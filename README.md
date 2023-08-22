@@ -44,10 +44,11 @@
 
 ### ❇️ 𝙂𝙍𝙐𝙋𝙊𝙎 𝙊𝙁𝙄𝘾𝙄𝘼𝙇𝙀𝙎
 
-<a href="https://chat.whatsapp.com/BkFKID3vATKKZuaPkOXJM5" target="blank"><img src="https://img.shields.io/badge/𝙂𝙧𝙪𝙥𝙤 𝙇𝙤𝙡𝙞𝙗𝙤𝙩-25D366?style=for-the-badge&logo=whatsapp&logoColor=white" /> 
-<a href="https://chat.whatsapp.com/GUlSx2eoanhBPssKzuA48c" target="blank"><img src="https://img.shields.io/badge/𝙂𝙧𝙪𝙥𝙤 𝙇𝙤𝙡𝙞𝙗𝙤𝙩 2-25D366?style=for-the-badge&logo=whatsapp&logoColor=white" />
-<a href="https://chat.whatsapp.com/CcJKHrxGBWAAH3PiBL07JS" target="blank"><img src="https://img.shields.io/badge/🐈 𝐆𝐚𝐭𝐚𝐁𝐨𝐭 & 𝐋𝐨𝐥𝐢𝐁𝐨𝐭 🥳-25D366?style=for-the-badge&logo=whatsapp&logoColor=white" />
-<a href="https://chat.whatsapp.com/ErnXC51D9lWJtRWOD4stR2" target="blank"><img src="https://img.shields.io/badge/💖 🅜🅤🅛🅣🅘 🅑🅞🅣🅢 💖-25D366?style=for-the-badge&logo=whatsapp&logoColor=white" />
+<a href="https://chat.whatsapp.com/KzJWBDGlE38A9Lbc6TJExI" target="blank"><img src="https://img.shields.io/badge/𝙂𝙧𝙪𝙥𝙤 𝙇𝙤𝙡𝙞𝙗𝙤𝙩-25D366?style=for-the-badge&logo=whatsapp&logoColor=white" /> 
+<a href="https://chat.whatsapp.com/BiozxvjQgo6L2QrfHK9V7R" target="blank"><img src="https://img.shields.io/badge/𝙂𝙧𝙪𝙥𝙤 𝙇𝙤𝙡𝙞𝙗𝙤𝙩 2-25D366?style=for-the-badge&logo=whatsapp&logoColor=white" />
+<a href="https://chat.whatsapp.com/EjiaKJWvzaiAmvktpScgEc" target="blank"><img src="https://img.shields.io/badge/🐈 𝐆𝐚𝐭𝐚𝐁𝐨𝐭 & 𝐋𝐨𝐥𝐢𝐁𝐨𝐭 🥳-25D366?style=for-the-badge&logo=whatsapp&logoColor=white" />
+<a href="https://chat.whatsapp.com/K7RzcVdxGqhGP5dCpVENSI" target="blank"><img src="https://img.shields.io/badge/𝐋𝐨𝐥𝐢𝐁𝐨𝐭 & 𝐙𝐢𝐫𝐚𝐱𝐁𝐨𝐭 -25D366?style=for-the-badge&logo=whatsapp&logoColor=white" />
+<a href="https://chat.whatsapp.com/KLpYFsitkgzJ15YQxZrBqO" target="blank"><img src="https://img.shields.io/badge/💖 🅜🅤🅛🅣🅘 🅑🅞🅣🅢 💖-25D366?style=for-the-badge&logo=whatsapp&logoColor=white" />
 </a>
 
 <a href="https://chat.whatsapp.com/FRkr7jJHSJA5OjVtE64dDs" target="blank"><img src="https://img.shields.io/badge/Grupo ayuda sobre el bot-25D366?style=for-the-badge&logo=whatsapp&logoColor=white" />
@@ -55,17 +56,57 @@
 
 [![Typing SVG](http://readme-typing-svg.herokuapp.com?font=Fira+Code&size=10&duration=3000&pause=1000&color=34F6F7&center=falso&vCenter=falso&width=435&lines=%C3%9Anete+y+Conoce+las+%C3%9Altimas+Novedades!!)](https://git.io/typing-svg)
 [![blog](https://img.shields.io/badge/Grupo-actulizaciones-25D366?style=for-the-badge&logo=whatsapp&logoColor=white 
-)](https://chat.whatsapp.com/JESaesjOEcB6wnGX0QYT9o)  <a href="https://chat.whatsapp.com/JESaesjOEcB6wnGX0QYT9o"> <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/WhatsApp_logo-color-vertical.svg/1200px-WhatsApp_logo-color-vertical.svg.png" height="29px">
+)](https://chat.whatsapp.com/KlqNmoUcVnsGJxIfATIDrK)  <a href="https://chat.whatsapp.com/KlqNmoUcVnsGJxIfATIDrK"> <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/WhatsApp_logo-color-vertical.svg/1200px-WhatsApp_logo-color-vertical.svg.png" height="29px">
 </a>
 -----
-### 🌟 (OPCIÓN 1) INSTALACIÓN AUTOMÁTICA POR TERMUX 🫰
+### 𝐀𝐂𝐓𝐈𝐕𝐀 𝐄𝐋 𝐓𝐄𝐑𝐌𝐔𝐗 - 𝙂𝙄𝙏𝙃𝙐𝘽
 [![blog](https://img.shields.io/badge/Instalacion-Automatica-FF0000?style=for-the-badge&logo=youtube&logoColor=white)](https://youtu.be/O_j2q5xCg3A?si=rqKUJF-8w1OCeAxx?feature=share)
-> **Note** Comandos para instalar de forma automática en Termux  
+> ⬇️ 𝐄𝐒𝐂𝐑𝐈𝐁𝐄 𝐋𝐎𝐒 𝐒𝐈𝐆𝐔𝐈𝐄𝐍𝐓𝐄𝐒 𝐂𝐎𝐌𝐀𝐍𝐃𝐎𝐒 𝐔𝐍𝐎 𝐏𝐎𝐑 𝐔𝐍𝐎 (Opción 1) 
 ```bash
 termux-setup-storage
 ```
 ```bash
 apt update -y && yes | apt upgrade && pkg install -y bash wget mpv && wget -O - https://raw.githubusercontent.com/elrebelde21/The-LoliBot-MD/master/install.sh | bash
+```
+-----
+### 📁 (OPCIÓN 2) 𝐀𝐂𝐓𝐈𝐕𝐀 𝐄𝐋 𝐓𝐄𝐑𝐌𝐔𝐗 - 𝘼𝙍𝘾𝙃𝙄𝙑𝙊𝙎 
+> **Note** Descargué y Descomprime
+### [`The-LoliBot-MD ~ Archivos`](https://github.com/elrebelde21/The-LoliBot-MD/archive/refs/heads/master.zip)
+[![blog](https://img.shields.io/badge/Termux-TheLoliBotMD-FF0000?style=for-the-badge&logo=youtube&logoColor=white)
+](https://youtu.be/i1xjB4bmYCc?si=JBYC22-3mBkLpB8c)
+```bash
+termux-setup-storage
+```
+```bash
+apt update && apt upgrade && pkg install -y git nodejs ffmpeg imagemagick yarn
+```
+```bash
+cd storage/downloads/The-LoliBot-MD-master/The-LoliBot-MD-master 
+```
+```bash
+yarn install
+```
+```bash
+npm install
+```
+```bash
+npm start
+```
+-----
+### `𝐀𝐂𝐓𝐈𝐕𝐀𝐑 𝐄𝐍 𝐂𝐀𝐒𝐎 𝐃𝐄 𝐃𝐄𝐓𝐄𝐍𝐄𝐑𝐒𝐄`
+```bash
+𝐄𝐒𝐂𝐑𝐈𝐁𝐄 𝐋𝐎𝐒 𝐒𝐈𝐆𝐔𝐈𝐄𝐍𝐓𝐄𝐒 𝐂𝐎𝐌𝐀𝐍𝐃𝐎𝐒 𝐔𝐍𝐎 𝐏𝐎𝐑 𝐔𝐍𝐎:
+> cd 
+> cd The-LoliBot-MD
+> npm start
+```
+### `𝐎𝐁𝐓𝐄𝐍𝐄𝐑 𝐎𝐓𝐑𝐎 𝐂𝐎𝐃𝐈𝐆𝐎 𝐐𝐑 
+```bash
+𝐄𝐒𝐂𝐑𝐈𝐁𝐄 𝐋𝐎𝐒 𝐒𝐈𝐆𝐔𝐈𝐄𝐍𝐓𝐄𝐒 𝐂𝐎𝐌𝐀𝐍𝐃𝐎𝐒 𝐔𝐍𝐎 𝐏𝐎𝐑 𝐔𝐍𝐎:
+> cd 
+> cd The-LoliBot-MD
+> rm -rf BotSession
+> npm start
 ```
 ------------------
 ### 🚀 USAR LOLIBOT 24/7 EN TERMUX 
@@ -76,7 +117,7 @@ termux-wake-lock && npm i -g pm2 && pm2 start index.js && pm2 save && pm2 logs
 #### ⬇️ Opciones Disponibles
 > **Warning** Esto eliminará todo el historial que hayas establecido con PM2:
 ```bash 
-pm2 delete index
+pm2 delete index 
 ``` 
 > Si tienes cerrado Termux y quiere ver de nuevo la ejecución use:
 ```bash 
@@ -97,7 +138,14 @@ pm2 start index
 grep -q 'bash\|wget' <(dpkg -l) || apt install -y bash wget && wget -O - https://raw.githubusercontent.com/elrebelde21/The-LoliBot-MD/master/update.sh | bash 
 ```
 #### Para que no pierda su progreso en LoliBot, estos comandos realizarán un respaldo de su `database.json` y se agregará a la versión más reciente.
-> **Warning** Estos comandos solo funcionan para TERMUX, REPLIT, LINUX                           
+> **Warning** Estos comandos solo funcionan para TERMUX, REPLIT, LINUX             
+-----
+### ✅ QUIERE TENER EL BOT 24/7 ACTIVO ACTIVAR EL BOXMINEHOST  
+[![blog](https://img.shields.io/badge/BoxMine-TheLoliBotMD-FF0000?style=for-the-badge&logo=youtube&logoColor=white)
+](https://youtu.be/wWyBHtKzx9Q?si=ihODwzs0pnVhzs5s)
+
+<a href="https://boxmineworld.com"><img src="https://i.imgur.com/allAyd4.png" height="125px"></a>
+### BoxMine World
 ----
 ### 🟣 ACTIVAR EN HEROKU 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/elrebelde21/The-LoliBotMD-Heroku) 
@@ -113,15 +161,6 @@ https://github.com/clhuang/heroku-buildpack-webp-binaries.git
 ```
 -----
 - [x] Resultado <details><summary>Buildpack</summary><img src="https://i.imgur.com/t3Xzgnh.jpeg"></details>
------
-
-### ✅ QUIERE TENER EL BOT 24/7 ACTIVO ACTIVAR EL BOXMINEHOST 
-[![blog](https://img.shields.io/badge/BoxMine-The-LoliBotMD-FF0000?style=for-the-badge&logo=youtube&logoColor=white)
-](https://youtu.be/wWyBHtKzx9Q?si=HUR57C5orIa_Z4M5)
-
-<a href="https://boxmineworld.com"><img src="https://i.imgur.com/allAyd4.png" height="125px"></a>
-
-- [x] Resultado <details><summary>Ajustes del Servidor - The-LoliBot-MD</summary><img src="https://i.imgur.com/N0SwvbY.jpeg"></details>
 ------------------
 ### ⚡ ACTIVA EL REPLIT
 [![blog](https://img.shields.io/badge/Lolibot-YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white)
@@ -168,10 +207,10 @@ Si tiene éxito, le dará un mensaje como: `SUCCESS: specified value was saved`.
 ### `📝 NOTA 📝`
 ```bash
 🔸ESTE REPOSITORIO SE PUBLICA LA VERSIÓN ACTUAL|OFICIAL DE THE-LOLIBOT-MD
-🔸ES POSIBLE QUE EL BOT TENGA ALGUNAW FALLAS, SE IRAN SOLUCIONANDO CONFORME SE VAYAN DETECTANDO
+🔸ES POSIBLE QUE EL BOT TENGA ALGUNAS FALLAS, SE IRAN SOLUCIONANDO CONFORME SE VAYAN DETECTANDO
 🔸SI VAS A EDITAR POR COMPLETO DEJA LOS CRÉDITOS DEL BOT
 🔸ATENTO A LAS NUEVAS ACTUALIZACIÓNES QUE SE HAGAN EN ESTE REPOSITORIO
-🔸EL ADD/KICK PUEDEN OCASIONAR QUE EL NÚMERO SE VAYA A SOPORTE POR ELLO SE ACTIVA CON #enablr restrict
+🔸EL ADD/KICK PUEDEN OCASIONAR QUE EL NÚMERO SE VAYA A SOPORTE POR ELLO SE ACTIVA CON #enable restrict
 🔸THE-LOLIBOT-MD, NO SE HACE RESPONSABLE DEL USO, NÚMERO, PRIVACIDAD Y CONTENIDO MANDADO, O USADO O GESTIONADO POR USTEDES O EL BOT.
 ```
 ----
@@ -182,7 +221,7 @@ Si tiene éxito, le dará un mensaje como: `SUCCESS: specified value was saved`.
 ### 🌟 DESARROLLADORES
 [![GataNina-Li](https://github.com/GataNina-Li.png?size=100)](https://github.com/GataNina-Li) 
 [![Yesenia57](https://github.com/Yesenia57.png?size=100)](https://github.com/Yesenia57) 
-[![Undefinido 17](https://github.com/undefined17.png?size=100)](https://github.com/Undefined17) 
+[![AzamiJs](https://github.com/AzamiJs.png?size=100)](https://github.com/AzamiJs)  
 
 ### 🌟 AGRADECIMIENTOS
 [![TheShadowBrokers1](https://github.com/BrunoSobrino.png?size=60)](https://github.com/BrunoSobrino) 
