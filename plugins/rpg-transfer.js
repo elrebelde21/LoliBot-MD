@@ -10,7 +10,7 @@ async function handler(m, { conn, args, usedPrefix, command }) {
     let user = global.db.data.users[m.sender]
     const item = items.filter(v => v in user && typeof user[v] == 'number')
     
-    let lol = `💱 *TRANTRANSFERENCIA* 💱
+    let lol = `💱 *TRANSFERENCIA* 💱
     
 *${usedPrefix + command}  tipo cantidad @tag*
 *EJEMPLO*
