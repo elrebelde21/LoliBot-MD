@@ -5,17 +5,17 @@ var document = doc[Math.floor(Math.random() * doc.length)]
 await m.reply(`╰⊱🔰⊱ *paso a paso* ⊱🔰⊱╮`)
   //conn.sendButton(m.chat, str, author, await(await fetch(pp)).buffer(), [['Menu', '/menu']], m)
 let texto1 = `
- Como sacar un número del soporte 
-Rápido 
+ ¿Cómo sacar un número del soporte 
+Rápido? 
 
-Manda un Gmail correo 
-Al
+Manda un Gmail - correo 
+Al 
 support@support.whatsapp.com
 
-Asulto 
+Asunto 
 Me suspendieron por error
 
-Texto algunos del esto 
+Elige cualquiera de estos textos
 
 Texto 1:
 Hola me suspendieron por error yo no hice nada malo apenas estoy usando el WhatsApp, y necesito mi número para mí grupo del estudio y trabajo.
