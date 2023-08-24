@@ -1,33 +1,33 @@
-import { watchFile, unwatchFile } from 'fs' 
+import { watchFile, unwatchFile } from 'fs'
 import chalk from 'chalk'
 import { fileURLToPath } from 'url'
 import fs from 'fs'
 import cheerio from 'cheerio'
 import fetch from 'node-fetch'
 import axios from 'axios'
-import moment from 'moment-timezone' 
-import { en, es, id, ar, pt } from './lib/idiomas/total-idiomas.js' 
+import moment from 'moment-timezone'
+import { en, es, id, ar, pt } from './lib/idiomas/total-idiomas.js'
 
-//⊱ ━━━━━.⋅ Añada los numeros a ser Propietario/a ⋅.━━━━ ⊰  
+//⊱ ━━━━━.⋅ Añada los numeros a ser Propietario/a ⋅.━━━━ ⊰
 
 global.owner = [ 
 ['593980586516', '𝙇𝙤𝙡𝙞𝘽𝙤𝙩-𝙈𝘿', true],
 ['573183650526', '𝙇𝙤𝙡𝙞𝘽𝙤𝙩-𝙈𝘿', true],
 ['593968585383'],
 ['595992302861'],
-['5492266466080'], 
+['5492266466080'],
 ['19393231057'],
-['595975740803'], 
+['595975740803'],
 ['5492266613038']]
 
-global.mods = ['50495745934'] 
-global.prems = ['972529277314'],  
+global.mods = ['50495745934']
+global.prems = ['972529277314'],
   
-//⊱ ━━━━━.⋅ IDIOMA : LENGUAJE ⋅.━━━━ ⊰ 
+//⊱ ━━━━━.⋅ IDIOMA : LENGUAJE ⋅.━━━━ ⊰
 //Agrega el Idioma que quieres que tenga The-LoliBot-MD
 //  es = Español         id = Bahasa Indonesia
-//  en = English         pt = Português 
-//  ar = عرب  
+//  en = English         pt = Português
+//  ar = عرب 
 
 global.lenguajeGB = es  //Idioma de The-LoliBot-MD, Ejemplo: es | en | pt...
 
@@ -46,7 +46,7 @@ global.lolkeysapi = 'GataDios'
 global.itsrose = ['4b146102c4d500809da9d1ff']
 global.baileys = '@whiskeysockets/baileys'
 
-global.APIs = { 
+global.APIs = {
   xteam: 'https://api.xteam.xyz',
   dzx: 'https://api.dhamzxploit.my.id',
   lol: 'https://api.lolhuman.xyz',
