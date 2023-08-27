@@ -1011,6 +1011,7 @@ if (!('temporal' in settings)) settings.temporal = true
 if (!('antiPrivate' in settings)) settings.antiPrivate = false
 if (!('antiCall' in settings)) settings.antiCall = true
 if (!('antiSpam' in settings)) settings.antiSpam = true
+if (!('antispam2' in settings)) settings.antispam2 = true
 if (!('jadibotmd' in settings)) settings.jadibotmd = true  
 } else global.db.data.settings[this.user.jid] = {
 self: false,
@@ -1021,6 +1022,7 @@ temporal: true,
 antiPrivate: false,
 antiCall: true,
 antiSpam: true,
+antispam2: true, 
 jadibotmd: true,
 }
 } catch (e) {
@@ -1149,8 +1151,7 @@ const messageNumber = user.bannedMessageCount + 1;
 const messageText = `⚠️ ESTAS BANEADO ⚠️\nAviso (${messageNumber}/3)${user.bannedReason ? `\n*Motivo:* *${user.bannedReason}*` : ''}
 *👉🏻 Puedes contactar al propietario del Bot si crees que se trata de un error o para charlar sobre tu desbaneo*
 
-👉 wa.me/527441745001
-👉 wa.me/972529277026
+👉 wa.me/593980586516
 👉 Wa.me/573183650526
 `.trim();
 //m.reply(messageText);
@@ -1163,22 +1164,20 @@ return;
 return;
 }
     
-if (botSpam.antispam && m.text && user && user.lastCommandTime && (Date.now() - user.lastCommandTime) < 5000 && !isROwner) {
-if (user.commandCount === 5) {
-const remainingTime = Math.ceil((user.lastCommandTime + 5000 - Date.now()) / 1000)
+if (botSpam.antispam2 && m.text && user && user.lastCommandTime && (Date.now() - user.lastCommandTime) < 5000 && !isROwner) {
+if (user.commandCount === 2) {
+const remainingTime = Math.ceil((user.lastCommandTime + 5000 - Date.now()) / 1000);
 if (remainingTime > 0) {
-const messageText = `*𝙀𝙎𝙋𝙀𝙍𝘼 ${remainingTime} 𝙎𝙀𝙂𝙐𝙉𝘿𝙊 𝘼𝙉𝙏𝙀𝙎 𝘿𝙀 𝙐𝙎𝘼𝙍 𝙊𝙏𝙍𝙊 𝘾𝙊𝙈𝘼𝙉𝘿𝙊*`
-m.reply(messageText)
-return
+const messageText = `𝙀𝙎𝙋𝙀𝙍𝘼 ${remainingTime} 𝙎𝙀𝙂𝙐𝙉𝘿𝙊 𝘼𝙉𝙏𝙀𝙎 𝘿𝙀 𝙐𝙎𝘼𝙍 𝙊𝙏𝙍𝙊 𝘾𝙊𝙈𝘼𝙉𝘿𝙊\n\nᴺᵒ ʰᵃᵍᵃ ˢᵖᵃᵐ`;
+ m.reply(messageText);
+return;
 } else {
-user.commandCount = 0
-}
-} else {
-user.commandCount += 1
-}
-} else {
-user.lastCommandTime = Date.now()
-user.commandCount = 1
+user.commandCount = 0;
+}} else {
+user.commandCount += 1;
+}} else {
+user.lastCommandTime = Date.now();
+user.commandCount = 1;
 }}
 
 let hl = _prefix 
