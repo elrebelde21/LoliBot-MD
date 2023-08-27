@@ -1243,10 +1243,7 @@ mentionedJid:[m.sender],
 "title": wm, 
 "containsAutoReply": true,
 "mediaType": 1, 
-"mediaUrl": 'https://www.youtube.com/@LoliBot', 
-"sourceUrl": 'https://www.youtube.com/@LoliBot', 
-}
-}
+sourceUrl: [md, nna, yt, nnn, nn, ig].getRandom()}}
 }, { quoted: m })
 // this.reply(m.chat, `🫥 𝙉𝙤 𝙩𝙞𝙚𝙣𝙚 𝙇𝙤𝙡𝙞𝘾𝙤𝙞𝙣𝙨`, m)
 continue     
@@ -1266,10 +1263,7 @@ mentionedJid:[m.sender],
 "title": wm, 
 "containsAutoReply": true,
 "mediaType": 1, 
-"mediaUrl": nn, 
-"sourceUrl": nn, 
-}
-}
+sourceUrl: [md, nna, yt, nnn, nn, ig].getRandom()}}
 }, { quoted: m })               
 //  this.reply(m.chat, `${lenguajeGB['smsCont7']()} *${usedPrefix}buy*`, m)
 continue // Limit habis
@@ -1288,10 +1282,7 @@ mentionedJid:[m.sender],
 "title": wm, 
 "containsAutoReply": true,
 "mediaType": 1, 
-"mediaUrl": nnn, 
-"sourceUrl": nnn, 
-}
-}
+sourceUrl: [md, nna, yt, nnn, nn, ig].getRandom()}}
 }, { quoted: m })                
 /*this.reply(m.chat, `${lenguajeGB['smsCont9']()} *${plugin.level}* ${lenguajeGB['smsCont10']()} *${_user.level}* ${lenguajeGB['smsCont11']()} *${usedPrefix}nivel*`, m)*/
 continue // If the level has not been reached
@@ -1414,20 +1405,33 @@ pp = await this.profilePictureUrl(user, 'image')
 } catch (e) {
 } finally {
 let apii = await this.getFile(pp)
-const antiArab = JSON.parse(fs.readFileSync('./lib/antiArab.json'))
-const userPrefix = antiArab.some(prefix => user.startsWith(prefix))                        
 const botTt2 = groupMetadata.participants.find(u => this.decodeJid(u.id) == this.user.jid) || {} 
 const isBotAdminNn = botTt2?.admin === "admin" || false
 text = (action === 'add' ? (chat.sWelcome || this.welcome || conn.welcome || 'Welcome, @user!').replace('@subject', await this.getName(id)).replace('@desc', groupMetadata.desc?.toString() || '*ᴜɴ ɢʀᴜᴘᴏ ɢᴇɴɪᴀ😸*\n *sɪɴ ʀᴇɢʟᴀ 😉*') :
 (chat.sBye || this.bye || conn.bye || 'Bye, @user!')).replace('@user', '@' + user.split('@')[0])
-if (userPrefix && chat.antifake && botTt.restrict && isBotAdminNn && action === 'add') {
+if (chat.antifake && isBotAdminNn && action === 'add') {
+const numerosPermitidos = ["212", "265", "92", "91", "90", "210", "60", "61", "62", "40", "48", "49", "93", "94", "98", "258"] //PUEDES EDITAR LOS USUARIOS QUE SE ELIMINARÁN SI EMPIEZA POR CUALQUIER DE ESOS NÚMEROS	
+if (numerosPermitidos.some(num => user.startsWith(num))) {	
+this.sendMessage(id, { text: `*${lenguajeGB['smsAvisoAG']()}${lenguajeGB['smsInt1']()} @${user.split("@")[0]} ${lenguajeGB['smsInt2']()}*`, mentions: [user] }, { quoted: null });          
 let responseb = await this.groupParticipantsUpdate(id, [user], 'remove')
-if (responseb[0].status === "404") return 
-let fkontak2 = { "key": { "participants":"0@s.whatsapp.net", "remoteJid": "status@broadcast", "fromMe": false, "id": "Halo" }, "message": { "contactMessage": { "vcard": `BEGIN:VCARD\nVERSION:3.0\nN:Sy;Bot;;;\nFN:y\nitem1.TEL;waid=${user.split('@')[0]}:${user.split('@')[0]}\nitem1.X-ABLabel:Ponsel\nEND:VCARD` }}, "participant": "0@s.whatsapp.net" }      
-this.sendMessage(id, { text: `*[❗] @${user.split('@')[0]} el este grupo no esta permido estos numero fakes por lo cual te eliminare del grupo bye*`, mentions: [user] }, { quoted: fkontak2 });          
+if (responseb[0].status === "404") return      
 return    
-}    
-this.sendFile(id, apii.data, 'pp.jpg', text, null, false, { mentions: [user] }) 
+}}    
+let fkontak2 = { "key": { "participants":"0@s.whatsapp.net", "remoteJid": "status@broadcast", "fromMe": false, "id": "Halo" }, "message": { "contactMessage": { "vcard": `BEGIN:VCARD\nVERSION:3.0\nN:Sy;Bot;;;\nFN:y\nitem1.TEL;waid=${user.split('@')[0]}:${user.split('@')[0]}\nitem1.X-ABLabel:Ponsel\nEND:VCARD` }}, "participant": "0@s.whatsapp.net" }      
+this.sendMessage(id, { text: text, 
+contextInfo:{
+forwardingScore: 9999999,
+isForwarded: true, 
+mentionedJid:[user],
+"externalAdReply": {
+"showAdAttribution": true,
+"renderLargerThumbnail": true,
+"thumbnail": apii.data, 
+"title": [wm, ' ' + lb + ' 😊', '🌟'].getRandom(),
+"containsAutoReply": true,
+"mediaType": 1, 
+sourceUrl: [md, nna, yt, nnn, nn, ig].getRandom()}}}, { quoted: fkontak2 }) 
+//this.sendFile(id, apii.data, 'pp.jpg', text, null, false, { mentions: [user] }, { quoted: fkontak2 })
 }}}
 			    
 break
@@ -1515,7 +1519,7 @@ restrict: lenguajeGB['smsRestrict'](),
 }[type]
 //if (msg) return m.reply(msg)
 let tg = { quoted: m, userJid: conn.user.jid }
-let prep = generateWAMessageFromContent(m.chat, { extendedTextMessage: { text: msg, contextInfo: { externalAdReply: { title: lenguajeGB.smsAvisoAG().slice(0,-2), body: [wm, ' ' + lb + ' 😊', '🌟'].getRandom(), thumbnail: gataImg.getRandom(), sourceUrl: [md, nna, yt, nnn, nn, ig].getRandom() }}}}, tg)
+let prep = generateWAMessageFromContent(m.chat, { extendedTextMessage: { text: msg, contextInfo: { externalAdReply: { title: lenguajeGB.smsAvisoAG().slice(0,-2), body: [wm, ' ' + lb + ' 😊', '🌟'].getRandom(), thumbnail: gataImg.getRandom(), sourceUrl: [md, nna, yt, nnn, nn, fb, ig].getRandom() }}}}, tg)
 if (msg) return conn.relayMessage(m.chat, prep.message, { messageId: prep.key.id })
 }
 
