@@ -102,12 +102,12 @@ global.md = 'https://github.com/elrebelde21/The-LoliBot-MD'
 global.fb = 'https://www.facebook.com/groups/872989990425789/'
 
 global.nna = 'https://chat.whatsapp.com/KlqNmoUcVnsGJxIfATIDrK' //Actualización, información sobre el bot
-global.nn = 'https://chat.whatsapp.com/KzJWBDGlE38A9Lbc6TJExI' //Grupo 1
-global.nnn = 'https://chat.whatsapp.com/F5oogSsyVb6KnmAZbHqJfo' //Grupo 2
-global.nnnt = 'https://chat.whatsapp.com/CcJKHrxGBWAAH3PiBL07JS' //Grupo del Colaboracion
+global.nn = 'https://chat.whatsapp.com/C6sxsP2ckrr2vxMKclOeCD' //Grupo 1
+global.nnn = 'https://chat.whatsapp.com/H4hxytyGvucIF1k0UAR7es' //Grupo 2
+global.nnnt = 'https://chat.whatsapp.com/IlyJBy1fxcw2qAHLSC5YLa' //Grupo del Colaboracion
 global.nnnt2 = 'https://chat.whatsapp.com/K7RzcVdxGqhGP5dCpVENSI' // Grupo COL 2
 global.nnntt = 'https://chat.whatsapp.com/KLpYFsitkgzJ15YQxZrBqO' //Grupo COL 3
-global.nnnttt = 'https://chat.whatsapp.com/EIm4nnvuYTl3KS2GySsgmx' //enlace lolibot
+global.nnnttt = 'https://chat.whatsapp.com/FUrq67MddDH25jUqrxeevr' //enlace lolibot
 global.nnntttt = 'https://chat.whatsapp.com/FRkr7jJHSJA5OjVtE64dDs' //Grupo ayuda sobre el bot
 global.asistencia = 'Wa.me/5492266466080' //Dudas? escríbeme...
 
