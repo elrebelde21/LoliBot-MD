@@ -24,20 +24,9 @@ let info = `
  *${nnntttt}*
  
 ┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈
-Grupos del amistades donde esta el bot
-
-*꧁⁣𓆩Aᴹᴵᴳᴼˢ Cᴴᴬᵀˢ Y Aᴾᴼᴿᵀᴱ*
-https://chat.whatsapp.com/JZaD3sfNoVW4JvaoQ4uVwF
 
 *⇶⃤꙰𝑬𝒏𝒍𝒂𝒄𝒆 𝒍𝒐𝒍𝒊𝒃𝒐𝒕ꦿ⃟⃢*
-*${nnnttt}*
-
-*꧁⃢⃟҉💫🌺ঔঔ𝔼ℕ𝕃𝔸ℂ𝔼𝕊 𝕃𝔸 𝕁𝔼𝔽𝔸✨*
-https://chat.whatsapp.com/JegOp8NUSMd0vn75s4hkaj
-┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈
-
-Si quieres que tu grupo aparezca aca habla con mi creador
-`.trim() 
+*${nnnttt}*`.trim() 
 
 conn.fakeReply(m.chat, info, '0@s.whatsapp.net', '𝙏𝙝𝙚-𝙇𝙤𝙡𝙞𝘽𝙤𝙩-𝙈𝘿', 'status@broadcast')
 }
