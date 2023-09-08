@@ -219,7 +219,8 @@ global.stopped = connection;
 if (isNewLogin) conn.isInit = true;
 const code = lastDisconnect?.error?.output?.statusCode || lastDisconnect?.error?.output?.payload?.statusCode;
 if (code && code !== DisconnectReason.loggedOut && conn?.ws.socket == null) {
- console.log(await global.reloadHandler(true).catch(console.error));
+await global.reloadHandler(true).catch(console.error);
+//console.log(await global.reloadHandler(true).catch(console.error));
 global.timestamp.connect = new Date;
 }
 if (global.db.data == null) loadDatabase();
@@ -231,13 +232,13 @@ let reason = new Boom(lastDisconnect?.error)?.output?.statusCode;
 if (connection === 'close') {
 if (reason === DisconnectReason.badSession) {
 conn.logger.error(chalk.bold.yellow(lenguajeGB['smsConexion']()));
- //process.exit();
+//process.exit();
 } else if (reason === DisconnectReason.connectionClosed) {
 conn.logger.warn(lenguajeGB['smsConexioncerrar']());
-process.send('reset');
+await global.reloadHandler(true).catch(console.error);
 } else if (reason === DisconnectReason.connectionLost) {
 conn.logger.warn(lenguajeGB['smsConexionperdida']());
-process.send('reset');
+await global.reloadHandler(true).catch(console.error);
 } else if (reason === DisconnectReason.connectionReplaced) {
 conn.logger.error(lenguajeGB['smsConexionreem']());
 //process.exit();
@@ -246,13 +247,13 @@ conn.logger.error(chalk.bold.yellow(lenguajeGB['smsConexion']()));
 //process.exit();
 } else if (reason === DisconnectReason.restartRequired) {
 conn.logger.info(lenguajeGB['smsConexionreinicio']());
-//process.send('reset');
+await global.reloadHandler(true).catch(console.error);
 } else if (reason === DisconnectReason.timedOut) {
 conn.logger.warn(lenguajeGB['smsConexiontiem']());
-process.send('reset');
+await global.reloadHandler(true).catch(console.error);
 } else {
 conn.logger.warn(lenguajeGB['smsConexiondescon']());
-//process.exit();
+await global.reloadHandler(true).catch(console.error);
 }}}
 
 process.on('uncaughtException', console.error);

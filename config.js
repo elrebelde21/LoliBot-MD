@@ -94,7 +94,7 @@ global.author = '𝙇𝙤𝙡𝙞𝘽𝙤𝙩-𝙈𝘿'
 
 //⊱ ━━━━━.⋅ Versión | Nombre | cuentas ⋅.━━━━ ⊰
 
-global.vs = '1.4.9'
+global.vs = '1.5.0'
 global.lb = '𝙏𝙝𝙚 𝙇𝙤𝙡𝙞𝘽𝙤𝙩-𝙈𝘿'
 global.yt = 'https://www.youtube.com/@TheLoliBot-MD'
 global.ig = 'https://www.tiktok.com/@thelolibot_md'
@@ -113,19 +113,19 @@ global.asistencia = 'Wa.me/5492266466080' //Dudas? escríbeme...
 
 //⊱ ━━━━━━━━━━━━━.⋅ Datos ⋅.━━━━━━━━━━━━━━ ⊰
 
-global.rg = '╰⊱✅⊱ *𝙍𝙚𝙨𝙪𝙡𝙩𝙖𝙙𝙤𝙨* ⊱✅⊱╮\n\n'
+global.rg = '╰⊱✅ *𝙍𝙀𝙎𝙐𝙇𝙏𝘼𝘿𝙊𝙎* ⊱✅⊱╮\n\n'
 global.resultado = rg
-global.ag = '╰⊱⚠️⊱ *𝘼𝙙𝙫𝙚𝙧𝙩𝙚𝙣𝙘𝙞𝙖* ⊱⚠️⊱╮\n\n'
+global.ag = '╰⊱⚠️⊱ *𝘼𝘿𝙑𝙀𝙍𝙏𝙀𝙉𝘾𝙄𝘼* ⊱⚠️⊱╮\n\n'
 global.advertencia = ag
-global.iig = '╰⊱❕⊱ *𝙄𝙣𝙛𝙤𝙧𝙢𝙖𝙘𝙞𝙤𝙣* ⊱⊱╮\n\n'
+global.iig = '╰⊱❕⊱ *𝙄𝙉𝙁𝙊𝙍𝙈𝘼𝘾𝙄𝙊𝙉 * ⊱⊱╮\n\n'
 global.informacion = iig
-global.fg = '╰⊱❌⊱ *𝙀𝙧𝙧𝙤𝙧* ⊱❌⊱╮\n\n'
+global.fg = '╰⊱❌⊱ *𝙀𝙍𝙍𝙊𝙍* ⊱❌⊱╮\n\n'
 global.fallo = fg
-global.mg = '╰⊱❗️⊱ *𝙇𝙤 𝙪𝙨𝙤 𝙢𝙖𝙡* ⊱❗️⊱╮\n\n'
+global.mg = '╰⊱❗️⊱ *𝙇𝙊 𝙐𝙎𝙊 𝙈𝘼𝙇* ⊱❗️⊱╮\n\n'
 global.mal = mg
-global.eeg = '╰⊱📩⊱ *𝙍𝙚𝙥𝙤𝙧𝙩𝙚* ⊱📩⊱╮\n\n'
+global.eeg = '╰⊱📩⊱ *𝙍𝙀𝙋𝙊𝙍𝙏𝙀* ⊱📩⊱╮\n\n'
 global.envio = eeg
-global.eg = '╰⊱💚⊱ *𝙀𝙭𝙞𝙩𝙤* ⊱💚⊱╮\n\n'
+global.eg = '╰⊱💚⊱ *𝙀𝙓𝙄𝙏𝙊𝙎* ⊱💚⊱╮\n\n'
 global.exito = eg
 
 //⊱ ━━━━━.⋅ Información ⋅.━━━━ ⊰
@@ -209,7 +209,7 @@ message: {
 
 //━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ ฅ^•ﻌ•^ฅ
 
-global.multiplier = 60 // Cuanto más alto, más difícil subir de nivel
+global.multiplier = 90 // Cuanto más alto, más difícil subir de nivel
 global.rpg = {
 emoticon(string) {
 string = string.toLowerCase()

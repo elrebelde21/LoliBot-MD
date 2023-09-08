@@ -1,6 +1,6 @@
 #!bin/bash
-GREEN='\033[0;32m' 
-while : 
+GREEN='\033[0;32m'
+while :
 do
 echo ""
     npm start

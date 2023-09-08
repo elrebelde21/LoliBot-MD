@@ -1133,28 +1133,28 @@ plugin.command === command :
 false
 //if (text) {
 //m.reply('*ERROR DE COMANDO*')}
-if (!isAccept)
-continue
-m.plugin = name
+if (!isAccept) {
+continue;
+}
+m.plugin = name;
 if (m.chat in global.db.data.chats || m.sender in global.db.data.users) {
-let chat = global.db.data.chats[m.chat]
-let user = global.db.data.users[m.sender]
-let botSpam = global.db.data.settings[this.user.jid]
-if (!['owner-unbanchat.js', 'gc-link.js', 'gc-hidetag.js', 'info-creator.js'].includes(name) && chat && chat.isBanned && !isROwner) return // Except this
-if (name != 'owner-unbanchat.js' && name != 'owner-exec.js' && name != 'owner-exec2.js' && name != 'tool-delete.js' && chat?.isBanned && !isROwner) return 
+const chat = global.db.data.chats[m.chat];
+const user = global.db.data.users[m.sender];
+const botSpam = global.db.data.settings[this.user.jid];
+if (!['owner-unbanchat.js', 'gc-link.js', 'gc-hidetag.js', 'info-creator.js'].includes(name) && chat && chat.isBanned && !isROwner) return; // Except this
+if (name != 'owner-unbanchat.js' && name != 'owner-exec.js' && name != 'owner-exec2.js' && name != 'tool-delete.js' && chat?.isBanned && !isROwner) return;
 if (m.text && user.banned && !isROwner) {
 if (typeof user.bannedMessageCount === 'undefined') {
-    user.bannedMessageCount = 0;
-  }
+user.bannedMessageCount = 0;
+}
 if (user.bannedMessageCount < 3) {
 const messageNumber = user.bannedMessageCount + 1;
-const messageText = `⚠️ ESTAS BANEADO ⚠️\nAviso (${messageNumber}/3)${user.bannedReason ? `\n*Motivo:* *${user.bannedReason}*` : ''}
+const messageText = `⚠️ ESTAS BANEADO ⚠️\nAviso (${messageNumber}/3) ${user.bannedReason ? `\n*Motivo:* ${user.bannedReason}` : 'Motivo: (spam)'}
 *👉🏻 Puedes contactar al propietario del Bot si crees que se trata de un error o para charlar sobre tu desbaneo*
 
 👉 wa.me/593980586516
-👉 Wa.me/573183650526
-`.trim();
-//m.reply(messageText);
+👉 Wa.me/573183650526`.trim();
+m.reply(messageText);
 user.bannedMessageCount++;
 } else if (user.bannedMessageCount === 3) {
 user.bannedMessageSent = true;
@@ -1163,19 +1163,21 @@ return;
 }
 return;
 }
-    
-if (botSpam.antispam2 && m.text && user && user.lastCommandTime && (Date.now() - user.lastCommandTime) < 5000 && !isROwner) {
+		
+if (botSpam.antispam2 && m.text && user && user.lastCommandTime && (Date.now() - user.lastCommandTime) < 9000 && !isROwner) {
 if (user.commandCount === 2) {
-const remainingTime = Math.ceil((user.lastCommandTime + 5000 - Date.now()) / 1000);
+const remainingTime = Math.ceil((user.lastCommandTime + 9000 - Date.now()) / 1000);
 if (remainingTime > 0) {
-const messageText = `𝙀𝙎𝙋𝙀𝙍𝘼 ${remainingTime} 𝙎𝙀𝙂𝙐𝙉𝘿𝙊 𝘼𝙉𝙏𝙀𝙎 𝘿𝙀 𝙐𝙎𝘼𝙍 𝙊𝙏𝙍𝙊 𝘾𝙊𝙈𝘼𝙉𝘿𝙊\n\nᴺᵒ ʰᵃᵍᵃ ˢᵖᵃᵐ`;
- m.reply(messageText);
+const messageText = `*𝙀𝙎𝙋𝙀𝙍𝘼 ${remainingTime} 𝙎𝙀𝙂𝙐𝙉𝘿𝙊 𝘼𝙉𝙏𝙀𝙎 𝘿𝙀 𝙐𝙎𝘼𝙍 𝙊𝙏𝙍𝙊 𝘾𝙊𝙈𝘼𝙉𝘿𝙊*`;
+m.reply(messageText);
 return;
 } else {
 user.commandCount = 0;
-}} else {
+}
+} else {
 user.commandCount += 1;
-}} else {
+}
+} else {
 user.lastCommandTime = Date.now();
 user.commandCount = 1;
 }}
