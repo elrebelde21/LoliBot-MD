@@ -21,7 +21,7 @@ const configuration = new Configuration({organization: global.openai_org_id, api
 const openaiii = new OpenAIApi(configuration);
 const idioma = 'es'
 //const sistema1 = await fetch(`https://raw.githubusercontent.com/Skidy89/chat-gpt-jailbreak/main/Text.txt`).then(v => v.text());
-const sistema1 = `Actuaras como un Bot de WhatsApp el cual fue creado por GataNina-Li, tu seras GataBot-MD`;
+const sistema1 = `Actuaras como un Bot de WhatsApp el cual fue creado por elrebelde, tu seras The-LoliBot-MD`;
 const handler = async (m, {conn, text, usedPrefix, command}) => {
 if (usedPrefix == 'a' || usedPrefix == 'A') return;
 if (!text) throw `*${lenguajeGB['smsAvisoMG']()}𝙄𝙉𝙂𝙍𝙀𝙎𝙀 𝙐𝙉𝘼 𝙋𝙀𝙏𝙄𝘾𝙄𝙊𝙉 𝙊 𝙐𝙉𝘼 𝙊𝙍𝘿𝙀𝙉 𝙋𝘼𝙍𝘼 𝙐𝙎𝘼𝙍 𝙇𝘼 𝙁𝙐𝙉𝘾𝙄𝙊𝙉 𝘿𝙀𝙇 𝘾𝙃𝘼𝙏𝙂𝙋𝙏\n\n❏ 𝙀𝙅𝙀𝙈𝙋𝙇𝙊 𝘿𝙀 𝙋𝙀𝙏𝙄𝘾𝙄𝙊𝙉𝙀𝙎 𝙔 𝙊𝙍𝘿𝙀𝙉𝙀𝙎\n❏ ${usedPrefix + command} Recomienda un top 10 de películas de acción\n❏ ${usedPrefix + command} Codigo en JS para un juego de cartas` 
@@ -115,7 +115,7 @@ const audio10 = await tts(akuariapiresult1.text, idioma);
 await conn.sendMessage(m.chat, {audio: audio10, fileName: 'error.mp3', mimetype: 'audio/mpeg', ptt: true}, {quoted: m});                           
 } catch {
 }}}}}}}}}}}
-handler.command = /^(openaivoz|chatgptvoz|iavoz|robotvoz|openai2voz|chatgpt2voz|ia2voz|robot2voz|Mysticvoz|MysticBotvoz|gptvoz|ai_voz|ai_voce)$/i;
+handler.command = /^(openaivoz|chatgptvoz|iavoz|robotvoz|openai2voz|chatgpt2voz|ia2voz|robot2voz|Lolivoz|LoliBotvoz|gptvoz|ai_voz|ai_voce)$/i;
 export default handler;
 
 async function tts(text = 'error', lang = 'es') {
