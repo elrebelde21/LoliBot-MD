@@ -10,6 +10,8 @@ import yargs from 'yargs';
 import {spawn} from 'child_process';
 import lodash from 'lodash';
 import chalk from 'chalk';
+import fs from 'fs'
+import { watchFile, unwatchFile } from 'fs'  
 import syntaxerror from 'syntax-error';
 import {tmpdir} from 'os';
 import {format} from 'util';
@@ -139,124 +141,49 @@ conn.isInit = false;
 conn.well = false;
 
 if (!opts['test']) {
-if (global.db) {
-setInterval(async () => {
-if (global.db.data) await global.db.write();
-if (opts['autocleartmp'] && (global.support || {}).find) (tmp = [os.tmpdir(), 'tmp', 'jadibts'], tmp.forEach((filename) => cp.spawn('find', [filename, '-amin', '3', '-type', 'f', '-delete'])));
-}, 30 * 1000);
-}}
-
-if (opts['server']) (await import('./server.js')).default(global.conn, PORT);
-
-function clearTmp() {
-const tmp = [tmpdir(), join(__dirname, './tmp')];
-const filename = [];
-tmp.forEach((dirname) => readdirSync(dirname).forEach((file) => filename.push(join(dirname, file))));
-return filename.map((file) => {
-const stats = statSync(file);
-if (stats.isFile() && (Date.now() - stats.mtimeMs >= 1000 * 60 * 3)) return unlinkSync(file); // 3 minutes
-return false;
-})}
-
-function purgeSession() {
-let prekey = []
-let directorio = readdirSync("./BotSession")
-let filesFolderPreKeys = directorio.filter(file => {
-return file.startsWith('pre-key-') || file.startsWith('session-') || file.startsWith('sender-') || file.startsWith('app-') 
-})
-prekey = [...prekey, ...filesFolderPreKeys]
-filesFolderPreKeys.forEach(files => {
-unlinkSync(`./BotSession/${files}`)
-})
-} 
-
-function purgeSessionSB() {
-try {
-let listaDirectorios = readdirSync('./jadibts/');
-let SBprekey = []
-listaDirectorios.forEach(directorio => {
-if (statSync(`./jadibts/${directorio}`).isDirectory()) {
-let DSBPreKeys = readdirSync(`./jadibts/${directorio}`).filter(fileInDir => {
-return fileInDir.startsWith('pre-key-') /*|| fileInDir.startsWith('app-') || fileInDir.startsWith('session-')*/
-})
-SBprekey = [...SBprekey, ...DSBPreKeys]
-DSBPreKeys.forEach(fileInDir => {
-unlinkSync(`./jadibts/${directorio}/${fileInDir}`)
-})
-}
-})
-if (SBprekey.length === 0) {
-console.log(chalk.bold.green(lenguajeGB.smspurgeSessionSB1()))
-} else {
-console.log(chalk.bold.cyanBright(lenguajeGB.smspurgeSessionSB2()))
-}} catch (err){
-console.log(chalk.bold.red(lenguajeGB.smspurgeSessionSB3() + err))
-}}
-
-function purgeOldFiles() {
-const directories = ['./BotSession/', './jadibts/']
-const oneHourAgo = Date.now() - (1000 * 60 * 30) //30 min 
-directories.forEach(dir => {
-readdirSync(dir, (err, files) => {
-if (err) throw err
-files.forEach(file => {
-const filePath = path.join(dir, file)
-stat(filePath, (err, stats) => {
-if (err) throw err;
-if (stats.isFile() && stats.mtimeMs < oneHourAgo && file !== 'creds.json') { 
-unlinkSync(filePath, err => {  
-if (err) throw err
-console.log(chalk.bold.green(`${lenguajeGB.smspurgeOldFiles1()} ${file} ${lenguajeGB.smspurgeOldFiles2()}`))
-})
-} else {  
-console.log(chalk.bold.red(`${lenguajeGB.smspurgeOldFiles3()} ${file} ${lenguajeGB.smspurgeOldFiles4()}` + err))
-} }) }) }) })
-}
+if (global.db) setInterval(async () => {
+if (global.db.data) await global.db.write()
+if (opts['autocleartmp'] && (global.support || {}).find) (tmp = [os.tmpdir(), 'tmp', "jadibts"], tmp.forEach(filename => cp.spawn('find', [filename, '-amin', '2', '-type', 'f', '-delete'])))}, 30 * 1000)}
+if (opts['server']) (await import('./server.js')).default(global.conn, PORT)
 
 async function connectionUpdate(update) {
-const {connection, lastDisconnect, isNewLogin} = update;
-global.stopped = connection;
-if (isNewLogin) conn.isInit = true;
-const code = lastDisconnect?.error?.output?.statusCode || lastDisconnect?.error?.output?.payload?.statusCode;
+const {connection, lastDisconnect, isNewLogin} = update
+global.stopped = connection
+if (isNewLogin) conn.isInit = true
+const code = lastDisconnect?.error?.output?.statusCode || lastDisconnect?.error?.output?.payload?.statusCode
 if (code && code !== DisconnectReason.loggedOut && conn?.ws.socket == null) {
-await global.reloadHandler(true).catch(console.error);
-//console.log(await global.reloadHandler(true).catch(console.error));
-global.timestamp.connect = new Date;
+console.log(await global.reloadHandler(true).catch(console.error))
+global.timestamp.connect = new Date
 }
-if (global.db.data == null) loadDatabase();
+if (global.db.data == null) loadDatabase()
 if (update.qr != 0 && update.qr != undefined) {
 console.log(chalk.bold.yellow(lenguajeGB['smsCodigoQR']()))}
 if (connection == 'open') {
-console.log(chalk.bold.yellow(lenguajeGB['smsConexion']()))}
-let reason = new Boom(lastDisconnect?.error)?.output?.statusCode;
+console.log(chalk.bold.greenBright(lenguajeGB['smsConexion']()))}
+let reason = new Boom(lastDisconnect?.error)?.output?.statusCode
 if (connection === 'close') {
 if (reason === DisconnectReason.badSession) {
-conn.logger.error(chalk.bold.yellow(lenguajeGB['smsConexion']()));
-//process.exit();
+console.log(chalk.bold.cyanBright(lenguajeGB['smsConexionOFF']()))
 } else if (reason === DisconnectReason.connectionClosed) {
-conn.logger.warn(lenguajeGB['smsConexioncerrar']());
-await global.reloadHandler(true).catch(console.error);
+console.log(chalk.bold.magentaBright(lenguajeGB['smsConexioncerrar']()))
+process.send('reset')
 } else if (reason === DisconnectReason.connectionLost) {
-conn.logger.warn(lenguajeGB['smsConexionperdida']());
-await global.reloadHandler(true).catch(console.error);
+console.log(chalk.bold.blueBright(lenguajeGB['smsConexionperdida']()))
+process.send('reset')
 } else if (reason === DisconnectReason.connectionReplaced) {
-conn.logger.error(lenguajeGB['smsConexionreem']());
-//process.exit();
+console.log(chalk.bold.yellowBright(lenguajeGB['smsConexionreem']()))
 } else if (reason === DisconnectReason.loggedOut) {
-conn.logger.error(chalk.bold.yellow(lenguajeGB['smsConexion']()));
-//process.exit();
+console.log(chalk.bold.redBright(lenguajeGB['smsConexionOFF']()))
 } else if (reason === DisconnectReason.restartRequired) {
-conn.logger.info(lenguajeGB['smsConexionreinicio']());
-await global.reloadHandler(true).catch(console.error);
+console.log(chalk.bold.cyanBright(lenguajeGB['smsConexionreinicio']()))
 } else if (reason === DisconnectReason.timedOut) {
-conn.logger.warn(lenguajeGB['smsConexiontiem']());
-await global.reloadHandler(true).catch(console.error);
+console.log(chalk.bold.yellowBright(lenguajeGB['smsConexiontiem']()))
+process.send('reset')
 } else {
-conn.logger.warn(lenguajeGB['smsConexiondescon']());
-await global.reloadHandler(true).catch(console.error);
-}}}
-
-process.on('uncaughtException', console.error);
+console.log(chalk.bold.redBright(lenguajeGB['smsConexiondescon'](reason, connection)))
+}}
+}
+process.on('uncaughtException', console.error)
 
 let isInit = true;
 let handler = await import('./handler.js');
@@ -287,14 +214,14 @@ conn.ev.off('creds.update', conn.credsUpdate);
 }
 
 //Información para Grupos
-conn.welcome = lenguajeGB['smsWelcome']() //'  ╭────────────\n┆──〘 *𝗕𝗶𝗲𝗻𝘃𝗲𝗻𝗶𝗱𝗼/𝗮* 〙──\n┆──────────\n┆ ✨ *@user* _𝗔𝗹_\n┆ *@subject ✨* \n┆\n┆ *𝗘𝗻 𝗲𝘀𝘁𝗲 𝗴𝗿𝘂𝗽𝗼 𝗽𝗼𝗱𝗿𝗮́𝘀*\n┆  *𝗘𝗻𝗰𝗼𝗻𝘁𝗿𝗮𝗿:*\n┆> *𝗔𝗺𝗶𝘀𝘁𝗮𝗱𝗲𝘀* 👥\n┆> *𝗗𝗲𝘀𝗺𝗮𝗱𝗿𝗲* 💃🕺\n┆> *𝗕𝗮𝗿𝗱𝗼*🤺\n┆> *𝙅𝙤𝙙𝙖 𝙮 𝙢𝙖𝙨* 😛\n┆> *𝗨𝗻 𝗯𝗼𝘁 𝘀𝗲𝘅𝘆*\n┆> *𝗣𝘂𝗲𝗱𝗲 𝘀𝗼𝗹𝗶𝗰𝗶𝘁𝗮𝗿 𝗺𝗶 𝗹𝗶𝘀𝘁𝗮 𝗱𝗲*\n┆> *𝗖𝗼𝗺𝗮𝗻𝗱𝗼 𝗰𝗼𝗻:*\n┆> *#menu*\n┆\n┆> *𝗔𝗾𝘂𝗶́ 𝘁𝗶𝗲𝗻𝗲 𝗹𝗮 𝗱𝗲𝘀𝗰𝗿𝗶𝗽𝗰𝗶𝗼́𝗻* \n┆ *𝗗𝗲𝗹 𝗴𝗿𝘂𝗽𝗼, 𝗹𝗲́𝗲𝗹𝗮!! 🙌*\n┆──────────\n┆  @desc\n┆──────────\n┆ *🔰 𝗗𝗶𝘀𝗳𝗿𝘂𝘁𝗮 𝗱𝗲 𝘁𝘂*\n┆ *𝗘𝘀𝘁𝗮𝗱𝗶́𝗮 𝗲𝗻 𝗲𝗹 𝗚𝗿𝘂𝗽𝗼 🔰* \n┆\n╰─────────────️'
-conn.bye = lenguajeGB['smsBye']() //'.' //no gusta :v
-conn.spromote = lenguajeGB['smsSpromote']() //'*𝙃𝙚𝙮@user 𝘼𝙝𝙤𝙧𝙖 𝙚𝙧𝙚𝙨 𝙖𝙙𝙢𝙞𝙣, 𝙙𝙚𝙡 𝙜𝙧𝙪𝙥𝙤😛!!*'
-conn.sdemote = lenguajeGB['smsSdemote']() //'*𝙃𝙚𝙮 @user 𝘿𝙀𝙅𝘼𝙔𝙖 𝙣𝙤 𝙚𝙧𝙚𝙨 𝙖𝙙𝙢𝙞𝙣😐!!*'
-conn.sDesc = lenguajeGB['smsSdesc']() //'*𝑺𝒆 𝒉𝒂 𝒎𝒐𝒅𝒊𝒇𝒊𝒄𝒂𝒅𝒐 𝒍𝒂 𝒅𝒆𝒔𝒄𝒓𝒊𝒑𝒄𝒊𝒐𝒏 𝒅𝒆𝒍 𝒈𝒓𝒖𝒑𝒐*\n\n*𝑵𝒖𝒆𝒗𝒐 𝒅𝒆𝒔𝒄𝒓𝒊𝒑𝒄𝒊𝒐𝒏:*\n@desc'
-conn.sSubject = lenguajeGB['smsSsubject']() //'*𝑺𝒆 𝒉𝒂 𝒎𝒐𝒅𝒊𝒇𝒊𝒄𝒂𝒅𝒐 𝒆𝒍 𝒏𝒐𝒎𝒃𝒓𝒆 𝒅𝒆𝒍 𝒈𝒓𝒖𝒑𝒐*\n*𝑵𝒖𝒆𝒗𝒐 𝒏𝒐𝒎𝒃𝒓𝒆:*\n@subject'
-conn.sIcon = lenguajeGB['smsSicon']() //'*𝑺𝒆 𝒉𝒂 𝒄𝒂𝒎𝒃𝒊𝒂𝒅𝒐 𝒍𝒂 𝒇𝒐𝒕𝒐 𝒅𝒆𝒍 𝒈𝒓𝒖𝒑𝒐!!'
-conn.sRevoke = lenguajeGB['smsSrevoke']() //'*𝑺𝒆 𝒉𝒂 𝒂𝒄𝒕𝒖𝒂𝒍𝒊𝒛𝒂𝒅𝒐 𝒆𝒍 𝒍𝒊𝒏𝒌 𝒅𝒆𝒍 𝒈𝒓𝒖𝒑𝒐!!*\n*𝑳𝒊𝒏𝒌 𝒏𝒖𝒆𝒗𝒐!!*\n\n*@revoke*'
+conn.welcome = lenguajeGB['smsWelcome']() 
+conn.bye = lenguajeGB['smsBye']() 
+conn.spromote = lenguajeGB['smsSpromote']() 
+conn.sdemote = lenguajeGB['smsSdemote']() 
+conn.sDesc = lenguajeGB['smsSdesc']() 
+conn.sSubject = lenguajeGB['smsSsubject']() 
+conn.sIcon = lenguajeGB['smsSicon']() 
+conn.sRevoke = lenguajeGB['smsSrevoke']() 
 
 conn.handler = handler.handler.bind(global.conn);
 conn.participantsUpdate = handler.participantsUpdate.bind(global.conn);
@@ -389,22 +316,84 @@ const [ffmpeg, ffprobe, ffmpegWebp, convert, magick, gm, find] = test;
 const s = global.support = {ffmpeg, ffprobe, ffmpegWebp, convert, magick, gm, find};
 Object.freeze(global.support);
 }
+
+function clearTmp() {
+const tmpDir = join(__dirname, 'tmp')
+const filenames = readdirSync(tmpDir)
+filenames.forEach(file => {
+const filePath = join(tmpDir, file)
+unlinkSync(filePath)})
+}
+
+function purgeSession() {
+let prekey = []
+let directorio = readdirSync("./BotSession")
+let filesFolderPreKeys = directorio.filter(file => {
+return file.startsWith('pre-key-') || file.startsWith('session-') || file.startsWith('sender-') || file.startsWith('app-')
+})
+prekey = [...prekey, ...filesFolderPreKeys]
+filesFolderPreKeys.forEach(files => {
+unlinkSync(`./BotSession/${files}`)
+})
+} 
+
+function purgeSessionSB() {
+try {
+const listaDirectorios = readdirSync('./jadibts/');
+let SBprekey = [];
+listaDirectorios.forEach(directorio => {
+if (statSync(`./jadibts/${directorio}`).isDirectory()) {
+const DSBPreKeys = readdirSync(`./jadibts/${directorio}`).filter(fileInDir => {
+return fileInDir.startsWith('pre-key-') || fileInDir.startsWith('app-') || fileInDir.startsWith('session-')
+})
+SBprekey = [...SBprekey, ...DSBPreKeys];
+DSBPreKeys.forEach(fileInDir => {
+if (fileInDir !== 'creds.json') {
+unlinkSync(`./jadibts/${directorio}/${fileInDir}`)
+}})
+}})
+if (SBprekey.length === 0) {
+console.log(chalk.bold.green(lenguajeGB.smspurgeSessionSB1()))
+} else {
+console.log(chalk.bold.cyanBright(lenguajeGB.smspurgeSessionSB2()))
+}} catch (err) {
+console.log(chalk.bold.red(lenguajeGB.smspurgeSessionSB3() + err))
+}}
+
+function purgeOldFiles() {
+const directories = ['./BotSession/', './jadibts/']
+directories.forEach(dir => {
+readdirSync(dir, (err, files) => {
+if (err) throw err
+files.forEach(file => {
+if (file !== 'creds.json') {
+const filePath = path.join(dir, file);
+unlinkSync(filePath, err => {
+if (err) {
+console.log(chalk.bold.red(`${lenguajeGB.smspurgeOldFiles3()} ${file} ${lenguajeGB.smspurgeOldFiles4()}` + err))
+} else {
+console.log(chalk.bold.green(`${lenguajeGB.smspurgeOldFiles1()} ${file} ${lenguajeGB.smspurgeOldFiles2()}`))
+} }) }
+}) }) }) }
+
 setInterval(async () => {
-if (stopped === 'close' || !conn || !conn.user) return;
-const a = await clearTmp();
-console.log(chalk.bold.cyanBright(lenguajeGB.smsClearTmp()))}, 1000 * 60 * 4)
+await clearTmp()        
+console.log(chalk.bold.cyanBright(lenguajeGB.smsClearTmp()))}, 1000 * 60 * 4) // 4 min 
 setInterval(async () => {
-if (stopped === 'close' || !conn || !conn.user) return;
-await purgeSession();
-console.log(chalk.bold.cyanBright(lenguajeGB.smspurgeSession()))}, 1000 * 60 * 30)
+await purgeSession()
+console.log(chalk.bold.cyanBright(lenguajeGB.smspurgeSession()))}, 1000 * 60 * 10) // 10 min
 setInterval(async () => {
-if (stopped === 'close' || !conn || !conn.user) return;
-await purgeSessionSB();
-await purgeSessionSB()}, 1000 * 60 * 30)
+await purgeSessionSB()}, 1000 * 60 * 10)
 setInterval(async () => {
-if (stopped === 'close' || !conn || !conn.user) return;
-await purgeOldFiles();
-console.log(chalk.bold.cyanBright(lenguajeGB.smspurgeOldFiles()))}, 1000 * 60 * 30)
+await purgeOldFiles()
+console.log(chalk.bold.cyanBright(lenguajeGB.smspurgeOldFiles()))}, 1000 * 60 * 10)
 _quickTest()
 .then(() => conn.logger.info(chalk.bold(lenguajeGB['smsCargando']())))
 .catch(console.error)
+
+let file = fileURLToPath(import.meta.url)
+watchFile(file, () => {
+unwatchFile(file)
+console.log(chalk.bold.greenBright(lenguajeGB['smsMainBot']().trim()))
+import(`${file}?update=${Date.now()}`)
+})

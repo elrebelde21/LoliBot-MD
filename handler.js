@@ -91,6 +91,7 @@ if (!isNumber(user.stroberi)) user.stroberi = 0
 }
 if (!isNumber(user.afk)) user.afk = -1
 //if (!('autolevelup' in user))  user.autolevelup = true
+if (!isNumber(user.counterPrivate)) user.counterPrivate = 0
 if (!isNumber(user.reporte)) user.reporte = 0
 if (!('role' in user)) user.role = '*NOVATO(A)* 🪤'
 if (!isNumber(user.agility)) user.agility = 0
