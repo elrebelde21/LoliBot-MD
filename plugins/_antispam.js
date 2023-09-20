@@ -10,7 +10,7 @@ let user = global.db.data.users[m.sender]
 const sender = m.sender
 const currentTime = new Date().getTime()
 const timeWindow = 5000 // tiempo límite 
-const messageLimit = 6 // cantidad de mensajes en dicho tiempo
+const messageLimit = 8 // cantidad de mensajes en dicho tiempo
 
 let time, time2, time3, mensaje
 time = 60000 // 1 min
@@ -33,17 +33,17 @@ const timeDifference = currentTime - userData.lastMessageTime
 if (userData.antiBan === 1) {
 if (userData.message < 1) {
 userData.message++  
-mensaje = `*@${m.sender.split`@`[0]} NO PUEDE USAR COMANDOS DURANTE 1 MINUTOS*\n\n*MOTIVO: SPAM DE MENSAJES LEVE*`
+mensaje = `*HEY @${m.sender.split`@`[0]} DEJA SPAM 🤨*\n*NO PUEDE USAR COMANDOS DURANTE 1 MINUTOS*\n\n*MOTIVO: SPAM DE MENSAJES LEVE*\n\n⚠️ \`\`\`ADVERTENCIA 1/3\`\`\` ⚠️`
 await conn.reply(m.chat, mensaje, m, { mentions: [m.sender] })  
 }} else if (userData.antiBan === 2) {
 if (userData.message2 < 1) {
 userData.message2++  
-mensaje = `*@${m.sender.split`@`[0]} NO PUEDE USAR COMMANDOS DURANTE 2 MINUTOS*\n\n*MOTIVO: SPAM DE MENSAJES MODERADO*`
+mensaje = `*HEY @${m.sender.split`@`[0]} OTRA VEZ 🤨DEJA EL PUTO SPAM*\n*NO PUEDE USAR COMANDOS DURANTE 2 MINUTOS*\n*MOTIVO: SPAM*\n\n*SI VUELVE A HACES SPAM SERA ELIMINADO DEL GRUPO*\n\n⚠️ \`\`\`ADVERTENCIA 2/3\`\`\` ⚠️`
 await conn.reply(m.chat, mensaje, m, { mentions: [m.sender] })  
 }} else if (userData.antiBan === 3) {
 if (userData.message3 < 1) {
 userData.message3++  
-mensaje = `*@${m.sender.split`@`[0]} NO PUEDE USAR COMMANDOS DURANTE 5 MINUTOS*\n\n*MOTIVO: SPAM DE MENSAJE ALARMANTE*`
+mensaje = `*Ufff @${m.sender.split`@`[0]} 🤨 NO ENTENDER? QUE REPERTI 3 VECES NO HAGAS SPAM*\nAHORA SERA ELIMINADO DEL GRUPO....`
 await conn.reply(m.chat, mensaje, m, { mentions: [m.sender] })  
 await conn.groupParticipantsUpdate(m.chat, [sender], 'remove')
 }}
@@ -53,7 +53,7 @@ userData.messageCount += 1
 
 if (userData.messageCount >= messageLimit) {
 const mention = `@${sender.split("@")[0]}`
-const warningMessage = `*${mention} ESTA PROHIBIDO HACER SPAM DE MENSAJES!!*`
+const warningMessage = `*${mention} 🤨 ESTA PROHIBIDO HACER SPAM DE MENSAJES!!*`
 if (userData.antiBan > 2) return
 await conn.reply(m.chat, warningMessage, m, { mentions: [m.sender] })  
 user.banned = true
