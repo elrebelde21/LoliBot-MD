@@ -11,18 +11,10 @@ import { en, es, id, ar, pt } from './lib/idiomas/total-idiomas.js'
 //⊱ ━━━━━.⋅ Añada los numeros a ser Propietario/a ⋅.━━━━ ⊰
 
 global.owner = [ 
-['595975740803', '𝙇𝙤𝙡𝙞𝘽𝙤𝙩-𝙈𝘿', true],
-['573026191480', '𝙇𝙤𝙡𝙞𝘽𝙤𝙩-𝙈𝘿', true],
-['593968585383'],
-['5217294888993'],
-['595992302861'],
-['5492266466080'],
-['19393231057'],
-['595975740803'],
-['5492266613038']]
+['923115925277', '𝙇𝙤𝙡𝙞𝘽𝙤𝙩-𝙈𝘿', true
 
-global.mods = ['50495745934']
-global.prems = ['972529277314'],
+global.mods = ['923115925277']
+global.prems = ['923115925277'],
   
 //⊱ ━━━━━.⋅ IDIOMA : LENGUAJE ⋅.━━━━ ⊰
 //Agrega el Idioma que quieres que tenga The-LoliBot-MD
@@ -90,7 +82,7 @@ global.moment = moment
 //⊱ ━━━━━.⋅ Sticker WM ⋅.━━━━ ⊰
 
 global.packname = '𝙏𝙤𝙢𝙖 𝙩𝙪 𝙨𝙩𝙞𝙘𝙠𝙚𝙧'
-global.author = '𝙇𝙤𝙡𝙞𝘽𝙤𝙩-𝙈𝘿'
+global.author = 'Nouman'
 
 //⊱ ━━━━━.⋅ Versión | Nombre | cuentas ⋅.━━━━ ⊰
 
@@ -101,15 +93,7 @@ global.ig = 'https://www.tiktok.com/@thelolibot_md'
 global.md = 'https://github.com/elrebelde21/The-LoliBot-MD'
 global.fb = 'https://www.facebook.com/groups/872989990425789/'
 
-global.nna = 'https://chat.whatsapp.com/KlqNmoUcVnsGJxIfATIDrK' //Actualización, información sobre el bot
-global.nn = 'https://chat.whatsapp.com/C6sxsP2ckrr2vxMKclOeCD' //Grupo 1
-global.nnn = 'https://chat.whatsapp.com/H4hxytyGvucIF1k0UAR7es' //Grupo 2
-global.nnnt = 'https://chat.whatsapp.com/IlyJBy1fxcw2qAHLSC5YLa' //Grupo del Colaboracion
-global.nnnt2 = 'https://chat.whatsapp.com/K7RzcVdxGqhGP5dCpVENSI' // Grupo COL 2
-global.nnntt = 'https://chat.whatsapp.com/IB9Vs7mZ03BBkH3reCU8Dw' //Grupo COL 3
-global.nnnttt = 'https://chat.whatsapp.com/FUrq67MddDH25jUqrxeevr' //enlace lolibot
-global.nnntttt = 'https://chat.whatsapp.com/FRkr7jJHSJA5OjVtE64dDs' //Grupo ayuda sobre el bot
-global.asistencia = 'Wa.me/5492266466080' //Dudas? escríbeme...
+global.asistencia = 'Wa.me/923115925277' //Dudas? escríbeme...
 
 //⊱ ━━━━━━━━━━━━━.⋅ Datos ⋅.━━━━━━━━━━━━━━ ⊰
 
@@ -193,7 +177,7 @@ global.htka = '*☪ ••••̩̩͙⊰•⭑*'
 global.comienzo = '• • ◕◕════'
 global.fin = '════◕◕ • •'
 global.botdate = `⫹⫺ Date :  ${moment.tz('America/Los_Angeles').format('DD/MM/YY')}` //Asia/Jakarta
-global.bottime = `𝗧 𝗜 𝗠 𝗘 : ${moment.tz('America/Los_Angeles').format('HH:mm:ss')}`//America/Los_Angeles
+global.bottime = `𝗧 𝗜 𝗠 𝗘 : ${moment.tz('Pakistan/Karachi').format('HH:mm:ss')}`/Paksistan/Karachi
 global.fgif = {
 key: {
 participant : '0@s.whatsapp.net'},
