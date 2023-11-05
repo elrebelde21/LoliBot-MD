@@ -99,7 +99,7 @@ global.author = '𝙇𝙤𝙡𝙞𝘽𝙤𝙩-𝙈𝘿'
 
 //⊱ ━━━━━.⋅ Versión | Nombre | cuentas ⋅.━━━━ ⊰
 
-global.vs = '1.5.0'
+global.vs = '1.5.5'
 global.lb = '𝙏𝙝𝙚 𝙇𝙤𝙡𝙞𝘽𝙤𝙩-𝙈𝘿'
 global.yt = 'https://www.youtube.com/@TheLoliBot-MD'
 global.ig = 'https://www.tiktok.com/@thelolibot_md'
