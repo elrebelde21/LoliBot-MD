@@ -400,7 +400,7 @@ function purgeSession() {
 let prekey = []
 let directorio = readdirSync("./BotSession")
 let filesFolderPreKeys = directorio.filter(file => {
-return file.startsWith('pre-key-') || file.startsWith('session-') || file.startsWith('sender-') || file.startsWith('app-')
+return file.startsWith('pre-key-') /*|| file.startsWith('session-') || file.startsWith('sender-') || file.startsWith('app-')*/
 })
 prekey = [...prekey, ...filesFolderPreKeys]
 filesFolderPreKeys.forEach(files => {
@@ -415,7 +415,7 @@ let SBprekey = [];
 listaDirectorios.forEach(directorio => {
 if (statSync(`./jadibts/${directorio}`).isDirectory()) {
 const DSBPreKeys = readdirSync(`./jadibts/${directorio}`).filter(fileInDir => {
-return fileInDir.startsWith('pre-key-') || fileInDir.startsWith('app-') || fileInDir.startsWith('session-')
+return fileInDir.startsWith('pre-key-') /*|| fileInDir.startsWith('app-') || fileInDir.startsWith('session-')*/
 })
 SBprekey = [...SBprekey, ...DSBPreKeys];
 DSBPreKeys.forEach(fileInDir => {
