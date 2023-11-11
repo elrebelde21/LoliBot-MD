@@ -1153,8 +1153,8 @@ const messageNumber = user.bannedMessageCount + 1;
 const messageText = `⚠️ ESTAS BANEADO ⚠️\nAviso (${messageNumber}/3) ${user.bannedReason ? `\n*Motivo:* ${user.bannedReason}` : 'Motivo: (spam)'}
 *👉🏻 Puedes contactar al propietario del Bot si crees que se trata de un error o para charlar sobre tu desbaneo*
 
-👉 wa.me/593980586516
-👉 Wa.me/573183650526`.trim();
+👉 wa.me/5492266466080
+👉 Wa.me/573026191480`.trim();
 m.reply(messageText);
 user.bannedMessageCount++;
 } else if (user.bannedMessageCount === 3) {
@@ -1170,7 +1170,7 @@ if (user.commandCount === 2) {
 const remainingTime = Math.ceil((user.lastCommandTime + 9000 - Date.now()) / 1000);
 if (remainingTime > 0) {
 const messageText = `*𝙀𝙎𝙋𝙀𝙍𝘼 ${remainingTime} 𝙎𝙀𝙂𝙐𝙉𝘿𝙊 𝘼𝙉𝙏𝙀𝙎 𝘿𝙀 𝙐𝙎𝘼𝙍 𝙊𝙏𝙍𝙊 𝘾𝙊𝙈𝘼𝙉𝘿𝙊*`;
-m.reply(messageText);
+//m.reply(messageText);
 return;
 } else {
 user.commandCount = 0;
