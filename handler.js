@@ -1165,9 +1165,9 @@ return;
 return;
 }
 		
-if (botSpam.antispam2 && m.text && user && user.lastCommandTime && (Date.now() - user.lastCommandTime) < 9000 && !isROwner) {
+if (botSpam.antispam2 && m.text && user && user.lastCommandTime && (Date.now() - user.lastCommandTime) < 3000 && !isROwner) {
 if (user.commandCount === 2) {
-const remainingTime = Math.ceil((user.lastCommandTime + 9000 - Date.now()) / 1000);
+const remainingTime = Math.ceil((user.lastCommandTime + 3000 - Date.now()) / 1000);
 if (remainingTime > 0) {
 const messageText = `*𝙀𝙎𝙋𝙀𝙍𝘼 ${remainingTime} 𝙎𝙀𝙂𝙐𝙉𝘿𝙊 𝘼𝙉𝙏𝙀𝙎 𝘿𝙀 𝙐𝙎𝘼𝙍 𝙊𝙏𝙍𝙊 𝘾𝙊𝙈𝘼𝙉𝘿𝙊*`;
 //m.reply(messageText);
