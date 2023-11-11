@@ -22,7 +22,7 @@ text: `${yt_play[0].title}
 contextInfo: {
 externalAdReply: {
 title: yt_play[0].title,
-body: packname,
+body: wm,
 thumbnailUrl: yt_play[0].thumbnail, 
 mediaType: 1,
 showAdAttribution: true,
