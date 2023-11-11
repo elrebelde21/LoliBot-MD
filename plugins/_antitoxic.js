@@ -30,5 +30,3 @@ global.db.data.users[m.sender].limit -= 5
 }
 return !1
 }*/
-
-h
