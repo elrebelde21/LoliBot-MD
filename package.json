@@ -1,6 +1,6 @@
 {
-"name": "The-LoliBot-MD",
-"version": "1.5.5", 
+"name": "NovaBot-MD",
+"version": "1.5.5",
 "description": "Super Bot WhatsApp",
 "main": "index.js",
 "type": "module",
@@ -12,19 +12,19 @@
     
 "scripts": {
 "start": "node index.js",
-"qr": "npm start",
+"qr": "node index.js qr",
 "code": "node index.js code",
 "test": "node test.js",
 "test2": "nodemon index.js" },
     
 "homepage": "https://github.com/elrebelde21/The-LoliBot-MD",
 "author": {
-"name": "elrebelde21" }, 
+"name": "elrebelde21" },
     
 "repository": {
 "type": "git",
- "url": "git+https://github.com/elrebelde21/The-LoliBot-MD.git" },
- 
+"url": "git+https://github.com/elrebelde21/The-LoliBot-MD.git" },
+
 "bugs": {
 "url": "https://github.com/elrebelde21/The-LoliBot-MD/issues" },
 "license": "GPL-3.0-or-later",
