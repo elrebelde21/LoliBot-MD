@@ -1,4 +1,4 @@
-const toxicRegex = /g0re|g0r3|g.o.r.e|sap0|sap4|malparido|malparida|malparidos|malparidas|m4lp4rid0|m4lp4rido|m4lparido|malp4rido|m4lparid0|malp4rid0|chocha|chup4la|chup4|sabandija|hijodelagranputa|hijodeputa|hijadeputa|hijadelagranputa|cajetuda|laconchadedios|putita|put1t4|putit4|put1ta|pr0stitut4s|pr0stitutas|pr05titutas|pr0stitut45|prostitut45|prostituta5|pr0stitut45|fanax|f4nax|p3n3|pen3|p.e.n.e|pvt0|hijodelagransetentamilparesdeputa|Chingadamadre|c0ño|afeminado|drog4|cocaína|marihuana|chocho|pedorro|agrandada|pedorra|cagona|mamar|chigadamadre|hijueputa|chupa|caca|boba|loca|chupapolla|estupido|estupida|estupidos|idiota|maricon|chucha|verga|vrga|naco|rctmre|mrd|csm|cp|cepe|sepe|sepesito|cepecito|cepesito|hldv|baboso|babosa|babosos|babosas|fea|feas|chupame|bolas|imbecil|embeciles|kbrones|cabron|capullo|gore|gorre|gorreo|sapa|mierda|cerdo|cerda|puerco|puerca|bullshit|cunt|semen|bitch|motherfucker/i
+/*const toxicRegex = /g0re|g0r3|g.o.r.e|sap0|sap4|malparido|malparida|malparidos|malparidas|m4lp4rid0|m4lp4rido|m4lparido|malp4rido|m4lparid0|malp4rid0|chocha|chup4la|chup4|sabandija|hijodelagranputa|hijodeputa|hijadeputa|hijadelagranputa|cajetuda|laconchadedios|putita|put1t4|putit4|put1ta|pr0stitut4s|pr0stitutas|pr05titutas|pr0stitut45|prostitut45|prostituta5|pr0stitut45|fanax|f4nax|p3n3|pen3|p.e.n.e|pvt0|hijodelagransetentamilparesdeputa|Chingadamadre|c0ño|afeminado|drog4|cocaína|marihuana|chocho|pedorro|agrandada|pedorra|cagona|mamar|chigadamadre|hijueputa|chupa|caca|boba|loca|chupapolla|estupido|estupida|estupidos|idiota|maricon|chucha|verga|vrga|naco|rctmre|mrd|csm|cp|cepe|sepe|sepesito|cepecito|cepesito|hldv|baboso|babosa|babosos|babosas|fea|feas|chupame|bolas|imbecil|embeciles|kbrones|cabron|capullo|gore|gorre|gorreo|sapa|mierda|cerdo|cerda|puerco|puerca|bullshit|cunt|semen|bitch|motherfucker/i
 
 export async function before(m, { conn, isAdmin, isBotAdmin, isOwner }) {
  
@@ -20,7 +20,7 @@ if (!(user.warn >= 4)) await m.reply(`${user.warn == 1 ? `*@${m.sender.split`@`[
 [lenguajeGB.smsToxic5(), '.off antitoxic'],
 [lenguajeGB.smsConMenu(), '/menu']], false, { mentions: [m.sender] })}*/
 
-if (user.warn >= 4) {
+/*if (user.warn >= 4) {
 user.warn = 0
 await m.reply(`*${lenguajeGB['smsToxic6']()}*\n*@${m.sender.split`@`[0]} ${lenguajeGB['smsToxic7']()}*`, false, { mentions: [m.sender] })
 user.banned = true
@@ -29,4 +29,6 @@ await this.groupParticipantsUpdate(m.chat, [m.sender], 'remove')
 global.db.data.users[m.sender].limit -= 5
 }
 return !1
-}
+}/*
+
+h
