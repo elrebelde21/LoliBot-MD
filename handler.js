@@ -948,7 +948,7 @@ if (!('sPromote' in chat)) chat.sPromote = ''
 if (!('sDemote' in chat)) chat.sDemote = ''              
 if (!('delete' in chat))
 chat.delete = true                   
-if (!('modohorny' in chat)) chat.modohorny = false       
+if (!('modohorny' in chat)) chat.modohorny = true       
 if (!('stickers' in chat)) chat.stickers = false               
 if (!('autosticker' in chat)) chat.autosticker = false       
 if (!('audios' in chat)) chat.audios = true                
@@ -965,10 +965,10 @@ if (!('antifake' in chat)) chat.antifake = false
 if (!('reaction' in chat)) chat.reaction = true    
 if (!('viewonce' in chat)) chat.viewonce = false         
 if (!('modoadmin' in chat)) chat.modoadmin = false      
-if (!('antitoxic' in chat)) chat.antitoxic = true 
+if (!('antitoxic' in chat)) chat.antitoxic = false
 if (!('simi' in chat)) chat.simi = false
 if (!('antiTraba' in chat)) chat.antiTraba = true
-if (!('autolevelup' in chat))  chat.autolevelup = false
+if (!('autolevelup' in chat))  chat.autolevelup = true
 if (!isNumber(chat.expired)) chat.expired = 0
 } else
 //🟢 SI QUIERE CAMBIA ALGUNAS DE ESTA FUNCIÓNE DE (false a true) o (true a false), LOS PUEDE HACER. PERO DEJARLO IGUAL COMO ESTA PARA EVITAR ERRORES
@@ -985,7 +985,7 @@ modohorny: true,
 stickers: false, 
 autosticker: false,
 audios: true,
-antiver: true,
+antiver: false,
 antiLink: false,
 antiLink2: false,
 antiTiktok: false,
@@ -998,10 +998,10 @@ antifake: false,
 reaction: true,
 viewonce: false,
 modoadmin: false,
-antitoxic: true,
+antitoxic: false,
 simi: false,
 antiTraba: true,
-autolevelup: false,
+autolevelup: true,
 expired: 0,
 }
 let settings = global.db.data.settings[this.user.jid]
@@ -1011,7 +1011,7 @@ if (!('self' in settings)) settings.self = false
 if (!('autoread' in settings)) settings.autoread = false
 if (!('autoread2' in settings)) settings.autoread2 = false
 if (!('restrict' in settings)) settings.restrict = false
-if (!('temporal' in settings)) settings.temporal = true
+if (!('temporal' in settings)) settings.temporal = false
 if (!('antiPrivate' in settings)) settings.antiPrivate = false
 if (!('antiCall' in settings)) settings.antiCall = true
 if (!('antiSpam' in settings)) settings.antiSpam = true
@@ -1022,7 +1022,7 @@ self: false,
 autoread: false,
 autoread2: false,
 restrict: false,
-temporal: true,
+temporal: false,
 antiPrivate: false,
 antiCall: true,
 antiSpam: true,
