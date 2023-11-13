@@ -1,11 +1,11 @@
 > <b>🚀 Versión actual: 1.5.5</b>
  
 <p align="center"> 
-<a href="https://github.com/elrebelde21"><img src="http://readme-typing-svg.herokuapp.com?font=mono&size=17&duration=4000&color=F7B11B&center=falso&vCenter=falso&lines=The-LoliBot-MD++%F0%9F%90%88;Gracias+por+visitar+este+repositorio.+%F0%9F%92%96" height="90px"></a> 
+<a href="https://github.com/DavidOficial"><img src="http://readme-typing-svg.herokuapp.com?font=mono&size=17&duration=4000&color=F7B11B&center=falso&vCenter=falso&lines=The-MikuBot-MD++%F0%9F%90%88;Gracias+por+visitar+este+repositorio.+%F0%9F%92%96" height="90px"></a> 
 </p>
 
 <p align="center">
-<img src="https://telegra.ph/file/9854a169d0eaea13083c7.jpg" alt="The-LoliBot-MD" width="900"/>
+<img src="https://telegra.ph/file/9854a169d0eaea13083c7.jpg" alt="The-MikuBot-MD" width="900"/>
 </p>
 
 <p align="center">
@@ -216,14 +216,16 @@ Si tiene éxito, le dará un mensaje como: `SUCCESS: specified value was saved`.
 ----
 
 ### 🌟 EDITOR Y PROPIETARIO DEL BOT
-<a href="https://github.com/elrebelde21"><img src="https://github.com/elrebelde21.png" width="300" height="300" alt="elrebelde21"/></a>
+<a href="https://github.com/DavidOficial"><img src="https://github.com/DavidOficial.png" width="300" height="300" alt="elrebelde21"/></a>
 
 ### 🌟 COLABORADORES
 [![GataNina-Li](https://github.com/GataNina-Li.png?size=100)](https://github.com/GataNina-Li) 
 [![Yesenia57](https://github.com/Yesenia57.png?size=100)](https://github.com/Yesenia57) 
 [![AzamiJs](https://github.com/AzamiJs.png?size=100)](https://github.com/AzamiJs)  
 [![KatashiFukushima](https://github.com/KatashiFukushima.png?size=100)](https://github.com/KatashiFukushima)  
+[![The-DiosBot-MD](https://github.com/The-DiosBot-MD.png?size=100)](https://github.com/The-DiosBot-MD)  
+
 
 ### 🌟 AGRADECIMIENTOS
 [![TheShadowBrokers1](https://github.com/BrunoSobrino.png?size=60)](https://github.com/BrunoSobrino) 
-
+[![The-DiosBot-MD](https://github.com/The-DiosBot-MD.png?size=100)](https://github.com/The-DiosBot-MD)
