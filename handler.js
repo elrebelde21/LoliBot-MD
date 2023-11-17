@@ -38,9 +38,11 @@ if (global.db.data == null) await global.loadDatabase()
 if (global.chatgpt.data === null) await global.loadChatgptDB();	
 /*------------------------------------------------*/	
 try {
-m = smsg(this, m) || m
-if (!m)
-return
+m = smsg(this, m) || m;
+if (!m) {
+return;
+}
+global.mconn = m 
 m.exp = 0
 m.limit = false
 m.money = false
@@ -946,8 +948,7 @@ if (!('sWelcome' in chat)) chat.sWelcome = ''
 if (!('sBye' in chat)) chat.sBye = ''                    
 if (!('sPromote' in chat)) chat.sPromote = ''               
 if (!('sDemote' in chat)) chat.sDemote = ''              
-if (!('delete' in chat))
-chat.delete = false                  
+if (!('delete' in chat)) chat.delete = true                   
 if (!('modohorny' in chat)) chat.modohorny = true       
 if (!('stickers' in chat)) chat.stickers = false               
 if (!('autosticker' in chat)) chat.autosticker = false       
@@ -980,7 +981,7 @@ sWelcome: '',
 sBye: '',
 sPromote: '',
 sDemote: '', 
-delete: false,
+delete: true,
 modohorny: true,
 stickers: false, 
 autosticker: false,
