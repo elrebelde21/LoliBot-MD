@@ -1490,24 +1490,18 @@ await this.updateBlockStatus(nk.from, 'block')
 
 export async function deleteUpdate(message) {
 try {
-const {fromMe, id, participant} = message;
-if (fromMe) {
-return;
-}
-const msg = this.serializeM(this.loadMessage(id));
-if (!msg) {
-return;
-}
-const chat = global.db.data.chats[msg.chat] || {};
-if (chat.delete) {
-return;
-}
-await this.reply(msg.chat, `[ ANTI ELIMINAR ]\n\n*El usuario @${participant.split`@`[0]} Elimino un mensaje,* \n*Enviando el mensaje..*\n\n*Para desactivar esta función escriba:*
-#disable antidelete
-`.trim(), msg, {mentions: [participant], });
-this.copyNForward(msg.chat, msg).catch((e) => console.log(e, msg));
+const { fromMe, id, participant } = message
+if (fromMe) return 
+let msg = mconn.conn.serializeM(mconn.conn.loadMessage(id))
+let chat = global.db.data.chats[msg?.chat] || {}
+if (!chat?.delete) return 
+if (!msg) return 
+if (!msg?.isGroup) return 
+const antideleteMessage = `*[ ANTI ELIMINAR ]*\n\n@${participant.split`@`[0]} Elimino un mensaje\nEnviando el mensaje...\n\n*Para desactivar esta función escriba:*\n#disable delete`.trim();
+await mconn.conn.sendMessage(msg.chat, {text: antideleteMessage, mentions: [participant]}, {quoted: msg})
+mconn.conn.copyNForward(msg.chat, msg).catch(e => console.log(e, msg))
 } catch (e) {
-console.error(e);
+console.error(e)
 }}
 
 global.dfail = (type, m, conn) => {
