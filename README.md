@@ -5,22 +5,22 @@
 </p>
 
 <p align="center">
-<img src="https://telegra.ph/file/9854a169d0eaea13083c7.jpg" alt="The-LoliBot-MD" width="900"/>
+<img src="https://telegra.ph/file/9854a169d0eaea13083c7.jpg" alt="LoliBot-MD" width="900"/>
 </p>
 
 <p align="center">
-<a href="#"><img title="The-LoliBot-MD" src="https://img.shields.io/badge/SI TE AGRADA EL REPOSITORIO APOYAME CON UNA 🌟 ¡GRACIAS! -red?colorA=%255ff0000&colorB=%23017e40&style=for-the-badge"></a> 
+<a href="#"><img title="LoliBot-MD" src="https://img.shields.io/badge/SI TE AGRADA EL REPOSITORIO APOYAME CON UNA 🌟 ¡GRACIAS! -red?colorA=%255ff0000&colorB=%23017e40&style=for-the-badge"></a> 
 <img src="https://i.pinimg.com/originals/d4/3c/90/d43c902873d4db8c85974dfd0798030b.gif" height="28px">
 </p>  
 
 <p align="center">
 <a href="#"><img title="The-LoliBot-MD" src="https://img.shields.io/badge/LEA TODO EL README-red?colorA=%F77F48FF&colorB=%F77F48FF&style=for-the-badge"></a> 
-<a href="#"><img title="The-LoliBot-MD" src="https://img.shields.io/badge/COMPATIBLE CON LA VERSIÓN MULTI DISPOSITIVOS DE WHATSAPP-red?colorA=%F77F48FF&colorB=%F77F48FF&style=for-the-badge">
+<a href="#"><img title="LoliBot-MD" src="https://img.shields.io/badge/COMPATIBLE CON LA VERSIÓN MULTI DISPOSITIVOS DE WHATSAPP-red?colorA=%F77F48FF&colorB=%F77F48FF&style=for-the-badge">
 
 <p align="center">   
-<a href="https://github.com/elrebelde21/The-LoliBot-MD/network/members"><img title="Forks" src="https://img.shields.io/github/forks/elrebelde21/The-LoliBot-MD?label=Forks&color=blue&style=flat-square"></a>
-<a href="https://github.com/elrebelde21/The-LoliBot-MD/watchers"><img title="Watchers" src="https://img.shields.io/github/watchers/elrebelde21/The-LoliBot-MD?label=Watchers&color=green&style=flat-square"></a>
-<a href="https://github.com/elrebelde21/The-LoliBot-MD/stargazers"><img title="Stars" src="https://img.shields.io/github/stars/elrebelde21/The-LoliBot-MD?label=Stars&color=yellow&style=flat-square"></a>
+<a href="https://github.com/elrebelde21/LoliBot-MD/network/members"><img title="Forks" src="https://img.shields.io/github/forks/elrebelde21/LoliBot-MD?label=Forks&color=blue&style=flat-square"></a>
+<a href="https://github.com/elrebelde21/LoliBot-MD/watchers"><img title="Watchers" src="https://img.shields.io/github/watchers/elrebelde21/LoliBot-MD?label=Watchers&color=green&style=flat-square"></a>
+<a href="https://github.com/elrebelde21/The-LoliBot-MD/stargazers"><img title="Stars" src="https://img.shields.io/github/stars/elrebelde21/LoliBot-MD?label=Stars&color=yellow&style=flat-square"></a>
 </p> 
 
 <div align="center">
@@ -66,13 +66,13 @@
 termux-setup-storage
 ```
 ```bash
-apt update -y && yes | apt upgrade && pkg install -y bash wget mpv && wget -O - https://raw.githubusercontent.com/elrebelde21/The-LoliBot-MD/master/install.sh | bash
+apt update -y && yes | apt upgrade && pkg install -y bash wget mpv && wget -O - https://raw.githubusercontent.com/elrebelde21/LoliBot-MD/master/install.sh | bash
 ```
 -----
 ### 📁 (OPCIÓN 2) 𝐀𝐂𝐓𝐈𝐕𝐀 𝐄𝐋 𝐓𝐄𝐑𝐌𝐔𝐗 - 𝘼𝙍𝘾𝙃𝙄𝙑𝙊𝙎 
 > **Note** Descargué y Descomprime
-### [`The-LoliBot-MD ~ Archivos`](https://github.com/elrebelde21/The-LoliBot-MD/archive/refs/heads/master.zip)
-[![blog](https://img.shields.io/badge/Termux-TheLoliBotMD-FF0000?style=for-the-badge&logo=youtube&logoColor=white)
+### [`LoliBot-MD ~ Archivos`](https://github.com/elrebelde21/LoliBot-MD/archive/refs/heads/master.zip)
+[![blog](https://img.shields.io/badge/Termux-LoliBotMD-FF0000?style=for-the-badge&logo=youtube&logoColor=white)
 ](https://youtu.be/i1xjB4bmYCc?si=JBYC22-3mBkLpB8c)
 ```bash
 termux-setup-storage
@@ -81,7 +81,7 @@ termux-setup-storage
 apt update && apt upgrade && pkg install -y git nodejs ffmpeg imagemagick yarn
 ```
 ```bash
-cd storage/downloads/The-LoliBot-MD-master/The-LoliBot-MD-master 
+cd storage/downloads/LoliBot-MD-master/LoliBot-MD-master 
 ```
 ```bash
 yarn install
@@ -97,20 +97,20 @@ npm start
 ```bash
 𝐄𝐒𝐂𝐑𝐈𝐁𝐄 𝐋𝐎𝐒 𝐒𝐈𝐆𝐔𝐈𝐄𝐍𝐓𝐄𝐒 𝐂𝐎𝐌𝐀𝐍𝐃𝐎𝐒 𝐔𝐍𝐎 𝐏𝐎𝐑 𝐔𝐍𝐎:
 > cd 
-> cd The-LoliBot-MD
+> cd LoliBot-MD
 > npm start
 ```
 ### `𝐎𝐁𝐓𝐄𝐍𝐄𝐑 𝐎𝐓𝐑𝐎 𝐂𝐎𝐃𝐈𝐆𝐎 𝐐𝐑 
 ```bash
 𝐄𝐒𝐂𝐑𝐈𝐁𝐄 𝐋𝐎𝐒 𝐒𝐈𝐆𝐔𝐈𝐄𝐍𝐓𝐄𝐒 𝐂𝐎𝐌𝐀𝐍𝐃𝐎𝐒 𝐔𝐍𝐎 𝐏𝐎𝐑 𝐔𝐍𝐎:
 > cd 
-> cd The-LoliBot-MD
+> cd LoliBot-MD
 > rm -rf BotSession
 > npm start
 ```
 ------------------
 ### 🚀 USAR LOLIBOT 24/7 EN TERMUX 
-> Ejecutar estos comandos dentro de la carpeta The-LoliBot-MD
+> Ejecutar estos comandos dentro de la carpeta LoliBot-MD
 ```bash
 termux-wake-lock && npm i -g pm2 && pm2 start index.js && pm2 save && pm2 logs 
 ``` 
@@ -133,9 +133,9 @@ pm2 start index
 ``` 
 ----
 ### 😼 ACTUALIZAR LOLIBOT
-> **Note** Comandos para actualizar The-LoliBot-MD de forma automática
+> **Note** Comandos para actualizar LoliBot-MD de forma automática
 ```bash
-grep -q 'bash\|wget' <(dpkg -l) || apt install -y bash wget && wget -O - https://raw.githubusercontent.com/elrebelde21/The-LoliBot-MD/master/update.sh | bash 
+grep -q 'bash\|wget' <(dpkg -l) || apt install -y bash wget && wget -O - https://raw.githubusercontent.com/elrebelde21/LoliBot-MD/master/update.sh | bash 
 ```
 #### Para que no pierda su progreso en LoliBot, estos comandos realizarán un respaldo de su `database.json` y se agregará a la versión más reciente.
 > **Warning** Estos comandos solo funcionan para TERMUX, REPLIT, LINUX             
@@ -148,7 +148,7 @@ grep -q 'bash\|wget' <(dpkg -l) || apt install -y bash wget && wget -O - https:/
 ### BoxMine World
 ----
 ### 🟣 ACTIVAR EN HEROKU 
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/elrebelde21/The-LoliBotMD-Heroku) 
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/elrebelde21/LoliBotMD-Heroku) 
 ### 👇 Añada lo siguente al Buildpack: 
 ```bash
 heroku/nodejs
@@ -165,18 +165,18 @@ https://github.com/clhuang/heroku-buildpack-webp-binaries.git
 ### ⚡ ACTIVA EL REPLIT
 [![blog](https://img.shields.io/badge/Lolibot-YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white)
 ](https://youtu.be/SMjCcfuyWQE)
-<a target="_blank" href="https://replit.com/github/elrebelde21/The-LoliBot-MD"><img alt="Run on Replit" src="https://binbashbanana.github.io/deploy-buttons/buttons/remade/replit.svg"></a>
-<a href="https://replit.com/github/elrebelde21/The-LoliBot-MD"> <img src="https://media0.giphy.com/media/lMwu8EJAnv9kmn51KQ/giphy.gif" height="29px"></a>
+<a target="_blank" href="https://replit.com/github/elrebelde21/LoliBot-MD"><img alt="Run on Replit" src="https://binbashbanana.github.io/deploy-buttons/buttons/remade/replit.svg"></a>
+<a href="https://replit.com/github/elrebelde21/LoliBot-MD"> <img src="https://media0.giphy.com/media/lMwu8EJAnv9kmn51KQ/giphy.gif" height="29px"></a>
 ------------------
 - [x] Resultado <details><summary>Importar Repositorio - The-LoliBot-MD</summary><img src="https://i.imgur.com/GQyRnMf.jpg"></details>
 ------------------
 ### 🌱 ACTIVAR EN KOYEB 
 
-[![Deploy to Koyeb](https://www.koyeb.com/static/images/deploy/button.svg)](https://app.koyeb.com/deploy?type=git&repository=github.com/elrebelde21/The-LoliBot-MD&branch=master&name=the-lolibot-md)
+[![Deploy to Koyeb](https://www.koyeb.com/static/images/deploy/button.svg)](https://app.koyeb.com/deploy?type=git&repository=github.com/elrebelde21/LoliBot-MD&branch=master&name=the-lolibot-md)
 
 ------------------
 ### ☁️ ACTIVAR EN RENDER 
-[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://dashboard.render.com/blueprint/new?repo=https%3A%2F%2Fgithub.com%2Felrebelde21%2FThe-LoliBot-MD) 
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://dashboard.render.com/blueprint/new?repo=https%3A%2F%2Fgithub.com%2Felrebelde21%2FLoliBot-MD) 
 
 ------------------
 ## 💻 PARA USUARIOS DE WINDOWS/VPS/RDP
@@ -187,7 +187,7 @@ https://github.com/clhuang/heroku-buildpack-webp-binaries.git
 * Descargar e instala ImageMagick [`Aquí`](https://imagemagick.org/script/download.php)
 * Descargar e instala Yarn [`Aquí`](https://classic.yarnpkg.com/en/docs/install#windows-stable)
 ```bash
-git clone https://github.com/elrebelde21/The-LoliBot-MD && cd The-LoliBot-MD && npm install && npm update && node .
+git clone https://github.com/elrebelde21/LoliBot-MD && cd LoliBot-MD && npm install && npm update && node .
 ```
 ## 💻 Instalación de FFmpeg para Windows 
 * Descarga cualquiera de las versiones de FFmpeg disponibles haciendo clic en [FFmpeg](https://www.gyan.dev/ffmpeg/builds/).
