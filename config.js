@@ -30,12 +30,12 @@ global.botNumberCode = "" //Ejemplo: +59309090909
 global.confirmCode = "" 
 
 //⊱ ━━━━━.⋅ IDIOMA : LENGUAJE ⋅.━━━━ ⊰
-//Agrega el Idioma que quieres que tenga The-LoliBot-MD
+//Agrega el Idioma que quieres que tenga LoliBot-MD
 //  es = Español         id = Bahasa Indonesia
 //  en = English         pt = Português
 //  ar = عرب 
 
-global.lenguajeGB = es  //Idioma de The-LoliBot-MD, Ejemplo: es | en | pt...
+global.lenguajeGB = es  //Idioma de LoliBot-MD, Ejemplo: es | en | pt...
 
 //━━━━━━━━━━━━━━━━━━━━ ฅ^•ﻌ•^ฅ
 
@@ -103,7 +103,7 @@ global.vs = '1.5.5'
 global.lb = '𝙇𝙤𝙡𝙞𝘽𝙤𝙩-𝙈𝘿'
 global.yt = 'https://www.youtube.com/@LoliBot'
 global.ig = 'tiktok.com/@elrebelde21'
-global.md = 'https://github.com/elrebelde21/The-LoliBot-MD'
+global.md = 'https://github.com/elrebelde21/LoliBot-MD'
 global.fb = 'https://www.facebook.com/groups/872989990425789/'
 
 global.nna = 'https://whatsapp.com/channel/0029Va4QjH7DeON0ePwzjS1A' //Actualización, información sobre el bot
@@ -135,8 +135,8 @@ global.exito = eg
 
 //⊱ ━━━━━.⋅ Información ⋅.━━━━ ⊰
 
-global.wm = '𝑻𝒉𝒆 𝑳𝒐𝒍𝒊𝑩𝒐𝒕-𝑴𝑫'
-global.igfg = '𝑻𝒉𝒆 𝑳𝒐𝒍𝒊𝑩𝒐𝒕-𝑴𝑫'
+global.wm = '𝑳𝒐𝒍𝒊𝑩𝒐𝒕-𝑴𝑫'
+global.igfg = '𝑳𝒐𝒍𝒊𝑩𝒐𝒕-𝑴𝑫'
 global.wait = '*⌛ _Cargando..._ ▬▭▭▭▭▭▭*'
 global.waitt = '*⌛ _Cargando..._ ▬▬▭▭▭*'
 global.waittt = '*⌛ _Cargando..._ ▬▬▬▬▭▭*'
