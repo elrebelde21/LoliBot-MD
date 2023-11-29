@@ -50,7 +50,7 @@ let old = performance.now()
 
 let info = `╭─────[ *INFO DEL BOT* ]────✧
 ├ 🤴🏻 *CREADOR:* elrebelde
-├ #️⃣ *CONTACTO:* *wa.me/5492266466080*
+├ #️⃣ *CONTACTO:* *wa.me/584124172474*
 ├ ✅ *VERSION ACTUAL:* ${vs}
 ├ 🎳 *PREFIJO:* *${usedPrefix}*
 ├ 🔐 *CHATS PRIVADO:* *${chats.length - groups.length}*
