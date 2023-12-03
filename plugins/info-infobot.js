@@ -49,7 +49,7 @@ let old = performance.now()
   let speed = neww - old
 
 let info = `╭─────[ *INFO DEL BOT* ]────✧
-├ 🤴🏻 *CREADOR:* elrebelde
+├ 🤴🏻 *CREADOR:* 𝕸𝖆𝖓𝖚𝕭𝖔𝖙-𝕸𝕯
 ├ #️⃣ *CONTACTO:* *wa.me/584124172474*
 ├ ✅ *VERSION ACTUAL:* ${vs}
 ├ 🎳 *PREFIJO:* *${usedPrefix}*
