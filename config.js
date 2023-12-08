@@ -170,7 +170,7 @@ global.img16 = 'https://i.imgur.com/11MRjo4.jpeg' //+18
 global.img17 = 'https://i.imgur.com/JpYfcH0.jpeg'
 global.redesMenu = [nna, nn, nnn, nnnt, nnntt, nnnttt, nnntttt, md, ig, lb, fb, yt]
 global.gataMenu = [img, img2, img6, img7, img8, img9, img13, img14, img15, img16]
-global.gataVidMenu = ['./media/menus/Menuvid1.mp4', './media/menus/Menuvid2.mp4', './media/menus/Menuvid3.mp4']
+global.gataVidMenu = ['https://a.uguu.se/RqbiXfNg.mp4', 'https://a.uguu.se/uoZBfOyV.mp4', './media/menus/Menuvid1.mp4']
 global.gataImg = [imagen1, imagen2, imagen3]
 
 //⊱ ━━━━━.⋅ RPG ⋅.━━━━ ⊰
