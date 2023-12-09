@@ -11,8 +11,8 @@ import { en, es, id, ar, pt } from './lib/idiomas/total-idiomas.js'
 //⊱ ━━━━━.⋅ Añada los numeros a ser Propietario/a ⋅.━━━━ ⊰
 
 global.owner = [ 
-['5492266466080', '𝙇𝙤𝙡𝙞𝘽𝙤𝙩-𝙈𝘿', true],
-['573026191480', '𝙇𝙤𝙡𝙞𝘽𝙤𝙩-𝙈𝘿', true],
+['5492266466080', '𝙇𝙤𝙡𝙞𝘽𝙤𝙩', true],
+['573026191480', '𝙇𝙤𝙡𝙞𝘽𝙤𝙩', true],
 ['593968585383'],
 ['5217294888993'],
 ['5492266466080'], 
@@ -97,8 +97,8 @@ global.author = '𝙇𝙤𝙡𝙞𝘽𝙤𝙩-𝙈𝘿'
 
 //⊱ ━━━━━.⋅ Versión | Nombre | cuentas ⋅.━━━━ ⊰
 
-global.vs = '1.5.5'
 global.lb = '𝙇𝙤𝙡𝙞𝘽𝙤𝙩-𝙈𝘿'
+global.vs = '1.5.5'
 global.yt = 'https://www.youtube.com/@LoliBot'
 global.ig = 'tiktok.com/@elrebelde21'
 global.md = 'https://github.com/elrebelde21/LoliBot-MD'
@@ -147,29 +147,11 @@ global.pdoc = ['application/vnd.openxmlformats-officedocument.presentationml.pre
 global.imagen1 = fs.readFileSync('./media/menus/Menu3.jpg')
 global.imagen2 = fs.readFileSync('./media/menus/img1.jpg')
 global.imagen3 = fs.readFileSync('./media/menus/img2.jpg')
-//global.imagen4 = fs.readFileSync('./media/menus/img3.jpg')
-
-//━━━━━━━━━━━━━━ img ━━━━━━━━━
-
 global.img = 'https://i.imgur.com/H6AofpJl.jpg'
 global.img2 = 'https://i.imgur.com/R1uVUId.jpeg'
-global.img3 = 'https://i.imgur.com/Q5m8R11.jpeg' //prem
-global.img4 = 'https://i.imgur.com/sJ3HUTb.jpeg' //prem
-global.img5 = 'https://i.imgur.com/gb8HwKN.jpeg'
-global.img6 = 'https://i.imgur.com/qevNnBU.jpeg'
-global.img7 = 'https://i.imgur.com/c1xXpPX.jpeg'
-global.img8 = 'https://i.imgur.com/5cofHE5.jpeg'
-global.img9 = 'https://i.imgur.com/qevNnBU.jpeg'
-global.img10 = 'https://i.imgur.com/R1uVUId.jpeg'
-global.img11 = 'https://i.imgur.com/Q5m8R11.jpeg'
-global.img12 = 'https://i.imgur.com/gb8HwKN.jpeg'
-global.img13 = 'https://i.imgur.com/qevNnBU.jpeg'
-global.img14 = 'https://i.imgur.com/c1xXpPX.jpeg'
-global.img15 = 'https://i.imgur.com/5cofHE5.jpeg'
-global.img16 = 'https://i.imgur.com/11MRjo4.jpeg' //+18
-global.img17 = 'https://i.imgur.com/JpYfcH0.jpeg'
+
 global.redesMenu = [nna, nn, nnn, nnnt, nnntt, nnnttt, nnntttt, md, ig, lb, fb, yt]
-global.gataMenu = [img, img2, img6, img7, img8, img9, img13, img14, img15, img16]
+global.gataMenu = [img, img2]
 global.gataVidMenu = ['https://a.uguu.se/RqbiXfNg.mp4', 'https://a.uguu.se/uoZBfOyV.mp4', './media/menus/Menuvid1.mp4']
 global.gataImg = [imagen1, imagen2, imagen3]
 
