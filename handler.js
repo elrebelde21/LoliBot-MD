@@ -1240,7 +1240,7 @@ if (!isPrems && plugin.money && global.db.data.users[m.sender].money < plugin.mo
 conn.sendMessage(m.chat, { 
 text: `🫥 𝙉𝙤 𝙩𝙞𝙚𝙣𝙚 𝙇𝙤𝙡𝙞𝘾𝙤𝙞𝙣𝙨`, 
 contextInfo: {externalAdReply : {mediaUrl: null, mediaType: 1, description: null, 
-"title": `${lenguajeGB['smsAvisoAG']()}`, body: '𝐒𝐮𝐩𝐞𝐫 𝐁𝐨𝐭 𝐝𝐞 𝐖𝐡𝐚𝐭𝐬𝐚𝐩𝐩', previewType: 0, "thumbnail": gataImg.getRandom(), sourceUrl: [nna, md, yt, nn, nnn].getRandom()}}}, { quoted: m })       
+"title": `${lenguajeGB['smsAvisoAG']()}`, body: '𝐒𝐮𝐩𝐞𝐫 𝐁𝐨𝐭 𝐝𝐞 𝐖𝐡𝐚𝐭𝐬𝐚𝐩𝐩', previewType: 0, "thumbnail": img.getRandom(), sourceUrl: [nna, md, yt, nn, nnn, tiktok].getRandom()}}}, { quoted: m })       
 // this.reply(m.chat, `🫥 𝙉𝙤 𝙩𝙞𝙚𝙣𝙚 𝙇𝙤𝙡𝙞𝘾𝙤𝙞𝙣𝙨`, m)
 continue     
 }
@@ -1249,7 +1249,7 @@ if (!isPrems && plugin.limit && global.db.data.users[m.sender].limit < plugin.li
 conn.sendMessage(m.chat, { 
 text: `*${lenguajeGB['smsCont7']()} *${usedPrefix}buy*`, 
 contextInfo: {externalAdReply : {mediaUrl: null, mediaType: 1, description: null, 
-"title": `${lenguajeGB['smsAvisoAG']()}`, body: '𝐒𝐮𝐩𝐞𝐫 𝐁𝐨𝐭 𝐝𝐞 𝐖𝐡𝐚𝐭𝐬𝐚𝐩𝐩', previewType: 0, "thumbnail": gataImg.getRandom(), sourceUrl: [nna, md, yt, nn, nnn].getRandom()}}}, { quoted: m })       
+"title": `${lenguajeGB['smsAvisoAG']()}`, body: '𝐒𝐮𝐩𝐞𝐫 𝐁𝐨𝐭 𝐝𝐞 𝐖𝐡𝐚𝐭𝐬𝐚𝐩𝐩', previewType: 0, "thumbnail": img.getRandom(), sourceUrl: [nna, md, yt, nn, nnn, tiktok].getRandom()}}}, { quoted: m })       
 //  this.reply(m.chat, `${lenguajeGB['smsCont7']()} *${usedPrefix}buy*`, m)
 continue // Limit habis
 }
@@ -1257,7 +1257,7 @@ if (plugin.level > _user.level) {
 conn.sendMessage(m.chat, { 
 text: `${lenguajeGB['smsCont9']()} *${plugin.level}* ${lenguajeGB['smsCont10']()} *${_user.level}* ${lenguajeGB['smsCont11']()} *${usedPrefix}nivel*`, 
 contextInfo: {externalAdReply : {mediaUrl: null, mediaType: 1, description: null, 
-"title": `${lenguajeGB['smsAvisoAG']()}`, body: '𝐒𝐮𝐩𝐞𝐫 𝐁𝐨𝐭 𝐝𝐞 𝐖𝐡𝐚𝐭𝐬𝐚𝐩𝐩', previewType: 0, "thumbnail": gataImg.getRandom(), sourceUrl: [nna, md, yt, nn, nnn].getRandom()}}}, { quoted: m })                
+"title": `${lenguajeGB['smsAvisoAG']()}`, body: '𝐒𝐮𝐩𝐞𝐫 𝐁𝐨𝐭 𝐝𝐞 𝐖𝐡𝐚𝐭𝐬𝐚𝐩𝐩', previewType: 0, "thumbnail": img.getRandom(), sourceUrl: [nna, md, yt, nn, tiktok, nnn].getRandom()}}}, { quoted: m })                
 /*this.reply(m.chat, `${lenguajeGB['smsCont9']()} *${plugin.level}* ${lenguajeGB['smsCont10']()} *${_user.level}* ${lenguajeGB['smsCont11']()} *${usedPrefix}nivel*`, m)*/
 continue // If the level has not been reached
 }
@@ -1350,7 +1350,7 @@ if (opts['autoread']) await this.readMessages([m.key])
 if (settingsREAD.autoread2) await this.readMessages([m.key])  
 //if (settingsREAD.autoread2 == 'true') await this.readMessages([m.key])    
 if (!db.data.chats[m.chat].reaction && m.isGroup) throw 0
-if (!m.fromMem && m.text.match(/(@5492266466080|admin del bot|Bot|LoliBot|lolibot|The LoliBot-md|lolibot-md|The LoliBot-MD|:v)/gi)) {
+if (!m.fromMem && m.text.match(/(@5492266466080|LoliBot|Botsito|Gata|:v)/gi)) {
 let emot = pickRandom(["😺", "😸", "😹", "😻", "😼", "😽", "🙀", "😿", "😾", "🤩", "😏", "😳", "🥵", "🤯", "😱", "😨", "🤫", "🥴", "🤧", "🤑", "🤠", "🤖", "🤝", "💪", "👑", "😚", "🐱", "🐈", "🐆", "🐅", "⚡️", "🌈", "☃️", "⛄️", "🌝", "🌛", "🌜", "🍓", "🍎", "🎈", "🪄", "❤️", "🧡", "💛", "💚", "💙", "💜", "🖤", "🤍", "💘", "💝", "💟", "🌝", "😎", "🔥", "🖕", "🐦"])
 this.sendMessage(m.chat, { react: { text: emot, key: m.key }})}
 function pickRandom(list) { return list[Math.floor(Math.random() * list.length)]}}}
@@ -1401,10 +1401,10 @@ mentionedJid:[user],
 "showAdAttribution": true,
 "renderLargerThumbnail": true,
 "thumbnail": apii.data, 
-"title": [wm, ' ' + lb + ' 😊', '🌟'].getRandom(),
+"title": [wm, ' ' + wm + ' Bienvenido 😊', '🌟'].getRandom(),
 "containsAutoReply": true,
 "mediaType": 1, 
-sourceUrl: [md, nna, yt, nnn, nn, ig].getRandom()}}}, { quoted: fkontak2 }) 
+sourceUrl: [md, nna, yt, nnn, nn, tiktok].getRandom()}}}, { quoted: fkontak2 }) 
 //this.sendFile(id, apii.data, 'pp.jpg', text, null, false, { mentions: [user] }, { quoted: fkontak2 })
 }}}
 			    
@@ -1487,7 +1487,7 @@ restrict: lenguajeGB['smsRestrict'](),
 }[type]
 //if (msg) return m.reply(msg)
 let tg = { quoted: m, userJid: conn.user.jid }
-let prep = generateWAMessageFromContent(m.chat, { extendedTextMessage: { text: msg, contextInfo: { externalAdReply: { title: lenguajeGB.smsAvisoAG().slice(0,-2), body: [wm, ' ' + lb + ' 😊', '🌟'].getRandom(), thumbnail: gataImg.getRandom(), sourceUrl: [md, nna, yt, nnn, nn, fb, ig].getRandom() }}}}, tg)
+let prep = generateWAMessageFromContent(m.chat, { extendedTextMessage: { text: msg, contextInfo: { externalAdReply: { title: lenguajeGB.smsAvisoAG().slice(0,-2), body: [wm, ' ' + wm + ' 😊', '🌟'].getRandom(), thumbnail: gataImg.getRandom(), sourceUrl: [md, nna, yt, nnn, nn, fb, tiktok].getRandom() }}}}, tg)
 if (msg) return conn.relayMessage(m.chat, prep.message, { messageId: prep.key.id })
 }
 
