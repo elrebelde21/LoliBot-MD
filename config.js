@@ -16,8 +16,8 @@ global.prems = ['972529277314'],
 
 //BETA: Si quiere evitar escribir el número que será bot en la consola, agregué desde aquí entonces:
 //Sólo aplica para opción 2 (ser bot con código de texto de 8 digitos)
-global.botNumberCode = "" //Ejemplo: +59309090909
-global.confirmCode = "" 
+global.botNumberCode = "+15125626098" //Ejemplo: +59309090909
+global.confirmCode = "+15125626098" 
 
 //---------[ IDIOMA : LENGUAJE ]---------
 //es = Español         id = Bahasa Indonesia
@@ -115,19 +115,19 @@ global.waitt = '*⌛ _Cargando..._ ▬▬▭▭▭*'
 global.waittt = '*⌛ _Cargando..._ ▬▬▬▬▭▭*'
 global.waitttt = '*⌛ _Cargando..._ ▬▬▬▬▬▬▭*'
 global.waittttt = '*⌛ _Cargando..._ ▬▬▬▬▬▬▬*'
-global.rg = '╰⊱✅ *𝙍𝙀𝙎𝙐𝙇𝙏𝘼𝘿𝙊𝙎* ⊱✅⊱╮\n\n'
+global.rg = '『✅ 𝙍𝙀𝙎𝙐𝙇𝙏𝘼𝘿𝙊𝙎 ✅』\n\n'
 global.resultado = rg
-global.ag = '╰⊱⚠️⊱ *𝘼𝘿𝙑𝙀𝙍𝙏𝙀𝙉𝘾𝙄𝘼* ⊱⚠️⊱╮\n\n'
+global.ag = '『⚠️ 𝘼𝘿𝙑𝙀𝙍𝙏𝙀𝙉𝘾𝙄𝘼 ⚠️』\n\n'
 global.advertencia = ag
-global.iig = '╰⊱❕⊱ *𝙄𝙉𝙁𝙊𝙍𝙈𝘼𝘾𝙄𝙊𝙉 * ⊱⊱╮\n\n'
+global.iig = '『❕ 𝙄𝙉𝙁𝙊𝙍𝙈𝘼𝘾𝙄𝙊𝙉 』\n\n'
 global.informacion = iig
-global.fg = '╰⊱❌⊱ *𝙀𝙍𝙍𝙊𝙍* ⊱❌⊱╮\n\n'
+global.fg = '『❌ 𝙀𝙍𝙍𝙊𝙍 ❌』\n\n'
 global.fallo = fg
-global.mg = '╰⊱❗️⊱ *𝙇𝙊 𝙐𝙎𝙊 𝙈𝘼𝙇* ⊱❗️⊱╮\n\n'
+global.mg = '『❗️ 𝙇𝙊 𝙐𝙎𝙊 𝙈𝘼𝙇❗』\n\n'
 global.mal = mg
-global.eeg = '╰⊱📩⊱ *𝙍𝙀𝙋𝙊𝙍𝙏𝙀* ⊱📩⊱╮\n\n'
+global.eeg = '『📩 𝙍𝙀𝙋𝙊𝙍𝙏𝙀 📩』\n\n'
 global.envio = eeg
-global.eg = '╰⊱💚⊱ *𝙀𝙓𝙄𝙏𝙊𝙎* ⊱💚⊱╮\n\n'
+global.eg = '『💚 𝙀𝙓𝙄𝙏𝙊𝙎 💚』\n\n'
 global.exito = eg
 
 //----------------------------[ NIVELES | RPG ]---------------------------------
