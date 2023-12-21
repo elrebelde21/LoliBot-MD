@@ -7,7 +7,7 @@ let chat = global.db.data.chats[m.chat]
 let bot = global.db.data.settings[conn.user.jid] || {}
 if (isBotAdmin && chat.antifake && !isAdmin && !isOwner && !isROwner) {
 //if (!db.data.chats[m.chat].antifake && m.isGroup) throw 0
-let texto = `${ag}este numero *@${m.sender.split`@`[0]}* no esta permitido en este grupo!!\n\nlo siento seras expulsado.. tu numero parece algo fake 😯`
+let texto = `${ag}Este numero *@${m.sender.split`@`[0]}* no esta permitido en este grupo!!\n\nLo siento seras expulsado.. tu numero parece algo fake 😯`
 
 if (m.sender.startsWith('91' || '91')) {
 await conn.reply(m.chat, texto, fkontak,  m)

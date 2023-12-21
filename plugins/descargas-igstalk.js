@@ -8,7 +8,7 @@ let res = await igstalk(args[0].replace(/^@/, ''))
 let res2 = await fetch(`https://api.lolhuman.xyz/api/stalkig/${args[0].replace(/^@/, '')}?apikey=${lolkeysapi}`)
 let res3 = await res2.json()
 let json = JSON.parse(JSON.stringify(res))
-let iggs = `╭╼╾╼⪻ *${gt}* ⪼╼╾╼╮
+let iggs = `╭╼╾╼⪻ *${wm}* ⪼╼╾╼╮
 ┃┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈
 ┃ 𝙉𝙊𝙈𝘽𝙍𝙀
 ┃ *${json.username}*

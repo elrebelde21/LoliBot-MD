@@ -48,7 +48,7 @@ if (!(reward in user)) continue
 user[reward] += recompensas[reward]
 texto += `+${recompensas[reward]} ${global.rpgshop.emoticon(reward)}\n`}
 let gat = `*${premium ? '🎟️ Recompensa Premium' : '🆓 Recompensa Gratis'}*\n*${minar}*\n*${limit} ${global.rpgshop.emoticon('limit')}*\n\n🍁 𝗕 𝗢 𝗡 𝗢\n\n${texto}\n\n🎟️ 𝗣 𝗥 𝗘 𝗠 𝗜 𝗨 𝗠 ⇢ ${premium ? '✅' : '❌'}\n${wm}`
-await conn.sendMessage(m.chat, {text: gat, contextInfo: {forwardingScore: 9999999, isForwarded: true, image: {url: pp}, "externalAdReply":  {"showAdAttribution": true, "renderLargerThumbnail": true, "thumbnail": img.getRandom(), "title": wm, "containsAutoReply": true, "mediaType": 1, "mediaUrl": [nna, nn, md, yt].getRandom(),  "sourceUrl": [nna, nn, md, yt].getRandom(), }}}, { quoted: fkontak })
+await conn.sendFile(m.chat, pp, 'pp.jpg', gat, fkontak, false, { contextInfo: {forwardingScore: 9999999, isForwarded: true, externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: wm, body: '𝐒𝐮𝐩𝐞𝐫 𝐁𝐨𝐭 𝐃𝐞 𝐖𝐡𝐚𝐭𝐬𝐀𝐩𝐩', previewType: 0, thumbnail: imagen4, sourceUrl: [md, yt, tiktok].getRandom()}}})
 user.lastdiamantes = new Date * 1  
 }
 handler.help = ['minar']

@@ -1,10 +1,7 @@
 export function before(m) {
 let user = global.db.data.users[m.sender]
 if (user.afk > -1) {
-m.reply(`
-${lenguajeGB['smsAfkM1']()}${user.afkReason ? ` ${lenguajeGB['smsAfkM2']()} ` + user.afkReason : ''}
-  
-${lenguajeGB['smsAfkM3']()} *${(new Date - user.afk).toTimeString()}*`.trim())
+m.reply(`${lenguajeGB['smsAfkM1']()}${user.afkReason ? ` ${lenguajeGB['smsAfkM2']()} ` + user.afkReason : ''}\n\n${lenguajeGB['smsAfkM3']()} *${(new Date - user.afk).toTimeString()}*`.trim())
 user.afk = -1
 user.afkReason = ''
 }
