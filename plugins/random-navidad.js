@@ -1,21 +1,8 @@
 import axios from 'axios';
-const handler = async (m, {
-  conn,
-  args,
-  usedPrefix,
-  command,
-}) => {
-  const res = (await axios.get(`https://raw.githubusercontent.com/BrunoSobrino/TheMystic-Bot-MD/master/src/JSON/navidad.json`)).data;
-  const mystic = await res[Math.floor(res.length * Math.random())];
-  conn.sendMessage(m.chat, {
-    image: {
-      url: mystic,
-    },
-    caption: `_Navidad 🧑‍🎄_`,
-  }, {
-    quoted: m,
-  });
-  // conn.sendButton(m.chat, `_Navidad 🧑‍🎄_`, author, mystic, [['🔄 𝚂𝙸𝙶𝚄𝙸𝙴𝙽𝚃𝙴 🔄', `${usedPrefix + command}`]], m)
+const handler = async (m, {conn, args, usedPrefix, command, }) => {
+const res = (await axios.get(`https://raw.githubusercontent.com/elrebelde21/LoliBot-MD/master/src/JSON/navidad.json`)).data;
+const navidad = await res[Math.floor(res.length * Math.random())];
+conn.sendFile(m.chat, navidad, 'error.jpg', command, m, false, { contextInfo: {externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: 'Navidad 🧑‍🎄', body: '𝐒𝐮𝐩𝐞𝐫 𝐁𝐨𝐭 𝐃𝐞 𝐖𝐡𝐚𝐭𝐬𝐀𝐩𝐩', previewType: 0, thumbnail: imagen4, sourceUrl: [nna, md, yt, tiktok, fb].getRandom()}}})
 };
 handler.help = ['navidad'];
 handler.tags = ['internet'];

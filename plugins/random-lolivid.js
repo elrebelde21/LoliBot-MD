@@ -1,6 +1,7 @@
 let handler  = async (m, { conn, usedPrefix, command }) => {
 let res = await lolivid[Math.floor(Math.random() * lolivid.length)]
-conn.sendMessage(m.chat, { video: { url: res }, caption: `💕💕💕💕` }, { quoted: m })}
+conn.sendFile(m.chat, res, 'error.mp4', '💕💕💕💕', m, false, { contextInfo: {externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: command, body: '𝐒𝐮𝐩𝐞𝐫 𝐁𝐨𝐭 𝐃𝐞 𝐖𝐡𝐚𝐭𝐬𝐀𝐩𝐩', previewType: 0, thumbnail: imagen4, sourceUrl: [nna, md, yt, tiktok, fb].getRandom()}}})
+}
 handler.help = ['lolivid']
 handler.tags = ['random']
 handler.command = /^(lolivid|lolivideos|lolívid)$/i
