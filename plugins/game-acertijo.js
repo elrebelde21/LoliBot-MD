@@ -22,7 +22,7 @@ let caption = `
 conn.tekateki[id] = [
 await //conn.reply(m.chat, caption, m),
 conn.sendMessage(m.chat, { text: caption, contextInfo:{forwardingScore: 9999999, isForwarded: true, "externalAdReply": {"showAdAttribution": true, "containsAutoReply": true, "body": `• 𝐀𝐂𝐄𝐍𝐓𝐈𝐉𝐎 •`, "previewType": "PHOTO", thumbnail: imagen1, sourceUrl: md}}}, { quoted: m, ephemeralExpiration: 24*60*100, disappearingMessagesInChat: 24*60*100}), json, poin, setTimeout(async () => {
-if (conn.tekateki[id]) await conn.reply(m.chat, `😢 Perdiste\n\nSe acabó el tiempo!`, conn.tekateki[id][0])
+if (conn.tekateki[id]) await conn.reply(m.chat, `*👾 Perdiste*\n\nSe acabó el tiempo!`, conn.tekateki[id][0])
 delete conn.tekateki[id]
 }, timeout)
 ]}
