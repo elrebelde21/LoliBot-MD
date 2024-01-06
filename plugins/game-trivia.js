@@ -28,6 +28,6 @@ delete conn.tekateki[id]
 ]}
 handler.help = ['trivia']
 handler.tags = ['game']
-handler.command = /^(trivia|triviador|adivinaza)$/i
+handler.command = /^(trivia|triviador|preg)$/i
 handler.register = true
 export default handler
