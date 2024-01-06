@@ -77,12 +77,12 @@ let menu = `『 ${wm} 』
 
 *Hola ${taguser}*
 
-□ *Creador: Mario*
-□ *Numero del creador: ${asistencia}*
-□ *Numero del bot ofc: wa.me/51944167935*
-□ *Tiempos activos :* *${uptime}*
-□ *Usuarios:* *${Object.keys(global.db.data.users).length}*
-□ *Registrado: ${rtotalreg} de ${totalreg}* ${(conn.user.jid == global.conn.user.jid ? '' : `\n□ *Soy un sub bot del:* wa.me/${global.conn.user.jid.split`@`[0]}`) || ''}
+□ *Creador:* Mario
+□ *Numero del creador:* ${asistencia}
+□ *Numero del bot ofc:* {bot}
+□ *Tiempos activos :* ${uptime}
+□ *Usuarios:* ${Object.keys(global.db.data.users).length}
+□ *Registrado:* ${rtotalreg} de ${totalreg} ${(conn.user.jid == global.conn.user.jid ? '' : `\n□ *Soy un sub bot del:* wa.me/${global.conn.user.jid.split`@`[0]}`) || ''}
     
 □ *COMO INSTALAR EL BOT*
 https://youtu.be/O_j2q5xCg3A
