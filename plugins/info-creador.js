@@ -19,8 +19,8 @@ let fkontak = { "key": { "participants":"0@s.whatsapp.net", "remoteJid": "status
 //------------ BIO
 let ppown = await conn.profilePictureUrl(nomorown + '@s.whatsapp.net', 'image').catch(_ => imagen1[1]) 
 let teksbio = `*𝘾𝙤𝙣𝙩𝙖𝙘𝙩𝙤* 
-${asistencia} (no bot)*
-*Wa.me/528131042249 (bot)*`
+*${asistencia} (no bot)*
+*${bot} (bot)*`
   let teks = ' '
 const sections = [{title: `𝙋𝙍𝙊𝙋𝙄𝙀𝙏𝘼𝙍𝙄𝙊/𝙊𝙒𝙉𝙀𝙍`, rows: [{title: "🔰 • NUMERO", rowId: ".owner bio"}, {title: "🌐 • CUENTAS OFICIALES", rowId: ".cuentasgb"}, {title: "🙌 • GRUPOS", rowId: ".grupos"},]}, {title: `–––––––·• 𝘼𝙋𝙊𝙔𝘼 𝘼𝙇 𝘽𝙊𝙏 –––––––·•`, rows: [ {title: "🤖 • INSTALARBOT", rowId: ".instalarbot"}, {title: "🌟 • SC", rowId: "Sc"}, ]}, ]
 
@@ -53,10 +53,10 @@ if (/(contacto|owner|creator|propietario|dueño|dueña|propietaria|dueño|creado
 const count = args[1] && args[1].length > 0 ? Math.min(99999999, Math.max(parseInt(args[1]), 1)) : !args[1] || args.length < 3 ? 1 : Math.min(1, count)
 switch (type) {
 case 'nomor':
-conn.reply(m.chat, "LoliBot-MD", m, { contextInfo: { mentionedJid: [nowner] }})
+conn.reply(m.chat, wm, m, { contextInfo: { mentionedJid: [nowner] }})
 break
 case 'bio':
-await conn.sendFile(m.chat, gataImg.getRandom(), 'gata.jpg', teksbio, fkontak)
+await conn.sendFile(m.chat, img.getRandom(), 'pp.jpg', teksbio, fkontak)
 break
 default:
 return await conn.sendMessage(m.chat, listMessage, { quoted: m, contextInfo: { mentionedJid: [m.sender] }})
@@ -68,7 +68,7 @@ break
 case '':
 break
 default:
-return await conn.sendFile(m.chat, gataImg.getRandom(), 'loli.jpg', teksbio, fkontak)
+return await conn.sendFile(m.chat, img.getRandom(), 'loli.jpg', teksbio, fkontak)
 }}} catch (err) {
 m.reply("Error\n\n\n" + err.stack)}
 conn.sendFile(m.chat, vn, 'creador.mp3', null, m, true, { type: 'audioMessage', ptt: true, sendEphemeral: true })}
