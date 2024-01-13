@@ -1,6 +1,6 @@
 import util from 'util'
 import path from 'path' 
-let handler = async (m, { conn, command, text, usedPrefix }) => {
+let handler = async (m, { conn, groupMetadata, command, text, usedPrefix }) => {
 let user = a => '@' + a.split('@')[0] //'@' + a.split('@')[0]
 let ps = groupMetadata.participants.map(v => v.id)
 let a = ps.getRandom()
