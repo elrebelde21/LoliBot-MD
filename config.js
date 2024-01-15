@@ -74,7 +74,7 @@ global.moment = moment
 
 //------------------------[ Stickers ]-----------------------------
 
-global.packname = '𝙏𝙤𝙢𝙖 𝙩𝙪 𝙨𝙩𝙞𝙘𝙠𝙚𝙧 ッ'
+global.packname = '𝙏𝙤𝙢𝙖 𝙩𝙪 𝙨𝙩𝙞𝙘𝙠𝙚𝙧'
 global.author = '𝙇𝙤𝙡𝙞𝘽𝙤𝙩-𝙈𝘿'
 
 //------------[ Versión | Nombre | cuentas ]------------
@@ -172,7 +172,7 @@ message: {
 
 //----------------------------------------------------
 
-global.multiplier = 90 // Cuanto más alto, más difícil subir de nivel
+global.multiplier = 150 // Cuanto más alto, más difícil subir de nivel
 global.rpg = {
 emoticon(string) {
 string = string.toLowerCase()
