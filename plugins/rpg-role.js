@@ -1,4 +1,96 @@
-let handler = m => m
+const roles = {
+    '*NOVATO(A) V* 🪤': 0,
+     '*NOVATO(A) IV* 🪤': 2,
+      '*NOVATO(A) III* 🪤': 4,
+       '*NOVATO(A) II* 🪤': 6,
+        '*NOVATO(A) I* 🪤': 8,
+    '*APRENDIS V* 🪚': 10,
+     '*APRENDIS IV* 🪚': 12,
+      '*APRENDIS III* 🪚': 14,
+       '*APRENDIS II* 🪚': 16,
+       '*APRENDIS I* 🪚': 18,
+    '*EXPLORADOR(A) V* 🪓': 20,
+     '*EXPLORADOR(A) IV* 🪓': 22,
+      '*EXPLORADOR(A) III* 🪓': 24,
+       '*EXPLORADOR(A) II* 🪓': 26,
+        '*EXPLORADOR(A) I* 🪓': 28,
+    '*MAESTRO(A) V* ⚒️': 30,
+     '*MAESTRO(A) IV* ⚒️': 32,
+      '*MAESTRO(A) III* ⚒️': 34,
+       '*MAESTRO(A) II* ⚒️': 36,
+        '*MAESTRO(A) I* ⚒️': 38,
+    '*IRON V* 🦾': 40,
+     '*IRON IV* 🦾': 42,
+      '*IRON III* 🦾': 44,
+       '*IRON II* 🦾': 46,
+        '*IRON I* 🦾': 48,
+    '*PLATA V* 🔮': 50,
+     '*PLATA IV* 🔮': 52,
+      '*PLATA III* 🔮': 54,
+       '*PLATA II* 🔮': 56,
+        '*PLATA I* 🔮': 58,
+    '*ORO V* 🏅': 60,
+     '*ORO IV* 🏅': 62,
+      '*ORO III* 🏅': 64,
+       '*ORO II* 🏅': 66,
+        '*ORO I* 🏅': 68,
+    '*DIAMANTE V* 💎': 70,
+     '*DIAMANTE IV* 💎': 72,
+      '*DIAMANTE III* 💎': 74,
+       '*DIAMANTE II* 💎': 76,
+        '*DIAMANTE I* 💎': 78,
+    '*PRO EN LOLIBOT V* 😼': 80,
+     '*PRO EN LOLIBOT IV* 😼': 82,
+      '*PRO EN LOLIBOT III* 😼': 84,
+       '*PRO EN LOLIBOT II* 😼': 86,
+        '*PRO EN LOLIBOT I* 😼': 88,
+    '*SUPER PRO V* 🎩': 90,
+     '*SUPER PRO IV* 🎩': 92,
+      '*SUPER PRO III* 🎩': 94,
+       '*SUPER PRO II* 🎩': 96,
+        '*SUPER PRO I* 🎩': 98,
+    '*LEGENDARIO(A) V* 🛡️': 100,
+     '*LEGENDARIO(A) IV* 🛡️': 102,
+      '*LEGENDARIO(A) III* 🛡️': 104,
+       '*LEGENDARIO(A) II* 🛡️': 106,
+        '*LEGENDARIO(A) I* 🛡️': 108,
+    '*LEYENDA V* 🏆': 110,
+     '*LEYENDA IV* 🏆': 112,
+      '*LEYENDA III* 🏆': 114,
+       '*LEYENDA II* 🏆': 116,
+       '*LEYENDA I* 🏆': 118,
+    '*ESTELAR V* ☄️': 120,
+     '*ESTELAR IV* ☄️': 122,
+      '*ESTELAR III* ☄️': 124,
+       '*ESTELAR II* ☄️': 126,
+        '*ESTELAR I* ☄️': 128,
+    '*TOP ASTRAL V* ⚜️🔱': 130,
+     '*TOP ASTRAL IV* ⚜️🔱': 132,
+      '*TOP ASTRAL III* ⚜️🔱': 134,
+       '*TOP ASTRAL II* ⚜️🔱': 136,
+        '*TOP ASTRAL I* ⚜️🔱': 138,
+    '👑 *ÉLITE GLOBAL V* 🏁': 140,
+     '👑 *ÉLITE GLOBAL IV* 🏁': 145,
+      '👑 *ÉLITE GLOBAL III* 🏁': 150,
+       '👑 *ÉLITE GLOBAL II* 🏁': 155,
+        '👑 *ÉLITE GLOBAL I* 🏁': 160,
+    '👑 *∞ ÉLITE GLOBAL V* 💎🏁': 170,
+     '👑 *∞ ÉLITE GLOBAL IV* 💎🏁': 185,
+    '👑 *∞ ÉLITE GLOBAL III* 💎🏁': 200,
+    '👑 *∞ ÉLITE GLOBAL II* 💎🏁': 250,
+    '👑 *∞ ÉLITE GLOBAL I* 💎🏁': 300
+}
+
+export function before(m) {
+        let user = db.data.users[m.sender]
+        let level = user.level
+        let role = (Object.entries(roles).sort((a, b) => b[1] - a[1]).find(([, minLevel]) => level >= minLevel) || Object.entries(roles)[0])[0]
+        user.role = role
+        return !0
+    
+}
+
+/*let handler = m => m
 
 handler.before = function (m, text) {
     let user = global.db.data.users[m.sender]
@@ -26,9 +118,9 @@ handler.before = function (m, text) {
                                                                                         : ((user.level >= 63) && (user.level <= 66)) ? '*DIAMANTE III* 💎'
                                                                                             : ((user.level >= 66) && (user.level <= 69)) ? '*DIAMANTE II* 💎'
                                                                                                 : ((user.level >= 69) && (user.level <= 71)) ? '*DIAMANTE I* 💎'
-                                                                                                    : ((user.level >= 71) && (user.level <= 74)) ? '*PRO EN THE LOLIBOT III* 😼'
-                                                                                                        : ((user.level >= 74) && (user.level <= 77)) ? '*PRO EN THE LOLIBOT II* 😼'
-                                                                                                            : ((user.level >= 77) && (user.level <= 80)) ? '*PRO EN THE LOLIBOT I* 😼'
+                                                                                                    : ((user.level >= 71) && (user.level <= 74)) ? '*PRO EN GATABOT III* 😼'
+                                                                                                        : ((user.level >= 74) && (user.level <= 77)) ? '*PRO EN GATABOT II* 😼'
+                                                                                                            : ((user.level >= 77) && (user.level <= 80)) ? '*PRO EN GATABOT I* 😼'
                                                                                                                 : ((user.level >= 80) && (user.level <= 83)) ? '*SUPER PRO III* 🎩'
                                                                                                                     : ((user.level >= 83) && (user.level <= 86)) ? '*SUPER PRO II* 🎩'
                                                                                                                         : ((user.level >= 86) && (user.level <= 89)) ? '*SUPER PRO I* 🎩'
@@ -52,4 +144,4 @@ handler.before = function (m, text) {
     return true
 }
 
-export default handler
+export default handler */
