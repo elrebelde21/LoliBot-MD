@@ -418,4 +418,8 @@ handler.exp = 100
 handler.register = true
 handler.group = true
 export default handler
+
+function pickRandom(list) {
+return list[Math.floor(list.length * Math.random())]}
+
 const delay = time => new Promise(res => setTimeout(res, time))
