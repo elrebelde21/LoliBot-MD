@@ -140,7 +140,7 @@ grep -q 'bash\|wget' <(dpkg -l) || apt install -y bash wget && wget -O - https:/
 #### Para que no pierda su progreso en LoliBot, estos comandos realizarán un respaldo de su `database.json` y se agregará a la versión más reciente.
 > **Warning** Estos comandos solo funcionan para TERMUX, REPLIT, LINUX             
 -----
-# `⚡ QUIERE TENER EL BOT 24/7 ACTIVO ACTIVAR EL CAFIREXOS HOST`
+## `⚡ QUIERE TENER EL BOT 24/7 ACTIVO ACTIVAR EL CAFIREXOS HOST`
 
 <a href="https://www.cafirexos.com/"><img src="https://telegra.ph/file/f400ffe819ad3c0fc87b9.jpg" height="125px"></a>
 ### Información del Host
