@@ -16,7 +16,7 @@ let before = user.level * 1
 while (canLevelUp(user.level, user.exp, global.multiplier)) user.level++
  if (before !== user.level) {
 
-conn.reply(m.chat, `*「 FELICIDADES LEVEL UP 🆙🥳 」*\n\nFelicidades subiste de nivel sigue asi 👏\n\n▢ ${lenguajeGB.smsAutoLv2()} ${before}\n▢ ${lenguajeGB.smsAutoLv3()} ${user.level}\n▢ ${lenguajeGB.smsAutoLv4()} ${user.role}\n\n*_${lenguajeGB.smsAutoLv6()}_*`, fkontak, {contextInfo: {externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: wm, body: ' 💫 𝐒𝐮𝐩𝐞𝐫 𝐁𝐨𝐭 𝐃𝐞 𝐖𝐡𝐚𝐭𝐬𝐚𝐩𝐩 🥳 ', previewType: 0, thumbnail: img.getRandom(), sourceUrl: loli.getRandom()}}})  
+conn.reply(m.chat, `*「 FELICIDADES LEVEL UP 🆙🥳 」*\n\nFelicidades subiste de nivel sigue asi 👏\n\n▢ ${lenguajeGB.smsAutoLv2()} ${before}\n▢ ${lenguajeGB.smsAutoLv3()} ${user.level}\n▢ ${lenguajeGB.smsAutoLv4()} ${user.role}\n\n*_${lenguajeGB.smsAutoLv6()}_*`, fkontak, {contextInfo: {externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: wm, body: ' 💫 𝐒𝐮𝐩𝐞𝐫 𝐁𝐨𝐭 𝐃𝐞 𝐖𝐡𝐚𝐭𝐬𝐚𝐩𝐩 🥳 ', previewType: 0, thumbnail: img.getRandom(), sourceUrl: redes.getRandom()}}})  
 /*conn.sendButton(m.chat, ' ' + wm, `┌───⊷ ${username}
 ▢ ${lenguajeGB.smsAutoLv2()} ${before}
 ▢ ${lenguajeGB.smsAutoLv3()} ${user.level}
@@ -49,7 +49,7 @@ conn.reply(m.chat, `*${lenguajeGB.smsAutoLv7()} 8!!* 🏆
 𓃠 *${especialCant * 1} ${global.rpgshop.emoticon(especial)}*
 𓃠 *${especialCant2 * 1} ${global.rpgshop.emoticon(especial2)}*
 𓃠 *${especialCant3 * 1} ${global.rpgshop.emoticon(especial3)}*
-𓃠 *${especialCant4 * 1} ${global.rpgshop.emoticon(especial4)}*`, m, {contextInfo: {externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: wm, body: ' 💫 𝐒𝐮𝐩𝐞𝐫 𝐁𝐨𝐭 𝐃𝐞 𝐖𝐡𝐚𝐭𝐬𝐚𝐩𝐩 🥳 ', previewType: 0, thumbnail: img.getRandom(), sourceUrl: loli.getRandom()}}})  
+𓃠 *${especialCant4 * 1} ${global.rpgshop.emoticon(especial4)}*`, m, {contextInfo: {externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: wm, body: ' 💫 𝐒𝐮𝐩𝐞𝐫 𝐁𝐨𝐭 𝐃𝐞 𝐖𝐡𝐚𝐭𝐬𝐚𝐩𝐩 🥳 ', previewType: 0, thumbnail: img.getRandom(), sourceUrl: redes.getRandom()}}})  
 user[especial] += especialCant * 1
 user[especial2] += especialCant2 * 1
 user[especial3] += especialCant3 * 1
@@ -60,7 +60,7 @@ conn.reply(m.chat, `*${lenguajeGB.smsAutoLv7()} 15!!* 🏆
 𓃠 *${especialCant * 1} ${global.rpgshop.emoticon(especial)}*
 𓃠 *${especialCant2 * 1} ${global.rpgshop.emoticon(especial2)}*
 𓃠 *${especialCant3 * 1} ${global.rpgshop.emoticon(especial3)}*
-𓃠 *${especialCant4 * 1} ${global.rpgshop.emoticon(especial4)}*`, m, {contextInfo: {externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: wm, body: ' 💫 𝐒𝐮𝐩𝐞𝐫 𝐁𝐨𝐭 𝐃𝐞 𝐖𝐡𝐚𝐭𝐬𝐚𝐩𝐩 🥳 ', previewType: 0, thumbnail: img.getRandom(), sourceUrl: loli.getRandom()}}})  
+𓃠 *${especialCant4 * 1} ${global.rpgshop.emoticon(especial4)}*`, m, {contextInfo: {externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: wm, body: ' 💫 𝐒𝐮𝐩𝐞𝐫 𝐁𝐨𝐭 𝐃𝐞 𝐖𝐡𝐚𝐭𝐬𝐚𝐩𝐩 🥳 ', previewType: 0, thumbnail: img.getRandom(), sourceUrl: redes.getRandom()}}})  
 user[especial] += especialCant * 1
 user[especial2] += especialCant2 * 1
 user[especial3] += especialCant3 * 1
@@ -71,7 +71,7 @@ conn.reply(m.chat, `*${lenguajeGB.smsAutoLv7()} 25!!* 🏆
 𓃠 *${especialCant * 2} ${global.rpgshop.emoticon(especial)}*
 𓃠 *${especialCant2 * 2} ${global.rpgshop.emoticon(especial2)}*
 𓃠 *${especialCant3 * 2} ${global.rpgshop.emoticon(especial3)}*
-𓃠 *${especialCant4 * 2} ${global.rpgshop.emoticon(especial4)}*`, m, {contextInfo: {externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: wm, body: ' 💫 𝐒𝐮𝐩𝐞𝐫 𝐁𝐨𝐭 𝐃𝐞 𝐖𝐡𝐚𝐭𝐬𝐚𝐩𝐩 🥳 ', previewType: 0, thumbnail: img.getRandom(), sourceUrl: loli.getRandom()}}})  
+𓃠 *${especialCant4 * 2} ${global.rpgshop.emoticon(especial4)}*`, m, {contextInfo: {externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: wm, body: ' 💫 𝐒𝐮𝐩𝐞𝐫 𝐁𝐨𝐭 𝐃𝐞 𝐖𝐡𝐚𝐭𝐬𝐚𝐩𝐩 🥳 ', previewType: 0, thumbnail: img.getRandom(), sourceUrl: redes.getRandom()}}})  
 user[especial] += especialCant * 2
 user[especial2] += especialCant2 * 2
 user[especial3] += especialCant3 * 2
@@ -82,7 +82,7 @@ conn.reply(m.chat, `*${lenguajeGB.smsAutoLv7()} 35!!* 🏆
 𓃠 *${especialCant * 2} ${global.rpgshop.emoticon(especial)}*
 𓃠 *${especialCant2 * 2} ${global.rpgshop.emoticon(especial2)}*
 𓃠 *${especialCant3 * 2} ${global.rpgshop.emoticon(especial3)}*
-𓃠 *${especialCant4 * 2} ${global.rpgshop.emoticon(especial4)}*`, m, {contextInfo: {externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: wm, body: ' 💫 𝐒𝐮𝐩𝐞𝐫 𝐁𝐨𝐭 𝐃𝐞 𝐖𝐡𝐚𝐭𝐬𝐚𝐩𝐩 🥳 ', previewType: 0, thumbnail: img.getRandom(), sourceUrl: loli.getRandom()}}})  
+𓃠 *${especialCant4 * 2} ${global.rpgshop.emoticon(especial4)}*`, m, {contextInfo: {externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: wm, body: ' 💫 𝐒𝐮𝐩𝐞𝐫 𝐁𝐨𝐭 𝐃𝐞 𝐖𝐡𝐚𝐭𝐬𝐚𝐩𝐩 🥳 ', previewType: 0, thumbnail: img.getRandom(), sourceUrl: redes.getRandom()}}})  
 user[especial] += especialCant * 2
 user[especial2] += especialCant2 * 2
 user[especial3] += especialCant3 * 2
@@ -93,7 +93,7 @@ conn.reply(m.chat, `*${lenguajeGB.smsAutoLv7()} 45!!* 🏆
 𓃠 *${especialCant * 3} ${global.rpgshop.emoticon(especial)}*
 𓃠 *${especialCant2 * 3} ${global.rpgshop.emoticon(especial2)}*
 𓃠 *${especialCant3 * 3} ${global.rpgshop.emoticon(especial3)}*
-𓃠 *${especialCant4 * 3} ${global.rpgshop.emoticon(especial4)}*`, m, {contextInfo: {externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: wm, body: ' 💫 𝐒𝐮𝐩𝐞𝐫 𝐁𝐨𝐭 𝐃𝐞 𝐖𝐡𝐚𝐭𝐬𝐚𝐩𝐩 🥳 ', previewType: 0, thumbnail: img.getRandom(), sourceUrl: loli.getRandom()}}})  
+𓃠 *${especialCant4 * 3} ${global.rpgshop.emoticon(especial4)}*`, m, {contextInfo: {externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: wm, body: ' 💫 𝐒𝐮𝐩𝐞𝐫 𝐁𝐨𝐭 𝐃𝐞 𝐖𝐡𝐚𝐭𝐬𝐚𝐩𝐩 🥳 ', previewType: 0, thumbnail: img.getRandom(), sourceUrl: redes.getRandom()}}})  
 user[especial] += especialCant * 3
 user[especial2] += especialCant2 * 3
 user[especial3] += especialCant3 * 3
@@ -104,7 +104,7 @@ conn.reply(m.chat, `*${lenguajeGB.smsAutoLv7()} 55!!* 🏆
 𓃠 *${especialCant * 3} ${global.rpgshop.emoticon(especial)}*
 𓃠 *${especialCant2 * 3} ${global.rpgshop.emoticon(especial2)}*
 𓃠 *${especialCant3 * 3} ${global.rpgshop.emoticon(especial3)}*
-𓃠 *${especialCant4 * 3} ${global.rpgshop.emoticon(especial4)}*`, m, {contextInfo: {externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: wm, body: ' 💫 𝐒𝐮𝐩𝐞𝐫 𝐁𝐨𝐭 𝐃𝐞 𝐖𝐡𝐚𝐭𝐬𝐚𝐩𝐩 🥳 ', previewType: 0, thumbnail: img.getRandom(), sourceUrl: loli.getRandom()}}})  
+𓃠 *${especialCant4 * 3} ${global.rpgshop.emoticon(especial4)}*`, m, {contextInfo: {externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: wm, body: ' 💫 𝐒𝐮𝐩𝐞𝐫 𝐁𝐨𝐭 𝐃𝐞 𝐖𝐡𝐚𝐭𝐬𝐚𝐩𝐩 🥳 ', previewType: 0, thumbnail: img.getRandom(), sourceUrl: redes.getRandom()}}})  
 user[especial] += especialCant * 3
 user[especial2] += especialCant2 * 3
 user[especial3] += especialCant3 * 3
@@ -115,7 +115,7 @@ conn.reply(m.chat, `*${lenguajeGB.smsAutoLv7()} 70!!* 🏆
 𓃠 *${especialCant * 4} ${global.rpgshop.emoticon(especial)}*
 𓃠 *${especialCant2 * 4} ${global.rpgshop.emoticon(especial2)}*
 𓃠 *${especialCant3 * 4} ${global.rpgshop.emoticon(especial3)}*
-𓃠 *${especialCant4 * 4} ${global.rpgshop.emoticon(especial4)}*`, m, {contextInfo: {externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: wm, body: ' 💫 𝐒𝐮𝐩𝐞𝐫 𝐁𝐨𝐭 𝐃𝐞 𝐖𝐡𝐚𝐭𝐬𝐚𝐩𝐩 🥳 ', previewType: 0, thumbnail: img.getRandom(), sourceUrl: loli.getRandom()}}})  
+𓃠 *${especialCant4 * 4} ${global.rpgshop.emoticon(especial4)}*`, m, {contextInfo: {externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: wm, body: ' 💫 𝐒𝐮𝐩𝐞𝐫 𝐁𝐨𝐭 𝐃𝐞 𝐖𝐡𝐚𝐭𝐬𝐚𝐩𝐩 🥳 ', previewType: 0, thumbnail: img.getRandom(), sourceUrl: redes.getRandom()}}})  
 user[especial] += especialCant * 4
 user[especial2] += especialCant2 * 4
 user[especial3] += especialCant3 * 4
@@ -126,7 +126,7 @@ conn.reply(m.chat, `*${lenguajeGB.smsAutoLv7()} 80!!* 🏆
 𓃠 *${especialCant * 4} ${global.rpgshop.emoticon(especial)}*
 𓃠 *${especialCant2 * 4} ${global.rpgshop.emoticon(especial2)}*
 𓃠 *${especialCant3 * 4} ${global.rpgshop.emoticon(especial3)}*
-𓃠 *${especialCant4 * 4} ${global.rpgshop.emoticon(especial4)}*`, m, {contextInfo: {externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: wm, body: ' 💫 𝐒𝐮𝐩𝐞𝐫 𝐁𝐨𝐭 𝐃𝐞 𝐖𝐡𝐚𝐭𝐬𝐚𝐩𝐩 🥳 ', previewType: 0, thumbnail: img.getRandom(), sourceUrl: loli.getRandom()}}})  
+𓃠 *${especialCant4 * 4} ${global.rpgshop.emoticon(especial4)}*`, m, {contextInfo: {externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: wm, body: ' 💫 𝐒𝐮𝐩𝐞𝐫 𝐁𝐨𝐭 𝐃𝐞 𝐖𝐡𝐚𝐭𝐬𝐚𝐩𝐩 🥳 ', previewType: 0, thumbnail: img.getRandom(), sourceUrl: redes.getRandom()}}})  
 user[especial] += especialCant * 4
 user[especial2] += especialCant2 * 4
 user[especial3] += especialCant3 * 4
@@ -137,7 +137,7 @@ conn.reply(m.chat, `*${lenguajeGB.smsAutoLv7()} 90!!* 🏆
 𓃠 *${especialCant * 4} ${global.rpgshop.emoticon(especial)}*
 𓃠 *${especialCant2 * 4} ${global.rpgshop.emoticon(especial2)}*
 𓃠 *${especialCant3 * 4} ${global.rpgshop.emoticon(especial3)}*
-𓃠 *${especialCant4 * 4} ${global.rpgshop.emoticon(especial4)}*`, m, {contextInfo: {externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: wm, body: ' 💫 𝐒𝐮𝐩𝐞𝐫 𝐁𝐨𝐭 𝐃𝐞 𝐖𝐡𝐚𝐭𝐬𝐚𝐩𝐩 🥳 ', previewType: 0, thumbnail: img.getRandom(), sourceUrl: loli.getRandom()}}})  
+𓃠 *${especialCant4 * 4} ${global.rpgshop.emoticon(especial4)}*`, m, {contextInfo: {externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: wm, body: ' 💫 𝐒𝐮𝐩𝐞𝐫 𝐁𝐨𝐭 𝐃𝐞 𝐖𝐡𝐚𝐭𝐬𝐚𝐩𝐩 🥳 ', previewType: 0, thumbnail: img.getRandom(), sourceUrl: redes.getRandom()}}})  
 user[especial] += especialCant * 4
 user[especial2] += especialCant2 * 4
 user[especial3] += especialCant3 * 4
@@ -148,7 +148,7 @@ conn.reply(m.chat, `*${lenguajeGB.smsAutoLv7()} 100!!* 🏆
 𓃠 *${especialCant * 10} ${global.rpgshop.emoticon(especial)}*
 𓃠 *${especialCant2 * 10} ${global.rpgshop.emoticon(especial2)}*
 𓃠 *${especialCant3 * 10} ${global.rpgshop.emoticon(especial3)}*
-𓃠 *${especialCant4 * 10} ${global.rpgshop.emoticon(especial4)}*`, m, {contextInfo: {externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: wm, body: ' 💫 𝐒𝐮𝐩𝐞𝐫 𝐁𝐨𝐭 𝐃𝐞 𝐖𝐡𝐚𝐭𝐬𝐚𝐩𝐩 🥳 ', previewType: 0, thumbnail: img.getRandom(), sourceUrl: loli.getRandom()}}})  
+𓃠 *${especialCant4 * 10} ${global.rpgshop.emoticon(especial4)}*`, m, {contextInfo: {externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: wm, body: ' 💫 𝐒𝐮𝐩𝐞𝐫 𝐁𝐨𝐭 𝐃𝐞 𝐖𝐡𝐚𝐭𝐬𝐚𝐩𝐩 🥳 ', previewType: 0, thumbnail: img.getRandom(), sourceUrl: redes.getRandom()}}})  
 user[especial] += especialCant * 10
 user[especial2] += especialCant2 * 10
 user[especial3] += especialCant3 * 10

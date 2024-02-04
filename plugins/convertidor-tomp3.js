@@ -2,7 +2,7 @@ import {toAudio} from '../lib/converter.js';
 const handler = async (m, {conn, usedPrefix, command}) => {
 const q = m.quoted ? m.quoted : m;
 const mime = (q || q.msg).mimetype || q.mediaType || '';
-if (!/video|audio/.test(mime)) return conn.reply(m.chat, `[ ⚠️ ] 𝐑𝐞𝐬𝐩𝐨𝐧𝐝𝐚 𝐚 𝐮𝐧 𝐕𝐢𝐝𝐞𝐨 𝐨 𝐍𝐨𝐭𝐚 𝐝𝐞 𝐯𝐨𝐳 𝐩𝐚𝐫𝐚 𝐜𝐨𝐧𝐯𝐞𝐫𝐭𝐢𝐫 𝐮𝐧 𝐬𝐮𝐝𝐢𝐨 𝐌𝐏𝟑 `, m, {contextInfo: {externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: mg, body: ' 💫 𝐒𝐮𝐩𝐞𝐫 𝐁𝐨𝐭 𝐃𝐞 𝐖𝐡𝐚𝐭𝐬𝐚𝐩𝐩 🥳', previewType: 0, thumbnail: img.getRandom(), sourceUrl: loli.getRandom()}}}) 
+if (!/video|audio/.test(mime)) return conn.reply(m.chat, `[ ⚠️ ] 𝐑𝐞𝐬𝐩𝐨𝐧𝐝𝐚 𝐚 𝐮𝐧 𝐕𝐢𝐝𝐞𝐨 𝐨 𝐍𝐨𝐭𝐚 𝐝𝐞 𝐯𝐨𝐳 𝐩𝐚𝐫𝐚 𝐜𝐨𝐧𝐯𝐞𝐫𝐭𝐢𝐫 𝐮𝐧 𝐬𝐮𝐝𝐢𝐨 𝐌𝐏𝟑 `, m, {contextInfo: {externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: mg, body: ' 💫 𝐒𝐮𝐩𝐞𝐫 𝐁𝐨𝐭 𝐃𝐞 𝐖𝐡𝐚𝐭𝐬𝐚𝐩𝐩 🥳', previewType: 0, thumbnail: img.getRandom(), sourceUrl: redes.getRandom()}}}) 
 const media = await q.download();
 if (!media) throw `[ ⚠️ ] 𝐒𝐞 𝐦𝐞 𝐜𝐚𝐲𝐨 𝐞𝐥 𝐢𝐧𝐭𝐞𝐧𝐞𝐭 👽, 𝐢𝐧𝐭𝐞𝐧𝐭𝐚 𝐧𝐮𝐞𝐯𝐚𝐦𝐞𝐧𝐭𝐞`
 const audio = await toAudio(media, 'mp4');

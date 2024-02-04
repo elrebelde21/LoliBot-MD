@@ -1,7 +1,7 @@
 let handler = async (m, { conn, text, args, usedPrefix, command }) => {
-if (!args[0]) return conn.reply(m.chat,       `${lenguajeGB['smsAvisoMG']()}𝙄𝙣𝙜𝙧𝙚𝙨𝙚 𝙚𝙡 𝙉𝙤𝙢𝙗𝙧𝙚 𝙙𝙚 𝙪𝙨𝙪𝙖𝙧𝙞𝙤 𝙙𝙚 𝙄𝙂 𝙥𝙖𝙧𝙖 𝙙𝙚𝙨𝙘𝙖𝙧𝙜𝙖𝙧 𝙡𝙖𝙨 𝙝𝙞𝙨𝙩𝙤𝙧𝙞𝙖\n𝙀𝙟:\n*${usedPrefix + command} gatadios*`, m, {contextInfo: {externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, body: wm, previewType: 0, thumbnail: img.getRandom(), sourceUrl: loli.getRandom()}}})
+if (!args[0]) return conn.reply(m.chat,       `${lenguajeGB['smsAvisoMG']()}𝙄𝙣𝙜𝙧𝙚𝙨𝙚 𝙚𝙡 𝙉𝙤𝙢𝙗𝙧𝙚 𝙙𝙚 𝙪𝙨𝙪𝙖𝙧𝙞𝙤 𝙙𝙚 𝙄𝙂 𝙥𝙖𝙧𝙖 𝙙𝙚𝙨𝙘𝙖𝙧𝙜𝙖𝙧 𝙡𝙖𝙨 𝙝𝙞𝙨𝙩𝙤𝙧𝙞𝙖\n𝙀𝙟:\n*${usedPrefix + command} gatadios*`, m, {contextInfo: {externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, body: wm, previewType: 0, thumbnail: img.getRandom(), sourceUrl: redes.getRandom()}}})
 try {
-await conn.reply(m.chat,  `⌛ 𝐀𝐠𝐮𝐚𝐫𝐝𝐞 𝐮𝐧 𝐦𝐨𝐦𝐞𝐧𝐭𝐨 𝐲𝐚 𝐯𝐨𝐲 𝐜𝐨𝐧 𝐭𝐮 𝐩𝐞𝐫𝐝𝐢𝐝𝐨 🏃‍♂️...`, m, {contextInfo: {externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, body: ' 🚫𝐍𝐨 𝐇𝐚𝐠𝐚 𝐬𝐩𝐚𝐦 ', previewType: 0, thumbnail: img.getRandom(), sourceUrl: loli.getRandom()}}})    
+await conn.reply(m.chat,  `⌛ 𝐀𝐠𝐮𝐚𝐫𝐝𝐞 𝐮𝐧 𝐦𝐨𝐦𝐞𝐧𝐭𝐨 𝐲𝐚 𝐯𝐨𝐲 𝐜𝐨𝐧 𝐭𝐮 𝐩𝐞𝐫𝐝𝐢𝐝𝐨 🏃‍♂️...`, m, {contextInfo: {externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, body: ' 🚫𝐍𝐨 𝐇𝐚𝐠𝐚 𝐬𝐩𝐚𝐦 ', previewType: 0, thumbnail: img.getRandom(), sourceUrl: redes.getRandom()}}})    
 const res = await fetch(`https://api.lolhuman.xyz/api/igstory/${args[0]}?apikey=${lolkeysapi}`)
 var anu = await res.json()
 var anuku = anu.result

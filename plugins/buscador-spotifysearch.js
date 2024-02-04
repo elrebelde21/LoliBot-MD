@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 let handler = async (m, { conn, text, usedPrefix, command }) => {
-if (!text) return conn.reply(m.chat,  `${lenguajeGB['smsAvisoMG']()}𝐈𝐧𝐠𝐫𝐞𝐬𝐚 𝐞𝐥 𝐧𝐨𝐦𝐛𝐫𝐞 𝐝𝐞 𝐚𝐥𝐠𝐮𝐧 𝐚𝐫𝐭𝐢𝐬𝐭𝐚 𝐝𝐞 𝐒𝐩𝐨𝐭𝐢𝐟𝐲\n𝐄𝐣𝐞𝐦𝐩𝐥𝐨:\n${usedPrefix + command} tini`, m, {contextInfo: {externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: mg, body: wm, previewType: 0, thumbnail: img.getRandom(), sourceUrl: loli.getRandom()}}})
+if (!text) return conn.reply(m.chat,  `${lenguajeGB['smsAvisoMG']()}𝐈𝐧𝐠𝐫𝐞𝐬𝐚 𝐞𝐥 𝐧𝐨𝐦𝐛𝐫𝐞 𝐝𝐞 𝐚𝐥𝐠𝐮𝐧 𝐚𝐫𝐭𝐢𝐬𝐭𝐚 𝐝𝐞 𝐒𝐩𝐨𝐭𝐢𝐟𝐲\n𝐄𝐣𝐞𝐦𝐩𝐥𝐨:\n${usedPrefix + command} tini`, m, {contextInfo: {externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: mg, body: wm, previewType: 0, thumbnail: img.getRandom(), sourceUrl: redes.getRandom()}}})
 try {
 let resultados = await spotifyxv(text)
 let res = resultados.map((v, i) => {
