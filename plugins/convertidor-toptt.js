@@ -1,18 +1,19 @@
-import { toPTT } from '../lib/converter.js'
-let handler = async (m, { conn, usedPrefix, command }) => {
-let q = m.quoted ? m.quoted : m
-let mime = (m.quoted ? m.quoted : m.msg).mimetype || ''
-if (!/video|audio/.test(mime)) throw `${mg}𝑹𝒆𝒔𝒑𝒐𝒏𝒅𝒆 𝒂 𝒖𝒏 𝒗𝒊́𝒅𝒆𝒐 𝒐 𝒂𝒖𝒅𝒊𝒐 𝒑𝒂𝒓𝒂 𝒄𝒐𝒏𝒗𝒆𝒓𝒕𝒊𝒓 𝒂 𝒏𝒐𝒕𝒂 𝒅𝒆 𝒗𝒐𝒛`
-let media = await q.download?.()
-if (!media && !/video/.test(mime)) throw `𝑰𝒏𝒕𝒆𝒏𝒕𝒆́ 𝒅𝒆 𝒏𝒖𝒆𝒗𝒐 𝒎𝒂́𝒔 𝒕𝒂𝒓𝒅𝒆`
-if (!media && !/audio/.test(mime)) throw `}𝑰𝒏𝒕𝒆𝒏𝒕𝒆́ 𝒅𝒆 𝒏𝒖𝒆𝒗𝒐 𝒎𝒂́𝒔 𝒕𝒂𝒓𝒅𝒆`
-let audio = await toPTT(media, 'mp4')
-if (!audio.data && !/audio/.test(mime)) throw `𝑰𝒏𝒕𝒆𝒏𝒕𝒆́ 𝒅𝒆 𝒏𝒖𝒆𝒗𝒐 𝒎𝒂́𝒔 𝒕𝒂𝒓𝒅𝒆.`
-if (!audio.data && !/video/.test(mime)) throw `𝑰𝒏𝒕𝒆𝒏𝒕𝒆́ 𝒅𝒆 𝒏𝒖𝒆𝒗𝒐 𝒎𝒂́𝒔 𝒕𝒂𝒓𝒅𝒆`
-conn.sendFile(m.chat, audio.data, 'error.mp3', '', m, true, { mimetype: 'audio/mp4' })
-}
-handler.help = ['tovn (reply)']
-handler.tags = ['audio']
-handler.command = /^tovn|vn|ptt$/i
-handler.register = true
-export default handler
+import {toPTT} from '../lib/converter.js';
+const handler = async (m, {conn, usedPrefix, command}) => {
+  const q = m.quoted ? m.quoted : m;
+  const mime = (m.quoted ? m.quoted : m.msg).mimetype || '';
+  if (!/video|audio/.test(mime)) return conn.reply(m.chat,   `[ ⚠️ ] 𝐑𝐞𝐬𝐩𝐨𝐧𝐝𝐚 𝐚𝐥 𝐕𝐢𝐝𝐞𝐨/𝐀𝐮𝐝𝐢𝐨 𝐪𝐮𝐞 𝐝𝐞𝐬𝐞𝐞 𝐜𝐨𝐧𝐯𝐞𝐫𝐭𝐢𝐫 𝐚 𝐍𝐨𝐭𝐚 𝐝𝐞 𝐯𝐨𝐳`, m, {contextInfo: {externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: mg, body: ' 💫 𝐒𝐮𝐩𝐞𝐫 𝐁𝐨𝐭 𝐃𝐞 𝐖𝐡𝐚𝐭𝐬𝐚𝐩𝐩 🥳 ', previewType: 0, thumbnail: img.getRandom(), sourceUrl: loli.getRandom()}}})
+  const media = await q.download?.();
+  if (!media && !/video/.test(mime)) throw `[ ⚠️ ] 𝐒𝐞 𝐦𝐞 𝐜𝐚𝐲𝐨 𝐞𝐥 𝐢𝐧𝐭𝐞𝐧𝐞𝐭 👽, 𝐢𝐧𝐭𝐞𝐧𝐭𝐚 𝐧𝐮𝐞𝐯𝐚𝐦𝐞𝐧𝐭𝐞`
+  if (!media && !/audio/.test(mime)) throw `[ ⚠️ ] 𝐒𝐞 𝐦𝐞 𝐜𝐚𝐲𝐨 𝐞𝐥 𝐢𝐧𝐭𝐞𝐧𝐞𝐭 👽, 𝐢𝐧𝐭𝐞𝐧𝐭𝐚 𝐧𝐮𝐞𝐯𝐚𝐦𝐞𝐧𝐭𝐞`
+  const audio = await toPTT(media, 'mp4');
+  if (!audio.data && !/audio/.test(mime)) throw `[ ⚠️ ] 𝐍𝐨 𝐬𝐞 𝐥𝐨𝐠𝐫𝐨 𝐜𝐨𝐧𝐯𝐞𝐫𝐭𝐢𝐫 𝐬𝐮 𝐧𝐨𝐭𝐚 𝐝𝐞 𝐯𝐨𝐳 𝐚 𝐀𝐮𝐝𝐢𝐨 𝐌𝐏𝟑, 𝐢𝐧𝐭𝐞𝐧𝐭𝐞 𝐦𝐚𝐬 𝐭𝐚𝐫𝐝𝐞`
+  if (!audio.data && !/video/.test(mime)) throw `[ ⚠️ ] 𝐍𝐨 𝐬𝐞 𝐥𝐨𝐠𝐫𝐨 𝐜𝐨𝐧𝐯𝐞𝐫𝐭𝐢𝐫 𝐬𝐮 𝐧𝐨𝐭𝐚 𝐝𝐞 𝐯𝐨𝐳 𝐚 𝐀𝐮𝐝𝐢𝐨 𝐌𝐏𝟑, 𝐢𝐧𝐭𝐞𝐧𝐭𝐞 𝐦𝐚𝐬 𝐭𝐚𝐫𝐝𝐞`
+  const aa = conn.sendFile(m.chat, audio.data, 'error.mp3', '', m, true, {mimetype: 'audio/mpeg'});
+  if (!aa) return conn.sendMessage(m.chat, {audio: {url: media}, fileName: 'error.mp3', mimetype: 'audio/mpeg', ptt: true}, {quoted: m});
+};
+handler.help = ['tovn (reply)'];
+handler.tags = ['audio'];
+handler.command = /^to(vn|(ptt)?)$/i;
+handler.register = true 
+export default handler;
