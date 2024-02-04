@@ -3,7 +3,7 @@ import fetch from 'node-fetch'
 import axios from "axios"
 
 let handler = async (m, { conn, usedPrefix, command }) => {
-let frep = { contextInfo: { externalAdReply: {title: wm, body: author, sourceUrl: [nna, nn, md, yt].getRandom(), thumbnail: await(await fetch(imagen)).buffer() }}}
+//let frep = { contextInfo: { externalAdReply: {title: wm, body: author, sourceUrl: redesMenu.getRandom(), thumbnail: await(await fetch(gataMenu.getRandom())).buffer() }}}
 let fkontak = { "key": { "participants":"0@s.whatsapp.net", "remoteJid": "status@broadcast", "fromMe": false, "id": "Halo" }, "message": { "contactMessage": { "vcard": `BEGIN:VCARD\nVERSION:3.0\nN:Sy;Bot;;;\nFN:y\nitem1.TEL;waid=${m.sender.split('@')[0]}:${m.sender.split('@')[0]}\nitem1.X-ABLabel:Ponsel\nEND:VCARD` }}, "participant": "0@s.whatsapp.net" }
 try { 
 if (command == 'consejo' || command == 'advice') { 
@@ -11,13 +11,13 @@ let img = 'https://img.freepik.com/vector-premium/caracter-gato-ilustracion-hoja
 let list = global.motivation 
 let contenido = list[Math.floor(Math.random() * list.length)]
 let result = await translate(`${contenido}`, { to: lenguajeGB.lenguaje(), autoCorrect: true })
-let texto = `*╭━━・☘️・━━━━・☘️・━━⬣*
+let texto = `
+*╭━━・☘️・━━━━・☘️・━━⬣*
 
 *ღ _${result.text}_*
 
 *╰━━・☘️・━━━━・☘️・━━⬣*`
-conn.sendFile(m.chat, img, 'error.png', texto.trim(), {contextInfo: { externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: `${wm}`, body: '', previewType: 0, thumbnail: imagen4, sourceUrl: [nna, nn, md, yt].getRandom()}}})}  
-//await conn.reply(m.chat,  `${lenguajeGB['smsAvisoMG']()}𝙄𝙉𝙂𝙍𝙀𝙎𝙀 𝙐𝙉 𝙀𝙉𝙇𝘼𝘾𝙀 𝘿𝙀 𝙁𝘼𝘾𝙀𝘽𝙊𝙊𝙆 𝙋𝘼𝙍𝘼 𝘿𝙀𝙎𝘾𝘼𝙍𝙂𝘼𝙍 𝙀𝙇 𝙑𝙄𝘿𝙀𝙊\n𝙀𝙅𝙀𝙈𝙋𝙇𝙊\n*${usedPrefix + command} https://www.facebook.com/watch?v=636541475139`, fkontak, {contextInfo: { externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: `${wm}`, body: '', previewType: 0, thumbnail: imagen4, sourceUrl: [nna, nn, md, yt].getRandom()}}})
+conn.sendFile(m.chat, img,  'error.jpg', texto.trim(), fkontak, false, { contextInfo: {externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: wm, body: ' 💫 𝐒𝐮𝐩𝐞𝐫 𝐁𝐨𝐭 𝐃𝐞 𝐖𝐡𝐚𝐭𝐬𝐚𝐩𝐩 🥳 ', previewType: 0, thumbnail: img.getRandom(), sourceUrl: loli.getRandom()}}})} 
 //await conn.sendButton(m.chat, texto.trim(), wm, img, [[lenguajeGB.smsConj(), `${usedPrefix + command}`], [lenguajeGB.smsConMenu(), `${usedPrefix}menu`]], m, frep)}   
   
 if (command == 'frase2' || command == 'phrase2') { 
@@ -26,12 +26,13 @@ let list = (await axios.get(`https://raw.githubusercontent.com/GataNina-Li/GataB
 let contenido = await list[Math.floor(list.length * Math.random())]
 let frase = contenido.motivasi
 let frase2 = await translate(`${frase}`, { to: lenguajeGB.lenguaje(), autoCorrect: true })
-let texto = `*╭━━・☘️・━━━━・☘️・━━⬣*
+let texto = `
+*╭━━・☘️・━━━━・☘️・━━⬣*
 
 *ღ ${frase2.text}*
 
 *╰━━・☘️・━━━━・☘️・━━⬣*`
-conn.sendFile(m.chat, img, 'error.png', texto.trim(), m, fkontak)} 
+conn.sendFile(m.chat, img,  'error.jpg', texto.trim(), fkontak, false, { contextInfo: {externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: wm, body: ' 💫 𝐒𝐮𝐩𝐞𝐫 𝐁𝐨𝐭 𝐃𝐞 𝐖𝐡𝐚𝐭𝐬𝐚𝐩𝐩 🥳 ', previewType: 0, thumbnail: img.getRandom(), sourceUrl: loli.getRandom()}}})} 
 //await conn.sendButton(m.chat, texto.trim(), wm, img, [[lenguajeGB.smsFras(), `${usedPrefix + command}`], [lenguajeGB.smsConMenu(), `${usedPrefix}menu`]], m, frep)} 
 } catch (e) {
 await m.reply(lenguajeGB['smsMalError3']() + '\n*' + lenguajeGB.smsMensError1() + '*\n*' + usedPrefix + `${lenguajeGB.lenguaje() == 'es' ? 'reporte' : 'report'}` + '* ' + `${lenguajeGB.smsMensError2()} ` + usedPrefix + command)
@@ -39,7 +40,6 @@ console.log(`❗❗ ${lenguajeGB['smsMensError2']()} ${usedPrefix + command} ❗
 console.log(e)}  
 }
 handler.command = ['consejo', 'advice', 'frase2', 'phrase2']
-handler.register = true
 export default handler
 
 global.motivation = [
