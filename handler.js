@@ -1057,12 +1057,10 @@ await delay(time)
 }, time)
 }
 
-if (opts['swonly'] && m.chat !== 'status@broadcast')  return
 if (opts['nyimak']) return
 if (!isROwner && opts['self']) return 
-//if (opts['pconly'] && m.chat.endsWith('g.us')) return
-if (global.db.data.settings.solopv && m.chat.endsWith('g.us')) return  
-if (global.db.data.settings.sologp && !m.chat.endsWith('g.us') && !/jadibot|serbot|bots|stop/gim.test(m.text)) return 
+if (opts['pconly'] && m.chat.endsWith('g.us')) return
+if (opts['gconly'] && !m.chat.endsWith('g.us')) return
 if (opts['swonly'] && m.chat !== 'status@broadcast') return
 if (typeof m.text !== 'string')
 m.text = ''
