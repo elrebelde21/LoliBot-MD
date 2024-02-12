@@ -1021,6 +1021,8 @@ if (!('antiPrivate' in settings)) settings.antiPrivate = false
 if (!('antiCall' in settings)) settings.antiCall = true
 if (!('antiSpam' in settings)) settings.antiSpam = true
 if (!('antispam2' in settings)) settings.antispam2 = true
+if (!('solopv' in settings)) settings.solopv = false 
+if (!('sologp' in settings)) settings.sologp = false 
 if (!('jadibotmd' in settings)) settings.jadibotmd = true  
 } else global.db.data.settings[this.user.jid] = {
 self: false,
@@ -1032,27 +1034,17 @@ antiPrivate: false,
 antiCall: true,
 antiSpam: true,
 antispam2: true, 
+solopv: false, 
+sologp: false, 
 jadibotmd: true,
 }
 } catch (e) {
 console.error(e)
 }
-if (opts['nyimak'])
-return
-if (!m.fromMe && opts['self'])
-return
-if (opts['pconly'] && m.chat.endsWith('g.us'))
-return
-if (opts['gconly'] && !m.chat.endsWith('g.us'))
-return
-if (opts['swonly'] && m.chat !== 'status@broadcast')
-return
-if (typeof m.text !== 'string')
-m.text = ''
 
 const isROwner = [conn.decodeJid(global.conn.user.id), ...global.owner.map(([number]) => number)].map(v => v.replace(/[^0-9]/g, '') + '@s.whatsapp.net').includes(m.sender)
 const isOwner = isROwner || m.fromMe
- const isMods = isOwner || global.mods.map(v => v.replace(/[^0-9]/g, '') + '@s.whatsapp.net').includes(m.sender)
+const isMods = isOwner || global.mods.map(v => v.replace(/[^0-9]/g, '') + '@s.whatsapp.net').includes(m.sender)
 //const isPrems = isROwner || global.prems.map(v => v.replace(/[^0-9]/g, '') + '@s.whatsapp.net').includes(m.sender)
 const isPrems = isROwner || global.db.data.users[m.sender].premiumTime > 0
 if (opts['queque'] && m.text && !(isMods || isPrems)) {
@@ -1064,6 +1056,17 @@ if (queque.indexOf(previousID) === -1) clearInterval(this)
 await delay(time)
 }, time)
 }
+
+if (opts['swonly'] && m.chat !== 'status@broadcast')  return
+if (opts['nyimak']) return
+if (!isROwner && opts['self']) return 
+//if (opts['pconly'] && m.chat.endsWith('g.us')) return
+if (global.db.data.settings.solopv && m.chat.endsWith('g.us')) return  
+if (global.db.data.settings.sologp && !m.chat.endsWith('g.us') && !/jadibot|serbot|bots|stop/gim.test(m.text)) return 
+if (opts['swonly'] && m.chat !== 'status@broadcast') return
+if (typeof m.text !== 'string')
+m.text = ''
+
 if (m.isBaileys)
 return
 m.exp += Math.ceil(Math.random() * 10)
@@ -1175,29 +1178,18 @@ return;
 return;
 }
 		
-if (botSpam.antispam2 && m.text && user && user.lastCommandTime && (Date.now() - user.lastCommandTime) < 3000 && !isROwner) {
-if (user.commandCount === 2) {
-const remainingTime = Math.ceil((user.lastCommandTime + 3000 - Date.now()) / 1000);
-if (remainingTime > 0) {
-const messageText = `*𝙀𝙎𝙋𝙀𝙍𝘼 ${remainingTime} 𝙎𝙀𝙂𝙐𝙉𝘿𝙊 𝘼𝙉𝙏𝙀𝙎 𝘿𝙀 𝙐𝙎𝘼𝙍 𝙊𝙏𝙍𝙊 𝘾𝙊𝙈𝘼𝙉𝘿𝙊*`;
-//m.reply(messageText);
-return;
-} else {
-user.commandCount = 0;
+//Antispam		
+if (user.antispam2) return
+let time = global.db.data.users[m.sender].spam + 5000
+if (new Date - global.db.data.users[m.sender].spam < 5000) throw console.log(`[ SPAM ]`) 
+global.db.data.users[m.sender].spam = new Date * 1
 }
-} else {
-user.commandCount += 1;
-}
-} else {
-user.lastCommandTime = Date.now();
-user.commandCount = 1;
-}}
 
 let hl = _prefix 
 let adminMode = global.db.data.chats[m.chat].modoadmin
 let gata = `${plugins.botAdmin || plugins.admin || plugins.group || plugins || noPrefix || hl ||  m.text.slice(0, 1) == hl || plugins.command}`
 if (adminMode && !isOwner && !isROwner && m.isGroup && !isAdmin && gata) return   
-if (plugin.rowner && plugin.owner && !(isROwner || isOwner)) { // Both Owner
+if (plugin.rowner && plugin.owner && !(isROwner || isOwner)) { // Owner
 fail('owner', m, this)
 continue
 }
