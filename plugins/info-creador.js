@@ -20,7 +20,12 @@ let fkontak = { "key": { "participants":"0@s.whatsapp.net", "remoteJid": "status
 let ppown = await conn.profilePictureUrl(nomorown + '@s.whatsapp.net', 'image').catch(_ => imagen1[1]) 
 let teksbio = `*𝘾𝙤𝙣𝙩𝙖𝙘𝙩𝙤* 
 *${asistencia} (no bot)*
-*${bot} (bot)*`
+*${bot} (bot)*
+
+__________________________
+
+💫 *¡Visita todos los enlaces oficiales en un único lugar!*
+https://atom.bio/lolibot`
   let teks = ' '
 const sections = [{title: `𝙋𝙍𝙊𝙋𝙄𝙀𝙏𝘼𝙍𝙄𝙊/𝙊𝙒𝙉𝙀𝙍`, rows: [{title: "🔰 • NUMERO", rowId: ".owner bio"}, {title: "🌐 • CUENTAS OFICIALES", rowId: ".cuentasgb"}, {title: "🙌 • GRUPOS", rowId: ".grupos"},]}, {title: `–––––––·• 𝘼𝙋𝙊𝙔𝘼 𝘼𝙇 𝘽𝙊𝙏 –––––––·•`, rows: [ {title: "🤖 • INSTALARBOT", rowId: ".instalarbot"}, {title: "🌟 • SC", rowId: "Sc"}, ]}, ]
 

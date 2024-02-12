@@ -68,7 +68,7 @@ let username = conn.getName(who)
 let Terminos = `*_Toda la información que se mencione aquí no excluye a la Propietario del Bot, y Propietarios Acredores al uso de LoliBot-MD_*
 *_No Somos responsables del desconocimiento que tenga por parte de esta información._*
 
-*TÉRMINOS DE PRIVACIDAD*
+\`*TÉRMINOS DE PRIVACIDAD*\`
 _- Somos consciente del constante uso que le pueda dar al Bot, y también Garantizamos que la información como (imágenes, vídeos, enlaces, ubicación, Audios, Stickers, Gif, Contactos que Usted Proporcione en torno a Número(s) Oficial(es) No son ni serán Compartido Con Nadie, ni se usaran dicho Datos fuera del entorno del BOT._
 
 _- Lo que realicé con el BOT queda solo en Usted ya que en Número(s) Oficial(es) El Chat se Borra cada 24 Horas, según el tiempo de Mensajes Temporales de WhatsApp._
@@ -80,7 +80,7 @@ _- El chat anónimo del comando #start, valga la redundancia no mostrará ningú
 _- NO somos responsable si Hay alteraciones de este Bot no siendo Número(s) Oficial(es) y tengan de uso un Repositorio de GitHub que no corresponda al Oficial, o que implementen Usuarios de Terceros integraciones que comprometan a los(as) Usuarios(as) al utilizar Versiones no Oficiales._
 
 
-*TÉRMINOS DE USO* 
+\`TÉRMINOS DE USO\`
 _- La información que haya en este Bot y el/la usuario/a Haga uso de las Mismas asumirá saber los Términos y Condiciones de tal forma que no habrá incovenientes al hacer un uso Particular de las Funciones del Bot._
 
 _- El Bot contiene Material que solo puede ser visible para mayores de 18 Años, NO somos responsable si no cumple con la edad mínima para usar el Material para Adultos._
@@ -92,7 +92,7 @@ _- Al hacer uso de una solicitud para ingreso de grupo con Una Cuenta Oficial, e
 _- Si ha recibido un Comunicado Oficial siendo Número(s) Oficial(es) Mantener el Respeto de la misma manera si recibe un Mensaje sin haber usado un Comando Mantener el Respeto ya que puede en este ultimo caso ser una Persona Real._
 
 
-*CONDICIONES DE USO*
+\`CONDICIONES DE USO\`
 _- NO haga ni intente Llamar o hacer Videollamada al Bot siendo Número(s) Oficial(es) ya que obstaculiza el funcionamiento del BOT._
 
 _- NO usar el Bot siendo Número(s) Oficial(es) para llevar a cabo alguna acción hostil que pueda verse comprometida el Funcionamiento del BOT._
@@ -101,25 +101,23 @@ _- NO use el comando de SPAM repetidamente, ya que Provocará un Mal funcionamie
 
 _- Al hacer uso de ciertos comandos que tengan como objetivo socavar la incomodidad, intranquilidad, molestia u otro termino tajante, se tomarán las respectivas sanciones o llamados de alerta para prevalecer la integridad de los/las Usuarios(as) y funcionamiento de LoliBot-MD._
 
+\`ESTE ES EL REPOSITORIO OFICIAL\`
+> *${md}*
 
-*ESTE ES EL REPOSITORIO OFICIAL*
- *${md}*
+\`CANAL UPDATE ACTUALIZACIONES Y NOVEDADES SOBRE EL BOT*\`
+> *infomarte sobre la nueva actualizaciónes y novedades de bot aqui*
+> ${nna}
 
-*CANAL UPDATE ACTUALIZACIONES Y NOVEDADES SOBRE EL BOT*
-*imfomarte sobre la nueva actualizaciónes y novedades de bot aqui*
-${nna}
+\`¡Visita todos los enlaces oficiales en un único lugar!*\`
+https://atom.bio/lolibot
 
-*FACEBOOK*
-~ _puede unirte al grupo asistencia facebook del bot_
-*${fb}*
+\`DONAR A LA CREADOR EN ESTA CUENTA OFICIAL*\`
+> _Si te Agrada y valoras el Trabajo que he realizado, puedes ayudarme en Donar para que pueda continuar en este Proyecto_
+> *🔸 MERCADO PAGO :*
+> • Alias: OficialGB
 
-*DONAR A LA CREADOR EN ESTA CUENTA OFICIAL*
-~ _Si te Agrada y valoras el Trabajo que he realizado, puedes ayudarme en Donar para que pueda continuar en este Proyecto_
-*🔸 MERCADO PAGO :*
-• Alias: elrebelde21
-
-*~ Muchas Gracias Por tomarte el tiempo en informate sobre LoliBot-MD*`.trim()
-await conn.sendFile(m.chat, pp, 'gata.mp4', Terminos)
+> *~ Muchas Gracias Por tomarte el tiempo en informate sobre LoliBot-MD*`.trim()
+await conn.sendFile(m.chat, pp, 'bots.mp4', Terminos)
 //conn.sendButton(m.chat, TerminoA, terminoB, pp, [['ɢʀᴜᴘᴏs', `#grupos`]], m)
 }
 

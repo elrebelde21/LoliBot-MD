@@ -10,7 +10,7 @@ if (!text) throw `${lenguajeGB['smsAvisoMG']()} ${lenguajeGB['smsMalused']()}\n*
 if (text.includes('+')) throw  `${lenguajeGB['smsAvisoMG']()}𝙄𝙉𝙂𝙍𝙀𝙎𝙀 𝙀𝙇 𝙉𝙐𝙈𝙀𝙍𝙊 𝙏𝙊𝘿𝙊 𝙅𝙐𝙉𝙏𝙊 𝙎𝙄𝙉  𝙀𝙡 *+*`
 let group = m.chat
 let link = 'https://chat.whatsapp.com/' + await conn.groupInviteCode(group)
-await conn.reply(text+'@s.whatsapp.net', `Hola! me presento, soy The-LoliBot-MD ✨ y soy un Bot para WhatsApp, una persona del grupo utilizo el comando para añadirte al grupo, pero no pude agregarte, asi que te mando la invitacion para que te agregues, te esperamos!!\n\n${link}`, m, {mentions: [m.sender]})
+await conn.reply(text+'@s.whatsapp.net', `Hola! me presento, soy LoliBot-MD ✨, soy un Bot de WhatsApp, una persona del grupo utilizo el comando para añadirte al grupo, pero no pude agregarte, asi que te mando la invitacion para que te agregues, te esperamos!!\n\n${link}`, m, {mentions: [m.sender]})
 m.reply(`*@${who.split`@`[0]}*\n*Enviando invitacion a su privado...*`)}
 handler.help = ['add', '+'].map(v => v + ' número')
 handler.tags = ['group']

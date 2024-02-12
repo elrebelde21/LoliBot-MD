@@ -14,17 +14,17 @@ let users = global.db.data.users[m.sender]
 //let time = global.db.data.users[m.sender].lastwork + 30000
 //if (new Date - users.lastwork < 30000) throw `*𝙑𝙐𝙀𝙇𝙑𝘼 𝙀𝙉 ${msToTime(time - new Date())} 𝙋𝘼𝙍𝘼 𝘾𝙊𝙉𝙏𝙄𝙉𝙐𝘼𝙍 𝘼𝙋𝙊𝙎𝙏𝘼𝙉𝘿𝙊* 🎰\n\n*𝘾𝙊𝙈𝙀 𝘽𝘼𝘾𝙆 𝙄𝙉 ${msToTime(time - new Date())} 𝙏𝙊 𝘾𝙊𝙉𝙏𝙄𝙉𝙐𝙀 𝘽𝙀𝙏𝙏𝙄𝙉𝙂* 💰`
 
-if (apuesta < 10) throw `${lenguajeGB['smsAvisoAG']()}𝑫𝒆𝒃𝒆𝒓 𝒅𝒆𝒍 𝒂𝒑𝒐𝒔𝒕𝒂𝒓 𝒖𝒏 𝒎𝒊́𝒏𝒊𝒎𝒐 𝒅𝒆 *10*`
+if (apuesta < 10) throw `${lenguajeGB['smsAvisoAG']()}𝐃𝐞𝐛𝐞𝐬 𝐝𝐞𝐥 𝐚𝐩𝐨𝐬𝐭𝐚𝐫 𝐮𝐧 𝐦𝐢𝐧𝐢𝐦𝐨𝐬 𝐝𝐞 *10*`
 
 if (users.exp < apuesta) {
-throw `${lenguajeGB['smsAvisoFG']()}𝑵𝒐 𝒂𝒍𝒄𝒂𝒏𝒛𝒂 𝒑𝒂𝒓𝒂 𝒂𝒑𝒐𝒔𝒕𝒂𝒓 𝒆𝒙𝒑, 𝒍𝒆 𝒓𝒆𝒄𝒐𝒎𝒊𝒆𝒏𝒅𝒐 𝒊𝒏𝒕𝒆𝒓𝒂𝒄𝒕𝒖𝒂𝒓 𝒄𝒐𝒏 𝒆𝒍 𝒃𝒐𝒕 𝒑𝒂𝒓𝒂 𝒐𝒃𝒕𝒆𝒏𝒆𝒓 𝒎𝒂́𝒔 𝒓𝒆𝒄𝒖𝒓𝒔𝒐𝒔`    
+throw `${lenguajeGB['smsAvisoFG']()}𝐍𝒐 𝒂𝒍𝒄𝒂𝒏𝒛𝒂 𝒑𝒂𝒓𝒂 𝒂𝒑𝒐𝒔𝒕𝒂𝒓 𝒆𝒙𝒑, 𝒍𝒆 𝒓𝒆𝒄𝒐𝒎𝒊𝒆𝒏𝒅𝒐 𝒊𝒏𝒕𝒆𝒓𝒂𝒄𝒕𝒖𝒂𝒓 𝒄𝒐𝒏 𝒆𝒍 𝒃𝒐𝒕 𝒑𝒂𝒓𝒂 𝒐𝒃𝒕𝒆𝒏𝒆𝒓 𝒎𝒂́𝒔 𝒓𝒆𝒄𝒖𝒓𝒔𝒐𝒔`    
 }
 if (command == 'slot1') {
 let time = global.db.data.users[m.sender].lastslot + 60000
-if (new Date - users.lastslot < 60000) throw `*𝑽𝒖𝒆𝒍𝒗𝒂 𝒆𝒏 ${msToTime(time - new Date())} 𝑷𝒂𝒓𝒂 𝒄𝒐𝒏𝒕𝒊𝒏𝒖𝒂𝒓 𝒂 𝒑𝒐𝒔𝒕𝒂𝒏𝒅𝒐 𝒆𝒙𝒑* 🎰`
+if (new Date - users.lastslot < 60000) throw `*𝐕𝐮𝐞𝐥𝐯𝐚 𝐞𝐧: ${msToTime(time - new Date())} 𝐏𝐚𝐫𝐚 𝐜𝐨𝐧𝐭𝐢𝐧𝐮𝐚𝐫 𝐚𝐩𝐨𝐬𝐭𝐚𝐧𝐝𝐨 𝐞𝐱𝐩* 🎰`
 users.lastslot = new Date * 1
     
-let emojis = ["🍁", "⚡", "🍇"];
+let emojis = ["💎", "⚡", "🪙"];
 let a = Math.floor(Math.random() * emojis.length);
 let b = Math.floor(Math.random() * emojis.length);
 let c = Math.floor(Math.random() * emojis.length);
@@ -83,10 +83,10 @@ throw `${lenguajeGB['smsAvisoFG']()}𝑵𝒐 𝒂𝒍𝒄𝒂𝒏𝒛𝒂 𝒑�
 }
 if (command == 'slot2') {
 let time = global.db.data.users[m.sender].lastslot + 60000
-if (new Date - users.lastslot < 60000) throw `*𝑽𝒖𝒆𝒍𝒗𝒂 𝒆𝒏 ${msToTime(time - new Date())} 𝑷𝒂𝒓𝒂 𝒄𝒐𝒏𝒕𝒊𝒏𝒖𝒂𝒓 𝒂 𝒑𝒐𝒔𝒕𝒂𝒏𝒅𝒐 𝑳𝒐𝒍𝒊𝒄𝒐𝒊𝒏𝒔* 🎰`
+if (new Date - users.lastslot < 60000) throw `*𝐕𝐮𝐞𝐥𝐯𝐚 𝐞𝐧:${msToTime(time - new Date())} 𝐏𝐚𝐫𝐚 𝐜𝐨𝐧𝐭𝐢𝐧𝐮𝐚𝐫 𝐚𝐩𝐨𝐬𝐭𝐚𝐧𝐝𝐨 𝐋𝐨𝐥𝐢𝐂𝐨𝐢𝐧𝐬* 🎰`
 users.lastslot = new Date * 1
     
-let emojis = ["🐈", "🐓", "🐙"];
+let emojis = ["🪙", "🔮", "🧿"];
 let a = Math.floor(Math.random() * emojis.length);
 let b = Math.floor(Math.random() * emojis.length);
 let c = Math.floor(Math.random() * emojis.length);
@@ -113,10 +113,10 @@ if (a == b && b == c) {
 end = `✨ *QUE PRO!! HAS GANADO +${apuesta + apuesta} GataCoins*`
 users.money += apuesta
 } else if (a == b || a == c || b == c) {
-end = `🙀 *CASI!!, VUELVA A INTENTAR*\n*BONO DE +30 GataCoins*`
+end = `🙀 *CASI!!, VUELVA A INTENTAR*\n*BONO DE +30 LoliCoins*`
 users.money += 30
 } else {
-end = `😿 *HA PERDIDO!! ❌ -${apuesta} GataCoins*`
+end = `😿 *HA PERDIDO!! ❌ -${apuesta} LoliCoins*`
 users.money -= apuesta
 }
 //users.lastslot = new Date * 1
@@ -144,10 +144,10 @@ throw `${lenguajeGB['smsAvisoFG']()}𝑵𝒐 𝒂𝒍𝒄𝒂𝒏𝒛𝒂 𝒑�
 }
 if (command == 'slot3') {
 let time = global.db.data.users[m.sender].lastslot + 30000
-if (new Date - users.lastslot < 30000) throw `*𝑽𝒖𝒆𝒍𝒗𝒂 𝒆𝒏 ${msToTime(time - new Date())} 𝑷𝒂𝒓𝒂 𝒄𝒐𝒏𝒕𝒊𝒏𝒖𝒂𝒓 𝒂 𝒑𝒐𝒔𝒕𝒂𝒏𝒅𝒐 𝑫𝒊𝒂𝒎𝒂𝒏𝒕𝒆* 🎰`
+if (new Date - users.lastslot < 30000) throw `*𝐕𝐮𝐞𝐥𝐯𝐚 𝐞𝐧: ${msToTime(time - new Date())} 𝐏𝐚𝐫𝐚 𝐜𝐨𝐧𝐭𝐢𝐧𝐮𝐚𝐫 𝐚𝐩𝐨𝐬𝐭𝐚𝐧𝐝𝐨 𝐃𝐢𝐚𝐦𝐚𝐧𝐭𝐞* 🎰`
 users.lastslot = new Date * 1
     
-let emojis = ["🪵", "💣", "💎"];
+let emojis = ["🪙", "💣", "💎"];
 let a = Math.floor(Math.random() * emojis.length);
 let b = Math.floor(Math.random() * emojis.length);
 let c = Math.floor(Math.random() * emojis.length);
@@ -201,7 +201,7 @@ await conn.reply(m.chat, sss, m)}
         
         
 if (command == 'slot') {       
-await conn.reply(m.chat, `*Elija en que apostará ${apuesta}*\n\n⚡ Exp:\n${usedPrefix}slot1 ${apuesta}\n\n🐈 Lolicoins:\n${usedPrefix}slot2 ${apuesta}\n\n💎 diamante:\n${usedPrefix}slot3 ${apuesta}`, m)}
+await conn.reply(m.chat, `*Elija en que apostará ${apuesta}*\n\n⚡ Exp:\n${usedPrefix}slot1 ${apuesta}\n\n🪙 Lolicoins:\n${usedPrefix}slot2 ${apuesta}\n\n💎 diamante:\n${usedPrefix}slot3 ${apuesta}`, m)}
 /*await conn.sendHydrated(m.chat, `*Elija en que apostará ${apuesta}*`, wm, null, md, '𝙂𝙖𝙩𝙖𝘽𝙤𝙩-𝙈𝘿', null, null, [
 ['⚡ 𝙀𝙓𝙋', `${usedPrefix}slot1 ${apuesta}`],
 ['🐈 𝙂𝘼𝙏𝘼𝘾𝙊𝙄𝙉𝙎', `${usedPrefix}slot2 ${apuesta}`],
@@ -209,7 +209,7 @@ await conn.reply(m.chat, `*Elija en que apostará ${apuesta}*\n\n⚡ Exp:\n${use
 ], m,)}*/
         
 if (command == 'apostar') {       
-await conn.reply(m.chat, `*Elija en que apostará ${apuesta}*\n\n*Choose what you will*\n\n⚡Exp:\n${usedPrefix}slot1 ${apuesta}\n🐈 Lolicoins:\n${usedPrefix}slot2 ${apuesta}\n💎 Diamante:\n${usedPrefix}slot3 ${apuesta}`, m)}
+await conn.reply(m.chat, `*Elija en que apostará ${apuesta}*\n\n⚡Exp:\n${usedPrefix}slot1 ${apuesta}\n🪙 Lolicoins:\n${usedPrefix}slot2 ${apuesta}\n💎 Diamante:\n${usedPrefix}slot3 ${apuesta}`, m)}
 /*await conn.sendHydrated(m.chat, `*Elija en que apostará ${apuesta}*\n\n*Choose what you will*`, wm, null, md, '𝙂𝙖𝙩𝙖𝘽𝙤𝙩-𝙈𝘿', null, null, [
 ['⚡ 𝙀𝙓𝙋', `${usedPrefix}slot1 ${apuesta}`],
 ['🐈 𝙂𝘼𝙏𝘼𝘾𝙊𝙄𝙉𝙎', `${usedPrefix}slot2 ${apuesta}`],

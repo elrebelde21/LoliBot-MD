@@ -15,20 +15,20 @@ if (global.videoList[0]?.from == m.sender) {
 delete global.videoList;
 }
 let results = await yts(text);
-let textoInfo = `${lenguajeGB['smsAvisoIIG']()}𝙋𝙐𝙀𝘿𝙀𝙎 𝘿𝙀𝙎𝘾𝘼𝙍𝙂𝘼𝙎 𝙀𝙇 𝙑𝙄𝘿𝙀𝙊 𝙌𝙐𝙀 𝙌𝙐𝙄𝙀𝙍𝘼𝙎 𝘿𝙀 𝙀𝙎𝙏𝘼 𝙁𝙊𝙍𝙈𝘼:
-${usedPrefix}video <numero> 
-${usedPrefix}audio <numero> 
+let textoInfo = `${lenguajeGB['smsAvisoIIG']()} \`𝙋𝙐𝙀𝘿𝙀𝙎 𝘿𝙀𝙎𝘾𝘼𝙍𝙂𝘼𝙎 𝙀𝙇 𝙑𝙄𝘿𝙀𝙊 𝙌𝙐𝙀 𝙌𝙐𝙄𝙀𝙍𝘼𝙎 𝘿𝙀 𝙀𝙎𝙏𝘼 𝙁𝙊𝙍𝙈𝘼:\`
+> ${usedPrefix}video <numero> 
+> ${usedPrefix}audio <numero> 
 
-*𝙀𝙅𝙀𝙈𝙋𝙇𝙊:*
-*${usedPrefix}video 2*\n\n••••••••••••••••••••••••••••••••••••`.trim()  
+\`*𝙀𝙅𝙀𝙈𝙋𝙇𝙊:*\`
+> *${usedPrefix}video 2*\n\n••••••••••••••••••••••••••••••••••••`.trim()  
 let teks = results.all.map((v, i) => {
 let link = v.url;
 vids_.urls.push(link);
-return `[${i + 1}]\n❤️꙰༻ *TÍTULO:*  ${v.title}
-⁖🩵꙰༻ *ENLACE:* ${v.url}
-⁖💜꙰༻ *DURACIÓN:* ${v.timestamp}
-⁖💚꙰༻ *SUBIDO:* ${v.ago}
-⁖🧡꙰༻ *VISTAS:* ${v.views}`}).join('\n\n••••••••••••••••••••••••••••••••••••\n\n')
+return `> [${i + 1}]\n> ❤️꙰༻ *TÍTULO:*  ${v.title}
+> ⁖🩵꙰༻ *ENLACE:* ${v.url}
+> ⁖💜꙰༻ *DURACIÓN:* ${v.timestamp}
+> ⁖💚꙰༻ *SUBIDO:* ${v.ago}
+> ⁖🧡꙰༻ *VISTAS:* ${v.views}`}).join('\n\n> ••••••••••••••••••••••••••••••••••••\n\n')
 conn.sendFile(m.chat, results.all[0].thumbnail, 'yts.jpeg', textoInfo + '\n\n' + teks, fkontak, m)
 global.videoList.push(vids_);
 } catch {    

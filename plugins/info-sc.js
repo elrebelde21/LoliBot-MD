@@ -22,7 +22,7 @@ const teks = `${kyun(runtime)}`
 const itsme = `0@s.whatsapp.net`
 const split = `uwu >//<`
 const rtimebro = {contextInfo: {participant: itsme, quotedMessage: {extendedTextMessage: {text: split }}}}
-let prep = generateWAMessageFromContent(m.chat, { orderMessage: {itemCount: -10062007, status: 500, surface: 999, message: teks, description: '^^', orderTitle: 'Hi Sis', token: '9', curreyCode: 'IDR', totalCurrencyCode: '>〰<', totalAmount1000: '1000000', sellerJid: 'https://github.com/elrebelde21/The-LoliBot-MD', thumbnail: fs.readFileSync('./src/avatar_contact.png')}}, {contextInfo: null, quoted: m})
+let prep = generateWAMessageFromContent(m.chat, { orderMessage: {itemCount: -10062007, status: 500, surface: 999, message: teks, description: '^^', orderTitle: 'Hi Sis', token: '9', curreyCode: 'IDR', totalCurrencyCode: '>〰<', totalAmount1000: '1000000', sellerJid: md, thumbnail: fs.readFileSync('./src/avatar_contact.png')}}, {contextInfo: null, quoted: m})
 conn.relayWAMessage(prep)
 //conn.sendMessage(m.chat, `${teks}`, MessageType.text, rtimebro)
 }

@@ -364,8 +364,7 @@ if (!isROwner) {
 global.dfail('rowner', m, conn)
 throw false
 }
-bot.solopv = isEnable
-//global.opts['pconly'] = isEnable
+global.opts['pconly'] = isEnable
 break
     
 case 'gconly': case 'grouponly': case 'sologrupos':
@@ -374,7 +373,7 @@ if (!isROwner) {
 global.dfail('rowner', m, conn)
 throw false
 }
-bot.sologp = isEnable
+global.opts['gconly'] = isEnable
 break
 
 case 'antiprivado':
