@@ -13,7 +13,7 @@ if (/webp|image|video/g.test(mime)) {
 if (/video/g.test(mime)) if ((q.msg || q).seconds > 8) return m.reply(`*EL VIDEO NO PUEDE DURA MAS DE 7 SEGUNDOS*`)
 let img = await q.download?.()
 
-if (!img) throw `╰⊱❗️⊱ *𝙇𝙊 𝙐𝙎𝙊́ 𝙈𝘼𝙇* ⊱❗️⊱╮\n\n*RESPONDE A UNA IMAGEN, VIDEO, GIF PARA REALIZAR EL STICKERS USE* *${usedPrefix + command}*`
+if (!img) throw `*Y LA IMAGEN? 🤔 RESPONDE A UNA IMAGEN, VIDEO, GIF PARA REALIZAR EL STICKERS USE* *${usedPrefix + command}*`
 
 let out
 try {

@@ -6,15 +6,15 @@ let fkontak = { "key": { "participants":"0@s.whatsapp.net", "remoteJid": "status
 let totalreg = Object.keys(global.db.data.users).length
 let rtotalreg = Object.values(global.db.data.users).filter(user => user.registered == true).length
   let name2 = conn.getName(m.sender)
-  if (user.registered === true) throw `🤨 𝙃𝙚𝙮 𝙔𝙖 𝙚𝙨𝙩𝙖 𝙧𝙚𝙜𝙞𝙨𝙩𝙧𝙖𝙙𝙤`
+  if (user.registered === true) throw `🤨 𝙔𝙖 𝙚𝙨𝙩𝙖 𝙧𝙚𝙜𝙞𝙨𝙩𝙧𝙖𝙙𝙤`
   if (!Reg.test(text)) throw `${mg}✳️ 𝙐𝙨𝙤 𝙚𝙡 𝙘𝙤𝙢𝙖𝙣𝙙𝙤: *${usedPrefix + command} nombre.edad*\n📌𝙀𝙟𝙚𝙢𝙥𝙡𝙤 : *${usedPrefix + command}* ${name2}.16`
   let [_, name, splitter, age] = text.match(Reg)
-  if (!name) throw '✳️ 𝑬𝒍 𝒏𝒐𝒎𝒃𝒓𝒆 𝒏𝒐 𝒑𝒖𝒆𝒅𝒆 𝒆𝒔𝒕𝒂𝒓 𝒗𝒂𝒄𝒊́𝒐'
-  if (!age) throw '✳️ 𝑳𝒂 𝒆𝒅𝒂𝒅 𝒏𝒐 𝒑𝒖𝒆𝒅𝒆 𝒆𝒔𝒕𝒂𝒓 𝒗𝒂𝒄𝒊́𝒂'
-  if (name.length >= 30) throw '✳️ 𝑷𝒇𝒇𝒇, 𝒆𝒍 𝒏𝒐𝒎𝒃𝒓𝒆 𝒆𝒔  𝒍𝒂𝒓𝒈𝒐' 
+  if (!name) throw '✳️ 𝐄𝐥. 𝐧𝐨𝐦𝐛𝐫𝐞 𝐧𝐨 𝐩𝐮𝐞𝐝𝐞 𝐞𝐬𝐭𝐚𝐫 𝐯𝐚𝐜𝐢𝐨'
+  if (!age) throw '✳️ 𝐋𝐚 𝐞𝐝𝐚𝐝 𝐧𝐨 𝐩𝐮𝐞𝐝𝐞 𝐞𝐬𝐭𝐚 𝐯𝐚𝐜𝐢𝐚'
+  if (name.length >= 30) throw '✳️ 𝐅𝐮𝐚𝐚𝐚, 𝐪𝐮𝐞 𝐧𝐨𝐦𝐛𝐫𝐞 𝐭𝐚𝐥 𝐥𝐚𝐫𝐠𝐨𝐨𝐨𝐨𝐨' 
   age = parseInt(age)
-  if (age > 100) throw '👴🏻 𝑷𝒂 𝒆𝒔𝒕𝒂 𝒗𝒊𝒆𝒋𝒐𝒔'
-  if (age < 5) throw '🚼  𝑽𝒓𝒈 𝒍𝒐𝒔 𝒃𝒆𝒃𝒆́𝒔 𝒔𝒂𝒃𝒆𝒏 𝒆𝒔𝒄𝒓𝒊𝒃𝒊𝒓 ✍️😳 '
+  if (age > 100) throw '👴🏻 𝐏𝐚 𝐞𝐬𝐭𝐚 𝐯𝐢𝐞𝐣𝐨𝐬'
+  if (age < 5) throw '🚼  𝐕𝐫𝐠 𝐥𝐨𝐬 𝐛𝐞𝐛𝐞𝐬 𝐬𝐚𝐛𝐞𝐧 𝐞𝐬𝐜𝐫𝐢𝐛𝐢𝐫? ✍️😳 '
   user.name = name.trim()
   user.age = age
   user.regTime = + new Date

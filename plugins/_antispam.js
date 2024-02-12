@@ -33,17 +33,17 @@ const timeDifference = currentTime - userData.lastMessageTime
 if (userData.antiBan === 1) {
 if (userData.message < 1) {
 userData.message++  
-mensaje = `*HEY @${m.sender.split`@`[0]} DEJA SPAM 🤨*\n*NO PUEDE USAR COMANDOS DURANTE 1 MINUTOS*\n\n*MOTIVO: SPAM DE MENSAJES LEVE*\n\n⚠️ \`\`\`ADVERTENCIA 1/3\`\`\` ⚠️`
+mensaje = `*HEY @${m.sender.split`@`[0]} DEJA SPAM 🤨*\n> *NO PUEDE USAR COMANDOS DURANTE 1 MINUTOS*\n\n> *MOTIVO: SPAM DE MENSAJES LEVE*\n\n⚠️ \`\`\`ADVERTENCIA 1/3\`\`\` ⚠️`
 await conn.reply(m.chat, mensaje, m, { mentions: [m.sender] })  
 }} else if (userData.antiBan === 2) {
 if (userData.message2 < 1) {
 userData.message2++  
-mensaje = `*HEY @${m.sender.split`@`[0]} OTRA VEZ 🤨DEJA EL PUTO SPAM*\n*NO PUEDE USAR COMANDOS DURANTE 2 MINUTOS*\n*MOTIVO: SPAM*\n\n*SI VUELVE A HACES SPAM SERA ELIMINADO DEL GRUPO*\n\n⚠️ \`\`\`ADVERTENCIA 2/3\`\`\` ⚠️`
+mensaje = `*HEY @${m.sender.split`@`[0]} OTRA VEZ 🤨DEJA EL PUTO SPAM*\n> *NO PUEDE USAR COMANDOS DURANTE 2 MINUTOS*\n> *MOTIVO: SPAM*\n\n> *SI VUELVE A HACES SPAM SERA ELIMINADO DEL GRUPO*\n\n⚠️ \`\`\`ADVERTENCIA 2/3\`\`\` ⚠️`
 await conn.reply(m.chat, mensaje, m, { mentions: [m.sender] })  
 }} else if (userData.antiBan === 3) {
 if (userData.message3 < 1) {
 userData.message3++  
-mensaje = `*Ufff @${m.sender.split`@`[0]} 🤨 NO ENTENDER? QUE REPERTI 3 VECES NO HAGAS SPAM*\nAHORA SERA ELIMINADO DEL GRUPO....`
+mensaje = `*Ufff @${m.sender.split`@`[0]} 🤨 NO ENTENDER? QUE REPERTI 3 VECES NO HAGAS SPAM*\n> AHORA SERA ELIMINADO DEL GRUPO....`
 await conn.reply(m.chat, mensaje, m, { mentions: [m.sender] })  
 await conn.groupParticipantsUpdate(m.chat, [sender], 'remove')
 }}

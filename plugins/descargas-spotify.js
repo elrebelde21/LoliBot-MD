@@ -15,13 +15,13 @@ return `${Math.floor(Math.random() * 10000)}${ext}`}
 let randomName = getRandom(".mp3")
 const filePath = `./tmp/${randomName}`
 fs.writeFileSync(filePath, spty.audio)
-let spotifyi = `〔 *🎶 ＳＰＯＴＩＦＹ 🎶* 〕
+let spotifyi = `\`🎶 ＳＰＯＴＩＦＹ 🎶\`
 
 ✨ *TITULO:* » *${spty.data.name}*
 🗣️ *ARTISTA:* » *${spty.data.artists}*
 🌐 *URL*: » *${linkDL}*
 
-🚀 *ᴱⁿᵛᶦᵃⁿᵈᵒ ᶜᵃⁿᶜᶦᵒ́ⁿ ᵃᵍᵘᵃʳᵈᵉ ᵘⁿ ᵐᵒᵐᵉⁿᵗᵒ....*`
+> 🚀 *ᴱⁿᵛᶦᵃⁿᵈᵒ ᶜᵃⁿᶜᶦᵒ́ⁿ ᵃᵍᵘᵃʳᵈᵉ ᵘⁿ ᵐᵒᵐᵉⁿᵗᵒ....*`
 await conn.sendFile(m.chat, spty.data.cover_url, 'error.jpg', spotifyi, fkontak, m)
 await conn.sendMessage(m.chat, { audio: fs.readFileSync(`./tmp/${randomName}`), fileName: `${spty.data.name}.mp3`, mimetype: "audio/mp4", }, { quoted: m })    
 } catch (e) {

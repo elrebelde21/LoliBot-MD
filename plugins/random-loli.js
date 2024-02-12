@@ -1,8 +1,10 @@
 let handler = async(m, { conn, text, command }) => {
+try {
 let yh = global.loli
 let url = yh[Math.floor(Math.random() * yh.length)]
 conn.sendFile(m.chat, url, 'error.jpg', '💕💕💕💕', m, false, { contextInfo: {externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: command, body: '𝐒𝐮𝐩𝐞𝐫 𝐁𝐨𝐭 𝐃𝐞 𝐖𝐡𝐚𝐭𝐬𝐀𝐩𝐩', previewType: 0, thumbnail: imagen4, sourceUrl: [nna, md, yt, tiktok, fb].getRandom()}}})
-}
+} catch (e) {
+console.log(e)}}
 handler.command = /^(loli)$/i
 handler.tags = ['anime']
 handler.help = ['loli']

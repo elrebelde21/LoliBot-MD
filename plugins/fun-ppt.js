@@ -11,7 +11,7 @@ let textquien = `${lenguajeGB['smsAvisoMG']()}𝘼 𝙌𝙐𝙄𝙀𝙉 𝙌𝙐
 if (!m.mentionedJid[0]) return m.reply(textquien, m.chat, {quoted: fkontak }, { mentions: conn.parseMention(textquien)})
 if (Object.values(conn.suit).find(room => room.id.startsWith('suit') && [room.p, room.p2].includes(m.mentionedJid[0]))) throw `${lenguajeGB['smsAvisoIIG']()}𝙇𝘼 𝙋𝙀𝙍𝙎𝙊𝙉𝘼 𝘼 𝙇𝘼 𝙌𝙐𝙀 𝙌𝙐𝙄𝙀𝙍𝙀 𝘿𝙀𝙎𝘼𝙁𝙄𝘼𝙍 𝘼 𝙐𝙉 𝙀𝙎𝙏𝘼 𝙅𝙐𝙂𝘼𝙉𝘿𝙊 𝙊𝙏𝙍𝘼 𝙋𝘼𝙍𝙏𝙄𝘿𝘼, 𝙀𝙎𝙋𝙀𝙍𝙀 𝘼 𝙌𝙐𝙀 𝙏𝙀𝙍𝙈𝙄𝙉𝙀 𝘿𝙀 𝙅𝙐𝙂𝘼𝙍`
 let id = 'suit_' + new Date() * 1
-let caption = `${lenguajeGB['smsAvisoIIG']()}🎮👾 𝙂𝘼𝙈𝙀𝙎 - 𝙋𝙑𝙋 - 𝙂𝘼𝙈𝙀𝙎 🎮👾\n\n@${m.sender.split`@`[0]} 𝘿𝙀𝙎𝘼𝙁𝙄𝘼 𝘼 @${m.mentionedJid[0].split`@`[0]} 𝘼 𝙐𝙉 (𝙋𝙑𝙋) 𝘿𝙀 𝙋𝙄𝙀𝘿𝙍𝘼, 𝙋𝘼𝙋𝙀𝙇 𝙊 𝙏𝙄𝙅𝙀𝙍𝘼\n\n_*Escribe (aceptar) para aceptar*_\n_*Escribe (rechazar) para rechazar*_`
+let caption = `${lenguajeGB['smsAvisoIIG']()}🎮👾 𝙂𝘼𝙈𝙀𝙎 - 𝙋𝙑𝙋 - 𝙂𝘼𝙈𝙀𝙎 🎮👾\n\n@${m.sender.split`@`[0]} 𝘿𝙀𝙎𝘼𝙁𝙄𝘼 𝘼 @${m.mentionedJid[0].split`@`[0]} 𝘼 𝙐𝙉 (𝙋𝙑𝙋) 𝘿𝙀 𝙋𝙄𝙀𝘿𝙍𝘼, 𝙋𝘼𝙋𝙀𝙇 𝙊 𝙏𝙄𝙅𝙀𝙍𝘼\n\n> _*Escribe (aceptar) para aceptar*_\n> _*Escribe (rechazar) para rechazar*_`
 let imgplaygame = `https://www.merca2.es/wp-content/uploads/2020/05/Piedra-papel-o-tijera-0003318_1584-825x259.jpeg`
 conn.suit[id] = {
 chat: await conn.sendMessage(m.chat, { text: caption }, {mentions: conn.parseMention(caption)}),

@@ -42,8 +42,8 @@ body: 'Super Bot WhatsApp',
 previewType: 0, thumbnail: fs.readFileSync("./media/menus/Menu1.jpg"),
 sourceUrl: redes.getRandom}}})
 } catch (e) {
-await conn.reply(m.chat, `${lenguajeGB['smsMalError3']()}#report ${lenguajeGB['smsMensError2']()} ${usedPrefix + command}\n\n${wm}`, m)
-console.log(`❗❗ ${lenguajeGB['smsMensError2']()} ${usedPrefix + command} ❗❗`)
+let sticker = './src/stickers1.webp'
+conn.sendFile(m.chat, sticker, 'error.webp', '', m)
 console.log(e)}}
 handler.help = ['igstalk'].map(v => v + ' <username>')
 handler.tags = ['downloader']
