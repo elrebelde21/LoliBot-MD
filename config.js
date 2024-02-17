@@ -172,7 +172,7 @@ message: {
 
 //----------------------------------------------------
 
-global.multiplier = 150 // Cuanto más alto, más difícil subir de nivel
+global.multiplier = 280 // Cuanto más alto, más difícil subir de nivel
 global.rpg = {
 emoticon(string) {
 string = string.toLowerCase()
