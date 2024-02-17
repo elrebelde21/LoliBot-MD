@@ -60,7 +60,7 @@ if (user) {
 if (!isNumber(user.exp)) user.exp = 0
 if (!('premium' in user)) user.premium = false
 if (!isNumber(user.joincount)) user.joincount = 1
-if (!isNumber(user.money)) user.money = 100
+if (!isNumber(user.money)) user.money = 50
 if (!isNumber(user.limit)) user.limit = 8       
 if (!('registered' in user)) user.registered = false
 if (!('registroR' in user)) user.registroR = false
@@ -788,7 +788,7 @@ makananserigala: 0,
 mana: 0,
 mangga: 0,
 misi: '',
-money: 100,
+money: 50,
 monyet: 0,
 mythic: 0,
 naga: 0,
@@ -1075,10 +1075,10 @@ let _user = global.db.data && global.db.data.users && global.db.data.users[m.sen
 const groupMetadata = (m.isGroup ? ((conn.chats[m.chat] || {}).metadata || await this.groupMetadata(m.chat).catch(_ => null)) : {}) || {}
 const participants = (m.isGroup ? groupMetadata.participants : []) || []
 const user = (m.isGroup ? participants.find(u => conn.decodeJid(u.id) === m.sender) : {}) || {} // User Data
-const bot = (m.isGroup ? participants.find(u => conn.decodeJid(u.id) == this.user.jid) : {}) || {} // Your Data
+const bot = (m.isGroup ? participants.find(u => conn.decodeJid(u.id) == this.user.jid) : {}) || {} //información del usuario
 const isRAdmin = user?.admin == 'superadmin' || false
-const isAdmin = isRAdmin || user?.admin == 'admin' || false // Is User Admin?
-const isBotAdmin = bot?.admin || false // Are you Admin?
+const isAdmin = isRAdmin || user?.admin == 'admin' || false //¿El usuario es administrador?
+const isBotAdmin = bot?.admin || false //¿Eres administrador?
 const ___dirname = path.join(path.dirname(fileURLToPath(import.meta.url)), './plugins')
 for (let name in global.plugins) {
 let plugin = global.plugins[name]
@@ -1133,15 +1133,15 @@ args = args || []
 let _args = noPrefix.trim().split` `.slice(1)
 let text = _args.join` `
 command = (command || '').toLowerCase()
-let fail = plugin.fail || global.dfail // When failed
-let isAccept = plugin.command instanceof RegExp ? // RegExp Mode?
+let fail = plugin.fail || global.dfail //cuando falló
+let isAccept = plugin.command instanceof RegExp ? // ¿Modo RegExp?
 plugin.command.test(command) :
 Array.isArray(plugin.command) ? // Array?
-plugin.command.some(cmd => cmd instanceof RegExp ? // RegExp in Array?
+plugin.command.some(cmd => cmd instanceof RegExp ? // ¿RegExp en matriz?
 cmd.test(command) :
 cmd === command
 ):
-typeof plugin.command === 'string' ? // String?
+typeof plugin.command === 'string' ? // ¿Cadena?
 plugin.command === command :
 false
 //if (text) {
@@ -1154,7 +1154,7 @@ if (m.chat in global.db.data.chats || m.sender in global.db.data.users) {
 const chat = global.db.data.chats[m.chat];
 const user = global.db.data.users[m.sender];
 const botSpam = global.db.data.settings[this.user.jid];
-if (!['owner-unbanchat.js', 'gc-link.js', 'gc-hidetag.js', 'info-creator.js'].includes(name) && chat && chat.isBanned && !isROwner) return; // Except this
+if (!['owner-unbanchat.js', 'gc-link.js', 'gc-hidetag.js', 'info-creator.js'].includes(name) && chat && chat.isBanned && !isROwner) return; // Excepto esto
 if (name != 'owner-unbanchat.js' && name != 'owner-exec.js' && name != 'owner-exec2.js' && name != 'tool-delete.js' && chat?.isBanned && !isROwner) return;
 if (m.text && user.banned && !isROwner) {
 if (typeof user.bannedMessageCount === 'undefined') {
@@ -1193,15 +1193,15 @@ if (plugin.rowner && plugin.owner && !(isROwner || isOwner)) { // Owner
 fail('owner', m, this)
 continue
 }
-if (plugin.rowner && !isROwner) { // Propietario/owner
+if (plugin.rowner && !isROwner) { //Propietario/owner
 fail('rowner', m, this)
 continue
 }
-if (plugin.owner && !isOwner) { // Numero De propietarios/Owner
+if (plugin.owner && !isOwner) { //Numero De propietarios/Owner
 fail('owner', m, this)
 continue
 }
-if (plugin.mods && !isMods) { // Moderator
+if (plugin.mods && !isMods) { //Moderator
 fail('mods', m, this)
 continue
 }
@@ -1209,27 +1209,27 @@ if (plugin.premium && !isPrems) { // Premium
 fail('premium', m, this)
 continue
 }
-if (plugin.group && !m.isGroup) { // Grupos
+if (plugin.group && !m.isGroup) { //Grupos
 fail('group', m, this)
 continue
-} else if (plugin.botAdmin && !isBotAdmin) { // detentan si el bot es admin
+} else if (plugin.botAdmin && !isBotAdmin) { //detentan si el bot es admin
 fail('botAdmin', m, this)
 continue
-} else if (plugin.admin && !isAdmin) { // detecta si el usuario es un Admin
+} else if (plugin.admin && !isAdmin) { //detecta si el usuario es un Admin
 fail('admin', m, this)
 continue
 }
-if (plugin.private && m.isGroup) { // Chat privado
+if (plugin.private && m.isGroup) { //Chat privado
 fail('private', m, this)
 continue
 }
-if (plugin.register == true && _user.registered == false) { // detectan si el usuarios esta registrado o nell
+if (plugin.register == true && _user.registered == false) { //detectan si el usuarios esta registrado o nell
 fail('unreg', m, this)
 continue
 }
 
 m.isCommand = true
-let xp = 'exp' in plugin ? parseInt(plugin.exp) : 10 // Ganancia de XP por comando
+let xp = 'exp' in plugin ? parseInt(plugin.exp) : 3 // Ganancia de XP por comando
 if (xp > 2000)
 m.reply('Exp limit') 
 else               
@@ -1242,12 +1242,12 @@ m.exp += xp
 if (!isPrems && plugin.limit && global.db.data.users[m.sender].limit < plugin.limit * 1) {
 conn.sendMessage(m.chat, {text: `*${lenguajeGB['smsCont7']()} *${usedPrefix}buy*`,  contextInfo: {externalAdReply : {mediaUrl: null, mediaType: 1, description: null, "title": `${lenguajeGB['smsAvisoAG']()}`, body: '𝐒𝐮𝐩𝐞𝐫 𝐁𝐨𝐭 𝐝𝐞 𝐖𝐡𝐚𝐭𝐬𝐚𝐩𝐩', previewType: 0, "thumbnail": img.getRandom(), sourceUrl: [nna, md, yt, nn, nnn, tiktok].getRandom()}}}, { quoted: m })       
 //this.reply(m.chat, `${lenguajeGB['smsCont7']()} *${usedPrefix}buy*`, m)
-continue // Limit habis
+continue //Los límites están arriba
 }
 if (plugin.level > _user.level) {
 conn.sendMessage(m.chat, {text: `${lenguajeGB['smsCont9']()} *${plugin.level}* ${lenguajeGB['smsCont10']()} *${_user.level}* ${lenguajeGB['smsCont11']()} *${usedPrefix}nivel*`,  contextInfo: {externalAdReply : {mediaUrl: null, mediaType: 1, description: null, "title": `${lenguajeGB['smsAvisoAG']()}`, body: '𝐒𝐮𝐩𝐞𝐫 𝐁𝐨𝐭 𝐝𝐞 𝐖𝐡𝐚𝐭𝐬𝐚𝐩𝐩', previewType: 0, "thumbnail": img.getRandom(), sourceUrl: [nna, md, yt, nn, tiktok, nnn].getRandom()}}}, { quoted: m })                
 /*this.reply(m.chat, `${lenguajeGB['smsCont9']()} *${plugin.level}* ${lenguajeGB['smsCont10']()} *${_user.level}* ${lenguajeGB['smsCont11']()} *${usedPrefix}nivel*`, m)*/
-continue // If the level has not been reached
+continue //Si no se ha alcanzado el nivel
 }
 let extra = {match, usedPrefix, noPrefix, _args, args, command, text, conn: this, participants, groupMetadata, user, bot, isROwner, isOwner, isRAdmin, isAdmin, isBotAdmin, isPrems, chatUpdate, __dirname: ___dirname, __filename}
 try {
@@ -1344,13 +1344,13 @@ let emot = pickRandom(["😺", "😸", "😹", "😻", "😼", "😽", "🙀", "
 this.sendMessage(m.chat, { react: { text: emot, key: m.key }})}
 function pickRandom(list) { return list[Math.floor(Math.random() * list.length)]}}}
 /**
- * Handle groups participants update
+ * Manejar la actualización de los participantes de los grupos
  * @param {import('@adiwajshing/baileys').BaileysEventMap<unknown>['group-participants.update']} groupsUpdate 
  */
 export async function participantsUpdate({ id, participants, action }) {
 if (opts['self'])
 return
-// if (id in conn.chats) return // First login will spam
+// if (id in conn.chats) return // El primer inicio de sesión será spam
 if (this.isInit)
 return
 if (global.db.data == null)
@@ -1413,7 +1413,8 @@ if (chat.detect)
 break
 }}
 
-/**
+/** 
+ * Actualización de grupos de control
  * Handle groups update
  * @param {import('@adiwajshing/baileys').BaileysEventMap<unknown>['groups.update']} groupsUpdate 
  */
