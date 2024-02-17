@@ -1,22 +1,22 @@
 const items = ['limit', 'exp', 'joincount', 'money', 'potion', 'trash', 'wood', 'rock', 'string', 'petFood', 'emerald', 'diamond', 'gold', 'iron', 'common', 'uncoommon', 'mythic', 'legendary', 'pet', ]
 let confirmation = {} 
 async function handler(m, { conn, args, usedPrefix, command }) {
-if (confirmation[m.sender]) return m.reply('estas haciendo una transferencia')
+if (confirmation[m.sender]) return m.reply('𝙀𝙨𝙩𝙖𝙨 𝙝𝙖𝙘𝙞𝙚𝙣𝙙𝙤 𝙪𝙣𝙖 𝙩𝙧𝙖𝙣𝙨𝙛𝙚𝙧𝙚𝙣𝙘𝙞𝙖')
 let user = global.db.data.users[m.sender]
 const item = items.filter(v => v in user && typeof user[v] == 'number')
     
-let lol = `💱 *TRANSFERENCIA* 💱
+let lol = `💱 *𝙏𝙍𝘼𝙉𝙎𝙁𝙀𝙍𝙀𝙉𝘾𝙄𝘼* 💱
     
 *${usedPrefix + command}  tipo cantidad @tag*
-*EJEMPLO*
+*𝙀𝙅𝙀𝙈𝙋𝙇𝙊*
 *${usedPrefix + command} exp 30 @59300000000*
 
 ╭━━━━━━━━━━━━━━━━━━ ღ
-┃ ✅ *RECURSOS DISPONIBLES*
+┃ ✅ *𝙍𝙀𝘾𝙐𝙍𝙎𝙊𝙎 𝘿𝙄𝙎𝙋𝙊𝙉𝙄𝘽𝙇𝙀𝙎*
 ┃──────────────
-┃ limit *= Diamantes* 💎
-┃ money *= LoliCoins* 🐈
-┃ exp *= Experiencia* ⚡
+┃ limit *= 𝘿𝙞𝙖𝙢𝙖𝙣𝙩𝙚𝙨* 💎
+┃ money *= 𝙇𝙤𝙡𝙞𝘾𝙤𝙞𝙣𝙨* 🪙
+┃ exp *= 𝙀𝙭𝙥𝙚𝙧𝙞𝙚𝙣𝙘𝙞𝙖* ⚡
 ╰━━━━━━━━━━━━━━━━━━ ღ 
 `.trim()
     
@@ -24,21 +24,21 @@ const type = (args[0] || '').toLowerCase()
 if (!item.includes(type)) return m.reply(lol)
 const count = Math.min(Number.MAX_SAFE_INTEGER, Math.max(1, (isNumber(args[1]) ? parseInt(args[1]) : 1))) * 1
 let who = m.mentionedJid && m.mentionedJid[0] ? m.mentionedJid[0] : args[2] ? (args[2].replace(/[@ .+-]/g, '') + '@s.whatsapp.net') : ''
-if (!who) return m.reply(`${ag} *ETIQUETE AL USUARIO*`)
-if (!(who in global.db.data.users)) return m.reply(`${fg}*EL USUARIO ${who} NO SE ENCUENTRA EN MI BASE DE DATOS*`)
-if (user[type] * 1 < count) return m.reply(`${fg}*NO TIENE SUFUCIENTE PARA REALIZAR LA TRANSFERENCIA DE ${type}*`)
+if (!who) return m.reply(`${ag} *𝙀𝙏𝙄𝙌𝙐𝙀𝙏𝙀 𝘼𝙇 𝙐𝙎𝙐𝘼𝙍𝙄𝙊*`)
+if (!(who in global.db.data.users)) return m.reply(`${fg}*𝙀𝙇 𝙐𝙎𝙐𝘼𝙍𝙄𝙊 ${who} 𝙉𝙊 𝙎𝙀 𝙀𝙉𝘾𝙐𝙀𝙉𝙏𝙍𝘼 𝙀𝙉 𝙈𝙄 𝘽𝘼𝙎𝙀 𝘿𝙀 𝘿𝘼𝙏𝙊𝙎*`)
+if (user[type] * 1 < count) return m.reply(`${fg}*𝙉𝙊 𝙏𝙄𝙀𝙉𝙀 𝙎𝙐𝙁𝙐𝘾𝙄𝙀𝙉𝙏𝙀 𝙋𝘼𝙍𝘼 𝙍𝙀𝘼𝙇𝙄𝙕𝘼𝙍 𝙇𝘼 𝙏𝙍𝘼𝙉𝙎𝙁𝙀𝙍𝙀𝙉𝘾𝙄𝘼 𝘿𝙀 ${type}*`)
 let mentionedJid = [who]
 let username = conn.getName(who)
     
-let confirm = `*ESTAS A PUNTO DE HACER ESTA ACCIÓN DE TRANFERENCIA* 
+let confirm = `\`ESTAS A PUNTO DE HACER ESTA ACCIÓN DE TRANFERENCIA\`
 
-💹 *${count} ${type} para* *@${(who || '').replace(/@s\.whatsapp\.net/g, '')}* ? 
+> 💹 *${count} ${type} para* *@${(who || '').replace(/@s\.whatsapp\.net/g, '')}* ? 
 
-*DESEAS CONTINUAR?*
-Tienes 60 segundos!!
+\`DESEAS CONTINUAR?\`
+> Tienes 60 segundos!!
 
-Escriba: (si) para acertar
-escriba: (no) para cancelar\n\n${wm}`.trim()
+> Escriba: (si) para acertar
+> escriba: (no) para cancelar\n\n> ${wm}`.trim()
     
 let c = `${wm}\nTienes 60 segundos!!`
 await conn.reply(m.chat, confirm, m, { mentions: [who] })

@@ -1,11 +1,11 @@
 const handler = async (m, {conn, text, usedPrefix, command}) => {
-if (!text) return m.reply(`*[❗] USO DEL COMANDO*\n\n*${usedPrefix + command}* hola @${m.sender.split`@`[0]} a`, null, {mentions: [m.sender]});
+if (!text) return m.reply(`*⚠️ 𝐔𝐒𝐎 𝐃𝐄𝐋 𝐂𝐎𝐌𝐀𝐍𝐃𝐎*\n\n*${usedPrefix + command}* hola @${m.sender.split`@`[0]} a`, null, {mentions: [m.sender]});
 const cm = copy(m);
 let who;
 if (text.includes('@0')) who = '0@s.whatsapp.net';
 else if (m.isGroup) who = cm.participant = m.mentionedJid[0];
 else who = m.chat;
-if (!who) return m.reply(`*[❗] USO DEL COMANDO*\n\n*${usedPrefix + command}* hola @${m.sender.split`@`[0]} a`, null, {mentions: [m.sender]});
+if (!who) return m.reply(`*⚠️ 𝐔𝐒𝐎 𝐃𝐄𝐋 𝐂𝐎𝐌𝐀𝐍𝐃𝐎*\n\n*${usedPrefix + command}* hola @${m.sender.split`@`[0]} a`, null, {mentions: [m.sender]});
 cm.key.fromMe = false;
 cm.message[m.mtype] = copy(m.msg);
 const sp = '@' + who.split`@`[0];

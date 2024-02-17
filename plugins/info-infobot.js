@@ -48,25 +48,25 @@ let old = performance.now()
   let totaljadibot = [...new Set([...global.conns.filter(conn => conn.user && conn.state !== 'close').map(conn => conn.user)])]
   let speed = neww - old
 
-let info = `╭─────[ *INFO DEL BOT* ]────✧
-├ 🤴🏻 *CREADOR:* elrebelde
-├ #️⃣ *CONTACTO:* ${asistencia}
-├ ✅ *VERSION ACTUAL:* ${vs}
-├ 🎳 *PREFIJO:* *${usedPrefix}*
-├ 🔐 *CHATS PRIVADO:* *${chats.length - groups.length}*
-├ 🦜 *CHATS DE GRUPOS:* *${groups.length}* 
-├ 💡 *CHATS EN TOTAL:* *${chats.length}* 
-├ 🚀 *ACTIVIDAD:* *${uptime}*
-├ 🎩 *USUARIOS:* *${totalreg}*
-├ 🐢 *VELOCIDAD:* *${speed}*   
-├ 🌎 *MODO:* ${global.db.data.settings[conn.user.jid].self ? '*Privado*' : '*Público*'}
-├ 💬 *ANTIPRIVADO:* ${global.db.data.settings[conn.user.jid].antiprivado ? '*Activado ✔*' : '*Desactivado ✘*'}
-├ 📵 *ANTILLAMADA:* ${global.db.data.settings[conn.user.jid].antiCall ? '*Activado ✔*' : '*Desactivado*'}
-├ 🤖 *BOTEMPORAL:* *${global.db.data.settings[conn.user.jid].temporal ? 'Activado ✔' : 'Desactivado ✘'}*
-├ ☑️ *AUTOREAD:*  ${autoread ? '*Activado ✔*' : '*Desactivado ✘*'}   
-├ 🤖 *BOTS SECUNDARIOS ACTIVOS:* *${totaljadibot.length}*
-├ ⛔ *RESTRICT:* ${restrict ? '*Activado ✔*' : '*Desactivado ✘*'} 
-╰────────────···`
+let info = `           \`『ＩＮＦＯ ＤＥＬ ＢＯＴ 』\`
+
+> 🤴🏻 *CREADOR:* elrebelde
+> #️⃣ *CONTACTO:* ${asistencia}
+> ✅ *VERSION ACTUAL:* ${vs}
+> 🎳 *PREFIJO:* *${usedPrefix}*
+> 🔐 *CHATS PRIVADO:* *${chats.length - groups.length}*
+> 🦜 *CHATS DE GRUPOS:* *${groups.length}* 
+> 💡 *CHATS EN TOTAL:* *${chats.length}* 
+> 🚀 *ACTIVIDAD:* *${uptime}*
+> 🎩 *USUARIOS:* *${totalreg}*
+> 🐢 *VELOCIDAD:* *${speed}*   
+> 🌎 *MODO:* ${global.db.data.settings[conn.user.jid].self ? '*Privado*' : '*Público*'}
+> 💬 *ANTIPRIVADO:* ${global.db.data.settings[conn.user.jid].antiprivado ? '*Activado ✔*' : '*Desactivado ✘*'}
+> 📵 *ANTILLAMADA:* ${global.db.data.settings[conn.user.jid].antiCall ? '*Activado ✔*' : '*Desactivado*'}
+> 🤖 *BOTEMPORAL:* *${global.db.data.settings[conn.user.jid].temporal ? 'Activado ✔' : 'Desactivado ✘'}*
+> ☑️ *AUTOREAD:*  ${autoread ? '*Activado ✔*' : '*Desactivado ✘*'}   
+> 🤖 *BOTS SECUNDARIOS ACTIVOS:* *${totaljadibot.length}*
+> ⛔ *RESTRICT:* ${restrict ? '*Activado ✔*' : '*Desactivado ✘*'}`
 await conn.sendMessage(m.chat, { text: info, contextInfo:{forwardingScore: 9999999, isForwarded: true, "externalAdReply": {"showAdAttribution": true, "containsAutoReply": true, "body": `              ⪨ ＩＮＦＯＢＯＴ ⪩`, "previewType": "PHOTO", thumbnail: imagen4, sourceUrl: md}}}, { quoted: fkontak, ephemeralExpiration: 24*60*100, disappearingMessagesInChat: 24*60*100})}
 handler.help = ['infobot']
 handler.tags = ['info', 'tools']

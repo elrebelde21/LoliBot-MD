@@ -4,15 +4,15 @@ let handler = async (m, { conn, text }) => {
 let who
 if (m.isGroup) who = m.mentionedJid[0]
 else who = m.chat
-if (!who) throw `${ag}𝘿𝙀𝘽𝙀 𝘿𝙀 𝙀𝙏𝙄𝙌𝙐𝙀𝙏𝘼𝙍 𝘼𝙇 𝙐𝙎𝙐𝘼𝙍𝙄𝙊 *@tag*`
+if (!who) throw `${ag}𝐃𝐞𝐛𝐞𝐬 𝐝𝐞 𝐞𝐭𝐢𝐪𝐮𝐞𝐭𝐚𝐫 𝐚𝐥 𝐮𝐬𝐮𝐚𝐫𝐢𝐨 *@tag*`
 let txt = text.replace('@' + who.split`@`[0], '').trim()
-if (!txt) throw `${ag}𝙄𝙉𝙂𝙍𝙀𝙎𝙀 𝙇𝘼 𝘾𝘼𝙉𝙏𝙄𝘿𝘼𝘿 𝘿𝙀 𝙇𝙊𝙇𝙄𝘾𝙊𝙄𝙉𝙎`
-if (isNaN(txt)) throw `${mg}𝙎𝙄𝙉 𝙎𝙄𝙈𝘽𝙊𝙇𝙊𝙎, 𝙎𝙊𝙇𝙊 𝙄𝙉𝙂𝙍𝙀𝙎𝙀 𝙉𝙐𝙈𝙀𝙍𝙊𝙎`
+if (!txt) throw `${ag}𝐈𝐧𝐠𝐫𝐞𝐬𝐞 𝐥𝐚 𝐜𝐚𝐧𝐭𝐢𝐝𝐚𝐝 𝐝𝐞 𝐋𝐨𝐥𝐢𝐂𝐨𝐢𝐧𝐬`
+if (isNaN(txt)) throw `${mg}𝐒𝐢𝐧 𝐬𝐢𝐦𝐛𝐨𝐥𝐨𝐬, 𝐬𝐨𝐥𝐨 𝐢𝐧𝐠𝐫𝐞𝐬𝐞 𝐧𝐮𝐦𝐞𝐫𝐨𝐬`
 let gatacoins = parseInt(txt)
 let money = gatacoins
 let pjk = Math.ceil(gatacoins * pajak)
 money += pjk
-if (money < 1) throw `${mg}𝙀𝙇 𝙉𝙐𝙈𝙀𝙍𝙊 𝙈𝙄𝙉𝙄𝙈𝙊 𝘿𝙀 𝙂𝘼𝙏𝘼𝘾𝙊𝙄𝙉𝙎 𝙀𝙎 *1*`
+if (money < 1) throw `${mg}𝐄𝐥 𝐍𝐮𝐦𝐞𝐫𝐨 𝐦𝐢𝐧𝐢𝐦𝐨 𝐝𝐞 𝐋𝐨𝐥𝐢𝐂𝐨𝐢𝐧𝐬 𝐄𝐬 *1*`
 let users = global.db.data.users
 //let users = global.db.data.users[who]
 users[who].money += gatacoins

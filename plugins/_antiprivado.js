@@ -14,7 +14,7 @@ bot = global.db.data.settings[this.user.jid] || {}
 if (bot.antiPrivate && !isOwner && !isROwner) {
 if (user.counterPrivate === 0) {
 mensaje = `Hola *@${m.sender.split`@`[0]}*, Esta prohibido usar el bot el privado\n\n✴️solo si quiere hacerte un bot manda el comando .serbot\n\n🚫NO USAR LOS COMANDO DEL BOT AL PV🚫\n\nPara usar el bot unirte al grupo del oficial del el bot\n${nn}\n\n⚠️ \`\`\`ADVERTENCIA 1/3\`\`\` ⚠️`
-await conn.reply(m.chat, mensaje, m, { mentions: [m.sender] })  
+await conn.reply(m.chat, mensaje, m, { mentions: [m.sender] }, {ephemeralExpiration: 30})  
   
 } else if (user.counterPrivate === 1) {
 let grupos = [ nn, nnn, nnnt, nnntt, nnnttt ].getRandom()

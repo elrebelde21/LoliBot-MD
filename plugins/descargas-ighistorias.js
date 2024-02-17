@@ -20,4 +20,5 @@ handler.tags = ['downloader']
 handler.command = ['igstory', 'ighistoria', 'ighistorias' ]
 handler.limit = 3
 handler.exp = 87
+handler.register = true
 export default handler

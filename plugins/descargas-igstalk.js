@@ -3,9 +3,13 @@ import cheerio from 'cheerio'
 import fetch from 'node-fetch'
 let handler = async (m, { conn, args, usedPrefix, command }) => {
 if (!args[0]) conn.reply(m.chat,      `${lenguajeGB['smsAvisoMG']()}𝙄𝙣𝙜𝙧𝙚𝙨𝙚 𝙚𝙡 𝙪𝙨𝙪𝙖𝙧𝙞𝙤 𝙙𝙚 𝙖𝙡𝙜𝙪𝙞𝙚𝙣 𝙙𝙚 𝙄𝙂\n𝙀𝙟:\n*${usedPrefix + command} gatadios*`, m, {contextInfo: {externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, body: ' 🚫𝐍𝐨 𝐇𝐚𝐠𝐚 𝐬𝐩𝐚𝐦 ', previewType: 0, thumbnail: img.getRandom(), sourceUrl: redes.getRandom()}}})
+const { key } = await conn.sendMessage(m.chat, {text: `⌛ 𝐀𝐠𝐮𝐚𝐫𝐝𝐞 𝐮𝐧 𝐦𝐨𝐦𝐞𝐧𝐭𝐨 𝐲𝐚 𝐯𝐨𝐲 𝐜𝐨𝐧 𝐭𝐮 𝐩𝐞𝐝𝐢𝐝𝐨 🐢...*\n▰▰▰▱▱▱▱▱▱\n`, contextInfo: {externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: wm, body: ' 🚫𝐍𝐨 𝐇𝐚𝐠𝐚 𝐬𝐩𝐚𝐦 ', previewType: 0, thumbnail: img.getRandom(), sourceUrl: redes.getRandom()}}}, { quoted: m })     
 try {
-await conn.reply(m.chat,  `⌛ 𝐀𝐠𝐮𝐚𝐫𝐝𝐞 𝐮𝐧 𝐦𝐨𝐦𝐞𝐧𝐭𝐨 𝐲𝐚 𝐯𝐨𝐲 𝐜𝐨𝐧 𝐭𝐮 𝐩𝐞𝐝𝐢𝐝𝐨 🐢...`, m, {contextInfo: {externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, body: ' 🚫𝐍𝐨 𝐇𝐚𝐠𝐚 𝐬𝐩𝐚𝐦 ', previewType: 0, thumbnail: img.getRandom(), sourceUrl: redes.getRandom()}}})   
-//m.reply(global.wait)    
+await delay(1000 * 2);
+await conn.sendMessage(m.chat, {text: `⌛ 𝙀𝙨𝙥𝙚𝙧𝙚 ✋ \n▰▰▰▰▰▱▱▱▱\n𝙔𝙖 𝙚𝙨𝙩𝙤𝙮 𝙙𝙚𝙨𝙘𝙖𝙧𝙜𝙖𝙙𝙤... 𝙨𝙪𝙨 𝙫𝙞𝙙𝙚𝙤 𝙙𝙚 𝙁𝙖𝙘𝙚𝙗𝙤𝙤𝙠 🔰`, edit: key});
+await delay(1000 * 2);
+await conn.sendMessage(m.chat, {text: `𝙔𝙖 𝙘𝙖𝙨𝙞 🏃‍♂️💨\n▰▰▰▰▰▰▰▱▱`, edit: key})
+await conn.sendMessage(m.chat, {text: waitttt, edit: key})
 let res = await igstalk(args[0].replace(/^@/, ''))
 let res2 = await fetch(`https://api.lolhuman.xyz/api/stalkig/${args[0].replace(/^@/, '')}?apikey=${lolkeysapi}`)
 let res3 = await res2.json()
@@ -53,6 +57,7 @@ handler.money = 150
 handler.level = 3
 handler.register = true
 export default handler
+const delay = time => new Promise(res => setTimeout(res, time))
 
 async function igstalk(Username) {
 return new Promise((resolve, reject) => {

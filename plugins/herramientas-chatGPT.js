@@ -6,7 +6,7 @@ const configuration = new Configuration({organization: global.openai_org_id, api
 const openaiii = new OpenAIApi(configuration);
 const handler = async (m, {conn, text, usedPrefix, command}) => {
 if (usedPrefix == 'a' || usedPrefix == 'A') return;
-if (!text) throw `*Y el texto? 🤔 Ingrese los que quiere buscar con el ChatGpt (IA)*\n❏ Ej: ${usedPrefix + command} Recomienda un top 10 de películas de acción`    
+if (!text) return conn.reply(m.chat, `*Y el texto? 🤔 Ingrese los que quiere buscar con el ChatGpt (IA)*\n❏ Ej: ${usedPrefix + command} Recomienda un top 10 de películas de acción`, m, {contextInfo: { externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: mg, body: '𝐒𝐮𝐩𝐞𝐫 𝐁𝐨𝐭 𝐃𝐞 𝐖𝐡𝐚𝐭𝐬𝐀𝐩𝐩', previewType: 0, thumbnail: imagen4, sourceUrl: redes.getRandom()}}})
 try {
 conn.sendPresenceUpdate('composing', m.chat);
 let sistema1 = `Actuaras como un Bot de WhatsApp el cual fue creado por elrebelde21, tu seras LoliBot-MD`;

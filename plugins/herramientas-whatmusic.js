@@ -29,7 +29,7 @@ let txt = `⧽⧽⧽ 𝙍𝙀𝙎𝙐𝙇𝙏𝘼𝘿𝙊 𝘿𝙀 𝙇𝘼 𝘽
 fs.unlinkSync(`./tmp/${m.sender}.${ext}`)
 await conn.reply(m.chat, txt, m, {contextInfo: { externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, body: '𝐒𝐮𝐩𝐞𝐫 𝐁𝐨𝐭 𝐃𝐞 𝐖𝐡𝐚𝐭𝐬𝐀𝐩𝐩', previewType: 0, thumbnail: imagen4, sourceUrl: [md, yt, tiktok].getRandom()}}})
 //m.reply(txt)
-} else return conn.reply(m.chat,  '⚠️ 𝙍𝙀𝙎𝙋𝙊𝙉𝘿𝘼 𝘼 𝙐𝙉 𝘼𝙐𝘿𝙄𝙊', m, {contextInfo: { externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, body: '╰⊱❗️⊱ 𝙇𝙊 𝙐𝙎𝙊́ 𝙈𝘼𝙇 ⊱❗️⊱╮', previewType: 0, thumbnail: imagen4, sourceUrl: [md, yt, tiktok].getRandom()}}})
+} else return conn.reply(m.chat,  '⚠️ 𝙍𝙀𝙎𝙋𝙊𝙉𝘿𝘼 𝘼 𝙐𝙉 𝘼𝙐𝘿𝙄𝙊', m, {contextInfo: { externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, body: '❗️ 𝙇𝙊 𝙐𝙎𝙊́ 𝙈𝘼𝙇❗️', previewType: 0, thumbnail: imagen4, sourceUrl: [md, yt, tiktok].getRandom()}}})
 }
 handler.command = /^quemusica|quemusicaes|whatmusic$/i
 handler.register = true

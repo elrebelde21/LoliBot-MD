@@ -11,7 +11,7 @@ let premium = user.premium
 const cartera = {economia: {exp: true, limit: true, money: true, },
 }
 const recursos = Object.keys(cartera.economia).map(v => user[v] && `*${global.rpgshop.emoticon(v)} ⇢ ${user[v]}*`).filter(v => v).join('\n> ').trim()
-let cart = `             \`⧼⧼⧼ 𝐂𝐀𝐑𝐓𝐄𝐑𝐀 👝 ⧽⧽⧽*\`\n\n> ${name} 𝐄𝐧 𝐬𝐮 𝐜𝐚𝐫𝐭𝐞𝐫𝐚 𝐭𝐢𝐞𝐧𝐞...
+let cart = `             \`⧼⧼⧼ 𝐂𝐀𝐑𝐓𝐄𝐑𝐀 👝 ⧽⧽⧽\`\n\n> ${name} 𝐄𝐧 𝐬𝐮 𝐜𝐚𝐫𝐭𝐞𝐫𝐚 𝐭𝐢𝐞𝐧𝐞...
 > ${recursos}`
 conn.sendMessage(m.chat, {text: cart, contextInfo: {forwardingScore: 9999999, isForwarded: true, mentionedJid:[who], image: {url: pp}, "externalAdReply":  {"showAdAttribution": true, "renderLargerThumbnail": true, "thumbnail": img.getRandom(), "title": wm, "containsAutoReply": true, "mediaType": 1, "mediaUrl": redes.getRandom(), "sourceUrl": redes.getRandom(), }}}, {quoted: fkontak, ephemeralExpiration: 24*60*100, disappearingMessagesInChat: 24*60*100})}
 handler.help = ['bal']

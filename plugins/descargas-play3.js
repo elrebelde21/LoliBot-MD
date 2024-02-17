@@ -10,21 +10,23 @@ try {
 const yt_play = await search(args.join(' '))
 let additionalText = ''
 if (command === 'play3' || command == 'playaudiodoc') {
-additionalText = '𝘼𝙐𝘿𝙄𝙊'
+additionalText = '𝘼𝙪𝙙𝙞𝙤'
 } else if (command === 'play4' || command == 'playvideodoc') {
-additionalText = '𝙑𝙄𝘿𝙀𝙊'
+additionalText = '𝙑𝙞𝙙𝙚𝙤'
 }
-const texto1 = `╭───≪~*╌◌ᰱ•••⃙❨͟͞P̸͟͞L̸͟A̸͟͞Y̸͟͞❩⃘•••ᰱ◌╌*~*
-│║📌 *𝗧𝗶𝘁𝘂𝗹𝗼:* ${yt_play[0].title}
-│║📆 *𝗣𝘂𝗯𝗹𝗶𝗰𝗮𝗰𝗶𝗼𝗻:* ${yt_play[0].ago}
-│║⌚ *𝘿𝙪𝙧𝙖𝙘𝙞𝙤𝙣:* ${secondString(yt_play[0].duration.seconds)}
-│║👀 *𝗩𝗶𝘀𝘁𝗮𝘀:* ${MilesNumber(yt_play[0].views)}
-│║👤 *𝘼𝙪𝙩𝙤𝙧:* ${yt_play[0].author.name}
-│║📇 *𝘿𝙚𝙨𝙘𝙧𝙞𝙥𝙘𝙞𝙤𝙣:* ${description}
-│║🔗 *𝙇𝙞𝙣𝙠:* ${yt_play[0].url}
-│║
-│║ 𝙀𝙉𝙑𝙄𝘼𝘿𝙊 ${additionalText}, 𝘼𝙂𝙐𝘼𝙍𝘿𝙀 𝙐𝙉 𝙈𝙊𝙈𝙀𝙉𝙏𝙊 ．．．
-╰─•┈┈┈•••✦𝒟ℳ✦•••┈┈┈•─╯⟤`.trim()
+const texto1 = `•━━『 𝐏𝐋𝐀𝐘𝐃𝐎𝐂 』━━•
+
+📌 *𝗧𝗶𝘁𝘂𝗹𝗼:* ${yt_play[0].title}
+📆 *𝗣𝘂𝗯𝗹𝗶𝗰𝗮𝗰𝗶𝗼𝗻:* ${yt_play[0].ago}
+⌚ *𝘿𝙪𝙧𝙖𝙘𝙞𝙤𝙣:* ${secondString(yt_play[0].duration.seconds)}
+👀 *𝗩𝗶𝘀𝘁𝗮𝘀:* ${MilesNumber(yt_play[0].views)}
+👤 *𝘼𝙪𝙩𝙤𝙧:* ${yt_play[0].author.name}
+📇 *𝘿𝙚𝙨𝙘𝙧𝙞𝙥𝙘𝙞𝙤𝙣:* ${description}
+🔗 *𝙇𝙞𝙣𝙠:* ${yt_play[0].url}
+
+•━━『 𝐏𝐋𝐀𝐘𝐃𝐎𝐂 』━━•
+
+> 𝙀𝙣𝙫𝙞𝙖𝙣𝙙𝙤 ${additionalText}, 𝘼𝙜𝙪𝙖𝙧𝙙𝙚 𝙪𝙣 𝙢𝙤𝙢𝙚𝙣𝙩𝙤....`.trim()
 await conn.sendMessage(m.chat, {
 text: texto1,
 contextInfo: {
@@ -44,7 +46,7 @@ const yt = await youtubedl(v).catch(async (_) => await youtubedlv2(v));
 const dl_url = await yt.audio[q].download();
 const ttl = await yt.title;
 const size = await yt.audio[q].fileSizeH;
-let cap = `╭┄〔 *${wm}* 〕┄⊱-\n┆📥 ʏᴏᴜᴛᴜʙᴇ ᴅʟ 📥*\n┆——————«•»——————\n┆❏ *ᴛɪᴛᴜʟᴏ:* ${ttl}\n┆❏ *ᴘᴇsᴏ:* ${size}\n╰─────────────────`.trim()
+let cap = `*📥 𝘼𝙌𝙐𝙄 𝙀𝙎𝙏𝘼 𝙏𝙐 𝘼𝙐𝘿𝙄𝙊 𝙀𝙉 𝘿𝙊𝘾𝙐𝙈𝙀𝙉𝙏𝙊𝙎*\n\n❏ *𝙏𝙞𝙩𝙪𝙡𝙤:* ${ttl}\n❏ *𝙋𝙚𝙨𝙤:* ${size}`.trim()
 await conn.sendMessage(m.chat, {document: {url: dl_url}, caption: cap, mimetype: 'audio/mpeg', fileName: `${ttl}.mp3`}, {quoted: m});
 /*await conn.sendMessage(m.chat, { document: { url: dl_url }, caption: cap, mimetype: 'audio/mpeg', contextInfo: {
 externalAdReply: {
@@ -60,7 +62,7 @@ try {
 const lolhuman = await fetch(`https://api.lolhuman.xyz/api/ytaudio2?apikey=${lolkeysapi}&url=${yt_play[0].url}`);
 const lolh = await lolhuman.json();
 const n = lolh.result.title || 'error';
-await conn.sendMessage(m.chat, {document: {url: lolh.result.link}, caption: `╭━❰  ${wm}  ❱━⬣\n┃📥 YOUTUBE DL 📥\n┃ও *TÍTULO | TITLE:* \n┃» ${n}\n┃﹘﹘﹘﹘﹘﹘﹘﹘﹘﹘﹘﹘\n┃ও *PESO | SIZE:*\n┃» ${n2}\n╰━━━━━❰ *𓃠 ${vs}* ❱━━━━⬣`, fileName: `${n}.mp3`, mimetype: 'audio/mpeg'}, {quoted: m});
+await conn.sendMessage(m.chat, {document: {url: lolh.result.link}, caption: `*『 📥 𝘼𝙌𝙐𝙄 𝙀𝙎𝙏𝘼 𝙏𝙐 𝘼𝙐𝘿𝙄𝙊 𝙀𝙉 𝘿𝙊𝘾𝙐𝙈𝙀𝙉𝙏𝙊𝙎 📥  』*\n\n❏ *𝙏𝙞𝙩𝙪𝙡𝙤:*${n}\n❏ *𝙋𝙚𝙨𝙤:*${n2}`, fileName: `${n}.mp3`, mimetype: 'audio/mpeg'}, {quoted: m});
 /*await conn.sendMessage(m.chat, { document: { url: lolh.result.link }, caption: `╭━❰  ${wm}  ❱━⬣\n┃📥 YOUTUBE DL 📥\n┃ও *TÍTULO | TITLE:* \n┃» ${n}\n╰━━━━━❰ *𓃠 ${vs}* ❱━━━━⬣`, fileName: `${n}.mp3`, mimetype: 'audio/mpeg', contextInfo: {
 externalAdReply: {
 title: n, 
@@ -106,7 +108,7 @@ mediaType: 1,
 showAdAttribution: true,
 renderLargerThumbnail: true
 }}} , { quoted: m })   */
-await conn.sendMessage(m.chat, {document: {url: dl_url}, fileName: `${ttl}.mp4`, mimetype: 'video/mp4', caption: `╭┄〔 *${wm}* 〕┄⊱-\n┆📥 ʏᴏᴜᴛᴜʙᴇ ᴅʟ 📥*\n┆——————«•»——————\n┆❏ *ᴛɪᴛᴜʟᴏ:* ${ttl}\n┆❏ *ᴘᴇsᴏ:* ${size}\n╰─────────────────`, thumbnail: await fetch(yt.thumbnail)}, {quoted: m});
+await conn.sendMessage(m.chat, {document: {url: dl_url}, fileName: `${ttl}.mp4`, mimetype: 'video/mp4', caption: `*📥 𝘼𝙌𝙐𝙄 𝙀𝙎𝙏𝘼 𝙏𝙐 𝙑𝙄𝘿𝙀𝙊 𝙀𝙉 𝘿𝙊𝘾𝙐𝙈𝙀𝙉𝙏𝙊𝙎*\n\n❏ *𝙏𝙞𝙩𝙪𝙡𝙤:* ${ttl}\n❏ *𝙋𝙚𝙨𝙤:* ${size}`, thumbnail: await fetch(yt.thumbnail)}, {quoted: m});
 } catch {
 try {
 const mediaa = await ytMp4(yt_play[0].url);
@@ -119,7 +121,7 @@ const n = lolh.result.title || 'error';
 const n2 = lolh.result.link;
 const n3 = lolh.result.size;
 const n4 = lolh.result.thumbnail;
-await conn.sendMessage(m.chat, {document: {url: n2}, fileName: `${n}.mp4`, mimetype: 'video/mp4', caption: `╭┄〔 *${wm}* 〕┄⊱-\n┆📥 ʏᴏᴜᴛᴜʙᴇ ᴅʟ 📥*\n┆——————«•»——————\n┆❏ *ᴛɪᴛᴜʟᴏ:* ${n}\n┆❏ *ᴘᴇsᴏ:* ${n3}\n╰─────────────────`, thumbnail: await fetch(n4)}, {quoted: m});
+await conn.sendMessage(m.chat, {document: {url: n2}, fileName: `${n}.mp4`, mimetype: 'video/mp4', caption: `*『 📥 𝘼𝙌𝙐𝙄 𝙀𝙎𝙏𝘼 𝙏𝙐 𝙑𝙄𝘿𝙀𝙊 𝙀𝙉 𝘿𝙊𝘾𝙐𝙈𝙀𝙉𝙏𝙊𝙎 📥  』*\n❏ *𝙏𝙞𝙩𝙪𝙡𝙤:* ${n}\n❏ *𝙋𝙚𝙨𝙤:* ${n3}`, thumbnail: await fetch(n4)}, {quoted: m});
 } catch {
 }}}}
 } catch {

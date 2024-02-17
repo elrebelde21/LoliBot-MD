@@ -16,5 +16,5 @@ handler.tags = ['internet']
 handler.command = /^(pinterest|dlpinterest|pinterestdl)$/i
 //handler.money = 100
 handler.register = true
-handler.level = 0
+handler.level = 3
 export default handler
