@@ -67,41 +67,33 @@ let name = conn.getName(m.sender)
 let user = global.db.data.users[m.sender]
 if (!canLevelUp(user.level, user.exp, global.multiplier)) {
 let { min, xp, max } = xpRange(user.level, global.multiplier)
-throw `┌───⊷ *𝑵𝑰𝑽𝑬𝑳*
-┆ *𝑵𝑶𝑴𝑩𝑹𝑬*
-┆ ${name}
-┆┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈
-┆ *𝑵𝑰𝑽𝑬𝑳:* *${user.level}*
-┆┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈
-┆ *𝑹𝑨𝑵𝑮𝑶:* ${role}
-┆┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈
-┆ *𝑿𝑷:* *${user.exp - min}/${xp}*
-╰━━━⊰ 𓃠 ${vs} ⊱━━━━დ
+throw `•──『 *ＮＩＶＥＬ* 』──•
 
-_*te falta ${max - user.exp} de XP para subir de nivel*_
-`.trim()}
+◉ *𝙉𝙤𝙢𝙗𝙧𝙚:* ${name}
+◉ *𝙉𝙞𝙫𝙚𝙡:* ${user.level}
+◉ *𝙍𝙖𝙣𝙜𝙤:* ${role}
+◉ *𝙓𝙋:* ${user.exp - min}/${xp}
+
+> _*te falta ${max - user.exp} de XP para subir de nivel*_`.trim()}
 let before = user.level * 1
 while (canLevelUp(user.level, user.exp, global.multiplier)) user.level++
 if (before !== user.level) {
 let teks = `Bien hecho! ${conn.getName(m.sender)} Nivel: ${user.level}`
-let str = `┌───⊷ *𝑵𝑰𝑽𝑬𝑳*
-┆ *𝑵𝑰𝑽𝑬𝑳 𝑨𝑵𝑻𝑬𝑹𝑰𝑶𝑹:* *${before}*
-┆┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈
-┆ *𝑵𝑰𝑽𝑬𝑳 𝑨𝑪𝑻𝑼𝑨𝑳:* *${user.level}*
-┆┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈
-┆ *𝑹𝑨𝑵𝑮𝑶:* ${role}
-┆┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈
-┆ *𝑭𝑬𝑪𝑯𝑨:* *${new Date().toLocaleString('id-ID')}*
-╰━━━⊰ 𓃠 ${vs} ⊱━━━━დ
+let str = `•──『 *ＮＩＶＥＬ* 』──•
 
-_*Cuanto mas interactues con el bot mayor sera tu nivel!!*_
+◉ *𝙉𝙞𝙫𝙚𝙡 𝙖𝙣𝙩𝙚𝙧𝙞𝙤𝙧:* *${before}*
+◉ *𝙉𝙞𝙫𝙚𝙡 𝙖𝙘𝙩𝙪𝙖𝙡:* *${user.level}*
+◉ *𝙍𝙖𝙣𝙜𝙤:* ${role}
+◉ *𝙁𝙚𝙘𝙝𝙖:* *${new Date().toLocaleString('id-ID')}*
+
+> _*Cuanto mas interactues con el bot mayor sera tu nivel!!*_
 `.trim()
 try {
 const img = await levelup(teks, user.level)
 conn.sendMessage(m.chat, {image: {url: img}, caption: str, mentions: conn.parseMention(str)}, {quoted: m, ephemeralExpiration: 24*60*100, disappearingMessagesInChat: 24*60*100})
 //conn.sendFile(m.chat, img, 'levelup.jpg', str, m)
 } catch (e) {
-conn.sendMessage(m.chat, {text: str, contextInfo: {forwardingScore: 9999999, isForwarded: true, mentionedJid:[who], image: {url: img}, "externalAdReply":  {"showAdAttribution": true, "renderLargerThumbnail": true, "thumbnail": img.getRandom(), "title": wm, "containsAutoReply": true, "mediaType": 1, "mediaUrl": md, "sourceUrl": md, }}}, { quoted: m })
+conn.reply(m.chat, str, m, {contextInfo: {externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: wm, body: '𝐍𝐔𝐄𝐕𝐎 𝐍𝐈𝐕𝐄𝐋 💫', previewType: 0, thumbnail: img.getRandom(), sourceUrl: redes.getRandom()}}})
 //m.reply(str)
 }}}
 handler.help = ['levelup']

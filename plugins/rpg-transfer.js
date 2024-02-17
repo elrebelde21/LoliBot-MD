@@ -5,23 +5,23 @@ if (confirmation[m.sender]) return m.reply('𝙀𝙨𝙩𝙖𝙨 𝙝𝙖𝙘�
 let user = global.db.data.users[m.sender]
 const item = items.filter(v => v in user && typeof user[v] == 'number')
     
-let lol = `💱 *𝙏𝙍𝘼𝙉𝙎𝙁𝙀𝙍𝙀𝙉𝘾𝙄𝘼* 💱
+let lol = `\`⧼⧼⧼ 💱 𝙏𝙍𝘼𝙉𝙎𝙁𝙀𝙍𝙀𝙉𝘾𝙄𝘼 💱 ⧽⧽⧽\`
     
-*${usedPrefix + command}  tipo cantidad @tag*
-*𝙀𝙅𝙀𝙈𝙋𝙇𝙊*
-*${usedPrefix + command} exp 30 @59300000000*
+> *${usedPrefix + command}  tipo cantidad @tag*
 
-╭━━━━━━━━━━━━━━━━━━ ღ
-┃ ✅ *𝙍𝙀𝘾𝙐𝙍𝙎𝙊𝙎 𝘿𝙄𝙎𝙋𝙊𝙉𝙄𝘽𝙇𝙀𝙎*
-┃──────────────
-┃ limit *= 𝘿𝙞𝙖𝙢𝙖𝙣𝙩𝙚𝙨* 💎
-┃ money *= 𝙇𝙤𝙡𝙞𝘾𝙤𝙞𝙣𝙨* 🪙
-┃ exp *= 𝙀𝙭𝙥𝙚𝙧𝙞𝙚𝙣𝙘𝙞𝙖* ⚡
-╰━━━━━━━━━━━━━━━━━━ ღ 
+\`❏ 𝙀𝙅𝙀𝙈𝙋𝙇𝙊 :\`
+* *${usedPrefix + command} exp 30 @0*
+
+┏•「 *✅ 𝙍𝙀𝘾𝙐𝙍𝙎𝙊𝙎 𝘿𝙄𝙎𝙋𝙊𝙉𝙄𝘽𝙇𝙀𝙎* 」
+┃
+┃ 💎 𝘿𝙞𝙖𝙢𝙖𝙣𝙩𝙚𝙨 = limit
+┃ 🪙 𝙇𝙤𝙡𝙞𝘾𝙤𝙞𝙣𝙨 = money 
+┃ ⚡ 𝙀𝙭𝙥𝙚𝙧𝙞𝙚𝙣𝙘𝙞𝙖 = exp 
+┗•
 `.trim()
     
 const type = (args[0] || '').toLowerCase()
-if (!item.includes(type)) return m.reply(lol)
+if (!item.includes(type)) return m.reply(lol,  m.chat, {mentions: conn.parseMention(lol)}, {quoted: m })
 const count = Math.min(Number.MAX_SAFE_INTEGER, Math.max(1, (isNumber(args[1]) ? parseInt(args[1]) : 1))) * 1
 let who = m.mentionedJid && m.mentionedJid[0] ? m.mentionedJid[0] : args[2] ? (args[2].replace(/[@ .+-]/g, '') + '@s.whatsapp.net') : ''
 if (!who) return m.reply(`${ag} *𝙀𝙏𝙄𝙌𝙐𝙀𝙏𝙀 𝘼𝙇 𝙐𝙎𝙐𝘼𝙍𝙄𝙊*`)

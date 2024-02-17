@@ -4,7 +4,7 @@ let ne = await (await fetch('https://raw.githubusercontent.com/ArugaZ/grabbed-re
 try {
 let nek = ne.split('\n')
 let neko = pickRandom(nek)
-conn.sendFile(m.chat, neko, 'error.jpg', 'Nyaww~ 🐾💗', m, false, { contextInfo: {externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: 'Nyaww~ 🐾💗', body: '𝐒𝐮𝐩𝐞𝐫 𝐁𝐨𝐭 𝐃𝐞 𝐖𝐡𝐚𝐭𝐬𝐀𝐩𝐩', previewType: 0, thumbnail: imagen4, sourceUrl: [nna, md, yt, tiktok, fb].getRandom()}}})
+conn.sendFile(m.chat, neko, 'error.jpg', 'Nyaww~ 🐾💗', m, false, { contextInfo: {externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: 'Nyaww~ 🐾💗', body: '𝐒𝐮𝐩𝐞𝐫 𝐁𝐨𝐭 𝐃𝐞 𝐖𝐡𝐚𝐭𝐬𝐀𝐩𝐩', previewType: 1, thumbnail: imagen4, sourceUrl: [nna, md, yt, tiktok, fb].getRandom()}}})
 } catch (e) {
 console.log(e)}}
 handler.command = /^(neko)$/i
