@@ -965,6 +965,7 @@ if (!('antiFacebook' in chat)) chat.antiFacebook = false
 if (!('antiInstagram' in chat)) chat.antiInstagram = false
 if (!('antiTwitter' in chat)) chat.antiInstagram = false
 if (!('game' in chat)) chat.game = true
+if (!('game2' in chat)) chat.game2 = true
 if (!('antifake' in chat)) chat.antifake = false
 if (!('reaction' in chat)) chat.reaction = true    
 if (!('viewonce' in chat)) chat.viewonce = false         
@@ -999,6 +1000,7 @@ antiFacebook: false,
 antiInstagram: false,
 antiTwitter: false,
 game: true, 
+game2: true, 
 antifake: false,
 reaction: true,
 viewonce: false,
