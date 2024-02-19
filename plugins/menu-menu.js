@@ -127,8 +127,11 @@ ${readMore}
 ┈┈┈┈┈┈┈┈┈┈┈┈┈┈
 
   『 \`SERBOT & JADIBOT\` 』
-> 🟢 _${usedPrefix}serbot_
-> 🟢 _${usedPrefix}stop_
+> 🟢 _${usedPrefix}serbot | jadibot_
+> 🟢 _${usedPrefix}serbot --code
+> 🟢 _${usedPrefix}jadibot --code
+> 🟢 _${usedPrefix}stop | detener_
+> 🟢 _${usedPrefix}eliminarsesion | deletebot_
 > 🟢 _${usedPrefix}bots_
 
 ┈┈┈┈┈┈┈┈┈┈┈┈┈┈
