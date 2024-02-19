@@ -440,7 +440,6 @@ if (!/[01]/.test(command)) return await conn.reply(m.chat, `       \`『 OPCIONE
 > ${lenguajeGB.smsConfi6()}
 > ${lenguajeGB.smsConfi7()}
 > ${lenguajeGB.smsConfi8()}
-${m.isGroup ? `` : `> ${lenguajeGB.smsConfi9()}`}
 
      \`『 ${lenguajeGB.smsParaAdmins()}  』\`
      
@@ -529,7 +528,7 @@ ${m.isGroup ? `` : `> ${lenguajeGB.smsConfi9()}`}
 * ${usedPrefix + command} antiSpam ${bot.antiSpam ? '✅' : '❌'}
 * ${lenguajeGB.smsAntiSp2()}
 
-* ${usedPrefix + command} self ${global.opts['self'] ? '❌' : '✅'}
+* ${usedPrefix + command} public ${global.opts['self'] ? '❌' : '✅'}
 * ${lenguajeGB.smsModP2()}
 
 * ${usedPrefix + command} autoread ${global.opts['autoread'] ? '✅' : '❌'}

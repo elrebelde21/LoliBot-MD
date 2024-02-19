@@ -90,7 +90,7 @@ let str = `•──『 *ＮＩＶＥＬ* 』──•
 `.trim()
 try {
 const img = await levelup(teks, user.level)
-conn.sendMessage(m.chat, {image: {url: img}, caption: str, mentions: conn.parseMention(str)}, {quoted: m, ephemeralExpiration: 24*60*100, disappearingMessagesInChat: 24*60*100})
+conn.sendFile(m.chat, img, 'lp.jpg', str, m, false, { contextInfo: {externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: wm, body: '𝐍𝐔𝐄𝐕𝐎 𝐍𝐈𝐕𝐄𝐋 💫', previewType: 0, thumbnail: img.getRandom(), sourceUrl: redes.getRandom()}}})
 //conn.sendFile(m.chat, img, 'levelup.jpg', str, m)
 } catch (e) {
 conn.reply(m.chat, str, m, {contextInfo: {externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: wm, body: '𝐍𝐔𝐄𝐕𝐎 𝐍𝐈𝐕𝐄𝐋 💫', previewType: 0, thumbnail: img.getRandom(), sourceUrl: redes.getRandom()}}})
