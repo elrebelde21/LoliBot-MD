@@ -26,7 +26,6 @@ sleep 2
 wait
 done &
 echo -e ""
-fi
  
 echo -e "\033[01;32m\033[01mInstalando dependencias!!\n\033[0m" 
 echo -e "\e[36m
