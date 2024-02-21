@@ -16,10 +16,10 @@ echo -e "\e[35m
 ...
 COMMENT
 
-echo -e "\033[01;93mPreparando instalación...\n\033[0m"
-mp3_array=("install_automatic1.mp3" "install_automatic2.mp3" "install_automatic3.mp3" "install_automatic4.mp3" "install_automatic5.mp3" "install_automatic6.mp3" "install_automatic7.mp3" "install_automatic8.mp3" "install_automatic9.mp3" "install_automatic10.mp3" "install_automatic11.mp3" "install_automatic12.mp3")
+echo -e "\033[01;93mPreparando instalación...\nPreparing installation...\n\033[0m"
+mp3_array=("https://qu.ax/PreU.mp3" "https://qu.ax/kKXA.mp3" "https://qu.ax/cFSp.mp3" "https://qu.ax/CQRm.mp3" "https://qu.ax/kDSY.mp3" "https://qu.ax/AQLB.mp3" "https://qu.ax/EspE.mp3" "https://qu.ax/ifKO.mp3" "https://qu.ax/EUDu.mp3" "https://qu.ax/SRNs.mp3" "https://qu.ax/WvfK.mp3" "https://qu.ax/lbff.mp3")
 random_mp3=${mp3_array[$RANDOM % ${#mp3_array[@]}]}
-if wget -q https://github.com/elrebelde21/The-LoliBot-MD-V2/raw/master/musicSH/"$random_mp3"; then
+if wget -q then
 echo -e "\033[01;32mDescarga exitosa. Reproduciendo sonido de intro...\n\033[0m"
 while true; do
 mpv --no-terminal "$random_mp3" &
