@@ -19,7 +19,6 @@ COMMENT
 echo -e "\033[01;93mPreparando instalación...\n\033[0m"
 mp3_array=("https://qu.ax/PreU.mp3" "https://qu.ax/kKXA.mp3" "https://qu.ax/cFSp.mp3" "https://qu.ax/CQRm.mp3" "https://qu.ax/kDSY.mp3" "https://qu.ax/AQLB.mp3" "https://qu.ax/EspE.mp3" "https://qu.ax/ifKO.mp3" "https://qu.ax/EUDu.mp3" "https://qu.ax/SRNs.mp3" "https://qu.ax/WvfK.mp3" "https://qu.ax/lbff.mp3")
 random_mp3=${mp3_array[$RANDOM % ${#mp3_array[@]}]}
-if wget -q https://github.com/elrebelee21/LoliBot-MD/raw/master/musicSH/"$random_mp3"; then
 echo -e ""
 while true; do
 mpv --no-terminal "$random_mp3" &
