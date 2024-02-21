@@ -25,7 +25,6 @@ mpv --no-terminal "$random_mp3" &
 sleep 2
 wait
 done &
-else
 echo -e ""
 fi
  
