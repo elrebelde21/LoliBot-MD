@@ -109,7 +109,7 @@ global.imagen5 = 'https://qu.ax/rULv.jpg'
 global.imagen6 = 'https://qu.ax/CySs.jpg'
 global.menu18 = 'https://qu.ax/MOgO.jpg'
 global.vid1 = 'https://qu.ax/dcAc.mp4'
-global.img = [imagen, imagen1, imagen2, imagen3, imagen4, imagen5, imagen6]
+global.img = [imagen, imagen1, imagen2, imagen3, imagen4]
 
 //------------------------[ Info | Datos ]---------------------------
 
