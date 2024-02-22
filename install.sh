@@ -190,9 +190,8 @@ echo -e "\e[35m
 ────────────────────────────────────────────────────\n\e[0m"
 
 echo -e "\033[1;35m"
-git clone https://github.com/elrebelde21/LoliBot-MD.git
-echo -e "\033[01;32m\033[01mLa clonación se ha descargado e instalado correctamente..\n\033[0m"
-cd LoliBot-MD
+git clone https://github.com/elrebelde21/LoliBot-MD && cd LoliBot-MD
+echo -e "\033[01;32m\033[01mLa clonación se ha descargado e instalado correctamente.\n\033[0m"
 
 echo -e "\033[01;32m\033[01mCambiando al directorio del repositorio!!\n\033[0m" 
 cd LoliBot-MD
