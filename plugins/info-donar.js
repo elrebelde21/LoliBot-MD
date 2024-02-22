@@ -1,6 +1,6 @@
-let media = './media/menus/Menu4paypal.jpg'
+let media = img.getRandom()
 let handler = async (m, { conn, command }) => {
-let pp = './src/apoyo.jpg'
+//let pp = './src/apoyo.jpg'
 let name = await conn.getName(m.sender)
 await conn.sendMessage(m.chat, { 
 text: `*╭╼╼╼╼╼╼[ 💖 DONACION 💖 ]╾╾╾╾╾╾╾*

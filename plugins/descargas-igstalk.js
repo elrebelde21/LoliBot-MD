@@ -46,7 +46,7 @@ body: 'Super Bot WhatsApp',
 previewType: 0, thumbnail: fs.readFileSync("./media/menus/Menu1.jpg"),
 sourceUrl: redes.getRandom}}})
 } catch (e) {
-let sticker = './src/stickers1.webp'
+let sticker = 'https://qu.ax/Wdsb.webp'
 conn.sendFile(m.chat, sticker, 'error.webp', '', m)
 console.log(e)}}
 handler.help = ['igstalk'].map(v => v + ' <username>')
