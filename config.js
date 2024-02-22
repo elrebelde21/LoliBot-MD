@@ -102,9 +102,9 @@ global.redes = [nna, yt, nn, md, tiktok, fb, nnn, face]
 //-------------------------[ IMAGEN ]------------------------------
 global.imagen = fs.readFileSync('./Menu2.jpg')
 global.imagen1 = fs.readFileSync('./media/Menu1.jpg')
-global.imagen2 = 'https://qu.ax/uipS.jpg'
-global.imagen3 = 'https://qu.ax/rkh.jpg'
-global.imagen4 = 'https://qu.ax/WApH.jpg'
+global.imagen2 = fs.readFileSync('./media/Menu2.jpg')
+global.imagen3 = fs.readFileSync('./media/Menu3.jpg')
+global.imagen4 = fs.readFileSync('./media/Menu4.jpg')
 global.imagen5 = 'https://qu.ax/rULv.jpg'
 global.imagen6 = 'https://qu.ax/CySs.jpg'
 global.menu18 = 'https://qu.ax/MOgO.jpg'
