@@ -101,13 +101,14 @@ global.redes = [nna, yt, nn, md, tiktok, fb, nnn, face]
 
 //-------------------------[ IMAGEN ]------------------------------
 global.imagen = fs.readFileSync('./Menu2.jpg')
-global.imagen1 = fs.readFileSync('./media/menus/Menu1.jpg')
-global.imagen2 = fs.readFileSync('./media/menus/Menu2.jpg')
-global.imagen3 = fs.readFileSync('./media/menus/Menu3.jpg')
-global.imagen4 = fs.readFileSync('./media/menus/Menu4.jpg')
-global.imagen5 = fs.readFileSync('./media/menus/Menu5.jpg')
-global.imagen6 = fs.readFileSync('./media/menus/Menu6.jpg')
-global.vid1 = fs.readFileSync('./media/menus/Menuvid1.mp4') 
+global.imagen1 = fs.readFileSync('./media/Menu1.jpg')
+global.imagen2 = 'https://qu.ax/uipS.jpg'
+global.imagen3 = 'https://qu.ax/rkh.jpg'
+global.imagen4 = 'https://qu.ax/WApH.jpg'
+global.imagen5 = 'https://qu.ax/rULv.jpg'
+global.imagen6 = 'https://qu.ax/CySs.jpg'
+global.menu18 = 'https://qu.ax/MOgO.jpg'
+global.vid1 = 'https://qu.ax/dcAc.mp4'
 global.img = [imagen, imagen1, imagen2, imagen3, imagen4, imagen5, imagen6]
 
 //------------------------[ Info | Datos ]---------------------------
@@ -167,7 +168,7 @@ message: {
 'seconds': '999999999', 
 'gifPlayback': 'true', 
 'caption': bottime,
-'jpegThumbnail': fs.readFileSync('./media/menus/Menu3.jpg')
+'jpegThumbnail': imagen4
 }}}
 
 //----------------------------------------------------
