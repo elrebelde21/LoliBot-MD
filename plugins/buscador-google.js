@@ -15,7 +15,7 @@ teks += `_${g.title}_\n_${g.link}_\n_${g.snippet}_\n\n┈┈┈┈┈┈┈┈�
 } 
 const ss = `https://image.thum.io/get/fullpage/${url}`
 conn.sendFile(m.chat, ss, 'error.png', teks, fkontak, false, { contextInfo: {externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: wm, body: ' 💫 𝐒𝐮𝐩𝐞𝐫 𝐁𝐨𝐭 𝐃𝐞 𝐖𝐡𝐚𝐭𝐬𝐚𝐩𝐩 🥳 ', previewType: 0, thumbnail: img.getRandom(), sourceUrl: redes.getRandom()}}})  
-//m.reply(teks)
+handler.limit = 1
 })
 } catch {    
 handler.limit = 0
@@ -25,5 +25,4 @@ handler.tags = ['internet']
 handler.command = /^googlef?$/i
 handler.exp = 40
 handler.exp = 3
-handler.limit = 1
 export default handler

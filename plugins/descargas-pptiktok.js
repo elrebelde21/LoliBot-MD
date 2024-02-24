@@ -4,14 +4,16 @@ if (!text) return conn.reply(m.chat, `𝙀𝙨𝙘𝙧𝙞𝙗𝙖 𝙚𝙡 𝙣
 try {
 let res = `https://api.lolhuman.xyz/api/pptiktok/${text}?apikey=9b817532fadff8fc7cb86862`
 await conn.sendFile(m.chat, res, 'error.jpg', `✅ 𝙁𝙤𝙩𝙤 𝙙𝙚 𝙥𝙚𝙧𝙛𝙞𝙡*${text}*`, m, false)
+handler.limit = 1
 } catch (e) {
 await conn.reply(m.chat, `${lenguajeGB['smsMalError3']()}#report ${lenguajeGB['smsMensError2']()} ${usedPrefix + command}\n\n${wm}`, m)
 console.log(`❗❗ ${lenguajeGB['smsMensError2']()} ${usedPrefix + command} ❗❗`)
-console.log(e)}}
+console.log(e)
+handler.limit = 0
+}}
 handler.help = ['tiktokfoto'].map(v => v + ' <username>')
 handler.tags = ['downloader']
 handler.command = /^(tiktokfoto|tiktokphoto)$/i
-handler.limit = 1
+//handler.limit = 1
 handler.register = true
-handler.exp = 68
 export default handler

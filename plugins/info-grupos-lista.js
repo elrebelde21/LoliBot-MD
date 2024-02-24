@@ -45,6 +45,5 @@ ${lenguajeGB.smsLisB()} ${totalGroups}\n\n${txt}`.trim());
 handler.help = ['groups', 'grouplist']
 handler.tags = ['info']
 handler.command = /^(groups|grouplist|listadegrupo|gruposlista|listagrupos|listadegrupos|grupolista|listagrupo)$/i
-handler.exp = 5
 handler.register = true
 export default handler

@@ -45,6 +45,7 @@ title: 'LoliBot-MD',
 body: 'Super Bot WhatsApp',         
 previewType: 0, thumbnail: fs.readFileSync("./media/menus/Menu1.jpg"),
 sourceUrl: redes.getRandom}}})
+handler.money = 150
 } catch (e) {
 let sticker = 'https://qu.ax/Wdsb.webp'
 conn.sendFile(m.chat, sticker, 'error.webp', '', m)
@@ -52,8 +53,7 @@ console.log(e)}}
 handler.help = ['igstalk'].map(v => v + ' <username>')
 handler.tags = ['downloader']
 handler.command = /^(igstalk|verig|igver)$/i
-handler.exp = 80
-handler.money = 150
+//handler.money = 150
 handler.level = 3
 handler.register = true
 export default handler

@@ -32,11 +32,14 @@ ${json.result.video}
 ${json.result.bio}
 `.trim()
 await conn.sendFile(m.chat, res2, 'error.jpg', text, m, false)
+handler.limit = 1
 } catch (e) {
-conn.reply(m.chat, `${lenguajeGB['smsAvisoFG']()}𝙉𝙊 𝙎𝙀 𝙀𝙉𝘾𝙊𝙉𝙏𝙍𝙊 𝙀𝙇 𝙉𝙊𝙈𝘽𝙍𝙀 𝘿𝙀 𝙐𝙎𝙐𝘼𝙍𝙄𝙊.`, m, { contextInfo: { externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: `${lenguajeGB['smsAvisoAG']()}`, body: '', previewType: 0, thumbnail: imagen2, sourceUrl: redes.getRandom}}})}}
+conn.reply(m.chat, `${lenguajeGB['smsAvisoFG']()}𝙉𝙊 𝙎𝙀 𝙀𝙉𝘾𝙊𝙉𝙏𝙍𝙊 𝙀𝙇 𝙉𝙊𝙈𝘽𝙍𝙀 𝘿𝙀 𝙐𝙎𝙐𝘼𝙍𝙄𝙊.`, m, { contextInfo: { externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: `${lenguajeGB['smsAvisoAG']()}`, body: '', previewType: 0, thumbnail: imagen2, sourceUrl: redes.getRandom}}})
+handler.limit = false
+}}
 handler.help = ['tiktokstalk'].map(v => v + ' <username>')
 handler.tags = ['stalk']
 handler.command = /^(tiktokstalk|ttstalk)$/i
-handler.limit = 1
+//handler.limit = 1
 handler.register = true
 export default handler

@@ -6,18 +6,17 @@ const owner = groupMetadata.owner || groupAdmins.find(p => p.admin === 'superadm
 let pesan = args.join` `
 let oi = `${lenguajeGB.smsAddB5()} _${pesan}_`
 
-let textoA = 
-`╭━━[ .⋅ 🗣️ ⋅]━━━⬣ 
+let textoA = `╭━━[ .⋅ 🗣️ ⋅]━━━⬣ 
 ෆ ${lenguajeGB.smsAddB3()}
 ෆ ${oi}
 ╰━━━━━━[ *𓃠.⋅ ${vs} ⋅]━━━━━⬣`
 
-let textoB = 
-`*${listAdmin}*
+let textoB = `*${listAdmin}*
 
 ⛔ ${lenguajeGB.smsAddB4()} ⛔`.trim()
-await conn.sendButton(m.chat, textoA, textoB, pp, [[lenguajeGB.smsConMenu(), `.menu`]], m, { mentions: [...groupAdmins.map(v => v.id), owner] })
+await conn.sendFile(m.chat, pp, 'error.jpg', textoA + textoB, m, false, { mentions: [...groupAdmins.map(v => v.id), owner] })
 }
 handler.command = /^(admins|@admins|dmins)$/i
 handler.group = true
+handler.register = true
 export default handler

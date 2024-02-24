@@ -60,9 +60,10 @@ if (id in conn.tebaklagu) {
 conn.reply(m.chat, 'Todavía hay canciones sin respuesta en este chat.', conn.tebaklagu[id][0]);
 throw false;
 } // 5LTV57azwaid7dXfz5fzJu
-const res = await fetchJson(`https://raw.githubusercontent.com/GataNina-Li/GataBot-MD/master/src/JSON/tebaklagu.json`);
+const res = await fetchJson(`https://raw.githubusercontent.com/elrebelde21/LoliBot-MD/master/src/JSON/tebaklagu.json`);
 const json = res[Math.floor(Math.random() * res.length)];
-const caption = `ADIVINA EL TITULO DE LA CANCION\n⎔ Tiempo ➺ ${(timeout / 1000).toFixed(2)} segundos ⏰\n⎔ Escribe *${usedPrefix}pista* Para obtener una pista 😸\n⎔ Premio: ${poin} XP⚡\n\nRESPONDE A ESTE MENSAJE CON LAS RESPUESTAS!!`.trim();
+const caption = `• *Tiempo :* ${(timeout / 1000).toFixed(2)} segundos\n• *Escribe :* ${usedPrefix}pista Para obtener una pista ♨️\n• *Premio :* ${poin} XP⚡
+`.trim();
 conn.tebaklagu[id] = [
 await conn.reply(m.chat,  caption, m, {contextInfo: { externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: 'ADIVINA LA CANCION', body: '𝐒𝐮𝐩𝐞𝐫 𝐁𝐨𝐭 𝐃𝐞 𝐖𝐡𝐚𝐭𝐬𝐀𝐩𝐩', previewType: 0, thumbnail: imagen4, sourceUrl: [md, yt, tiktok].getRandom()}}}), 
 json, poin, setTimeout(() => {
@@ -80,12 +81,10 @@ let json = tekateki[Math.floor(Math.random() * tekateki.length)]
 let _clue = json.response
 let clue = _clue.replace(/[A-Za-z]/g, '_')
 let caption = `
-ⷮ *${json.question}*
+ⷮ${json.question}
 
 *• Tiempo:* ${(timeout / 1000).toFixed(2)} segundos
 *• Bono:* +${poin} Exp
-
-💫 Responde a este mensaje con la letra de la opción correcta ✅
 `.trim()
 conn.tekateki[id] = [
 await //conn.reply(m.chat, caption, m),

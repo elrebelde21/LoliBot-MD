@@ -35,8 +35,9 @@ users = global.db.data.users
 if (users[user].banned === true) conn.reply(m.chat, lenguajeGB.smsPropban4(number), null, { mentions: [user] }) 
 users[user].banned = true
 usr = m.sender.split('@')[0]     
-let ban = './media/baneado.mp3'
-conn.sendFile(m.chat, ban, 'error.mp3', null, m, true, {type: 'audioMessage', ptt: true})
+let ban = 'https://qu.ax/SJJt.mp3'
+conn.sendMessage(m.chat, { audio: { url: ban }, contextInfo: { "externalAdReply": { "title": `⚠️ ᴱˡ ᵘˢᵘᵃʳᶦᵒ(ᵃ) ᶠᵘᵉ ᵇᵃⁿᵉᵃᵈᵒ(ᵃ) 🙀 ⁿᵒ ᵖᵒᵈʳᵃ ᵘˢᵃʳ ᵃ ${wm}`, "body": ``, "previewType": "PHOTO", "thumbnailUrl": null,"thumbnail": imagen1, "sourceUrl": md, "showAdAttribution": true}}, ptt: true, mimetype: 'audio/mpeg', fileName: `error.mp3` }, { quoted: m })
+//conn.sendFile(m.chat, ban, 'error.mp3', null, m, true, {type: 'audioMessage', ptt: true})
 //await conn.reply(m.chat, lenguajeGB.smsPropban5(), null, { mentions: [user] })   
 //await conn.reply(user, lenguajeGB.smsPropban6(number, usr), null, { mentions: [user, m.sender] })
 }} catch (e) {

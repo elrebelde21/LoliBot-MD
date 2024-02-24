@@ -58,7 +58,7 @@ readmore: readMore
 text = text.replace(new RegExp(`%(${Object.keys(replace).sort((a, b) => b.length - a.length).join`|`})`, 'g'), (_, name) => '' + replace[name])
   
 //let name = await conn.getName(m.sender)
-let pp = './media/menus/Menu1.jpg'
+let pp = './media/Menu1.jpg'
 let who = m.mentionedJid && m.mentionedJid[0] ? m.mentionedJid[0] : m.fromMe ? conn.user.jid : m.sender
 let mentionedJid = [who]
 let username = conn.getName(who)
@@ -124,7 +124,6 @@ await conn.sendFile(m.chat, pp, 'bots.mp4', Terminos)
 handler.customPrefix = /terminos|términos|términos, condiciones y privacidad|terminos, condiciones y privacidad|términos y condiciones y privacidad|terminosycondicionesyprivacidad|terminosycondiciones|terminos y condiciones y privacidad|terminos y condiciones|terminos y condiciones|terminos de uso|Terminos de uso|Terminó se uso|términos de uso|Términos de uso|Términos y condiciones/i
 handler.command = new RegExp
 handler.register = true
-handler.exp = 70
 export default handler
 
 const more = String.fromCharCode(8206)

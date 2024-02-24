@@ -434,7 +434,7 @@ throw false
 global.opts['swonly'] = isEnable
 break
 default:
-if (!/[01]/.test(command)) return await conn.reply(m.chat, `       \`『 OPCIONES PARA ACTIVA Y DESACTIVAR 』\`
+if (!/[01]/.test(command)) return await conn.reply(m.chat, `   \`『 OPCIONES PARA ACTIVA/DESACTIVAR 』\`
 
 > ${lenguajeGB.smsConfi5()}
 > ${lenguajeGB.smsConfi6()}

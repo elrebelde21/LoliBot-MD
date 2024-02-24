@@ -5,11 +5,11 @@ if (new Date - global.db.data.users[m.sender].lastrob < 7200000) throw `*⏱️ 
 let who
 if (m.isGroup) who = m.mentionedJid[0] ? m.mentionedJid[0] : m.quoted ? m.quoted.sender : false
 else who = m.chat
-if (!who) throw `*⚠️ 𝙀𝙩𝙞𝙦𝙪𝙚𝙩𝙖 𝙖 𝙖𝙡𝙜𝙪𝙞𝙚𝙣 𝙥𝙖𝙧𝙖 𝙧𝙤𝙗𝙖𝙧.*`
+if (!who) throw `*⚠️ 𝙀𝙩𝙞𝙦𝙪𝙚𝙩𝙖 𝙖 𝙖𝙡𝙜𝙪𝙞𝙚𝙣 𝙥𝙖𝙧𝙖 𝙧𝙤𝙗𝙖𝙧*`
 if (!(who in global.db.data.users)) throw `*⚠️ 𝙀𝙡 𝙪𝙨𝙪𝙖𝙧𝙞𝙤 𝙣𝙤 𝙨𝙚 𝙚𝙣𝙘𝙪𝙚𝙣𝙩𝙧𝙖 𝙚𝙣 𝙢𝙞 𝙗𝙖𝙨𝙚 𝙙𝙚 𝙙𝙖𝙩𝙤𝙨.*`
 let users = global.db.data.users[who]
 let rob = Math.floor(Math.random() * ro)
-if (users.exp < rob) return m.reply(`😔 @${who.split`@`[0]} 𝙩𝙞𝙚𝙣𝙚 𝙢𝙚𝙣𝙤𝙨 𝙙𝙚 *${ro} 𝙓𝙋*\n𝙉𝙤 𝙧𝙤𝙗𝙚𝙨 𝙖 𝙪𝙣 𝙥𝙤𝙗𝙧𝙚 v":`, null, { mentions: [who] })    
+if (users.exp < rob) return m.reply(`😔 @${who.split`@`[0]} 𝙩𝙞𝙚𝙣𝙚 𝙢𝙚𝙣𝙤𝙨 𝙙𝙚 ${ro} 𝙓𝙋\n𝙉𝙤 𝙧𝙤𝙗𝙚𝙨 𝙖 𝙪𝙣 𝙥𝙤𝙗𝙧𝙚 v:`, null, { mentions: [who] })    
 global.db.data.users[m.sender].exp += rob
 global.db.data.users[who].exp -= rob 
 m.reply(`*‣ Robaste ${rob} XP a @${who.split`@`[0]}*`, null, { mentions: [who] })

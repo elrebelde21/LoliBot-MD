@@ -12,7 +12,7 @@ let response = `≪ＤＥＳＣＡＲＧＡＤＯ ＡＰＫＳ🚀≫
 ┃🕒 𝙐𝙇𝙏𝙄𝙈𝘼 𝘼𝘾𝙏𝙐𝙇𝙄𝙕𝘼𝘾𝙄𝙊𝙉: ${data5.lastup}
 ┃💪 𝙋𝙀𝙎𝙊: ${data5.size}
 ┗━━━━━━━━━━━━━━━━━━━━━━━•`
-await conn.sendFile(m.chat, data5.icon, 'akp.jpg', response, fkontak, false, { contextInfo: {mentionedJid, externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, body: iig, previewType: 0, thumbnail: img.getRandom(), sourceUrl: redes.getRandom()}}})   
+await conn.sendFile(m.chat, data5.icon, 'akp.jpg', response, m, false, { contextInfo: {externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, body: iig, previewType: 0, thumbnail: img.getRandom(), sourceUrl: redes.getRandom()}}})   
 //conn.sendMessage(m.chat, {image: {url: data5.icon}, caption: response}, {quoted: m});
 if (data5.size.includes('GB') || data5.size.replace(' MB', '') > 999) {
 return await conn.sendMessage(m.chat, {text: '*𝙀𝙡 𝙖𝙥𝙠 𝙚𝙨 𝙢𝙪𝙮 𝙥𝙚𝙨𝙖𝙙𝙤.*'}, {quoted: m})}

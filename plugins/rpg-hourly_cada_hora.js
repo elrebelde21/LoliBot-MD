@@ -26,14 +26,13 @@ const recompensas = {
 let pp = 'https://us.123rf.com/450wm/emojiimage/emojiimage1802/emojiimage180200332/95468325-mont%C3%B3n-de-piedras-preciosas-diamantes-azules-brillantes-concepto-de-joyas-caras-s%C3%ADmbolo-de-riqueza-d.jpg?ver=6'
 
 let time = user.lasthourly + 3600000 //1 Hora //3600000
-if (new Date - user.lasthourly < 3600000) return await conn.reply(m.chat,  `🕔 𝙔𝘼 𝙍𝙀𝘾𝙄𝘽𝙄𝙎𝙏𝙀 𝙏𝙐 𝙀𝙉𝙏𝙀𝙂𝘼 𝘿𝙀 𝘾𝘼𝘿𝘼 𝙃𝙊𝙍𝘼 ♻️\n𝙑𝙐𝙀𝙇𝙑𝙀 𝙀𝙉 *${msToTime(time - new Date())}* 𝙋𝘼𝙍𝘼 𝙍𝙀𝘾𝙄𝘽𝙄𝙍 𝙊𝙏𝙍𝘼 𝙀𝙉𝙏𝙍𝙀𝙂𝘼`, fkontak, {contextInfo: { externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: ag, body: '𝐒𝐮𝐩𝐞𝐫 𝐁𝐨𝐭 𝐃𝐞 𝐖𝐡𝐚𝐭𝐬𝐀𝐩𝐩', previewType: 0, thumbnail: imagen4, sourceUrl: [md, yt, tiktok].getRandom()}}})
+if (new Date - user.lasthourly < 3600000) return await conn.reply(m.chat,  `🕔 𝙔𝙖 𝙧𝙚𝙘𝙞𝙗𝙞𝙨𝙩𝙚 𝙩𝙪 𝙚𝙣𝙩𝙚𝙜𝙖 𝙙𝙚 𝙘𝙖𝙙𝙖 𝙝𝙤𝙧𝙖 ♻️\n𝙑𝙪𝙚𝙡𝙫𝙚 𝙚𝙣 : *${msToTime(time - new Date())}* 𝙋𝙖𝙧𝙖 𝙧𝙚𝙘𝙞𝙗𝙞𝙧 𝙤𝙩𝙧𝙖 𝙚𝙣𝙩𝙧𝙚𝙜𝙖`, fkontak, {contextInfo: { externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: ag, body: '𝐒𝐮𝐩𝐞𝐫 𝐁𝐨𝐭 𝐃𝐞 𝐖𝐡𝐚𝐭𝐬𝐀𝐩𝐩', previewType: 0, thumbnail: imagen4, sourceUrl: [md, yt, tiktok].getRandom()}}})
 let texto = ''
 for (let reward of Object.keys(recompensas)) {
     if (!(reward in user)) continue
     user[reward] += recompensas[reward]
 texto += `*+${recompensas[reward]}* ${global.rpgshop.emoticon(reward)}\n┃ `}
-let text = `╭━━🕐━🕑━🕒━━⬣
-┃ ♻️ 𝙀𝙉𝙏𝙍𝙀𝙂𝘼 𝘾𝘼𝘿𝘼 𝙃𝙊𝙍𝘼!!
+let text = `┏━「 🕐 𝙀𝙉𝙏𝙍𝙀𝙂𝘼 𝘾𝘼𝘿𝘼 𝙃𝙊𝙍𝘼 」
 ┃ *${premium ? '🎟️ Recompensa Premium' : '🆓 Recompensa Gratis'}*
 ┃ ${texto}
 ╰━━🕕━🕔━🕓━━⬣\n\n🎟️ 𝗣 𝗥 𝗘 𝗠 𝗜 𝗨 𝗠 ⇢ ${premium ? '✅' : '❌'}\n${wm}`

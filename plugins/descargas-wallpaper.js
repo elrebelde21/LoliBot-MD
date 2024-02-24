@@ -6,15 +6,17 @@ const res = await (/2/.test(command) ? wallpaperv2 : wallpaper)(text)
 const img = res[Math.floor(Math.random() * res.length)]
 let link = img
 conn.sendFile(m.chat, img, 'error.jpg', `*💞 𝙍𝙚𝙨𝙪𝙡𝙩𝙖𝙙𝙤 ${text}*\n${wm}`, m)
+handler.limit = 1
 } catch (e) {
 await conn.reply(m.chat, `${lenguajeGB['smsMalError3']()}#report ${lenguajeGB['smsMensError2']()} ${usedPrefix + command}\n\n${wm}`, m)
 console.log(`❗❗ ${lenguajeGB['smsMensError2']()} ${usedPrefix + command} ❗❗`)
-console.log(e)}}
+console.log(e)
+handler.limit = false
+}}
 handler.help = ['', '2'].map(v => 'wallpaper' + v + ' <query>')
 handler.tags = ['downloader']
 handler.command = /^(wp|wallpaper2?)$/i
-handler.exp = 29
-handler.limit = 1
+//handler.limit = 1
 handler.level = 3
 handler.register = true
 export default handler 

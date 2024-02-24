@@ -17,23 +17,27 @@ await conn.sendMessage(m.chat, {text: `⌛ 𝙔𝙖 𝙘𝙖𝙨𝙞 🏃‍♂�
 try {
 const dataF = await tiktok.v1(args[0])
 conn.sendFile(m.chat, dataF.play, 'tiktok.mp4', `*Aqui tiene 🔰*`.trim(), m) 
-await conn.sendMessage(m.chat, {text: `✅ 𝘾𝙤𝙢𝙥𝙡𝙚𝙩𝙖𝙙𝙤\n▰▰▰▰▰▰▰▰▰\n𝘼𝙦𝙪𝙞 𝙚𝙨𝙩𝙖 𝙩𝙪 𝙫𝙞𝙙𝙚𝙤 💫`, edit: key});
+await conn.sendMessage(m.chat, {text: `✅ 𝘾𝙤𝙢𝙥𝙡𝙚𝙩𝙖𝙙𝙤\n▰▰▰▰▰▰▰▰▰\n𝘼𝙦𝙪𝙞 𝙚𝙨𝙩𝙖 𝙩𝙪 𝙫𝙞𝙙𝙚𝙤 💫`, edit: key})
+handler.limit = 1
 } catch (e1) {
 try {
 const tTiktok = await tiktokdlF(args[0])
 conn.sendFile(m.chat, tTiktok.video, 'tiktok.mp4', `*Aqui tiene 🔰*`.trim(), m) 
-await conn.sendMessage(m.chat, {text: `✅ 𝘾𝙤𝙢𝙥𝙡𝙚𝙩𝙖𝙙𝙤\n▰▰▰▰▰▰▰▰▰\n𝘼𝙦𝙪𝙞 𝙚𝙨𝙩𝙖 𝙩𝙪 𝙫𝙞𝙙𝙚𝙤 💫`, edit: key});
+await conn.sendMessage(m.chat, {text: `✅ 𝘾𝙤𝙢𝙥𝙡𝙚𝙩𝙖𝙙𝙤\n▰▰▰▰▰▰▰▰▰\n𝘼𝙦𝙪𝙞 𝙚𝙨𝙩𝙖 𝙩𝙪 𝙫𝙞𝙙𝙚𝙤 💫`, edit: key})
+handler.limit = 1
 } catch (e2) {
 try {
 let p = await fg.tiktok(args[0]) 
 conn.sendFile(m.chat, p.nowm, 'tiktok.mp4', `*Aqui tiene 🔰*`.trim(), m)
 await conn.sendMessage(m.chat, {text: `✅ 𝘾𝙤𝙢𝙥𝙡𝙚𝙩𝙖𝙙𝙤\n▰▰▰▰▰▰▰▰▰\n𝘼𝙦𝙪𝙞 𝙚𝙨𝙩𝙖 𝙩𝙪 𝙫𝙞𝙙𝙚𝙤 💫`, edit: key});
+handler.limit = 1
 } catch (e3) {
 try { 
 const { author: { nickname }, video, description } = await tiktokdl(args[0])
 const url = video.no_watermark2 || video.no_watermark || 'https://tikcdn.net' + video.no_watermark_raw || video.no_watermark_hd
 conn.sendFile(m.chat, url, 'tiktok.mp4', `*Aqui tiene 🔰*`.trim(), m)
 await conn.sendMessage(m.chat, {text: `✅ 𝘾𝙤𝙢𝙥𝙡𝙚𝙩𝙖𝙙𝙤\n▰▰▰▰▰▰▰▰▰\n𝘼𝙦𝙪𝙞 𝙚𝙨𝙩𝙖 𝙩𝙪 𝙫𝙞𝙙𝙚𝙤 💫`, edit: key});
+handler.limit = 1
 } catch {
 handler.limit = 0
 await conn.sendMessage(m.chat, {text: `𝙊𝙘𝙪𝙧𝙧𝙞𝙤 𝙪𝙣 𝙚𝙧𝙧𝙤𝙧 🏃‍♂️💨`, edit: key});
@@ -41,7 +45,7 @@ await conn.sendMessage(m.chat, {text: `𝙊𝙘𝙪𝙧𝙧𝙞𝙤 𝙪𝙣 �
 handler.help = ['tiktok']
 handler.tags = ['dl']
 handler.command = /^(tt|tiktok)(dl|nowm)?$/i
-handler.limit = 1
+//handler.limit = 1
 export default handler
 const delay = time => new Promise(res => setTimeout(res, time))
 

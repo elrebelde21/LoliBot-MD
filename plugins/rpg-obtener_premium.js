@@ -38,16 +38,14 @@ const imgpre = [
 'https://i.imgur.com/i0pccuo.jpg'];
 //let imgpre = 'https://logowiki.net/wp-content/uploads/imgp/Premium-Logo-1-5365.jpg' 
 
-await conn.reply(m.chat, `${eg}*╭┈┈┈┈┈◈ 🌟 ◈┈┈┈┈┈╮*
-*┃🎟️ 𝙐𝙨𝙩𝙚𝙙 𝙖𝙝𝙤𝙧𝙖 𝙚𝙨 𝙥𝙧𝙚𝙢𝙞𝙪𝙢!!!*
-*┃*
-*┃✨ 𝙉𝙤𝙢𝙗𝙧𝙚*
-*┃» ${user.name}*
-*┃💰 𝙋𝙖𝙜𝙤:* »  -${gata * text} ${rpgshopp.emoticon('limit')}*
-*┃👝 𝙏𝙚𝙣𝙞́𝙖:* » ${user.limit + gata} ${rpgshopp.emoticon('limit')}*
-*┃🛄 𝙇𝙚 𝙦𝙪𝙚𝙙𝙖𝙣:* » ${user.limit} ${rpgshopp.emoticon('limit')}*
-*┃🕐 𝙏𝙞𝙚𝙢𝙥𝙤:* » ${tiempoPremium} min*
-*╰┈┈┈┈┈◈ 🌟 ◈┈┈┈┈┈╯*\n\n😻 *Ahora tiene Premium por lo tanto no va tener límites.*\n\n*Now you have Premium so there will be no limits.*\n\n${wm}`, fkontak, { mentions: [aa,] })}
+await conn.reply(m.chat, `┏━「 🎟️ 𝙐𝙨𝙩𝙚𝙙 𝙖𝙝𝙤𝙧𝙖 𝙚𝙨 𝙥𝙧𝙚𝙢𝙞𝙪𝙢 」
+┃
+┃✨ 𝙉𝙤𝙢𝙗𝙧𝙚 » ${user.name}
+┃💰 𝙋𝙖𝙜𝙤 »  -${gata * text} ${rpgshopp.emoticon('limit')}
+┃👝 𝙏𝙚𝙣𝙞𝙖 » ${user.limit + gata} ${rpgshopp.emoticon('limit')}
+┃🛄 𝙇𝙚 𝙦𝙪𝙚𝙙𝙖𝙣 » ${user.limit} ${rpgshopp.emoticon('limit')}
+┃🕐 𝙏𝙞𝙚𝙢𝙥𝙤 » ${tiempoPremium} min
+┗•\n\n😻 *Ahora tiene Premium por lo tanto no va tener límites.*\n\n${wm}`, fkontak, { mentions: [aa,] })}
 /*conn.sendButton(m.chat,`${eg}*╭┈┈┈┈┈◈ 🌟 ◈┈┈┈┈┈╮*
 *┃🎟️ 𝙐𝙎𝙏𝙀𝘿 𝘼𝙃𝙊𝙍𝘼 𝙀𝙎 𝙋𝙍𝙀𝙈𝙄𝙐𝙈!!!*
 *┃*
@@ -86,16 +84,14 @@ const imgpre = [
 'https://i.imgur.com/oUAGYc2.jpg',
 'https://i.imgur.com/i0pccuo.jpg'];
 
-await conn.reply(m.chat, `${eg}*╭┈┈┈┈┈◈ 🌟 ◈┈┈┈┈┈╮*
-*┃🎟️ 𝙐𝙨𝙩𝙚𝙙 𝙖𝙝𝙤𝙧𝙖 𝙚𝙨 𝙥𝙧𝙚𝙢𝙞𝙪𝙢!!!*
-*┃*
-*┃✨ 𝙉𝙤𝙢𝙗𝙧𝙚*
-*┃» ${user.name}*
-*┃💰 𝙋𝙖𝙜𝙤:* »  -${gata * text} ${rpgshopp.emoticon('limit')}*
-*┃👝 𝙏𝙚𝙣𝙞́𝙖:* » ${user.limit + gata} ${rpgshopp.emoticon('limit')}*
-*┃🛄 𝙇𝙚 𝙦𝙪𝙚𝙙𝙖𝙣:* » ${user.limit} ${rpgshopp.emoticon('limit')}*
-*┃🕐 𝙏𝙞𝙚𝙢𝙥𝙤:* » ${tiempoPremium} min*
-*╰┈┈┈┈┈◈ 🌟 ◈┈┈┈┈┈╯*\n\n😻 *Ahora tiene Premium por lo tanto no va tener límites.*\n\n*Now you have Premium so there will be no limits.*\n\n${wm}`, fkontak, { mentions: [aa,] })}
+await conn.reply(m.chat, `┏━「 🎟️ 𝙐𝙨𝙩𝙚𝙙 𝙖𝙝𝙤𝙧𝙖 𝙚𝙨 𝙥𝙧𝙚𝙢𝙞𝙪𝙢 」
+┃
+┃✨ 𝙉𝙤𝙢𝙗𝙧𝙚 » ${user.name}
+┃💰 𝙋𝙖𝙜𝙤 »  -${gata * text} ${rpgshopp.emoticon('limit')}*
+┃👝 𝙏𝙚𝙣𝙞́𝙖: » ${user.limit + gata} ${rpgshopp.emoticon('limit')}
+┃🛄 𝙇𝙚 𝙦𝙪𝙚𝙙𝙖𝙣 » ${user.limit} ${rpgshopp.emoticon('limit')}
+┃🕐 𝙏𝙞𝙚𝙢𝙥𝙤 » ${tiempoPremium} min
+┗•*\n\n😻 *Ahora tiene Premium por lo tanto no va tener límites.*\n\n${wm}`, fkontak, { mentions: [aa,] })}
 /*await conn.sendButton(m.chat,`${eg}*╭┈┈┈┈┈◈ 🌟 ◈┈┈┈┈┈╮*
 *┃🎟️ 𝙐𝙎𝙏𝙀𝘿 𝘼𝙃𝙊𝙍𝘼 𝙀𝙎 𝙋𝙍𝙀𝙈𝙄𝙐𝙈!!!*
 *┃*
@@ -133,16 +129,14 @@ const imgpre = [
 'https://i.imgur.com/oUAGYc2.jpg',
 'https://i.imgur.com/i0pccuo.jpg'];
 
-await conn.reply(m.chat, `${eg}*╭┈┈┈┈┈◈ 🌟 ◈┈┈┈┈┈╮*
-*┃🎟️ 𝙐𝙨𝙩𝙚𝙙 𝙖𝙝𝙤𝙧𝙖 𝙚𝙨 𝙥𝙧𝙚𝙢𝙞𝙪𝙢!!!*
-*┃*
-*┃✨ 𝙉𝙤𝙢𝙗𝙧𝙚*
-*┃» ${user.name}*
-*┃💰 𝙋𝙖𝙜𝙤:* »  -${gata * text} ${rpgshopp.emoticon('limit')}*
-*┃👝 𝙏𝙚𝙣𝙞́𝙖:* » ${user.limit + gata} ${rpgshopp.emoticon('limit')}*
-*┃🛄 𝙇𝙚 𝙦𝙪𝙚𝙙𝙖𝙣:* » ${user.limit} ${rpgshopp.emoticon('limit')}*
-*┃🕐 𝙏𝙞𝙚𝙢𝙥𝙤:* » ${tiempoPremium} min*
-*╰┈┈┈┈┈◈ 🌟 ◈┈┈┈┈┈╯*\n\n😻 *Ahora tiene Premium por lo tanto no va tener límites.*\n\n*Now you have Premium so there will be no limits.*\n\n${wm}`, fkontak, { mentions: [aa,] })}
+await conn.reply(m.chat, `┏━「 🎟️ 𝙐𝙨𝙩𝙚𝙙 𝙖𝙝𝙤𝙧𝙖 𝙚𝙨 𝙥𝙧𝙚𝙢𝙞𝙪𝙢 」
+┃
+┃✨ 𝙉𝙤𝙢𝙗𝙧𝙚 » ${user.name}
+┃💰 𝙋𝙖𝙜𝙤 »  -${gata * text} ${rpgshopp.emoticon('limit')}*
+┃👝 𝙏𝙚𝙣𝙞́𝙖: » ${user.limit + gata} ${rpgshopp.emoticon('limit')}
+┃🛄 𝙇𝙚 𝙦𝙪𝙚𝙙𝙖𝙣 » ${user.limit} ${rpgshopp.emoticon('limit')}
+┃🕐 𝙏𝙞𝙚𝙢𝙥𝙤 » ${tiempoPremium} min
+┗•*\n\n😻 *Ahora tiene Premium por lo tanto no va tener límites.*\n\n${wm}`, fkontak, { mentions: [aa,] })}
 /*await conn.sendButton(m.chat,`${eg}*╭┈┈┈┈┈◈ 🌟 ◈┈┈┈┈┈╮*
 *┃🎟️ 𝙐𝙎𝙏𝙀𝘿 𝘼𝙃𝙊𝙍𝘼 𝙀𝙎 𝙋𝙍𝙀𝙈𝙄𝙐𝙈!!!*
 *┃*
@@ -180,16 +174,14 @@ const imgpre = [
 'https://i.imgur.com/oUAGYc2.jpg',
 'https://i.imgur.com/i0pccuo.jpg'];
 
-await conn.reply(m.chat, `${eg}*╭┈┈┈┈┈◈ 🌟 ◈┈┈┈┈┈╮*
-*┃🎟️ 𝙐𝙨𝙩𝙚𝙙 𝙖𝙝𝙤𝙧𝙖 𝙚𝙨 𝙥𝙧𝙚𝙢𝙞𝙪𝙢!!!*
-*┃*
-*┃✨ 𝙉𝙤𝙢𝙗𝙧𝙚*
-*┃» ${user.name}*
-*┃💰 𝙋𝙖𝙜𝙤:* »  -${gata * text} ${rpgshopp.emoticon('limit')}*
-*┃👝 𝙏𝙚𝙣𝙞́𝙖:* » ${user.limit + gata} ${rpgshopp.emoticon('limit')}*
-*┃🛄 𝙇𝙚 𝙦𝙪𝙚𝙙𝙖𝙣:* » ${user.limit} ${rpgshopp.emoticon('limit')}*
-*┃🕐 𝙏𝙞𝙚𝙢𝙥𝙤:* » ${tiempoPremium} min*
-*╰┈┈┈┈┈◈ 🌟 ◈┈┈┈┈┈╯*\n\n😻 *Ahora tiene Premium por lo tanto no va tener límites.*\n\n*Now you have Premium so there will be no limits.*\n\n${wm}`, fkontak, { mentions: [aa,] })}
+await conn.reply(m.chat, `┏━「 🎟️ 𝙐𝙨𝙩𝙚𝙙 𝙖𝙝𝙤𝙧𝙖 𝙚𝙨 𝙥𝙧𝙚𝙢𝙞𝙪𝙢 」
+┃
+┃✨ 𝙉𝙤𝙢𝙗𝙧𝙚 » ${user.name}
+┃💰 𝙋𝙖𝙜𝙤 »  -${gata * text} ${rpgshopp.emoticon('limit')}*
+┃👝 𝙏𝙚𝙣𝙞́𝙖: » ${user.limit + gata} ${rpgshopp.emoticon('limit')}
+┃🛄 𝙇𝙚 𝙦𝙪𝙚𝙙𝙖𝙣 » ${user.limit} ${rpgshopp.emoticon('limit')}
+┃🕐 𝙏𝙞𝙚𝙢𝙥𝙤 » ${tiempoPremium} min
+┗•*\n\n😻 *Ahora tiene Premium por lo tanto no va tener límites.*\n\n${wm}`, fkontak, { mentions: [aa,] })}
 /*await conn.sendButton(m.chat,`${eg}*╭┈┈┈┈┈◈ 🌟 ◈┈┈┈┈┈╮*
 *┃🎟️ 𝙐𝙎𝙏𝙀𝘿 𝘼𝙃𝙊𝙍𝘼 𝙀𝙎 𝙋𝙍𝙀𝙈𝙄𝙐𝙈!!!*
 *┃*
@@ -227,16 +219,14 @@ const imgpre = [
 'https://i.imgur.com/oUAGYc2.jpg',
 'https://i.imgur.com/i0pccuo.jpg'];
 
-await conn.reply(m.chat, `${eg}*╭┈┈┈┈┈◈ 🌟 ◈┈┈┈┈┈╮*
-*┃🎟️ 𝙐𝙨𝙩𝙚𝙙 𝙖𝙝𝙤𝙧𝙖 𝙚𝙨 𝙥𝙧𝙚𝙢𝙞𝙪𝙢!!!*
-*┃*
-*┃✨ 𝙉𝙤𝙢𝙗𝙧𝙚*
-*┃» ${user.name}*
-*┃💰 𝙋𝙖𝙜𝙤:* »  -${gata * text} ${rpgshopp.emoticon('limit')}*
-*┃👝 𝙏𝙚𝙣𝙞́𝙖:* » ${user.limit + gata} ${rpgshopp.emoticon('limit')}*
-*┃🛄 𝙇𝙚 𝙦𝙪𝙚𝙙𝙖𝙣:* » ${user.limit} ${rpgshopp.emoticon('limit')}*
-*┃🕐 𝙏𝙞𝙚𝙢𝙥𝙤:* » ${tiempoPremium} min*
-*╰┈┈┈┈┈◈ 🌟 ◈┈┈┈┈┈╯*\n\n😻 *Ahora tiene Premium por lo tanto no va tener límites.*\n\n*Now you have Premium so there will be no limits.*\n\n${wm}`, fkontak, { mentions: [aa,] })}
+await conn.reply(m.chat, `┏━「 🎟️ 𝙐𝙨𝙩𝙚𝙙 𝙖𝙝𝙤𝙧𝙖 𝙚𝙨 𝙥𝙧𝙚𝙢𝙞𝙪𝙢 」
+┃
+┃✨ 𝙉𝙤𝙢𝙗𝙧𝙚 » ${user.name}
+┃💰 𝙋𝙖𝙜𝙤 »  -${gata * text} ${rpgshopp.emoticon('limit')}*
+┃👝 𝙏𝙚𝙣𝙞́𝙖: » ${user.limit + gata} ${rpgshopp.emoticon('limit')}
+┃🛄 𝙇𝙚 𝙦𝙪𝙚𝙙𝙖𝙣 » ${user.limit} ${rpgshopp.emoticon('limit')}
+┃🕐 𝙏𝙞𝙚𝙢𝙥𝙤 » ${tiempoPremium} min
+┗•*\n\n😻 *Ahora tiene Premium por lo tanto no va tener límites.*\n\n${wm}`, fkontak, { mentions: [aa,] })}
 	
 //┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅
 	
@@ -261,16 +251,14 @@ const imgpre = [
 'https://i.imgur.com/oUAGYc2.jpg',
 'https://i.imgur.com/i0pccuo.jpg'];
 
-await conn.reply(m.chat, `${eg}*╭┈┈┈┈┈◈ 🌟 ◈┈┈┈┈┈╮*
-*┃🎟️ 𝙐𝙨𝙩𝙚𝙙 𝙖𝙝𝙤𝙧𝙖 𝙚𝙨 𝙥𝙧𝙚𝙢𝙞𝙪𝙢!!!*
-*┃*
-*┃✨ 𝙉𝙤𝙢𝙗𝙧𝙚*
-*┃» ${user.name}*
-*┃💰 𝙋𝙖𝙜𝙤:* »  -${gata * text} ${rpgshopp.emoticon('limit')}*
-*┃👝 𝙏𝙚𝙣𝙞́𝙖:* » ${user.limit + gata} ${rpgshopp.emoticon('limit')}*
-*┃🛄 𝙇𝙚 𝙦𝙪𝙚𝙙𝙖𝙣:* » ${user.limit} ${rpgshopp.emoticon('limit')}*
-*┃🕐 𝙏𝙞𝙚𝙢𝙥𝙤:* » ${tiempoPremium} min*
-*╰┈┈┈┈┈◈ 🌟 ◈┈┈┈┈┈╯*\n\n😻 *Ahora tiene Premium por lo tanto no va tener límites.*\n\n*Now you have Premium so there will be no limits.*\n\n${wm}`, fkontak, { mentions: [aa,] })}
+await conn.reply(m.chat, `┏━「 🎟️ 𝙐𝙨𝙩𝙚𝙙 𝙖𝙝𝙤𝙧𝙖 𝙚𝙨 𝙥𝙧𝙚𝙢𝙞𝙪𝙢 」
+┃
+┃✨ 𝙉𝙤𝙢𝙗𝙧𝙚 » ${user.name}
+┃💰 𝙋𝙖𝙜𝙤 »  -${gata * text} ${rpgshopp.emoticon('limit')}*
+┃👝 𝙏𝙚𝙣𝙞́𝙖: » ${user.limit + gata} ${rpgshopp.emoticon('limit')}
+┃🛄 𝙇𝙚 𝙦𝙪𝙚𝙙𝙖𝙣 » ${user.limit} ${rpgshopp.emoticon('limit')}
+┃🕐 𝙏𝙞𝙚𝙢𝙥𝙤 » ${tiempoPremium} min
+┗•*\n\n😻 *Ahora tiene Premium por lo tanto no va tener límites.*\n\n${wm}`, fkontak, { mentions: [aa,] })}
 	
 //┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅
 	
@@ -295,16 +283,14 @@ const imgpre = [
 'https://i.imgur.com/oUAGYc2.jpg',
 'https://i.imgur.com/i0pccuo.jpg'];
 
-await conn.reply(m.chat, `${eg}*╭┈┈┈┈┈◈ 🌟 ◈┈┈┈┈┈╮*
-*┃🎟️ 𝙐𝙨𝙩𝙚𝙙 𝙖𝙝𝙤𝙧𝙖 𝙚𝙨 𝙥𝙧𝙚𝙢𝙞𝙪𝙢!!!*
-*┃*
-*┃✨ 𝙉𝙤𝙢𝙗𝙧𝙚*
-*┃» ${user.name}*
-*┃💰 𝙋𝙖𝙜𝙤:* »  -${gata * text} ${rpgshopp.emoticon('limit')}*
-*┃👝 𝙏𝙚𝙣𝙞́𝙖:* » ${user.limit + gata} ${rpgshopp.emoticon('limit')}*
-*┃🛄 𝙇𝙚 𝙦𝙪𝙚𝙙𝙖𝙣:* » ${user.limit} ${rpgshopp.emoticon('limit')}*
-*┃🕐 𝙏𝙞𝙚𝙢𝙥𝙤:* » ${tiempoPremium} min*
-*╰┈┈┈┈┈◈ 🌟 ◈┈┈┈┈┈╯*\n\n😻 *Ahora tiene Premium por lo tanto no va tener límites.*\n\n*Now you have Premium so there will be no limits.*\n\n${wm}`, fkontak, { mentions: [aa,] })}
+await conn.reply(m.chat, `┏━「 🎟️ 𝙐𝙨𝙩𝙚𝙙 𝙖𝙝𝙤𝙧𝙖 𝙚𝙨 𝙥𝙧𝙚𝙢𝙞𝙪𝙢 」
+┃
+┃✨ 𝙉𝙤𝙢𝙗𝙧𝙚 » ${user.name}
+┃💰 𝙋𝙖𝙜𝙤 »  -${gata * text} ${rpgshopp.emoticon('limit')}*
+┃👝 𝙏𝙚𝙣𝙞́𝙖: » ${user.limit + gata} ${rpgshopp.emoticon('limit')}
+┃🛄 𝙇𝙚 𝙦𝙪𝙚𝙙𝙖𝙣 » ${user.limit} ${rpgshopp.emoticon('limit')}
+┃🕐 𝙏𝙞𝙚𝙢𝙥𝙤 » ${tiempoPremium} min
+┗•*\n\n😻 *Ahora tiene Premium por lo tanto no va tener límites.*\n\n${wm}`, fkontak, { mentions: [aa,] })}
 	
 //┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅
 	
@@ -329,16 +315,14 @@ const imgpre = [
 'https://i.imgur.com/oUAGYc2.jpg',
 'https://i.imgur.com/i0pccuo.jpg'];
 
-await conn.reply(m.chat, `${eg}*╭┈┈┈┈┈◈ 🌟 ◈┈┈┈┈┈╮*
-*┃🎟️ 𝙐𝙨𝙩𝙚𝙙 𝙖𝙝𝙤𝙧𝙖 𝙚𝙨 𝙥𝙧𝙚𝙢𝙞𝙪𝙢!!!*
-*┃*
-*┃✨ 𝙉𝙤𝙢𝙗𝙧𝙚*
-*┃» ${user.name}*
-*┃💰 𝙋𝙖𝙜𝙤:* »  -${gata * text} ${rpgshopp.emoticon('limit')}*
-*┃👝 𝙏𝙚𝙣𝙞́𝙖:* » ${user.limit + gata} ${rpgshopp.emoticon('limit')}*
-*┃🛄 𝙇𝙚 𝙦𝙪𝙚𝙙𝙖𝙣:* » ${user.limit} ${rpgshopp.emoticon('limit')}*
-*┃🕐 𝙏𝙞𝙚𝙢𝙥𝙤:* » ${tiempoPremium} min*
-*╰┈┈┈┈┈◈ 🌟 ◈┈┈┈┈┈╯*\n\n😻 *Ahora tiene Premium por lo tanto no va tener límites.*\n\n*Now you have Premium so there will be no limits.*\n\n${wm}`, fkontak, { mentions: [aa,] })}
+await conn.reply(m.chat, `┏━「 🎟️ 𝙐𝙨𝙩𝙚𝙙 𝙖𝙝𝙤𝙧𝙖 𝙚𝙨 𝙥𝙧𝙚𝙢𝙞𝙪𝙢 」
+┃
+┃✨ 𝙉𝙤𝙢𝙗𝙧𝙚 » ${user.name}
+┃💰 𝙋𝙖𝙜𝙤 »  -${gata * text} ${rpgshopp.emoticon('limit')}*
+┃👝 𝙏𝙚𝙣𝙞́𝙖: » ${user.limit + gata} ${rpgshopp.emoticon('limit')}
+┃🛄 𝙇𝙚 𝙦𝙪𝙚𝙙𝙖𝙣 » ${user.limit} ${rpgshopp.emoticon('limit')}
+┃🕐 𝙏𝙞𝙚𝙢𝙥𝙤 » ${tiempoPremium} min
+┗•*\n\n😻 *Ahora tiene Premium por lo tanto no va tener límites.*\n\n${wm}`, fkontak, { mentions: [aa,] })}
 	
 //┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅
 	
