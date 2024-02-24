@@ -1166,8 +1166,7 @@ const messageText = `⚠️ ESTAS BANEADO ⚠️\nAviso (${messageNumber}/3) ${u
 *👉🏻 Puedes contactar al propietario del Bot si crees que se trata de un error o para charlar sobre tu desbaneo*
 
 👉 wa.me/5492266466080
-👉 Wa.me/573026191480
-👉 wa.me/595992302861`.trim();
+👉 ${fb}`.trim();
 m.reply(messageText);
 user.bannedMessageCount++;
 } else if (user.bannedMessageCount === 3) {
@@ -1179,7 +1178,7 @@ return;
 }
 		
 //Antispam		
-if (user.antispam2) return
+if (user.antispam2 && isROwner) return
 let time = global.db.data.users[m.sender].spam + 5000
 if (new Date - global.db.data.users[m.sender].spam < 5000) throw console.log(`[ SPAM ]`) 
 global.db.data.users[m.sender].spam = new Date * 1
@@ -1235,7 +1234,7 @@ m.reply('Exp limit')
 else               
 if (!isPrems && plugin.money && global.db.data.users[m.sender].money < plugin.money * 1) {
 conn.sendMessage(m.chat, {text: `🫥 𝙉𝙤 𝙩𝙞𝙚𝙣𝙚 𝙇𝙤𝙡𝙞𝘾𝙤𝙞𝙣𝙨`, contextInfo: {externalAdReply : {mediaUrl: null, mediaType: 1, description: null, "title": `${lenguajeGB['smsAvisoAG']()}`, body: '𝐒𝐮𝐩𝐞𝐫 𝐁𝐨𝐭 𝐝𝐞 𝐖𝐡𝐚𝐭𝐬𝐚𝐩𝐩', previewType: 0, "thumbnail": img.getRandom(), sourceUrl: [nna, md, yt, nn, nnn, tiktok].getRandom()}}}, { quoted: m })       
-// this.reply(m.chat, `🫥 𝙉𝙤 𝙩𝙞𝙚𝙣𝙚 𝙇𝙤𝙡𝙞𝘾𝙤𝙞𝙣𝙨`, m)
+//this.reply(m.chat, `🫥 𝙉𝙤 𝙩𝙞𝙚𝙣𝙚 𝙇𝙤𝙡𝙞𝘾𝙤𝙞𝙣𝙨`, m)
 continue     
 }
 m.exp += xp
