@@ -30,11 +30,12 @@ handler.before = async function (m) {
       const json = JSON.parse(JSON.stringify(this.tebaklagu[id][1]));
       if (m.text.toLowerCase() == json.jawaban.toLowerCase().trim()) {
         global.db.data.users[m.sender].exp += this.tebaklagu[id][2];
-        m.reply(`✅Correcto!\n+${this.tebaklagu[id][2]} XP`);
+        m.reply(`\`Respuesta correcta! 🥳\`\n\n• *Ganarte :* ${this.tebaklagu[id][2]} XP`);
+        m.react(`✅`)
         clearTimeout(this.tebaklagu[id][3]);
         delete this.tebaklagu[id];
-      } else if (similarity(m.text.toLowerCase(), json.jawaban.toLowerCase().trim()) >= threshold) m.reply(`Casii!`);
-      else m.reply(`❌Incorrecto!`);
+      } else if (similarity(m.text.toLowerCase(), json.jawaban.toLowerCase().trim()) >= threshold) m.reply(`Casi lo logra!`);
+      else m.react(`❌`)
     }
     return !0
 }

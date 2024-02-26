@@ -38,8 +38,8 @@ let fa = `${mg}𝙐𝙨𝙖𝙧 𝙙𝙚𝙡 𝙡𝙖 𝙨𝙞𝙜𝙪𝙞𝙚�
 𝙀𝙟𝙚𝙢𝙥𝙡𝙤:
 *${usedPrefix + command} 50*`.trim()
 
-if (!args[0]) throw fa
-if (isNaN(args[0])) throw fa
+if (!args[0]) return m.reply(fa) 
+if (isNaN(args[0])) return m.reply(fa) 
 let apuesta = parseInt(args[0])
 
 let users = global.db.data.users[m.sender]
@@ -51,7 +51,7 @@ throw `${lenguajeGB['smsAvisoFG']()}𝐍𝒐 𝒂𝒍𝒄𝒂𝒏𝒛𝒂 𝒑�
 }
 if (command == 'slot1') {
 let time = global.db.data.users[m.sender].lastslot + 60000
-if (new Date - users.lastslot < 60000) throw `*𝐕𝐮𝐞𝐥𝐯𝐚 𝐞𝐧: ${msToTime(time - new Date())} 𝐏𝐚𝐫𝐚 𝐜𝐨𝐧𝐭𝐢𝐧𝐮𝐚𝐫 𝐚𝐩𝐨𝐬𝐭𝐚𝐧𝐝𝐨 𝐞𝐱𝐩* 🎰`
+if (new Date - users.lastslot < 60000) return m.reply(`*𝐕𝐮𝐞𝐥𝐯𝐚 𝐞𝐧: ${msToTime(time - new Date())} 𝐏𝐚𝐫𝐚 𝐜𝐨𝐧𝐭𝐢𝐧𝐮𝐚𝐫 𝐚𝐩𝐨𝐬𝐭𝐚𝐧𝐝𝐨 𝐞𝐱𝐩* 🎰`) 
 users.lastslot = new Date * 1
     
 let emojis = ["💎", "⚡", "🪙"];
@@ -78,33 +78,55 @@ if (c == emojis.length) c = 0;
 }
 let end;
 if (a == b && b == c) {
-end = `✨ *QUE PRO!! HAS GANADO +${apuesta + apuesta} EXP*`
+end = `🥳 *QUE PRO!! HAS GANADO +${apuesta + apuesta} EXP*`
 users.exp += apuesta
 } else if (a == b || a == c || b == c) {
-end = `🙀 *CASI!!, VUELVA A INTENTAR*\n*BONO DE +50 EXP*`
+end = `😯 *CASI!!, VUELVA A INTENTAR*\n*BONO DE +50 EXP*`
 users.exp += 50
 } else {
 end = `😿 *HA PERDIDO!! ❌ -${apuesta} EXP*`
 users.exp -= apuesta
 }
-await delay(5000)
-let s = `🎰 | *RANURAS* | 🎰 
- ────────
-  ${x[0]} : ${y[0]} : ${z[0]}
-  ${x[1]} : ${y[1]} : ${z[1]}
-  ${x[2]} : ${y[2]} : ${z[2]}
- ────────
-🎰 |   *SLOTS*   | 🎰
 
-${end}`
-await conn.reply(m.chat, s, m)}
+var hawemod = [
+`${x[1]} : ${y[0]} : ${z[0]}
+${z[0]} : ${y[1]} : ${x[1]}
+${z[1]} : ${x[2]} : ${y[0]}`, 
+`${x[0]} : ${y[1]} : ${z[2]}
+${y[1]} : ${z[2]} : ${x[1]}
+${x[2]} : ${y[0]} : ${z[0]}`, 
+`${x[1]} : ${y[2]} : ${z[1]}
+${y[0]} : ${z[0]} : ${x[2]}
+${x[2]} : ${y[1]} : ${z[0]}`
+]
+
+const maxIterations = 25;
+const arrayCasuale = generaArrayCasuale(hawemod, maxIterations);
+
+const array = [...arrayCasuale, ];
+  
+let { key } = await conn.sendMessage(m.chat, { text: `🕹` }, { quoted: m });
+
+for (let i = 0; i < maxIterations; i++) {
+
+await conn.sendMessage(m.chat, { text: `🎰 | *RANURAS* | 🎰\n────────\n` + `${array[i]}` + `\n ────────\n🎰 |   *SLOTS*   | 🎰`, edit: key }, { quoted: m });
+await new Promise((resolve) => setTimeout(resolve, 1))}
+  
+return await conn.sendMessage(m.chat, {text: `
+🎰 | *RANURAS* | 🎰 
+────────
+${x[0]} : ${y[0]} : ${z[0]}
+${x[1]} : ${y[1]} : ${z[1]}
+${x[2]} : ${y[2]} : ${z[2]}
+ ────────
+🎰 |   *SLOTS*   | 🎰\n\n${end}`, edit: key}, {quoted: m})}
 
 if (users.money < apuesta)  { 
-throw `${lenguajeGB['smsAvisoFG']()}𝑵𝒐 𝒂𝒍𝒄𝒂𝒏𝒛𝒂 𝒑𝒂𝒓𝒂 𝒂𝒑𝒐𝒔𝒕𝒂𝒓 𝑳𝒐𝒍𝒊𝒄𝒐𝒊𝒏𝒔, 𝒍𝒆 𝒓𝒆𝒄𝒐𝒎𝒊𝒆𝒏𝒅𝒐 𝒊𝒏𝒕𝒆𝒓𝒂𝒄𝒕𝒖𝒂𝒓 𝒄𝒐𝒏 𝒆𝒍 𝒃𝒐𝒕 𝒑𝒂𝒓𝒂 𝒐𝒃𝒕𝒆𝒏𝒆𝒓 𝒎𝒂́𝒔 𝒓𝒆𝒄𝒖𝒓𝒔𝒐𝒔`    
+throw `${lenguajeGB['smsAvisoFG']()}𝐍𝐨 𝐚𝐥𝐜𝐚𝐧𝐳𝐚 𝐩𝐚𝐫𝐚 𝐚𝐩𝐨𝐬𝐭𝐚𝐫 𝐋𝐨𝐥𝐢𝐂𝐨𝐢𝐧𝐬, 𝐥𝐞 𝐫𝐞𝐜𝐨𝐦𝐢𝐞𝐧𝐝𝐨 𝐢𝐧𝐭𝐞𝐫𝐚𝐜𝐭𝐮𝐚𝐫 𝐜𝐨𝐧 𝐞𝐥 𝐛𝐨𝐭 𝐩𝐚𝐫𝐚 𝐨𝐛𝐭𝐞𝐧𝐞𝐫 𝐫𝐞𝐜𝐮𝐫𝐬𝐨𝐬`    
 }
 if (command == 'slot2') {
 let time = global.db.data.users[m.sender].lastslot + 60000
-if (new Date - users.lastslot < 60000) throw `*𝐕𝐮𝐞𝐥𝐯𝐚 𝐞𝐧:${msToTime(time - new Date())} 𝐏𝐚𝐫𝐚 𝐜𝐨𝐧𝐭𝐢𝐧𝐮𝐚𝐫 𝐚𝐩𝐨𝐬𝐭𝐚𝐧𝐝𝐨 𝐋𝐨𝐥𝐢𝐂𝐨𝐢𝐧𝐬* 🎰`
+if (new Date - users.lastslot < 60000) return m.reply(`*𝐕𝐮𝐞𝐥𝐯𝐚 𝐞𝐧:${msToTime(time - new Date())} 𝐏𝐚𝐫𝐚 𝐜𝐨𝐧𝐭𝐢𝐧𝐮𝐚𝐫 𝐚𝐩𝐨𝐬𝐭𝐚𝐧𝐝𝐨 𝐋𝐨𝐥𝐢𝐂𝐨𝐢𝐧𝐬* 🎰`) 
 users.lastslot = new Date * 1
     
 let emojis = ["🪙", "🔮", "🧿"];
@@ -131,35 +153,54 @@ if (c == emojis.length) c = 0;
 }
 let end;
 if (a == b && b == c) {
-end = `✨ *QUE PRO!! HAS GANADO +${apuesta + apuesta} GataCoins*`
+end = `🥳 *QUE PRO!! HAS GANADO +${apuesta + apuesta} LoliCoins*`
 users.money += apuesta
 } else if (a == b || a == c || b == c) {
-end = `🙀 *CASI!!, VUELVA A INTENTAR*\n*BONO DE +30 LoliCoins*`
+end = `😯 *CASI!!, VUELVA A INTENTAR*\n*BONO DE +30 LoliCoins*`
 users.money += 30
 } else {
 end = `😿 *HA PERDIDO!! ❌ -${apuesta} LoliCoins*`
 users.money -= apuesta
 }
-//users.lastslot = new Date * 1
-//return await m.reply(
-    //    `
-await delay(5000)
-let ss = `
+
+var hawemod = [
+`${x[0]} : ${y[1]} : ${z[0]}
+${z[0]} : ${y[0]} : ${x[1]}
+${z[2]} : ${x[2]} : ${y[2]}`, 
+`${x[0]} : ${y[0]} : ${z[0]}
+${y[1]} : ${z[1]} : ${x[1]}
+${x[2]} : ${y[2]} : ${z[2]}`, 
+`${x[0]} : ${y[1]} : ${z[0]}
+${y[1]} : ${z[0]} : ${x[1]}
+${x[2]} : ${y[1]} : ${z[0]}`
+]
+
+const maxIterations = 25;
+const arrayCasuale = generaArrayCasuale(hawemod, maxIterations);
+
+const array = [...arrayCasuale, ];
+  
+let { key } = await conn.sendMessage(m.chat, { text: `🕹` }, { quoted: m });
+
+for (let i = 1; i <= maxIterations; i++) {
+await conn.sendMessage(m.chat, { text: `🎰 | *RANURAS* | 🎰\n────────\n` + `${array[i]}` + `\n ────────\n🎰 |   *SLOTS*   | 🎰`, edit: key }, { quoted: m });
+await new Promise((resolve) => setTimeout(resolve, 50))}
+  
+return await conn.sendMessage(m.chat, {text: `
 🎰 | *RANURAS* | 🎰 
+────────
+${x[0]} : ${y[0]} : ${z[0]}
+${x[1]} : ${y[1]} : ${z[1]}
+${x[2]} : ${y[2]} : ${z[2]}
  ────────
-  ${x[0]} : ${y[0]} : ${z[0]}
-  ${x[1]} : ${y[1]} : ${z[1]}
-  ${x[2]} : ${y[2]} : ${z[2]}
- ────────
-🎰 |   *SLOTS*   | 🎰\n\n${end}`
-await conn.reply(m.chat, ss, m)}
-    
+🎰 |   *SLOTS*   | 🎰\n\n${end}`, edit: key}, {quoted: m})}
+
 if (users.limit < apuesta) {  
 throw `${lenguajeGB['smsAvisoFG']()}𝑵𝒐 𝒂𝒍𝒄𝒂𝒏𝒛𝒂 𝒑𝒂𝒓𝒂 𝒂𝒑𝒐𝒔𝒕𝒂𝒓 𝑫𝒊𝒂𝒎𝒂𝒏𝒕𝒆, 𝒍𝒆 𝒓𝒆𝒄𝒐𝒎𝒊𝒆𝒏𝒅𝒐 𝒊𝒏𝒕𝒆𝒓𝒂𝒄𝒕𝒖𝒂𝒓 𝒄𝒐𝒏 𝒆𝒍 𝒃𝒐𝒕 𝒑𝒂𝒓𝒂 𝒐𝒃𝒕𝒆𝒏𝒆𝒓 𝒎𝒂́𝒔 𝒓𝒆𝒄𝒖𝒓𝒔𝒐𝒔`    
 }
 if (command == 'slot3') {
 let time = global.db.data.users[m.sender].lastslot + 30000
-if (new Date - users.lastslot < 30000) throw `*𝐕𝐮𝐞𝐥𝐯𝐚 𝐞𝐧: ${msToTime(time - new Date())} 𝐏𝐚𝐫𝐚 𝐜𝐨𝐧𝐭𝐢𝐧𝐮𝐚𝐫 𝐚𝐩𝐨𝐬𝐭𝐚𝐧𝐝𝐨 𝐃𝐢𝐚𝐦𝐚𝐧𝐭𝐞* 🎰`
+if (new Date - users.lastslot < 30000) return m.reply(`*𝐕𝐮𝐞𝐥𝐯𝐚 𝐞𝐧: ${msToTime(time - new Date())} 𝐏𝐚𝐫𝐚 𝐜𝐨𝐧𝐭𝐢𝐧𝐮𝐚𝐫 𝐚𝐩𝐨𝐬𝐭𝐚𝐧𝐝𝐨 𝐃𝐢𝐚𝐦𝐚𝐧𝐭𝐞* 🎰`) 
 users.lastslot = new Date * 1
     
 let emojis = ["🪙", "💣", "💎"];
@@ -186,31 +227,51 @@ if (c == emojis.length) c = 0;
 }
 let end;
 if (a == b && b == c) {
-end = `✨ *QUE PRO!! HAS GANADO +${apuesta + apuesta} Diamantes*`
+end = `🥳 *QUE PRO!! HAS GANADO +${apuesta + apuesta} Diamantes*`
 users.limit += apuesta
 } else if (a == b || a == c || b == c) {
 end = `🙀 *CASI!!, VUELVA A INTENTAR*\n*BONO DE +2 Diamantes*`
 users.limit += 2
 } else {
-end = `😿 *HA PERDIDO!! ❌ -${apuesta} Diamantes*`
+end = `😿 *HA PERDIDO!! ❌ -${apuesta} Diamante*`
 users.limit -= apuesta
 }
-//users.lastslot = new Date * 1
-//return await m.reply(
-    //    `
-await delay(3000)
-let sss = `🎰 | *RANURAS* | 🎰 
+
+var hawemod = [
+`${x[0]} : ${y[1]} : ${z[0]}
+${z[1]} : ${y[0]} : ${x[0]}
+${z[2]} : ${x[1]} : ${y[2]}`, 
+`${x[0]} : ${y[1]} : ${z[0]}
+${y[1]} : ${z[2]} : ${x[1]}
+${x[2]} : ${y[1]} : ${z[2]}`, 
+`${x[0]} : ${y[0]} : ${z[1]}
+${y[1]} : ${z[2]} : ${x[0]}
+${x[0]} : ${y[2]} : ${z[1]}`
+]
+
+const maxIterations = 25;
+const arrayCasuale = generaArrayCasuale(hawemod, maxIterations);
+
+const array = [...arrayCasuale, ];
+  
+let { key } = await conn.sendMessage(m.chat, { text: `🕹` }, { quoted: m });
+
+for (let i = 1; i <= maxIterations; i++) {
+await conn.sendMessage(m.chat, { text: `🎰 | *RANURAS* | 🎰\n────────\n` + `${array[i]}` + `\n ────────\n🎰 |   *SLOTS*   | 🎰`, edit: key }, { quoted: m });
+await new Promise((resolve) => setTimeout(resolve, 50))}
+  
+return await conn.sendMessage(m.chat, {text: `
+🎰 | *RANURAS* | 🎰 
+────────
+${x[0]} : ${y[0]} : ${z[0]}
+${x[1]} : ${y[1]} : ${z[1]}
+${x[2]} : ${y[2]} : ${z[2]}
  ────────
-  ${x[0]} : ${y[0]} : ${z[0]}
-  ${x[1]} : ${y[1]} : ${z[1]}
-  ${x[2]} : ${y[2]} : ${z[2]}
- ────────
-🎰 |   *SLOTS*   | 🎰\n\n${end}`
-await conn.reply(m.chat, sss, m)}
+🎰 |   *SLOTS*   | 🎰\n\n${end}`, edit: key}, {quoted: m})}
         
 if (command == 'slot') {       
 await conn.reply(m.chat, `*Elija en que apostará ${apuesta}*\n\n⚡ Exp:\n${usedPrefix}slot1 ${apuesta}\n\n🪙 Lolicoins:\n${usedPrefix}slot2 ${apuesta}\n\n💎 diamante:\n${usedPrefix}slot3 ${apuesta}`, m)}
-
+        
 if (command == 'apostar') {       
 await conn.reply(m.chat, `*Elija en que apostará ${apuesta}*\n\n⚡Exp:\n${usedPrefix}slot1 ${apuesta}\n🪙 Lolicoins:\n${usedPrefix}slot2 ${apuesta}\n💎 Diamante:\n${usedPrefix}slot3 ${apuesta}`, m)}
 }
@@ -387,6 +448,14 @@ time,
 bonus,
 result
 }}
+
+function generaArrayCasuale(array, ripetizioni) {
+  let risultato = [];
+  for (let i = 0; i < ripetizioni; i++) {
+    risultato = risultato.concat(array);
+  }
+  return risultato;
+}
 
 function randomInt(from, to) {
 if (from > to) [from, to] = [to, from]
