@@ -9,14 +9,67 @@ let MessageType = (await import(global.baileys)).default
 let handler = async (m, { conn, text, command, usedPrefix, args }) => { 
 let pp = 'https://telegra.ph/file/c7924bf0e0d839290cc51.jpg'
 let fkontak = { "key": { "participants":"0@s.whatsapp.net", "remoteJid": "status@broadcast", "fromMe": false, "id": "Halo" }, "message": { "contactMessage": { "vcard": `BEGIN:VCARD\nVERSION:3.0\nN:Sy;Bot;;;\nFN:y\nitem1.TEL;waid=${m.sender.split('@')[0]}:${m.sender.split('@')[0]}\nitem1.X-ABLabel:Ponsel\nEND:VCARD` }}, "participant": "0@s.whatsapp.net" }  
-if (!db.data.chats[m.chat].game) throw `${lenguajeGB['smsAvisoAG']()}𝙇𝙊𝙎 𝙅𝙐𝙀𝙂𝙊𝙎 𝙀𝙎𝙏𝘼𝙎 𝘿𝙀𝙎𝘼𝘾𝙏𝙄𝙑𝘼𝘿𝙊 𝙀𝙉 𝙀𝙎𝙏𝙀 𝙂𝙍𝙐𝙋𝙊, 𝙎𝙄 𝙀𝙍𝙀𝙎 𝘼𝘿𝙈𝙄𝙉𝙎 𝙋𝙐𝙀𝘿𝙀 𝘼𝘾𝙏𝙄𝙑𝘼𝙍𝙇𝙊 𝘾𝙊𝙉 : #on juegos`  
+if (!db.data.chats[m.chat].game) return m.reply(`${lenguajeGB['smsAvisoAG']()}𝙇𝙊𝙎 𝙅𝙐𝙀𝙂𝙊𝙎 𝙀𝙎𝙏𝘼𝙎 𝘿𝙀𝙎𝘼𝘾𝙏𝙄𝙑𝘼𝘿𝙊 𝙀𝙉 𝙀𝙎𝙏𝙀 𝙂𝙍𝙐𝙋𝙊, 𝙎𝙄 𝙀𝙍𝙀𝙎 𝘼𝘿𝙈𝙄𝙉𝙎 𝙋𝙐𝙀𝘿𝙀 𝘼𝘾𝙏𝙄𝙑𝘼𝙍𝙇𝙊 𝘾𝙊𝙉 : #on juegos`) 
 try {
 
-if (command == 'ppt' || command == 'pvp' || command == 'suit') {
-if (Object.values(conn.suit).find(room => room.id.startsWith('suit') && [room.p, room.p2].includes(m.sender))) throw `${lenguajeGB['smsAvisoAG']()}𝙏𝙚𝙧𝙢𝙞𝙣𝙖 𝙩𝙪 𝙥𝙖𝙧𝙩𝙞𝙙𝙖 𝙖𝙣𝙩𝙚𝙨 𝙙𝙚 𝙞𝙣𝙞𝙘𝙞𝙖 𝙤𝙩𝙧𝙖`
-let textquien = `${lenguajeGB['smsAvisoMG']()}𝘼 𝙦𝙪𝙞𝙚𝙣 𝙦𝙪𝙞𝙚𝙧𝙚𝙨 𝙙𝙚𝙨𝙖𝙛𝙞𝙖𝙧? 𝙀𝙩𝙞𝙦𝙪𝙚𝙩𝙖 𝙖 𝙪𝙣𝙖 𝙥𝙚𝙧𝙨𝙤𝙣𝙖\n\n*𝙀𝙟:* ${usedPrefix + command} @0`
-if (!m.mentionedJid[0]) return m.reply(textquien, m.chat, {mentions: conn.parseMention(textquien)}, {quoted: fkontak })
-if (Object.values(conn.suit).find(room => room.id.startsWith('suit') && [room.p, room.p2].includes(m.mentionedJid[0]))) throw `${lenguajeGB['smsAvisoIIG']()}𝙇𝙖 𝙥𝙚𝙧𝙨𝙤𝙣𝙖 𝙖 𝙡𝙖 𝙦𝙪𝙚 𝙦𝙪𝙞𝙚𝙧𝙚𝙨 𝙙𝙚𝙨𝙖𝙛𝙞𝙖𝙧 𝙖 𝙪𝙣 𝙚𝙨𝙩𝙖 𝙟𝙪𝙜𝙖𝙣𝙙𝙤 𝙤𝙩𝙧𝙖 𝙥𝙖𝙧𝙩𝙞𝙙𝙖, 𝙀𝙨𝙥𝙚𝙧𝙚 𝙖 𝙦𝙪𝙚 𝙩𝙚𝙧𝙢𝙞𝙣𝙚 𝙙𝙚 𝙟𝙪𝙜𝙖𝙧`
+if (command == 'ppt' || command == 'pvp' || command == 'suit' || command == 'suitpvp') {
+let textquien = `${lenguajeGB['smsAvisoMG']()}𝐏𝐢𝐞𝐝𝐫𝐚 🗿, 𝐏𝐚𝐩𝐞𝐥 📄 𝐨 𝐓𝐢𝐣𝐞𝐫𝐚 ✂️\n\n👾 𝙅𝙪𝙜𝙖𝙧 𝙪𝙣 𝙋𝙋𝙏 𝙘𝙤𝙣 𝙚𝙡 𝙗𝙤𝙩 𝙪𝙨𝙖𝙧 𝙡𝙤𝙨 𝙨𝙞𝙜𝙪𝙞𝙚𝙣𝙩𝙚𝙨 𝙘𝙤𝙢𝙖𝙣𝙙𝙤 :\n• ${usedPrefix + command} piedra\n• ${usedPrefix + command} papel\n• ${usedPrefix + command} tijera\n\n🕹 𝙅𝙪𝙜𝙖𝙧 𝙪𝙣 𝙋𝙋𝙏 𝙘𝙤𝙣 𝙪𝙣 𝙪𝙨𝙪𝙖𝙧𝙞𝙤, 𝙀𝙩𝙞𝙦𝙪𝙚𝙩𝙖𝙧𝙡𝙤 𝙚𝙟𝙚𝙢𝙥𝙡𝙤 :\n${usedPrefix + command} @0`
+if (!m.mentionedJid[0] && !args[0]) return m.reply(textquien, m.chat, {mentions: conn.parseMention(textquien)}, {quoted: fkontak })
+let who
+if (m.isGroup) who = m.mentionedJid[0] ? m.mentionedJid[0] : m.sender
+else who = m.sender 
+let name = conn.getName(who) 
+  
+let astro = Math.random();
+if (astro < 0.34) {
+astro = 'piedra';
+} else if (astro > 0.34 && astro < 0.67) {
+astro = 'tijera';
+} else {
+astro = 'papel';
+}
+if (text == astro) {
+let money = global.db.data.users[m.sender].money += 2;
+conn.reply(m.chat, `\`「 𝙀𝙈𝙋𝘼𝙏𝙀 🤝」\`\n\n👉 Tu: ${text}\n👉 El Bot : ${astro}\n🎁 Premios : ${money}`, m, {contextInfo: {externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: name, body: wm, previewType: 0, thumbnail: img.getRandom(), sourceUrl: redes.getRandom()}}})
+} else if (text == 'papel') {
+if (astro == 'piedra') {
+let money = global.db.data.users[m.sender].money += 100
+conn.reply(m.chat, `\`「 𝙃𝘼 𝙂𝘼𝙉𝘼𝘿𝙊! 🎉 」\`\n\n👉 Tu: ${text}\n👉 El Bot : ${astro}\n🎁 Premios : ${money}`, m, {contextInfo: {externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: name, body: wm, previewType: 0, thumbnail: img.getRandom(), sourceUrl: redes.getRandom()}}});
+} else {
+let money = global.db.data.users[m.sender].money -= 25
+conn.reply(m.chat, `\`「 𝙃𝘼 𝙋𝙀𝙍𝘿𝙄𝘿𝙊! 🤡 」\`\n\n👉 Tu: ${text}\n👉 El Bot : ${astro}\n🎁 Premios : ${money}`, m, {contextInfo: {externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: name, body: wm, previewType: 0, thumbnail: img.getRandom(), sourceUrl: redes.getRandom()}}})
+}} else if (text == 'tijera') {
+if (astro == 'papel') {
+let money = global.db.data.users[m.sender].money += 900
+conn.reply(m.chat, `\`「 𝙃𝘼 𝙂𝘼𝙉𝘼𝘿𝙊! 🎉 」\`\n\n👉 Tu: ${text}\n👉 El Bot : ${astro}\n🎁 Premios : ${money}`, m, {contextInfo: {externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: name, body: wm, previewType: 0, thumbnail: img.getRandom(), sourceUrl: redes.getRandom()}}});
+} else {
+let money = global.db.data.users[m.sender].money -= 300
+conn.reply(m.chat, `\`「 𝙃𝘼 𝙋𝙀𝙍𝘿𝙄𝘿𝙊! 🤡 」\`\n\n👉 Tu: ${text}\n👉 El Bot : ${astro}\n🎁 Premios : ${money}`, m, {contextInfo: {externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: name, body: wm, previewType: 0, thumbnail: img.getRandom(), sourceUrl: redes.getRandom()}}})
+}} else if (text == 'tijera') {
+if (astro == 'papel') {
+let money = global.db.data.users[m.sender].money += 1000
+conn.reply(m.chat, `\`「 𝙃𝘼 𝙂𝘼𝙉𝘼𝘿𝙊! 🎉 」\`\n\n👉 Tu: ${text}\n👉 El Bot : ${astro}\n🎁 Premios : ${money}`, m, {contextInfo: {externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: name, body: wm, previewType: 0, thumbnail: img.getRandom(), sourceUrl: redes.getRandom()}}});
+} else {
+let money = global.db.data.users[m.sender].money -= 300
+conn.reply(m.chat, `\`「 𝙃𝘼 𝙋𝙀𝙍𝘿𝙄𝘿𝙊! 🤡 」\`\n\n👉 Tu: ${text}\n👉 El Bot : ${astro}\n🎁 Premios : ${money}`, m, {contextInfo: {externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: name, body: wm, previewType: 0, thumbnail: img.getRandom(), sourceUrl: redes.getRandom()}}})
+}} else if (text == 'papel') {
+if (astro == 'piedra') {
+let money = global.db.data.users[m.sender].money += 1000
+conn.reply(m.chat, `\`「 𝙃𝘼 𝙂𝘼𝙉𝘼𝘿𝙊! 🎉 」\`\n\n👉 Tu: ${text}\n👉 El Bot : ${astro}\n🎁 Premios : ${money}`, m, {contextInfo: {externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: name, body: wm, previewType: 0, thumbnail: img.getRandom(), sourceUrl: redes.getRandom()}}});
+} else {
+let money = global.db.data.users[m.sender].money -= 300
+conn.reply(m.chat, `\`「 𝙃𝘼 𝙋𝙀𝙍𝘿𝙄𝘿𝙊! 🤡 」\`\n\n👉 Tu: ${text}\n👉 El Bot : ${astro}\n🎁 Premios : ${money}`, m, {contextInfo: {externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: name, body: wm, previewType: 0, thumbnail: img.getRandom(), sourceUrl: redes.getRandom()}}})
+}} else if (text == 'piedra') {
+if (astro == 'tijera') {
+let money = global.db.data.users[m.sender].money += 1000
+conn.reply(m.chat, `\`「 𝙃𝘼 𝙂𝘼𝙉𝘼𝘿𝙊! 🎉 」\`\n\n👉 Tu: ${text}\n👉 El Bot : ${astro}\n🎁 Premios : ${money}`, m, {contextInfo: {externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: name, body: wm, previewType: 0, thumbnail: img.getRandom(), sourceUrl: redes.getRandom()}}});
+//m.reply(`*╭━━━━[ 𝙃𝘼 𝙂𝘼𝙉𝘼𝘿𝙊! 🎉 ]━━━⬣*\n┃${name} 𝙐𝙨𝙩𝙚𝙙: ${text}\n┃🐱 𝙂𝙖𝙩𝙖𝘽𝙤𝙩: ${astro}\n┃💰 𝙋𝙧𝙚𝙢𝙞𝙤: ${[money0].getRandom()} 𝙂𝙖𝙩𝙖𝘾𝙤𝙞𝙣𝙨\n┃💵 𝙎𝙪 𝘿𝙞𝙣𝙚𝙧𝙤: ${money} 𝙂𝙖𝙩𝙖𝘾𝙤𝙞𝙣𝙨\n╰━━━━━━[ ${vs} ]━━━━━⬣`);
+} else {
+let money = global.db.data.users[m.sender].money -= 300
+conn.reply(m.chat, `\`「 𝙃𝘼 𝙋𝙀𝙍𝘿𝙄𝘿𝙊! 🤡 」\`\n\n👉 Tu: ${text}\n👉 El Bot : ${astro}\n🎁 Premios : ${money}`, m, {contextInfo: {externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: name, body: wm, previewType: 0, thumbnail: img.getRandom(), sourceUrl: redes.getRandom()}}})}}
+
+if (Object.values(conn.suit).find(room => room.id.startsWith('suit') && [room.p, room.p2].includes(m.sender))) return m.reply(`${lenguajeGB['smsAvisoAG']()}𝙏𝙚𝙧𝙢𝙞𝙣𝙖 𝙩𝙪 𝙥𝙖𝙧𝙩𝙞𝙙𝙖 𝙖𝙣𝙩𝙚𝙨 𝙙𝙚 𝙞𝙣𝙞𝙘𝙞𝙖 𝙤𝙩𝙧𝙖`) 
+if (Object.values(conn.suit).find(room => room.id.startsWith('suit') && [room.p, room.p2].includes(m.mentionedJid[0]))) return m.reply(`${lenguajeGB['smsAvisoIIG']()}𝙇𝙖 𝙥𝙚𝙧𝙨𝙤𝙣𝙖 𝙖 𝙡𝙖 𝙦𝙪𝙚 𝙦𝙪𝙞𝙚𝙧𝙚𝙨 𝙙𝙚𝙨𝙖𝙛𝙞𝙖𝙧 𝙖 𝙪𝙣 𝙚𝙨𝙩𝙖 𝙟𝙪𝙜𝙖𝙣𝙙𝙤 𝙤𝙩𝙧𝙖 𝙥𝙖𝙧𝙩𝙞𝙙𝙖, 𝙀𝙨𝙥𝙚𝙧𝙚 𝙖 𝙦𝙪𝙚 𝙩𝙚𝙧𝙢𝙞𝙣𝙚 𝙙𝙚 𝙟𝙪𝙜𝙖𝙧`) 
 let id = 'suit_' + new Date() * 1
 let caption = `${lenguajeGB['smsAvisoIIG']()}🎮👾 𝙂𝘼𝙈𝙀𝙎 - 𝙋𝙑𝙋 - 𝙂𝘼𝙈𝙀𝙎 🎮👾\n\n@${m.sender.split`@`[0]} 𝘿𝙀𝙎𝘼𝙁𝙄𝘼 𝘼 @${m.mentionedJid[0].split`@`[0]} 𝘼 𝙐𝙉 (𝙋𝙑𝙋) 𝘿𝙀 𝙋𝙄𝙀𝘿𝙍𝘼, 𝙋𝘼𝙋𝙀𝙇 𝙊 𝙏𝙄𝙅𝙀𝙍𝘼\n\n> _*Escribe (aceptar) para aceptar*_\n> _*Escribe (rechazar) para rechazar*_`
 let imgplaygame = `https://www.merca2.es/wp-content/uploads/2020/05/Piedra-papel-o-tijera-0003318_1584-825x259.jpeg`
@@ -44,10 +97,10 @@ let apuesta = parseInt(args[0])
 
 let users = global.db.data.users[m.sender]
 
-if (apuesta < 10) throw `${lenguajeGB['smsAvisoAG']()}𝐃𝐞𝐛𝐞𝐬 𝐝𝐞𝐥 𝐚𝐩𝐨𝐬𝐭𝐚𝐫 𝐮𝐧 𝐦𝐢𝐧𝐢𝐦𝐨𝐬 𝐝𝐞 *10*`
+if (apuesta < 10) return m.reply(`${lenguajeGB['smsAvisoAG']()}𝐃𝐞𝐛𝐞𝐬 𝐝𝐞𝐥 𝐚𝐩𝐨𝐬𝐭𝐚𝐫 𝐮𝐧 𝐦𝐢𝐧𝐢𝐦𝐨𝐬 𝐝𝐞 *10*`) 
 
 if (users.exp < apuesta) {
-throw `${lenguajeGB['smsAvisoFG']()}𝐍𝒐 𝒂𝒍𝒄𝒂𝒏𝒛𝒂 𝒑𝒂𝒓𝒂 𝒂𝒑𝒐𝒔𝒕𝒂𝒓 𝒆𝒙𝒑, 𝒍𝒆 𝒓𝒆𝒄𝒐𝒎𝒊𝒆𝒏𝒅𝒐 𝒊𝒏𝒕𝒆𝒓𝒂𝒄𝒕𝒖𝒂𝒓 𝒄𝒐𝒏 𝒆𝒍 𝒃𝒐𝒕 𝒑𝒂𝒓𝒂 𝒐𝒃𝒕𝒆𝒏𝒆𝒓 𝒎𝒂́𝒔 𝒓𝒆𝒄𝒖𝒓𝒔𝒐𝒔`    
+return m.reply(`${lenguajeGB['smsAvisoFG']()}𝐍𝒐 𝒂𝒍𝒄𝒂𝒏𝒛𝒂 𝒑𝒂𝒓𝒂 𝒂𝒑𝒐𝒔𝒕𝒂𝒓 𝒆𝒙𝒑, 𝒍𝒆 𝒓𝒆𝒄𝒐𝒎𝒊𝒆𝒏𝒅𝒐 𝒊𝒏𝒕𝒆𝒓𝒂𝒄𝒕𝒖𝒂𝒓 𝒄𝒐𝒏 𝒆𝒍 𝒃𝒐𝒕 𝒑𝒂𝒓𝒂 𝒐𝒃𝒕𝒆𝒏𝒆𝒓 𝒎𝒂́𝒔 𝒓𝒆𝒄𝒖𝒓𝒔𝒐𝒔`) 
 }
 if (command == 'slot1') {
 let time = global.db.data.users[m.sender].lastslot + 60000
@@ -278,8 +331,8 @@ await conn.reply(m.chat, `*Elija en que apostará ${apuesta}*\n\n⚡Exp:\n${used
 
 if (command == 'tictactoe' || command == 'ttc' || command == 'ttt' || command == 'xo') {
 conn.game = conn.game ? conn.game : {}
-if (Object.values(conn.game).find(room => room.id.startsWith('tictactoe') && [room.game.playerX, room.game.playerO].includes(m.sender))) throw `${lenguajeGB['smsAvisoAG']()}𝙏𝙤𝙙𝙖𝙫𝙞𝙖 𝙖𝙡𝙜𝙪𝙞𝙚𝙣 𝙚𝙨𝙩𝙖 𝙟𝙪𝙜𝙖𝙣𝙙𝙤 𝙚𝙣 𝙡𝙖 𝙨𝙖𝙡𝙖 𝙨𝙞 𝙦𝙪𝙞𝙚𝙧𝙚 𝙖𝙗𝙖𝙣𝙙𝙤𝙣𝙖𝙧 𝙚𝙨𝙘𝙧𝙞𝙗𝙖 *salir*\n𝙏𝙖𝙢𝙗𝙞𝙚𝙣 𝙥𝙪𝙚𝙙𝙚𝙨 𝙚𝙡𝙞𝙢𝙞𝙣𝙖𝙧 𝙡𝙖 𝙨𝙖𝙡𝙖 𝙪𝙨𝙖𝙣𝙙𝙤 𝙚𝙡 𝙘𝙤𝙢𝙖𝙣𝙙𝙤 *${usedPrefix}delttt*`
-if (!text) throw `*${lenguajeGB['smsAvisoFG']()}𝘿𝙚𝙗𝙚 𝙙𝙚 𝙖𝙜𝙧𝙚𝙜𝙖 𝙪𝙣 𝙣𝙤𝙢𝙗𝙧𝙚 𝙖 𝙡𝙖 𝙨𝙖𝙡𝙖\n𝙀𝙟𝙚𝙢𝙥𝙡𝙤\n${usedPrefix + command} Sala bot*`
+if (Object.values(conn.game).find(room => room.id.startsWith('tictactoe') && [room.game.playerX, room.game.playerO].includes(m.sender))) return m.reply(`${lenguajeGB['smsAvisoAG']()}𝙏𝙤𝙙𝙖𝙫𝙞𝙖 𝙖𝙡𝙜𝙪𝙞𝙚𝙣 𝙚𝙨𝙩𝙖 𝙟𝙪𝙜𝙖𝙣𝙙𝙤 𝙚𝙣 𝙡𝙖 𝙨𝙖𝙡𝙖 𝙨𝙞 𝙦𝙪𝙞𝙚𝙧𝙚 𝙖𝙗𝙖𝙣𝙙𝙤𝙣𝙖𝙧 𝙚𝙨𝙘𝙧𝙞𝙗𝙖 *salir*\n𝙏𝙖𝙢𝙗𝙞𝙚𝙣 𝙥𝙪𝙚𝙙𝙚𝙨 𝙚𝙡𝙞𝙢𝙞𝙣𝙖𝙧 𝙡𝙖 𝙨𝙖𝙡𝙖 𝙪𝙨𝙖𝙣𝙙𝙤 𝙚𝙡 𝙘𝙤𝙢𝙖𝙣𝙙𝙤 *${usedPrefix}delttt*`) 
+if (!text) return m.reply(`*${lenguajeGB['smsAvisoFG']()}𝘿𝙚𝙗𝙚 𝙙𝙚 𝙖𝙜𝙧𝙚𝙜𝙖 𝙪𝙣 𝙣𝙤𝙢𝙗𝙧𝙚 𝙖 𝙡𝙖 𝙨𝙖𝙡𝙖\n𝙀𝙟𝙚𝙢𝙥𝙡𝙤\n${usedPrefix + command} Sala bot*`) 
 let room = Object.values(conn.game).find(room => room.state === 'WAITING' && (text ? room.name === text : true)) 
 if (room) {
 await conn.reply(m.chat, `${lenguajeGB['smsAvisoEG']()}𝘼𝙡𝙜𝙪𝙞𝙚𝙣 𝙨𝙚 𝙝𝙖 𝙪𝙣𝙞𝙙𝙤 𝙖 𝙡𝙖 𝙨𝙖𝙡𝙖 *${text}*\n𝙔𝙖 𝙥𝙪𝙚𝙙𝙚𝙣 𝙟𝙪𝙜𝙖𝙧!! 😼`, fkontak, m)
@@ -389,12 +442,12 @@ delete conn.game[room.id]
 
 await conn.reply(m.chat, `${lenguajeGB['smsAvisoEG']()}𝙇𝘼 𝙎𝘼𝙇𝘼 𝙏𝙍𝙀𝙎 𝙀𝙉 𝙍𝘼𝙔𝘼 𝙁𝙐𝙀 𝙀𝙇𝙄𝙈𝙄𝙉𝘼𝘿𝘼`, fkontak, m)
 }} catch (e) {
-await conn.reply(m.chat, `${lenguajeGB['smsMalError3']()}#report ${lenguajeGB['smsMensError2']()} ${usedPrefix + command}\n\n${wm}`, fkontak, m)
+//await conn.reply(m.chat, `${lenguajeGB['smsMalError3']()}#report ${lenguajeGB['smsMensError2']()} ${usedPrefix + command}\n\n${wm}`, fkontak, m)
 console.log(`❗❗ ${lenguajeGB['smsMensError2']()} ${usedPrefix + command} ❗❗`)
 console.log(e)}}
 handler.help = ['ppt']
 handler.tags = ['games']
-handler.command = /^(ppt|suitpvp|moneda|suert|currency|luck|cara|Method|slot|apostar|slot1|slot2|slot3|tictactoe|ttc|ttt|xo|math|mates|matemáticas|delttt|deltt|delxo|deltictactoe)$/i
+handler.command = /^(ppt|suitpvp|suit|pvp|moneda|suert|currency|luck|cara|Method|slot|apostar|slot1|slot2|slot3|tictactoe|ttc|ttt|xo|math|mates|matemáticas|delttt|deltt|delxo|deltictactoe)$/i
 handler.group = true
 handler.game = true
 handler.register = true
