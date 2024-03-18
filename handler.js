@@ -6,7 +6,6 @@ import path, { join } from 'path'
 import { unwatchFile, watchFile } from 'fs'
 import chalk from 'chalk'   
 import fetch from 'node-fetch' 
-import mddd5 from 'md5'
  
 /**
  * @type {import('@adiwajshing/baileys')}  
@@ -14,8 +13,8 @@ import mddd5 from 'md5'
 const { proto } = (await import('@whiskeysockets/baileys')).default
 const isNumber = x => typeof x === 'number' && !isNaN(x)
 const delay = ms => isNumber(ms) && new Promise(resolve => setTimeout(function () {
-    clearTimeout(this)
-    resolve()
+clearTimeout(this)
+resolve()
 }, ms))
 
 /**
@@ -1067,18 +1066,19 @@ if (opts['swonly'] && m.chat !== 'status@broadcast') return
 if (typeof m.text !== 'string')
 m.text = ''
 
-if (m.isBaileys)
-return
+if (m.isBaileys) return
 m.exp += Math.ceil(Math.random() * 10)
 let usedPrefix
 let _user = global.db.data && global.db.data.users && global.db.data.users[m.sender]
+
 const groupMetadata = (m.isGroup ? ((conn.chats[m.chat] || {}).metadata || await this.groupMetadata(m.chat).catch(_ => null)) : {}) || {}
 const participants = (m.isGroup ? groupMetadata.participants : []) || []
 const user = (m.isGroup ? participants.find(u => conn.decodeJid(u.id) === m.sender) : {}) || {} // User Data
-const bot = (m.isGroup ? participants.find(u => conn.decodeJid(u.id) == this.user.jid) : {}) || {} //información del usuario
+const bot = (m.isGroup ? participants.find(u => conn.decodeJid(u.id) == this.user.jid) : {}) || {}
 const isRAdmin = user?.admin == 'superadmin' || false
-const isAdmin = isRAdmin || user?.admin == 'admin' || false //¿El usuario es administrador?
-const isBotAdmin = bot?.admin || false //¿Eres administrador?
+const isAdmin = isRAdmin || user?.admin == 'admin' || false //user admins? 
+const isBotAdmin = bot?.admin || false //Detecta sin el bot es admin
+
 const ___dirname = path.join(path.dirname(fileURLToPath(import.meta.url)), './plugins')
 for (let name in global.plugins) {
 let plugin = global.plugins[name]
@@ -1089,7 +1089,11 @@ continue
 const __filename = join(___dirname, name)
 if (typeof plugin.all === 'function') {
 try {
-await plugin.all.call(this, m, { chatUpdate, __dirname: ___dirname, __filename })
+await plugin.all.call(this, m, {
+chatUpdate,
+__dirname: ___dirname,
+__filename
+})
 } catch (e) {
 // if (typeof e === 'string') continue
 console.error(e)
@@ -1115,13 +1119,29 @@ let re = p instanceof RegExp ? // RegExp in Array?
 p :
 new RegExp(str2Regex(p))
 return [re.exec(m.text), re]
-}):
+}) :
 typeof _prefix === 'string' ? // String?
 [[new RegExp(str2Regex(_prefix)).exec(m.text), new RegExp(str2Regex(_prefix))]] :
 [[[], new RegExp]]
 ).find(p => p[1])
 if (typeof plugin.before === 'function') {
-if (await plugin.before.call(this, m, {match, conn: this, participants, groupMetadata, user, bot, isROwner, isOwner, isRAdmin, isAdmin, isBotAdmin, isPrems, chatUpdate, __dirname: ___dirname, __filename}))
+if (await plugin.before.call(this, m, {
+match,
+conn: this,
+participants,
+groupMetadata,
+user,
+bot,
+isROwner,
+isOwner,
+isRAdmin,
+isAdmin,
+isBotAdmin,
+isPrems,
+chatUpdate,
+__dirname: ___dirname,
+__filename
+}))
 continue
 }
 if (typeof plugin !== 'function')
@@ -1133,23 +1153,21 @@ args = args || []
 let _args = noPrefix.trim().split` `.slice(1)
 let text = _args.join` `
 command = (command || '').toLowerCase()
-let fail = plugin.fail || global.dfail //cuando falló
-let isAccept = plugin.command instanceof RegExp ? // ¿Modo RegExp?
+let fail = plugin.fail || global.dfail // When failed
+let isAccept = plugin.command instanceof RegExp ? // RegExp Mode?
 plugin.command.test(command) :
 Array.isArray(plugin.command) ? // Array?
-plugin.command.some(cmd => cmd instanceof RegExp ? // ¿RegExp en matriz?
+plugin.command.some(cmd => cmd instanceof RegExp ? // RegExp in Array?
 cmd.test(command) :
 cmd === command
-):
-typeof plugin.command === 'string' ? // ¿Cadena?
+) :
+typeof plugin.command === 'string' ? // String?
 plugin.command === command :
 false
-//if (text) {
-//m.reply('*ERROR DE COMANDO*')}
-if (!isAccept) {
-continue;
-}
-m.plugin = name;
+
+if (!isAccept)
+continue
+m.plugin = name
 if (m.chat in global.db.data.chats || m.sender in global.db.data.users) {
 const chat = global.db.data.chats[m.chat];
 const user = global.db.data.users[m.sender];
@@ -1171,7 +1189,7 @@ m.reply(messageText);
 user.bannedMessageCount++;
 } else if (user.bannedMessageCount === 3) {
 user.bannedMessageSent = true;
-} else {
+} else { //`
 return;
 }
 return;
@@ -1183,24 +1201,24 @@ let time = global.db.data.users[m.sender].spam + 5000
 if (new Date - global.db.data.users[m.sender].spam < 5000) throw console.log(`[ SPAM ]`) 
 global.db.data.users[m.sender].spam = new Date * 1
 }
-
+		
 let hl = _prefix 
 let adminMode = global.db.data.chats[m.chat].modoadmin
 let gata = `${plugins.botAdmin || plugins.admin || plugins.group || plugins || noPrefix || hl ||  m.text.slice(0, 1) == hl || plugins.command}`
 if (adminMode && !isOwner && !isROwner && m.isGroup && !isAdmin && gata) return   
-if (plugin.rowner && plugin.owner && !(isROwner || isOwner)) { // Owner
+if (plugin.rowner && plugin.owner && !(isROwner || isOwner)) { //número bot owner
 fail('owner', m, this)
 continue
 }
-if (plugin.rowner && !isROwner) { //Propietario/owner
+if (plugin.rowner && !isROwner) { //Owner
 fail('rowner', m, this)
 continue
 }
-if (plugin.owner && !isOwner) { //Numero De propietarios/Owner
+if (plugin.owner && !isOwner) { //Propietario/Owner
 fail('owner', m, this)
 continue
 }
-if (plugin.mods && !isMods) { //Moderator
+if (plugin.mods && !isMods) { // Moderator
 fail('mods', m, this)
 continue
 }
@@ -1208,47 +1226,69 @@ if (plugin.premium && !isPrems) { // Premium
 fail('premium', m, this)
 continue
 }
-if (plugin.group && !m.isGroup) { //Grupos
+if (plugin.group && !m.isGroup) { //Solo el grupo
 fail('group', m, this)
 continue
-} else if (plugin.botAdmin && !isBotAdmin) { //detentan si el bot es admin
+} else if (plugin.botAdmin && !isBotAdmin) { //Detecta si el bot es admins
 fail('botAdmin', m, this)
 continue
-} else if (plugin.admin && !isAdmin) { //detecta si el usuario es un Admin
+} else if (plugin.admin && !isAdmin) { //admins
 fail('admin', m, this)
 continue
 }
-if (plugin.private && m.isGroup) { //Chat privado
+if (plugin.private && m.isGroup) { //Solo chat privado
 fail('private', m, this)
 continue
 }
-if (plugin.register == true && _user.registered == false) { //detectan si el usuarios esta registrado o nell
+if (plugin.register == true && _user.registered == false) { // user registrado? 
 fail('unreg', m, this)
 continue
 }
 
 m.isCommand = true
-let xp = 'exp' in plugin ? parseInt(plugin.exp) : 3 // Ganancia de XP por comando
+let xp = 'exp' in plugin ? parseInt(plugin.exp) : 10 // Ganancia de XP por comando
 if (xp > 2000)
-m.reply('Exp limit') 
+m.reply('Exp limit') // Hehehe
 else               
 if (!isPrems && plugin.money && global.db.data.users[m.sender].money < plugin.money * 1) {
 conn.sendMessage(m.chat, {text: `🫥 𝙉𝙤 𝙩𝙞𝙚𝙣𝙚 𝙇𝙤𝙡𝙞𝘾𝙤𝙞𝙣𝙨`, contextInfo: {externalAdReply : {mediaUrl: null, mediaType: 1, description: null, "title": `${lenguajeGB['smsAvisoAG']()}`, body: '𝐒𝐮𝐩𝐞𝐫 𝐁𝐨𝐭 𝐝𝐞 𝐖𝐡𝐚𝐭𝐬𝐚𝐩𝐩', previewType: 0, "thumbnail": img.getRandom(), sourceUrl: [nna, md, yt, nn, nnn, tiktok].getRandom()}}}, { quoted: m })       
-//this.reply(m.chat, `🫥 𝙉𝙤 𝙩𝙞𝙚𝙣𝙚 𝙇𝙤𝙡𝙞𝘾𝙤𝙞𝙣𝙨`, m)
 continue     
 }
+			
 m.exp += xp
 if (!isPrems && plugin.limit && global.db.data.users[m.sender].limit < plugin.limit * 1) {
-conn.sendMessage(m.chat, {text: `*${lenguajeGB['smsCont7']()} *${usedPrefix}buy*`,  contextInfo: {externalAdReply : {mediaUrl: null, mediaType: 1, description: null, "title": `${lenguajeGB['smsAvisoAG']()}`, body: '𝐒𝐮𝐩𝐞𝐫 𝐁𝐨𝐭 𝐝𝐞 𝐖𝐡𝐚𝐭𝐬𝐚𝐩𝐩', previewType: 0, "thumbnail": img.getRandom(), sourceUrl: [nna, md, yt, nn, nnn, tiktok].getRandom()}}}, { quoted: m })       
+conn.sendMessage(m.chat, {text: `*${lenguajeGB['smsCont7']()} *${usedPrefix}buy*`,  contextInfo: {externalAdReply : {mediaUrl: null, mediaType: 1, description: null, "title": `${lenguajeGB['smsAvisoAG']()}`, body: '𝐒𝐮𝐩𝐞𝐫 𝐁𝐨𝐭 𝐝𝐞 𝐖𝐡𝐚𝐭𝐬𝐚𝐩𝐩', previewType: 0, "thumbnail": img.getRandom(), sourceUrl: [nna, md, yt, nn, nnn, tiktok].getRandom()}}}, { quoted: m })            
 //this.reply(m.chat, `${lenguajeGB['smsCont7']()} *${usedPrefix}buy*`, m)
-continue //Los límites están arriba
+continue //Sin límite
 }
 if (plugin.level > _user.level) {
-conn.sendMessage(m.chat, {text: `${lenguajeGB['smsCont9']()} *${plugin.level}* ${lenguajeGB['smsCont10']()} *${_user.level}* ${lenguajeGB['smsCont11']()} *${usedPrefix}nivel*`,  contextInfo: {externalAdReply : {mediaUrl: null, mediaType: 1, description: null, "title": `${lenguajeGB['smsAvisoAG']()}`, body: '𝐒𝐮𝐩𝐞𝐫 𝐁𝐨𝐭 𝐝𝐞 𝐖𝐡𝐚𝐭𝐬𝐚𝐩𝐩', previewType: 0, "thumbnail": img.getRandom(), sourceUrl: [nna, md, yt, nn, tiktok, nnn].getRandom()}}}, { quoted: m })                
-/*this.reply(m.chat, `${lenguajeGB['smsCont9']()} *${plugin.level}* ${lenguajeGB['smsCont10']()} *${_user.level}* ${lenguajeGB['smsCont11']()} *${usedPrefix}nivel*`, m)*/
-continue //Si no se ha alcanzado el nivel
+conn.sendMessage(m.chat, {text: `${lenguajeGB['smsCont9']()} *${plugin.level}* ${lenguajeGB['smsCont10']()} *${_user.level}* ${lenguajeGB['smsCont11']()} *${usedPrefix}nivel*`,  contextInfo: {externalAdReply : {mediaUrl: null, mediaType: 1, description: null, "title": `${lenguajeGB['smsAvisoAG']()}`, body: '𝐒𝐮𝐩𝐞𝐫 𝐁𝐨𝐭 𝐝𝐞 𝐖𝐡𝐚𝐭𝐬𝐚𝐩𝐩', previewType: 0, "thumbnail": img.getRandom(), sourceUrl: [nna, md, yt, nn, tiktok, nnn].getRandom()}}}, { quoted: m })                  
+//this.reply(m.chat, `${lenguajeGB['smsCont9']()} *${plugin.level}* ${lenguajeGB['smsCont10']()} *${_user.level}* ${lenguajeGB['smsCont11']()} *${usedPrefix}nivel*`, m)
+continue // Si no se ha alcanzado el nivel
 }
-let extra = {match, usedPrefix, noPrefix, _args, args, command, text, conn: this, participants, groupMetadata, user, bot, isROwner, isOwner, isRAdmin, isAdmin, isBotAdmin, isPrems, chatUpdate, __dirname: ___dirname, __filename}
+let extra = {
+match,
+usedPrefix,
+noPrefix,
+_args,
+args,
+command,
+text,
+conn: this,
+participants,
+groupMetadata,
+user,
+bot,
+isROwner,
+isOwner,
+isRAdmin,
+isAdmin,
+isBotAdmin,
+isPrems,
+chatUpdate,
+__dirname: ___dirname,
+__filename
+}
 try {
 await plugin.call(this, m, extra)
 if (!isPrems)
@@ -1270,8 +1310,7 @@ delay(3 * 3000)
 m.reply(`${lenguajeGB['smsCont1']()}\n\n${lenguajeGB['smsCont2']()}\n*_${name}_*\n\n${lenguajeGB['smsCont3']()}\n*_${m.sender}_*\n\n${lenguajeGB['smsCont4']()}\n*_${m.text}_*\n\n${lenguajeGB['smsCont5']()}\n\`\`\`${format(e)}\`\`\`\n\n${lenguajeGB['smsCont6']()}`.trim(), data.jid)
 }
 m.reply(text)
-}
-} finally {
+}} finally {
 // m.reply(util.format(_user))
 if (typeof plugin.after === 'function') {
 try {
@@ -1282,18 +1321,18 @@ console.error(e)
 if (m.limit)
 m.reply(+m.limit + lenguajeGB.smsCont8())
 }
-if (m.money)  
-m.reply(+m.money + ' 𝙇𝙤𝙡𝙞𝘾𝙤𝙞𝙣𝙨 𝙪𝙨𝙖𝙙𝙤𝙨')
+if (m.money)
+m.reply(+m.money + ' 𝙇𝙤𝙡𝙞𝘾𝙤𝙞𝙣𝙨 𝙪𝙨𝙖𝙙𝙤𝙨') 
 break
-}}
-} catch (e) {
+}}} catch (e) {
 console.error(e)
 } finally {
 if (opts['queque'] && m.text) {
 const quequeIndex = this.msgqueque.indexOf(m.id || m.key.id)
 if (quequeIndex !== -1)
 this.msgqueque.splice(quequeIndex, 1)
-} //console.log(global.db.data.users[m.sender])
+}
+//console.log(global.db.data.users[m.sender])
 let user, stats = global.db.data.stats
 if (m) {
 if (m.sender && (user = global.db.data.users[m.sender])) {
@@ -1328,28 +1367,29 @@ if (m.error == null) {
 stat.success += 1
 stat.lastSuccess = now
 }}}
+
 try {
 if (!opts['noprint']) await (await import(`./lib/print.js`)).default(m, this)
 } catch (e) {
-console.log(m, m.quoted, e)
-}
+console.log(m, m.quoted, e)}
 let settingsREAD = global.db.data.settings[this.user.jid] || {}  
 if (opts['autoread']) await this.readMessages([m.key])
 if (settingsREAD.autoread2) await this.readMessages([m.key])  
 //if (settingsREAD.autoread2 == 'true') await this.readMessages([m.key])    
-if (!db.data.chats[m.chat].reaction && m.isGroup) throw 0
+	    
 if (!m.fromMem && m.text.match(/(@5492266466080|LoliBot|Botsito|Gata|:v)/gi)) {
 let emot = pickRandom(["😺", "😸", "😹", "😻", "😼", "😽", "🙀", "😿", "😾", "🤩", "😏", "😳", "🥵", "🤯", "😱", "😨", "🤫", "🥴", "🤧", "🤑", "🤠", "🤖", "🤝", "💪", "👑", "😚", "🐱", "🐈", "🐆", "🐅", "⚡️", "🌈", "☃️", "⛄️", "🌝", "🌛", "🌜", "🍓", "🍎", "🎈", "🪄", "❤️", "🧡", "💛", "💚", "💙", "💜", "🖤", "🤍", "💘", "💝", "💟", "🌝", "😎", "🔥", "🖕", "🐦"])
 this.sendMessage(m.chat, { react: { text: emot, key: m.key }})}
 function pickRandom(list) { return list[Math.floor(Math.random() * list.length)]}}}
+
 /**
- * Manejar la actualización de los participantes de los grupos
+ * Handle groups participants update
  * @param {import('@adiwajshing/baileys').BaileysEventMap<unknown>['group-participants.update']} groupsUpdate 
  */
 export async function participantsUpdate({ id, participants, action }) {
 if (opts['self'])
 return
-// if (id in conn.chats) return // El primer inicio de sesión será spam
+// if (id in conn.chats) return // First login will spam
 if (this.isInit)
 return
 if (global.db.data == null)
@@ -1456,14 +1496,14 @@ export async function deleteUpdate(message) {
 try {
 const { fromMe, id, participant } = message
 if (fromMe) return 
-let msg = mconn.conn.serializeM(mconn.conn.loadMessage(id))
+let msg = this.serializeM(this.loadMessage(id))
 let chat = global.db.data.chats[msg?.chat] || {}
 if (!chat?.delete) return 
 if (!msg) return 
 if (!msg?.isGroup) return 
 const antideleteMessage = `*[ ANTI ELIMINAR ]*\n\n@${participant.split`@`[0]} Elimino un mensaje\nEnviando el mensaje...\n\n*Para desactivar esta función escriba:*\n#disable delete`.trim();
-await mconn.conn.sendMessage(msg.chat, {text: antideleteMessage, mentions: [participant]}, {quoted: msg})
-mconn.conn.copyNForward(msg.chat, msg).catch(e => console.log(e, msg))
+await this.sendMessage(msg.chat, {text: antideleteMessage, mentions: [participant]}, {quoted: msg})
+this.copyNForward(msg.chat, msg).catch(e => console.log(e, msg))
 } catch (e) {
 console.error(e)
 }}
