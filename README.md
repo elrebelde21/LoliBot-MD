@@ -239,6 +239,7 @@ Si tiene éxito, le dará un mensaje como: `SUCCESS: specified value was saved`.
 [![AzamiJs](https://github.com/AzamiJs.png?size=100)](https://github.com/AzamiJs)  
 [![KatashiFukushima](https://github.com/KatashiFukushima.png?size=100)](https://github.com/KatashiFukushima)
 [![DanielDiod](https://github.com/DanielDiod.png?size=100)](https://github.com/DanielDiod)
+[![edar123](https://github.com/edar123.png?size=100)](https://github.com/edar123)
 
 ### 🌟 AGRADECIMIENTOS
 [![TheShadowBrokers1](https://github.com/BrunoSobrino.png?size=60)](https://github.com/BrunoSobrino) 
