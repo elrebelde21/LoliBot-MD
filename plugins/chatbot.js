@@ -35,17 +35,23 @@ conn.reply(m.chat, `\`⚠️ 𝙍𝙀𝙂𝙇𝘼𝙎 ⚠️\`
 if (/^Quiero un bot|como obtengo un bot? |Quiero un bot? |quiero un bot|solicitud|solicitó bot|solicito bot|Necesito un bot|necesito un bot$/i.test(m.text) ) {
 conn.reply(m.chat,  `\`⚡ ¿Quieres un bot para tu grupo?\`
 
-Puedes solicitarlo haciendo una donación voluntaria a través de nuestro Mercado Pago arg.
+Puedes solicitarlo haciendo una donación voluntaria a través de PayPal o Mercado Pago arg. 
 
 > *🚀 El bot estará activo 24/7 para tu grupo.*
 
-\`⚡ ¿Por dónde puedo donar?\`
-A través de nuestro Mercado Pago.
+*⚡ ¿Por dónde puedo donar?*
+A través de nuestro Paypal, Mercado Pago o Naranja X.
 
-> *❇️ Mercado pago:*
+> *❇️PayPal:* 
+https://paypal.me/OfcGB
 
+> *❇️Mercado pago:*
 > *• Alias :* OficialGB
 > *• CVU :* 0000003100059201491917
+
+> *❇️ Naranja X:*
+> *• Alias :* OficialGL
+> *• CVU :* 4530000800017922067114
 
 \`⏩ Siguiente paso ⏩\`
 
