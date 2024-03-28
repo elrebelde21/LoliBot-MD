@@ -30,7 +30,7 @@ text: texto1,
 contextInfo: {
 externalAdReply: {
 title: yt_play[0].title,
-body: packname,
+body: wm,
 thumbnailUrl: yt_play[0].thumbnail, 
 mediaType: 1,
 showAdAttribution: true,
@@ -96,7 +96,7 @@ const yt = await youtubedl(v).catch(async (_) => await youtubedlv2(v));
 const dl_url = await yt.video[q].download();
 const ttl = await yt.title;
 const size = await yt.video[q].fileSizeH;
-await conn.sendMessage(m.chat, { document: { url: dl_url }, caption: `*📥 𝘼𝙌𝙐𝙄 𝙀𝙎𝙏𝘼 𝙏𝙐 𝘼𝙐𝘿𝙄𝙊 𝙀𝙉 𝘿𝙊𝘾𝙐𝙈𝙀𝙉𝙏𝙊𝙎*\n\n❏ *𝙏𝙞𝙩𝙪𝙡𝙤:* ${ttl}\n❏ *𝙋𝙚𝙨𝙤:* ${size}`, fileName: `${ttl}.mp4`, mimetype: 'video/mp4', contextInfo: {
+await conn.sendMessage(m.chat, { document: { url: dl_url }, caption: `*📥 𝘼𝙌𝙐𝙄 𝙀𝙎𝙏𝘼 𝙏𝙐 𝙑𝙄𝘿𝙀𝙊 𝙀𝙉 𝘿𝙊𝘾𝙐𝙈𝙀𝙉𝙏𝙊𝙎*\n\n❏ *𝙏𝙞𝙩𝙪𝙡𝙤:* ${ttl}\n❏ *𝙋𝙚𝙨𝙤:* ${size}`, fileName: `${ttl}.mp4`, mimetype: 'video/mp4', contextInfo: {
 externalAdReply: {
 title: ttl,
 body: "",
@@ -119,7 +119,7 @@ const n = lolh.result.title || 'error';
 const n2 = lolh.result.link;
 const n3 = lolh.result.size;
 const n4 = lolh.result.thumbnail;
-await conn.sendMessage(m.chat, {document: {url: n2}, fileName: `${n}.mp4`, mimetype: 'video/mp4', caption: `*📥 𝘼𝙌𝙐𝙄 𝙀𝙎𝙏𝘼 𝙏𝙐 𝘼𝙐𝘿𝙄𝙊 𝙀𝙉 𝘿𝙊𝘾𝙐𝙈𝙀𝙉𝙏𝙊𝙎*\n\n❏ *𝙏𝙞𝙩𝙪𝙡𝙤:* ${n}\n❏ *𝙋𝙚𝙨𝙤:* ${n3}`, thumbnail: await fetch(n4)}, {quoted: m});
+await conn.sendMessage(m.chat, {document: {url: n2}, fileName: `${n}.mp4`, mimetype: 'video/mp4', caption: `*📥 𝘼𝙌𝙐𝙄 𝙀𝙎𝙏𝘼 𝙏𝙐 𝙑𝙄𝘿𝙀𝙊 𝙀𝙉 𝘿𝙊𝘾𝙐𝙈𝙀𝙉𝙏𝙊𝙎*\n\n❏ *𝙏𝙞𝙩𝙪𝙡𝙤:* ${n}\n❏ *𝙋𝙚𝙨𝙤:* ${n3}`, thumbnail: await fetch(n4)}, {quoted: m});
 handler.limit = 3
 } catch {
 }}}}
