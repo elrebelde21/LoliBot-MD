@@ -88,7 +88,7 @@ global.fb = 'https://www.facebook.com/elrebelde21'
 global.face = 'https://www.facebook.com/groups/872989990425789/'
 
 global.nna = 'https://whatsapp.com/channel/0029Va4QjH7DeON0ePwzjS1A' //Update
-global.nn = 'https://chat.whatsapp.com/C6sxsP2ckrr2vxMKclOeCD' //Grupo 1
+global.nn = 'https://chat.whatsapp.com/H4hxytyGvucIF1k0UAR7es' //Grupo 1
 global.nnn = 'https://chat.whatsapp.com/H4hxytyGvucIF1k0UAR7es' //Grupo 2
 global.nnnt = 'https://chat.whatsapp.com/IlyJBy1fxcw2qAHLSC5YLa' //Grupo del Colaboracion
 global.nnnt2 = 'https://chat.whatsapp.com/K7RzcVdxGqhGP5dCpVENSI' // Grupo COL 2
