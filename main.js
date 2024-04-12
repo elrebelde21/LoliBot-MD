@@ -155,7 +155,7 @@ console.log(chalk.bold.redBright(`NO SE PERMITE NÚMEROS QUE NO SEAN ${chalk.bol
 }} while (opcion !== '1' && opcion !== '2' || fs.existsSync(`./${authFile}/creds.json`))
 }
   
-const filterStrings = ["Q2xvc2luZyBzdGFsZSBvcGVu", // "Closing stable open" 
+const filterStrings = ["Q2xvc2luZyBzdGFsZSBvcGVu", // "Closing stable open"
 "Q2xvc2luZyBvcGVuIHNlc3Npb24=", // "Closing open session"
 "RmFpbGVkIHRvIGRlY3J5cHQ=", // "Failed to decrypt"
 "U2Vzc2lvbiBlcnJvcg==", // "Session error"
@@ -166,7 +166,6 @@ const filterStrings = ["Q2xvc2luZyBzdGFsZSBvcGVu", // "Closing stable open"
 console.info = () => {} 
 console.debug = () => {} 
 ['log', 'warn', 'error'].forEach(methodName => redefineConsoleMethod(methodName, filterStrings))
-
 const connectionOptions = {
 logger: pino({ level: 'silent' }),
 printQRInTerminal: opcion == '1' ? true : methodCodeQR ? true : false,
@@ -185,7 +184,7 @@ let msg = await store.loadMessage(jid, clave.id)
 return msg?.message || ""
 },
 msgRetryCounterCache, // Resolver mensajes en espera
-msgRetryCounterMap, // Determinar si se debe volver a intentar enviar un mensaje o no
+msgRetryCounterMap, 
 defaultQueryTimeoutMs: undefined,
 version,  
 }
@@ -452,6 +451,16 @@ console.log(chalk.bold.red(`${lenguajeGB.smspurgeOldFiles3()} ${file} ${lenguaje
 } else {
 console.log(chalk.bold.green(`${lenguajeGB.smspurgeOldFiles1()} ${file} ${lenguajeGB.smspurgeOldFiles2()}`))
 }})}})})})}
+
+function redefineConsoleMethod(methodName, filterStrings) {
+const originalConsoleMethod = console[methodName]
+console[methodName] = function() {
+const message = arguments[0]
+if (typeof message === 'string' && filterStrings.some(filterString => message.includes(atob(filterString)))) {
+arguments[0] = ""
+}
+originalConsoleMethod.apply(console, arguments)
+}}
 
 setInterval(async () => {
 if (stopped === 'close' || !conn || !conn.user) return
