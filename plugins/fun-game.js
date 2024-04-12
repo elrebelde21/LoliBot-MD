@@ -14,7 +14,7 @@ try {
 
 if (command == 'ppt' || command == 'pvp' || command == 'suit' || command == 'suitpvp') {
 const time = global.db.data.users[m.sender].wait + 10000;
-if (new Date - global.db.data.users[m.sender].wait < 10000) return m.reply(`*🕓 𝙃𝙚𝙮, 𝙀𝙨𝙥𝙚𝙧𝙖 ${Math.floor((time - new Date()) / 1000)} 𝙖𝙣𝙩𝙚𝙨 𝙙𝙚 𝙪𝙨𝙖𝙧 𝙤𝙩𝙧𝙤𝙨 𝙘𝙤𝙢𝙖𝙣𝙙𝙤*\n\n*ᴺᵒ ʰᵃᵍᵃⁿ ˢᵖᵃᵐ*`) 
+if (new Date - global.db.data.users[m.sender].wait < 10000) throw `*🕓 𝙃𝙚𝙮, 𝙀𝙨𝙥𝙚𝙧𝙖 ${Math.floor((time - new Date()) / 1000)} 𝙖𝙣𝙩𝙚𝙨 𝙙𝙚 𝙪𝙨𝙖𝙧 𝙤𝙩𝙧𝙤𝙨 𝙘𝙤𝙢𝙖𝙣𝙙𝙤*\n\n*ᴺᵒ ʰᵃᵍᵃⁿ ˢᵖᵃᵐ*`
 let textquien = `${lenguajeGB['smsAvisoMG']()}𝐏𝐢𝐞𝐝𝐫𝐚 🗿, 𝐏𝐚𝐩𝐞𝐥 📄 𝐨 𝐓𝐢𝐣𝐞𝐫𝐚 ✂️\n\n👾 𝙅𝙪𝙜𝙖𝙧 𝙪𝙣 𝙋𝙋𝙏 𝙘𝙤𝙣 𝙚𝙡 𝙗𝙤𝙩 𝙪𝙨𝙖𝙧 𝙡𝙤𝙨 𝙨𝙞𝙜𝙪𝙞𝙚𝙣𝙩𝙚𝙨 𝙘𝙤𝙢𝙖𝙣𝙙𝙤 :\n• ${usedPrefix + command} piedra\n• ${usedPrefix + command} papel\n• ${usedPrefix + command} tijera\n\n🕹 𝙅𝙪𝙜𝙖𝙧 𝙪𝙣 𝙋𝙋𝙏 𝙘𝙤𝙣 𝙪𝙣 𝙪𝙨𝙪𝙖𝙧𝙞𝙤, 𝙀𝙩𝙞𝙦𝙪𝙚𝙩𝙖𝙧𝙡𝙤 𝙚𝙟𝙚𝙢𝙥𝙡𝙤 :\n${usedPrefix + command} @0`
 if (!m.mentionedJid[0] && !args[0]) return m.reply(textquien, m.chat, {mentions: conn.parseMention(textquien)}, {quoted: fkontak })
 let who
@@ -30,6 +30,7 @@ astro = 'tijera';
 } else {
 astro = 'papel';
 }
+global.db.data.users[m.sender].wait = new Date * 1;
 if (text == astro) {
 let money = global.db.data.users[m.sender].exp += 500;
 conn.reply(m.chat, `\`「 𝙀𝙈𝙋𝘼𝙏𝙀 🤝」\`\n\n👉 Tu: ${text}\n👉 El Bot : ${astro}\n🎁 Premios : ${money} XP`, m, {contextInfo: {externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: name, body: wm, previewType: 0, thumbnail: img.getRandom(), sourceUrl: redes.getRandom()}}})
@@ -69,7 +70,6 @@ conn.reply(m.chat, `\`「 𝙃𝘼 𝙂𝘼𝙉𝘼𝘿𝙊! 🎉 」\`\n\n👉 
 } else {
 let money = global.db.data.users[m.sender].money -= 300
 conn.reply(m.chat, `\`「 𝙃𝘼 𝙋𝙀𝙍𝘿𝙄𝘿𝙊! 🤡 」\`\n\n👉 Tu: ${text}\n👉 El Bot : ${astro}\n❌ Premios : -${money} coins`, m, {contextInfo: {externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: name, body: wm, previewType: 0, thumbnail: img.getRandom(), sourceUrl: redes.getRandom()}}})}
-global.db.data.users[m.sender].wait = new Date * 1;
 }
 
 if (Object.values(conn.suit).find(room => room.id.startsWith('suit') && [room.p, room.p2].includes(m.sender))) return m.reply(`${lenguajeGB['smsAvisoAG']()}𝙏𝙚𝙧𝙢𝙞𝙣𝙖 𝙩𝙪 𝙥𝙖𝙧𝙩𝙞𝙙𝙖 𝙖𝙣𝙩𝙚𝙨 𝙙𝙚 𝙞𝙣𝙞𝙘𝙞𝙖 𝙤𝙩𝙧𝙖`) 
