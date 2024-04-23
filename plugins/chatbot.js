@@ -20,10 +20,16 @@ let txt = `*\`💫 Te presentamos un nuevo hosting: "Infinity-Wa Host"\`*
 🟢 \`\`\`Información del Host\`\`\`
 
 💻 *Página:*
-https://host.panel-infinitywa.store
+https://live.panel-infinitywa.store
+
+*🟢 Dashboard:*
+https://dashboard.infinitywa.xyz
+
+*⚙️ Bot de Support: exclusivo para host*
+https://wa.me/message/FETBF7YBO37CG1
 
 🧡 *Canal de WhatsApp:*
-https://whatsapp.com/channel/0029Va4QjH7DeON0ePwzjS1A
+${nna}
 
 💚 *Grupo:*
 https://chat.whatsapp.com/GQ82mPnSYnm0XL2hLPk7FV
@@ -127,4 +133,3 @@ export default handler
 function pickRandom(list) {
     return list[Math.floor(Math.random() * list.length)]
 }
-
