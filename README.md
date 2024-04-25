@@ -143,6 +143,8 @@ grep -q 'bash\|wget' <(dpkg -l) || apt install -y bash wget && wget -O - https:/
 > **Warning** Estos comandos solo funcionan para TERMUX, REPLIT, LINUX             
 -----
 ### 🟢 INFINITY HOST
+[![blog](https://img.shields.io/badge/infinity-LoliBot-FF0000?style=for-the-badge&logo=youtube&logoColor=white)
+](https://youtu.be/o6ZSpMOsvHs?si=fzwZIDN5LPE1w0pI)
 > Activar **LoliBot-MD** 24/7 activo en Infinity-Host
 
 <a href="https://dashboard.infinitywa.xyz"><img src="https://qu.ax/TPhh.jpg" height="125px"></a>
