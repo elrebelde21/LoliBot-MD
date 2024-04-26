@@ -85,9 +85,9 @@ let menu = `『 ${wm} 』
 \`□ Tiempos activos :\` ${uptime}
 \`□ Usuarios:\` ${Object.keys(global.db.data.users).length}
 \`□ Registrado:\` ${rtotalreg} de ${totalreg} ${(conn.user.jid == global.conn.user.jid ? '' : `\n□ *Soy un sub bot del:* wa.me/${global.conn.user.jid.split`@`[0]}`) || ''}
-    
-\`□ COMO INSTALAR EL BOT\`
-https://youtu.be/O_j2q5xCg3A
+
+*\`□ Activar tu bot 24/7 activo en Infinity-Host \`*
+https://youtu.be/o6ZSpMOsvHs?si=Kp2swTeJOUYSg8wn
 
 \`◉ INFO DEL USUARIO\`
 > □ *🙌 Registrado:* ${user.registered === true ? '✅' : '❌ _#verificar_'}
