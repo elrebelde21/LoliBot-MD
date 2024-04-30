@@ -1,4 +1,43 @@
 import yts from 'yt-search';
+let handler = async (m, { conn, usedPrefix, text, args, command }) => {
+if (!text) conn.reply(m.chat,  `${lenguajeGB['smsAvisoMG']()}𝙀𝙨𝙘𝙧𝙞𝙗𝙖 𝙚𝙡 𝙣𝙤𝙢𝙗𝙧𝙚 𝙙𝙚 𝙪𝙣 𝙫𝙞𝙙𝙚𝙤 𝙤 𝙘𝙖𝙣𝙖𝙡 𝙙𝙚 𝙮𝙤𝙪𝙩𝙪𝙗𝙚`, m, {contextInfo: {externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: mg, body: wm, previewType: 0, thumbnail: img.getRandom(), sourceUrl: redes.getRandom()}}})    
+    let result = await yts(text);
+    let ytres = result.videos;
+    
+let listSections = [];
+    for (let index in ytres) {
+        let v = ytres[index];
+        listSections.push({
+            title: `• Opción : [ ${index} ]`,
+            rows: [
+                {
+                    header: '🎶 𝐀𝐔𝐃𝐈𝐎',
+                    title: "",
+                    description: `❤️꙰༻ *TÍTULO:* ${v.title}\n💜꙰༻ *DURACIÓN:* ${v.timestamp}\n⁖🧡꙰༻ *VISTAS:* ${v.views}\n⁖💚꙰༻ *SUBIDO:* ${v.ago}\n`, 
+                    id: `${usedPrefix}ytmp3 ${v.url}`
+                },
+                {
+                    header: "🎥 𝐕𝐈𝐃𝐄𝐎",
+                    title: "" ,
+                    description: `❤️꙰༻ *TÍTULO:* ${v.title}\n⁖💜꙰༻ *DURACIÓN:* ${v.timestamp}\n ⁖🧡꙰༻ *VISTAS:* ${v.views}\n ⁖💚꙰༻ *SUBIDO:* ${v.ago}\n`, 
+                    id: `${usedPrefix}ytmp4 ${v.url}`
+                }
+            ]
+        });
+    }
+
+    await conn.sendList(m.chat, `🔎 𝘽𝙪𝙨𝙦𝙪𝙚𝙙𝙖 𝙙𝙚: ${text}`, `\n${wm}`, `Seleciones Aqui`, listSections, m);
+};
+handler.help = ['playlist']
+handler.tags = ['dl']
+handler.command = /^playlist|ytbuscar|yts(earch)?$/i
+handler.limit = 1
+handler.level = 3
+
+export default handler
+
+
+/*import yts from 'yt-search';
 import fs from 'fs';
 let handler = async (m, { conn, text, usedPrefix, command }) => {
 let fkontak = { "key": { "participants":"0@s.whatsapp.net", "remoteJid": "status@broadcast", "fromMe": false, "id": "Halo" }, "message": { "contactMessage": { "vcard": `BEGIN:VCARD\nVERSION:3.0\nN:Sy;Bot;;;\nFN:y\nitem1.TEL;waid=${m.sender.split('@')[0]}:${m.sender.split('@')[0]}\nitem1.X-ABLabel:Ponsel\nEND:VCARD` }}, "participant": "0@s.whatsapp.net" }
@@ -40,4 +79,4 @@ handler.tags = ['tools']
 handler.command = /^playlist|ytbuscar|yts(earch)?$/i
 //handler.limit = 1
 handler.level = 4
-export default handler
+export default handler*/

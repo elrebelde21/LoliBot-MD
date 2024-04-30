@@ -14,7 +14,7 @@ export async function all(m, chatUpdate) {
   const {text, mentionedJid} = hash;
   const messages = await generateWAMessage(m.chat, {text: text, mentions: mentionedJid}, {
     userJid: this.user.id,
-    quoted: m.quoted && m.quoted.fakeObj,
+    quoted: m.quoted && m.quoted.fakeObj, 
   });
   messages.key.fromMe = areJidsSameUser(m.sender, this.user.id);
   messages.key.id = m.key.id; 
