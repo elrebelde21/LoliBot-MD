@@ -25,9 +25,6 @@ https://live.panel-infinitywa.store
 *🟢 Dashboard:*
 https://dashboard.infinitywa.xyz
 
-*⚙️ Bot de Support: exclusivo para host*
-https://wa.me/message/FETBF7YBO37CG1
-
 🧡 *Canal de WhatsApp:*
 ${nna}
 
