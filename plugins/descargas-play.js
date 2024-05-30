@@ -5,7 +5,7 @@ import axios from 'axios'
 import { youtubedl, youtubedlv2 } from '@bochilteam/scraper'
 let handler = async (m, { conn, command, args, text, usedPrefix }) => {
 let q, v, yt, dl_url, ttl, size, lolhuman, lolh, n, n2, n3, n4, cap, qu, currentQuality   
-if (!text) throw `*🤔Que esta buscado? 🤔*\n*Ingrese el nombre del la canción*\n\n*Ejemplo:*\n#play emilia 420`
+if (!text) return conn.reply(m.chat, `*🤔Que esta buscado? 🤔*\n*Ingrese el nombre del la canción*\n\n*Ejemplo:*\n#play emilia 420`, m, {contextInfo: {externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: wm, body: '', previewType: 0, thumbnail: img.getRandom(), sourceUrl: redes.getRandom()}}})
 try {
 const yt_play = await search(args.join(" "))
 let additionalText = ''
@@ -13,7 +13,12 @@ if (command === 'play') {
 additionalText = 'audio 🔊'
 } else if (command === 'play2') {
 additionalText = 'video 🎥'}
-await conn.sendMessage(m.chat, {
+await conn.reply(m.chat, `${yt_play[0].title}
+*⇄ㅤ     ◁   ㅤ  ❚❚ㅤ     ▷ㅤ     ↻*
+
+*⏰ Duración:* ${secondString(yt_play[0].duration.seconds)}
+*👉🏻Aguarde un momento en lo que envío su ${additionalText}*`, m, {contextInfo: {externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: wm, body: ' ', previewType: 0, thumbnail: yt_play[0].thumbnail, sourceUrl: redes.getRandom()}}})
+/*conn.sendMessage(m.chat, {
 text: `${yt_play[0].title}
 *⇄ㅤ     ◁   ㅤ  ❚❚ㅤ     ▷ㅤ     ↻*
 
@@ -27,7 +32,7 @@ thumbnailUrl: yt_play[0].thumbnail,
 mediaType: 1,
 showAdAttribution: true,
 renderLargerThumbnail: true
-}}} , { quoted: m })
+}}} , { quoted: m })*/
 if (command == 'play') {	
 try {
 let q = '128kbps'

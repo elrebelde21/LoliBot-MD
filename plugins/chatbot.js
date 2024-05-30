@@ -2,8 +2,14 @@
 
 let handler = m => m
 handler.all = async function (m) {
+let fkontak = { "key": { "participants":"0@s.whatsapp.net", "remoteJid": "status@broadcast", "fromMe": false, "id": "Halo" }, "message": { "contactMessage": { "vcard": `BEGIN:VCARD\nVERSION:3.0\nN:Sy;Bot;;;\nFN:y\nitem1.TEL;waid=${m.sender.split('@')[0]}:${m.sender.split('@')[0]}\nitem1.X-ABLabel:Ponsel\nEND:VCARD` }}, "participant": "0@s.whatsapp.net" }
 let chat = global.db.data.chats[m.chat]
 let name = conn.getName(m.sender)
+const user = `@${m.sender.split`@`[0]}`;
+if (chat.isBanned) return
+let vn = 'https://qu.ax/eGdW.mp3'
+let bot = `${pickRandom([`*Hola ${user} soy un bot el que puedo ayudar? 👉👈*`, `Aqui estoy`, `bot tu abuela`, `que quiere?`, `No dispoble 🫣`, `Hola aqui estoy soy tu botsito sexy el que puedo ayudar uwu`])}
+`.trim()//`
 let txt = `*\`💫 Te presentamos un nuevo hosting: "Infinity-Wa Host"\`*
 
 *¿Muy lento tu nokia y necesitas tener activo tu bot 24/7?*
@@ -50,6 +56,12 @@ https://chat.whatsapp.com/GQ82mPnSYnm0XL2hLPk7FV
 • https://www.facebook.com/elrebelde21
 • wa.me/527294888993
 • wa.me/5492964650915` 
+
+if (/^bot$/i.test(m.text) && !chat.isBanned) { 
+conn.sendPresenceUpdate('recording', m.chat)    
+await conn.sendMessage(m.chat, {text: bot, mentions: [m.sender]}, {quoted: fkontak})
+//conn.sendButton(m.chat, '*𝙃𝙤𝙡𝙖 𝙨𝙤𝙮 𝙪𝙣 𝙗𝙤𝙩 𝙚𝙡 𝙦𝙪𝙚 𝙥𝙪𝙚𝙙𝙤 𝙖𝙮𝙪𝙙𝙖𝙧? 👉👈*', wm, [['𝙼𝙴𝙽𝚄', `#menu`]], 'conversation', { sendEphemeral: true, quoted: m })
+conn.sendFile(m.chat, vn, 'bot.mp3', null, m, true, { type: 'audioMessage', seconds: '4556', ptt: true, sendEphemeral: true, quoted: m })}
 
 if (/^infinity|infinityWa|infohost|hosting$/i.test(m.text)) {
  await conn.sendMessage(m.chat, { text: txt,

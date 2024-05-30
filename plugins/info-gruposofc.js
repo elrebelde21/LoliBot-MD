@@ -1,7 +1,6 @@
 let handler  = async (m, { conn, usedPrefix: _p }) => {
-let info = `*Hola 👋🏻, Bienvenido a los grupos oficiales, te invito a unete a los grupos oficiales para pasar un rato agradable usando el Bot o platicando con la familia de LoliBot-MD 😸*
+let info = `*✅ BIENVENIDO A LOS GRUPOS OFICIALES*
 
-➤ Grupos oficiales del bot:
   1) *${nn}*
   
   2) *${nnn}*

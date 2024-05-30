@@ -9,10 +9,10 @@ if (!m.text) return
 let textodem = m.text  
 try {
 await conn.sendPresenceUpdate('composing', m.chat)
-let ressimi = await fetch(`https://api.simsimi.net/v2/?text=${encodeURIComponent(m.text)}&lc=` + lenguajeGB.lenguaje())
-let data = await ressimi.json();
+let api = await fetch(`https://delirius-api-oficial.vercel.app/api/simi?text=${encodeURIComponent(m.text)}`)
+let res = await api.json()
 if (data.success == 'No s\u00e9 lo qu\u00e9 est\u00e1s diciendo. Por favor ense\u00f1ame.') return m.reply(`${lol}`) /* EL TEXTO "lol" NO ESTA DEFINIDO PARA DAR ERROR Y USAR LA OTRA API */
-await m.reply(data.success)
+await m.reply(res.data.message)
 } catch {
 /* SI DA ERROR USARA ESTA OTRA OPCION DE API DE IA QUE RECUERDA EL NOMBRE DE LA PERSONA */
 if (textodem.includes('Hola')) textodem = textodem.replace('Hola', 'Hello')

@@ -5,7 +5,7 @@ let fkontak = { "key": { "participants":"0@s.whatsapp.net", "remoteJid": "status
 let texto = `*◄┢┅͜͡✇⟬↯ື ►ஜ۩💥۩ஜ◄ ↯ື⟭✇͜͡┅┧►*
 
 \`𝙑𝙄𝘿𝙀𝙊 𝘿𝙀 𝙄𝙉𝙎𝙏𝘼𝙇𝘼𝘾𝙄𝙊𝙉\`
-> *https://youtu.be/gh5NajZOTA8*
+https://youtu.be/gh5NajZOTA8
 
 > ✨ *Canal de Actualizaciones y novedades sobre el bot*
 > *${global.nna}*
@@ -18,7 +18,7 @@ let texto = `*◄┢┅͜͡✇⟬↯ື ►ஜ۩💥۩ஜ◄ ↯ື⟭✇͜͡┅
 
 > ───────•••───────
 
-> ✨ 𝙍𝙀𝙌𝙐𝙄𝙎𝙄𝙏𝙊𝙎 𝙋𝘼𝙍𝘼 𝙇𝘼 𝙄𝙉𝙎𝙏𝘼𝙇𝘼𝘾𝙄𝙊𝙉 ✨
+\`✨ 𝙍𝙀𝙌𝙐𝙄𝙎𝙄𝙏𝙊𝙎 𝙋𝘼𝙍𝘼 𝙇𝘼 𝙄𝙉𝙎𝙏𝘼𝙇𝘼𝘾𝙄𝙊𝙉 ✨\`
 
 > ✅ _1 GB de almacenamiento_
 > ✅ _Aplicación Termux (actualizada)_
@@ -28,10 +28,9 @@ let texto = `*◄┢┅͜͡✇⟬↯ື ►ஜ۩💥۩ஜ◄ ↯ື⟭✇͜͡┅
 
 > ───────•••───────
 
-> ✨ 𝙂𝙄𝙏𝙃𝙐𝘽 > 𝙍𝙀𝙋𝙊𝙎𝙄𝙏𝙊𝙍𝙄𝙊
+\`✨ 𝙂𝙄𝙏𝙃𝙐𝘽 > 𝙍𝙀𝙋𝙊𝙎𝙄𝙏𝙊𝙍𝙄𝙊\`
 > *_Visita mí repositorio 😸 para más información, si te agrada el Bot apoya me con una ⭐️ ¡Gracias!_*
-
-> ${md}
+${md}
 
 > ───────•••───────
 
@@ -56,47 +55,31 @@ let texto = `*◄┢┅͜͡✇⟬↯ື ►ஜ۩💥۩ஜ◄ ↯ື⟭✇͜͡┅
 
 > ───────•••───────
 
-\`📌 𝙄𝙉𝙎𝙏𝘼𝙇𝘼𝙍 𝙀𝙉 𝙑𝙊𝙍𝙏𝙀𝙓𝙐𝙎𝙃𝙊𝙏𝙎\`
+\`📌 INSTALAR EN INFINITY HOST\`
+https://youtu.be/o6ZSpMOsvHs?si=xhlDEnihi1HKyh8D
 
-> 𝙇𝙤𝙡𝙞𝘽𝙤𝙩-𝙈𝘿 : 𝙏𝙪𝙩𝙤𝙧𝙞𝙖𝙡
-> https://youtu.be/Xp2jRbG_v8o?si=-pzA7OJTrLTRDhzY
+> *Dashboard:*
+https://dashboard.infinitywa.xyz
 
-> _Pagina oficial_
-> https://dash.vortexuscloud.com/home
-
-> ───────•••───────
-
-\`📌 𝗜𝗡𝗦𝗧𝗔𝗟𝗔𝗥 𝗘𝗡 𝗕𝗢𝗫𝗠𝗜𝗡𝗘\`
-
-> *𝙇𝙤𝙡𝙞𝘽𝙤𝙩-𝙈𝘿 : 𝘽𝙤𝙭𝙈𝙞𝙣𝙚*
-> *_https://youtu.be/wWyBHtKzx9Q_*
-
-> _Pagina Oficial_ 
-> _https://boxmineworld.com_
-
-> _Panel_
-> _https://panel.boxmineworld.com_
+> *Panel:*
+https://store.panel-infinitywa.store
 
 > ───────•••───────
 
-\`📌 𝗜𝗡𝗦𝗧𝗔𝗟𝗔𝗥 𝗘𝗡 𝙍𝙀𝙋𝙇𝙄𝙏\`
+\`📌 INSTALAR EN CAFIREXOS\`
 
-> *𝙇𝙤𝙡𝙞𝘽𝙤𝙩-𝙈𝘿 : 𝙍𝙀𝙋𝙇𝙄𝙏*
-> https://youtu.be/SMjCcfuyWQE
+> *Pagina oficial:* 
+https://www.cafirexos.com
 
-> _Pagina Oficial_ 
-> https://replit.com/
+> *Dashboard:*
+https://dash.cafirexos.com
 
-> *◄┢┅͜͡✇⟬↯ື ►ஜ۩💥۩ஜ◄ ↯ື⟭✇͜͡┅┧►*
+> *Panel:* 
+https://panel.cafirexos.com
 
-\`💥 INFO EXTRA 💥\`
-> ➤ _Se sugiere leer el archivo README.md_
-> ➤ _Bot compartible con WhatsApp multi device_
-> ➤ _Para habilitar el /añadir y el /sacar usa /enable restrict_ _Puede ocasionar que el numero se vaya a soporte_
-> ➤ _Recomiendo que active el autoread con (#on autoread)_
-> ➤ _Cualquier cosa hablame solo por tema del bot, Saludos 🔰🤖_` 
+> *◄┢┅͜͡✇⟬↯ື ►ஜ۩💥۩ஜ◄ ↯ື⟭✇͜͡┅┧►*` 
 let aa = { quoted: m, userJid: conn.user.jid }
-let prep = generateWAMessageFromContent(m.chat, { extendedTextMessage: { text: texto, contextInfo: { externalAdReply: { title: 'ᴛʜᴇ-ʟᴏʟɪʙᴏᴛ-ᴍᴅ', body: null, thumbnail: imagen1, sourceUrl: 'https://youtu.be/gh5NajZOTA8' }, mentionedJid: [m.sender] }}}, aa)
+let prep = generateWAMessageFromContent(m.chat, { extendedTextMessage: { text: texto, contextInfo: { externalAdReply: { title: 'ʟᴏʟɪʙᴏᴛ-ᴍᴅ', body: null, thumbnail: imagen1, sourceUrl: 'https://youtu.be/gh5NajZOTA8' }, mentionedJid: [m.sender] }}}, aa)
 conn.relayMessage(m.chat, prep.message, { messageId: prep.key.id, mentions: [m.sender] })  
 }
 handler.command = /^(instalarbot)/i

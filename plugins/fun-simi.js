@@ -1,12 +1,12 @@
 import translate from '@vitalets/google-translate-api'
 import fetch from "node-fetch"
 let handler = async (m, { text, command, args, usedPrefix }) => {
-  if (!text) throw `*Hola quiere hablar un rato conmigo?* *escriba un texto para hablar conmigo*\n\n*Ejemplo: ${usedPrefix + command} Hola bot*`
+  if (!text) return conn.reply(m.chat,  `*Hola quiere hablar un rato conmigo?* escriba un texto para hablar conmigo\n\n*Ejemplo:* ${usedPrefix + command} Hola bot`, m, {contextInfo: {externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: wm, body: '', previewType: 0, thumbnail: img.getRandom(), sourceUrl: redes.getRandom()}}}) 
   try {
   await conn.sendPresenceUpdate('composing', m.chat)
-  let api = await fetch("https://api.simsimi.net/v2/?text=" + text + "&lc=es")
-  let resSimi = await api.json()
-  m.reply(resSimi.success)      
+let api = await fetch(`https://delirius-api-oficial.vercel.app/api/simi?text=${text}`)
+let res = await api.json()
+m.reply(res.data.message)
   } catch {
   try {
   if (text.includes('Hola')) text = text.replace('Hola', 'Hello')

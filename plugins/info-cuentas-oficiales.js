@@ -6,9 +6,6 @@ let str = `\`『 ＣＵＥＮＴＡＳ ＯＦＩＣＩＡＬＥＳ 』\`
 \`𝙉𝙪𝙢𝙚𝙧𝙤 𝙙𝙚𝙡 𝙗𝙤𝙩 𝙤𝙛𝙘 (𝙇𝙤𝙡𝙞𝘽𝙤𝙩)\`
 > *${bot}*
 
-\`𝙉𝙪𝙢𝙚𝙧𝙤 𝙙𝙚𝙡 𝙗𝙤𝙩 𝙤𝙛𝙘 (𝙉𝙤𝙫𝙖𝘽𝙤𝙩)\`
-> *https://wa.me/message/52LYVVT7DB6AH1*
-
  ┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈
  
 \`『 ᴳᶦᵗᴴᵘᵇ ᵒᶠᶦᶜᶦᵃˡ 』\`   
@@ -26,9 +23,6 @@ let str = `\`『 ＣＵＥＮＴＡＳ ＯＦＩＣＩＡＬＥＳ 』\`
 \`『  ᵃˢᶦˢᵗᵉⁿᶜᶦᵃ ᵖᵃʳᵃ ᵘˢᵘᵃʳᶦᵒˢ ᶠᵃᶜᵉᵇᵒᵒᵏ 』\`   
 * *${fb}* 
 
-\`『  ᵍʳᵘᵖᵒ ᵀᵉˡᵉᵍʳᵃᵐ 』\`   
-* *https://t.me/+EcdN9fktnQQwY2Ex* 
-
 \`『  ᵀᶦᵏᵀᵒᵏ 』\`   
 * *${tiktok}* 
 
@@ -43,7 +37,8 @@ let str = `\`『 ＣＵＥＮＴＡＳ ＯＦＩＣＩＡＬＥＳ 』\`
 • https://atom.bio/lolibot
 
 ${wm}`
-await conn.sendFile(m.chat, media, 'loli.mp4', str, fkontak)}
+await conn.reply(m.chat, str, fkontak, {contextInfo: {externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: wm, body: '', previewType: 0, thumbnail: img.getRandom(), sourceUrl: redes.getRandom()}}})}
+//conn.sendFile(m.chat, media, 'loli.mp4', str, fkontak)}
 handler.command = /^cuentasoficiales|cuentas|cuentaofc$/i
 handler.register = true
 export default handler

@@ -4,7 +4,7 @@ import ytdl from 'ytdl-core';
 import axios from 'axios';
 import {youtubedl, youtubedlv2} from '@bochilteam/scraper';
 const handler = async (m, {conn, command, args, text, usedPrefix}) => {
-if (!text) throw `*𝙌𝙪𝙚 𝙚𝙨𝙩𝙖 𝙗𝙪𝙨𝙘𝙖𝙙𝙤? 𝙥𝙤𝙧 𝙛𝙖𝙫𝙤𝙧 𝙞𝙣𝙜𝙧𝙚𝙨𝙚 𝙚𝙡 𝙘𝙤𝙢𝙖𝙣𝙙𝙤 𝙢𝙖𝙨 𝙣𝙤𝙢𝙗𝙧𝙚 𝙙𝙚𝙡 𝙘𝙖𝙣𝙘𝙞𝙤𝙣*\n\n* 𝙚𝙟𝙚𝙢𝙥𝙡𝙤:*\n*${usedPrefix + command} ozuna*`
+if (!text) return conn.reply(m.chat, `*𝙌𝙪𝙚 𝙚𝙨𝙩𝙖 𝙗𝙪𝙨𝙘𝙖𝙙𝙤? 𝙥𝙤𝙧 𝙛𝙖𝙫𝙤𝙧 𝙞𝙣𝙜𝙧𝙚𝙨𝙚 𝙚𝙡 𝙘𝙤𝙢𝙖𝙣𝙙𝙤 𝙢𝙖𝙨 𝙣𝙤𝙢𝙗𝙧𝙚 𝙙𝙚𝙡 𝙘𝙖𝙣𝙘𝙞𝙤𝙣*\n\n* 𝙚𝙟𝙚𝙢𝙥𝙡𝙤:*\n*${usedPrefix + command} ozuna*`, m, {contextInfo: {externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: wm, body: ' 💫 𝐒𝐮𝐩𝐞𝐫 𝐁𝐨𝐭 𝐃𝐞 𝐖𝐡𝐚𝐭𝐬𝐚𝐩𝐩 🥳 ', previewType: 0, thumbnail: img.getRandom(), sourceUrl: redes.getRandom()}}})
 try { 
 const yt_play = await search(args.join(' '))
 let additionalText = ''
@@ -13,18 +13,15 @@ additionalText = '𝘼𝙪𝙙𝙞𝙤'
 } else if (command === 'play4' || command == 'playvideodoc') {
 additionalText = '𝙑𝙞𝙙𝙚𝙤'
 }
-const texto1 = `•━━『 𝐏𝐋𝐀𝐘𝐃𝐎𝐂 』━━•
+const texto1 = `${yt_play[0].title}
+*⇄ㅤ     ◁   ㅤ  ❚❚ㅤ     ▷ㅤ     ↻*
 
-📌 *𝗧𝗶𝘁𝘂𝗹𝗼:* ${yt_play[0].title}
-📆 *𝗣𝘂𝗯𝗹𝗶𝗰𝗮𝗰𝗶𝗼𝗻:* ${yt_play[0].ago}
-⌚ *𝘿𝙪𝙧𝙖𝙘𝙞𝙤𝙣:* ${secondString(yt_play[0].duration.seconds)}
-👀 *𝗩𝗶𝘀𝘁𝗮𝘀:* ${MilesNumber(yt_play[0].views)}
-👤 *𝘼𝙪𝙩𝙤𝙧:* ${yt_play[0].author.name}
-🔗 *𝙇𝙞𝙣𝙠:* ${yt_play[0].url}
+*⏰ Duración:* ${secondString(yt_play[0].duration.seconds)}
+*📆 Publicado:* ${yt_play[0].ago}
+*👀 Vistas:* ${MilesNumber(yt_play[0].views)}
+*👤 Autor:* ${yt_play[0].author.name}
 
-•━━『 𝐏𝐋𝐀𝐘𝐃𝐎𝐂 』━━•
-
-> 𝙀𝙣𝙫𝙞𝙖𝙣𝙙𝙤 ${additionalText}, 𝘼𝙜𝙪𝙖𝙧𝙙𝙚 𝙪𝙣 𝙢𝙤𝙢𝙚𝙣𝙩𝙤....`.trim()
+> *👉🏻Aguarde un momento en lo que envío su ${additionalText}`.trim()
 await conn.sendMessage(m.chat, {
 text: texto1,
 contextInfo: {

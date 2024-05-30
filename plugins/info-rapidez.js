@@ -59,7 +59,7 @@ const { key } = await conn.sendMessage(m.chat, {text: `𝘾𝙤𝙢𝙚𝙣𝙯�
 //await conn.reply(m.chat, `𝘾𝙤𝙢𝙚𝙣𝙯𝙖𝙣𝙙𝙤 𝙥𝙧𝙪𝙚𝙗𝙖 𝙙𝙚𝙡 𝙫𝙚𝙡𝙤𝙘𝙞𝙙𝙖𝙙 🚀...`, fkontak,  m)
 let neww = performance.now()
 let speed = neww - old
-let caption = `              \`⧼⧼⧼ ＶＥＬＯＣＩＤＡＤ 🚀 ⧽⧽⧽\`
+let caption = `           \`⧼⧼⧼ ＶＥＬＯＣＩＤＡＤ 🚀 ⧽⧽⧽\`
 
 > 🚄 *${Math.round(neww - old)}* ms
 > 🚄 *${speed}* ms

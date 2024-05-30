@@ -21,7 +21,7 @@ const fechanew = moment().tz('America/New_York').format('DD/MM HH:mm')
 const fechaasi = moment().tz('Asia/Jakarta').format('DD/MM HH:mm')
 const fechabra = moment().tz('America/Sao_Paulo').format('DD/MM HH:mm')
 const fechaafri = moment().tz('Africa/Malabo').format('DD/MM HH:mm')
-await conn.sendMessage(m.chat, { text: `\`\`\`
+await conn.fakeReply(m.chat, `\`\`\`
 「 ZONA-HORARIA ⏰ 」
 ⏱️Peru       : ${fechaper}
 ⏱️Mexico     : ${fechamex}
@@ -45,7 +45,7 @@ await conn.sendMessage(m.chat, { text: `\`\`\`
 ⏱️G.N.Q      : ${fechaafri}
 \`\`\`
 ${String.fromCharCode(8206).repeat(850)}
-Zona horaria del servidor actual:\n[ ${Intl.DateTimeFormat().resolvedOptions().timeZone} ]\n${moment().tz(Intl.DateTimeFormat().resolvedOptions().timeZone).format('DD/MM/YY HH:mm:ss')}` }, {quoted: m })
+Zona horaria del servidor actual:\n[ ${Intl.DateTimeFormat().resolvedOptions().timeZone} ]\n${moment().tz(Intl.DateTimeFormat().resolvedOptions().timeZone).format('DD/MM/YY HH:mm:ss')}`, '0@s.whatsapp.net', 'ZONA-HORARIA ⏰', 'status@broadcast')
 }
 handler.help = ['horario']
 handler.tags = ['info']

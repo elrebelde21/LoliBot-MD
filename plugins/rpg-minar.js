@@ -47,7 +47,8 @@ for (let reward of Object.keys(recompensas)) {
 if (!(reward in user)) continue
 user[reward] += recompensas[reward]
 texto += `+${recompensas[reward]} ${global.rpgshop.emoticon(reward)}\n`}
-m.reply(`*${minar} ${xp} XP*`)
+conn.reply(m.chat, `*${minar} ${xp} XP*`, m, {contextInfo: {externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: wm, body: '🥳 Felicidades has minador', previewType: 0, thumbnail: img.getRandom(), sourceUrl: redes.getRandom()}}}) 
+//m.reply(`*${minar} ${xp} XP*`)
 user.lastmiming = new Date * 1  
 }
 handler.help = ['minar']
