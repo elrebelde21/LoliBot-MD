@@ -10,52 +10,6 @@ if (chat.isBanned) return
 let vn = 'https://qu.ax/eGdW.mp3'
 let bot = `${pickRandom([`*Hola ${user} soy un bot el que puedo ayudar? 👉👈*`, `Aqui estoy`, `bot tu abuela`, `que quiere?`, `No dispoble 🫣`, `Hola aqui estoy soy tu botsito sexy el que puedo ayudar uwu`])}
 `.trim()//`
-let txt = `*\`💫 Te presentamos un nuevo hosting: "Infinity-Wa Host"\`*
-
-*¿Muy lento tu nokia y necesitas tener activo tu bot 24/7?*
-
-> *Te tenemos la mejor opción para mantener activo tu bot 24/7, a precios muy accesibles. Es muy barato y todos pueden comprar.*
-
-*🚩Precios :*
-* 1GB, 100 CPU = 1Dolar
-* 2GB, 120 CPU = 2Dolar
-* 3GB, 140 CPU = 3Dolar
-* 4GB, 175 CPU = 4Dolar
-* 5GB, 200 CPU = 5 Dólar. 
-
-🟢 \`\`\`Información del Host\`\`\`
-
-💻 *Página:*
-https://live.panel-infinitywa.store
-
-*🟢 Dashboard:*
-https://dashboard.infinitywa.xyz
-
-🧡 *Canal de WhatsApp:*
-${nna}
-
-💚 *Grupo:*
-https://chat.whatsapp.com/GQ82mPnSYnm0XL2hLPk7FV
-
-🛍️ *Método de pago:*
-*• PayPal :* paypal.me/OfcGB
-*• Mercado pago, alías:* OficialGB
-*• Naranja x, alías:* OficialGL
-*• Yape (Perú) :* +51948705559
-*• Uala:* thelolibotm.uala
-*• DolarApp:* $oficialgb
-*• Pago con tarjeta:* wa.me/390684003755
-
-*• Link de pago:*
-• _link.mercadopago.com.ar/h0sting_
-• _https://payment-link.astropay.com/RbMJ_
-*• Patreon:*_patreon.com/Infinity_wa_hosting_
-*• Kofi:* _https://ko-fi.com/infinitywa_
-
-*\`💙 Contactanos para más información o alquidir los servicios:\`*
-• https://www.facebook.com/elrebelde21
-• wa.me/527294888993
-• wa.me/5492964650915` 
 
 if (/^bot$/i.test(m.text) && !chat.isBanned) { 
 conn.sendPresenceUpdate('recording', m.chat)    
@@ -63,7 +17,7 @@ await conn.sendMessage(m.chat, {text: bot, mentions: [m.sender]}, {quoted: fkont
 //conn.sendButton(m.chat, '*𝙃𝙤𝙡𝙖 𝙨𝙤𝙮 𝙪𝙣 𝙗𝙤𝙩 𝙚𝙡 𝙦𝙪𝙚 𝙥𝙪𝙚𝙙𝙤 𝙖𝙮𝙪𝙙𝙖𝙧? 👉👈*', wm, [['𝙼𝙴𝙽𝚄', `#menu`]], 'conversation', { sendEphemeral: true, quoted: m })
 conn.sendFile(m.chat, vn, 'bot.mp3', null, m, true, { type: 'audioMessage', seconds: '4556', ptt: true, sendEphemeral: true, quoted: m })}
 
-if (/^infinity|infinityWa|infohost|hosting$/i.test(m.text)) {
+/*if (/^infinity|infinityWa|infohost|hosting$/i.test(m.text)) {
  await conn.sendMessage(m.chat, { text: txt,
 contextInfo:{
 forwardingScore: 9999999,
@@ -76,7 +30,7 @@ body: `✅ Hosting de Calidad`,
 "previewType": "PHOTO",
 thumbnailUrl: 'https://qu.ax/EQTd.jpg', 
 sourceUrl: nna}}}, { quoted: m})
-} 
+} */
     
 if (/^todo bien$/i.test(m.text) ) { //sin prefijo
 conn.reply(m.chat, `𝑩𝒊𝒆𝒏 𝒄𝒂𝒑𝒐 😎 𝒚 𝒕𝒖`, m) }
