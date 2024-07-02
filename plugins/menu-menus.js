@@ -153,28 +153,15 @@ let handler = async (m, { conn, usedPrefix: _p, __dirname }) => {
       level, limit, name, weton, week, date, dateIslamic, time, totalreg, rtotalreg, role,
       readmore: readMore
     }
-    text = text.replace(new RegExp(`%(${Object.keys(replace).sort((a, b) => b.length - a.length).join`|`})`, 'g'), (_, name) => '' + replace[name])
-    
-    let pp = './media/Menu1.jpg'
-    
-     /*conn.sendHydrated2(m.chat, text.trim(), '▢ DyLux  ┃ ᴮᴼᵀ\n▢ Sígueme en Instagram\nhttps://www.instagram.com/fg98_ff', pp, fgyt, 'YouTube', 'https://paypal.me/fg98f', 'PayPal', [
-      ['ꨄ︎ Apoyar', `${_p}donate`],
-      ['⏍ Info', `${_p}botinfo`],
-      ['⌬ Grupos', `${_p}gpdylux`]
-    ], m)*/  
-    conn.sendFile(m.chat, pp, 'menu.jpg', text.trim(), m, null, rpl)
-  /* conn.sendButton(m.chat, text.trim(), '*ɴᴏᴠᴀʙᴏᴛ-ᴍᴅ*', pp, [
-      ['Info', `${_p}botinfo`],
-      ['Grupos', `${_p}grupos`]
-    ],m, rpl)*/
-  
-    m.react('🙌') 
-    
-  } catch (e) {
- m.react(`❌`) 
-    throw e
-  }
-}
+text = text.replace(new RegExp(`%(${Object.keys(replace).sort((a, b) => b.length - a.length).join`|`})`, 'g'), (_, name) => '' + replace[name])
+
+let pp = './Menu2.jpg'
+conn.sendFile(m.chat, pp, 'menu.jpg', text.trim(), m, null, rpl)
+m.react('🙌') 
+} catch (e) {
+m.react(`❌`) 
+throw e
+}}
 handler.help = ['help']
 handler.tags = ['main']
 //handler.command = ['menucompleto', 'help', 'fullmenu'] 
