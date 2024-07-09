@@ -1130,35 +1130,22 @@ let _user = global.db.data && global.db.data.users && global.db.data.users[m.sen
                             plugin.command === command :
                             false
 
-if (!isAccept) {
-continue;
-}
-m.plugin = name;
+if (!isAccept)
+continue
+m.plugin = name
 if (m.chat in global.db.data.chats || m.sender in global.db.data.users) {
-const chat = global.db.data.chats[m.chat];
-const user = global.db.data.users[m.sender];
-const botSpam = global.db.data.settings[this.user.jid];
-if (!['owner-unbanchat.js', 'info-creator.js'].includes(name) && chat && chat?.isBanned && !isROwner) return; // Except this
-if (name != 'owner-unbanchat.js' && name != 'owner-exec.js' && name != 'owner-exec2.js' && chat?.isBanned && !isROwner) return; // Except this
-//if ((name != 'owner-unbanchat.js' || name != 'owner-exec.js' || name != 'owner-exec2.js') && chat?.isBanned && !isROwner) return; // Except this
-		
+let chat = global.db.data.chats[m.chat]
+let user = global.db.data.users[m.sender]
+if (!['owner-unbanchat.js'].includes(name) && chat && chat.isBanned && !isROwner) return // Except this
+if (name != 'owner-unbanchat.js' && name != 'owner-exec.js' && name != 'owner-exec2.js' && name != 'tool-delete.js' && chat?.isBanned && !isROwner) return 
 if (m.text && user.banned && !isROwner) {
-if (typeof user.bannedMessageCount === 'undefined') {
-user.bannedMessageCount = 0;
-}
-if (user.bannedMessageCount < 3) {
-const messageNumber = user.bannedMessageCount + 1;
-m.reply(`⚠️ ESTAS BANEADO ⚠️\nAviso ${messageNumber}/3 ${user.bannedReason ? `\n*• Motivo:* ${user.bannedReason}` : ' *• Motivo:* Sin especificar'}\n*👉🏻 Puedes contactar al propietario del Bot si crees que se trata de un error o para charlar sobre tu desbaneo*
-
-👉 wa.me/573147616444
-👉 ${fb}`);
-user.bannedMessageCount++;
-} else if (user.bannedMessageCount === 3) {
-user.bannedMessageSent = true;
-} else {
-return;
-}
-return;
+if (user.antispam > 2) return
+m.reply(`⚠️ ESTAS BANEADO ⚠️\n*• Motivo:* ${user.messageSpam === 0 ? 'NO ESPECIFICADO' : user.messageSpam}*\n*👉🏻 Puedes contactar al propietario del Bot si crees que se trata de un error o para charlar sobre tu desbaneo*
+ 
+👉 wa.me/573147616444 
+👉 ${fb}`)
+user.antispam++	
+return
 }
 
 //Antispam 2		
