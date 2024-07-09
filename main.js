@@ -357,49 +357,52 @@ return true
 }
 
 const pluginFolder = global.__dirname(join(__dirname, './plugins/index'))
-const pluginFilter = filename => /\.js$/.test(filename)
+const pluginFilter = (filename) => /\.js$/.test(filename)
 global.plugins = {}
 async function filesInit() {
-for (let filename of readdirSync(pluginFolder).filter(pluginFilter)) {
+for (const filename of readdirSync(pluginFolder).filter(pluginFilter)) {
 try {
-let file = global.__filename(join(pluginFolder, filename))
+const file = global.__filename(join(pluginFolder, filename))
 const module = await import(file)
-global.plugins[filename] = module.default || module
+global.plugins[filename] = module.default || module;
 } catch (e) {
 conn.logger.error(e)
 delete global.plugins[filename]
 }}}
-filesInit().then(_ => console.log(Object.keys(global.plugins))).catch(console.error)
+filesInit().then((_) => Object.keys(global.plugins)).catch(console.error)
 
 global.reload = async (_ev, filename) => {
 if (pluginFilter(filename)) {
-let dir = global.__filename(join(pluginFolder, filename), true)
+const dir = global.__filename(join(pluginFolder, filename), true)
 if (filename in global.plugins) {
 if (existsSync(dir)) conn.logger.info(`Plugins actualizado: '${filename}'`)
-else {
+else { 
 conn.logger.warn(`delete plugins: '${filename}'`)
 return delete global.plugins[filename]
-}} else conn.logger.info(`Nuevo plugins: '${filename}'`)
-let err = syntaxerror(readFileSync(dir), filename, {
+}
+} else conn.logger.info(`Nuevo plugins:  '${filename}'`)
+const err = syntaxerror(readFileSync(dir), filename, {
 sourceType: 'module',
-allowAwaitOutsideFunction: true
-})
-if (err) conn.logger.error(`❌ error de sintaxis al cargar: '${filename}'\n${format(err)}`)
-else try {
+allowAwaitOutsideFunction: true,
+});
+if (err) conn.logger.error(`❌ error de sintaxis al cargar '${filename}'\n${format(err)}`)
+else {
+try { 
 const module = (await import(`${global.__filename(dir)}?update=${Date.now()}`))
 global.plugins[filename] = module.default || module
 } catch (e) {
-conn.logger.error(`❌ Error requiere plugins: '${filename}\n${format(e)}'`)
+conn.logger.error(`❌ Error requiere plugins: '${filename}\n${format(e)}'`);
 } finally {
 global.plugins = Object.fromEntries(Object.entries(global.plugins).sort(([a], [b]) => a.localeCompare(b)))
-}}}
+}}}}
+
 Object.freeze(global.reload)
 watch(pluginFolder, global.reload)
 await global.reloadHandler()
 
-// Quick Test
 async function _quickTest() {
-let test = await Promise.all([spawn('ffmpeg'),
+let test = await Promise.all([
+spawn('ffmpeg'),
 spawn('ffprobe'),
 spawn('ffmpeg', ['-hide_banner', '-loglevel', 'error', '-filter_complex', 'color', '-frames:v', '1', '-f', 'webp', '-']),
 spawn('convert'),
@@ -415,19 +418,14 @@ resolve(code !== 127)
 new Promise(resolve => {
 p.on('error', _ => resolve(false))
 })
-])
-}))
+])}))
+
 let [ffmpeg, ffprobe, ffmpegWebp, convert, magick, gm, find] = test
 console.log(test)
 let s = global.support = {ffmpeg, ffprobe, ffmpegWebp, convert, magick, gm, find }
-// require('./lib/sticker').support = s
 Object.freeze(global.support)
-
-if (!s.ffmpeg) conn.logger.warn('Please install ffmpeg for sending videos (pkg install ffmpeg)')
-if (s.ffmpeg && !s.ffmpegWebp) conn.logger.warn('Stickers may not animated without libwebp on ffmpeg (--enable-ibwebp while compiling ffmpeg)')
-if (!s.convert && !s.magick && !s.gm) conn.logger.warn('Stickers may not work without imagemagick if libwebp on ffmpeg doesnt isntalled (pkg install imagemagick)')
 }
 
 _quickTest()
- .then(() => conn.logger.info('Ƈᴀʀɢᴀɴᴅᴏ．．．.\n'))
+.then(() => conn.logger.info('Ƈᴀʀɢᴀɴᴅᴏ．．．.\n'))
 .catch(console.error)

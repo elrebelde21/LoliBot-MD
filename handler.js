@@ -1170,7 +1170,7 @@ await plugin.after.call(this, m, extra)
 } catch (e) {
 console.error(e)
 }}
-if (m.limit) m.reply(`*${+m.limit}* ᴅɪᴀᴍᴀɴᴛᴇ 💎 ᴜsᴀᴅᴏ`)
+if (m.limit) m.reply(`*${+m.limit}* 𝘿𝙞𝙖𝙢𝙖𝙣𝙩𝙚 💎 𝙪𝙨𝙖𝙙𝙤𝙨`)
 if (m.money) m.reply(+m.money + ' 𝙇𝙤𝙡𝙞𝘾𝙤𝙞𝙣𝙨 𝙪𝙨𝙖𝙙𝙤𝙨') 
 }
 break
@@ -1265,7 +1265,7 @@ text = (action === 'add' ? (chat.sWelcome || this.welcome || conn.welcome || 'We
 if (chat.antifake && isBotAdminNn && action === 'add') {
 const numerosPermitidos = ["212", "265", "92", "91", "90", "210", "60", "61", "62", "40", "48", "49", "93", "94", "98", "258"] //PUEDES EDITAR LOS USUARIOS QUE SE ELIMINARÁN SI EMPIEZA POR CUALQUIER DE ESOS NÚMEROS	
 if (numerosPermitidos.some(num => user.startsWith(num))) {	
-this.sendMessage(id, { text: `*${lenguajeGB['smsAvisoAG']()}${lenguajeGB['smsInt1']()} @${user.split("@")[0]} ${lenguajeGB['smsInt2']()}*`, mentions: [user] }, { quoted: null });          
+this.sendMessage(id, { text: `@${user.split("@")[0]} Nos numero fake no esta permitido el este grupo hasta la próxima...`, mentions: [user] }, { quoted: null });          
 let responseb = await this.groupParticipantsUpdate(id, [user], 'remove')
 if (responseb[0].status === "404") return      
 return    
@@ -1340,8 +1340,8 @@ export async function callUpdate(callUpdate) {
     let callmsg = await this.reply(nk.from, `ʜᴏʟᴀ *@${nk.from.split('@')[0]}*, ʟᴀs ${nk.isVideo ? 'videollamadas' : 'llamadas'} ɴᴏ ᴇsᴛᴀɴ ᴘᴇʀᴍɪᴛɪᴅᴀs, sᴇʀᴀs ʙʟᴏǫᴜᴇᴀᴅᴏ.\n\nsɪ ᴀᴄᴄɪᴅᴇɴᴛᴀʟᴍᴇɴᴛᴇ ʟʟᴀᴍᴀsᴛᴇ ᴘᴏɴɢᴀsᴇ ᴇɴ ᴄᴏɴᴛᴀᴄᴛᴏ ᴄᴏɴ ᴍɪ ᴄʀᴇᴀᴅᴏʀ ᴘᴀʀᴀ ǫᴜᴇ ᴛᴇ ᴅᴇsʙʟᴏǫᴜᴇᴇ!\n\nɢʀᴜᴘᴏ ᴀsɪsᴛᴇɴᴄɪᴀ ғᴀᴄᴇʙᴏᴏᴋ: https://facebook.com/groups/872989990425789/`, false, { mentions: [nk.from] })
     //let data = global.owner.filter(([id, isCreator]) => id && isCreator)
     //await this.sendContact(nk.from, data.map(([id, name]) => [id, name]), false, { quoted: callmsg })
-    let vcard = `BEGIN:VCARD\nVERSION:3.0\nN:;ɴᴏᴠᴀʙᴏᴛ-ᴍᴅ 👑;;;\nFN:ɴᴏᴠᴀʙᴏᴛ-ᴍᴅ\nORG:ɴᴏᴠᴀʙᴏᴛ-ᴍᴅ 👑\nTITLE:\nitem1.TEL;waid=18134039996:+1 (813) 403-9996\nitem1.X-ABLabel:ɴᴏᴠᴀʙᴏᴛ-ᴍᴅ 👑\nX-WA-BIZ-DESCRIPTION:[❗] ᴇsᴄʀɪʙɪ sᴏʟᴏ ᴘᴏʀ ᴄᴏsᴀs ᴅᴇʟ ʙᴏᴛ.\nX-WA-BIZ-NAME:ɴᴏᴠᴀʙᴏᴛ-ᴍᴅ 👑\nEND:VCARD`
-    await this.sendMessage(nk.from, { contacts: { displayName: 'ɴᴏᴠᴀʙᴏᴛ-ᴍᴅ 👑', contacts: [{ vcard }] }}, {quoted: callmsg})
+    let vcard = `BEGIN:VCARD\nVERSION:3.0\nN:;𝙇𝙤𝙡𝙞𝘽𝙤𝙩-𝙈𝘿 👑;;;\nFN:𝙇𝙤𝙡𝙞𝘽𝙤𝙩-𝙈𝘿\nORG:𝙇𝙤𝙡𝙞𝘽𝙤𝙩-𝙈𝘿 👑\nTITLE:\nitem1.TEL;waid=573147616444:+57 314 7616444\nitem1.X-ABLabel:𝙇𝙤𝙡𝙞𝘽𝙤𝙩-𝙈𝘿 👑\nX-WA-BIZ-DESCRIPTION:[❗] ᴇsᴄʀɪʙɪ sᴏʟᴏ ᴘᴏʀ ᴄᴏsᴀs ᴅᴇʟ ʙᴏᴛ.\nX-WA-BIZ-NAME:𝙇𝙤𝙡𝙞𝘽𝙤𝙩-𝙈𝘿 👑\nEND:VCARD`
+    await this.sendMessage(nk.from, { contacts: { displayName: '𝙇𝙤𝙡𝙞𝘽𝙤𝙩-𝙈𝘿 👑', contacts: [{ vcard }] }}, {quoted: callmsg})
     await this.updateBlockStatus(nk.from, 'block')
     }
     }
