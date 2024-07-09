@@ -24,22 +24,6 @@ await fs.unlink(path.join(sessionPath, file));
 filesDeleted++;
 console.log(`⚠️ Eliminacion session (PreKey) que provocan el undefined el chat`)}}*/
 
-/*if (chat.welcome && m.messageStubType == 27) {
-    let text = `HOLAA!! @${m.messageStubParameters[0].split`@`[0]} ¿COMO ESTAS?😃\n\n『Bienvenido A *${groupMetadata.subject}*』\n\nUn gusto conocerte amig@ 🤗\n\n_Recuerda leer las reglas del grupo para no tener ningun problema 🧐_\n\n*Solo disfrutar de este grupo y divertite 🥳*`
-    
-await conn.sendMessage(m.chat, {image: img, caption: text, mentionedJid: [m.messageStubParameters[0]]}, {quoted: null});
-  }
-  
-  if (chat.welcome && m.messageStubType == 28) {
-    let text = `Bueno, se fue @${m.messageStubParameters[0].split`@`[0]} 👋\n\nQue dios lo bendiga 😎`
-await conn.sendMessage(m.chat, {image: img, caption: text, mentionedJid: [m.messageStubParameters[0]]}, {quoted: null});
-  }
-   
-  if (chat.welcome2 && m.messageStubType == 32) {
-    let text = `${usuario} Elimino a la rata de @${m.messageStubParameters[0].split`@`[0]} no vuelva a agregar a esta sucias rata`
-await conn.sendMessage(m.chat, {image: img, caption: text`, mentionedJid: [m.messageStubParameters[0]]}, {quoted: null});
-} 
- */
 if (chat.detect && m.messageStubType == 21) {
 await this.sendMessage(m.chat, { text: `${usuario} \`𝙃𝘼𝙎 𝘾𝘼𝙈𝘽𝙄𝘼𝘿𝙊 𝙀𝙇 𝙉𝙊𝙈𝘽𝙍𝙀́ 𝘿𝙀𝙇 𝙂𝙍𝙐𝙋𝙊 𝘼:\`\n\n> *${m.messageStubParameters[0]}*`, mentions: [m.sender], mentions: [...groupAdmins.map(v => v.id)] }, { quoted: fkontak, ephemeralExpiration: 24*60*100, disappearingMessagesInChat: 24*60*100}) 
 } else if (chat.detect && m.messageStubType == 22) {

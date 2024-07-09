@@ -4,8 +4,7 @@ let handler = m => m
 handler.all = async function (m) {
 let chat = global.db.data.chats[m.chat]
 if (chat.isBanned) return
-global.db.data.users[m.sender].money += 50
-global.db.data.users[m.sender].exp += 50  
+if (chat.audios) return
     
 if (/^A Bueno master|Bueno master|Bueno Máster|🫂$/i.test(m.text) && chat.audios) {  
 if (!db.data.chats[m.chat].audios && m.isGroup) throw 0    
