@@ -71,8 +71,9 @@ if (!isNumber(user.limit)) user.limit = 8
           if (!isNumber(user.stroberi)) user.stroberi = 0;
         }
         if (!isNumber(user.afk)) user.afk = -1;
-	        if (!('autolevelup' in user)) user.autolevelup = true;
-	        if (!('role' in user)) user.role = 'Novato';
+	   if (!('autolevelup' in user)) user.autolevelup = true;
+	   if (!('role' in user)) user.role = 'Novato';
+	     if (!('antispam2' in user)) user.antispam2 = true;
         if (!isNumber(user.agility)) user.agility = 0;
         if (!isNumber(user.anakanjing)) user.anakanjing = 0;
         if (!isNumber(user.anakcentaur)) user.anakcentaur = 0;
@@ -572,6 +573,7 @@ if (!isNumber(user.limit)) user.limit = 8
           exp: 0,
           expg: 0,
           exphero: 0,
+          antispam2: true, 
           expired: 0,
 		    eleksirb: 0,
 		    emasbatang: 0,
@@ -883,86 +885,134 @@ if (!isNumber(user.limit)) user.limit = 8
             let chat = global.db.data.chats[m.chat]
             if (typeof chat !== 'object')
                 global.db.data.chats[m.chat] = {}
-            if (chat) {
-                 if (!('isBanned' in chat)) chat.isBanned = false;
-        if (!('welcome' in chat)) chat.welcome = true;
-        if (!('detect' in chat)) chat.detect = true;
-        if (!('detect2' in chat)) chat.detect2 = false;
-        if (!('sWelcome' in chat)) chat.sWelcome = '';
-        if (!('sBye' in chat)) chat.sBye = '';
-        if (!('sPromote' in chat)) chat.sPromote = '';
-        if (!('sDemote' in chat)) chat.sDemote = '';
-        if (!('delete' in chat)) chat.antidelete = false;
-        if (!('modohorny' in chat)) chat.modohorny = true;
-        if (!('autosticker' in chat)) chat.autosticker = false;
-        if (!('audios' in chat)) chat.audios = false;
-        if (!('antiLink' in chat)) chat.antiLink = false;
-        if (!('antiLink2' in chat)) chat.antiLink2 = false;
-        if (!('antiviewonce' in chat)) chat.antiviewonce = false;
-        if (!('antiToxic' in chat)) chat.antiToxic = false;
-        if (!('antiTraba' in chat)) chat.antiTraba = false;
-        if (!('antiArab' in chat)) chat.antiArab = false;    
-        if (!('modoadmin' in chat)) chat.modoadmin = false;
-        if (!('simi' in chat)) chat.simi = false;
-        if (!isNumber(chat.expired)) chat.expired = 0;
-            } else
-                global.db.data.chats[m.chat] = {
-                    isBanned: false,
-          welcome: true,
-          detect: true,
-	  detect2: false,
-          sWelcome: '',
-          sBye: '',
-          sPromote: '',
-          sDemote: '',
-          antidelete: false,
-          modohorny: true,
-          autosticker: false,
-          audios: true,
-          antiLink: false,
-          antiLink2: false,
-          antiviewonce: false,
-          antiToxic: false,
-          antiTraba: false,
-          antiArab: false,
-	  modoadmin: false,
-	  simi: false,
-	  game: true, 
-          expired: 0,
-                }
-            var settings = global.db.data.settings[this.user.jid]
-            if (typeof settings !== 'object') global.db.data.settings[this.user.jid] = {}
-            if (settings) {
-               if (!('self' in settings)) settings.self = false
-                if (!('autoread' in settings)) settings.autoread = false
-                if (!('restrict' in settings)) settings.restrict = false
-                if (!('antiCall' in settings)) settings.antiCall = false
-                if (!('antiPrivate' in settings)) settings.antiPrivate = false
-                if (!('jadibotmd' in settings)) settings.jadibotmd = true  
-                if (!('status' in settings)) settings.status = 0
-            } else global.db.data.settings[this.user.jid] = {
-                self: false,
-                autoread: false,
-                restrict: false, 
-                antiCall: false,
-                antiPrivate: false,
-                jadibotmd: true,
-                status: 0
-            }
-        } catch (e) {
-            console.error(e)
-        }
-        if (opts['nyimak'])  return
-        if (!m.fromMe && opts['self'])  return
-        if (settings.solopv && m.chat.endsWith('g.us')) return  
-        if (settings.sologp && !m.chat.endsWith('g.us')) return
-        //if (settings.sologp && !m.chat.endsWith('g.us') && !/jadibot|bebot|getcode|serbot|bots|stop|support|donate|off|on|s|tiktok|code|newcode|join/gim.test(m.text)) return 
-        if (opts['swonly'] && m.chat !== 'status@broadcast')  return
-        if (typeof m.text !== 'string')
-            m.text = ''
-        
+if (chat) {
+if (!('isBanned' in chat)) chat.isBanned = false         
+if (!('welcome' in chat)) chat.welcome = true           
+if (!('detect' in chat)) chat.detect = true               
+if (!('sWelcome' in chat)) chat.sWelcome = ''          
+if (!('sBye' in chat)) chat.sBye = ''                    
+if (!('sPromote' in chat)) chat.sPromote = ''             
+if (!('sDemote' in chat)) chat.sDemote = '' 
+if (!('sCondition' in chat)) chat.sCondition = JSON.stringify([{ grupo: { usuario: [], condicion: [], admin: '' }, prefijos: []}])
+if (!('delete' in chat)) chat.delete = false                   
+if (!('modohorny' in chat)) chat.modohorny = true       
+if (!('stickers' in chat)) chat.stickers = false            
+if (!('autosticker' in chat)) chat.autosticker = false      
+if (!('audios' in chat)) chat.audios = true               
+if (!('antiver' in chat)) chat.antiver = false 
+if (!('antiPorn' in chat)) chat.antiPorn = true     
+if (!('antiLink' in chat)) chat.antiLink = false     
+if (!('antiLink2' in chat)) chat.antiLink2 = false
+if (!('antiTiktok' in chat)) chat.antiTiktok = false
+if (!('antiYoutube' in chat)) chat.antiYoutube = false
+if (!('antiTelegram' in chat)) chat.antiTelegram = false
+if (!('antiFacebook' in chat)) chat.antiFacebook = false
+if (!('antiInstagram' in chat)) chat.antiInstagram = false
+if (!('antiTwitter' in chat)) chat.antiTwitter = false
+if (!('antiDiscord' in chat)) chat.antiDiscord = false
+if (!('antiThreads' in chat)) chat.antiThreads = false
+if (!('antiTwitch' in chat)) chat.antiTwitch = false
+if (!('antifake' in chat)) chat.antifake = false
+if (!('reaction' in chat)) chat.reaction = true    
+if (!('viewonce' in chat)) chat.viewonce = false       
+if (!('modoadmin' in chat)) chat.modoadmin = false    
+if (!('antitoxic' in chat)) chat.antitoxic = false
+if (!('game' in chat)) chat.game = true
+if (!('game2' in chat)) chat.game2 = true
+if (!('simi' in chat)) chat.simi = false
+if (!('antiTraba' in chat)) chat.antiTraba = true
+if (!('autolevelup' in chat))  chat.autolevelup = true
+if (!isNumber(chat.expired)) chat.expired = 0
+} else
+global.db.data.chats[m.chat] = {
+isBanned: false,
+welcome: true,
+detect: true,
+sWelcome: '',
+sBye: '',
+sPromote: '',
+sDemote: '', 
+sCondition: JSON.stringify([{ grupo: { usuario: [], condicion: [], admin: '' }, prefijos: []}]), 
+delete: true,
+modohorny: true,
+stickers: false,
+autosticker: false,
+audios: false,
+antiver: true,
+antiPorn: true,
+antiLink: false,
+antiLink2: false,
+antiTiktok: false,
+antiYoutube: false,
+antiTelegram: false,
+antiFacebook: false,
+antiInstagram: false,
+antiTwitter: false,
+antiDiscord: false,
+antiThreads: false,
+antiTwitch: false,
+antifake: false,
+reaction: true,
+viewonce: true,
+modoadmin: false,
+antitoxic: false,
+game: true, 
+game2: true, 
+simi: false,
+antiTraba: true,
+autolevelup: true,
+expired: 0,
+}
+var settings = global.db.data.settings[this.user.jid]
+if (typeof settings !== 'object') global.db.data.settings[this.user.jid] = {}
+if (settings) {
+if (!('self' in settings)) settings.self = false
+if (!('autoread' in settings)) settings.autoread = false
+if (!('autoread2' in settings)) settings.autoread2 = false
+if (!('restrict' in settings)) settings.restrict = true
+if (!('temporal' in settings)) settings.temporal = false
+if (!('antiPrivate' in settings)) settings.antiPrivate = false
+if (!('antiCall' in settings)) settings.antiCall = true
+if (!('antiSpam' in settings)) settings.antiSpam = true 
+if (!('modoia' in settings)) settings.modoia = false
+if (!('jadibotmd' in settings)) settings.jadibotmd = true
+if (!('status' in settings)) settings.status = 0
+} else global.db.data.settings[this.user.jid] = {
+self: false,
+autoread: false,
+autoread2: false,
+restrict: true,
+temporal: false,
+antiPrivate: false,
+antiCall: true,
+antiSpam: true,
+modoia: false, 
+jadibotmd: true,
+status: 0
+}} catch (e) {
+console.error(e)
+}
 
-        let _user = global.db.data && global.db.data.users && global.db.data.users[m.sender]
+if (opts['nyimak']) {
+return;
+}
+    if (!m.fromMe && opts['self']) {
+      return;
+    }
+    if (opts['pconly'] && m.chat.endsWith('g.us')) {
+      return;
+    }
+    if (opts['gconly'] && !m.chat.endsWith('g.us')) {
+      return;
+    }
+    if (opts['swonly'] && m.chat !== 'status@broadcast') {
+      return;
+    }
+    if (typeof m.text !== 'string') {
+      m.text = '';
+    }
+        
+let _user = global.db.data && global.db.data.users && global.db.data.users[m.sender]
 
         const isROwner = [conn.decodeJid(global.conn.user.id), ...global.owner.map(([number]) => number)].map(v => v.replace(/[^0-9]/g, '') + '@s.whatsapp.net').includes(m.sender)
         const isOwner = isROwner || m.fromMe
@@ -1080,25 +1130,52 @@ if (!isNumber(user.limit)) user.limit = 8
                             plugin.command === command :
                             false
 
-                if (!isAccept)
-                    continue
-                m.plugin = name
-                if (m.chat in global.db.data.chats || m.sender in global.db.data.users) {
-                    let chat = global.db.data.chats[m.chat]
-                    let user = global.db.data.users[m.sender]
-                    if (name != 'owner-unbanchat.js' && chat?.isBanned)
-                        return // Except this
-                    if (name != 'owner-unbanuser.js' && user?.banned)
-                        return
-                }
+if (!isAccept) {
+continue;
+}
+m.plugin = name;
+if (m.chat in global.db.data.chats || m.sender in global.db.data.users) {
+const chat = global.db.data.chats[m.chat];
+const user = global.db.data.users[m.sender];
+const botSpam = global.db.data.settings[this.user.jid];
+if (!['owner-unbanchat.js', 'info-creator.js'].includes(name) && chat && chat?.isBanned && !isROwner) return; // Except this
+if (name != 'owner-unbanchat.js' && name != 'owner-exec.js' && name != 'owner-exec2.js' && chat?.isBanned && !isROwner) return; // Except this
+//if ((name != 'owner-unbanchat.js' || name != 'owner-exec.js' || name != 'owner-exec2.js') && chat?.isBanned && !isROwner) return; // Except this
+		
+if (m.text && user.banned && !isROwner) {
+if (typeof user.bannedMessageCount === 'undefined') {
+user.bannedMessageCount = 0;
+}
+if (user.bannedMessageCount < 3) {
+const messageNumber = user.bannedMessageCount + 1;
+m.reply(`⚠️ ESTAS BANEADO ⚠️\nAviso ${messageNumber}/3 ${user.bannedReason ? `\n*• Motivo:* ${user.bannedReason}` : ' *• Motivo:* Sin especificar'}\n*👉🏻 Puedes contactar al propietario del Bot si crees que se trata de un error o para charlar sobre tu desbaneo*
+
+👉 wa.me/573147616444
+👉 ${fb}`);
+user.bannedMessageCount++;
+} else if (user.bannedMessageCount === 3) {
+user.bannedMessageSent = true;
+} else {
+return;
+}
+return;
+}
+
+//Antispam 2		
+if (user.antispam2 && isROwner) return
+let time = global.db.data.users[m.sender].spam + 3000
+if (new Date - global.db.data.users[m.sender].spam < 3000) return console.log(`[ SPAM ]`) 
+global.db.data.users[m.sender].spam = new Date * 1
+}
+
 const hl = _prefix;
-        const adminMode = global.db.data.chats[m.chat].modoadmin;
-        const mystica = `${plugin.botAdmin || plugin.admin || plugin.group || plugin || noPrefix || hl || m.text.slice(0, 1) == hl || plugin.command}`;
-        if (adminMode && !isOwner && !isROwner && m.isGroup && !isAdmin && mystica) return;                         
-                if (plugin.rowner && plugin.owner && !(isROwner || isOwner)) { // Both Owner
-                    fail('owner', m, this)
-                    continue
-                }
+const adminMode = global.db.data.chats[m.chat].modoadmin;
+const mystica = `${plugin.botAdmin || plugin.admin || plugin.group || plugin || noPrefix || hl || m.text.slice(0, 1) == hl || plugin.command}`;
+if (adminMode && !isOwner && !isROwner && m.isGroup && !isAdmin && mystica) return;                         
+if (plugin.rowner && plugin.owner && !(isROwner || isOwner)) { // Both Owner
+fail('owner', m, this)
+continue
+}
                 if (plugin.rowner && !isROwner) { // Real Owner
                     fail('rowner', m, this)
                     continue
@@ -1134,7 +1211,7 @@ const hl = _prefix;
                     continue
                 }
                 m.isCommand = true
-                let xp = 'exp' in plugin ? parseInt(plugin.exp) : 17 // Ganancia de XP por comando
+                let xp = 'exp' in plugin ? parseInt(plugin.exp) : 1 // Ganancia de XP por comando
                 if (xp > 200)
                     m.reply('chirrido -_-') // Hehehe
                 else
