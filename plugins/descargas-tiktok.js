@@ -13,51 +13,35 @@ await delay(1000 * 2);
 await conn.sendMessage(m.chat, {text: `⌛ 𝙀𝙨𝙥𝙚𝙧𝙚 ✋ \n▰▰▰▰▰▱▱▱▱\n𝙔𝙖 𝙚𝙨𝙩𝙤𝙮 𝙙𝙚𝙨𝙘𝙖𝙧𝙜𝙖𝙙𝙤... 𝙨𝙪𝙨 𝙫𝙞𝙙𝙚𝙤 𝙙𝙚𝙡 𝙏𝙞𝙠𝙏𝙤𝙠 🔰`, edit: key});
 await delay(1000 * 2);
 await conn.sendMessage(m.chat, {text: `⌛ 𝙔𝙖 𝙘𝙖𝙨𝙞 🏃‍♂️💨\n▰▰▰▰▰▰▰▱▱`, edit: key});
-  try {
-    const dataFn = await conn.getFile(`${CFROSAPI}/api/tiktokv2?url=${args[0]}`);   
-    await conn.sendMessage(m.chat, {video: dataFn.data, caption: `Aqui esta tu video Tiktok`}, {quoted: m});
+try {
+const dataFn = await conn.getFile(`${CFROSAPI}/api/tiktokv2?url=${args[0]}`);   
+await conn.sendMessage(m.chat, {video: dataFn.data, caption: `*✅ Aquí esta tu video de tiktok*`}, {quoted: m});
 await conn.sendMessage(m.chat, {text: `✅ 𝘾𝙤𝙢𝙥𝙡𝙚𝙩𝙖𝙙𝙤\n▰▰▰▰▰▰▰▰▰\n𝘼𝙦𝙪𝙞 𝙚𝙨𝙩𝙖 𝙩𝙪 𝙫𝙞𝙙𝙚𝙤 💫`, edit: key})         
-  } catch (ee1) {
-  try {
-    //const aa = {quoted: m, userJid: conn.user.jid};
-    //const prep = generateWAMessageFromContent(m.chat, {extendedTextMessage: {text: texto, contextInfo: {externalAdReply: {title: 'ᴛʜᴇ ᴍʏsᴛɪᴄ - ʙᴏᴛ', body: null, thumbnail: imagen1, sourceUrl: 'https://github.com/BrunoSobrino/TheMystic-Bot-MD'}, mentionedJid: [m.sender]}}}, aa);
-    //await conn.relayMessage(m.chat, prep.message, {messageId: prep.key.id, mentions: [m.sender]});
-    const dataF = await tiktok.v1(args[0]);
-    // let desc1 =  `*𝙽𝙸𝙲𝙺𝙽𝙰𝙼𝙴:* ${dataF.nickname || 'Indefinido'}`
-    const desc1 = `_*< DESCARGAS - TIKTOK />*_\n\n*[ 💡 ] Responde a este vídeo con el comando* _${usedPrefix}tomp3_ *para convertirlo en audio.*`;
-    await conn.sendMessage(m.chat, {video: {url: dataF.play}, caption: desc1}, {quoted: m});
+} catch (ee1) {
+try {
+const dataF = await tiktok.v1(args[0]);
+await conn.sendMessage(m.chat, {video: {url: dataF.play}, caption: `*✅ Aquí esta tu video de tiktok*`}, {quoted: m});
 await conn.sendMessage(m.chat, {text: `✅ 𝘾𝙤𝙢𝙥𝙡𝙚𝙩𝙖𝙙𝙤\n▰▰▰▰▰▰▰▰▰\n𝘼𝙦𝙪𝙞 𝙚𝙨𝙩𝙖 𝙩𝙪 𝙫𝙞𝙙𝙚𝙤 💫`, edit: key})           
-  } catch (e1) {
-    try {
-      const tTiktok = await tiktokdlF(args[0]);
-      // let desc2 = `🔗 *Url:* ${tTiktok.video}`
-      const desc2 = `_*< DESCARGAS - TIKTOK />*_\n\n*[ 💡 ] Responde a este vídeo con el comando* _${usedPrefix}tomp3_ *para convertirlo en audio.*`;
-      await conn.sendMessage(m.chat, {video: {url: tTiktok.video}, caption: desc2}, {quoted: m});
+} catch (e1) {
+try {
+const tTiktok = await tiktokdlF(args[0]);
+await conn.sendMessage(m.chat, {video: {url: tTiktok.video}, caption: `*🔰 Aqui esta tu video de tiktok*`}, {quoted: m});
 await conn.sendMessage(m.chat, {text: `✅ 𝘾𝙤𝙢𝙥𝙡𝙚𝙩𝙖𝙙𝙤\n▰▰▰▰▰▰▰▰▰\n𝘼𝙦𝙪𝙞 𝙚𝙨𝙩𝙖 𝙩𝙪 𝙫𝙞𝙙𝙚𝙤 💫`, edit: key})             
-    } catch (e2) {
-      try {
-        const p = await fg.tiktok(args[0]);
-        // let te = `*𝚄𝚂𝙴𝚁𝙽𝙰𝙼𝙴:* ${p.author || 'Indefinido'}`
-        const te = `_*< DESCARGAS - TIKTOK />*_\n\n*[ 💡 ] Responde a este vídeo con el comando* _${usedPrefix}tomp3_ *para convertirlo en audio.*`;
-        await conn.sendMessage(m.chat, {video: {url: p.nowm}, caption: te}, {quoted: m});
+} catch (e2) {
+try {
+const p = await fg.tiktok(args[0]);
+await conn.sendMessage(m.chat, {video: {url: p.nowm}, caption: `*✅ Aquí esta tu video de tiktok*`}, {quoted: m});
 await conn.sendMessage(m.chat, {text: `✅ 𝘾𝙤𝙢𝙥𝙡𝙚𝙩𝙖𝙙𝙤\n▰▰▰▰▰▰▰▰▰\n𝘼𝙦𝙪𝙞 𝙚𝙨𝙩𝙖 𝙩𝙪 𝙫𝙞𝙙𝙚𝙤 💫`, edit: key})               
-      } catch (e3) {
-        try {
-          const {author: {nickname}, video, description} = await tiktokdl(args[0]);
-          const url = video.no_watermark2 || video.no_watermark || 'https://tikcdn.net' + video.no_watermark_raw || video.no_watermark_hd;
-          // let cap = `*𝙽𝙸𝙲𝙺𝙽𝙰𝙼𝙴:* ${nickname || 'Indefinido'}`
-          const cap = `_*< DESCARGAS - TIKTOK />*_\n\n*[ 💡 ] Responde a este vídeo con el comando* _${usedPrefix}tomp3_ *para convertirlo en audio.*`;
-  await conn.sendMessage(m.chat, {video: {url: url}, caption: `✅ Aquí esta tu video de tiktok`}, {quoted: m});
+} catch (e3) {
+try {
+const {author: {nickname}, video, description} = await tiktokdl(args[0]);
+const url = video.no_watermark2 || video.no_watermark || 'https://tikcdn.net' + video.no_watermark_raw || video.no_watermark_hd;
+await conn.sendMessage(m.chat, {video: {url: url}, caption: `✅ Aquí esta tu video de tiktok`}, {quoted: m});
 await conn.sendMessage(m.chat, {text: `✅ 𝘾𝙤𝙢𝙥𝙡𝙚𝙩𝙖𝙙𝙤\n▰▰▰▰▰▰▰▰▰\n𝘼𝙦𝙪𝙞 𝙚𝙨𝙩𝙖 𝙩𝙪 𝙫𝙞𝙙𝙚𝙤 💫`, edit: key})                 
-        } catch (e) {
+} catch (e) {
 m.reply(`\`\`\`⚠️ OCURRIO UN ERROR ⚠️\`\`\`\n\n> *Reporta el siguiente error a mi creador con el comando:*#report\n\n> error Sintays >>> ${e} <<<< `) 
 m.react(`❌`)         
-          }
-        }
-      }
-    }
-  }
-};
+}}}}}};
 handler.help = ['tiktok']
 handler.tags = ['downloader']
 handler.command = /^(tt|tiktok)(dl|nowm)?$/i
