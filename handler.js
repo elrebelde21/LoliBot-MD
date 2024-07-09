@@ -73,7 +73,6 @@ if (!isNumber(user.limit)) user.limit = 8
         if (!isNumber(user.afk)) user.afk = -1;
 	   if (!('autolevelup' in user)) user.autolevelup = true;
 	   if (!('role' in user)) user.role = 'Novato';
-	     if (!('antispam2' in user)) user.antispam2 = true;
         if (!isNumber(user.agility)) user.agility = 0;
         if (!isNumber(user.anakanjing)) user.anakanjing = 0;
         if (!isNumber(user.anakcentaur)) user.anakcentaur = 0;
@@ -573,7 +572,6 @@ if (!isNumber(user.limit)) user.limit = 8
           exp: 0,
           expg: 0,
           exphero: 0,
-          antispam2: true, 
           expired: 0,
 		    eleksirb: 0,
 		    emasbatang: 0,
@@ -1149,7 +1147,7 @@ return
 }
 
 //Antispam 2		
-if (user.antispam2 && isROwner) return
+if (settings.antiSpam && isROwner) return
 let time = global.db.data.users[m.sender].spam + 3000
 if (new Date - global.db.data.users[m.sender].spam < 3000) return console.log(`[ SPAM ]`) 
 global.db.data.users[m.sender].spam = new Date * 1
