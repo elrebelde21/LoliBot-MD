@@ -1128,23 +1128,17 @@ let _user = global.db.data && global.db.data.users && global.db.data.users[m.sen
                             plugin.command === command :
                             false
 
-if (!isAccept)
-continue
-m.plugin = name
-if (m.chat in global.db.data.chats || m.sender in global.db.data.users) {
-let chat = global.db.data.chats[m.chat]
-let user = global.db.data.users[m.sender]
-if (!['owner-unbanchat.js'].includes(name) && chat && chat.isBanned && !isROwner) return // Except this
-if (name != 'owner-unbanchat.js' && name != 'owner-exec.js' && name != 'owner-exec2.js' && name != 'tool-delete.js' && chat?.isBanned && !isROwner) return 
-if (m.text && user.banned && !isROwner) {
-if (user.antispam > 2) return
-m.reply(`⚠️ ESTAS BANEADO ⚠️\n*• Motivo:* ${user.messageSpam === 0 ? 'NO ESPECIFICADO' : user.messageSpam}*\n*👉🏻 Puedes contactar al propietario del Bot si crees que se trata de un error o para charlar sobre tu desbaneo*
- 
-👉 wa.me/573147616444 
-👉 ${fb}`)
-user.antispam++	
-return
-}
+                if (!isAccept)
+                    continue
+                m.plugin = name
+                if (m.chat in global.db.data.chats || m.sender in global.db.data.users) {
+                    let chat = global.db.data.chats[m.chat]
+                    let user = global.db.data.users[m.sender]
+                    if (name != 'owner-unbanchat.js' && chat?.isBanned)
+                        return // Except this
+                    if (name != 'owner-unbanuser.js' && user?.banned)
+                        return
+                }
 
 //Antispam 2		
 if (settings.antiSpam && isROwner) return
