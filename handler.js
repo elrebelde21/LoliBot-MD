@@ -1139,14 +1139,6 @@ let _user = global.db.data && global.db.data.users && global.db.data.users[m.sen
                     if (name != 'owner-unbanuser.js' && user?.banned)
                         return
                 }
-
-//Antispam 2		
-if (settings.antiSpam && isROwner) return
-let time = global.db.data.users[m.sender].spam + 3000
-if (new Date - global.db.data.users[m.sender].spam < 3000) return console.log(`[ SPAM ]`) 
-global.db.data.users[m.sender].spam = new Date * 1
-}
-
 const hl = _prefix;
 const adminMode = global.db.data.chats[m.chat].modoadmin;
 const mystica = `${plugin.botAdmin || plugin.admin || plugin.group || plugin || noPrefix || hl || m.text.slice(0, 1) == hl || plugin.command}`;
