@@ -444,9 +444,7 @@ if (!/[01]/.test(command)) return await conn.sendList(m.chat, `\`⧼⧼⧼ Ｃ�
 ● *Avisos de la Configuracion:*
 ✅ ⇢ *Función Activada*
 ❌ ⇢ *Función Desactivada*
-⚠️ ⇢ *Este Chat no es un Grupo"
-`, wm, `AJUSTES`, listSections, m)
-//conn.sendMessage(m.chat, texto, {quoted: fkontak})	
+⚠️ ⇢ *Este Chat no es un Grupo`, wm, `AJUSTES`, null, listSections, m) //conn.sendMessage(m.chat, texto, {quoted: fkontak})	
 throw false
 }
 await conn.sendButton(m.chat, `╭┄〔 *${wm}* 〕┄⊱
