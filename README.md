@@ -46,11 +46,11 @@
 
 ### ❇️ 𝙂𝙍𝙐𝙋𝙊𝙎 𝙊𝙁𝙄𝘾𝙄𝘼𝙇𝙀𝙎
 
-<a href="https://chat.whatsapp.com/KzJWBDGlE38A9Lbc6TJExI" target="blank"><img src="https://img.shields.io/badge/𝙂𝙧𝙪𝙥𝙤 𝙇𝙤𝙡𝙞𝙗𝙤𝙩-25D366?style=for-the-badge&logo=whatsapp&logoColor=white" /> 
-<a href="https://chat.whatsapp.com/BiozxvjQgo6L2QrfHK9V7R" target="blank"><img src="https://img.shields.io/badge/𝙂𝙧𝙪𝙥𝙤 𝙇𝙤𝙡𝙞𝙗𝙤𝙩 2-25D366?style=for-the-badge&logo=whatsapp&logoColor=white" />
+<a href="https://chat.whatsapp.com/HNDVUxHphPzG3cJHIwCaX5" target="blank"><img src="https://img.shields.io/badge/𝙂𝙧𝙪𝙥𝙤 𝙇𝙤𝙡𝙞𝙗𝙤𝙩-25D366?style=for-the-badge&logo=whatsapp&logoColor=white" /> 
+<a href="https://chat.whatsapp.com/H4hxytyGvucIF1k0UAR7es" target="blank"><img src="https://img.shields.io/badge/𝙂𝙧𝙪𝙥𝙤 𝙇𝙤𝙡𝙞𝙗𝙤𝙩 2-25D366?style=for-the-badge&logo=whatsapp&logoColor=white" />
 <a href="https://chat.whatsapp.com/EjiaKJWvzaiAmvktpScgEc" target="blank"><img src="https://img.shields.io/badge/🐈 𝐆𝐚𝐭𝐚𝐁𝐨𝐭 & 𝐋𝐨𝐥𝐢𝐁𝐨𝐭 🥳-25D366?style=for-the-badge&logo=whatsapp&logoColor=white" />
-<a href="https://chat.whatsapp.com/K7RzcVdxGqhGP5dCpVENSI" target="blank"><img src="https://img.shields.io/badge/𝐋𝐨𝐥𝐢𝐁𝐨𝐭 & 𝐙𝐢𝐫𝐚𝐱𝐁𝐨𝐭 -25D366?style=for-the-badge&logo=whatsapp&logoColor=white" />
-<a href="https://chat.whatsapp.com/KLpYFsitkgzJ15YQxZrBqO" target="blank"><img src="https://img.shields.io/badge/💖 🅜🅤🅛🅣🅘 🅑🅞🅣🅢 💖-25D366?style=for-the-badge&logo=whatsapp&logoColor=white" />
+<a href="https://chat.whatsapp.com/IstOAq2RnBx687WhQpOYK8" target="blank"><img src="https://img.shields.io/badge/⇶⃤꙰𝑬𝒏𝒍𝒂𝒄𝒆 𝒍𝒐𝒍𝒊𝒃𝒐𝒕ꦿ⃟⃢ -25D366?style=for-the-badge&logo=whatsapp&logoColor=white" />
+<a href="https://chat.whatsapp.com/Jpshmvl9Ey4K30zKHoK20q" target="blank"><img src="https://img.shields.io/badge/💫 𝘾𝙤𝙢𝙪𝙣𝙞𝙙𝙖𝙙 𝙇𝙤𝙡𝙞𝘽𝙤𝙩 🥳-25D366?style=for-the-badge&logo=whatsapp&logoColor=white" />
 </a>
 
 <a href="https://chat.whatsapp.com/FRkr7jJHSJA5OjVtE64dDs" target="blank"><img src="https://img.shields.io/badge/Grupo ayuda sobre el bot-25D366?style=for-the-badge&logo=whatsapp&logoColor=white" />
