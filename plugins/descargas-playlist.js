@@ -19,9 +19,9 @@ header: "'• • •「 🅓🅞🅒🅤🅜🅔🅝🅣🅞🅢 🅜🅟❹ �
     
 await conn.sendList(m.chat, `*• Resultados:* ${text}*\n\n> *ᴇʟɪᴊᴀ ᴀ ᴜɴᴀ ᴏᴘᴄɪᴏɴ ʏ ᴘʀᴇsɪᴏɴᴇ ᴇɴᴠɪᴀʀ*`, wm, `🚀 𝙍𝙀𝙎𝙐𝙇𝙏𝘼𝘿𝙊𝙎 🚀`, ytres[0].image, listSections, m);
 };
-handler.help = ['playlist']
+handler.help = ['playlist', 'yts']
 handler.tags = ['downloader']
-handler.command = ['playvid2', 'playlist', 'playlista'] 
+handler.command = ['playvid2', 'playlist', 'playlista', 'yts', 'ytsearch'] 
 handler.register = true 
 
 export default handler
