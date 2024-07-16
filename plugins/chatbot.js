@@ -11,40 +11,34 @@ if (chat.isBanned) return
 let vn = 'https://qu.ax/eGdW.mp3'
 let bot = `${pickRandom([`*Hola ${user} soy un bot el que puedo ayudar? 👉👈*`, `Aqui estoy`, `bot tu abuela`, `que quiere?`, `No dispoble 🫣`, `Hola aqui estoy soy tu botsito sexy el que puedo ayudar uwu`])}
 `.trim()//`
-let txt = `*\`💫 Te presentamos un nuevo hosting: "Infinity-Wa Host"\`*
+let txt = `*\`💫 Te presentamos un nuevo hosting: "Infinity-Wa" host propios 😎\`*
 
 *¿Muy lento tu nokia y necesitas tener activo tu bot 24/7?*
 
 > *Te tenemos la mejor opción para mantener activo tu bot 24/7, a precios muy accesibles. Es muy barato y todos pueden comprar.*
 
-*🚩Precios :*
-* 1GB, 100 CPU = 1Dolar
-* 2GB, 120 CPU = 2Dolar
-* 3GB, 140 CPU = 3Dolar
-* 4GB, 175 CPU = 4Dolar
-* 5GB, 200 CPU = 5 Dólar. 
-
 🟢 \`\`\`Información del Host\`\`\`
 
-💻 *Página:*
-https://live.panel-infinitywa.store
+*💻 Dashboard:*
+https://dash.infinity-wa.com
 
-*🟢 Dashboard:*
-https://dashboard.infinitywa.xyz
+⚙️ *Panel*
+https://panel.infinity-wa.com
+
+💥 *Grupo Support whatsapp:*
+https://chat.whatsapp.com/GQ82mPnSYnm0XL2hLPk7FV
+
+*🟣 Discord:*
+https://discord.com/invite/vgfpe4Nwd8
 
 🧡 *Canal de WhatsApp:*
 ${nna}
 
-💚 *Grupo:*
-https://chat.whatsapp.com/GQ82mPnSYnm0XL2hLPk7FV
-
 🛍️ *Método de pago:*
-*• PayPal :* paypal.me/OfcGB
 *• Mercado pago, alías:* OficialGB
-*• Naranja x, alías:* OficialGL
+*• Naranja x, alías:* infinity-host
 *• Yape (Perú) :* +51948705559
-*• Uala:* thelolibotm.uala
-*• DolarApp:* $oficialgb
+*• Uala, CVU:* 0000007900204304075982
 *• Pago con tarjeta:* wa.me/390684003755
 
 *• Link de pago:*
@@ -53,10 +47,9 @@ https://chat.whatsapp.com/GQ82mPnSYnm0XL2hLPk7FV
 *• Patreon:*_patreon.com/Infinity_wa_hosting_
 *• Kofi:* _https://ko-fi.com/infinitywa_
 
-*\`💙 Contactanos para más información o alquidir los servicios:\`*
+🗣📲 *Contacto:*
 • https://www.facebook.com/elrebelde21
-• wa.me/527294888993
-• wa.me/5492964650915` 
+• wa.me/573147616444` 
 
 if (m.text.includes(`Bot`) || m.text.includes(`bot`) || m.text.includes(`simi`) || m.text.includes(`alexa`)) {   
 if (m.text.includes('jadibot') || m.text.includes('bots') || m.text.includes('serbot') || m.text.includes('instalarbot') ||  m.text.includes('infobot')) return
