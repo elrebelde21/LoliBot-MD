@@ -109,38 +109,7 @@ npm start
 > cd LoliBot-MD
 > rm -rf BotSession
 > npm start
-```
-------------------
-### 🚀 USAR LOLIBOT 24/7 EN TERMUX 
-> Ejecutar estos comandos dentro de la carpeta LoliBot-MD
-```bash
-termux-wake-lock && npm i -g pm2 && pm2 start index.js && pm2 save && pm2 logs 
-``` 
-#### ⬇️ Opciones Disponibles
-> **Warning** Esto eliminará todo el historial que hayas establecido con PM2:
-```bash 
-pm2 delete index 
-``` 
-> Si tienes cerrado Termux y quiere ver de nuevo la ejecución use:
-```bash 
-pm2 logs 
-``` 
-> Si desea detener la ejecución de Termux use:
-```bash 
-pm2 stop index
-``` 
-> Si desea iniciar de nuevo la ejecución de Termux use:
-```bash 
-pm2 start index
-``` 
-----
-### 😼 ACTUALIZAR LOLIBOT
-> **Note** Comandos para actualizar LoliBot-MD de forma automática
-```bash
-grep -q 'bash\|wget' <(dpkg -l) || apt install -y bash wget && wget -O - https://raw.githubusercontent.com/elrebelde21/LoliBot-MD/master/update.sh | bash 
-```
-#### Para que no pierda su progreso en LoliBot, estos comandos realizarán un respaldo de su `database.json` y se agregará a la versión más reciente.
-> **Warning** Estos comandos solo funcionan para TERMUX, REPLIT, LINUX             
+```          
 -----
 ### 🟢 INFINITY HOST
 [![blog](https://img.shields.io/badge/infinity-LoliBot-FF0000?style=for-the-badge&logo=youtube&logoColor=white)
@@ -150,16 +119,16 @@ grep -q 'bash\|wget' <(dpkg -l) || apt install -y bash wget && wget -O - https:/
 <a href="https://dashboard.infinitywa.xyz"><img src="https://qu.ax/TPhh.jpg" height="125px"></a>
 ### Información del Host
 
-- **Página:** [`Click aqui`](https://dashboard.infinitywa.xyz)
-- **Dashboard:** [`Aquí`](https://dashboard.infinitywa.xyz)
-- **Panel:** [`Aquí`](https://live.panel-infinitywa.store)
+- **Página:** [`Click aqui`](https://dash.infinity-wa.com)
+- **Dashboard:** [`Aquí`](https://dash.infinity-wa.com)
+- **Panel:** [`Aquí`](https://panel.infinity-wa.com)
 - **Grupo de WhatsApp:** [`Aquí`](https://chat.whatsapp.com/GQ82mPnSYnm0XL2hLPk7FV)
 - **Canal de WhatsApp:** [`Aquí`](https://whatsapp.com/channel/0029Va4QjH7DeON0ePwzjS1A)
 - **Support:** [`Bot exclusivo`](https://wa.me/message/FETBF7YBO37CG1)
 
 - [x] **Configuración** <details><summary>**Ajustes del Servidor - LoliBot-MD**</summary><img src="https://qu.ax/CqMG.jpg"></details>
 ---- 
-#### ⚡ QUIERE TENER EL BOT 24/7 ACTIVO ACTIVAR EL CAFIREXOS HOST
+#### 🟢 CAFIREXOS HOST
 
 <a href="https://www.cafirexos.com/"><img src="https://telegra.ph/file/f400ffe819ad3c0fc87b9.jpg" height="125px"></a>
 ### Información del Host
@@ -181,31 +150,6 @@ grep -q 'bash\|wget' <(dpkg -l) || apt install -y bash wget && wget -O - https:/
 <a href="https://replit.com/github/elrebelde21/LoliBot-MD"> <img src="https://media0.giphy.com/media/lMwu8EJAnv9kmn51KQ/giphy.gif" height="29px"></a>
 ------------------
 - [x] Resultado <details><summary>Importar Repositorio - The-LoliBot-MD</summary><img src="https://i.imgur.com/GQyRnMf.jpg"></details>
-------------------
-## 💻 PARA USUARIOS DE WINDOWS/VPS/RDP
-
-* Descargar e instala Git [`Aquí`](https://git-scm.com/downloads)
-* Descargar e instala NodeJS [`Aquí`](https://nodejs.org/en/download)
-* Descargar e instala FFmpeg [`Aquí`](https://ffmpeg.org/download.html) (**No olvide agregar FFmpeg a la variable de entorno PATH**)
-* Descargar e instala ImageMagick [`Aquí`](https://imagemagick.org/script/download.php)
-* Descargar e instala Yarn [`Aquí`](https://classic.yarnpkg.com/en/docs/install#windows-stable)
-```bash
-git clone https://github.com/elrebelde21/LoliBot-MD && cd LoliBot-MD && npm install && npm update && node .
-```
-## 💻 Instalación de FFmpeg para Windows 
-* Descarga cualquiera de las versiones de FFmpeg disponibles haciendo clic en [FFmpeg](https://www.gyan.dev/ffmpeg/builds/).
-* Extraer archivos a `C:\` path.
-* Cambie el nombre de la carpeta extraída a `ffmpeg`.
-* Ejecute el símbolo del sistema como administrador.
-* Ejecute el siguiente comando:
-```cmd
-> setx /m PATH "C:\ffmpeg\bin;%PATH%"
-```
-Si tiene éxito, le dará un mensaje como: `SUCCESS: specified value was saved`.
-* Ahora que tiene FFmpeg instalado, verifique que funcionó ejecutando este comando para ver la versión:
-```cmd
-> ffmpeg -version
-```
 ----  
 ### `📝 NOTA 📝`
 ```bash
