@@ -120,8 +120,8 @@ npm start
 ### Información del Host
 
 - **Página:** [`Click aqui`](https://dash.infinity-wa.com)
-- **Dashboard:** [`Aquí`](https://dash.infinity-wa.com)
-- **Panel:** [`Aquí`](https://panel.infinity-wa.com)
+- **Dashboard:** [`Aquí`](https://dash.infinitywa-host.com)
+- **Panel:** [`Aquí`](https://panel.infinitywa-host.com)
 - **Grupo de WhatsApp:** [`Aquí`](https://chat.whatsapp.com/GQ82mPnSYnm0XL2hLPk7FV)
 - **Canal de WhatsApp:** [`Aquí`](https://whatsapp.com/channel/0029Va4QjH7DeON0ePwzjS1A)
 - **Support:** [`Bot exclusivo`](https://wa.me/message/FETBF7YBO37CG1)
