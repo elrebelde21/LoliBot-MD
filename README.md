@@ -116,10 +116,10 @@ npm start
 ](https://youtu.be/o6ZSpMOsvHs?si=fzwZIDN5LPE1w0pI)
 > Activar **LoliBot-MD** 24/7 activo en Infinity-Host
 
-<a href="https://dashboard.infinitywa.xyz"><img src="https://qu.ax/TPhh.jpg" height="125px"></a>
+<a href="https://dash.infinitywa-host.com"><img src="https://qu.ax/TPhh.jpg" height="125px"></a>
 ### Información del Host
 
-- **Página:** [`Click aqui`](https://dash.infinity-wa.com)
+- **Página:** [`Click aqui`](https://infinitywa-host.com/)
 - **Dashboard:** [`Aquí`](https://dash.infinitywa-host.com)
 - **Panel:** [`Aquí`](https://panel.infinitywa-host.com)
 - **Grupo de WhatsApp:** [`Aquí`](https://chat.whatsapp.com/GQ82mPnSYnm0XL2hLPk7FV)
