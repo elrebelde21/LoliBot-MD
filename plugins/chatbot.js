@@ -20,10 +20,10 @@ let txt = `*\`💫 Te presentamos un nuevo hosting: "Infinity-Wa" host propios �
 🟢 \`\`\`Información del Host\`\`\`
 
 *💻 Dashboard:*
-https://dash.infinity-wa.com
+https://dash.infinitywa-host.com
 
 ⚙️ *Panel*
-https://panel.infinity-wa.com
+https://panel.infinitywa-host.com
 
 💥 *Grupo Support whatsapp:*
 https://chat.whatsapp.com/GQ82mPnSYnm0XL2hLPk7FV
