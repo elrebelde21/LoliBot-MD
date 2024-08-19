@@ -19,37 +19,47 @@ let txt = `*\`💫 Te presentamos un nuevo hosting: "Infinity-Wa" host propios �
 
 🟢 \`\`\`Información del Host\`\`\`
 
-*💻 Dashboard:*
-https://dash.infinitywa-host.com
+💻 *Página:*
+https://dash.corinplus.com
+
+*🟢 Dashboard:*
+https://dash.corinplus.com
 
 ⚙️ *Panel*
-https://panel.infinitywa-host.com
+https://panel.corinplus.com
 
-💥 *Grupo Support whatsapp:*
-https://chat.whatsapp.com/GQ82mPnSYnm0XL2hLPk7FV
+💥 *Comunidad de WhatsApp:*
+https://chat.whatsapp.com/HR3OLhsuZPqCMImzuHcuON
 
 *🟣 Discord:*
-https://discord.com/invite/vgfpe4Nwd8
+https://discord.com/invite/bjKpRBtkHv
 
 🧡 *Canal de WhatsApp:*
-${nna}
+https://whatsapp.com/channel/0029VakUvreFHWpyWUr4Jr0g
 
 🛍️ *Método de pago:*
+*• PayPal (opción 1):* https://paypal.me/OfcGB
+*• PayPal (opcion 2):* paypal.me/Corinplushost
 *• Mercado pago, alías:* OficialGB
-*• Naranja x, alías:* infinity-host
-*• Yape (Perú) :* +51948705559
+*• Naranja x, alías:* hostingCalidad
 *• Uala, CVU:* 0000007900204304075982
+*• Yape/plin (Perú) :* 976673519
+*• Tigo Money (Paraguay):* +595 983 799436
+*• Personal Pay (Paraguay):* +595 973 755967
+*• Yape o método QR (Bolivia):* +59169082575
+*• Bitcoin (binance) :* 967522575
 *• Pago con tarjeta:* wa.me/390684003755
 
 *• Link de pago:*
 • _link.mercadopago.com.ar/h0sting_
 • _https://payment-link.astropay.com/RbMJ_
-*• Patreon:*_patreon.com/Infinity_wa_hosting_
-*• Kofi:* _https://ko-fi.com/infinitywa_
+*• Patreon:* _https://patreon.com/CorinPlus_hosting_
+*• Kofi:* _https://ko-fi.com/corinplus_
 
 🗣📲 *Contacto:*
-• https://www.facebook.com/elrebelde21
-• wa.me/573147616444` 
+• wa.me/5214531287294
+• wa.me/573147616444
+• https://www.facebook.com/elrebelde21` 
 
 if (m.text.includes(`Bot`) || m.text.includes(`bot`) || m.text.includes(`simi`) || m.text.includes(`alexa`)) {   
 if (m.text.includes('jadibot') || m.text.includes('bots') || m.text.includes('serbot') || m.text.includes('instalarbot') ||  m.text.includes('infobot')) return
@@ -75,7 +85,7 @@ m.reply(resu2[0][0][0]);
 return m.reply([`Simsimi esta durmiendo no molesta 🥱`, `Callarte`, `Api simsimi caida`, `Simsimi esta ocupado cojieron con tu hermana vuelva mas tarde 🥵`, `NO MOLESTE PUTA`, `No hay señar`, `No estoy disponible`].getRandom());
 }}}
 
-if (/^infinity|infinityWa|infohost|hosting$/i.test(m.text)) {
+if (/^CorinPlus|corinplus|infinityWa|infohost|hosting$/i.test(m.text)) {
  await conn.sendMessage(m.chat, { text: txt,
 contextInfo:{
 forwardingScore: 9999999,
@@ -83,10 +93,10 @@ isForwarded: false,
 "externalAdReply": {
 "showAdAttribution": true,
 "containsAutoReply": true,
-title: `🤖 𝐈𝐍𝐅𝐈𝐍𝐈𝐓𝐘𝐖𝐀-𝐇𝐎𝐒𝐓 🤖`,
+title: `🤖 𝐂O𝐑𝐈𝐍𝐏𝐋𝐔𝐒-𝐇𝐎𝐒𝐓 🤖`,
 body: `✅ Hosting de Calidad`,
 "previewType": "PHOTO",
-thumbnailUrl: 'https://qu.ax/EQTd.jpg', 
+thumbnailUrl: 'https://telegra.ph/file/551d3d544d7bc607fd337.jpg', 
 sourceUrl: nna}}}, { quoted: m})
 } 
     
