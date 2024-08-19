@@ -117,12 +117,14 @@ npm start
 
 - **Dashboard:** [`Aquí`](https://dash.corinplus.com)
 - **Panel:** [`Aquí`](https://panel.corinplus.com)
-- **Estado de servicios:** [`Aquí`](https://hetrixtools.com/r/ff8487f2c0ac4fd2b0b95392068d5879)
+- **Estado de servicios:** [`Aquí`](https://status.corinplus.com)
 - **Canal de WhatsApp:** [`Aquí`](https://whatsapp.com/channel/0029VakUvreFHWpyWUr4Jr0g)
 - **Comunidad - WhatsApp** [`Aquí`](https://chat.whatsapp.com/HR3OLhsuZPqCMImzuHcuON)
 - **Support:** [`Bot exclusivo`](https://wa.me/message/FETBF7YBO37CG1)
+- **Contacto:** [`Gata Dios`](https://wa.me/message/B3KTM5XN2JMRD1)
+- **Contacto:** [`elrebelde21`](https://facebook.com/elrebelde21)
 
-- [x] **Configuración** <details><summary>**Ajustes del Servidor - LoliBot-MD**</summary><img src="https://qu.ax/CqMG.jpg"></details>
+- [x] **Configuración** <details><summary>**Ajustes del Servidor - LoliBot-MD**</summary><img src="https://telegra.ph/file/7ddd30dd7d77354fb01fe.jpg"></details>
 ----
 ### ⚡ ACTIVA EL REPLIT
 [![blog](https://img.shields.io/badge/Lolibot-YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white)
