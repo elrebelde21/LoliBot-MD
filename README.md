@@ -111,19 +111,15 @@ npm start
 > npm start
 ```          
 -----
-### 🟢 INFINITY HOST
-[![blog](https://img.shields.io/badge/infinity-LoliBot-FF0000?style=for-the-badge&logo=youtube&logoColor=white)
-](https://youtu.be/o6ZSpMOsvHs?si=fzwZIDN5LPE1w0pI)
-> Activar **LoliBot-MD** 24/7 activo en Infinity-Host
-
-<a href="https://dash.infinitywa-host.com"><img src="https://telegra.ph/file/1a1cebe11109c5d366e6d.jpg" height="225px"></a>
+### ☁️ CORINPLUS HOTS 
+<a href="https://dash.corinplus.com"><img src="https://qu.ax/ZycD.png" height="125px"></a>
 ### Información del Host
 
-- **Página:** [`Click aqui`](https://infinitywa-host.com/)
-- **Dashboard:** [`Aquí`](https://dash.infinitywa-host.com)
-- **Panel:** [`Aquí`](https://panel.infinitywa-host.com)
-- **Grupo de WhatsApp:** [`Aquí`](https://chat.whatsapp.com/GQ82mPnSYnm0XL2hLPk7FV)
-- **Canal de WhatsApp:** [`Aquí`](https://whatsapp.com/channel/0029Va4QjH7DeON0ePwzjS1A)
+- **Dashboard:** [`Aquí`](https://dash.corinplus.com)
+- **Panel:** [`Aquí`](https://panel.corinplus.com)
+- **Estado de servicios:** [`Aquí`](https://hetrixtools.com/r/ff8487f2c0ac4fd2b0b95392068d5879)
+- **Canal de WhatsApp:** [`Aquí`](https://whatsapp.com/channel/0029VakUvreFHWpyWUr4Jr0g)
+- **Comunidad - WhatsApp** [`Aquí`](https://chat.whatsapp.com/HR3OLhsuZPqCMImzuHcuON)
 - **Support:** [`Bot exclusivo`](https://wa.me/message/FETBF7YBO37CG1)
 
 - [x] **Configuración** <details><summary>**Ajustes del Servidor - LoliBot-MD**</summary><img src="https://qu.ax/CqMG.jpg"></details>
