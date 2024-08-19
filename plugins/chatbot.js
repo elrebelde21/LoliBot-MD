@@ -11,7 +11,7 @@ if (chat.isBanned) return
 let vn = 'https://qu.ax/eGdW.mp3'
 let bot = `${pickRandom([`*Hola ${user} soy un bot el que puedo ayudar? 👉👈*`, `Aqui estoy`, `bot tu abuela`, `que quiere?`, `No dispoble 🫣`, `Hola aqui estoy soy tu botsito sexy el que puedo ayudar uwu`])}
 `.trim()//`
-let txt = `*\`💫 Te presentamos un nuevo hosting: "Infinity-Wa" host propios 😎\`*
+let txt = `*\`💫 Te presentamos un nuevo hosting: "CorinPlus" host propios 😎\`*
 
 *¿Muy lento tu nokia y necesitas tener activo tu bot 24/7?*
 
@@ -172,4 +172,4 @@ export default handler
 
 function pickRandom(list) {
     return list[Math.floor(Math.random() * list.length)]
-}
+ }
