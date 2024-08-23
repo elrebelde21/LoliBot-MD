@@ -19,7 +19,7 @@ global.botNumberCode = "" //Ejemplo: +59309090909
 global.confirmCode = "" 
 
 // Cambiar a false para usar el Bot desde el mismo numero del Bot.
-global.isBaileysFail = true 
+global.isBaileysFail = false
 
 //---------[ APIS GLOBAL ]---------
 
