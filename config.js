@@ -18,6 +18,9 @@ global.prems = []
 global.botNumberCode = "" //Ejemplo: +59309090909
 global.confirmCode = "" 
 
+// Cambiar a false para usar el Bot desde el mismo numero del Bot.
+global.isBaileysFail = true 
+
 //---------[ APIS GLOBAL ]---------
 
 global.openai_key = 'sk-...OzYy' /* Consigue tu ApiKey en este enlace: https://platform.openai.com/account/api-keys */
