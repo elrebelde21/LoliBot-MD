@@ -63,8 +63,33 @@ https://whatsapp.com/channel/0029VakUvreFHWpyWUr4Jr0g
 
 if (m.text.includes(`Bot`) || m.text.includes(`bot`) || m.text.includes(`simi`) || m.text.includes(`alexa`)) {   
 if (m.text.includes('jadibot') || m.text.includes('bots') || m.text.includes('serbot') || m.text.includes('instalarbot') ||  m.text.includes('infobot')) return
-try {
+//try {
 await conn.sendPresenceUpdate('composing', m.chat)
+async function luminsesi(q, username, logic) {
+try {
+const response = await axios.post("https://lumin-ai.xyz/", {
+content: q,
+user: username,
+prompt: logic,
+webSearchMode: true // true = resultado con url
+});
+return response.data.result;
+} catch (error) {
+console.error(error);
+}}
+
+let query = m.text;
+let username = `${m.pushName}`;
+
+let syms1 = `Tomarás el rol de un bot de Whatsapp creado por elrebelde21. Tu nombre sera LoliBot, Tu idioma es el español, pero puedes responder en diferentes idiomas. tiene este rol que chat divertido con exploit incluido osea los quiere dices es que este rol solo es humor, divertido, no que tome nada real, tu respuesta sera divertida, humor, y usar mucho emojis el tu respuesta.
+
+"general risa el chat por que este rol actúal más como simsimi" Chatbot no chatgpt. 
+
+los quiere dices que tu respuesta sera humor puro, risa, memes.`;  
+
+let result = await luminsesi(query, username, syms1);
+await conn.reply(m.chat, result, m)
+/*
 let gpt = await fetch(`https://deliriusapi-official.vercel.app/tools/simi?text=${m.text}`)
 let res = await gpt.json()
 await m.reply(res.data.message)
@@ -83,7 +108,8 @@ const resu2 = await reis2.json();
 m.reply(resu2[0][0][0]);
 } catch {
 return m.reply([`Simsimi esta durmiendo no molesta 🥱`, `Callarte`, `Api simsimi caida`, `Simsimi esta ocupado cojieron con tu hermana vuelva mas tarde 🥵`, `NO MOLESTE PUTA`, `No hay señar`, `No estoy disponible`].getRandom());
-}}}
+}}*/
+}
 
 if (/^CorinPlus|corinplus|infinityWa|infohost|hosting$/i.test(m.text)) {
  await conn.sendMessage(m.chat, { text: txt,
@@ -172,4 +198,4 @@ export default handler
 
 function pickRandom(list) {
     return list[Math.floor(Math.random() * list.length)]
- }
+}
