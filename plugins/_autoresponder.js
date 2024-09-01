@@ -7,10 +7,10 @@ handler.all = async function (m, {conn}) {
 let chat = global.db.data.chats[m.chat];
 let prefixRegex = new RegExp('^[' + (opts['prefix'] || '‎z/i!#$%+£¢€¥^°=¶∆×÷π√✓©®:;?&.,\\-').replace(/[|\\{}()[\]^$+*?.\-\^]/g, '\\$&') + ']');
 
-if (prefixRegex.test(m.text)) return true;
-if (global.db.data.users[m.sender].gameActive === true) {
+//if (prefixRegex.test(m.text)) return true;
+/*if (global.db.data.users[m.sender].gameActive === true) {
 return; //
-}
+}*/
 
 //if (!m.text || m.text.trim().length === 0 || m.mtype !== 'conversation') return;
 if (m.mentionedJid.includes(this.user.jid)) {
