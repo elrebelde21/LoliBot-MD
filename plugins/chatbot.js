@@ -61,8 +61,8 @@ https://whatsapp.com/channel/0029VakUvreFHWpyWUr4Jr0g
 • wa.me/573147616444
 • https://www.facebook.com/elrebelde21` 
 
-if (m.text.includes(`Bot`) || m.text.includes(`simi`) || m.text.includes(`alexa`)) {   
-//if (m.text.includes(`Bot`) || m.text.includes(`bot`) || m.text.includes(`simi`) || m.text.includes(`alexa`)) {   
+//if (m.text.includes(`Bot`) || m.text.includes(`simi`) || m.text.includes(`alexa`)) {   
+if (m.text.includes(`Bot`) || m.text.includes(`bot`) || m.text.includes(`simi`) || m.text.includes(`alexa`)) {   
 if (m.text.includes('jadibot') || m.text.includes('bots') || m.text.includes('serbot') || m.text.includes('instalarbot') ||  m.text.includes('infobot')) return
 //try {
 await conn.sendPresenceUpdate('composing', m.chat)
