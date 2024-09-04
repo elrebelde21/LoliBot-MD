@@ -1,77 +1,89 @@
-import db from '../lib/database.js'
-//import si from "systeminformation";
-import { cpus as _cpus, totalmem, freemem, platform, hostname, version, release, arch } from 'os'
-import speed from 'performance-now'
-import { performance } from 'perf_hooks'
-import { sizeFormatter } from 'human-readable'
+import db from '../lib/database.js';
+import { cpus as _cpus, totalmem, freemem, platform, hostname, version, release, arch } from 'os';
+import os from 'os';
+import moment from 'moment';
+import speed from 'performance-now';
+import { sizeFormatter } from 'human-readable';
+import si from 'systeminformation';
 
-let format = sizeFormatter({
-    std: 'JEDEC',
-    decimalPlaces: 2,
-    keepTrailingZeroes: false,
-    render: (literal, symbol) => `${literal} ${symbol}B`,
-})
+let format = sizeFormatter({std: 'JEDEC',
+decimalPlaces: 2,
+keepTrailingZeroes: false,
+render: (literal, symbol) => `${literal} ${symbol}B`,
+});
+
+async function getSystemInfo() {
+let disk = await si.fsSize();
+const memInfo = await si.mem();
+const load = await si.currentLoad();
+    
+let cpuInfo = os.cpus();
+let modeloCPU = cpuInfo && cpuInfo.length > 0 ? cpuInfo[0].model : 'Modelo de CPU no disponible';
+let espacioTotalDisco = 'Información no disponible';
+if (disk && disk.length > 0) {
+espacioTotalDisco = humanFileSize(disk[0].available, true, 1) + ' libre de ' + humanFileSize(disk[0].size, true, 1);
+}
+
+const data = {
+latencia: 'No disponible',
+plataforma: os.platform(),
+núcleosCPU: cpuInfo ? cpuInfo.length : 'No disponible',
+modeloCPU: modeloCPU,
+arquitecturaSistema: os.arch(),
+versiónSistema: os.release(),
+procesosActivos: os.loadavg()[0],
+porcentajeCPUUsada: load.currentLoad.toFixed(2) + '%',
+memory: humanFileSize(ram.free, true, 1) + ' libre de ' + humanFileSize(ram.total, true, 1),
+ramUsada: (memInfo.used / (1024 * 1024 * 1024)).toFixed(2) + ' GB',
+ramTotal: (memInfo.total / (1024 * 1024 * 1024)).toFixed(2) + ' GB',
+ramLibre: (memInfo.free / (1024 * 1024 * 1024)).toFixed(2) + ' GB',
+porcentajeRAMUsada: ((memInfo.used / memInfo.total) * 100).toFixed(2) + '%',
+espacioTotalDisco: espacioTotalDisco,
+tiempoActividad: 'No disponible',
+cargaPromedio: os.loadavg().map((avg, index) => `${index + 1} min: ${avg.toFixed(2)}.`).join('\n'),
+horaActual: new Date().toLocaleString(),
+detallesCPUNúcleo: load.cpus.map(cpu => cpu.load.toFixed(2) + '%')
+};
+
+//Calcula la latencia (tiempo de respuesta)
+const startTime = Date.now();
+await si.currentLoad();
+const endTime = Date.now();
+data.latencia = `${endTime - startTime} ms`;
+
+//Calcula el tiempo de actividad
+const uptimeSeconds = await si.time().uptime;
+const days = Math.floor(uptimeSeconds / 60 / 60 / 24);
+const hours = Math.floor((uptimeSeconds / 60 / 60) % 24);
+const minutes = Math.floor((uptimeSeconds / 60) % 60);
+
+data.tiempoActividad = `${days}d ${hours}h ${minutes}m`;
+return data;
+}
 
 let handler = async (m, { conn, usedPrefix }) => {
-   let bot = global.db.data.settings[conn.user.jid]
-   let _uptime = process.uptime() * 1000
-   let uptime = (_uptime).toTimeString()
-        let totalreg = Object.keys(global.db.data.users).length
-    let rtotalreg = Object.values(global.db.data.users).filter(user => user.registered == true).length
-   let totalbots = Object.keys(global.db.data.settings).length
-   let totalStats = Object.values(global.db.data.stats).reduce((total, stat) => total + stat.total, 0)
-   const chats = Object.entries(conn.chats).filter(([id, data]) => id && data.isChats)
-   let totalchats = Object.keys(global.db.data.chats).length
-   let totalf = Object.values(global.plugins).filter(
-    (v) => v.help && v.tags
-  ).length
-   const groupsIn = chats.filter(([id]) => id.endsWith('@g.us')) //groups.filter(v => !v.read_only
-   let totaljadibot = [...new Set([...global.conns.filter(conn => conn.user && conn.state !== 'close').map(conn => conn.user)])]
-   const used = process.memoryUsage()
-   const cpus = _cpus().map(cpu => {
-      cpu.total = Object.keys(cpu.times).reduce((last, type) => last + cpu.times[type], 0)
-      return cpu
-   })
-   const cpu = cpus.reduce((last, cpu, _, { length }) => {
-      last.total += cpu.total
-      last.speed += cpu.speed / length
-      last.times.user += cpu.times.user
-      last.times.nice += cpu.times.nice
-      last.times.sys += cpu.times.sys
-      last.times.idle += cpu.times.idle
-      last.times.irq += cpu.times.irq
-      return last
-   }, {
-      speed: 0,
-      total: 0,
-      times: {
-         user: 0,
-         nice: 0,
-         sys: 0,
-         idle: 0,
-         irq: 0
-      }
-   })
-   let _muptime
-   if (process.send) {
-      process.send('uptime')
-      _muptime = await new Promise(resolve => {
-         process.once('message', resolve)
-         setTimeout(resolve, 1000)
-      }) * 1000
-   }
-//let ram = await si.mem(); 
-// let cpu = await si.cpuCurrentSpeed(); 
-// let disk = await si.fsSize(); 
- /*let json = { 
-   memory: formatSize(ram.free) + " de " + formatSize(ram.total), 
-   memory_used: formatSize(ram.used), 
-   cpu: cpu.avg + " Ghz", 
-   disk: formatSize(disk[0].available), 
- }; */  
-   let timestamp = speed()
-   let latensi = speed() - timestamp
-   let teks = `*≡ INFOBOT*
+let bot = global.db.data.settings[conn.user.jid];
+let _uptime = process.uptime() * 1000;
+let uptime = new Date(_uptime).toISOString().substr(11, 8);
+let totalreg = Object.keys(global.db.data.users).length;
+let rtotalreg = Object.values(global.db.data.users).filter(user => user.registered == true).length;
+let totalbots = Object.keys(global.db.data.settings).length;
+let totalStats = Object.values(global.db.data.stats).reduce((total, stat) => total + stat.total, 0);
+const chats = Object.entries(conn.chats).filter(([id, data]) => id && data.isChats);
+let totalchats = Object.keys(global.db.data.chats).length;
+let totalf = Object.values(global.plugins).filter(v => v.help && v.tags).length;
+const groupsIn = chats.filter(([id]) => id.endsWith('@g.us'));
+let totaljadibot = [...new Set([...global.conns.filter(conn => conn.user && conn.state !== 'close').map(conn => conn.user)])];
+const used = process.memoryUsage();
+    let ram = await si.mem()
+    let cpu = await si.cpuCurrentSpeed()
+    let disk = await si.fsSize()
+    let up = await si.time()
+let timestamp = speed();
+let latensi = speed() - timestamp;
+
+getSystemInfo().then(async (data) => {
+let teks = `*≡ INFOBOT*
 
 *INFORMACIÓN*
 *▣ Grupos total:* ${groupsIn.length}
@@ -83,41 +95,46 @@ let handler = async (m, { conn, usedPrefix }) => {
 *▣ Total plugins:* ${totalf}
 *▣ Velocidad:* ${latensi.toFixed(4)} ms
 *▣ Actividad:* ${uptime}
- 
+
 *▣ Comando Ejecutando:* ${toNum(totalStats)}/${totalStats}
 *▣ Grupos registrado:* ${toNum(totalchats)}/${totalchats}
 *▣ Usuarios registrado:*  ${rtotalreg} de ${totalreg} usuarios
 
 *≡ S E R V E R*
 ▣ *Servidor:* ${hostname()}
+▣ *Plataforma:* ${platform()}
+▣ *Núcleos de CPU:* ${data.núcleosCPU} 
+▣ *CPU Usada:* ${data.porcentajeCPUUsada} 
 ▣ *Ram usada:* ${format(totalmem() - freemem())} / ${format(totalmem())}
-▣ *Plataforma:* ${platform()}`
-await conn.sendMessage(m.chat, { image: { url: "https://telegra.ph/file/39fb047cdf23c790e0146.jpg", }, caption: teks,
-contextInfo: {
-externalAdReply: {
-title: `INFO - BOT`,
-sourceUrl: nna, 
-mediaType: 1,
-showAdAttribution: true,
-thumbnailUrl: img1,
-}}}, { quoted: m })
-}
-handler.help = ['infobot']
-handler.tags = ['main']
+▣ *Espacio Total en Disco:* ${data.espacioTotalDisco} 
+▣ *Uptime:* ${data.tiempoActividad}`;
+
+await conn.sendMessage(m.chat, {image: { url: "https://telegra.ph/file/39fb047cdf23c790e0146.jpg" },
+caption: teks, contextInfo: {externalAdReply: { title: `INFO - BOT`, sourceUrl: nna, mediaType: 1, showAdAttribution: true, thumbnailUrl: img1,
+}}}, { quoted: m })});
+};
+handler.help = ['infobot'];
+handler.tags = ['main'];
 handler.command = /^(infobot|informacionbot|infololi)$/i;
-handler.register = true 
-export default handler
+handler.register = true;
+export default handler;
 
 function toNum(number) {
     if (number >= 1000 && number < 1000000) {
-        return (number / 1000).toFixed(1) + 'k'
+        return (number / 1000).toFixed(1) + 'k';
     } else if (number >= 1000000) {
-        return (number / 1000000).toFixed(1) + 'M'
+        return (number / 1000000).toFixed(1) + 'M';
     } else if (number <= -1000 && number > -1000000) {
-        return (number / 1000).toFixed(1) + 'k'
+        return (number / 1000).toFixed(1) + 'k';
     } else if (number <= -1000000) {
-        return (number / 1000000).toFixed(1) + 'M'
+        return (number / 1000000).toFixed(1) + 'M';
     } else {
-        return number.toString()
+        return number.toString();
     }
-                                   }
+}
+
+function humanFileSize(bytes) {
+    const unidades = ['B', 'KB', 'MB', 'GB', 'TB', 'PB'];
+    const exponente = Math.floor(Math.log(bytes) / Math.log(1024));
+    return `${(bytes / Math.pow(1024, exponente)).toFixed(2)} ${unidades[exponente]}`;
+}

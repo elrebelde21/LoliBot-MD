@@ -55,27 +55,14 @@ ${md}
 
 > ───────•••───────
 
-\`📌 INSTALAR EN INFINITY HOST\`
-https://youtu.be/o6ZSpMOsvHs?si=xhlDEnihi1HKyh8D
+\`📌 INSTALAR EN CORINPLUS HOST\`
+https://youtube.com/shorts/9KxvFilxwP8?si=x3pBulswFdMRKaJE
 
 > *Dashboard:*
-https://dashboard.infinitywa.xyz
+https://dash.corinplus.com
 
 > *Panel:*
-https://store.panel-infinitywa.store
-
-> ───────•••───────
-
-\`📌 INSTALAR EN CAFIREXOS\`
-
-> *Pagina oficial:* 
-https://www.cafirexos.com
-
-> *Dashboard:*
-https://dash.cafirexos.com
-
-> *Panel:* 
-https://panel.cafirexos.com
+https://panel.corinplus.com
 
 > *◄┢┅͜͡✇⟬↯ື ►ஜ۩💥۩ஜ◄ ↯ື⟭✇͜͡┅┧►*` 
 let aa = { quoted: m, userJid: conn.user.jid }

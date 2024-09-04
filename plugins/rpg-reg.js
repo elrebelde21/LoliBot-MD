@@ -18,46 +18,58 @@ let rtotalreg = Object.values(global.db.data.users).filter(user => user.register
 let name2 = conn.getName(m.sender)
 
 if (command == 'verify' || command == 'reg' || command == 'verificar') {
-if (user.registered === true) throw `*Ya esta registrados 🤨*`
-if (!Reg.test(text)) throw `*⚠️¿No saber como usar este comando?* usar de la siguiente manera: *${usedPrefix + command} nombre.edad*\n*• Ejemplo:* ${usedPrefix + command} ${name2}.16`
-let [_, name, splitter, age] = text.match(Reg)
-if (!name) throw '*¿Y el nombre?*'
-if (!age) throw '*la edad no puede esta vacia, agregar la edad pendejo*'
-if (name.length >= 45) throw '*Que?, tan largo van ser tu nombre 🤓*, no me imagino la de abajo 🤣' 
-age = parseInt(age)
-if (age > 100) throw '👴🏻 Pa esta viejos'
-if (age < 5) throw '🚼  Vrg los bebes saben escribir? ✍️😳 '
-user.name = name.trim()
-user.age = age
-user.regTime = + new Date
-user.registered = true
-global.db.data.users[m.sender].money += 400
-global.db.data.users[m.sender].limit += 2
-global.db.data.users[m.sender].exp += 150
-global.db.data.users[m.sender].joincount += 2
-let sn = createHash('md5').update(m.sender).digest('hex')
+if (user.registered === true) throw `*Ya estás registrado 🤨*`
+if (!Reg.test(text)) throw `*⚠️ ¿No sabes cómo usar este comando?* Seguir los seguirte paso:\n\n• Unirte al seguirte grupo:\n${nn}\n• Después usa de la siguiente manera: *${usedPrefix + command} nombre.edad*\n*• Ejemplo:* ${usedPrefix + command} ${name2}.16`
+  
+//Verificar si el usuario es miembro del grupo requerido
+let groupID = '120363043118239234@g.us'; // Reemplaza con el ID de tu grupo
+let groupMetadata = await conn.groupMetadata(groupID);
+let groupMembers = groupMetadata.participants.map(participant => participant.id || participant.jid); // Aseguramos que el ID se tome correctamente
+  
+if (!groupMembers.includes(m.sender)) {
+throw '*⚠️ Debes unirte al grupo requerido antes de poder registrarte*\nhttps://chat.whatsapp.com/HNDVUxHphPzG3cJHIwCaX5';
+}
 
-await conn.reply(m.chat,  `[ ✅ REGISTRO COMPLETADO ]
+let [_, name, splitter, age] = text.match(Reg);
+if (!name) throw '*¿Y el nombre?*'
+if (!age) throw '*La edad no puede estar vacía, agrega tu edad*'
+if (name.length >= 45) throw '*¿Qué?, ¿tan largo va a ser tu nombre?*'
+  
+age = parseInt(age);
+if (age > 100) throw '👴🏻 ¡Estás muy viejo para esto!'
+if (age < 5) throw '🚼 ¿Los bebés saben escribir? ✍️😳'
+
+user.name = name.trim();
+user.age = age;
+user.regTime = +new Date();
+user.registered = true;
+global.db.data.users[m.sender].money += 400;
+global.db.data.users[m.sender].limit += 2;
+global.db.data.users[m.sender].exp += 150;
+global.db.data.users[m.sender].joincount += 2;
+  
+let sn = createHash('md5').update(m.sender).digest('hex');
+await conn.reply(m.chat, `[ ✅ REGISTRO COMPLETADO ]
 
 ◉ *Nombre:* ${name}
 ◉ *Edad:* ${age} años
 ◉ *Hora:* ${time} 🇦🇷
 ◉ *Fecha:* ${date}
-◉ *Pais:* ${userNationality}
+◉ *País:* ${userNationality}
 ◉ *Número:* wa.me/${who.split`@`[0]}
-◉ *Numero del serie*
+◉ *Número de serie:*
 ⤷ ${sn}
 
 🎁 *Recompensa:*
-⤷ 2 diamante 💎
+⤷ 2 diamantes 💎
 ⤷ 400 Coins 🪙
 ⤷ 150 exp
 
 *◉ Para ver los comandos del bot usar:*
 ${usedPrefix}menu
 
-◉ *Total de usuários registrados:* ${rtotalreg}`, m, {contextInfo: { externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: `𝐑𝐄𝐆𝐈𝐒𝐓𝐑𝐎 𝐂𝐎𝐌𝐏𝐋𝐄𝐓𝐀𝐃𝐎`, body: '', previewType: 0, thumbnail: img.getRandom(), sourceUrl: [nna, nn, md, yt, tiktok].getRandom()}}})
-await m.reply(`${sn}`)
+◉ *Total de usuarios registrados:* ${rtotalreg}`, m, { contextInfo: { externalAdReply: { mediaUrl: null, mediaType: 1, description: null, title: `𝐑𝐄𝐆𝐈𝐒𝐓𝐑𝐎 𝐂𝐎𝐌𝐏𝐋𝐄𝐓𝐀𝐃𝐎`, body: '', previewType: 0, thumbnail: img.getRandom(), sourceUrl: [nna, nn, md, yt, tiktok].getRandom() }}})
+await m.reply(`${sn}`);
 }
 
 if (command == 'nserie' || command == 'myns' || command == 'sn') {

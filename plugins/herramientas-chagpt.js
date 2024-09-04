@@ -115,7 +115,7 @@ let result = await luminsesi(query, username, syms1);
  await m.reply(result)
 } catch {
 try {
-let gpt = await fetch(`https://deliriusapi-official.vercel.app/ia/gptweb?text=${text}`) 
+let gpt = await fetch(`https://apidelirius.duckdns.org/ia/gptweb?text=${text}`) 
 let res = await gpt.json()
 await m.reply(res.gpt)
 /*let gpt = await fetch(`https://deliriusapi-official.vercel.app/ia/chatgpt?q=${text}`)
@@ -126,19 +126,19 @@ await m.reply(res.data)*/
 
 if (command == 'openai' || command == 'ia2' || command == 'chatgpt2') {
 conn.sendPresenceUpdate('composing', m.chat);
-let gpt = await fetch(`https://delirius-api-oficial.vercel.app/api/ia2?text=${text}`)
+let gpt = await fetch(`https://apidelirius.duckdns.org/api/ia2?text=${text}`)
 let res = await gpt.json()
 await m.reply(res.gpt)
 }
 
 if (command == 'gemini') {
-let gpt = await fetch(`https://deliriusapi-official.vercel.app/ia/gemini?query=${text}`)
+let gpt = await fetch(`https://apidelirius.duckdns.org/ia/gemini?query=${text}`)
 let res = await gpt.json()
 await m.reply(res.message)
 }
 
 if (command == 'copilot' || command == 'bing') {
-let gpt = await fetch(`https://deliriusapi-official.vercel.app/ia/bingia?query=${text}`)
+let gpt = await fetch(`https://apidelirius.duckdns.org/ia/bingia?query=${text}`)
 let res = await gpt.json()
 await m.reply(res.message)
 }}
