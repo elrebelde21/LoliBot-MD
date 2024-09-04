@@ -51,7 +51,6 @@ new cloudDBAdapter(opts['db']) : /mongodb(\+srv)?:\/\//i.test(opts['db']) ? (opt
 new JSONFile(`${opts._[0] ? opts._[0] + '_' : ''}database.json`)
 )
 
-
 global.DATABASE = global.db 
 global.loadDatabase = async function loadDatabase() {
 if (global.db.READ) return new Promise((resolve) => setInterval(async function () {
@@ -177,7 +176,6 @@ setInterval(async () => {
 if (global.db.data) await global.db.write().catch(console.error)
 if (opts['autocleartmp']) try {
 clearTmp()
-
 } catch (e) { console.error(e) }
 }, 60 * 1000)
 }
@@ -192,7 +190,7 @@ tmp.forEach(dirname => readdirSync(dirname).forEach(file => filename.push(join(d
 
 return filename.map(file => {
 const stats = statSync(file)
-if (stats.isFile() && (Date.now() - stats.mtimeMs >= 1000 * 60 * 1)) return unlinkSync(file) // 1 minuto
+if (stats.isFile() && (Date.now() - stats.mtimeMs >= 1000 * 60 * 1)) return unlinkSync(file) // 
 return false
 })
 }
@@ -200,7 +198,7 @@ return false
 setInterval(async () => {
 await clearTmp()
 console.log(chalk.cyan(`┏━━━━━━⪻♻️ AUTO-CLEAR 🗑️⪼━━━━━━•\n┃→ ARCHIVOS DE LA CARPETA TMP ELIMINADAS\n┗━━━━━━━━━━━━━━━━━━━━━━━━━━━•`))
-}, 60000) //1 min
+}, 60000) //1 munto
 
 function purgeSession() {
 let prekey = []
