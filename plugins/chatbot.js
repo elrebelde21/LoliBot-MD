@@ -115,7 +115,7 @@ return m.reply([`Simsimi esta durmiendo no molesta 🥱`, `Callarte`, `Api simsi
 }}*/
 }
 
-if (/^CorinPlus|corinplus|infinityWa|infohost|hosting$/i.test(m.text)) {
+if (/^infohost$/i.test(m.text)) {
  await conn.sendMessage(m.chat, { text: txt,
 contextInfo:{
 forwardingScore: 9999999,
