@@ -17,28 +17,32 @@ let totalreg = Object.keys(global.db.data.users).length
 let rtotalreg = Object.values(global.db.data.users).filter(user => user.registered == true).length
 let name2 = conn.getName(m.sender)
 
-if (command == 'verify' || command == 'reg' || command == 'verificar') {
-if (user.registered === true) throw `*Ya estás registrado 🤨*`
-if (!Reg.test(text)) throw `*⚠️ ¿No sabes cómo usar este comando?* Sigue estos pasos:\n\n• Unirte al grupo:\n${nn}\n• Después usa el comando de la siguiente manera: *${usedPrefix + command} nombre.edad*\n*• Ejemplo:* ${usedPrefix + command} ${name2}.16`
-  
-//Verificar si el usuario es miembro del grupo requerido
-let groupID = '120363043118239234@g.us'; 
-let groupMetadata = await conn.groupMetadata(groupID);
-let groupMembers = groupMetadata.participants.map(participant => participant.id || participant.jid); //
-  
+iif (command == 'verify' || command == 'reg' || command == 'verificar') {
+ if (user.registered === true) throw `*Ya estás registrado 🤨*`;
+ if (!Reg.test(text)) throw `*⚠️ ¿No sabes cómo usar este comando?* Sigue estos pasos:\n\n• Unirte al grupo:\n${nn}\n• Después usa el comando de la siguiente manera: *${usedPrefix + command} nombre.edad*\n*• Ejemplo:* ${usedPrefix + command} ${name2}.16`;
+
+let groupID = '120363043118239234@g.us'
+let groupMetadata;
+try {
+groupMetadata = await conn.groupMetadata(groupID);
+let groupMembers = groupMetadata.participants.map(participant => participant.id || participant.jid);
 if (!groupMembers.includes(m.sender)) {
-throw `*⚠️ ¿No sabes cómo usar este comando?* Antes de registrarte primero debes unirte al grupo requerido:*\nhttps://chat.whatsapp.com/HNDVUxHphPzG3cJHIwCaX5\n\n*• Después usar el comando de la siguiente manera:*\n> ${usedPrefix + command} nombre.edad`;
-}
+throw `*⚠️ Para registrarte, primero debes unirte al grupo requerido:*\nhttps://chat.whatsapp.com/HNDVUxHphPzG3cJHIwCaX5\n\n*Después usa el comando de la siguiente manera:*\n> ${usedPrefix + command} nombre.edad`
+}} catch (e) {
+if (e.name === "FetchError") {
+console.log("Error al obtener metadata del grupo o el bot no está en el grupo. " + e);
+} else {
+console.error("Error inesperado:", e);
+throw "*Ocurrió un error inesperado, intenta más tarde*";
+}}
 
 let [_, name, splitter, age] = text.match(Reg);
-if (!name) throw '*¿Y el nombre?*'
-if (!age) throw '*La edad no puede estar vacía, agrega tu edad*'
-if (name.length >= 45) throw '*¿Qué?, ¿tan largo va a ser tu nombre?*'
-  
+if (!name) throw '*¿Y el nombre?*';
+if (!age) throw '*La edad no puede estar vacía, agrega tu edad*';
+if (name.length >= 45) throw '*¿Qué?, ¿tan largo va a ser tu nombre?*';
 age = parseInt(age);
-if (age > 100) throw '👴🏻 ¡Estás muy viejo para esto!'
-if (age < 5) throw '🚼 ¿Los bebés saben escribir? ✍️😳'
-
+if (age > 100) throw '👴🏻 ¡Estás muy viejo para esto!';
+if (age < 5) throw '🚼 ¿Los bebés saben escribir? ✍️😳';
 user.name = name.trim();
 user.age = age;
 user.regTime = +new Date();
@@ -47,8 +51,8 @@ global.db.data.users[m.sender].money += 400;
 global.db.data.users[m.sender].limit += 2;
 global.db.data.users[m.sender].exp += 150;
 global.db.data.users[m.sender].joincount += 2;
-  
 let sn = createHash('md5').update(m.sender).digest('hex');
+    
 await conn.reply(m.chat, `[ ✅ REGISTRO COMPLETADO ]
 
 ◉ *Nombre:* ${name}
@@ -69,7 +73,7 @@ await conn.reply(m.chat, `[ ✅ REGISTRO COMPLETADO ]
 ${usedPrefix}menu
 
 ◉ *Total de usuarios registrados:* ${rtotalreg}`, m, { contextInfo: { externalAdReply: { mediaUrl: null, mediaType: 1, description: null, title: `𝐑𝐄𝐆𝐈𝐒𝐓𝐑𝐎 𝐂𝐎𝐌𝐏𝐋𝐄𝐓𝐀𝐃𝐎`, body: '', previewType: 0, thumbnail: img.getRandom(), sourceUrl: [nna, nn, md, yt, tiktok].getRandom() }}})
-await m.reply(`${sn}`);
+await m.reply(`${sn}`)
 }
 
 if (command == 'nserie' || command == 'myns' || command == 'sn') {
