@@ -5,6 +5,8 @@ import * as fs from 'fs'
 export async function before(m, { conn, isAdmin, isBotAdmin, usedPrefix }) {
 if (m.isBaileys && m.fromMe) return !0
 if (!m.isGroup) return !1
+m.isBot = m.id.startsWith('BAE5') && m.id.length === 16 || m.id.startsWith('3EB0') && m.id.length === 12 || m.id.startsWith('3EB0') && (m.id.length === 20 || m.id.length === 22) || m.id.startsWith('B24E') && m.id.length === 20;
+if (m.isBot) return
 let chat = global.db.data.chats[m.chat]
 let bot = global.db.data.settings[this.user.jid] || {}
 let delet = m.key.participant
