@@ -24,30 +24,29 @@ let txt = `*\`💫 Te presentamos un nuevo hosting: "CorinPlus" host propios �
 🟢 \`\`\`Información del Host\`\`\`
 
 💻 *Página:*
-https://dash.corinplus.com
+https://dash.skyultraplus.com
 
 *🟢 Dashboard:*
-https://dash.corinplus.com
+https://dash.skyultraplus.com
 
 ⚙️ *Panel*
-https://panel.corinplus.com
+https://panel.skyultraplus.com
 
 💥 *Comunidad de WhatsApp:*
-https://chat.whatsapp.com/HR3OLhsuZPqCMImzuHcuON
+https://chat.whatsapp.com/KGPhTIfgOzZCMNqoc3R7OW
 
 *🟣 Discord:*
-https://discord.com/invite/bjKpRBtkHv
+https://discord.gg/zvKgtc2RBc
 
 🧡 *Canal de WhatsApp:*
 https://whatsapp.com/channel/0029VakUvreFHWpyWUr4Jr0g
 
 🛍️ *Método de pago:*
 *• PayPal (opción 1):* https://paypal.me/OfcGB
-*• PayPal (opcion 2):* paypal.me/Corinplushost
+*• PayPal (opcion 2):* https://paypal.me/OficialGD
 *• Mercado pago, alías:* OficialGB
 *• Naranja x, alías:* hostingCalidad
 *• Uala, CVU:* 0000007900204304075982
-*• Yape/plin (Perú) :* 976673519
 *• Tigo Money (Paraguay):* +595 983 799436
 *• Personal Pay (Paraguay):* +595 973 755967
 *• Yape o método QR (Bolivia):* +59169082575
@@ -57,11 +56,12 @@ https://whatsapp.com/channel/0029VakUvreFHWpyWUr4Jr0g
 *• Link de pago:*
 • _link.mercadopago.com.ar/h0sting_
 • _https://payment-link.astropay.com/RbMJ_
-*• Patreon:* _https://patreon.com/CorinPlus_hosting_
-*• Kofi:* _https://ko-fi.com/corinplus_
+*• Patreon:* _https://patreon.com/SkyUltraPlus_
+*• Kofi:* _https://ko-fi.com/skyultraplus_
 
 🗣📲 *Contacto:*
 • wa.me/5214531287294
+• wa.me/15167096032
 • wa.me/573147616444
 • https://www.facebook.com/elrebelde21` 
 
@@ -92,7 +92,7 @@ let syms1 = `Tomarás el rol de un bot de Whatsapp creado por elrebelde21. Tu no
 
 los quiere dices que tu respuesta sera humor puro, risa, memes.
 
-si pregunta donde aloja el bot 24/7 tu recomienda el hosting "CorinPlus host", alojamiento de bot de WhatsApp, Telegram, discord, todos con etono JavaScript, ofrecemos server gratis y de pago, a precios asequibles, barato, todos puede comprar mas información: (https://dash.corinplus.com). 
+si pregunta donde aloja el bot 24/7 tu recomienda el hosting "Sky-Ultra-Plus host", alojamiento de bot de WhatsApp, Telegram, discord, todos con etono JavaScript, ofrecemos server gratis y de pago, a precios asequibles, barato, todos puede comprar mas información: (https://dash.skyultraplus.com). 
 para actualizaciónes/novedades sobre el bot o nuesro hosting seguir nuestro canal de WhatsApp: (https://whatsapp.com/channel/0029Va4QjH7DeON0ePwzjS1A).`;  
 
 let result = await luminsesi(query, username, syms1);
@@ -119,7 +119,7 @@ return m.reply([`Simsimi esta durmiendo no molesta 🥱`, `Callarte`, `Api simsi
 }}*/
 }
 
-if (/^infohost$/i.test(m.text)) {
+if (/^infohost|hosting$/i.test(m.text)) {
  await conn.sendMessage(m.chat, { text: txt,
 contextInfo:{
 forwardingScore: 9999999,
@@ -127,10 +127,10 @@ isForwarded: false,
 "externalAdReply": {
 "showAdAttribution": true,
 "containsAutoReply": true,
-title: `🤖 𝐂O𝐑𝐈𝐍𝐏𝐋𝐔𝐒-𝐇𝐎𝐒𝐓 🤖`,
+title: `🤖 𝐒𝐊𝐘𝐏𝐋𝐔𝐒-𝐇𝐎𝐒𝐓 🤖`,
 body: `✅ Hosting de Calidad`,
 "previewType": "PHOTO",
-thumbnailUrl: 'https://telegra.ph/file/551d3d544d7bc607fd337.jpg', 
+thumbnailUrl: 'https://qu.ax/wXciz.jpg', 
 sourceUrl: nna}}}, { quoted: m})
 } 
     

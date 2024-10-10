@@ -55,14 +55,14 @@ ${md}
 
 > ───────•••───────
 
-\`📌 INSTALAR EN CORINPLUS HOST\`
+\`📌 INSTALAR EN SKY-ULTRA-PLUS HOST\`
 https://youtube.com/shorts/9KxvFilxwP8?si=x3pBulswFdMRKaJE
 
 > *Dashboard:*
-https://dash.corinplus.com
+https://dash.skyultraplus.com
 
 > *Panel:*
-https://panel.corinplus.com
+https://panel.skyultraplus.com
 
 > *◄┢┅͜͡✇⟬↯ື ►ஜ۩💥۩ஜ◄ ↯ື⟭✇͜͡┅┧►*` 
 let aa = { quoted: m, userJid: conn.user.jid }
