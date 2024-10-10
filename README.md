@@ -61,7 +61,7 @@
 )](https://whatsapp.com/channel/0029Va4QjH7DeON0ePwzjS1A)  <a href="https://whatsapp.com/channel/0029Va4QjH7DeON0ePwzjS1A"> <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/WhatsApp_logo-color-vertical.svg/1200px-WhatsApp_logo-color-vertical.svg.png" height="29px">
 </a>
 -----
-### ☁️ Activar LoliBot-MD 24/7 activos en Sky-Ultra-Plus Host
+### ☁️ Activar LoliBot-MD 24/7 activos en SkyPlus Host
 <a href="https://dash.corinplus.com"><img src="https://qu.ax/zFzXF.png" height="125px"></a>
 ### Información del Host
 
@@ -70,7 +70,7 @@
 - **Canal de WhatsApp:** [`Aquí`](https://whatsapp.com/channel/0029VakUvreFHWpyWUr4Jr0g)
 - **Comunidad:** [`Aquí`](https://chat.whatsapp.com/JPwcXvPEUwlEOyjI3BpYys)
 - **Contacto(s):** [`Gata Dios`](https://wa.me/message/B3KTM5XN2JMRD1) / [`Russell`](https://api.whatsapp.com/send/?phone=15167096032&text&type=phone_number&app_absent=0) / [`elrebelde21`](https://facebook.com/elrebelde21)
-- **Discord:** [`SkyUltraPlus`](https://discord.gg/Ph4eWsZ8)
+- **Discord:** [`aqui`](https://discord.gg/Ph4eWsZ8)
 
 - [x] **Configuración** <details><summary>**Ajustes del Servidor - LoliBot-MD**</summary><img src="https://telegra.ph/file/7ddd30dd7d77354fb01fe.jpg"></details>
 ----
