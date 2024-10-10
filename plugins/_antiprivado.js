@@ -1,5 +1,4 @@
-let handler = m => m
-handler.all = async function (m) {
+export async function before(m, { conn, isAdmin, isBotAdmin, isOwner, isROwner }) {
 let prefixRegex = new RegExp('^[' + (opts['prefix'] || '‎z/i!#$%+£¢€¥^°=¶∆×÷π√✓©®:;?&.,\\-').replace(/[|\\{}()[\]^$+*?.\-\^]/g, '\\$&') + ']')
 
 let setting = global.db.data.settings[this.user.jid]
@@ -11,12 +10,8 @@ await this.readMessages([m.key])
         
 let usedPrefix = m.text.match(prefixRegex)[0]
 let command = m.text.slice(usedPrefix.length).trim().split(' ')[0]
-}}
+}
 
-export default handler
-
-/*----------------------[ ANTIPRIVADO ]-----------------------*/
-export async function before(m, { conn, isAdmin, isBotAdmin, isOwner, isROwner }) {
 if (m.isBaileys && m.fromMe) return !0
 if (m.isGroup) return !1
 if (!m.message) return !0 
