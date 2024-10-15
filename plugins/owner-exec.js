@@ -10,7 +10,7 @@ const require = createRequire(__dirname)
 let handler = async (m, _2, msg, isOwner, pickRandom) => {
 m.isBot = m.id.startsWith('BAE5') && m.id.length === 16 || m.id.startsWith('3EB0') && m.id.length === 12 || m.id.startsWith('3EB0') && (m.id.length === 20 || m.id.length === 22) || m.id.startsWith('B24E') && m.id.length === 20;
 if (m.isBot) return
-if (!rowner) return 
+if (!isROwner) return;
 
 let mention = m.mentionedJid && m.mentionedJid[0] ? m.mentionedJid[0] : m.quoted ? m.quoted.sender : false
 let { conn, usedPrefix, noPrefix, args, groupMetadata } = _2
