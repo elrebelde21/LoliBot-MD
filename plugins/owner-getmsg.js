@@ -1,8 +1,8 @@
 let handler = async (m, { conn, command, usedPrefix, text }) => {
 let which = command.replace(/ver/i, '')
-if (!text) throw `*[❗𝐈𝐍𝐅𝐎❗] 𝚄𝚂𝙰𝚁 *${usedPrefix}list${which}* 𝙿𝙰𝚁𝙰 𝚅𝙴𝚁 𝙻𝙰 𝙻𝙸𝚂𝚃𝙰*`
+if (!text) throw `*⚠️ 𝐔𝐬𝐚𝐫 *${usedPrefix}list${which}* 𝐏𝐚𝐫𝐚 𝐯𝐞𝐫 𝐥𝐚 𝐥𝐢𝐬𝐭𝐚*`
 let msgs = global.db.data.msgs
-if (!text in msgs) throw `*[❗𝐈𝐍𝐅𝐎❗] '${text}' 𝙽𝙾 𝚁𝙴𝙶𝙸𝚂𝚃𝚁𝙰𝙳𝙾 𝙴𝙽 𝙻𝙰 𝙻𝙸𝚂𝚃𝙰 𝙳𝙴 𝙼𝙴𝙽𝚂𝙰𝙹𝙴𝚂*`
+if (!text in msgs) throw `*⚠️ '${text}' 𝐍𝐨 𝐫𝐞𝐠𝐢𝐬𝐭𝐫𝐚𝐝𝐨 𝐞𝐧 𝐥𝐚 𝐥𝐢𝐬𝐭𝐚 𝐝𝐞 𝐦𝐞𝐧𝐬𝐚𝐣𝐞𝐬*`
 let _m = await conn.serializeM(msgs[text])
 await _m.copyNForward(m.chat, true)
 }

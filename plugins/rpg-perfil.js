@@ -16,7 +16,7 @@ let { min, xp, max } = xpRange(user.level, global.multiplier)
 let username = conn.getName(who)
 let prem = global.prems.includes(who.split`@`[0])
 let sn = createHash('md5').update(who).digest('hex')
-let api = await axios.get(`https://deliriusapi-official.vercel.app/tools/country?text=${PhoneNumber('+' + who.replace('@s.whatsapp.net', '')).getNumber('international')}`)
+let api = await axios.get(`${apis}/tools/country?text=${PhoneNumber('+' + who.replace('@s.whatsapp.net', '')).getNumber('international')}`)
 let userNationalityData = api.data.result
 let userNationality = userNationalityData ? `${userNationalityData.name} ${userNationalityData.emoji}` : 'Desconocido'
 let img = await (await fetch(`${pp}`)).buffer()
@@ -40,29 +40,24 @@ handler.help = ['perfil', 'perfil *@user*']
 handler.tags = ['rg']
 handler.command = /^(perfil|profile)$/i
 handler.register = true
-
 export default handler
-
 
 const more = String.fromCharCode(8206)
 const readMore = more.repeat(4001)
 
 function formatDate(n, locale = 'es-US') {
-  let d = new Date(n)
-  return d.toLocaleDateString(locale, {
-    weekday: 'long',
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric'
-  })
-}
+let d = new Date(n)
+return d.toLocaleDateString(locale, {weekday: 'long',
+day: 'numeric',
+month: 'long',
+year: 'numeric'
+})}
 
 function formatHour(n, locale = 'en-US') {
-  let d = new Date(n)
-  return d.toLocaleString(locale, {
-    hour: 'numeric',
-    minute: 'numeric',
-    second: 'numeric',
-    hour12: true
-  })
-}
+let d = new Date(n)
+return d.toLocaleString(locale, {
+hour: 'numeric',
+minute: 'numeric',
+second: 'numeric',
+hour12: true
+})}

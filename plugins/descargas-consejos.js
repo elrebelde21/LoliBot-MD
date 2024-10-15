@@ -37,8 +37,8 @@ conn.sendButton(m.chat, texto.trim(), botname, img, [['✨ 𝐒𝐈𝐆𝐔𝐈�
 //await conn.sendButton(m.chat, texto.trim(), wm, img, [[lenguajeGB.smsFras(), `${usedPrefix + command}`], [lenguajeGB.smsConMenu(), `${usedPrefix}menu`]], m, frep)} 
 } catch (e) {
 await m.react(`❌`) 
-console.log(e)}  
-}
+m.reply(`\`\`\`⚠️ OCURRIO UN ERROR ⚠️\`\`\`\n\n> *Reporta el siguiente error a mi creador con el comando:*#report\n\n>>> ${e} <<<< `)       
+console.log(e)}}
 handler.help = ['consejo']
 handler.tags = ['downloader']
 handler.command = ['consejo', 'advice', 'frase2', 'phrase2']

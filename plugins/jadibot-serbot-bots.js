@@ -32,4 +32,5 @@ await _envio.sendMessage(m.chat, { text: responseMessage, contextInfo: {mentione
 //_envio.sendMessage(m.chat, {text: responseMessage, mentions: _envio.parseMention(responseMessage)}, {quoted: m})}
 handler.command = handler.help = ['listjadibot', 'bots'];
 handler.tags = ['jadibot'];
+handler.register = true 
 export default handler;

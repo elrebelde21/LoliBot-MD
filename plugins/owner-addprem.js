@@ -4,10 +4,8 @@ let who
 if (m.isGroup) who = m.mentionedJid[0] ? m.mentionedJid[0] : m.quoted ? m.quoted.sender : false
 else who = m.chat
 
-//let who = m.mentionedJid[0] ? m.mentionedJid[0] : m.quoted ? m.quoted.sender : text ? text.replace(/[^0-9]/g, '') + '@s.whatsapp.net' : false
-//let res = [];
 let user = global.db.data.users[who]
-if (!who) throw `*MENCIONA O REPONDA AL MENSAJE DE LA APERSONA QUE SERÁ PREMIUM*\n\n*${usedPrefix + command} @${m.sender.split`@`[0]} 1*\n*${usedPrefix + command} 1*`
+if (!who) throw `*⚠️ 𝐌𝐄𝐍𝐂𝐈𝐎𝐍𝐀/𝐑𝐄𝐏𝐎𝐍𝐃𝐀 𝐀𝐋 𝐌𝐄𝐍𝐒𝐀𝐉𝐄 𝐃𝐄 𝐋𝐀 𝐏𝐄𝐑𝐒𝐎𝐍𝐀 𝐐𝐔𝐄 𝐒𝐄𝐑𝐀́ 𝐏𝐑𝐄𝐌𝐈𝐔𝐌*\n\n*${usedPrefix + command} @${m.sender.split`@`[0]} 1*\n*${usedPrefix + command} 1*`
 let txt = text.replace('@' + who.split`@`[0], '').trim()
 let name = await '@' + who.split`@`[0]
 

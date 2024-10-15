@@ -39,7 +39,8 @@ const url = video.no_watermark2 || video.no_watermark || 'https://tikcdn.net' + 
 await conn.sendMessage(m.chat, {video: {url: url}, caption: `✅ Aquí esta tu video de tiktok`}, {quoted: m});
 await conn.sendMessage(m.chat, {text: `✅ 𝘾𝙤𝙢𝙥𝙡𝙚𝙩𝙖𝙙𝙤\n▰▰▰▰▰▰▰▰▰\n𝘼𝙦𝙪𝙞 𝙚𝙨𝙩𝙖 𝙩𝙪 𝙫𝙞𝙙𝙚𝙤 💫`, edit: key})                 
 } catch (e) {
-m.reply(`\`\`\`⚠️ OCURRIO UN ERROR ⚠️\`\`\`\n\n> *Reporta el siguiente error a mi creador con el comando:*#report\n\n> error Sintays >>> ${e} <<<< `) 
+//m.reply(`\`\`\`⚠️ OCURRIO UN ERROR ⚠️\`\`\`\n\n> *Reporta el siguiente error a mi creador con el comando:*#report\n\n>>> ${e} <<<< `) 
+console.log(e) 
 m.react(`❌`)         
 }}}}}};
 handler.help = ['tiktok']

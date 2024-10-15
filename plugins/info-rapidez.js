@@ -164,6 +164,7 @@ console.log(e)
 handler.help = ['ping', 'speed']
 handler.tags = ['main']
 handler.command = /^(ping|speed|velocidad|rapidez|velocity)$/i
+handler.register = true 
 export default handler
 
 const more = String.fromCharCode(8206)

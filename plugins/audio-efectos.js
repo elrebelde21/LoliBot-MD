@@ -33,7 +33,8 @@ ptt: true
 })})
 } else throw `⚡ 𝙍𝙚𝙨𝙥𝙤𝙣𝙙𝙖𝙣 𝙖𝙡 𝙖𝙪𝙙𝙞𝙤 𝙤 𝙣𝙤𝙩𝙖 𝙙𝙚𝙡 𝙫𝙤𝙯 𝙥𝙖𝙧𝙖 𝙢𝙤𝙙𝙞𝙛𝙞𝙘𝙖𝙧 𝙪𝙨𝙚 𝙚𝙨𝙩𝙚 𝙘𝙤𝙢𝙖𝙣𝙙𝙤 *${usedPrefix + command}*`
 } catch (e) {
-throw e
+m.reply(`\`\`\`⚠️ OCURRIO UN ERROR ⚠️\`\`\`\n\n> *Reporta el siguiente error a mi creador con el comando:*#report\n\n>>> ${e} <<<< `)       
+console.log(e) 
 }}
 handler.help = ['bass', 'blown', 'deep', 'earrape', 'fast', 'fat', 'nightcore', 'reverse', 'robot', 'slow', 'smooth', 'tupai'].map(v => v + ' [vn]')
 handler.tags = ['efec']

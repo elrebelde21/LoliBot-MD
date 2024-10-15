@@ -2,7 +2,6 @@ const palabras = ["gato", "perro", "pájaro", "elefante", "tigre", "ballena", "m
 ]
 
 const intentosMaximos = 6
-
 const gam = new Map()
 
 function elegirPalabraAleatoria() {
@@ -10,15 +9,14 @@ return palabras[Math.floor(Math.random() * palabras.length)]
 }
 
 function ocultarPalabra(palabra, letrasAdivinadas) {
-    let palabraOculta = "";
-    for (const letra of palabra) {
-        if (letrasAdivinadas.includes(letra)) {
-            palabraOculta += letra + " "; 
-        } else {
-            palabraOculta += "_ "; 
-        }
-    }
-    return palabraOculta.trim(); 
+let palabraOculta = "";
+for (const letra of palabra) {
+if (letrasAdivinadas.includes(letra)) {
+palabraOculta += letra + " "; 
+} else {
+palabraOculta += "_ "; 
+}}
+return palabraOculta.trim(); 
 }
 
 
@@ -34,21 +32,20 @@ return dibujo.slice(0, intentosMaximos - intentos).join("\n")
 }
 
 function juegoTerminado(sender, mensaje, palabra, letrasAdivinadas, intentos) {
-    if (intentos === 0) {
-        gam.delete(sender);
-        return `❌ ¡Perdiste! La palabra correcta era: ${palabra}\n\n${mostrarAhorcado(intentos)}`;
-    } else if (!mensaje.includes("_")) {
-        let expGanada = Math.floor(Math.random() * 300); //fáciles
-        if (palabra.length >= 8) {
-            expGanada = Math.floor(Math.random() * 3500); //difíciles
-        }
-        global.db.data.users[sender].exp += expGanada;
-        gam.delete(sender);
-        return `¡Que pro Ganaste 🥳! Adivinaste la palabra "${palabra}".\n\n*Has ganado:* ${expGanada} Exp.`;
-    } else {
-        return `${mostrarAhorcado(intentos)}\n\n${mensaje}`;
-    }
+if (intentos === 0) {
+gam.delete(sender);
+return `❌ ¡Perdiste! La palabra correcta era: ${palabra}\n\n${mostrarAhorcado(intentos)}`;
+} else if (!mensaje.includes("_")) {
+let expGanada = Math.floor(Math.random() * 300); //fáciles
+if (palabra.length >= 8) {
+expGanada = Math.floor(Math.random() * 3500); //difíciles
 }
+global.db.data.users[sender].exp += expGanada;
+gam.delete(sender);
+return `¡Que pro Ganaste 🥳! Adivinaste la palabra "${palabra}".\n\n*Has ganado:* ${expGanada} Exp.`;
+} else {
+return `${mostrarAhorcado(intentos)}\n\n${mensaje}`;
+}}
 
 let handler = async (m, { conn }) => {
 let users = global.db.data.users[m.sender]
@@ -75,8 +72,7 @@ if (!letrasAdivinadas.includes(letra)) {
 letrasAdivinadas.push(letra)
 if (!palabra.includes(letra)) {
 intentos--
-}
-}
+}}
 let mensaje = ocultarPalabra(palabra, letrasAdivinadas)
 let respuesta = juegoTerminado(m.sender, mensaje, palabra, letrasAdivinadas, intentos)
 if (respuesta.includes("¡Perdiste!") || respuesta.includes("¡Ganaste!")) {
@@ -84,14 +80,12 @@ conn.reply(m.chat, respuesta, m)
 } else {
 gam.set(m.sender, { palabra, letrasAdivinadas, intentos })
 conn.reply(m.chat, respuesta + `\n\nIntentos restantes: ${intentos}`, m)
-}
-} else {
+}} else {
 let mensaje = ocultarPalabra(palabra, letrasAdivinadas);
 let respuesta = juegoTerminado(m.sender, mensaje, palabra, letrasAdivinadas, intentos)
 conn.reply(m.chat, respuesta, m)
 gam.delete(m.sender)
-}
-}
+}}
 handler.help = ['ahorcado']
 handler.tags = ['game']
 handler.command = ['ahorcado']

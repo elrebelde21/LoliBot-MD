@@ -12,8 +12,8 @@ let rob = Math.floor(Math.random() * ro)
 if (users.exp < rob) return m.reply(`@${who.split`@`[0]} Este usuario tiene menos de ${ro} XP\n> No robes a un pobre v:`, null, { mentions: [who] })    
 global.db.data.users[m.sender].exp += rob
 global.db.data.users[who].exp -= rob 
-conn.sendMessage(m.chat, {text: `*Robaste ${rob} XP a @${who.split`@`[0]}*`, contextInfo:{ mentions: [who]}}, { quoted: m})
-//m.reply(`*Robaste ${rob} XP a @${who.split`@`[0]}*`, null, { mentions: [who] })
+m.reply(`*Robaste ${rob} XP a @${who.split`@`[0]}*`, null, { mentions: [who] })
+//conn.sendMessage(m.chat, {text: `*Robaste ${rob} XP a @${who.split`@`[0]}*`, contextInfo:{ mentions: [who]}}, { quoted: m})
 global.db.data.users[m.sender].lastrob = new Date * 1
 }
 handler.help = ['rob']
@@ -21,6 +21,7 @@ handler.tags = ['econ']
 handler.command = ['robar', 'rob']
 handler.register = true
 export default handler  
+
 function msToTime(duration) {
 var milliseconds = parseInt((duration % 1000) / 100),
 seconds = Math.floor((duration / 1000) % 60),

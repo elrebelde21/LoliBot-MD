@@ -3,18 +3,18 @@ import cheerio from "cheerio";
 import FormData from "form-data";
 const split = '|';
 const handler = async (m, {conn, args: [effect], text: txt, usedPrefix, command, name}) => {
-  if (!effect) throw '*[❗𝐈𝐍𝐅𝐎❗] ¿𝙲𝙾𝙼𝙾 𝚄𝚂𝙰𝚁 𝙴𝚂𝚃𝙴 𝙲𝙾𝙼𝙰𝙽𝙳𝙾?*\n—◉ _#logo (efecto) (texto)_\n*𝙴𝙹𝙴𝙼𝙿𝙻𝙾:*\n—◉ _#logo 3d-deep-sea-metal Mystic_\n\n*[❗] 𝙲𝚄𝙰𝙽𝙳𝙾 𝙻𝙴𝚂 𝙳𝙸𝙶𝙰 𝚀𝚄𝙴 𝙷𝙰𝙲𝙴 𝙵𝙰𝙻𝚃𝙰 𝚄𝙽 𝚃𝙴𝚇𝚃𝙾 𝙴𝙻 𝚄𝚂𝙾 𝚂𝙴𝚁𝙸𝙰:*\n—◉ _#logo (efecto) (texto1|texto2)_\n*𝙴𝙹𝙴𝙼𝙿𝙻𝙾:*\n—◉ _#logo Wolf-Logo-Galaxy Mystic|Bot_\n\n*<𝑳𝑰𝑺𝑻𝑨 𝑫𝑬 𝑬𝑭𝑬𝑪𝑻𝑶𝑺/>*\n\n° ඬ⃟📝 #logo ' + effects.map((v) => v.title).join('\n° ඬ⃟📝 #logo ');
-  if (!effects.find((v) => (new RegExp(v.title, 'gi')).test(effect))) throw `*[❗𝐈𝐍𝐅𝐎❗] 𝙴𝙻 𝙴𝙵𝙴𝙲𝚃𝙾 ${effect} 𝙽𝙾 𝙴𝚂𝚃𝙰 𝙴𝙽 𝙻𝙰 𝙻𝙸𝚂𝚃𝙰 𝙳𝙴 𝙴𝙵𝙴𝙲𝚃𝙾𝚂*`;  
-  let text = txt.replace(new RegExp(effect, 'gi'), '').trimStart();
-  if (text.includes(split)) {
-    text = text.split(split).map((t) => t.trim());
-  } else {
-    text = [text.trim()];
-  }
-  const effectoSelect = effects.find((effectz) => new RegExp(effectz?.title, 'i').test(effect));
-  const res = await maker(effectoSelect?.url, [...text]).catch(_ => { throw '*[❗] Falta el texto al que se realizara el logo*' })
-   if (typeof res == 'number') throw res == -1 ? `*[❗𝐈𝐍𝐅𝐎❗] 𝙴𝙻 𝙴𝙵𝙴𝙲𝚃𝙾 ${effect} 𝙽𝙾 𝙴𝚂𝚃𝙰 𝙴𝙽 𝙻𝙰 𝙻𝙸𝚂𝚃𝙰 𝙳𝙴 𝙴𝙵𝙴𝙲𝚃𝙾𝚂*` : `*[❗𝐈𝐍𝐅𝐎❗] 𝙴𝙻 𝚄𝚂𝙾 𝙲𝙾𝚁𝚁𝙴𝙲𝚃𝙾 𝙳𝙴𝙻 𝙲𝙾𝙼𝙰𝙽𝙳𝙾 𝙴𝚂 ${usedPrefix + command} ${effect} ${new Array(res).fill('texto').map((v, i) => v + (i ? i + 1 : '')).join('|')}*`;
-  await conn.sendMessage(m.chat, {image: {url: res.image}, caption: `*𝚃𝙾𝙼𝙰 𝚃𝚄 𝙸𝙼𝙰𝙶𝙴𝙽 𝙿𝙴𝚁𝚂𝙾𝙽𝙰𝙻𝙸𝚉𝙰𝙳𝙰!!*\n*𝙴𝙵𝙴𝙲𝚃𝙾: ${effect}*`}, {quoted: m});  
+if (!effect) throw '*⚠️ ¿𝐂𝐨𝐦𝐨 𝐮𝐬𝐚𝐫 𝐞𝐬𝐭𝐞 𝐜𝐨𝐦𝐚𝐧𝐝𝐨?*\n• _#logo (efecto) (texto)_\n*𝐄𝐣𝐞𝐦𝐩𝐥𝐨:*\n• _#logo 3d-deep-sea-metal Mystic_\n\n*⚠️ 𝐂𝐮𝐚𝐧𝐝𝐨 𝐥𝐞𝐬 𝐝𝐢𝐠𝐚 𝐪𝐮𝐞 𝐡𝐚𝐜𝐞 𝐟𝐚𝐥𝐭𝐚 𝐮𝐧 𝐭𝐞𝐱𝐭𝐨 𝐞𝐥 𝐮𝐬𝐨 𝐬𝐞𝐫𝐢𝐚:*\n• _#logo (efecto) (texto1|texto2)_\n*𝐄𝐣𝐞𝐦𝐩𝐥𝐨:*\n• _#logo Wolf-Logo-Galaxy Loli|Bot_\n\n*<𝑳𝑰𝑺𝑻𝑨 𝑫𝑬 𝑬𝑭𝑬𝑪𝑻𝑶𝑺/>*\n\n° ඬ⃟📝 #logo ' + effects.map((v) => v.title).join('\n° ඬ⃟📝 #logo ');
+if (!effects.find((v) => (new RegExp(v.title, 'gi')).test(effect))) throw `*⚠️ 𝐄𝐥 𝐞𝐟𝐞𝐜𝐭𝐨 ${effect} 𝐧𝐨 𝐞𝐬𝐭𝐚 𝐞𝐧 𝐥𝐚 𝐥𝐢𝐬𝐭𝐚 𝐝𝐞 𝐞𝐟𝐞𝐜𝐭𝐨𝐬*`;  
+let text = txt.replace(new RegExp(effect, 'gi'), '').trimStart();
+if (text.includes(split)) {
+text = text.split(split).map((t) => t.trim());
+} else {
+text = [text.trim()];
+}
+const effectoSelect = effects.find((effectz) => new RegExp(effectz?.title, 'i').test(effect));
+const res = await maker(effectoSelect?.url, [...text]).catch(_ => { throw '*⚠️ ғᴀʟᴛᴀ ᴇʟ ᴛᴇxᴛᴏ ᴀʟ ǫᴜᴇ sᴇ ʀᴇᴀʟɪᴢᴀʀᴀ ᴇʟ ʟᴏɢᴏ*' })
+if (typeof res == 'number') throw res == -1 ? `*⚠️ ᴇʟ ᴇғᴇᴄᴛᴏ ${effect} ɴᴏ ᴇsᴛᴀ ᴇɴ ʟᴀ ʟɪsᴛᴀ ᴅᴇ ᴇғᴇᴄᴛᴏs*` : `*⚠️ ᴇʟ ᴜsᴏ ᴄᴏʀʀᴇᴄᴛᴏ ᴅᴇʟ ᴄᴏᴍᴀɴᴅᴏ ᴇs ${usedPrefix + command} ${effect} ${new Array(res).fill('texto').map((v, i) => v + (i ? i + 1 : '')).join('|')}*`;
+await conn.sendMessage(m.chat, {image: {url: res.image}, caption: `*💫 𝐀𝐪𝐮𝐢 𝐭𝐢𝐞𝐧𝐞 𝐭𝐮 𝐢𝐦𝐚𝐠𝐞𝐧 𝐩𝐞𝐫𝐬𝐨𝐧𝐚𝐥𝐢𝐳𝐚𝐝𝐚!!*\n*• 𝐄𝐟𝐞𝐜𝐭𝐨𝐬: ${effect}*\n${wm}`}, {quoted: m});  
 };
 handler.help = ['logos'];
 handler.tags = ['logo'];

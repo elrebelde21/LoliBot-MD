@@ -20,7 +20,7 @@ return { img: await resizedImage.getBufferAsync(Jimp.MIME_JPEG) }}
 const { img } = await processImage(imageBuffer);
 await conn.query({tag: 'iq', attrs: {to: targetChatId, type: 'set', xmlns: 'w:profile:picture', }, content: [{tag: 'picture', attrs: { type: 'image' }, content: img,}], });
 
-message.reply('⚘ *_Imagen actualizada con éxito._*');
+message.reply('_*• Imagen actualizada con éxito.*_');
 } catch {
 throw '*⚠️️ Responde a una imagen.*';
 }};
@@ -29,5 +29,5 @@ handler.tags = ['group']
 handler.command = ['setppgc', 'setppgrup', 'setppgroup'];
 handler.botAdmin = true;
 handler.admin = true;
-
+handler.register = true 
 export default handler;

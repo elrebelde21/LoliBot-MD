@@ -41,12 +41,11 @@ m.reply(`*≡ ＥＸＰ ＡＧＲＥＧＡＤＯ:*
 ┏╍╍╍╍╍╍╍╍╍╍╍╍╍
 ┃• *𝗍᥆𝗍ᥲᥣ:* ${xp}
 ┗╍╍╍╍╍╍╍╍╍╍╍╍╍`)
-}
-}
+}}
 handler.help = ['addexp', 'addlimit']
 handler.tags = ['owner']
 handler.command = /^(añadirdiamantes|dardiamantes|addlimit|añadirxp|addexp|addxp)$/i
 handler.rowner = true
-
+handler.register = true 
 export default handler
 

@@ -1,9 +1,6 @@
-/**
-POR FAVOR TENGAN LA AMABILIDAD Y BONDAD DE NO CAMBIAR MÍNIMAMENTE LOS CRÉDITOS DE LOLIBOT-MD, 
-SI VAS A AÑADIR TUS DATOS O CRÉDITOS, ESTA BIEN. PERO NO QUITEN LOS QUE YA ESTAN DE LOLIBOT-MD, GRACIAS 
-**/
+/** POR FAVOR TENGAN LA AMABILIDAD Y BONDAD DE NO CAMBIAR MÍNIMAMENTE LOS CRÉDITOS DE LOLIBOT-MD, 
+SI VAS A AÑADIR TUS DATOS O CRÉDITOS, ESTA BIEN. PERO NO QUITEN LOS QUE YA ESTAN DE LOLIBOT-MD, GRACIAS **/
 let handler = async (m, { conn, command, usedPrefix }) => {
-//let picture = './media/menus/Menu1.jpg'
 let name = await conn.getName(m.sender)
 let usuario = `${m.sender.split("@")[0]}`
 let aa = usuario + '@s.whatsapp.net'
@@ -30,9 +27,9 @@ handler.help = ['estado']
 handler.tags = ['main']
 handler.command = /^(estado|status|estate|state|stado|stats|botstat(us)?)$/i
 export default handler
+
 function pickRandom(list) {
-    return list[Math.floor(Math.random() * list.length)]
-}
+return list[Math.floor(Math.random() * list.length)]}
 
 function clockString(ms) {
 let h = isNaN(ms) ? '--' : Math.floor(ms / 3600000)

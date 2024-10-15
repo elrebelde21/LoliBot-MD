@@ -120,21 +120,20 @@ handler.register = true;
 export default handler;
 
 function toNum(number) {
-    if (number >= 1000 && number < 1000000) {
-        return (number / 1000).toFixed(1) + 'k';
-    } else if (number >= 1000000) {
-        return (number / 1000000).toFixed(1) + 'M';
-    } else if (number <= -1000 && number > -1000000) {
-        return (number / 1000).toFixed(1) + 'k';
-    } else if (number <= -1000000) {
-        return (number / 1000000).toFixed(1) + 'M';
-    } else {
-        return number.toString();
-    }
-}
+if (number >= 1000 && number < 1000000) {
+return (number / 1000).toFixed(1) + 'k';
+} else if (number >= 1000000) {
+return (number / 1000000).toFixed(1) + 'M';
+} else if (number <= -1000 && number > -1000000) {
+return (number / 1000).toFixed(1) + 'k';
+} else if (number <= -1000000) {
+return (number / 1000000).toFixed(1) + 'M';
+} else {
+return number.toString();
+}}
 
 function humanFileSize(bytes) {
-    const unidades = ['B', 'KB', 'MB', 'GB', 'TB', 'PB'];
-    const exponente = Math.floor(Math.log(bytes) / Math.log(1024));
-    return `${(bytes / Math.pow(1024, exponente)).toFixed(2)} ${unidades[exponente]}`;
+const unidades = ['B', 'KB', 'MB', 'GB', 'TB', 'PB'];
+const exponente = Math.floor(Math.log(bytes) / Math.log(1024));
+return `${(bytes / Math.pow(1024, exponente)).toFixed(2)} ${unidades[exponente]}`;
 }

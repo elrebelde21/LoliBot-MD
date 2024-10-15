@@ -1,5 +1,5 @@
 const handler = async (m, {text, conn, usedPrefix, command}) => {
-const why = `*⚠️𝙴𝙹𝙴𝙼𝙿𝙻𝙾:*\n${usedPrefix + command} @${m.sender.split('@')[0]}`;
+const why = `*⚠️ 𝐄𝐣𝐞𝐦𝐩𝐥𝐨:*\n${usedPrefix + command} @${m.sender.split('@')[0]}`;
 const who = m.mentionedJid[0] ? m.mentionedJid[0] : m.quoted ? m.quoted.sender : text ? text.replace(/[^0-9]/g, '') + '@s.whatsapp.net' : false;
 if (!who) conn.reply(m.chat, why, m, {mentions: [m.sender]});
 const res = [];

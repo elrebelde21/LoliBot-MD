@@ -1,8 +1,6 @@
 import cp from "child_process";
 import { promisify } from "util";
-
 const exec = promisify(cp.exec).bind(cp);
-
 var handler = async (m, { conn }) => {
 let o;  
   await conn.reply(m.chat, global.wait, m);
@@ -24,5 +22,5 @@ console.log(e)}}
 handler.help = ["speedtest"];
 handler.tags = ["main"];
 handler.command = /^(speedtest?|test?speed)$/i;
-
+handler.register = true 
 export default handler

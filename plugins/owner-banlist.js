@@ -5,8 +5,7 @@ let fkontak = { "key": { "participants":"0@s.whatsapp.net", "remoteJid": "status
 if (command == 'listban' || command == 'listbaneado') {
 let chats = Object.entries(global.db.data.chats).filter(chat => chat[1].isBanned)
 let users = Object.entries(global.db.data.users).filter(user => user[1].banned)
-let caption = `
-╭•·––| 👥 𝐔𝐒𝐔𝐀𝐑𝐈𝐎𝐒 𝐁𝐀𝐍𝐄𝐀𝐃𝐎𝐒 |––·•
+let caption = `╭•·––| 👥 𝐔𝐒𝐔𝐀𝐑𝐈𝐎𝐒 𝐁𝐀𝐍𝐄𝐀𝐃𝐎𝐒 |––·•
 │  Total: ${users.length} ${users ? '\n' + users.map(([jid], i) => `
 │ ${isOwner ? '@' + jid.split`@`[0] : jid}`.trim()).join('\n') : '├'}
 ╰•·–––––––––––––––––––·•
@@ -31,7 +30,7 @@ return conn.reply(m.chat, txt, fkontak, m, { mentions: await conn.parseMention(t
 ['𝗠 𝗘 𝗡 𝗨 ☘️', '/menu']], m, { mentions: await conn.parseMention(txt) })*/
 }).catch(err => {
 console.log(err);
-return conn.reply(m.chat, `${rg}𝙉𝘼𝘿𝙄𝙀 𝙃𝘼 𝙎𝙄𝘿𝙊 𝘽𝙇𝙊𝙌𝙐𝙀𝘼𝘿𝙊`, gata, m) 
+return conn.reply(m.chat, `${rg}𝙉𝘼𝘿𝙄𝙀 𝙃𝘼 𝙎𝙄𝘿𝙊 𝘽𝙇𝙊𝙌𝙐𝙀𝘼𝘿𝙊`, m) 
 /*conn.sendButton(m.chat, `${rg}𝙉𝘼𝘿𝙄𝙀 𝙃𝘼 𝙎𝙄𝘿𝙊 𝘽𝙇𝙊𝙌𝙐𝙀𝘼𝘿𝙊\n\n𝙉𝙊 𝙊𝙉𝙀 𝙃𝘼𝙎 𝘽𝙀𝙀𝙉 𝘽𝙇𝙊𝘾𝙆𝙀𝘿`, wm, gata, [
 ['𝗠 𝗘 𝗡 𝗨 ☘️', '/menu']], os.getRandom())*/
 })

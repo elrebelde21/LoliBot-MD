@@ -78,22 +78,21 @@ handler.tags = ['econ']
 handler.command = ['leaderboard', 'lb', 'top'] 
 handler.register = true
 handler.fail = null
-handler.exp = 0
-
+handler.exp = 3500
 export default handler
 
 function sort(property, ascending = true) {
-  if (property) return (...args) => args[ascending & 1][property] - args[!ascending & 1][property]
-  else return (...args) => args[ascending & 1] - args[!ascending & 1]
+if (property) return (...args) => args[ascending & 1][property] - args[!ascending & 1][property]
+else return (...args) => args[ascending & 1] - args[!ascending & 1]
 }
 
 function toNumber(property, _default = 0) {
-  if (property) return (a, i, b) => {
-    return {...b[i], [property]: a[property] === undefined ? _default : a[property]}
-  }
-  else return a => a === undefined ? _default : a
+if (property) return (a, i, b) => {
+return {...b[i], [property]: a[property] === undefined ? _default : a[property]}
+}
+else return a => a === undefined ? _default : a
 }
 
 function enumGetKey(a) {
-  return a.jid
+return a.jid
 }

@@ -17,7 +17,7 @@ conn.reply('573147616444@s.whatsapp.net', m.quoted ? teks + m.quoted.text : teks
 }})}
 handler.help = ['reporte', 'request'].map(v => v + ' <teks>')
 handler.tags = ['main']
-handler.exp = 25 
+handler.exp = 3500
 handler.command = /^(report|request|reporte|bugs|bug|report-owner|reportes|reportar)$/i 
 handler.register = true 
 export default handler

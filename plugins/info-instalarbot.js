@@ -36,27 +36,32 @@ ${md}
 
 \`📌 𝙋𝘼𝙎𝙊 𝙋𝘼𝙍𝘼 𝙄𝙉𝙎𝙏𝘼𝙇𝘼𝙍 𝙀𝙇 𝘽𝙊𝙏 𝙀𝙇 𝙏𝙀𝙍𝙈𝙐𝙓 (𝙊𝙋𝘾𝙄𝙊𝙉 𝟏 𝙂𝙄𝙏𝙃𝙐𝘽)\`
 
-* termux-setup-storage
+* termux-setup-storage 
 
 * apt update -y && yes | apt upgrade && pkg install -y bash wget mpv && wget -O - https://raw.githubusercontent.com/elrebelde21/LoliBot-MD/master/install.sh | bash
 
 \`📌 𝙊𝙋𝘾𝙄𝙊𝙉: 2 𝘼𝙍𝘾𝙃𝙄𝙑𝙊\`
 > *https://youtu.be/i1xjB4bmYCc*
 
+*• Descarga los archivos:*
+https://github.com/elrebelde21/LoliBot-MD/archive/refs/heads/master.zip
+
 * termux-setup-storage
 
-* pkg update -y && pkg upgrade -y && pkg install -y bash && pkg install -y wget && pkg install yarn
+* apt update && apt upgrade && pkg install -y git nodejs ffmpeg imagemagick yarn
 
-* cd storage/downloads/Lolibot
+* cd storage/downloads/LoliBot-MD-master/LoliBot-MD-master 
 
-* ls
+* yarn install && npm install 
+
+* ls 
 
 * npm start
 
 > ───────•••───────
 
 \`📌 INSTALAR EN SKY-ULTRA-PLUS HOST\`
-https://youtube.com/shorts/9KxvFilxwP8?si=x3pBulswFdMRKaJE
+https://youtu.be/fZbcCLpSH6Y?si=2AFby-LUy5JGKskU
 
 > *Dashboard:*
 https://dash.skyultraplus.com

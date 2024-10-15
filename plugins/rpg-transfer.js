@@ -17,8 +17,7 @@ let lol = `\`⧼⧼⧼ 💱 𝙏𝙍𝘼𝙉𝙎𝙁𝙀𝙍𝙀𝙉𝘾𝙄𝘼
 ┃ 💎 𝘿𝙞𝙖𝙢𝙖𝙣𝙩𝙚𝙨 = limit
 ┃ 🪙 𝙇𝙤𝙡𝙞𝘾𝙤𝙞𝙣𝙨 = money 
 ┃ ⚡ 𝙀𝙭𝙥𝙚𝙧𝙞𝙚𝙣𝙘𝙞𝙖 = exp 
-┗•
-`.trim()
+┗•`.trim()
     
 const type = (args[0] || '').toLowerCase()
 if (!item.includes(type)) return m.reply(lol,  m.chat, {mentions: conn.parseMention(lol)}, {quoted: m })
@@ -82,11 +81,11 @@ handler.register = true
 export default handler
 
 function special(type) {
-    let b = type.toLowerCase()
-    let special = (['common', 'uncoommon', 'mythic', 'legendary', 'pet'].includes(b) ? ' Crate' : '')
-    return special
+let b = type.toLowerCase()
+let special = (['common', 'uncoommon', 'mythic', 'legendary', 'pet'].includes(b) ? ' Crate' : '')
+return special
 }
 
 function isNumber(x) {
-    return !isNaN(x)
+return !isNaN(x)
 }

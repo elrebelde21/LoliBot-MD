@@ -67,7 +67,7 @@ mentionedJid:[m.sender],
 handler.help = ['donar']
 handler.tags = ['main']
 handler.command = /^dona(te|si)|donar|apoyar|paypal|donating|creditos$/i
-handler.exp = 80
+handler.exp = 600
 handler.register = true
 export default handler
 

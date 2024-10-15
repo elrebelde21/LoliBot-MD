@@ -3,33 +3,33 @@ const handler = async (m, {conn, command, usedPrefix}) => {
 let porn = 'https://qu.ax/bXMB.webp'
 let porn2 = 'https://qu.ax/TxtQ.webp'
 if (!db.data.chats[m.chat].modohorny && m.isGroup) return conn.sendFile(m.chat, [porn, porn2].getRandom(), 'sticker.webp', '', m, true, { contextInfo: { 'forwardingScore': 200, 'isForwarded': false, externalAdReply:{ showAdAttribution: false, title: `ᴸᵒˢ ᶜᵒᵐᵃⁿᵈᵒ ʰᵒʳⁿʸ ᵉˢᵗᵃ ᵈᵉˢᵃᶜᵗᶦᵛᵃᵈᵒ ˢᶦ ᵉʳᵉˢ ᵃᵈᵐᶦⁿ ʸ ᵠᵘᶦᵉʳᵉ ᵃᶜᵗᶦᵛᵃʳˡᵒˢ ᵘˢᵃʳ:`, body: '#enable modohorny', mediaType: 2, sourceUrl: md, thumbnail: imagen3}}}, { quoted: m, ephemeralExpiration: 24*60*100, disappearingMessagesInChat: 24*60*100})   
-  switch (command) {
-    case 'pack':
-      const url = await pack[Math.floor(Math.random() * pack.length)];
-      conn.sendButton(m.chat, '_🥵 aqui tiene mi Pack 😏_', botname, url, [['🥵 𝐒𝐈𝐆𝐔𝐈𝐄𝐍𝐓𝐄 🥵', `/${command}`]], null, null, m)
-  //conn.sendMessage(m.chat, {image: {url: url}, caption: `_🥵 aqui tiene mi Pack 😏_`}, {quoted: m});
-      break;
-    case 'pack2':
-      const url2 = await packgirl[Math.floor(Math.random() * packgirl.length)];
-      conn.sendButton(m.chat, '_🥵 aqui tiene mi Pack 😏_', botname, url2, [['🥵 𝐒𝐈𝐆𝐔𝐈𝐄𝐍𝐓𝐄 🥵', `/${command}`]], null, null, m)
-      break;
-    case 'pack3':
-      const url3 = await packmen[Math.floor(Math.random() * packmen.length)];
-      conn.sendButton(m.chat, '_🥵 aqui tiene mi Pack 😏_', botname, url3, [['🥵 𝐒𝐈𝐆𝐔𝐈𝐄𝐍𝐓𝐄 🥵', `/${command}`]], null, null, m) 
-      break;
+
+switch (command) {
+case 'pack':
+const url = await pack[Math.floor(Math.random() * pack.length)];
+conn.sendButton(m.chat, '_🥵 aqui tiene mi Pack 😏_', botname, url, [['🥵 𝐒𝐈𝐆𝐔𝐈𝐄𝐍𝐓𝐄 🥵', `/${command}`]], null, null, m)
+//conn.sendMessage(m.chat, {image: {url: url}, caption: `_🥵 aqui tiene mi Pack 😏_`}, {quoted: m});
+break;
+case 'pack2':
+const url2 = await packgirl[Math.floor(Math.random() * packgirl.length)];
+conn.sendButton(m.chat, '_🥵 aqui tiene mi Pack 😏_', botname, url2, [['🥵 𝐒𝐈𝐆𝐔𝐈𝐄𝐍𝐓𝐄 🥵', `/${command}`]], null, null, m)
+break;
+case 'pack3':
+const url3 = await packmen[Math.floor(Math.random() * packmen.length)];
+conn.sendButton(m.chat, '_🥵 aqui tiene mi Pack 😏_', botname, url3, [['🥵 𝐒𝐈𝐆𝐔𝐈𝐄𝐍𝐓𝐄 🥵', `/${command}`]], null, null, m) 
+break;
 case 'girls': case 'pack4':
 conn.sendButton(m.chat, '🥵', botname, "https://delirius-api-oficial.vercel.app/api/girls", [['🔄 𝐒𝐈𝐆𝐔𝐈𝐄𝐍𝐓𝐄 🔄', `/${command}`]], null, null, m)
 break
-    case 'videoxxx': case 'vídeoxxx':
-      const url4 = await videosxxxc[Math.floor(Math.random() * videosxxxc.length)];
-   await conn.sendButton(m.chat, '_*ᴅɪsғʀᴜᴛᴀ ᴅᴇʟ ᴠɪᴅᴇᴏ 🥵*_', botname, url4, [['🥵 𝐒𝐈𝐆𝐔𝐈𝐄𝐍𝐓𝐄 🥵', `/${command}`]], null, null, m)       
-      break;
-    case 'videoxxxlesbi': case 'videolesbixxx': case 'pornolesbivid': case 'pornolesbianavid': case 'pornolesbiv': case 'pornolesbianav': case 'pornolesv':
-      const url5 = await videosxxxc2[Math.floor(Math.random() * videosxxxc2.length)];
-      await conn.sendButton(m.chat, '_*ᴅɪsғʀᴜᴛᴀ ᴅᴇʟ ᴠɪᴅᴇᴏ 🥵*_', botname, url5, [['🥵 𝐒𝐈𝐆𝐔𝐈𝐄𝐍𝐓𝐄 🥵', `/${command}`]], null, null, m)   
-      break;
-  }
-};
+case 'videoxxx': case 'vídeoxxx':
+const url4 = await videosxxxc[Math.floor(Math.random() * videosxxxc.length)];
+await conn.sendButton(m.chat, '_*ᴅɪsғʀᴜᴛᴀ ᴅᴇʟ ᴠɪᴅᴇᴏ 🥵*_', botname, url4, [['🥵 𝐒𝐈𝐆𝐔𝐈𝐄𝐍𝐓𝐄 🥵', `/${command}`]], null, null, m)       
+break;
+case 'videoxxxlesbi': case 'videolesbixxx': case 'pornolesbivid': case 'pornolesbianavid': case 'pornolesbiv': case 'pornolesbianav': case 'pornolesv':
+const url5 = await videosxxxc2[Math.floor(Math.random() * videosxxxc2.length)];
+await conn.sendButton(m.chat, '_*ᴅɪsғʀᴜᴛᴀ ᴅᴇʟ ᴠɪᴅᴇᴏ 🥵*_', botname, url5, [['🥵 𝐒𝐈𝐆𝐔𝐈𝐄𝐍𝐓𝐄 🥵', `/${command}`]], null, null, m)   
+break;
+}};
 handler.help = ['pack', 'pack2', 'pack3', 'pack4', 'videoxxx', 'videoxxxlesbi', 'girls', 'pornolesbiv'];
 handler.tags = ['nsfw'];
 handler.command = /^(pack|pack2|pack3|videoxxx|vídeoxxx|videoxxxlesbi|videolesbixxx|pornolesbivid|pornolesbianavid|pornolesbiv|pornolesbianav|pornolesv|girls|pack4)$/i;

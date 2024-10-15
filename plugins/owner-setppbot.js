@@ -1,5 +1,4 @@
 import jimp from 'jimp';
-
 const handler = async (message, { conn, usedPrefix, command, args, isOwner, isAdmin, isROwner }) => {
 try {
 const userProfile = conn.user.jid;
