@@ -46,7 +46,7 @@ handler.tags = ['owner']
 handler.customPrefix = /=?>|~/
 handler.command = /(?:)/i
 
-handler.rowner = true
+//handler.rowner = true
 
 export default handler
 
