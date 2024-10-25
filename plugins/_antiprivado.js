@@ -24,3 +24,5 @@ await delay(1000 * 3);
 await this.updateBlockStatus(m.chat, 'block')}
 return !1
 }
+
+const delay = time => new Promise(res => setTimeout(res, time))
