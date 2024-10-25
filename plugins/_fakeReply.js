@@ -12,6 +12,8 @@ global.fake = { contextInfo: { mentionedJid: null, forwardingScore: 1, isForward
    
 global.rpyp = { contextInfo: { externalAdReply: { mediaUrl: md, mediaType: 'VIDEO', description: 'GitHub', title: 'GitHub', body: 'ˢᶦ ᵗᵉ ᵃᵍʳᵃᵈᵃ ᵉˡ ᴮᵒᵗ ᵃᵖᵒʸᵃʳᵐᵉ ᶜᵒⁿ ᵘⁿᵃ 🌟', thumbnailUrl: pp, sourceUrl: md }}}
 
+const delay = time => new Promise(res => setTimeout(res, time))
+	
 //⊱ ━━━━━.⋅ RPG ⋅.━━━━ ⊰
 
 global.flaaa = [
