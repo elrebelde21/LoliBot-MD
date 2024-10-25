@@ -20,7 +20,7 @@ let chat = global.db.data.chats[m.chat]
 let bot = global.db.data.settings[this.user.jid] || {}
 if (bot.antiPrivate && !isOwner && !isROwner) {
 await m.reply(`Hola esta prohibido hablar al privado del bot, por lo cual seras bloqueado...\n> _*Para usar mi funciones unirte al  grupo oficial 👇*_\n${nn}`, false, { mentions: [m.sender] })
-await delay(1000 * 3);
+await delay(1000 * 1);
 await this.updateBlockStatus(m.chat, 'block')}
 return !1
 }
