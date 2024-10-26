@@ -19,7 +19,10 @@ import pino from 'pino';
 import { mongoDB, mongoDBV2 } from './lib/mongoDB.js';
 import store from './lib/store.js'
 import { Boom } from '@hapi/boom'
-const {useMultiFileAuthState, DisconnectReason, fetchLatestBaileysVersion, MessageRetryMap, makeCacheableSignalKeyStore,  jidNormalizedUser, PHONENUMBER_MCC } = await import('@whiskeysockets/baileys')
+import pkg from 'google-libphonenumber'
+const { PhoneNumberUtil } = pkg
+const phoneUtil = PhoneNumberUtil.getInstance()
+const {useMultiFileAuthState, DisconnectReason, fetchLatestBaileysVersion, MessageRetryMap, makeCacheableSignalKeyStore,  jidNormalizedUser } = await import('@whiskeysockets/baileys')
 import moment from 'moment-timezone'
 import NodeCache from 'node-cache'
 import readline from 'readline'
@@ -147,19 +150,26 @@ if (MethodMobile) throw new Error('⚠️ Se produjo un Error en la API de movil
 let addNumber
 if (!!phoneNumber) {
 addNumber = phoneNumber.replace(/[^0-9]/g, '')
-if (!Object.keys(PHONENUMBER_MCC).some(v => numeroTelefono.startsWith(v))) {
-console.log(chalk.bgBlack(chalk.bold.redBright("\n\n✴️ Su número debe comenzar  con el codigo de pais")))
-process.exit(0)
+if (!addNumber.startsWith('+')) {
+addNumber = `+${addNumber}`
+}
+if (!await isValidPhoneNumber(addNumber)) {
+console.log(chalk.bgBlack(chalk.bold.redBright("\n\n✴️ Su número debe ser válido")))
+process.exit(0);
 }} else {
 while (true) {
-addNumber = await question(chalk.bgBlack(chalk.bold.greenBright("\n\n✳️ Escriba su numero\n\nEjemplo: 5491168xxxx\n\n\n\n")))
+addNumber = await question(chalk.bgBlack(chalk.bold.greenBright("\n\n✳️ Escriba su número\n\nEjemplo: 5491168xxxx\n\n\n\n")))
 addNumber = addNumber.replace(/[^0-9]/g, '')
-  
-if (addNumber.match(/^\d+$/) && Object.keys(PHONENUMBER_MCC).some(v => addNumber.startsWith(v))) {
-break 
+if (!addNumber.startsWith('+')) {
+addNumber = `+${addNumber}`
+}
+if (await isValidPhoneNumber(addNumber)) {
+phoneNumber = addNumber
+break
 } else {
-console.log(chalk.bgBlack(chalk.bold.redBright("\n\n✴️ Asegúrese de agregar el código de país")))
+console.log(chalk.bgBlack(chalk.bold.redBright("\n\n✴️ Número no válido. Intente de nuevo.")))
 }}}
+
   
 setTimeout(async () => {
 let codeBot = await conn.requestPairingCode(addNumber)
@@ -427,3 +437,18 @@ Object.freeze(global.support)
 _quickTest()
 .then(() => conn.logger.info('Ƈᴀʀɢᴀɴᴅᴏ．．．.\n'))
 .catch(console.error)
+
+async function isValidPhoneNumber(number) {
+try {
+number = number.replace(/\s+/g, '')
+// Si el número empieza con '+521' o '+52 1', quitar el '1'
+if (number.startsWith('+521')) {
+number = number.replace('+521', '+52'); // Cambiar +521 a +52
+} else if (number.startsWith('+52') && number[4] === '1') {
+number = number.replace('+52 1', '+52'); // Cambiar +52 1 a +52
+}
+const parsedNumber = phoneUtil.parseAndKeepRawInput(number)
+return phoneUtil.isValidNumber(parsedNumber)
+} catch (error) {
+return false
+}}
