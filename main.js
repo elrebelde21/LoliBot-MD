@@ -150,24 +150,18 @@ if (MethodMobile) throw new Error('⚠️ Se produjo un Error en la API de movil
 let addNumber
 if (!!phoneNumber) {
 addNumber = phoneNumber.replace(/[^0-9]/g, '')
-if (!addNumber.startsWith('+')) {
-addNumber = `+${addNumber}`
-}
 if (!await isValidPhoneNumber(addNumber)) {
-console.log(chalk.bgBlack(chalk.bold.redBright("\n\n✴️ Su número debe ser válido")))
-process.exit(0);
+console.log(chalk.bgBlack(chalk.bold.redBright("\n\n✴️ Su número debe comenzar  con el codigo de pais")))
+process.exit(0)
 }} else {
 while (true) {
-addNumber = await question(chalk.bgBlack(chalk.bold.greenBright("\n\n✳️ Escriba su número\n\nEjemplo: 5491168xxxx\n\n\n\n")))
+addNumber = await question(chalk.bgBlack(chalk.bold.greenBright("\n\n✳️ Escriba su numero\n\nEjemplo: 5491168xxxx\n\n\n\n")))
 addNumber = addNumber.replace(/[^0-9]/g, '')
-if (!addNumber.startsWith('+')) {
-addNumber = `+${addNumber}`
-}
-if (await isValidPhoneNumber(addNumber)) {
-phoneNumber = addNumber
-break
+  
+if (addNumber.match(/^\d+$/) && await isValidPhoneNumber(addNumber)) {
+break 
 } else {
-console.log(chalk.bgBlack(chalk.bold.redBright("\n\n✴️ Número no válido. Intente de nuevo.")))
+console.log(chalk.bgBlack(chalk.bold.redBright("\n\n✴️ Asegúrese de agregar el código de país")))
 }}}
 
   
