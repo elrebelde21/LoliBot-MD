@@ -1213,7 +1213,7 @@ continue
                 }
                 m.isCommand = true
                 let xp = 'exp' in plugin ? parseInt(plugin.exp) : 1 // Ganancia de XP por comando
-                if (xp > 200)
+                if (xp > 9000)
                     m.reply('chirrido -_-') // Hehehe
                 else
 m.exp += xp
@@ -1444,14 +1444,14 @@ console.error(e)
 
 global.dfail = (type, m, conn, usedPrefix) => {
     let msg = {
-        rowner: '[❗] Este comando solo puede ser utilizado por un admins del grupo',
-        owner: '[❗] Este comando solo puede ser utilizado por un admins del grupo',
-        mods: '[❗] Este comando solo lo usa ShanBot',
-        premium: '[❗] Este comando solo es para usuarios Premium (VIP)',
-        group: '[❗] Este comando es solo para grupos',
-        private: '[❗] Este comando solo. funciona el privado del bot',
-        admin: '[❗] Este comando solo puede ser utilizado por administradores del grupo',
-        botAdmin: '[❗] Este comando solo se puede usar cuando el bot se convierte en administrador',
+        rowner: '⚠️ Este comando solo puede ser utilizado por un admins del grupo',
+        owner: '⚠️ Este comando solo puede ser utilizado por un admins del grupo',
+        mods: '⚠️ Este comando solo lo usa ShanBot',
+        premium: '⚠️ Este comando solo es para usuarios Premium (VIP)',
+        group: '⚠️ Este comando es solo para grupos',
+        private: '⚠️ Este comando solo. funciona el privado del bot',
+        admin: '⚠️ Este comando solo puede ser utilizado por administradores del grupo',
+        botAdmin: '⚠️ Este comando solo se puede usar cuando el bot se convierte en administrador',
         unreg: '「NO ESTAS REGISTRADO」\n\nPA NO APARECES EN MI BASE DE DATOS ✋🥸🤚\n\nPara poder usarme escribe el siguente comando\n\nComando: #reg nombre.edad\nEjemplo: #reg elrebelde.21',
         restrict: '[ 🔐 ] Este comando esta desactivado por mi jefe'
     }[type]
