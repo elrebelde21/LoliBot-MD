@@ -20,9 +20,6 @@ let chat = global.db.data.chats[m.chat]
 let bot = global.db.data.settings[this.user.jid] || {}
 if (bot.antiPrivate && !isOwner && !isROwner) {
 await m.reply(`Hola esta prohibido usar los comando al privado del bot, por lo cual seras bloqueado...\n\n> _*Para usar mi funciones unirte al  grupo oficial 👇*_\n${nn}`, false, { mentions: [m.sender] })
-await delay(1000 * 1);
 await this.updateBlockStatus(m.chat, 'block')}
 return !1
 }
-
-const delay = time => new Promise(res => setTimeout(res, time))
