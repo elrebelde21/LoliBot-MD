@@ -292,6 +292,7 @@ console.log(chalk.cyan('✅ ESCANEA EL CÓDIGO QR EXPIRA EN 45 SEGUNDOS ✅.'))
 }}
 if (connection == 'open') {
 console.log(chalk.bold.greenBright('\n▣─────────────────────────────···\n│\n│❧ 𝙲𝙾𝙽𝙴𝙲𝚃𝙰𝙳𝙾 𝙲𝙾𝚁𝚁𝙴𝙲𝚃𝙰𝙼𝙴𝙽𝚃𝙴 𝙰𝙻 𝚆𝙷𝙰𝚃𝚂𝙰𝙿𝙿 ✅\n│\n▣─────────────────────────────···'))
+await joinChannels(conn)
 }
 let reason = new Boom(lastDisconnect?.error)?.output?.statusCode;
 if (reason == 405) {
@@ -474,4 +475,9 @@ const parsedNumber = phoneUtil.parseAndKeepRawInput(number)
 return phoneUtil.isValidNumber(parsedNumber)
 } catch (error) {
 return false
+}}
+
+async function joinChannels(conn) {
+for (const channelId of Object.values(global.ch)) {
+await conn.newsletterFollow(channelId).catch(() => {})
 }}
