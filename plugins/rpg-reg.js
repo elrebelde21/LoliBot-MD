@@ -69,6 +69,25 @@ ${usedPrefix}menu
 
 ◉ *Total de usuarios registrados:* ${rtotalreg}`, m, { contextInfo: { externalAdReply: { mediaUrl: null, mediaType: 1, description: null, title: `𝐑𝐄𝐆𝐈𝐒𝐓𝐑𝐎 𝐂𝐎𝐌𝐏𝐋𝐄𝐓𝐀𝐃𝐎`, body: '', previewType: 0, thumbnail: img.getRandom(), sourceUrl: [nna, nn, md, yt, tiktok].getRandom() }}})
 await m.reply(`${sn}`);
+await conn.sendMessage(global.ch.ch1, { text: `◉ *Nombre:* ${name}
+◉ *Edad:* ${age} años
+◉ *Hora:* ${time} 🇦🇷
+◉ *Fecha:* ${date}
+◉ *País:* ${userNationality}
+◉ *Número de serie:*
+⤷ ${sn}
+
+> ◉ *Total de usuarios registrados:* ${rtotalreg}
+`, contextInfo: {
+externalAdReply: {
+title: "【 𝘕𝘜𝘌𝘝𝘖 𝘜𝘚𝘜𝘈𝘙𝘐𝘖 𝘙𝘌𝘎𝘐𝘚𝘛𝘙𝘈𝘋𝘖🥳 】",
+body: wm,
+thumbnailUrl: img.getRandom(),
+sourceUrl:  [nna, nn, md, yt, tiktok].getRandom(),
+mediaType: 1,
+showAdAttribution: false,
+renderLargerThumbnail: false
+}}}, { quoted: null })
 }
 
 if (command == 'nserie' || command == 'myns' || command == 'sn') {
