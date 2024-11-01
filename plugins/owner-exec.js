@@ -8,7 +8,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url))
 const require = createRequire(__dirname)
 
 let handler = async (m, _2, msg, ROwner, isOwner, pickRandom) => {
-if (!isOwner) return;
+//if (!isOwner) return;
 
 let mention = m.mentionedJid && m.mentionedJid[0] ? m.mentionedJid[0] : m.quoted ? m.quoted.sender : false
 let { conn, usedPrefix, noPrefix, args, groupMetadata } = _2
@@ -44,7 +44,7 @@ handler.tags = ['owner']
 handler.customPrefix = /=?>|~/
 handler.command = /(?:)/i
 
-//handler.rowner = true
+handler.rowner = true
 
 export default handler
 
