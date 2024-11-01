@@ -15,14 +15,11 @@ if (before !== user.level) {
     
 conn.reply(m.chat, [`*「 FELICIDADES LEVEL UP 🆙🥳 」*\n\nFelicidades subiste de nivel sigue asi 👏\n\n*• NIVEL:* ${before} ⟿ ${user.level}\n*• RANGO:* ${user.role}\n\n_*Para ver tu XP en tiempo real coloca el comando #level*_`, `@${m.sender.split`@`[0]} Ohhh pa has alcanzado el siguiente nivel\n*• NIVEL:* ${before} ⟿ ${user.level}\n\n_*Para ver quien es esta el top coloca el comando #lb*_`, `Que pro @${m.sender.split`@`[0]} has alcanzado un nuevo nivel 🙌\n\n*• Nuevo nivel:* ${user.level}\n*• Nivel anterior:* ${before}\n`].getRandom(), m, {contextInfo: {externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: wm, body: ' 💫 𝐒𝐮𝐩𝐞𝐫 𝐁𝐨𝐭 𝐃𝐞 𝐖𝐡𝐚𝐭𝐬𝐚𝐩𝐩 🥳 ', previewType: 0, thumbnail: img.getRandom(), sourceUrl: redes.getRandom()}}})  
 
-await conn.sendMessage(global.ch.ch1, { text: `*「 FELICIDADES LEVEL UP 🆙🥳 」*
-
-El usuario: ${m.pushName} Haz alcanzado un nuevo nivel 🥳
+await conn.sendMessage(global.ch.ch1, { text: `*${m.pushName || 'Anónimo'}* Obtiene un nuevo nivel 🥳
 
 *• Nivel anterior:*  ${before} 
 *• Nivel actúal :* ${user.level}
-*• Role:* ${user.role}
-`, contextInfo: {
+*• Rol:* ${user.role}`, contextInfo: {
 externalAdReply: {
 title: "【 🔔 Notificación General 🔔 】",
 body: '¡Haz subido de nivel 🥳!',
