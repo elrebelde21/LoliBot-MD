@@ -39,7 +39,8 @@ age = parseInt(age);
 if (age > 100) throw '👴🏻 ¡Estás muy viejo para esto!'
 if (age < 5) throw '🚼 ¿Los bebés saben escribir? ✍️😳'
 
-user.name = name.trim();
+user.name = name + '✓'.trim()
+//user.name = name.trim();
 user.age = age;
 user.regTime = +new Date();
 user.registered = true;
@@ -70,15 +71,13 @@ ${usedPrefix}menu
 
 ◉ *Total de usuarios registrados:* ${rtotalreg}`, contextInfo:{forwardedNewsletterMessageInfo: { newsletterJid: '120363355261011910@newsletter', serverMessageId: '', newsletterName: 'LoliBot - Test ✨' }, forwardingScore: 9999999, isForwarded: true, "externalAdReply": {"showAdAttribution": true, "containsAutoReply": true, "title": `𝐑𝐄𝐆𝐈𝐒𝐓𝐑𝐎 𝐂𝐎𝐌𝐏𝐋𝐄𝐓𝐀𝐃𝐎`, "body": wm, "previewType": "PHOTO", thumbnail: img.getRandom(), sourceUrl: [nna, nna2, nn, md, yt, tiktok].getRandom()}}}, { quoted: fkontak, ephemeralExpiration: 24*60*100, disappearingMessagesInChat: 24*60*100})
 //await m.reply(`${sn}`);
-await conn.sendMessage(global.ch.ch1, { text: `◉ *Nombre:* ${name}
+await conn.sendMessage(global.ch.ch1, { text: `◉ *Usuarios:* ${m.pushName || 'Anónimo'}
+◉ *País:* ${userNationality}
+◉ *Verificación:* ${user.name}
 ◉ *Edad:* ${age} años
 ◉ *Fecha:* ${date}
-◉ *País:* ${userNationality}
 ◉ *Número de serie:*
-⤷ ${sn}
-
-> ◉ *Total de usuarios registrados:* ${rtotalreg}
-`, contextInfo: {
+⤷ ${sn}`, contextInfo: {
 externalAdReply: {
 title: "『 𝙉𝙊𝙏𝙄𝙁𝙄𝘾𝘼𝘾𝙄𝙊́𝙉 📢 』",
 body: "Nuevo usuario registrado 🥳",
