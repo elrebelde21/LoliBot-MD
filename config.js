@@ -85,6 +85,7 @@ global.fb = 'https://www.facebook.com/elrebelde21'
 global.face = 'https://www.facebook.com/groups/872989990425789/'
 
 global.nna = 'https://whatsapp.com/channel/0029Va4QjH7DeON0ePwzjS1A' //Update
+global.nna2 = 'https://whatsapp.com/channel/0029Vau57ykEwEk5CgosvU3v'
 global.nn = 'https://chat.whatsapp.com/HNDVUxHphPzG3cJHIwCaX5' //Grupo 1
 global.nnn = 'https://chat.whatsapp.com/H4hxytyGvucIF1k0UAR7es' //Grupo 2
 global.nnnt = 'https://chat.whatsapp.com/IlyJBy1fxcw2qAHLSC5YLa' //Grupo del Colaboracion
@@ -159,8 +160,9 @@ global.flaaa = [
 //---------------[ IDs de canales ]----------------
 
 global.ch = {
-ch1: '120363160031023229@newsletter',
-ch2: '120363301598733462@newsletter',
+ch1: '120363355261011910@newsletter', 
+ch2: '120363160031023229@newsletter',
+ch3: '120363301598733462@newsletter',
 }
 
 //----------------------------------------------------
