@@ -2,6 +2,8 @@
 import { canLevelUp } from '../lib/levelling.js'
 
 export async function before(m, { conn }) {
+  let who = m.mentionedJid && m.mentionedJid[0] ? m.mentionedJid[0] : m.fromMe ? conn.user.jid : m.sender
+ let ppch = await conn.profilePictureUrl(who, 'image').catch(_ => img.getRandom()) 
 let user = global.db.data.users[m.sender]
 let chat = global.db.data.chats[m.chat]
 if (!chat.autolevelup) return !0
@@ -24,7 +26,7 @@ El usuario: ${m.pushName} Haz alcanzado un nuevo nivel 🥳
 externalAdReply: {
 title: "【 🔔 Notificación General 🔔 】",
 body: '¡Haz subido de nivel 🥳!',
-thumbnailUrl: img.getRandom(),
+thumbnailUrl: ppch, 
 sourceUrl: redes.getRandom(),
 mediaType: 1,
 showAdAttribution: false,

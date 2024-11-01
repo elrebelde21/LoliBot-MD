@@ -5,6 +5,7 @@ let Reg = /\|?(.*)([.|] *?)([0-9]*)$/i
 let handler = async function (m, { conn, text, args, usedPrefix, command }) {
 let fkontak = { "key": { "participants":"0@s.whatsapp.net", "remoteJid": "status@broadcast", "fromMe": false, "id": "Halo" }, "message": { "contactMessage": { "vcard": `BEGIN:VCARD\nVERSION:3.0\nN:Sy;Bot;;;\nFN:y\nitem1.TEL;waid=${m.sender.split('@')[0]}:${m.sender.split('@')[0]}\nitem1.X-ABLabel:Ponsel\nEND:VCARD` }}, "participant": "0@s.whatsapp.net" }
   let who = m.mentionedJid && m.mentionedJid[0] ? m.mentionedJid[0] : m.fromMe ? conn.user.jid : m.sender
+ let ppch = await conn.profilePictureUrl(who, 'image').catch(_ => img.getRandom()) 
   let bio = await conn.fetchStatus(who).catch(_ => 'undefined')
 let biot = bio.status?.toString() || 'Sin Info'
 const date = moment.tz('America/Bogota').format('DD/MM/YYYY')
@@ -48,7 +49,7 @@ global.db.data.users[m.sender].exp += 150;
 global.db.data.users[m.sender].joincount += 2;
   
 let sn = createHash('md5').update(m.sender).digest('hex');
-await conn.reply(m.chat, `[ ✅ REGISTRO COMPLETADO ]
+await conn.sendMessage(m.chat, { text: `[ ✅ REGISTRO COMPLETADO ]
 
 ◉ *Nombre:* ${name}
 ◉ *Edad:* ${age} años
@@ -67,11 +68,10 @@ await conn.reply(m.chat, `[ ✅ REGISTRO COMPLETADO ]
 *◉ Para ver los comandos del bot usar:*
 ${usedPrefix}menu
 
-◉ *Total de usuarios registrados:* ${rtotalreg}`, m, { contextInfo: { externalAdReply: { mediaUrl: null, mediaType: 1, description: null, title: `𝐑𝐄𝐆𝐈𝐒𝐓𝐑𝐎 𝐂𝐎𝐌𝐏𝐋𝐄𝐓𝐀𝐃𝐎`, body: '', previewType: 0, thumbnail: img.getRandom(), sourceUrl: [nna, nn, md, yt, tiktok].getRandom() }}})
-await m.reply(`${sn}`);
+◉ *Total de usuarios registrados:* ${rtotalreg}`, contextInfo:{forwardedNewsletterMessageInfo: { newsletterJid: '120363355261011910@newsletter', serverMessageId: '', newsletterName: 'LoliBot - Test ✨' }, forwardingScore: 9999999, isForwarded: true, "externalAdReply": {"showAdAttribution": true, "containsAutoReply": true, "title": `𝐑𝐄𝐆𝐈𝐒𝐓𝐑𝐎 𝐂𝐎𝐌𝐏𝐋𝐄𝐓𝐀𝐃𝐎`, "body": wm, "previewType": "PHOTO", thumbnail: img.getRandom(), sourceUrl: [nna, nna2, nn, md, yt, tiktok].getRandom()}}}, { quoted: fkontak, ephemeralExpiration: 24*60*100, disappearingMessagesInChat: 24*60*100})
+//await m.reply(`${sn}`);
 await conn.sendMessage(global.ch.ch1, { text: `◉ *Nombre:* ${name}
 ◉ *Edad:* ${age} años
-◉ *Hora:* ${time} 🇦🇷
 ◉ *Fecha:* ${date}
 ◉ *País:* ${userNationality}
 ◉ *Número de serie:*
@@ -80,9 +80,9 @@ await conn.sendMessage(global.ch.ch1, { text: `◉ *Nombre:* ${name}
 > ◉ *Total de usuarios registrados:* ${rtotalreg}
 `, contextInfo: {
 externalAdReply: {
-title: "【 𝘕𝘜𝘌𝘝𝘖 𝘜𝘚𝘜𝘈𝘙𝘐𝘖 𝘙𝘌𝘎𝘐𝘚𝘛𝘙𝘈𝘋𝘖🥳 】",
-body: wm,
-thumbnailUrl: img.getRandom(),
+title: "『 𝙉𝙊𝙏𝙄𝙁𝙄𝘾𝘼𝘾𝙄𝙊́𝙉 📢 』",
+body: "Nuevo usuario registrado 🥳",
+thumbnailUrl: ppch, 
 sourceUrl:  [nna, nn, md, yt, tiktok].getRandom(),
 mediaType: 1,
 showAdAttribution: false,
