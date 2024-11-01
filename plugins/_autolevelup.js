@@ -3,7 +3,7 @@ import { canLevelUp } from '../lib/levelling.js'
 
 export async function before(m, { conn }) {
   let who = m.mentionedJid && m.mentionedJid[0] ? m.mentionedJid[0] : m.fromMe ? conn.user.jid : m.sender
- let ppch = await conn.profilePictureUrl(who, 'image').catch(_ => img.getRandom()) 
+ let ppch = await conn.profilePictureUrl(who, 'image').catch(_ => imageUrl.getRandom()) 
 let user = global.db.data.users[m.sender]
 let chat = global.db.data.chats[m.chat]
 if (!chat.autolevelup) return !0
