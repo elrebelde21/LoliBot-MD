@@ -120,7 +120,7 @@ global.eg = '『💚 𝙀𝙓𝙄𝙏𝙊𝙎 💚』\n\n'
 global.exito = eg
 
 //-------------------------[ IMAGEN ]------------------------------
-global.img = "https://qu.ax/Zgqq.jpg"
+//global.img = "https://qu.ax/Zgqq.jpg"
 global.img1 = 'https://qu.ax/hNJk.jpg'
 global.img2 = 'https://qu.ax/jzhN.jpg'
 
@@ -134,6 +134,7 @@ global.imagen6 = 'https://qu.ax/CySs.jpg'
 global.menu18 = 'https://qu.ax/MOgO.jpg'
 global.vid1 = 'https://qu.ax/dcAc.mp4'
 global.img = [imagen, imagen1, imagen2, imagen3, imagen4]
+global.imageUrl = ["https://qu.ax/HJnWj.jpg", "https://qu.ax/ehPzQ.jpg", "https://qu.ax/ilfbC.jpg"]
 
 //----------------------------[ NIVELES | RPG ]---------------------------------
 
