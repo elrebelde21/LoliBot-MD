@@ -66,7 +66,7 @@ https://whatsapp.com/channel/0029VakUvreFHWpyWUr4Jr0g
 • https://www.facebook.com/elrebelde21` 
 
 //if (m.text.includes(`Bot`) || m.text.includes(`simi`) || m.text.includes(`alexa`)) {   
-if (m.text.includes(`Bot`) || m.text.includes(`bot`) || m.text.includes(`simi`) || m.text.includes(`alexa`)) {   
+/*if (m.text.includes(`Bot`) || m.text.includes(`bot`) || m.text.includes(`simi`) || m.text.includes(`alexa`)) {   
 if (m.text.includes('jadibot') || m.text.includes('bots') || m.text.includes('serbot') || m.text.includes('instalarbot') ||  m.text.includes('infobot')) return
 //try {
 await conn.sendPresenceUpdate('composing', m.chat)
@@ -117,7 +117,7 @@ m.reply(resu2[0][0][0]);
 } catch {
 return m.reply([`Simsimi esta durmiendo no molesta 🥱`, `Callarte`, `Api simsimi caida`, `Simsimi esta ocupado cojieron con tu hermana vuelva mas tarde 🥵`, `NO MOLESTE PUTA`, `No hay señar`, `No estoy disponible`].getRandom());
 }}*/
-}
+//}
 
 if (/^infohost|hosting$/i.test(m.text)) {
  await conn.sendMessage(m.chat, { text: txt,
