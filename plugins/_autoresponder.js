@@ -1,4 +1,5 @@
-import axios from 'axios';
+//Api ya no sirven dejen buscó otras :v
+/*import axios from 'axios';
 import fetch from 'node-fetch';
 import translate from '@vitalets/google-translate-api';
 import { sticker } from '../lib/sticker.js';
@@ -61,3 +62,4 @@ return true;
 }
 
 export default handler;
+*/
