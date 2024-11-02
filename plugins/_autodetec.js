@@ -38,7 +38,34 @@ await this.sendMessage(m.chat, { text: `𝙀𝙇 𝙂𝙍𝙐𝙋𝙊 *${m.messa
 await this.sendMessage(m.chat, { text: `@${m.messageStubParameters[0].split`@`[0]} 𝘼𝙃𝙊𝙍𝘼 𝙀𝙎 𝘼𝘿𝙈𝙄𝙉 𝙀𝙉 𝙀𝙎𝙏𝙀 𝙂𝙍𝙐𝙋𝙊\n\n😼🫵𝘼𝘾𝘾𝙄𝙊𝙉 𝙍𝙀𝘼𝙇𝙄𝙕𝘼𝘿𝘼 𝙋𝙊𝙍: ${usuario}`, mentions: [m.sender, m.messageStubParameters[0], ...groupAdmins.map(v => v.id)] }, { quoted: fkontak, ephemeralExpiration: 24*60*100, disappearingMessagesInChat: 24*60*100})
 } else if (chat.detect && m.messageStubType == 30) {
 await this.sendMessage(m.chat, { text: `@${m.messageStubParameters[0].split`@`[0]} 𝘿𝙀𝙅𝘼 𝘿𝙀 𝙎𝙀𝙍 𝘼𝘿𝙈𝙄𝙉 𝙀𝙉 𝙀𝙎𝙏𝙀 𝙂𝙍𝙐𝙋𝙊\n\n😼🫵𝘼𝘾𝘾𝙄𝙊𝙉 𝙍𝙀𝘼𝙇𝙄𝙕𝘼𝘿𝘼 𝙋𝙊𝙍: ${usuario}`, mentions: [m.sender, m.messageStubParameters[0], ...groupAdmins.map(v => v.id)] }, { quoted: fkontak, ephemeralExpiration: 24*60*100, disappearingMessagesInChat: 24*60*100})
-} else if (chat.detect && m.messageStubType == 72) {
+} else if (m.messageStubType === 172 && m.messageStubParameters.length > 0) {
+const rawUser = m.messageStubParameters[0];
+const users = rawUser.split('@')[0]; 
+const prefijosProhibidos = ['91', '92', '222', '93', '265', '61', '62', '966', '229', '40', '49', '20', '963', '967', '234', '210', '212'];
+const usersConPrefijo = users.startsWith('+') ? users : `+${users}`;
+
+if (chat.antifake) {
+if (prefijosProhibidos.some(prefijo => usersConPrefijo.startsWith(prefijo))) {
+try {
+await conn.groupRequestParticipantsUpdate(m.chat, [rawUser], 'reject');
+console.log(`Solicitud de ingreso de ${usersConPrefijo} rechazada automáticamente por tener un prefijo prohibido.`);
+} catch (error) {
+console.error(`Error al rechazar la solicitud de ${usersConPrefijo}:`, error);
+}} else {
+try {
+await conn.groupRequestParticipantsUpdate(m.chat, [rawUser], 'approve');
+console.log(`Solicitud de ingreso de ${usersConPrefijo} aprobada automáticamente.`);
+} catch (error) {
+console.error(`Error al aprobar la solicitud de ${usersConPrefijo}:`, error);
+}}} else {
+try {
+await conn.groupRequestParticipantsUpdate(m.chat, [rawUser], 'approve');
+console.log(`Solicitud de ingreso de ${usersConPrefijo} aprobada automáticamente ya que #antifake está desactivado.`);
+} catch (error) {
+console.error(`Error al aprobar la solicitud de ${usersConPrefijo}:`, error);
+}}
+return;
+} if (chat.detect && m.messageStubType == 72) {
 await this.sendMessage(m.chat, { text: `${usuario} 𝘾𝘼𝙈𝘽𝙄𝙊 𝙇𝘼𝙎 𝘿𝙐𝙍𝘼𝘾𝙄𝙊𝙉 𝘿𝙀𝙇 𝙇𝙊𝙎 𝙈𝙀𝙉𝙎𝘼𝙅𝙀 𝙏𝙀𝙈𝙋𝙊𝙍𝘼𝙇𝙀𝙎 𝘼 *@${m.messageStubParameters[0]}*`, mentions: [m.sender] }, { quoted: fkontak, ephemeralExpiration: 24*60*100, disappearingMessagesInChat: 24*60*100})
 } else if (chat.detect && m.messageStubType == 123) {
 await this.sendMessage(m.chat, { text: `${usuario} *𝘿𝙀𝙎𝘼𝘾𝙏𝙄𝙑𝙊́* 𝙇𝙊𝙎 𝙈𝙀𝙉𝙎𝘼𝙅𝙀 𝙏𝙀𝙈𝙋𝙊𝙍𝘼𝙇.`, mentions: [m.sender] }, { quoted: fkontak, ephemeralExpiration: 24*60*100, disappearingMessagesInChat: 24*60*100})
