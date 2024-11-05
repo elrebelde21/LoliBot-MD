@@ -919,7 +919,8 @@ if (!('antitoxic' in chat)) chat.antitoxic = false
 if (!('game' in chat)) chat.game = true
 if (!('game2' in chat)) chat.game2 = false
 if (!('simi' in chat)) chat.simi = false
-if (!('antiTraba' in chat)) chat.antiTraba = true
+if (!('antiTraba' in chat)) chat.antiTraba = true 
+if (!('autorespond' in chat)) chat.autorespond = true 
 if (!('autolevelup' in chat))  chat.autolevelup = true
 if (!isNumber(chat.expired)) chat.expired = 0
 } else
@@ -959,6 +960,7 @@ game: true,
 game2: false, 
 simi: false,
 antiTraba: true,
+autorespond: true, 
 autolevelup: true,
 expired: 0,
 }
