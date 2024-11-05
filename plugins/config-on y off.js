@@ -410,6 +410,15 @@ throw false
 }}
 chat.antiTraba = isEnable
 break
+
+case 'autorespond': case 'autoresponder':
+if (m.isGroup) {
+if (!(isAdmin || isOwner)) {
+global.dfail('admin', m, conn)
+throw false
+}}
+chat.autorespond = isEnable 
+break		
 case 'simi': case 'chatbot':
 if (m.isGroup) {
 if (!(isAdmin || isOwner)) {
