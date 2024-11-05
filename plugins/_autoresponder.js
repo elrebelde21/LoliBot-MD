@@ -1,5 +1,4 @@
-//Api ya no sirven dejen buscó otras :v
-/*import axios from 'axios';
+import axios from 'axios';
 import fetch from 'node-fetch';
 import translate from '@vitalets/google-translate-api';
 import { sticker } from '../lib/sticker.js';
@@ -54,6 +53,8 @@ let query = m.text;
 let username = `${m.pushName}`;
 let syms1 = await fetch('https://raw.githubusercontent.com/elrebelde21/LoliBot-MD/main/src/text-chatgpt.txt').then(v => v.text());
 
+//if (!chat.autorespond) return 
+if (m.fromMe) return
 let result = await luminsesi(query, username, syms1)
 if (result && result.trim().length > 0) {
 await this.reply(m.chat, result, m)
@@ -62,4 +63,4 @@ return true;
 }
 
 export default handler;
-*/
+
