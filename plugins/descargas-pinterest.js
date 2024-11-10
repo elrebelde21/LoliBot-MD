@@ -1,10 +1,19 @@
 import {pinterest} from '@bochilteam/scraper';
 const handler = async (m, {conn, text, usedPrefix, command}) => {
-  if (!text) throw `*⚠️ Ejemplo:* ${usedPrefix + command} Loli`;
-  const json = await pinterest(text);
-conn.sendButton(m.chat, `🔎 𝐑𝐞𝐬𝐮𝐥𝐭𝐚𝐝𝐨𝐬 𝐝𝐞: ${text}`, botname, json.getRandom(), [['🔄 𝐒𝐈𝐆𝐔𝐈𝐄𝐍𝐓𝐄 🔄', `/${command} ${text}`]], null, null, m)   
-//conn.sendFile(m.chat, json.getRandom(), 'error.jpg', `*𝚁𝙴𝚂𝚄𝙻𝚃𝙰𝙳𝙾𝚂 𝙳𝙴 𝙻𝙰 𝙱𝚄𝚂𝚀𝚄𝙴𝙳𝙰*${text}`.trim(), m);
-};
+if (!text) throw `*⚠️ Ejemplo:* ${usedPrefix + command} Loli`;
+try {
+const json = await pinterest(text);
+conn.sendFile(m.chat, json.getRandom(), 'error.jpg', `_🔎 𝙍𝙚𝙨𝙪𝙡𝙩𝙖𝙙𝙤𝙨 𝙙𝙚: ${text}_`, m, null, fake);
+} catch (error1) {
+try {
+const response=await fetch(`https://deliriussapi-oficial.vercel.app/search/pinterest?text=${text}`)
+const dataR = await response.json()
+const json = dataR.result
+conn.sendFile(m.chat, json.getRandom(), 'error.jpg', `_🔎 𝙍𝙚𝙨𝙪𝙡𝙩𝙖𝙙𝙤𝙨 𝙙𝙚: ${text}_`, m, null, fake);
+//conn.sendButton(m.chat, `💞 ${mid.buscador} ${text}`, `𝙋𝙞𝙣𝙩𝙚𝙧𝙚𝙨𝙩 | ${wm}`, json.getRandom(), [['🔄 𝙎𝙞𝙜𝙪𝙞𝙚𝙣𝙩𝙚 | 𝙉𝙚𝙭𝙩', `${usedPrefix}pinterest ${text}`]], null, null, m)
+} catch (e) {
+console.log(e) 
+}}}
 handler.help = ['pinterest <keyword>'];
 handler.tags = ['buscadores'];
 handler.command = /^(pinterest)$/i;

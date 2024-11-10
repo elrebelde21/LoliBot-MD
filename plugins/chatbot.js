@@ -8,6 +8,7 @@ let name = conn.getName(m.sender)
 const user = `@${m.sender.split`@`[0]}`;
 //let textodem = m.text;
 if (chat.isBanned) return
+if (m.fromMe) return
 if (m.isBot || m.sender.includes('bot') || m.sender.includes('Bot')) {
 return true; 
 }
@@ -64,9 +65,10 @@ https://whatsapp.com/channel/0029VakUvreFHWpyWUr4Jr0g
 • https://www.facebook.com/elrebelde21` 
 
 //if (m.text.includes(`Bot`) || m.text.includes(`simi`) || m.text.includes(`alexa`)) {   
-/*if (m.text.includes(`Bot`) || m.text.includes(`bot`) || m.text.includes(`simi`) || m.text.includes(`alexa`)) {   
+
+if (/^bot|simi|alexa$/i.test(m.text)) {   
 if (m.text.includes('jadibot') || m.text.includes('bots') || m.text.includes('serbot') || m.text.includes('instalarbot') ||  m.text.includes('infobot')) return
-//try {
+try {
 await conn.sendPresenceUpdate('composing', m.chat)
 async function luminsesi(q, username, logic) {
 try {
@@ -95,11 +97,12 @@ para actualizaciónes/novedades sobre el bot o nuesro hosting seguir nuestro can
 
 let result = await luminsesi(query, username, syms1);
 await conn.reply(m.chat, result, m)
-/*
-let gpt = await fetch(`https://deliriusapi-official.vercel.app/tools/simi?text=${m.text}`)
+} catch {
+try {
+let gpt = await fetch(`https://deliriussapi-oficial.vercel.app/tools/simi?text=${m.text}`)
 let res = await gpt.json()
 await m.reply(res.data.message)
-} catch {
+/*} catch {
 try {
 if (text.includes('Hola')) text = text.replace('Hola', 'Hello');
 if (text.includes('hola')) text = text.replace('hola', 'Hello');
@@ -111,11 +114,12 @@ const api = await fetch('http://api.brainshop.ai/get?bid=153868&key=rcKonOgrUFmn
 const res = await api.json();
 const reis2 = await fetch('https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=es&dt=t&q=' + res.cnt);
 const resu2 = await reis2.json();
-m.reply(resu2[0][0][0]);
-} catch {
+m.reply(resu2[0][0][0]);*/
+} catch (e) {
 return m.reply([`Simsimi esta durmiendo no molesta 🥱`, `Callarte`, `Api simsimi caida`, `Simsimi esta ocupado cojieron con tu hermana vuelva mas tarde 🥵`, `NO MOLESTE PUTA`, `No hay señar`, `No estoy disponible`].getRandom());
-}}*/
-//}
+console.log(e) 
+}}
+}
 
 if (/^infohost|hosting$/i.test(m.text)) {
  await conn.sendMessage(m.chat, { text: txt,

@@ -28,7 +28,8 @@ console.error('Error al obtener:', error);
 
 let query = m.text;
 let username = `${m.pushName}`;
-let syms1 = await fetch('https://raw.githubusercontent.com/elrebelde21/LoliBot-MD/main/src/text-chatgpt.txt').then(v => v.text());
+//let syms1 = await fetch('https://raw.githubusercontent.com/elrebelde21/LoliBot-MD/main/src/text-chatgpt.txt').then(v => v.text());
+let syms1 = `Actuaras como un Bot de WhatsApp el cual fue creado por elrebelde21, tu seras LoliBot-MD`;  
 
 let result = await luminsesi(query, username, syms1);
  await m.reply(result)
