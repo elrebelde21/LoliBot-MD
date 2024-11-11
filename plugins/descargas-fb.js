@@ -15,7 +15,7 @@ const delius = await apiResponse.json();
 if (!delius || !delius.urls || delius.urls.length === 0) return m.react("❌")
 const downloadUrl = delius.urls[0].hd || delius.urls[0].sd;
 if (!downloadUrl) return m.react("❌");
-await conn.sendFile(m.chat, downloadUrl, 'video.mp4', '✅ Aquí está tu video de Facebook', m, null, fake);
+await conn.sendFile(m.chat, downloadUrl, 'video.mp4', '✅ Aquí está tu video de Facebook', m);
 } catch (err1) {
 try {
 const d2ata = await facebook.v1(args[0]);

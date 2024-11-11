@@ -12,6 +12,24 @@ const handler = async (m, {conn, args, command, usedPrefix}) => {
 if (!args[0]) return conn.reply(m.chat, `⚠️ Ingresa el enlace del vídeo de Instagram junto al comando.\n\nEjemplo: *${usedPrefix + command}* https://www.instagram.com/p/C60xXk3J-sb/?igsh=YzljYTk1ODg3Zg==`, m)
 await m.react('⌛')
 try {
+const apiUrl = `https://deliriussapi-oficial.vercel.app/download/instagram?url=${encodeURIComponent(args[0])}`;
+const apiResponse = await fetch(apiUrl);
+const delius = await apiResponse.json();
+if (!delius || !delius.data || delius.data.length === 0) return m.react("❌");
+const downloadUrl = delius.data[0].url;
+const fileType = delius.data[0].type;
+if (!downloadUrl) return m.react("❌");
+
+if (fileType === 'image') {
+await conn.sendFile(m.chat, downloadUrl, 'ig.jpg', '_*Aqui tiene tu imagen de Instagram*', m, null, fake);
+m.react('✅')
+} else if (fileType === 'video') {
+await conn.sendFile(m.chat, downloadUrl, 'ig.mp4', '*Aqui esta el video de Instagram*', m, null, fake);
+m.react('✅')
+} else {
+return m.react("❌"); 
+}} catch {   
+try {
 const img = await instagramDl(args[0]);
 for (let i = 0; i < img.length; i++) {
 const bufferInfo = await getBuffer(img[i].download_link);
@@ -55,7 +73,7 @@ await conn.sendFile(m.chat, videoig, 'error.mp4', txt1, m, null, fake);
 await m.react('✅')
 } catch (e) {
 await m.react('❌')
-console.log(e)}}}}}};
+console.log(e)}}}}}}}
 handler.help = ['instagram *<link ig>*']
 handler.tags = ['downloader']
 handler.command = /^(instagramdl|instagram|igdl|ig|instagramdl2|instagram2|igdl2|ig2|instagramdl3|instagram3|igdl3|ig3)$/i
