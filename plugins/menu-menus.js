@@ -4,8 +4,6 @@ import fetch from 'node-fetch'
 import moment from 'moment-timezone'
 import { xpRange } from '../lib/levelling.js'
 //import { plugins } from '../lib/plugins.js'
-let fecha = moment.tz('America/Bogota').format('DD/MM/YYYY')
-let hora = moment.tz('America/Argentina/Buenos_Aires').format('LT')
 let tags = {'main': 'ℹ️ INFOBOT',
 'jadibot': '✨ SER SUB BOT', 
 'downloader': '🚀 DESCARGAS',
@@ -28,15 +26,15 @@ let tags = {'main': 'ℹ️ INFOBOT',
 'owner': '👑 OWNER', 
 }
 const defaultMenu = {
-before: `「 ${wm} 」
+before: `「 %wm 」
  
 Hola 👋🏻 *%name*
  
-*• Fecha:* ${fecha}
-*• Hora:* ${hora} (🇦🇷) 
+*• Fecha:* %fecha
+*• Hora:* %hora (🇦🇷) 
 *• Usuario:* %totalreg
 *• Tiempo activos:* %muptime
-${(conn.user.jid == global.conn.user.jid ? `*• Bot Ofc:* wa.me/${global.conn.user.jid.split`@`[0]}` : `*• Soy un sub bot del:* wa.me/${global.conn.user.jid.split`@`[0]}`) || ''}
+%botOfc
 
 *• Tu limite:* %limit
 *• Nivel:* %level
@@ -45,8 +43,8 @@ ${(conn.user.jid == global.conn.user.jid ? `*• Bot Ofc:* wa.me/${global.conn.u
 
 *• Usuario registrados:* %rtotalreg de %totalreg
 
-*\`✅ Activar tu bot 24/7 activo en SkyPlus\`*
-https://dash.skyultraplus.com
+${[`*\`✅ Activar tu bot 24/7 activo en SkyPlus\`*\nhttps://youtu.be/qyxhetqeO1U?si=XxWhDOAi3OfmOjBY`, `Unirte a nuestro canal de WhatsApp y informarte de todas la novedades/Actualizaciones del bot y mas\nhttps://whatsapp.com/channel/0029Vau57ykEwEk5CgosvU3v`, `❤ Seguirme el tiktok\nhttps://tiktok.com/@elrebelde21`].getRandom()}
+
 `.trimStart(),
 header: '◉ %category  ',
 body: ' ║\n╠ ○%cmd %islimit %isPremium',
@@ -62,6 +60,8 @@ let { min, xp, max } = xpRange(level, global.multiplier)
 let name = await conn.getName(m.sender)
 let d = new Date(new Date + 3600000)
 let locale = 'es'
+let fecha = moment.tz('America/Bogota').format('DD/MM/YYYY')
+let hora = moment.tz('America/Argentina/Buenos_Aires').format('LT')
 
 let weton = ['Pahing', 'Pon', 'Wage', 'Kliwon', 'Legi'][Math.floor(d / 84600000) % 5]
 let week = d.toLocaleDateString(locale, { weekday: 'long' })
@@ -95,6 +95,7 @@ let uptime = clockString(_uptime)
 let taguser = '@' + m.sender.split('@s.whatsapp.net')[0];
 let totalreg = Object.keys(global.db.data.users).length
 let rtotalreg = Object.values(global.db.data.users).filter(user => user.registered == true).length
+let botOfc = (conn.user.jid == global.conn.user.jid) ? `*• Bot Ofc:* wa.me/${global.conn.user.jid.split`@`[0]}` : `• Soy un sub bot del:* wa.me/${global.conn.user.jid.split`@`[0]}`
 let help = Object.values(global.plugins).filter(plugin => !plugin.disabled).map(plugin => {
 return {
 help: Array.isArray(plugin.tags) ? plugin.help : [plugin.help],
@@ -139,7 +140,11 @@ totalexp: exp,
 xp4levelup: max - exp,
 github: _package.homepage ? _package.homepage.url || _package.homepage : '[unknown github url]',
 level, limit, name, weton, week, date, dateIslamic, time, totalreg, rtotalreg, role,
-readmore: readMore
+readmore: readMore, 
+fecha, 
+hora, 
+botOfc, 
+wm
 }
 text = text.replace(new RegExp(`%(${Object.keys(replace).sort((a, b) => b.length - a.length).join`|`})`, 'g'), (_, name) => '' + replace[name])
 
