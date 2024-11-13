@@ -7,14 +7,37 @@ let handler = async (m, { conn, text, usedPrefix, command }) => {
 if (!text) return await conn.reply(m.chat, `¿Que esta buscando? ingresa el nombre para descargar sus música de Spotify, Ejemplo:* ${usedPrefix + command} ozuna`, m, {contextInfo: {externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: mg, body: wm, previewType: 0, thumbnail: img.getRandom(), sourceUrl: redes.getRandom()}}})    
 m.react(`⌛`) 
 try {
+let songInfo = await spotifyxv(text);
+if (!songInfo.length) throw `*No se encontró la canción.*`;
+let song = songInfo[0]; 
+const res = await fetch(`https://deliriussapi-oficial.vercel.app/download/spotifydl?url=${song.url}`);
+const data = await res.json();
+if (!data || !data.data || !data.data.url) throw "No se pudo obtener el enlace de descarga.";
+let spotifyMessage = `*• Título:* ${song.name}\n*• Artista:* ${song.artista.join(', ')}\n*• Cover:* ${data.data.cover}\n\n> 🚀 *ᴱⁿᵛᶦᵃⁿᵈᵒ ᶜᵃⁿᶜᶦᵒ́ⁿ ᵃᵍᵘᵃʳᵈᵉ ᵘⁿ ᵐᵒᵐᵉⁿᵗᵒ....*`;
+await conn.sendMessage(m.chat, {text: spotifyMessage, contextInfo: { forwardingScore: 9999999, isForwarded: true, 
+externalAdReply: {
+showAdAttribution: true,
+containsAutoReply: true,
+renderLargerThumbnail: true,
+title: wm,
+mediaType: 1,
+thumbnailUrl: data.data.image,
+mediaUrl: data.data.url,
+sourceUrl: data.data.url
+}}}, { quoted: m });
+conn.sendMessage(m.chat, { audio: { url: data.data.url }, fileName: `${song.name}.mp3`, mimetype: 'audio/mpeg' }, { quoted: m });
+m.react('✅️');
+handler.limit = 1
+} catch (e1) {
+try {
 let songInfo = await spotifyxv(text)
 if (!songInfo.length) throw `*No se encontró una canción.*`
 let res = songInfo[0]
 let fileSizeInMB = (await getBuffer(res.url)).length / (1024 * 1024)
 let shortURL = await getTinyURL(res.url)
-let spotifyi = `*• Titulo:* _${res.name}_
-*• Artista:* ${res.artista.join(', ')}_
-*• Url:* _${shortURL}_
+let spotifyi = `*• Titulo:* ${res.name}
+*• Artista:* ${res.artista.join(', ')}
+*• Url:* ${shortURL}
 
 > 🚀 *ᴱⁿᵛᶦᵃⁿᵈᵒ ᶜᵃⁿᶜᶦᵒ́ⁿ ᵃᵍᵘᵃʳᵈᵉ ᵘⁿ ᵐᵒᵐᵉⁿᵗᵒ....*`
 
@@ -28,12 +51,26 @@ let dl_url = await yt.audio[q].download()
 let ttl = await yt.title
 let size = await yt.audio[q].fileSizeH
 let img = await getBuffer(res.imagen)
+await conn.sendMessage(m.chat, {text: spotifyi, contextInfo: { forwardingScore: 9999999, isForwarded: true, 
+externalAdReply: {
+showAdAttribution: true,
+containsAutoReply: true,
+renderLargerThumbnail: true,
+title: wm,
+mediaType: 1,
+thumbnail: img,
+thumbnailUrl: img,
+mediaUrl: dl_url,
+sourceUrl: dl_url
+}}}, { quoted: m });
 conn.sendMessage(m.chat, { audio: { url: dl_url }, fileName: `${ttl}.mp3`, mimetype: 'audio/mpeg' }, { quoted: m })
-await m.reply(spotifyi) 
-//conn.sendMessage(m.chat, {text: spotifyi, contextInfo: {forwardingScore: 9999999, isForwarded: true, "externalAdReply": {"showAdAttribution": true, "containsAutoReply": true, "renderLargerThumbnail": true, "title": global.wm, "containsAutoReply": true, "mediaType": 1, "thumbnail": img, "thumbnailUrl": img, "mediaUrl": shortURL, "sourceUrl": shortURL}}}, {quoted: m});
 m.react('✅️')
+handler.limit = 1
 } catch (error) {
-}}
+m.reply(`\`\`\`⚠️ OCURRIO UN ERROR ⚠️\`\`\`\n\n> *Reporta el siguiente error a mi creador con el comando:* #report\n\n>>> ${error} <<<< `) 
+console.log(error) 
+m.react('❌')
+}}}
 handler.help = ['spotify']
 handler.tags = ['downloader']
 handler.command = /^(spotify|music)$/i
@@ -105,81 +142,5 @@ return response.data;
 return text;
 }}
 
-/*import fetch from 'node-fetch';
-import fs from 'fs';
-import axios from 'axios';
-
-const handler = async (m, { conn, text, usedPrefix, command }) => {
-if (!text) return await conn.reply(m.chat, `¿Que esta buscando? ingresa el nombre para descargar sus música de Spotify, Ejemplo:* ${usedPrefix + command} ozuna`, m, {contextInfo: {externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: mg, body: wm, previewType: 0, thumbnail: img.getRandom(), sourceUrl: redes.getRandom()}}})    
-m.react(`⌛`) 
-let ouh = await fetch(`https://api.nyxs.pw/dl/spotify-direct?title=${text}`)
-  let gyh = await ouh.json()
-try {
-  m.reply(`_✧ Enviando ${gyh.result.title} - ${gyh.result.artists} (${gyh.result.album})\n\n> ${gyh.result.urlSpotify}_`)
-      const doc = {
-      audio: { url: gyh.result.url },
-      mimetype: 'audio/mp4',
-      fileName: `${gyh.result.title}.mp3`,
-      contextInfo: {
-        externalAdReply: {
-          showAdAttribution: true,
-          mediaType: 2,
-          mediaUrl: gyh.result.urlSpotify,
-          title: gyh.result.title,
-          sourceUrl: gyh.result.urlSpotify,
-          thumbnail: await (await conn.getFile(gyh.result.thumbnail)).data
-        }
-      }
-    };
-   // await conn.sendMessage(m.chat, doc, { quoted: m });
-await conn.sendFile(m.chat, gyh.result.url, `${gyh.result.title}.mp3`, ``, m)
-	m.react('✅'); 
-} catch (error1) {
-try {
-const downloadRes = await fetch(`https://deliriussapi-oficial.vercel.app/download/spotifydl?url=${gyh.result.url}`);
-    const downloadData = await downloadRes.json();
-console.log(downloadData)
-
-    if (!downloadData.status) {
-      throw new Error('Error al obtener los datos de la canción.');
-    }
-
-    const spty = downloadData.data;
-    let spotifyDetails = `*• Título:* ${spty.title}\n*• Artista:* ${spty.author}\n*• Álbum:* ${spty.album || 'Desconocido'}\n*• Publicado:* ${spty.year || 'Desconocido'}`;
-
-    // Obtener la portada de la canción
-    const imgBufferSong = await (await fetch(spty.thumbnail)).buffer();
-    await conn.sendFile(m.chat, imgBufferSong, 'cover.jpg', spotifyDetails, m);
-
-    // Enviar el archivo de audio
-    const fileData = {
-      link: spty.url,
-      filename: `${spty.title}.mp3`,
-      mime: 'audio/mpeg'
-    };
-    await conn.sendFile(m.chat, fileData.link, fileData.filename, '', m, null, { mimetype: fileData.mime, asDocument: true });
-
-    // También enviar el audio directamente
-    await conn.sendMessage(m.chat, {
-      audio: fileData.link,
-      fileName: `${spty.title}.mp3`,
-      mimetype: 'audio/mpeg'
-    }, { quoted: m });
-
-    m.react('✅'); 
-handler.limit = 1
-} catch (error2) {
-//m.reply(`\`\`\`⚠️ OCURRIO UN ERROR ⚠️\`\`\`\n\n> *Reporta el siguiente error a mi creador con el comando:*#report\n\n>>> ${error} <<<< `) 
-console.log(error2) 
-m.react(`❌`) 
-}}}
-handler.help = ['spotify']
-handler.tags = ['downloader']
-handler.command = /^(spotify|music)$/i
-handler.register = true
-//handler.limit = 1
-handler.level = 2
-export default handler
 
 
-*/
