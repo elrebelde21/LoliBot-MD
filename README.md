@@ -155,7 +155,7 @@ npm start
 [![Yesenia57](https://github.com/Yesenia57.png?size=100)](https://github.com/Yesenia57) 
 [![AzamiJs](https://github.com/AzamiJs.png?size=100)](https://github.com/AzamiJs)  
 [![KatashiFukushima](https://github.com/KatashiFukushima.png?size=100)](https://github.com/KatashiFukushima)
-[![DanielDiod](https://github.com/DanielDiod.png?size=100)](https://github.com/DanielDiod)
+[![DanixlJs](https://github.com/DanixlJs.png?size=100)](https://github.com/DanixlJs)
 [![edar123](https://github.com/edar123.png?size=100)](https://github.com/edar123)
 
 ### 🌟 AGRADECIMIENTOS
