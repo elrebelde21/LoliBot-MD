@@ -1,3 +1,6 @@
+// Código adaptado por https://github.com/GataNina-Li
+// Código compatible con canales y comunidades de WhatsApp 
+
 import { getUrlFromDirectPath } from "@whiskeysockets/baileys";
 import _ from "lodash";
 import axios from 'axios';
