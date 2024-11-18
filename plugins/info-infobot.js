@@ -12,6 +12,12 @@ keepTrailingZeroes: false,
 render: (literal, symbol) => `${literal} ${symbol}B`,
 });
 
+const used = process.memoryUsage();
+let ram = await si.mem()
+let cpu = await si.cpuCurrentSpeed()
+let disk = await si.fsSize()
+let up = await si.time()
+      
 async function getSystemInfo() {
 let disk = await si.fsSize();
 const memInfo = await si.mem();
@@ -45,13 +51,10 @@ horaActual: new Date().toLocaleString(),
 detallesCPUNúcleo: load.cpus.map(cpu => cpu.load.toFixed(2) + '%')
 };
 
-//Calcula la latencia (tiempo de respuesta)
 const startTime = Date.now();
 await si.currentLoad();
 const endTime = Date.now();
 data.latencia = `${endTime - startTime} ms`;
-
-//Calcula el tiempo de actividad
 const uptimeSeconds = await si.time().uptime;
 const days = Math.floor(uptimeSeconds / 60 / 60 / 24);
 const hours = Math.floor((uptimeSeconds / 60 / 60) % 24);
@@ -74,11 +77,6 @@ let totalchats = Object.keys(global.db.data.chats).length;
 let totalf = Object.values(global.plugins).filter(v => v.help && v.tags).length;
 const groupsIn = chats.filter(([id]) => id.endsWith('@g.us'));
 let totaljadibot = [...new Set([...global.conns.filter(conn => conn.user && conn.state !== 'close').map(conn => conn.user)])];
-const used = process.memoryUsage();
-    let ram = await si.mem()
-    let cpu = await si.cpuCurrentSpeed()
-    let disk = await si.fsSize()
-    let up = await si.time()
 let timestamp = speed();
 let latensi = speed() - timestamp;
 
