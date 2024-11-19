@@ -13,10 +13,10 @@ render: (literal, symbol) => `${literal} ${symbol}B`,
 });
 
 const used = process.memoryUsage();
-let ram = await si.mem()
-let cpu = await si.cpuCurrentSpeed()
-let disk = await si.fsSize()
-let up = await si.time()
+    let ram = await si.mem()
+    let cpu = await si.cpuCurrentSpeed()
+    let disk = await si.fsSize()
+    let up = await si.time()
       
 async function getSystemInfo() {
 let disk = await si.fsSize();
@@ -107,8 +107,7 @@ let teks = `*≡ INFOBOT*
 ▣ *Espacio Total en Disco:* ${data.espacioTotalDisco} 
 ▣ *Uptime:* ${data.tiempoActividad}`;
 
-await conn.sendMessage(m.chat, {image: { url: "https://telegra.ph/file/39fb047cdf23c790e0146.jpg" },
-caption: teks, contextInfo: {externalAdReply: { title: `INFO - BOT`, sourceUrl: nna, mediaType: 1, showAdAttribution: true, thumbnailUrl: img1,
+await conn.sendMessage(m.chat, {image: { url: "https://telegra.ph/file/39fb047cdf23c790e0146.jpg" }, caption: teks, contextInfo: {externalAdReply: { title: `INFO - BOT`, sourceUrl: redes.getRandom(), mediaType: 1, showAdAttribution: true, thumbnailUrl: img1,
 }}}, { quoted: m })});
 };
 handler.help = ['infobot'];
