@@ -139,7 +139,7 @@ const texto1 = `📌 *Título* : ${yt_play[0].title}
 
 _*Descargado el audio 🔊 en documentos, aguarden un momento por favor....*_
 
-> _*Si este comando falla usar de la seguirte manera:*_ #ytmp3 ${yt_play[0].url}`.trim();
+> _*Si este comando falla usar de la seguirte manera:*_ #ytmp3doc ${yt_play[0].url}`.trim();
 
 await conn.sendFile(m.chat, yt_play[0].thumbnail, 'error.jpg', texto1, m, null, fake);
 try {
@@ -192,7 +192,7 @@ const texto1 = `📌 *Título* : ${yt_play[0].title}\n📆 *Publicado:* ${yt_pla
 
 _*Descargado sus video en documentos, aguarden un momento por favor....*_
 
-> _*Si este comando falla usar de la seguirte manera:*_ #ytmp4 ${yt_play[0].url}`.trim();
+> _*Si este comando falla usar de la seguirte manera:*_ #ytmp4doc ${yt_play[0].url}`.trim();
 
 await conn.sendFile(m.chat, yt_play[0].thumbnail, 'error.jpg', texto1, m, null, fake);
 try {
