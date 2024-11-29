@@ -22,8 +22,9 @@ const texto = `[ 🛒 𝐎𝐁𝐓𝐈𝐄𝐍𝐄𝐒 𝐔𝐍 𝐂𝐎𝐅𝐑
 
 const fkontak = {'key': {'participants': '0@s.whatsapp.net', 'remoteJid': 'status@broadcast', 'fromMe': false, 'id': 'Halo', }, 'message': { 'contactMessage': { 'vcard': `BEGIN:VCARD\nVERSION:3.0\nN:Sy;Bot;;;\nFN:y\nitem1.TEL;waid=${m.sender.split('@')[0]}:${m.sender.split('@')[0]}\nitem1.X-ABLabel:Ponsel\nEND:VCARD`, }, }, 'participant': '0@s.whatsapp.net', };
 
-await conn.sendButton(m.chat, texto, botname, img, [['🔰 Ir al menu ', `.menu`]], null, null, m)   
+await conn.sendMessage(m.chat, { image: { url: img }, caption: texto }, { quoted: { key: { fromMe: false, participant: '0@s.whatsapp.net', remoteJid: 'status@broadcast' }, message: { conversation: '🎉 Obtiene un regalo 🎁' }}});
 //conn.sendFile(m.chat, img, 'text.jpg', texto, fkontak);
+//conn.sendButton(m.chat, texto, botname, img, [['🔰 Ir al menu ', `.menu`]], null, null, m)   
 global.db.data.users[m.sender].lastcofre = new Date * 1;
 };
 handler.help = ['daily'];

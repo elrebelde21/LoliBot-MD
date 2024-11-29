@@ -32,9 +32,10 @@ let str = `*[ 𝐋𝐄𝐕𝐄𝐋 𝐔𝐏 ]*
 `.trim()
 try {
 const img = await levelup(teks, user.level)
-conn.sendFile(m.chat, img, 'levelup.jpg', str, m)
+conn.sendFile(m.chat, img, 'levelup.jpg', str, m, null, fake)
 } catch (e) {
-m.reply(str)
+conn.fakeReply(m.chat, str, '13135550002@s.whatsapp.net', `*TUS ESTADISTICAS 🆙*`, 'status@broadcast', null, fake)
+//m.reply(str)
 }}}
 handler.help = ['levelup']
 handler.tags = ['econ']

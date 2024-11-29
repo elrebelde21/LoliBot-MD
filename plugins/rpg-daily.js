@@ -9,13 +9,15 @@ const money = Math.floor(Math.random() * 800)
 global.db.data.users[m.sender].limit += limit;
 global.db.data.users[m.sender].money += money
 global.db.data.users[m.sender].exp += isPrems ? prem : free
-m.reply(`🎁 *𝙊𝙗𝙩𝙞𝙚𝙣𝙚 𝙪𝙣 𝙧𝙚𝙜𝙖𝙡𝙤!!*
 
-🔸 *𝐇𝐀𝐒 𝐑𝐄𝐂𝐈𝐁𝐈𝐃𝐎:*
+let text = `*🔸 𝐇𝐀𝐒 𝐑𝐄𝐂𝐈𝐁𝐈𝐃𝐎:*
+
 *💎 Diamante:* ${limit}
 *🪙 LoliCoins:* ${money}
-*🆙 Xp:* ${isPrems ? prem : free}`)
-  global.db.data.users[m.sender].lastclaim = new Date * 1
+*🆙 Xp:* ${isPrems ? prem : free}`
+conn.fakeReply(m.chat, text, '13135550002@s.whatsapp.net', `🎁 Obtener un regalo 🎁`, 'status@broadcast', null, fake)
+//m.reply(text)
+global.db.data.users[m.sender].lastclaim = new Date * 1
 }
 handler.help = ['daily']
 handler.tags = ['econ']

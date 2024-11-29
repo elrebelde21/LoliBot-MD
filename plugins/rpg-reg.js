@@ -69,7 +69,7 @@ await conn.sendMessage(m.chat, { text: `[ ✅ REGISTRO COMPLETADO ]
 *◉ Para ver los comandos del bot usar:*
 ${usedPrefix}menu
 
-◉ *Total de usuarios registrados:* ${rtotalreg}`, contextInfo:{forwardedNewsletterMessageInfo: { newsletterJid: '120363355261011910@newsletter', serverMessageId: '', newsletterName: 'LoliBot - Test ✨' }, forwardingScore: 9999999, isForwarded: true, "externalAdReply": {"showAdAttribution": true, "containsAutoReply": true, "title": `𝐑𝐄𝐆𝐈𝐒𝐓𝐑𝐎 𝐂𝐎𝐌𝐏𝐋𝐄𝐓𝐀𝐃𝐎`, "body": wm, "previewType": "PHOTO", thumbnail: img.getRandom(), sourceUrl: [nna, nna2, nn, md, yt, tiktok].getRandom()}}}, { quoted: fkontak, ephemeralExpiration: 24*60*100, disappearingMessagesInChat: 24*60*100})
+◉ *Total de usuarios registrados:* ${rtotalreg}`, contextInfo:{forwardedNewsletterMessageInfo: { newsletterJid: ['120363355261011910@newsletter', '120363297379773397@newsletter'].getRandom(), serverMessageId: '', newsletterName: 'LoliBot ✨' }, forwardingScore: 9999999, isForwarded: true, "externalAdReply": {"showAdAttribution": true, "containsAutoReply": true, "title": `𝐑𝐄𝐆𝐈𝐒𝐓𝐑𝐎 𝐂𝐎𝐌𝐏𝐋𝐄𝐓𝐀𝐃𝐎`, "body": wm, "previewType": "PHOTO", thumbnail: img.getRandom(), sourceUrl: [nna, nna2, nn, md, yt, tiktok].getRandom()}}}, { quoted: fkontak, ephemeralExpiration: 24*60*100, disappearingMessagesInChat: 24*60*100})
 //await m.reply(`${sn}`);
 await conn.sendMessage(global.ch.ch1, { text: `◉ *Usuarios:* ${m.pushName || 'Anónimo'}
 ◉ *País:* ${userNationality}
@@ -82,7 +82,7 @@ externalAdReply: {
 title: "『 𝙉𝙊𝙏𝙄𝙁𝙄𝘾𝘼𝘾𝙄𝙊́𝙉 📢 』",
 body: "Nuevo usuario registrado 🥳",
 thumbnailUrl: ppch, 
-sourceUrl:  [nna, nn, md, yt, tiktok].getRandom(),
+sourceUrl: [nna, nna2, nn, md, yt, tiktok].getRandom(),
 mediaType: 1,
 showAdAttribution: false,
 renderLargerThumbnail: false
@@ -91,7 +91,7 @@ renderLargerThumbnail: false
 
 if (command == 'nserie' || command == 'myns' || command == 'sn') {
 let sn = createHash('md5').update(m.sender).digest('hex')
-conn.fakeReply(m.chat, sn, '0@s.whatsapp.net', `⬇️ ᴇsᴛᴇ ᴇs sᴜs ɴᴜᴍᴇʀᴏ ᴅᴇʟ sᴇʀɪᴇ ⬇️`, 'status@broadcast')
+conn.fakeReply(m.chat, sn, '0@s.whatsapp.net', `⬇️ ᴇsᴛᴇ ᴇs sᴜs ɴᴜᴍᴇʀᴏ ᴅᴇʟ sᴇʀɪᴇ ⬇️`, 'status@broadcast', null, fake)
 }
 
 if (command == 'unreg') {
@@ -104,7 +104,7 @@ global.db.data.users[m.sender].limit -= 2
 global.db.data.users[m.sender].exp -= 150
 global.db.data.users[m.sender].joincount -= 2  
 user.registered = false
-m.reply(`✅ ᴿᵉᵍᶦˢᵗʳᵒ ᵉˡᶦᵐᶦⁿᵃᵈᵒ`)
+conn.fakeReply(m.chat, `😢 Ya no estas registrado`, '0@s.whatsapp.net', `ᴿᵉᵍᶦˢᵗʳᵒ ᵉˡᶦᵐᶦⁿᵃᵈᵒ`, 'status@broadcast', null, fake)
 }}
 handler.help = ['reg', 'verificar', 'myns', 'nserie', 'unreg']
 handler.tags = ['rg']
