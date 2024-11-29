@@ -275,6 +275,14 @@ console.log(chalk.bold.red(`Archivo ${file} no borrado` + err))
 } }) }) }) })
 }
 
+setInterval(async () => {
+if (stopped === 'close' || !conn || !conn.user) return
+await purgeSessionSB()
+await purgeSession()
+console.log(chalk.bold.cyanBright(`\n╭» 🔵 ${global.authFile} 🔵\n│→ SESIONES NO ESENCIALES ELIMINADAS\n╰― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― 🗑️♻️`))
+await purgeOldFiles()
+console.log(chalk.bold.cyanBright(`\n╭» 🟠 ARCHIVOS 🟠\n│→ ARCHIVOS RESIDUALES ELIMINADAS\n╰― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― 🗑️♻️`))}, 1000 * 60 * 10)
+
 async function connectionUpdate(update) {
 const {connection, lastDisconnect, isNewLogin} = update;
 global.stopped = connection;
