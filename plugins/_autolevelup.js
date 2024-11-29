@@ -20,7 +20,7 @@ let niv = `*${m.pushName || 'Anónimo'}* Obtiene un nuevo nivel 🥳
 *• Nivel anterior:* ${before} 
 *• Nivel actúal :* ${user.level}
 *• Rol:* ${user.role}
-> *• Bot:* ${wm}`
+*• Bot:* ${wm}`
 let nivell = `*${m.pushName || 'Anónimo'} Haz subido un nuevo nivel 🥳*
 
 > _*• NIVEL:* ${before} ⟿ ${user.level}_`
@@ -28,7 +28,7 @@ let nivelll = `🥳 ${m.pushName || 'Anónimo'} Que pro Acaba de alcanzar un nue
 
 *• Nivel:* ${before} ⟿ ${user.level}
 *• Rango:* ${user.role}
-> *• Bot:* ${wm}`
+*• Bot:* ${wm}`
 await conn.sendMessage(global.ch.ch1, { text: [niv, nivell, nivelll].getRandom(), contextInfo: {
 externalAdReply: {
 title: "【 🔔 Notificación General 🔔 】",
