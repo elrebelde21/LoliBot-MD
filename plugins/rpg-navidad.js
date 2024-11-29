@@ -69,7 +69,7 @@ await conn.sendMessage(m.chat, { image: { url: selectedImage}, caption: `${text}
 user.lastclaim = new Date * 1
 }
 handler.help = ['navidad']
-handler.tags = ['diamantes']
+handler.tags = ['econ']
 handler.command = ['navidad', 'navidad2'] 
 handler.fail = null
 handler.exp = 0
