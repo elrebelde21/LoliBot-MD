@@ -31,11 +31,12 @@ global.videoListXXX.push(vids_);
 } catch (e) {
 m.reply(`\`\`\`⚠️ OCURRIO UN ERROR ⚠️\`\`\`\n\n> *Reporta el siguiente error a mi creador con el comando:*#report\n\n>>> ${e} <<<< `)       
 console.log(e) 
+handler.limit = false
 }};
 handler.help = ['xnxxsearch'].map((v) => v + ' <query>');
 handler.tags = ['nsfw'];
 handler.command = /^xnxxsearch|xnxxs$/i;
-handler.limit = 10
+handler.limit = ["10", "12", "15", "16", "18", "25"].getRandom()
 handler.register = true
 export default handler;
 

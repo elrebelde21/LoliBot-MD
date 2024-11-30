@@ -5,7 +5,10 @@ const handler = async (m, {command, conn}) => {
 let porn = 'https://qu.ax/bXMB.webp'
 let porn2 = 'https://qu.ax/TxtQ.webp'
 const fakee2 = { contextInfo: { mentionedJid: null, forwardingScore: 1, isForwarded: true, forwardedNewsletterMessageInfo: { newsletterJid: channelRD.id, serverMessageId: '', newsletterName: channelRD.name }, externalAdReply: { title: "🥵 CONTENIDO +18🥵", body: "No alto para menores..", mediaType: 1, renderLargerThumbnail: false, previewType: `PHOTO`, thumbnail: imagen3, sourceUrl: redes.getRandom() }}}
-if (!db.data.chats[m.chat].modohorny && m.isGroup) return conn.sendFile(m.chat, [porn, porn2].getRandom(), 'sticker.webp', '', m, true, { contextInfo: { 'forwardingScore': 200, 'isForwarded': false, externalAdReply:{ showAdAttribution: false, title: `ᴸᵒˢ ᶜᵒᵐᵃⁿᵈᵒ ʰᵒʳⁿʸ ᵉˢᵗᵃ ᵈᵉˢᵃᶜᵗᶦᵛᵃᵈᵒ ᵖᵃʳᵃ ᵃᶜᵗᶦᵛᵃʳ ᵘˢᵃʳ:`, body: '#enable modohorny', mediaType: 2, sourceUrl: md, thumbnail: imagen3}}}, { quoted: m, ephemeralExpiration: 24*60*100, disappearingMessagesInChat: 24*60*100})   
+if (!db.data.chats[m.chat].modohorny && m.isGroup) {
+return conn.sendFile(m.chat, [porn, porn2].getRandom(), 'sticker.webp', '', m, true, { contextInfo: { 'forwardingScore': 200, 'isForwarded': false, externalAdReply:{ showAdAttribution: false, title: `ᴸᵒˢ ᶜᵒᵐᵃⁿᵈᵒ ʰᵒʳⁿʸ ᵉˢᵗᵃ ᵈᵉˢᵃᶜᵗᶦᵛᵃᵈᵒ ᵖᵃʳᵃ ᵃᶜᵗᶦᵛᵃʳ ᵘˢᵃʳ:`, body: '#enable modohorny', mediaType: 2, sourceUrl: md, thumbnail: imagen3}}}, { quoted: m, ephemeralExpiration: 24*60*100, disappearingMessagesInChat: 24*60*100})  
+handler.limit = false
+}
 //'*[ ALTO HAY PAJIN ]*n\nLos comando +18 esta apagado en este grupo, si eres admins activarlo con: #enable modohorny*';
  
 if (command == 'hentai') {
@@ -215,7 +218,7 @@ conn.sendFile(m.chat, randomThumbnail, 'error.jpg', teks, fake, m);
 handler.help = ['nsfwloli', 'nsfwfoot', 'nsfwass', 'nsfwbdsm', 'nsfwcum', 'nsfwero', 'nsfwfemdom', 'nsfwfoot', 'nsfwglass', 'nsfworgy', 'yuri', 'yuri2', 'yaoi', 'yaoi2', 'panties', 'tetas', 'booty', 'ecchi', 'furro', 'hentai', 'trapito', 'imagenlesbians', 'pene', 'porno', 'randomxxx', 'pechos', 'hentai', 'hentai2', 'nsfwloli', 'porno', 'tetas', 'china', 'boobs'];
 handler.tags = ['nsfw'];
 handler.command = ['nsfwloli', 'nsfwfoot', 'nsfwass', 'nsfwbdsm', 'nsfwcum', 'nsfwero', 'nsfwfemdom', 'nsfwfoot', 'nsfwglass', 'nsfworgy', 'yuri', 'yuri2', 'yaoi', 'yaoi2', 'panties', 'tetas', 'booty', 'ecchi', 'furro', 'hentai', 'trapito', 'imagenlesbians', 'pene', 'porno', 'randomxxx', 'pechos', 'hentai', 'hentai2', 'nsfwloli', 'porno', 'tetas', 'china', 'boobs', 'hentaisearch', 'searchhentai']
-handler.limit = 3
+handler.limit = ["2", "3", "4", "6", "8"].getRandom()
 handler.register = true
 export default handler
 

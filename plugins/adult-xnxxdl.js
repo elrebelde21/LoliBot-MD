@@ -30,12 +30,13 @@ const json = await res.result.files;
 conn.sendMessage(m.chat, {document: {url: json.high}, mimetype: 'video/mp4', fileName: res.result.title}, {quoted: m});
 m.react(`🔥`) 
 } catch {
-throw '*⚠️ ¿Que esta buscando pajin? ingresa un enlace valido de xnxx*\n\n*Aqui te recomiendo uno algo similar a estos:* https://www.xnxx.com/video-14lcwbe8/rubia_novia_follada_en_cuarto_de_bano';
+throw `*⚠️ ¿Que esta buscando pajin? ingresa un enlace valido de xnxx*\n\n*Aqui te recomiendo uno algo similar a estos:* ${usedPrefix + command} https://www.xnxx.com/video-14lcwbe8/rubia_novia_follada_en_cuarto_de_bano`;
+handler.limit = false
 }};
 handler.help = ['xnxxdl']
 handler.tags = ['nsfw'];
 handler.command = /^(xnxxdl)$/i;
-handler.limit = 12
+handler.limit = ["10", "12", "15", "16", "18", "25"].getRandom()
 handler.register = true
 export default handler;
 
