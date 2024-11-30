@@ -97,7 +97,7 @@
 "openai": "^3.3.0",
 "megajs": "^1.1.3",
 "mime-types": "^2.1.35",
-"api-dylux": "^1.7.2",
+"api-dylux": "^1.8.3",
 "yargs": "^17.6.0" 
 },
 "optionalDependencies": {
