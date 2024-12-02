@@ -1,33 +1,60 @@
 import fetch from 'node-fetch';
+import moment from 'moment-timezone';
 const handler = async (m, {conn, command, usedPrefix}) => {
+const fakee2 = { contextInfo: { mentionedJid: null, forwardingScore: 1, isForwarded: true, forwardedNewsletterMessageInfo: { newsletterJid: channelRD.id, serverMessageId: '', newsletterName: channelRD.name }, externalAdReply: { title: "🥵 CONTENIDO +18🥵", body: "No alto para menores..", mediaType: 1, renderLargerThumbnail: false, previewType: `PHOTO`, thumbnail: imagen3, sourceUrl: redes.getRandom() }}}
 let porn = 'https://qu.ax/bXMB.webp'
 let porn2 = 'https://qu.ax/TxtQ.webp'
-if (!db.data.chats[m.chat].modohorny && m.isGroup) return conn.sendFile(m.chat, [porn, porn2].getRandom(), 'sticker.webp', '', m, true, { contextInfo: { 'forwardingScore': 200, 'isForwarded': false, externalAdReply:{ showAdAttribution: false, title: `ᴸᵒˢ ᶜᵒᵐᵃⁿᵈᵒ ʰᵒʳⁿʸ ᵉˢᵗᵃ ᵈᵉˢᵃᶜᵗᶦᵛᵃᵈᵒ ᵖᵃʳᵃ ᵃᶜᵗᶦᵛᵃʳ ᵘˢᵃʳ:`, body: '#enable modohorny', mediaType: 2, sourceUrl: md, thumbnail: imagen3}}}, { quoted: m, ephemeralExpiration: 24*60*100, disappearingMessagesInChat: 24*60*100})   
+if (!db.data.chats[m.chat].modohorny && m.isGroup) return conn.sendFile(m.chat, [porn, porn2].getRandom(), 'sticker.webp', '', m, true, { contextInfo: { 'forwardingScore': 200, 'isForwarded': false, externalAdReply:{ showAdAttribution: false, title: `ᴸᵒˢ ᶜᵒᵐᵃⁿᵈᵒ ʰᵒʳⁿʸ ᵉˢᵗᵃ ᵈᵉˢᵃᶜᵗᶦᵛᵃᵈᵒ ᵖᵃʳᵃ ᵃᶜᵗᶦᵛᵃʳ ᵘˢᵃʳ:`, body: '#enable modohorny', mediaType: 2, sourceUrl: md, thumbnail: imagen3}}}, { quoted: m, ephemeralExpiration: 24*60*100, disappearingMessagesInChat: 24*60*100}).catch(m.reply(`*[ ALTO HAY PAJIN ]*n\nLos comando +18 esta apagado en este grupo, si eres admins activarlo con: #enable modohorny*`)) 
+const horarioNsfw = db.data.chats[m.chat].horarioNsfw || null;
+const now = moment.tz('America/Argentina/Buenos_Aires'); 
+const currentTime = now.format('HH:mm'); 
+
+if (horarioNsfw) {
+const { inicio, fin } = horarioNsfw;
+const inicioTime = moment(inicio, 'HH:mm').tz('America/Argentina/Buenos_Aires');
+const finTime = moment(fin, 'HH:mm').tz('America/Argentina/Buenos_Aires');
+const currentMoment = moment(currentTime, 'HH:mm').tz('America/Argentina/Buenos_Aires');
+let isWithinTimeRange = false;
+if (inicioTime.isAfter(finTime)) {
+if (currentMoment.isBetween(inicioTime, moment('23:59', 'HH:mm').tz('America/Argentina/Buenos_Aires')) || 
+currentMoment.isBetween(moment('00:00', 'HH:mm').tz('America/Argentina/Buenos_Aires'), finTime)) {
+isWithinTimeRange = true;
+}} else {
+if (currentMoment.isBetween(inicioTime, finTime)) {
+isWithinTimeRange = true;
+}}
+if (!isWithinTimeRange) return conn.sendFile(m.chat, [porn, porn2].getRandom(), 'sticker.webp', '', m, true, { contextInfo: { 'forwardingScore': 200, 'isForwarded': false, externalAdReply:{ showAdAttribution: false, title: `ᴱˢᵗᵉ ᶜᵒᵐᵃⁿᵈᵒ ˢᵒˡᵒ ᶠᵘⁿᶜᶦᵒⁿᵃ ᵉˡ ʰᵒʳᵃʳᶦᵒ ʰᵃᵇᶦˡᶦᵗᵃᵈᵒ ᵉˡ ᵍʳᵘᵖᵒ:`, body: `${inicio} a ${fin}`, mediaType: 2, sourceUrl: md, thumbnail: imagen3}}}, { quoted: m, ephemeralExpiration: 24*60*100, disappearingMessagesInChat: 24*60*100}).catch(m.reply(`*[ ALTO HAY PAJIN ]*n\nLos comando +18 solo funcióna el horario habilitado el grupo:* ${inicio} a ${fin}`))   
+}
 
 switch (command) {
 case 'pack':
 const url = await pack[Math.floor(Math.random() * pack.length)];
-conn.sendButton(m.chat, '_🥵 aqui tiene mi Pack 😏_', botname, url, [['🥵 𝐒𝐈𝐆𝐔𝐈𝐄𝐍𝐓𝐄 🥵', `/${command}`]], null, null, m)
-//conn.sendMessage(m.chat, {image: {url: url}, caption: `_🥵 aqui tiene mi Pack 😏_`}, {quoted: m});
+conn.sendFile(m.chat, url, 'error.jpg', "_🥵 aqui tiene mi Pack 😏_", m, null, fakee2);
+//conn.sendButton(m.chat, '_🥵 aqui tiene mi Pack 😏_', botname, url, [['🥵 𝐒𝐈𝐆𝐔𝐈𝐄𝐍𝐓𝐄 🥵', `/${command}`]], null, null, m)
 break;
 case 'pack2':
 const url2 = await packgirl[Math.floor(Math.random() * packgirl.length)];
-conn.sendButton(m.chat, '_🥵 aqui tiene mi Pack 😏_', botname, url2, [['🥵 𝐒𝐈𝐆𝐔𝐈𝐄𝐍𝐓𝐄 🥵', `/${command}`]], null, null, m)
+conn.sendFile(m.chat, url2, 'error.jpg', "_🥵 aqui tiene mi Pack 😏_", m, null, fakee2);
+//conn.sendButton(m.chat, '_🥵 aqui tiene mi Pack 😏_', botname, url2, [['🥵 𝐒𝐈𝐆𝐔𝐈𝐄𝐍𝐓𝐄 🥵', `/${command}`]], null, null, m)
 break;
 case 'pack3':
 const url3 = await packmen[Math.floor(Math.random() * packmen.length)];
-conn.sendButton(m.chat, '_🥵 aqui tiene mi Pack 😏_', botname, url3, [['🥵 𝐒𝐈𝐆𝐔𝐈𝐄𝐍𝐓𝐄 🥵', `/${command}`]], null, null, m) 
+conn.sendFile(m.chat, url3, 'error.jpg', "_🥵 aqui tiene mi Pack 😏_", m, null, fakee2);
+//conn.sendButton(m.chat, '_🥵 aqui tiene mi Pack 😏_', botname, url3, [['🥵 𝐒𝐈𝐆𝐔𝐈𝐄𝐍𝐓𝐄 🥵', `/${command}`]], null, null, m) 
 break;
 case 'girls': case 'pack4':
-conn.sendButton(m.chat, '🥵', botname, "https://delirius-api-oficial.vercel.app/api/girls", [['🔄 𝐒𝐈𝐆𝐔𝐈𝐄𝐍𝐓𝐄 🔄', `/${command}`]], null, null, m)
+conn.sendFile(m.chat, "https://delirius-api-oficial.vercel.app/api/girls", 'error.jpg', "🥵", m, null, fakee2);
+//conn.sendButton(m.chat, '🥵', botname, "https://delirius-api-oficial.vercel.app/api/girls", [['🔄 𝐒𝐈𝐆𝐔𝐈𝐄𝐍𝐓𝐄 🔄', `/${command}`]], null, null, m)
 break
 case 'videoxxx': case 'vídeoxxx':
 const url4 = await videosxxxc[Math.floor(Math.random() * videosxxxc.length)];
-await conn.sendButton(m.chat, '_*ᴅɪsғʀᴜᴛᴀ ᴅᴇʟ ᴠɪᴅᴇᴏ 🥵*_', botname, url4, [['🥵 𝐒𝐈𝐆𝐔𝐈𝐄𝐍𝐓𝐄 🥵', `/${command}`]], null, null, m)       
+await conn.sendFile(m.chat, url4, 'error.jpg', "_*ᴅɪsғʀᴜᴛᴀ ᴅᴇʟ ᴠɪᴅᴇᴏ 🥵_", m, null, fakee2);
+//conn.sendButton(m.chat, '_*ᴅɪsғʀᴜᴛᴀ ᴅᴇʟ ᴠɪᴅᴇᴏ 🥵*_', botname, url4, [['🥵 𝐒𝐈𝐆𝐔𝐈𝐄𝐍𝐓𝐄 🥵', `/${command}`]], null, null, m)       
 break;
 case 'videoxxxlesbi': case 'videolesbixxx': case 'pornolesbivid': case 'pornolesbianavid': case 'pornolesbiv': case 'pornolesbianav': case 'pornolesv':
 const url5 = await videosxxxc2[Math.floor(Math.random() * videosxxxc2.length)];
-await conn.sendButton(m.chat, '_*ᴅɪsғʀᴜᴛᴀ ᴅᴇʟ ᴠɪᴅᴇᴏ 🥵*_', botname, url5, [['🥵 𝐒𝐈𝐆𝐔𝐈𝐄𝐍𝐓𝐄 🥵', `/${command}`]], null, null, m)   
+await conn.sendFile(m.chat, url5, 'error.jpg', "_*ᴅɪsғʀᴜᴛᴀ ᴅᴇʟ ᴠɪᴅᴇᴏ 🥵_", m, null, fakee2);
+//conn.sendButton(m.chat, '_*ᴅɪsғʀᴜᴛᴀ ᴅᴇʟ ᴠɪᴅᴇᴏ 🥵*_', botname, url5, [['🥵 𝐒𝐈𝐆𝐔𝐈𝐄𝐍𝐓𝐄 🥵', `/${command}`]], null, null, m)   
 break;
 }};
 handler.help = ['pack', 'pack2', 'pack3', 'pack4', 'videoxxx', 'videoxxxlesbi', 'girls', 'pornolesbiv'];

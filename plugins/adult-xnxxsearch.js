@@ -1,8 +1,30 @@
 import fetch from 'node-fetch';
+import moment from 'moment-timezone';
 const handler = async (m, {text, usedPrefix, command}) => {
 let porn = 'https://qu.ax/bXMB.webp'
 let porn2 = 'https://qu.ax/TxtQ.webp'
-if (!db.data.chats[m.chat].modohorny && m.isGroup) return conn.sendFile(m.chat, [porn, porn2].getRandom(), 'sticker.webp', '', m, true, { contextInfo: { 'forwardingScore': 200, 'isForwarded': false, externalAdReply:{ showAdAttribution: false, title: `ᴸᵒˢ ᶜᵒᵐᵃⁿᵈᵒ ʰᵒʳⁿʸ ᵉˢᵗᵃ ᵈᵉˢᵃᶜᵗᶦᵛᵃᵈᵒ ᵖᵃʳᵃ ᵃᶜᵗᶦᵛᵃʳ ᵘˢᵃʳ:`, body: '#enable modohorny', mediaType: 2, sourceUrl: md, thumbnail: imagen3}}}, { quoted: m, ephemeralExpiration: 24*60*100, disappearingMessagesInChat: 24*60*100})   
+if (!db.data.chats[m.chat].modohorny && m.isGroup) return conn.sendFile(m.chat, [porn, porn2].getRandom(), 'sticker.webp', '', m, true, { contextInfo: { 'forwardingScore': 200, 'isForwarded': false, externalAdReply:{ showAdAttribution: false, title: `ᴸᵒˢ ᶜᵒᵐᵃⁿᵈᵒ ʰᵒʳⁿʸ ᵉˢᵗᵃ ᵈᵉˢᵃᶜᵗᶦᵛᵃᵈᵒ ᵖᵃʳᵃ ᵃᶜᵗᶦᵛᵃʳ ᵘˢᵃʳ:`, body: '#enable modohorny', mediaType: 2, sourceUrl: md, thumbnail: imagen3}}}, { quoted: m, ephemeralExpiration: 24*60*100, disappearingMessagesInChat: 24*60*100}).catch(m.reply(`*[ ALTO HAY PAJIN ]*n\nLos comando +18 esta apagado en este grupo, si eres admins activarlo con: #enable modohorny*`)) 
+const horarioNsfw = db.data.chats[m.chat].horarioNsfw || null;
+const now = moment.tz('America/Argentina/Buenos_Aires'); 
+const currentTime = now.format('HH:mm'); 
+
+if (horarioNsfw) {
+const { inicio, fin } = horarioNsfw;
+const inicioTime = moment(inicio, 'HH:mm').tz('America/Argentina/Buenos_Aires');
+const finTime = moment(fin, 'HH:mm').tz('America/Argentina/Buenos_Aires');
+const currentMoment = moment(currentTime, 'HH:mm').tz('America/Argentina/Buenos_Aires');
+let isWithinTimeRange = false;
+if (inicioTime.isAfter(finTime)) {
+if (currentMoment.isBetween(inicioTime, moment('23:59', 'HH:mm').tz('America/Argentina/Buenos_Aires')) || 
+currentMoment.isBetween(moment('00:00', 'HH:mm').tz('America/Argentina/Buenos_Aires'), finTime)) {
+isWithinTimeRange = true;
+}} else {
+if (currentMoment.isBetween(inicioTime, finTime)) {
+isWithinTimeRange = true;
+}}
+if (!isWithinTimeRange) return conn.sendFile(m.chat, [porn, porn2].getRandom(), 'sticker.webp', '', m, true, { contextInfo: { 'forwardingScore': 200, 'isForwarded': false, externalAdReply:{ showAdAttribution: false, title: `ᴱˢᵗᵉ ᶜᵒᵐᵃⁿᵈᵒ ˢᵒˡᵒ ᶠᵘⁿᶜᶦᵒⁿᵃ ᵉˡ ʰᵒʳᵃʳᶦᵒ ʰᵃᵇᶦˡᶦᵗᵃᵈᵒ ᵉˡ ᵍʳᵘᵖᵒ:`, body: `${inicio} a ${fin}`, mediaType: 2, sourceUrl: md, thumbnail: imagen3}}}, { quoted: m, ephemeralExpiration: 24*60*100, disappearingMessagesInChat: 24*60*100}).catch(m.reply(`*[ ALTO HAY PAJIN ]*n\nLos comando +18 solo funcióna el horario habilitado el grupo:* ${inicio} a ${fin}`))   
+}
+
 if (!text) throw `*⚠️ Que esta buscando Pajín? usar el comando de esta forma*\n*• Ejemplo:* ${usedPrefix + command} Con mi prima*`;
 try {
 const vids_ = {

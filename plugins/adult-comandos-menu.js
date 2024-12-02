@@ -1,8 +1,8 @@
 import { xpRange } from "../lib/levelling.js";
-var handler = async (m, {conn, usedPrefix, usedPrefix: _p, text}) => {
+var handler = async (m, {conn, usedPrefix, usedPrefix: _p, text, args, isAdmin}) => {
 let porn = 'https://qu.ax/bXMB.webp'
 let porn2 = 'https://qu.ax/TxtQ.webp'
-if (!db.data.chats[m.chat].modohorny && m.isGroup) return conn.sendFile(m.chat, [porn, porn2].getRandom(), 'sticker.webp', '', m, true, { contextInfo: { 'forwardingScore': 200, 'isForwarded': false, externalAdReply:{ showAdAttribution: false, title: `ᴸᵒˢ ᶜᵒᵐᵃⁿᵈᵒ ʰᵒʳⁿʸ ᵉˢᵗᵃ ᵈᵉˢᵃᶜᵗᶦᵛᵃᵈᵒ ᵖᵃʳᵃ ᵃᶜᵗᶦᵛᵃʳ ᵘˢᵃʳ:`, body: '#enable modohorny', mediaType: 2, sourceUrl: md, thumbnail: imagen3}}}, { quoted: m, ephemeralExpiration: 24*60*100, disappearingMessagesInChat: 24*60*100})   
+if (!db.data.chats[m.chat].modohorny && m.isGroup) return conn.sendFile(m.chat, [porn, porn2].getRandom(), 'sticker.webp', '', m, true, { contextInfo: { 'forwardingScore': 200, 'isForwarded': false, externalAdReply:{ showAdAttribution: false, title: `ᴸᵒˢ ᶜᵒᵐᵃⁿᵈᵒ ʰᵒʳⁿʸ ᵉˢᵗᵃ ᵈᵉˢᵃᶜᵗᶦᵛᵃᵈᵒ ᵖᵃʳᵃ ᵃᶜᵗᶦᵛᵃʳ ᵘˢᵃʳ:`, body: '#enable modohorny', mediaType: 2, sourceUrl: md, thumbnail: imagen3}}}, { quoted: m, ephemeralExpiration: 24*60*100, disappearingMessagesInChat: 24*60*100}).catch(m.reply(`*[ ALTO HAY PAJIN ]*n\nLos comando +18 esta apagado en este grupo, si eres admins activarlo con: #enable modohorny*`)) 
 
 let {exp, limit, level, role} = global.db.data.users[m.sender];
 let {min, xp, max} = xpRange(level, global.multiplier);
@@ -122,6 +122,8 @@ let menu = `Hola ${username} pajin 🤓
 ◉ ${usedPrefix}pornomuslos
   
 > El yaoi es pa las chicas no solo los hombre se divierten 🤓`.trim();
+
+if (/^hornymenu|menu18|menucaliente$/i.test(m.text)) {   
 conn.sendMessage(m.chat, { image: { url: "https://telegra.ph/file/c0b57f22c3fce1c2b5e72.jpg", }, caption: menu, 
 contextInfo: {
 externalAdReply: {
@@ -132,9 +134,36 @@ showAdAttribution: true,
 thumbnailUrl: "https://telegra.ph/file/361c821b05575733b1bb5.jpg",
 }}}, { quoted: m })
 }
-handler.help = ["menu18", "hornymenu"]
+
+if (/^sethorario|nwfshorario|hornyHorario$/i.test(m.text)) {   
+handler.group = true
+if (!isAdmin) return await m.reply(`⚠️ *Solo los admins pueden usar este comando.*`)
+const args = m.text.split(' ').slice(1); 
+if (args.length < 2) return conn.reply(m.chat, '⚠️ Por favor ingresa la hora de inicio y fin en formato HH:MM, por ejemplo: 23:00 - 06:00.', m);
+let inicio, fin;
+const regex1 = /^(\d{2}:\d{2})\s*-\s*(\d{2}:\d{2})$/; 
+const regex2 = /^(\d{2}:\d{2})\s*a\s*(\d{2}:\d{2})$/; 
+const regex3 = /^(\d{2}:\d{2})\s*,\s*(\d{2}:\d{2})$/;
+let match;
+if (match = args.join(' ').match(regex1)) {
+inicio = match[1];
+fin = match[2];
+} else if (match = args.join(' ').match(regex2)) {
+inicio = match[1];
+fin = match[2];
+} else if (match = args.join(' ').match(regex3)) {
+inicio = match[1];
+fin = match[2];
+} else {
+return conn.reply(m.chat, '⚠️ Formato de horario incorrecto. Por favor usa uno de los siguientes formatos: HH:MM - HH:MM o HH:MM, HH:MM.', m);
+}
+db.data.chats[m.chat].horarioNsfw = { inicio, fin };
+return conn.reply(m.chat, `Horario establecido: ${inicio} a ${fin}`, m);
+}
+}
+handler.help = ["menu18", "hornymenu", "nwfshorario"]
 handler.tags = ["main"];
-handler.command = /^(hornymenu|menu18|menucaliente)$/i;
+handler.command = /^(hornymenu|menu18|menucaliente|sethorario|nwfshorario|hornyHorario)$/i;
 handler.register = true
 handler.exp = 70;
 export default handler;
