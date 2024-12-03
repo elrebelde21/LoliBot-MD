@@ -1,4 +1,4 @@
- import { smsg } from './lib/simple.js'
+import { smsg } from './lib/simple.js'
 import { format } from 'util' 
 import { fileURLToPath } from 'url'
 import path, { join } from 'path'
@@ -925,8 +925,8 @@ if (!('autolevelup' in chat))  chat.autolevelup = true
 if (!isNumber(chat.expired)) chat.expired = 0
 if (!('horarioNsfw' in chat)) { 
 chat.horarioNsfw = {
-inicio: null, 
-fin: null
+inicio: "00:00", 
+fin: "23:59"
 };
 }
 } else
@@ -970,8 +970,8 @@ autorespond: true,
 autolevelup: true,
 expired: 0,
 horarioNsfw: {
-inicio: null, 
-fin: null
+inicio: "00:00", 
+fin: "23:59"
 }
 }
 var settings = global.db.data.settings[this.user.jid]
