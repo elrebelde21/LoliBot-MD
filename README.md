@@ -85,7 +85,16 @@
 termux-setup-storage
 ```
 ```bash
-apt update -y && yes | apt upgrade && pkg install -y bash wget mpv && wget -O - https://raw.githubusercontent.com/elrebelde21/LoliBot-MD/master/install.sh | bash
+apt update && apt upgrade && pkg update && pkg upgrade && pkg install bash && pkg install libwebp && pkg install git -y && pkg install nodejs -y && pkg install ffmpeg -y && pkg install wget && pkg install imagemagick -y && pkg install yarn
+```
+```bash
+git clone https://github.com/elrebelde21/LoliBot-MD && cd LoliBot-MD
+```
+```bash
+bash ./install2.sh
+```
+```bash
+npm start
 ```
 -----
 ### 📁 (OPCIÓN 2) 𝐀𝐂𝐓𝐈𝐕𝐀 𝐄𝐋 𝐓𝐄𝐑𝐌𝐔𝐗 - 𝘼𝙍𝘾𝙃𝙄𝙑𝙊𝙎 
