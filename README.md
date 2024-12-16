@@ -112,10 +112,7 @@ apt update && apt upgrade && pkg install -y git nodejs ffmpeg imagemagick yarn
 cd storage/downloads/LoliBot-MD-master/LoliBot-MD-master 
 ```
 ```bash
-yarn install
-```
-```bash
-npm install
+bash ./install2.sh
 ```
 ```bash
 npm start
