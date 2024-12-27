@@ -29,6 +29,7 @@ import moment from 'moment-timezone'
 import NodeCache from 'node-cache'
 import readline from 'readline'
 import fs from 'fs'
+import { gataJadiBot } from './plugins/jadibot.js';
 const { CONNECTING } = ws
 const { chain } = lodash
 const PORT = process.env.PORT || process.env.SERVER_PORT || 3000
@@ -80,7 +81,16 @@ global.db.chain = chain(global.db.data)
 }
 loadDatabase()
 
+global.creds = 'creds.json'
 global.authFile = `BotSession`
+global.authFileJB  = 'jadibts'
+global.rutaBot = join(__dirname, authFile)
+global.rutaJadiBot = join(__dirname, authFileJB)
+
+if (!fs.existsSync(rutaJadiBot)) {
+fs.mkdirSync(rutaJadiBot)
+}
+
 const {state, saveState, saveCreds} = await useMultiFileAuthState(global.authFile)
 const msgRetryCounterMap = (MessageRetryMap) => { }
 const msgRetryCounterCache = new NodeCache()
@@ -337,28 +347,31 @@ await global.reloadHandler(true).catch(console.error);
 process.on('uncaughtException', console.error);
 
 let isInit = true;
-let handler = await import('./handler.js')
-global.reloadHandler = async function (restatConn) {
+let handler = await import('./handler.js');
+global.reloadHandler = async function(restatConn) {
 try {
-const Handler = await import(`./handler.js?update=${Date.now()}`).catch(console.error)
-if (Object.keys(Handler || {}).length) handler = Handler
+const Handler = await import(`./handler.js?update=${Date.now()}`).catch(console.error);
+if (Object.keys(Handler || {}).length) handler = Handler;
 } catch (e) {
-console.error(e)
+console.error(e);
 }
 if (restatConn) {
-const oldChats = global.conn.chats
-try { global.conn.ws.close() } catch { }
-conn.ev.removeAllListeners()
-global.conn = makeWASocket(connectionOptions, { chats: oldChats })
-isInit = true
+const oldChats = global.conn.chats;
+try {
+global.conn.ws.close();
+} catch { }
+conn.ev.removeAllListeners();
+global.conn = makeWASocket(connectionOptions, {chats: oldChats});
+isInit = true;
 }
 if (!isInit) {
-conn.ev.off('messages.upsert', conn.handler)
-conn.ev.off('group-participants.update', conn.participantsUpdate)
-conn.ev.off('groups.update', conn.groupsUpdate)
-conn.ev.off('message.delete', conn.onDelete)
-conn.ev.off('connection.update', conn.connectionUpdate)
-conn.ev.off('creds.update', conn.credsUpdate)
+conn.ev.off('messages.upsert', conn.handler);
+conn.ev.off('group-participants.update', conn.participantsUpdate);
+conn.ev.off('groups.update', conn.groupsUpdate);
+conn.ev.off('message.delete', conn.onDelete);
+conn.ev.off('call', conn.onCall);
+conn.ev.off('connection.update', conn.connectionUpdate);
+conn.ev.off('creds.update', conn.credsUpdate);
 }
 
 conn.welcome = 'HOLAA!! @user ¿COMO ESTAS?😃\n\n『Bienvenido A *@subject*』\n\nUn gusto conocerte amig@ 🤗\n\n_Recuerda leer las reglas del grupo para no tener ningun problema 🧐_\n\n*Solo disfrutar de este grupo y divertite 🥳*`'
@@ -384,6 +397,22 @@ conn.ev.on('connection.update', conn.connectionUpdate)
 conn.ev.on('creds.update', conn.credsUpdate)
 isInit = false
 return true
+}
+
+/** Arranque nativo para subbots by - ReyEndymion >> https://github.com/ReyEndymion
+ */
+if (global.gataJadibts) {
+const readRutaJadiBot = readdirSync(rutaJadiBot)
+if (readRutaJadiBot.length > 0) {
+const creds = 'creds.json'
+for (const gjbts of readRutaJadiBot) {
+const botPath = join(rutaJadiBot, gjbts)
+const readBotPath = readdirSync(botPath)
+if (readBotPath.includes(creds)) {
+gataJadiBot({pathGataJadiBot: botPath, m: null, conn, args: '', usedPrefix: '/', command: 'serbot'})
+}
+}
+}
 }
 
 const pluginFolder = global.__dirname(join(__dirname, './plugins/index'))
