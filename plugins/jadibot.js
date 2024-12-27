@@ -165,7 +165,7 @@ if (connection === 'close') {
 console.log(reason)
 if (reason == 405) {
 //await fs.unlinkSync("./GataJadiBot/" + id + "/creds.json")
-fs.unlinkSync(pathGataJadiBot)
+fs.unlinkSync(pathCreds);
 //thank you aiden_notLogic
 return await conn.sendMessage(m.chat, {text : `*🟢 REENVIAR NUEVAMENTE EL COMANDO....*` }, { quoted: null })
 }
