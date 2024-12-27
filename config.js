@@ -18,6 +18,9 @@ global.prems = []
 global.botNumberCode = "" //Ejemplo: +59309090909
 global.confirmCode = "" 
 
+//cambia a false Desactivar en "auto-reconexion" de sub-bots
+global.gataJadibts = true 
+
 // Cambiar a false para usar el Bot desde el mismo numero del Bot.
 global.isBaileysFail = false
 
