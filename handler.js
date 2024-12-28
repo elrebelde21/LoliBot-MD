@@ -986,6 +986,7 @@ if (!('antiPrivate' in settings)) settings.antiPrivate = false
 if (!('antiCall' in settings)) settings.antiCall = true
 if (!('antiSpam' in settings)) settings.antiSpam = true 
 if (!('modoia' in settings)) settings.modoia = false
+if (!('anticommand' in settings)) settings.anticommand = false	
 if (!('jadibotmd' in settings)) settings.jadibotmd = true
 if (!('status' in settings)) settings.status = 0
 } else global.db.data.settings[this.user.jid] = {
@@ -998,6 +999,7 @@ antiPrivate: false,
 antiCall: true,
 antiSpam: true,
 modoia: false, 
+anticommand: false, 	
 jadibotmd: true,
 status: 0
 }} catch (e) {
