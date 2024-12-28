@@ -553,7 +553,17 @@ global.dfail('admin', m, conn)
 throw false
 }}
 chat.simi = isEnable
-break
+break 
+		
+case 'anticommand': case 'antiarabe': case 'antiarabe2': case 'AntiCommand':
+isAll = true
+if (!isROwner) {
+global.dfail('rowner', m, conn)
+throw false
+}
+bot.anticommand = isEnable
+break 
+		
 case 'modoia': case 'chatgpt': case 'ia':
 isAll = true;
 if (!isOwner) {
