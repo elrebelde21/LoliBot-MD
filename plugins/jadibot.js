@@ -181,7 +181,7 @@ await endSesion(false)
 return conn.sendMessage(m.chat, {text : `*Ha cerrado sesión o hubo una interrupción inesperada*\n\nUsa el comando *${usedPrefix}serbot* o *${usedPrefix}serbot + ID*. Si el problema persiste, inicia sesión nuevamente con el comando *${usedPrefix}serbot code*.\n\n> _El *ID* es un mensaje con muchos caracteres que fue enviado cuando se hizo sub bot._` }, { quoted: null }) //smsJBConexion
 //m.reply(lenguajeGB['smsJBConexion']())
 } else if (reason === DisconnectReason.connectionLost) {
-await jddt()
+//await jddt()
 return console.log(`⚠️ CONEXIÓN PERDIDA CON EL SERVIDOR, RECONECTANDO...`); 
 } else if (reason === DisconnectReason.badSession) {
 return await conn.sendMessage(m.chat, {text : `🔴 *LA CONEXIÓN SE HA CERRADO, DEBERÁ DE CONECTARSE MANUALMENTE USANDO EL COMANDO #serbot Y REESCANEAR EL NUEVO CÓDIGO QR*` }, { quoted: null })
