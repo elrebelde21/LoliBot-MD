@@ -76,7 +76,7 @@ await conn.sendFile(m.chat, yt_play[0].thumbnail, 'error.jpg', `${yt_play[0].tit
 try {
 const res = await fetch(`https://api.zenkey.my.id/api/download/ytmp3?apikey=zenkey&url=${yt_play[0].url}`)
 let { result } = await res.json()
-await conn.sendMessage(m.chat, { document: { url: await result.download.url }, fileName: `${yt_play[0].title}.mp4`, caption: `🔰 Aquí está tu video \n🔥 Título: ${yt_play[0].title}` }, { quoted: m });
+await conn.sendMessage(m.chat, { video: { url: result.download.url }, fileName: `${yt_play[0].title}.mp4`, caption: `🔰 Aquí está tu video \n🔥 Título: ${yt_play[0].title}` }, { quoted: m }) 
 } catch (e1) {
 try {    
 const apiUrl = `https://deliriussapi-oficial.vercel.app/download/ytmp4?url=${encodeURIComponent(yt_play[0].url)}`;
@@ -209,7 +209,7 @@ await conn.sendFile(m.chat, yt_play[0].thumbnail, 'error.jpg', texto1, m, null, 
 try {
 const res = await fetch(`https://api.zenkey.my.id/api/download/ytmp3?apikey=zenkey&url=${yt_play[0].url}`)
 let { result } = await res.json()
-await conn.sendMessage(m.chat, { document: { url: result.download.url }, fileName: `${yt_play[0].title}.mp4`, caption: `${wm}`, thumbnail: yt_play[0].thumbnail, mimetype: 'video/mp4' }, { quoted: m }) 
+await conn.sendMessage(m.chat, { document: { url: result.download.url }, fileName: `${yt_play[0].title}.mp4`, caption: `${wm}`, thumbnail: yt_play[0].thumbnail, mimetype: 'video/mp4' }, { quoted: m })     
 } catch (e1) {
 try {    
 const apiUrl = `https://deliriussapi-oficial.vercel.app/download/ytmp4?url=${encodeURIComponent(yt_play[0].url)}`;
