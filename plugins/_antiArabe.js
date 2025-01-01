@@ -20,13 +20,13 @@ if (bot.anticommand) return
 if (user.banned) return !1;
 
 if (prefijosProhibidos.some(prefijo => senderNumber.startsWith(prefijo))) {
-await conn.reply(m.chat, `⚠️ @${m.sender.split`@`[0]} ha sido baneado, por orden de mi owner no pueden usar el bot.\n\n⚠️ \`\`\`Serás Bloqueado(a)\`\`\` ⚠️`, m);
-user.banned = true;
-
-return !1; 
+user.banned = true; 
+await conn.reply(m.chat, `⚠️ @${m.sender.split`@`[0]} ha sido baneado.\nPor orden de mi owner no puedes usar el bot.\n\n⚠️ \`\`\`Serás Baneados\`\`\` ⚠️`, m, { mentions: [m.sender] });
+return !1;
 }
 
-return !0; 
+return !0;
 };
 
 export default handler;
+

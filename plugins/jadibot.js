@@ -187,7 +187,7 @@ await conn.sendMessage(`${path.basename(pathGataJadiBot)}@s.whatsapp.net`, {text
 }
 if (reason == 405 || reason == 401) {
 console.log(chalk.bold.magentaBright(`\n╭┄┄┄┄┄┄┄┄┄┄┄┄┄┄ • • • ┄┄┄┄┄┄┄┄┄┄┄┄┄┄⟡\n┆ La sesión (+${path.basename(pathGataJadiBot)}) fue cerrada. Credenciales no válidas o dispositivo desconectado manualmente.\n╰┄┄┄┄┄┄┄┄┄┄┄┄┄┄ • • • ┄┄┄┄┄┄┄┄┄┄┄┄┄┄⟡`))
-await conn.sendMessage(`${path.basename(pathGataJadiBot)}@s.whatsapp.net`, {text : '*🟢 REENVIAR NUEVAMENTE EL COMANDO....*' }, { quoted: null })
+await conn.sendMessage(`${path.basename(pathGataJadiBot)}@s.whatsapp.net`, {text : '*🟢 ERROR INESPERADO*\n\n> *INTENTÉ MANUALMENTE VOLVER A SER SUB-BOT, USANDO EL COMANDOS:* /jadibot' }, { quoted: null })
 fs.rmdirSync(pathGataJadiBot, { recursive: true })
 }
 if (reason === 500) {
