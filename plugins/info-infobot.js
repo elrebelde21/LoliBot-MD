@@ -1,4 +1,5 @@
 import db from '../lib/database.js';
+import ws from 'ws';
 import { cpus as _cpus, totalmem, freemem, platform, hostname, version, release, arch } from 'os';
 import os from 'os';
 import moment from 'moment';
@@ -76,7 +77,8 @@ const chats = Object.entries(conn.chats).filter(([id, data]) => id && data.isCha
 let totalchats = Object.keys(global.db.data.chats).length;
 let totalf = Object.values(global.plugins).filter(v => v.help && v.tags).length;
 const groupsIn = chats.filter(([id]) => id.endsWith('@g.us'));
-let totaljadibot = [...new Set([...global.conns.filter(conn => conn.user && conn.state !== 'close').map(conn => conn.user)])];
+let totaljadibot = [...new Set([...global.conns.filter((conn) => conn.user && conn.ws.socket && conn.ws.socket.readyState !== ws.CLOSED).map((conn) => conn)])];
+const totalUsers = totaljadibot.length;
 let timestamp = speed();
 let latensi = speed() - timestamp;
 
@@ -89,7 +91,7 @@ let teks = `*≡ INFOBOT*
 *▣ Grupo salidos:* ${groupsIn.length - groupsIn.length}
 *▣ Chats privado:* ${chats.length - groupsIn.length}
 *▣ Chats totales:* ${chats.length}
-*▣ Sub-Bots conectado:* ${totaljadibot.length}
+*▣ Sub-Bots conectado:* ${totalUsers}
 *▣ Total plugins:* ${totalf}
 *▣ Velocidad:* ${latensi.toFixed(4)} ms
 *▣ Actividad:* ${uptime}
