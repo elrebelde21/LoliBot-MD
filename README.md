@@ -71,6 +71,7 @@
 <a href="https://dash.corinplus.com"><img src="https://qu.ax/zFzXF.png" height="125px"></a>
 
 ### Información del Host
+- **Pagina Oficial:** [`Aqui`](https://skyultraplus.com)
 - **Dashboard:** [`Aquí`](https://dash.skyultraplus.com)
 - **Panel:** [`Aquí`](https://panel.skyultraplus.com)
 - **Estado de servicios:** [`Aquí`](https://estado.skyultraplus.com)
