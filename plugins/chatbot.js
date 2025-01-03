@@ -3,12 +3,16 @@
 let handler = m => m
 handler.all = async function (m) {
 let fkontak = { "key": { "participants":"0@s.whatsapp.net", "remoteJid": "status@broadcast", "fromMe": false, "id": "Halo" }, "message": { "contactMessage": { "vcard": `BEGIN:VCARD\nVERSION:3.0\nN:Sy;Bot;;;\nFN:y\nitem1.TEL;waid=${m.sender.split('@')[0]}:${m.sender.split('@')[0]}\nitem1.X-ABLabel:Ponsel\nEND:VCARD` }}, "participant": "0@s.whatsapp.net" }
+m.isBot = m.id.startsWith('BAE5') && m.id.length === 16 || m.id.startsWith('3EB0') && m.id.length === 12 || m.id.startsWith('3EB0') && (m.id.length === 20 || m.id.length === 22) || m.id.startsWith('B24E') && m.id.length === 20;
+if (m.isBot) return
 let chat = global.db.data.chats[m.chat]
 let name = conn.getName(m.sender)
 const user = `@${m.sender.split`@`[0]}`;
 //let textodem = m.text;
 if (chat.isBanned) return
 if (m.fromMe) return
+if (m.chat === "120363297379773397@newsletter") return; 
+if (m.chat === "120363355261011910@newsletter") return;
 if (m.isBot || m.sender.includes('bot') || m.sender.includes('Bot')) {
 return true; 
 }
