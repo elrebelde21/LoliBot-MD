@@ -196,16 +196,48 @@ echo -e "\033[01;32m\033[01mLa clonación se ha descargado e instalado correctam
 echo -e "\033[01;32m\033[01mCambiando al directorio del repositorio!!\n\033[0m" 
 cd LoliBot-MD
 
-# Verificar si node_modules ya existe
-if [ -d "node_modules" ]; then
-    echo -e "\033[01;32m\033[01mLa carpeta 'node_modules' ya existe. Omitiendo instalación de dependencias.\n\033[0m"
+echo -e "\e[36m
+██╗███╗░░██╗░██████╗████████╗░█████╗░██╗░░░░░██╗░░░░░  ███╗░░██╗██████╗░███╗░░░███╗
+██║████╗░██║██╔════╝╚══██╔══╝██╔══██╗██║░░░░░██║░░░░░  ████╗░██║██╔══██╗████╗░████║
+██║██╔██╗██║╚█████╗░░░░██║░░░███████║██║░░░░░██║░░░░░  ██╔██╗██║██████╔╝██╔████╔██║
+██║██║╚████║░╚═══██╗░░░██║░░░██╔══██║██║░░░░░██║░░░░░  ██║╚████║██╔═══╝░██║╚██╔╝██║
+██║██║░╚███║██████╔╝░░░██║░░░██║░░██║███████╗███████╗  ██║░╚███║██║░░░░░██║░╚═╝░██║
+╚═╝╚═╝░░╚══╝╚═════╝░░░░╚═╝░░░╚═╝░░╚═╝╚══════╝╚══════╝  ╚═╝░░╚══╝╚═╝░░░░░╚═╝░░░░░╚═╝\n\e[0m"
+
+if command npm install >/dev/null 2>&1; then
+echo -e "\033[01;33m Se actualizará NPM automáticamente. Espere un momento por favor.\033[0m"
 else
-    echo -e "\033[01;33mDescargando y extrayendo node_modules.tar.gz...\033[0m"
-    curl -L -o node_modules.tar.gz https://github.com/elrebelde21/NovaBot_MD/releases/download/1.1.8/node_modules.tar.gz
-    tar -xzf node_modules.tar.gz
-    rm node_modules.tar.gz
-    echo -e "\033[01;32mDependencias instaladas correctamente.\n\033[0m"
+echo -e "\033[0;34mNPM no se encontró en su sistema. Se instalará NPM automáticamente.\n\033[0m"
+if npm install 2>&1 >/dev/null | grep -E -i -q '(command not found|unable to locate package|E: Could not get lock|debconf: delaying package configuration|Package not found|Failed to fetch|404 Not Found|Hash sum mismatch|503 Service Unavailable|504 Gateway Timeout|408 Request Timeout|Connection timed out|Temporary failure resolving)'; then
+error=$(npm install 2>&1 >/dev/null)
+echo -e "\033[0;31mError: $error\033[0m" 
+echo -e "\033[0;34mNo se pudo instalar NPM. Verifique su conexión a Internet e inténtelo de nuevo. Si el error continúa, instale de forma manual!!\nIf the error continues, install manually!!\033[0m" 
+echo -e "\033[01;33mpkg install git -y\npkg install nodejs -y\npkg install ffmpeg -y\npkg install imagemagick -y\npkg install yarn -y\npkg install npm -y\ngit clone https://github.com/elrebelde21/LoliBot-MD\ncd LoliBot-MD\nnpm install\nyarn install\nnpm start\033[0m"
+exit 1
+else
+echo -e "\033[01;32m\033[01mNPM se ha instalado correctamente..\n\033[0m" 
 fi
+fi
+
+echo -e "\e[35m
+██╗███╗░░██╗░██████╗████████╗░█████╗░██╗░░░░░██╗░░░░░  ██╗░░░██╗░█████╗░██████╗░███╗░░██╗
+██║████╗░██║██╔════╝╚══██╔══╝██╔══██╗██║░░░░░██║░░░░░  ╚██╗░██╔╝██╔══██╗██╔══██╗████╗░██║
+██║██╔██╗██║╚█████╗░░░░██║░░░███████║██║░░░░░██║░░░░░  ░╚████╔╝░███████║██████╔╝██╔██╗██║
+██║██║╚████║░╚═══██╗░░░██║░░░██╔══██║██║░░░░░██║░░░░░  ░░╚██╔╝░░██╔══██║██╔══██╗██║╚████║
+██║██║░╚███║██████╔╝░░░██║░░░██║░░██║███████╗███████╗  ░░░██║░░░██║░░██║██║░░██║██║░╚███║
+╚═╝╚═╝░░╚══╝╚═════╝░░░░╚═╝░░░╚═╝░░╚═╝╚══════╝╚══════╝  ░░░╚═╝░░░╚═╝░░╚═╝╚═╝░░╚═╝╚═╝░░╚══╝\n\e[0m"
+
+if command yarn install >/dev/null 2>&1; then
+echo -e "\033[01;33mSe actualizará yarn automáticamente. Espere un momento por favor...\033[0m"
+else
+if yarn install 2>&1 >/dev/null | grep -E -i -q '(command not found|unable to locate package|E: Could not get lock|debconf: delaying package configuration|Package not found|Failed to fetch|404 Not Found|Hash sum mismatch|503 Service Unavailable|504 Gateway Timeout|408 Request Timeout|Connection timed out|Temporary failure resolving)'; then
+error=$(yarn install 2>&1 >/dev/null)
+echo -e "\033[0;31mError: $error\033[0m" 
+echo -e "\033[0;34mNo se pudo instalar Yarn. Verifique su conexión a Internet e inténtelo de nuevo. Si el error continúa, instale de forma manual!!\nIf the error continues, install manually!!\033[0m" 
+echo -e "\033[01;33mpkg install git -y\npkg install nodejs -y\npkg install ffmpeg -y\npkg install imagemagick -y\npkg install yarn\ngit clone https://github.com/elrebelde21/LoliBot-MD\ncd LoliBot-MD\nnpm install\nyarn install\nnpm start\033[0m"
+exit 1
+else
+echo -e "\033[01;32m\033[01mYarn se ha instalado correctamente.....\n\033[0m" 
 fi
 fi
 
