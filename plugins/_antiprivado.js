@@ -12,7 +12,7 @@ let usedPrefix = m.text.match(prefixRegex)[0]
 let command = m.text.slice(usedPrefix.length).trim().split(' ')[0]
 }
 
-if (m.isBaileys && m.fromMe) return !0
+if (m.fromMe) return
 if (m.isGroup) return !1
 if (!m.message) return !0 
 if (m.chat === "120363297379773397@newsletter") return; 

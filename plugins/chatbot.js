@@ -71,7 +71,7 @@ https://whatsapp.com/channel/0029VakUvreFHWpyWUr4Jr0g
 //if (/^bot|simi|alexa$/i.test(m.text)) {   
 if (m.text.includes(`bot`) || m.text.includes(`Bot`) || m.text.includes(`simsimi`) || m.text.includes(`simi`) || m.text.includes(`alexa`)) {   
 if (m.text.includes('jadibot') || m.text.includes('bots') || m.text.includes('serbot') || m.text.includes('instalarbot') || m.text.includes('infobot')) return;
-if (m.mentionedJid.includes(conn.user.jid) || (m.quoted && m.quoted.sender === conn.user.jid)) return
+//if (m.mentionedJid.includes(conn.user.jid) || (m.quoted && m.quoted.sender === conn.user.jid)) return
 try {
 await conn.sendPresenceUpdate('composing', m.chat)
 async function luminsesi(q, username, logic) {
