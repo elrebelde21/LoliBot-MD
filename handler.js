@@ -885,6 +885,7 @@ if (!isNumber(user.limit)) user.limit = 8
             if (typeof chat !== 'object')
                 global.db.data.chats[m.chat] = {}
 if (chat) {
+if (!('sAutorespond' in chat)) chat.sAutorespond = '' 
 if (!('isBanned' in chat)) chat.isBanned = false         
 if (!('welcome' in chat)) chat.welcome = true           
 if (!('detect' in chat)) chat.detect = true               
@@ -939,6 +940,7 @@ sBye: '',
 sPromote: '',
 sDemote: '', 
 sCondition: JSON.stringify([{ grupo: { usuario: [], condicion: [], admin: '' }, prefijos: []}]), 
+sAutorespond: '', 
 delete: false,
 modohorny: true,
 stickers: false,
