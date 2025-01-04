@@ -10,7 +10,7 @@ El codigo de este archivo fue parchado por:
 Contenido adaptado por:
 - GataNina-Li >> https://github.com/GataNina-Li
 - elrebelde21 >> https://github.com/elrebelde21
-*/
+*/ 
 
 const { useMultiFileAuthState, DisconnectReason, makeCacheableSignalKeyStore, fetchLatestBaileysVersion} = (await import(global.baileys));
 import qrcode from "qrcode"
