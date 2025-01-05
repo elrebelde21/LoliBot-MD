@@ -200,7 +200,6 @@ await creloadHandler(true).catch(console.error)
 if (reason === 403) {
 console.log(chalk.bold.magentaBright(`\n╭┄┄┄┄┄┄┄┄┄┄┄┄┄┄ • • • ┄┄┄┄┄┄┄┄┄┄┄┄┄┄⟡\n┆ Sesión cerrada o cuenta en soporte para la sesión (+${path.basename(pathGataJadiBot)}).\n╰┄┄┄┄┄┄┄┄┄┄┄┄┄┄ • • • ┄┄┄┄┄┄┄┄┄┄┄┄┄┄⟡`))
 //fs.rmdirSync(pathGataJadiBot, { recursive: true })
-await creloadHandler(true).catch(console.error)
 }}
 if (global.db.data == null) loadDatabase()
 if (connection == `open`) {
@@ -236,7 +235,7 @@ renderLargerThumbnail: false
 await sleep(3000)
 await joinChannels(sock)
 //await conn.sendMessage(m.chat, {text : `${lenguajeGB['smsJBCargando'](usedPrefix)}`}, { quoted: m })
-if (m?.fromMe) return
+if (global.conn.user.jid.split`@`[0] != sock.user.jid.split`@`[0]) return
 if (!args[0]) m?.chat ? conn.sendMessage(m.chat, {text : usedPrefix + command + " " + Buffer.from(fs.readFileSync(pathCreds), "utf-8").toString("base64")}, { quoted: m }) : ''    
 //await sleep(5000)
 //if (!args[0]) conn.sendMessage(m.chat, {text: usedPrefix + command + " " + Buffer.from(fs.readFileSync("./jadibts/" + uniqid + "/creds.json"), "utf-8").toString("base64")}, { quoted: m })
@@ -317,3 +316,27 @@ async function joinChannels(conn) {
 for (const channelId of Object.values(global.ch)) {
 await conn.newsletterFollow(channelId).catch(() => {})
 }}
+
+async function checkSubBots() {
+    for (const sock of global.conns) {
+        if (!sock.user) {
+            try {
+                console.log(`el sub-bot +${path.basename(pathGataJadiBot)} se ha desconectado, intentando reiniciar.`);
+                await restartSubBot(sock);
+            } catch (error) {
+                console.error(`error inesperado: ${error}`);
+            }
+        }
+    }
+}
+
+async function restartSubBot(sock) {
+    let i = global.conns.indexOf(sock);
+    if (i >= 0) {
+        global.conns.splice(i, 1);
+    }
+    let options = { ...sock.options };
+    await gataJadiBot(options);
+}
+
+setInterval(checkSubBots, 5 * 60 * 1000);
