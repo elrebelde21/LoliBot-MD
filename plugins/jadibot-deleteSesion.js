@@ -21,10 +21,12 @@ await conn.sendMessage(m.chat, { text: `*TE VOY A EXTRAÑAR ${wm} CHAOO!! 🥹*`
 await conn.sendMessage(m.chat, { text : `*⚠️ HA CERRADO SESIÓN Y BORRADO TODO RASTRO*` } , { quoted: m })
 } catch(err) {
 if (err.code === 'ENOENT' && err.path === `./jadibts/${uniqid}`) {
-await conn.sendMessage(m.chat, { text: "Usted no es Sub Bot" }, { quoted: m })
+await conn.sendMessage(m.chat, { text: "⚠️ Usted no es un Sub-Bot" }, { quoted: m })
 } else {
 console.error(userS + ' ' + `⚠️ HA CERRADO SESIÓN COMO SUB BOT`, err)
-}}}}
+}}}
+}
+
 handler.command = /^(deletesess?ion|eliminarsesion|borrarsesion|delsess?ion|cerrarsesion)$/i
 handler.private = true
 handler.fail = null
