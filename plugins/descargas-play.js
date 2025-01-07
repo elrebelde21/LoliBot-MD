@@ -6,11 +6,12 @@ import axios from 'axios'
 const LimitAud = 725 * 1024 * 1024; //700MB
 const LimitVid = 425 * 1024 * 1024; //425MB
 const handler = async (m, {conn, command, args, text, usedPrefix}) => {
-
-if (command == 'play' || command == 'musica') {
-if (!text) return m.reply(`*🤔Que está buscando? 🤔*\n*Ingrese el nombre de la canción*\n\n*Ejemplo:*\n#play emilia 420`) 
+if (!args[0] || !text) return m.reply(`*🤔Que está buscando? 🤔*\n*Ingrese el nombre de la canción*\n\n*Ejemplo:*\n#play emilia 420`) 
+//const tipoDescarga = command === 'play' ? 'audio' : command === 'play2' ? 'video' : command === 'play3' ? 'audio doc' : command === 'play4' ? 'video doc' : '';
 const yt_play = await search(args.join(' '));
 const ytplay2 = await yts(text);
+
+if (command == 'play' || command == 'musica') {
 await conn.sendFile(m.chat, yt_play[0].thumbnail, 'error.jpg', `${yt_play[0].title}
 *⇄ㅤ     ◁   ㅤ  ❚❚ㅤ     ▷ㅤ     ↻*
 
@@ -86,9 +87,6 @@ console.log(e);
 }}}}}}}}}}}
 
 if (command == 'play2' || command == 'video') {
-if (!text) return m.reply(`*🤔Que está buscando? 🤔*\n*Ingrese el nombre de la canción*\n\n*Ejemplo:*\n#play emilia 420`) 
-const yt_play = await search(args.join(' '));
-const ytplay2 = await yts(text);
 await conn.sendFile(m.chat, yt_play[0].thumbnail, 'error.jpg', `${yt_play[0].title}
 *⇄ㅤ     ◁   ㅤ  ❚❚ㅤ     ▷ㅤ     ↻*
 
@@ -168,9 +166,6 @@ console.log(e);
 }}}}}}}}}}}
 
 if (command == 'play3' || command == 'playdoc') {
-if (!text) return m.reply(`*🤔Que está buscando? 🤔*\n*Ingrese el nombre de la canción*\n\n*Ejemplo:*\n#play emilia 420`) 
-const yt_play = await search(args.join(' '));
-const ytplay2 = await yts(text);
 const texto1 = `${yt_play[0].title}
 *⇄ㅤ     ◁   ㅤ  ❚❚ㅤ     ▷ㅤ     ↻*
 
@@ -228,9 +223,6 @@ console.log(e);
 }}}}}}}}
 
 if (command == 'play4' || command == 'playdoc2') {
-if (!text) return m.reply(`*🤔Que está buscando? 🤔*\n*Ingrese el nombre de la canción*\n\n*Ejemplo:*\n#play emilia 420`) 
-const yt_play = await search(args.join(' '));
-const ytplay2 = await yts(text);
 const texto1 = `${yt_play[0].title}
 *⇄ㅤ     ◁   ㅤ  ❚❚ㅤ     ▷ㅤ     ↻*
 
