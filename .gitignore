@@ -1,6 +1,6 @@
 package-lock.json
 yarn.lock
-database.json
+database.json 
 node_modules/
 BotSession/
-jadibts/
+jadibts/ 
