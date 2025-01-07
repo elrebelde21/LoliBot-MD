@@ -10,9 +10,14 @@ let fkontak = { "key": { "participants":"0@s.whatsapp.net", "remoteJid": "status
 let biot = bio.status?.toString() || 'Sin Info'
 const date = moment.tz('America/Bogota').format('DD/MM/YYYY')
 const time = moment.tz('America/Argentina/Buenos_Aires').format('LT')
-let api = await axios.get(`${apis}/tools/country?text=${PhoneNumber('+' + who.replace('@s.whatsapp.net', '')).getNumber('international')}`)
-let userNationalityData = api.data.result
-let userNationality = userNationalityData ? `${userNationalityData.name} ${userNationalityData.emoji}` : 'Desconocido'
+let userNationality = null; 
+try {
+let api = await axios.get(`${apis}/tools/country?text=${PhoneNumber('+' + who.replace('@s.whatsapp.net', '')).getNumber('international')}`);
+let userNationalityData = api.data.result;
+userNationality = userNationalityData ? `${userNationalityData.name} ${userNationalityData.emoji}` : null;
+} catch (err) {
+userNationality = null; 
+}
 let user = db.data.users[m.sender]
 let totalreg = Object.keys(global.db.data.users).length
 let rtotalreg = Object.values(global.db.data.users).filter(user => user.registered == true).length
@@ -55,8 +60,7 @@ await conn.sendMessage(m.chat, { text: `[ ✅ REGISTRO COMPLETADO ]
 ◉ *Nombre:* ${name}
 ◉ *Edad:* ${age} años
 ◉ *Hora:* ${time} 🇦🇷
-◉ *Fecha:* ${date}
-◉ *País:* ${userNationality}
+◉ *Fecha:* ${date} ${userNationality ? `\n◉ *País:* ${userNationality}` : ''}
 ◉ *Número:* wa.me/${who.split`@`[0]}
 ◉ *Número de serie:*
 ⤷ ${sn}
@@ -74,8 +78,7 @@ ${usedPrefix}menu
 > *Mira tú registro en este canal*
 ${nnaa}`, contextInfo:{forwardedNewsletterMessageInfo: { newsletterJid: ['120363355261011910@newsletter', '120363297379773397@newsletter'].getRandom(), serverMessageId: '', newsletterName: 'LoliBot ✨' }, forwardingScore: 9999999, isForwarded: true, "externalAdReply": {"showAdAttribution": true, "containsAutoReply": true, "title": `𝐑𝐄𝐆𝐈𝐒𝐓𝐑𝐎 𝐂𝐎𝐌𝐏𝐋𝐄𝐓𝐀𝐃𝐎`, "body": wm, "previewType": "PHOTO", thumbnail: img.getRandom(), sourceUrl: [nna, nna2, nn, md, yt, tiktok].getRandom()}}}, { quoted: fkontak, ephemeralExpiration: 24*60*100, disappearingMessagesInChat: 24*60*100})
 //await m.reply(`${sn}`);
-await global.conn.sendMessage(global.ch.ch1, { text: `◉ *Usuarios:* ${m.pushName || 'Anónimo'}
-◉ *País:* ${userNationality}
+await global.conn.sendMessage(global.ch.ch1, { text: `◉ *Usuarios:* ${m.pushName || 'Anónimo'} ${userNationality ? `\n◉ *País:* ${userNationality}` : ''}
 ◉ *Verificación:* ${user.name}
 ◉ *Edad:* ${age} años
 ◉ *Fecha:* ${date}
