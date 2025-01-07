@@ -1,5 +1,8 @@
 import db from '../lib/database.js';
-import ws from 'ws';
+import fs from 'fs'
+import path from 'path'
+import { fileURLToPath } from 'url'
+import ws from 'ws'
 import { cpus as _cpus, totalmem, freemem, platform, hostname, version, release, arch } from 'os';
 import os from 'os';
 import moment from 'moment';
@@ -12,6 +15,11 @@ decimalPlaces: 2,
 keepTrailingZeroes: false,
 render: (literal, symbol) => `${literal} ${symbol}B`,
 });
+
+const __filename = fileURLToPath(import.meta?.url)
+const __dirname = path?.dirname(__filename)
+const carpetaBase = path?.resolve(__dirname, '..', 'jadibts')
+const cantidadCarpetas = (fs?.readdirSync(carpetaBase, { withFileTypes: true }).filter(item => item?.isDirectory())?.length) || 0
 
 const used = process.memoryUsage();
     let ram = await si.mem()
