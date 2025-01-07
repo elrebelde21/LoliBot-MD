@@ -99,7 +99,7 @@ global.nnnttt = 'https://chat.whatsapp.com/GHyhi1rPV2946UN2pAyHZi' //enlace loli
 global.nnntttt = 'https://chat.whatsapp.com/FRkr7jJHSJA5OjVtE64dDs' //Grupo ayuda sobre el bot
 global.bot = 'wa.me/573007487856'
 global.asistencia = `${fb}`
-global.redes = [nna, nna2, yt, nn, md, tiktok, fb, nnn, face]
+global.redes = [nna, nna2, yt, nn, nnn, nnnt, nnnttt, md, tiktok, fb, nnn, face]
 
 //------------------------[ Info | Datos ]---------------------------
 
