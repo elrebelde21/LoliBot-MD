@@ -29,6 +29,11 @@ return
   
 conn.reply(m.chat, [`*⌛ 𝙀𝙨𝙥𝙚𝙧𝙚 ✋ 𝙪𝙣 𝙢𝙤𝙢𝙚𝙣𝙩𝙤... 𝙔𝙖 𝙚𝙨𝙩𝙤𝙮 𝙙𝙚𝙨𝙘𝙖𝙧𝙜𝙖𝙙𝙤 𝙩𝙪 𝙖𝙪𝙙𝙞𝙤🍹*`, `⌛ 𝙋𝙍𝙊𝘾𝙀𝙎𝘼𝙉𝘿𝙊...\n*𝘌𝘴𝘵𝘰𝘺 𝘪𝘯𝘵𝘦𝘯𝘵𝘢𝘯𝘥𝘰 𝘥𝘦𝘴𝘤𝘢𝘳𝘨𝘢 𝘴𝘶𝘴 𝘈𝘶𝘥𝘪𝘰 𝘦𝘴𝘱𝘦𝘳𝘦 🏃‍♂️💨*`, `Calmao pa estoy bucando tu canción 😎\n\n*Recuerda colocar bien el nombre de la cancion o el link del video de youtube*\n\n> *Si el comando *play no funciona utiliza el comando *ytmp3*`].getRandom(), m, {contextInfo: {externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: wm, body: ' 💫 𝐒𝐮𝐩𝐞𝐫 𝐁𝐨𝐭 𝐃𝐞 𝐖𝐡𝐚𝐭𝐬𝐚𝐩𝐩 🥳 ', previewType: 0, thumbnail: img.getRandom(), sourceUrl: redes.getRandom()}}})    
 try {
+const res = await fetch(`https://api.siputzx.my.id/api/d/ytmp3?url=${encodeURIComponent(args)}`);
+let { data } = await res.json();
+await conn.sendMessage(m.chat, { audio: { url: data.dl }, mimetype: 'audio/mpeg' }, { quoted: m ||null });
+} catch (e1) {
+try {  
 const res = await fetch(`https://api.zenkey.my.id/api/download/ytmp3?apikey=zenkey&url=${encodeURIComponent(args)}`)
 let { result } = await res.json()
 await conn.sendMessage(m.chat, { audio: { url: await result.download.url }, mimetype: 'audio/mpeg' }, { quoted: m })
@@ -65,7 +70,7 @@ let infoo = await ytdl.getInfo('https://youtu.be/' + __res[0].videoId)
 let ress = await ytdl.chooseFormat(infoo.formats, { filter: 'audioonly' })
 conn.sendMessage(m.chat, { audio: { url: ress.url }, fileName: __res[0].title + '.mp3', mimetype: 'audio/mp4' }, { quoted: m })  
 } catch {
-}}}}}}
+}}}}}}}
 
 if (command == 'ytmp4' || command == 'fgmp4') {
 let youtubeLink = '';
@@ -104,7 +109,7 @@ const axeelJson = await axeelRes.json();
 if (axeelJson && axeelJson.downloads?.url) {
 const videoUrl = axeelJson.downloads.url;
 await conn.sendMessage(m.chat, { video: { url: videoUrl }, fileName: `${yt_play[0].title}.mp4`, caption: `🔰 Aquí está tu video \n🔥 Título: ${yt_play[0].title}` }, { quoted: m }) 
-} catch {
+}} catch {
 try {              
 let qu = args[1] || '360'
 let q = qu + 'p'
