@@ -38,7 +38,7 @@ global.keysneoxr = keysneoxrrr[Math.floor(keysneoxrrr.length * Math.random())]
 global.lolkeysapi = "GataDiosV2"
 global.itsrose = ['4b146102c4d500809da9d1ff']
 global.baileys = '@whiskeysockets/baileys'
-global.apis = 'https://deliriussapi-oficial.vercel.app'
+global.apis = 'https://delirius-apiofc.vercel.app'
 
 global.APIs = {xteam: 'https://api.xteam.xyz', 
 dzx: 'https://api.dhamzxploit.my.id',
