@@ -1,81 +1,50 @@
 import db from '../lib/database.js';
-import fs from 'fs'
-import path from 'path'
-import { fileURLToPath } from 'url'
-import ws from 'ws'
+import ws from 'ws';
 import { cpus as _cpus, totalmem, freemem, platform, hostname, version, release, arch } from 'os';
 import os from 'os';
 import moment from 'moment';
 import speed from 'performance-now';
 import { sizeFormatter } from 'human-readable';
-import si from 'systeminformation';
 
-let format = sizeFormatter({std: 'JEDEC',
-decimalPlaces: 2,
-keepTrailingZeroes: false,
-render: (literal, symbol) => `${literal} ${symbol}B`,
-});
-
-const __filename = fileURLToPath(import.meta?.url)
-const __dirname = path?.dirname(__filename)
-const carpetaBase = path?.resolve(__dirname, '..', 'jadibts')
-const cantidadCarpetas = (fs?.readdirSync(carpetaBase, { withFileTypes: true }).filter(item => item?.isDirectory())?.length) || 0
+let format = sizeFormatter({std: 'JEDEC', decimalPlaces: 2, keepTrailingZeroes: false, render: (literal, symbol) => `${literal} ${symbol}B`,});
 
 const used = process.memoryUsage();
-    let ram = await si.mem()
-    let cpu = await si.cpuCurrentSpeed()
-    let disk = await si.fsSize()
-    let up = await si.time()
-      
+
 async function getSystemInfo() {
-let disk = await si.fsSize();
-const memInfo = await si.mem();
-const load = await si.currentLoad();
-    
-let cpuInfo = os.cpus();
-let modeloCPU = cpuInfo && cpuInfo.length > 0 ? cpuInfo[0].model : 'Modelo de CPU no disponible';
-let espacioTotalDisco = 'Información no disponible';
-if (disk && disk.length > 0) {
-espacioTotalDisco = humanFileSize(disk[0].available, true, 1) + ' libre de ' + humanFileSize(disk[0].size, true, 1);
-}
+    let cpuInfo = os.cpus();
+    let modeloCPU = cpuInfo && cpuInfo.length > 0 ? cpuInfo[0].model : 'Modelo de CPU no disponible';
+    let espacioTotalDisco = 'Información no disponible';
 
-const data = {
-latencia: 'No disponible',
-plataforma: os.platform(),
-núcleosCPU: cpuInfo ? cpuInfo.length : 'No disponible',
-modeloCPU: modeloCPU,
-arquitecturaSistema: os.arch(),
-versiónSistema: os.release(),
-procesosActivos: os.loadavg()[0],
-porcentajeCPUUsada: load.currentLoad.toFixed(2) + '%',
-memory: humanFileSize(ram.free, true, 1) + ' libre de ' + humanFileSize(ram.total, true, 1),
-ramUsada: (memInfo.used / (1024 * 1024 * 1024)).toFixed(2) + ' GB',
-ramTotal: (memInfo.total / (1024 * 1024 * 1024)).toFixed(2) + ' GB',
-ramLibre: (memInfo.free / (1024 * 1024 * 1024)).toFixed(2) + ' GB',
-porcentajeRAMUsada: ((memInfo.used / memInfo.total) * 100).toFixed(2) + '%',
-espacioTotalDisco: espacioTotalDisco,
-tiempoActividad: 'No disponible',
-cargaPromedio: os.loadavg().map((avg, index) => `${index + 1} min: ${avg.toFixed(2)}.`).join('\n'),
-horaActual: new Date().toLocaleString(),
-detallesCPUNúcleo: load.cpus.map(cpu => cpu.load.toFixed(2) + '%')
-};
+    const data = {
+        latencia: 'No disponible',
+        plataforma: os.platform(),
+        núcleosCPU: cpuInfo ? cpuInfo.length : 'No disponible',
+        modeloCPU: modeloCPU,
+        arquitecturaSistema: os.arch(),
+        versiónSistema: os.release(),
+        procesosActivos: os.loadavg()[0],
+        porcentajeCPUUsada: 'No disponible',
+        memory: humanFileSize(used.free, true, 1) + ' libre de ' + humanFileSize(used.total, true, 1),
+        ramUsada: 'No disponible',
+        ramTotal: 'No disponible',
+        ramLibre: 'No disponible',
+        porcentajeRAMUsada: 'No disponible',
+        espacioTotalDisco: espacioTotalDisco,
+        tiempoActividad: 'No disponible',
+        cargaPromedio: os.loadavg().map((avg, index) => `${index + 1} min: ${avg.toFixed(2)}.`).join('\n'),
+        horaActual: new Date().toLocaleString(),
+    };
 
-const startTime = Date.now();
-await si.currentLoad();
-const endTime = Date.now();
-data.latencia = `${endTime - startTime} ms`;
-const uptimeSeconds = await si.time().uptime;
-const days = Math.floor(uptimeSeconds / 60 / 60 / 24);
-const hours = Math.floor((uptimeSeconds / 60 / 60) % 24);
-const minutes = Math.floor((uptimeSeconds / 60) % 60);
+    const startTime = Date.now();
+    const endTime = Date.now();
+    data.latencia = `${endTime - startTime} ms`;
 
-data.tiempoActividad = `${days}d ${hours}h ${minutes}m`;
-return data;
+    return data;
 }
 
 let handler = async (m, { conn, usedPrefix }) => {
-let bot = global.db.data.settings[conn.user.jid];
-let _uptime = process.uptime() * 1000;
+    let bot = global.db.data.settings[conn.user.jid];
+    let _uptime = process.uptime() * 1000;
 let uptime = new Date(_uptime).toISOString().substr(11, 8);
 let totalreg = Object.keys(global.db.data.users).length;
 let rtotalreg = Object.values(global.db.data.users).filter(user => user.registered == true).length;
