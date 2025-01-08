@@ -10,7 +10,7 @@ if (m.text.includes('serbot') || m.text.includes('bots')|| m.text.includes('jadi
 if (m.fromMe) return
 try {
 await conn.sendPresenceUpdate('composing', m.chat)
-let gpt = await fetch(`https://deliriussapi-oficial.vercel.app/tools/simi?text=${encodeURIComponent(textodem)}`)
+let gpt = await fetch(`${apis}/tools/simi?text=${encodeURIComponent(textodem)}`)
 let res = await gpt.json() 
 await m.reply(res.data.message) 
 } catch {
