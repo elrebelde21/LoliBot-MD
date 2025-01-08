@@ -104,7 +104,7 @@ let result = await luminsesi(query, username, syms1);
 await conn.reply(m.chat, result, m)
 } catch {
 try {
-let gpt = await fetch(`https://deliriussapi-oficial.vercel.app/tools/simi?text=${m.text}`)
+let gpt = await fetch(`${apis}/tools/simi?text=${m.text}`)
 let res = await gpt.json()
 await m.reply(res.data.message)
 /*} catch {
