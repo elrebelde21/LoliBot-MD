@@ -41,7 +41,6 @@
 "@ibaraki-douji/pixivts": "^2.4.1",
 "awesome-phonenumber": "^3.4.0",
 "spotifydl-x": "^0.3.5", 
-"systeminformation": "^5.17.3",   
 "axios": "^1.1.2",
 "fuzzysort": "^1.0.0", 
 "fb-downloader-scrapper": "^1.0.1",
