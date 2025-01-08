@@ -6,12 +6,11 @@ import axios from 'axios'
 const LimitAud = 725 * 1024 * 1024; //700MB
 const LimitVid = 425 * 1024 * 1024; //425MB
 const handler = async (m, {conn, command, args, text, usedPrefix}) => {
-if (!args[0] || !text) return m.reply(`*🤔Que está buscando? 🤔*\n*Ingrese el nombre de la canción*\n\n*Ejemplo:*\n#play emilia 420`) 
-//const tipoDescarga = command === 'play' ? 'audio' : command === 'play2' ? 'video' : command === 'play3' ? 'audio doc' : command === 'play4' ? 'video doc' : '';
-const yt_play = await search(args.join(' '));
-const ytplay2 = await yts(text);
 
 if (command == 'play' || command == 'musica') {
+if (!text) return m.reply(`*🤔Que está buscando? 🤔*\n*Ingrese el nombre de la canción*\n\n*Ejemplo:*\n#play emilia 420`) 
+const yt_play = await search(args.join(' '));
+const ytplay2 = await yts(text);
 await conn.sendFile(m.chat, yt_play[0].thumbnail, 'error.jpg', `${yt_play[0].title}
 *⇄ㅤ     ◁   ㅤ  ❚❚ㅤ     ▷ㅤ     ↻*
 
@@ -44,7 +43,7 @@ await conn.sendMessage(m.chat, { audio: { url: downloadUrl }, mimetype: 'audio/m
 }
 } catch {
 try {          
-const apiUrl = `https://deliriussapi-oficial.vercel.app/download/ytmp4?url=${encodeURIComponent(yt_play[0].url)}`;
+const apiUrl = `${apis}/download/ytmp3?url=${encodeURIComponent(yt_play[0].url)}`;
 const apiResponse = await fetch(apiUrl);
 const delius = await apiResponse.json();
 if (!delius.status) {
@@ -87,6 +86,9 @@ console.log(e);
 }}}}}}}}}}}
 
 if (command == 'play2' || command == 'video') {
+if (!text) return m.reply(`*🤔Que está buscando? 🤔*\n*Ingrese el nombre de la canción*\n\n*Ejemplo:*\n#play emilia 420`) 
+const yt_play = await search(args.join(' '));
+const ytplay2 = await yts(text);
 await conn.sendFile(m.chat, yt_play[0].thumbnail, 'error.jpg', `${yt_play[0].title}
 *⇄ㅤ     ◁   ㅤ  ❚❚ㅤ     ▷ㅤ     ↻*
 
@@ -111,7 +113,7 @@ const videoUrl = axeelJson.downloads.url;
 await conn.sendMessage(m.chat, { video: { url: videoUrl }, fileName: `${yt_play[0].title}.mp4`, caption: `🔰 Aquí está tu video \n🔥 Título: ${yt_play[0].title}` }, { quoted: m }) 
 }} catch {
 try {                
-const apiUrl = `https://deliriussapi-oficial.vercel.app/download/ytmp4?url=${encodeURIComponent(yt_play[0].url)}`;
+const apiUrl = `${apis}/download/ytmp4?url=${encodeURIComponent(yt_play[0].url)}`;
 const apiResponse = await fetch(apiUrl);
 const delius = await apiResponse.json();
 if (!delius.status) return m.react("❌");
@@ -166,6 +168,9 @@ console.log(e);
 }}}}}}}}}}}
 
 if (command == 'play3' || command == 'playdoc') {
+if (!text) return m.reply(`*🤔Que está buscando? 🤔*\n*Ingrese el nombre de la canción*\n\n*Ejemplo:*\n#play emilia 420`) 
+const yt_play = await search(args.join(' '));
+const ytplay2 = await yts(text);
 const texto1 = `${yt_play[0].title}
 *⇄ㅤ     ◁   ㅤ  ❚❚ㅤ     ▷ㅤ     ↻*
 
@@ -181,7 +186,7 @@ let { result } = await res.json()
 await conn.sendMessage(m.chat, { document: { url: result.download.url }, mimetype: 'audio/mpeg', fileName: `${yt_play[0].title}.mp3` }, { quoted: m });
 } catch (e1) {
 try {    
-const apiUrl = `https://deliriussapi-oficial.vercel.app/download/ytmp4?url=${encodeURIComponent(yt_play[0].url)}`;
+const apiUrl = `${apis}/download/ytmp3?url=${encodeURIComponent(yt_play[0].url)}`;
 const apiResponse = await fetch(apiUrl);
 const delius = await apiResponse.json();
 if (!delius.status) {
@@ -223,6 +228,9 @@ console.log(e);
 }}}}}}}}
 
 if (command == 'play4' || command == 'playdoc2') {
+if (!text) return m.reply(`*🤔Que está buscando? 🤔*\n*Ingrese el nombre de la canción*\n\n*Ejemplo:*\n#play emilia 420`) 
+const yt_play = await search(args.join(' '));
+const ytplay2 = await yts(text);
 const texto1 = `${yt_play[0].title}
 *⇄ㅤ     ◁   ㅤ  ❚❚ㅤ     ▷ㅤ     ↻*
 
@@ -238,7 +246,7 @@ let { result } = await res.json()
 await conn.sendMessage(m.chat, { document: { url: result.download.url }, fileName: `${yt_play[0].title}.mp4`, caption: `${wm}`, thumbnail: yt_play[0].thumbnail, mimetype: 'video/mp4' }, { quoted: m })     
 } catch (e1) {
 try {    
-const apiUrl = `https://deliriussapi-oficial.vercel.app/download/ytmp4?url=${encodeURIComponent(yt_play[0].url)}`;
+const apiUrl = `${apis}/download/ytmp4?url=${encodeURIComponent(yt_play[0].url)}`;
 const apiResponse = await fetch(apiUrl);
 const delius = await apiResponse.json();
 if (!delius.status) return m.react("❌");

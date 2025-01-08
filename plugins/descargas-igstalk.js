@@ -3,7 +3,7 @@ let handler= async (m, { conn, args, text, usedPrefix, command }) => {
 if (!args[0]) throw `⚠️ Ingrese el Username de Instagram\n\n*• Ejemplo:* ${usedPrefix + command} GataDios` 
 m.react("⌛");
 try {
-const apiUrl = `https://deliriussapi-oficial.vercel.app/tools/igstalk?username=${encodeURIComponent(args[0])}`;
+const apiUrl = `${apis}/tools/igstalk?username=${encodeURIComponent(args[0])}`;
 const apiResponse = await fetch(apiUrl);
 const delius = await apiResponse.json();
 if (!delius || !delius.data) return m.react("❌");

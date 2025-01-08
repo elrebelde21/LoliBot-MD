@@ -8,7 +8,7 @@ let sticker = 'https://qu.ax/Wdsb.webp'
 if (!args[0]) return conn.reply(m.chat, `⚠️ 𝙄𝙣𝙜𝙧𝙚𝙨𝙚 𝙪𝙣 𝙀𝙣𝙡𝙖𝙘𝙚 𝙫𝙖𝙡𝙞𝙙𝙤 𝙙𝙚𝙡 𝙢𝙚𝙙𝙞𝙖𝙛𝙞𝙧𝙚 𝙀𝙟:*\n${usedPrefix + command} https://www.mediafire.com/file/cv64tns6co3272q/Lolibot.zip/file`, m, {contextInfo: {externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: wm, previewType: 0, thumbnail: img.getRandom(), sourceUrl: redes.getRandom()}}})   
 m.react(`🚀`) 
  try {
-const res = await fetch(`https://deliriussapi-oficial.vercel.app/api/mediafire?url=${args[0]}`);
+const res = await fetch(`${apis}/api/mediafire?url=${args[0]}`);
 if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
 const data = await res.json();
 const fileDataArray = data.data;

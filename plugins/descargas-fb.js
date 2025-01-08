@@ -20,7 +20,7 @@ const downloadUrl = hdUrl || sdUrl;
 await conn.sendFile(m.chat, downloadUrl, 'video.mp4', '✅ Aquí está tu video de Facebook', m, null, fake);
 }} catch (err1) {
 try {
-const apiUrl = `https://deliriussapi-oficial.vercel.app/download/facebook?url=${encodeURIComponent(args[0])}`;
+const apiUrl = `${apis}/download/facebook?url=${encodeURIComponent(args[0])}`;
 const apiResponse = await fetch(apiUrl);
 const delius = await apiResponse.json();
 if (!delius || !delius.urls || delius.urls.length === 0) return m.react("❌")

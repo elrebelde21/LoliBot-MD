@@ -3,7 +3,7 @@ let handler = async (m, { conn, text, args }) => {
 if (!text) throw `✳️ Ingrese el Username de un usuario de TikTok`
 m.react("⌛");
 try {
-const apiUrl = `https://deliriussapi-oficial.vercel.app/tools/tiktokstalk?q=${encodeURIComponent(args[0])}`;
+const apiUrl = `${apis}/tools/tiktokstalk?q=${encodeURIComponent(args[0])}`;
 const apiResponse = await fetch(apiUrl);
 const delius = await apiResponse.json();
 if (!delius || !delius.result || !delius.result.users) return m.react("❌");

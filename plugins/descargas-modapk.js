@@ -7,7 +7,7 @@ const apkpureDownloadApi = 'https://apkpure.com/api/v2/download?id=';
 if (!text) return conn.reply(m.chat,  `⚠️ *𝙀𝙨𝙘𝙧𝙞𝙗𝙖 𝙚𝙡 𝙣𝙤𝙢𝙗𝙧𝙚 𝙙𝙚𝙡 𝘼𝙋𝙆*`, m, {contextInfo: {externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, body: `¿Que esta buscando gile polla?`, previewType: 0, thumbnail: img.getRandom(), sourceUrl: redes.getRandom()}}})   
 m.react("⌛") 
 try {   
-const res = await fetch(`https://deliriussapi-oficial.vercel.app/download/apk?query=${text}`);
+const res = await fetch(`${apis}/download/apk?query=${text}`);
 const data = await res.json();
 if (!data.status || !data.data) {
 return conn.reply(m.chat, `⚠️ No se pudo encontrar el APK solicitado. Intenta con otro nombre.`, m);

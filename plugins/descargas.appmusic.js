@@ -5,7 +5,7 @@ import qs from 'qs';
 let handler = async (m, { conn, text, usedPrefix, command }) => {
 if (!text) return m.reply(`Ejemplo de uso: ${usedPrefix + command} https://music.apple.com/us/album/glimpse-of-us/1625328890?i=1625328892`);
   
-const apiUrl = `https://deliriussapi-oficial.vercel.app/download/applemusicdl?url=${encodeURIComponent(text)}`;
+const apiUrl = `${apis}/applemusicdl?url=${encodeURIComponent(text)}`;
 const apiResponse = await fetch(apiUrl);
 const delius = await apiResponse.json();
  const { name, artists, image, duration, download } = delius.data;

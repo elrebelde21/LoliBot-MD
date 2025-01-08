@@ -12,7 +12,7 @@ const handler = async (m, {conn, args, command, usedPrefix}) => {
 if (!args[0]) return conn.reply(m.chat, `⚠️ Ingresa el enlace del vídeo de Instagram junto al comando.\n\nEjemplo: *${usedPrefix + command}* https://www.instagram.com/p/C60xXk3J-sb/?igsh=YzljYTk1ODg3Zg==`, m)
 await m.react('⌛')
 try {
-const apiUrl = `https://deliriussapi-oficial.vercel.app/download/instagram?url=${encodeURIComponent(args[0])}`;
+const apiUrl = `${apis}/download/instagram?url=${encodeURIComponent(args[0])}`;
 const apiResponse = await fetch(apiUrl);
 const delius = await apiResponse.json();
 if (!delius || !delius.data || delius.data.length === 0) return m.react("❌");

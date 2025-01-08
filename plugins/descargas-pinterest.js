@@ -6,7 +6,7 @@ const json = await pinterest(text);
 conn.sendFile(m.chat, json.getRandom(), 'error.jpg', `_🔎 𝙍𝙚𝙨𝙪𝙡𝙩𝙖𝙙𝙤𝙨 𝙙𝙚: ${text}_`, m, null, fake);
 } catch (error1) {
 try {
-const response=await fetch(`https://deliriussapi-oficial.vercel.app/search/pinterest?text=${text}`)
+const response=await fetch(`${apis}/search/pinterest?text=${text}`)
 const dataR = await response.json()
 const json = dataR.result
 conn.sendFile(m.chat, json.getRandom(), 'error.jpg', `_🔎 𝙍𝙚𝙨𝙪𝙡𝙩𝙖𝙙𝙤𝙨 𝙙𝙚: ${text}_`, m, null, fake);

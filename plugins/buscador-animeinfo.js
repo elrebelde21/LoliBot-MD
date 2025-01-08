@@ -29,7 +29,7 @@ conn.sendFile(m.chat, result.images.jpg.image_url, 'error.jpg', AnimeInfo, m, nu
 m.react("✅") 
 } catch (error) {   
 try {
-const res = await fetch(`https://deliriussapi-oficial.vercel.app/search/animesearch?q=${encodeURIComponent(text)}`);
+const res = await fetch(`${apis}/search/animesearch?q=${encodeURIComponent(text)}`);
 const data = await res.json();
 if (data && data.data && data.data.length > 0) {
 const result = data.data[0];

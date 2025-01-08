@@ -44,12 +44,12 @@ conn.sendFile(m.chat, nsfw.url, null, "🥵", null, null, { viewOnce: true }, m,
 }
 
 if (command == 'china') {
-conn.sendFile(m.chat, 'https://deliriussapi-oficial.vercel.app/nsfw/corean', 'error.jpg', "🥵", m, null, fakee2, { viewOnce: true }, null)
+conn.sendFile(m.chat, `${apis}/nsfw/corean`, 'error.jpg', "🥵", m, null, fakee2, { viewOnce: true }, null)
 //conn.sendButton(m.chat, '*Te gustó 😏*', botname, "https://deliriusapi-official.vercel.app/api/china", [['🔄 𝐒𝐈𝐆𝐔𝐈𝐄𝐍𝐓𝐄 🔄', `/${command}`]], null, null, m)
 }
 
 if (command == 'boobs') {
-conn.sendFile(m.chat, "https://deliriussapi-oficial.vercel.app/nsfw/boobs", null, "Upa la paja 😱", null, null, { viewOnce: true }, m, null, fake)
+conn.sendFile(m.chat, `${apis}/nsfw/boobs`, null, "Upa la paja 😱", null, null, { viewOnce: true }, m, null, fake)
 //conn.sendButton(m.chat, '*Upa la paja*', botname, "https://deliriusapi-official.vercel.app/api/boobs", [['🔄 𝐒𝐈𝐆𝐔𝐈𝐄𝐍𝐓𝐄 🔄', `/${command}`]], null, null, m)
 }
 
@@ -62,7 +62,7 @@ conn.sendFile(m.chat, hentairesult, null, "Upa la paja 😱", null, null, { view
  
 if (command == 'porno') {
 //conn.sendButton(m.chat, '🥵 Uff pa una pajita 🥵', botname, "https://delirius-nsfw.onrender.com/media/r/ass", [['🔄 𝐒𝐈𝐆𝐔𝐈𝐄𝐍𝐓𝐄 🔄', `/${command}`]], null, null, m)
-conn.sendFile(m.chat, "https://deliriussapi-oficial.vercel.app/nsfw/girls", null, "🥵 Uff pa una pajita 🥵", null, null, { viewOnce: true }, m, null, fakee2)
+conn.sendFile(m.chat, `${apis}/nsfw/girls`, null, "🥵 Uff pa una pajita 🥵", null, null, { viewOnce: true }, m, null, fakee2)
 }
 
 if (command == 'tetas') {

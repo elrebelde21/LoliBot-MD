@@ -10,7 +10,7 @@ try {
 let songInfo = await spotifyxv(text);
 if (!songInfo.length) throw `*No se encontró la canción.*`;
 let song = songInfo[0]; 
-const res = await fetch(`https://deliriussapi-oficial.vercel.app/download/spotifydl?url=${song.url}`);
+const res = await fetch(`${apis}/download/spotifydl?url=${song.url}`);
 const data = await res.json();
 if (!data || !data.data || !data.data.url) throw "No se pudo obtener el enlace de descarga.";
 let spotifyMessage = `*• Título:* ${song.name}\n*• Artista:* ${song.artista.join(', ')}\n*• Cover:* ${data.data.cover}\n\n> 🚀 *ᴱⁿᵛᶦᵃⁿᵈᵒ ᶜᵃⁿᶜᶦᵒ́ⁿ ᵃᵍᵘᵃʳᵈᵉ ᵘⁿ ᵐᵒᵐᵉⁿᵗᵒ....*`;

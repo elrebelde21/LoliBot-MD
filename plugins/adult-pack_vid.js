@@ -44,7 +44,7 @@ conn.sendFile(m.chat, url3, 'error.jpg', "_🥵 aqui tiene mi Pack 😏_", m, nu
 //conn.sendButton(m.chat, '_🥵 aqui tiene mi Pack 😏_', botname, url3, [['🥵 𝐒𝐈𝐆𝐔𝐈𝐄𝐍𝐓𝐄 🥵', `/${command}`]], null, null, m) 
 break;
 case 'girls': case 'pack4':
-conn.sendFile(m.chat, "https://delirius-api-oficial.vercel.app/api/girls", 'error.jpg', "🥵", m, null, fakee2);
+conn.sendFile(m.chat, `${apis}/api/girls`, 'error.jpg', "🥵", m, null, fakee2);
 //conn.sendButton(m.chat, '🥵', botname, "https://delirius-api-oficial.vercel.app/api/girls", [['🔄 𝐒𝐈𝐆𝐔𝐈𝐄𝐍𝐓𝐄 🔄', `/${command}`]], null, null, m)
 break
 case 'videoxxx': case 'vídeoxxx':

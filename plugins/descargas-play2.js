@@ -39,7 +39,7 @@ let { result } = await res.json()
 await conn.sendMessage(m.chat, { audio: { url: await result.download.url }, mimetype: 'audio/mpeg' }, { quoted: m })
 } catch {
 try {
-const apiUrl = `https://deliriussapi-oficial.vercel.app/download/ytmp4?url=${encodeURIComponent(args)}`;
+const apiUrl = `${apis}/download/ytmp3?url=${encodeURIComponent(args)}`;
 const apiResponse = await fetch(apiUrl);
 const delius = await apiResponse.json();
 

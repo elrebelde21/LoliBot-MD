@@ -5,7 +5,7 @@ const handler = async (m, {conn, text, usedPrefix, command}) => {
 const teks = text ? text : m.quoted && m.quoted.text ? m.quoted.text : '';
 if (!teks) throw `*⚠️ ¿Que esta buscando? ingresa el nombre del tema para buscar la letra de la canción, ejemplo:* ${usedPrefix + command} ozuna te vas`;
 try {
-const res = await fetch(`https://deliriussapi-oficial.vercel.app/search/letra?query=${encodeURIComponent(text)}`);
+const res = await fetch(`${apis}/search/letra?query=${encodeURIComponent(text)}`);
 const data = await res.json();
 if (data.status !== "200" || !data.data) return conn.reply(m.chat, 'No se encontró la letra de la canción especificada.', m);
 
