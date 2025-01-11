@@ -4,9 +4,9 @@ import moment from 'moment-timezone'
 let Reg = /\|?(.*)([.|] *?)([0-9]*)$/i
 let handler = async function (m, { conn, text, args, usedPrefix, command }) {
 let fkontak = { "key": { "participants":"0@s.whatsapp.net", "remoteJid": "status@broadcast", "fromMe": false, "id": "Halo" }, "message": { "contactMessage": { "vcard": `BEGIN:VCARD\nVERSION:3.0\nN:Sy;Bot;;;\nFN:y\nitem1.TEL;waid=${m.sender.split('@')[0]}:${m.sender.split('@')[0]}\nitem1.X-ABLabel:Ponsel\nEND:VCARD` }}, "participant": "0@s.whatsapp.net" }
-  let who = m.mentionedJid && m.mentionedJid[0] ? m.mentionedJid[0] : m.fromMe ? conn.user.jid : m.sender
- let ppch = await conn.profilePictureUrl(who, 'image').catch(_ => imageUrl.getRandom()) 
-  let bio = await conn.fetchStatus(who).catch(_ => 'undefined')
+let who = m.mentionedJid && m.mentionedJid[0] ? m.mentionedJid[0] : m.fromMe ? conn.user.jid : m.sender
+let ppch = await conn.profilePictureUrl(who, 'image').catch(_ => imageUrl.getRandom()) 
+let bio = await conn.fetchStatus(who).catch(_ => 'undefined')
 let biot = bio.status?.toString() || 'Sin Info'
 const date = moment.tz('America/Bogota').format('DD/MM/YYYY')
 const time = moment.tz('America/Argentina/Buenos_Aires').format('LT')
@@ -25,7 +25,7 @@ let name2 = conn.getName(m.sender)
 
 if (command == 'verify' || command == 'reg' || command == 'verificar') {
 if (user.registered === true) throw `*Ya estás registrado 🤨*`
-if (!Reg.test(text)) throw `*⚠️ ¿No sabes cómo usar este comando?* Sigue estos pasos:\n\n• Unirte al grupo:\n${nn}\n• Después usa el comando de la siguiente manera: *${usedPrefix + command} nombre.edad*\n*• Ejemplo:* ${usedPrefix + command} ${name2}.16`
+if (!Reg.test(text)) throw `*⚠️ ¿No sabes cómo usar este comando?* Sigue estos pasos:\n\n• Unirte al grupo:\n${[nnn, nnnttt, nnnt].getRandom()}\n• Después usa el comando de la siguiente manera: *${usedPrefix + command} nombre.edad*\n*• Ejemplo:* ${usedPrefix + command} ${name2}.16`
   
 /*let groupID = '120363043118239234@g.us'; 
 let groupMetadata = await conn.groupMetadata(groupID);
