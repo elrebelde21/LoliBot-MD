@@ -33,7 +33,7 @@ let crm4 = "IF9hdXRvcmVzcG9uZGVyLmpzIGluZm8tYm90Lmpz"
 let drm1 = "CkphZGlib3QsIEhlY2hv"
 let drm2 = "IHBvciBAQWlkZW5fTm90TG9naWM"
 let rtx = `*🔰 LoliBot-MD 🔰*\nㅤㅤㅤㅤ*Ser sub bot*\n\n*Con otro telefono que tengas o en la PC escanea este QR para convertirte en un sub bot*\n\n*1. Haga clic en los tres puntos en la esquina superior derecha*\n*2. Toca WhatsApp Web*\n*3. Escanee este codigo QR*\n*Este código QR expira en 45 segundos!*\n\n> *⚠️ No nos hacemos responsable del mal uso que se le pueda dar o si el numero se manda a soporte.. ustedes tienen el deber se seguir al pie de la letra los terminos y condiciones y privacidad (escribe eso y te los dará)*`
-let rtx2 = `*🔰 LoliBot-MD 🔰*\nㅤㅤㅤㅤ*Ser sub bot*\n\n🟢 *_NUEVA FUNCIÓN DE HACERTE UN SUB BOT_* 🟢
+let rtx2 = `🟢 *_NUEVA FUNCIÓN DE HACERTE UN SUB BOT_* 🟢
 
 *1️⃣ Diríjase en los tres puntos en la esquina superior derecha*
 *2️⃣ Ir a la opción Dispositivos vinculados*
@@ -144,7 +144,7 @@ if (!m.isWABusiness && /web|desktop|unknown/i.test(dispositivo)) {
 txtCode = await conn.sendMessage(m.chat, { image: { url: 'https://qu.ax/wyUjT.jpg' || imageUrl.getRandom() }, caption: rtx2.trim() + '\n' + drmer.toString("utf-8") }, { quoted: m })
 codeBot = await m.reply(secret)
 } else {
-txtCode = await conn.sendButton(m.chat, rtx2.trim() + '\n' + drmer.toString("utf-8"), `\n\n*Código:* ${secret}` + wm, 'https://qu.ax/wyUjT.jpg' || imageUrl.getRandom(), null,  [[`Copiar código`, secret]], null, null, m)
+txtCode = await conn.sendButton(m.chat, rtx2.trim() + '\n' + drmer.toString("utf-8"), `\n*Código:* ${secret}\n` + wm, 'https://qu.ax/wyUjT.jpg' || imageUrl.getRandom(), null,  [[`Copiar código`, secret]], null, null, m)
 }
 console.log(secret)
 }
