@@ -38,7 +38,7 @@ await this.sendMessage(m.chat, { text: `𝙀𝙇 𝙂𝙍𝙐𝙋𝙊 *${m.messa
 let subject = groupMetadata.subject
 let descs = groupMetadata.desc || "*ᴜɴ ɢʀᴜᴘᴏ ɢᴇɴɪᴀ😸*\n *sɪɴ ʀᴇɢʟᴀ 😉*";
 let userName = `${m.messageStubParameters[0].split`@`[0]}`;
-let defaultWelcome = `•──〘 *\`WELCOME\`* 〙──•\n\n✨ *Bienvenid@s @${userName} a ${subject}* ✨\n\n*En este grupo podrás encontrar:*\n➤ *Amistades* 👥\n➤ *Desmadre* 💃🕺\n➤ *Una botsita sexy 😘*\n➤ *Puede solicitar mi lista de comandos con:* #menu\n\n> *Aquí tiene la descripción del grupo, léela!! 🙌*\n${descs}\n\n> *🔰 𝗗𝗶𝘀𝗳𝗿𝘂𝘁𝗮 𝗱𝗲 𝘁𝘂 𝗲𝘀𝘁𝗮𝗱𝗶́𝗮 𝗲𝗻 𝗲𝗹 𝗴𝗿𝘂𝗽𝗼 🔰*`;
+let defaultWelcome = `┏━━━━━━━━━━━━\n┃──〘 *WELCOME* 〙──\n┃━━━━━━━━━━━━\n┃ *Hola @${userName} 👋 Bienvenido a*\n┃ *_${subject} ✨_*\n┃\n┃=> *_En este grupo podrás_*\n┃ *_encontrar:_*\n┠⊷ *Amistades 🫂* \n┠⊷ *Desmadre 💃🕺*\n┠⊷ *Relajo 💅*\n┠⊷ *Enemig@s 🥵*\n┠⊷ *Un Bot Sexy*\n┃\n┃=> *_Puedes solicitar mi lista de_*\n┃ *_comandos con:_*\n┠⊷ *#menu*\n┃\n┃=> *_Aquí tienes la descripción_*\n┃ *_del grupo, léela!!_*\n┃\n\n${descs}\n\n┃\n┃ *_🥳 Disfruta de tu_*\n┃ *_estadía en el grupo 🥳_*\n┃\n┗━━━━━━━━━━━`;
 let textWel = chat.sWelcome ? chat.sWelcome
 .replace(/@user/g, `@${userName}`)
 .replace(/@group/g, subject) 
@@ -62,13 +62,12 @@ sourceUrl: [nna, nna2, nnaa, yt, md].getRandom()}}}, { quoted: fkontak })
 } else if (chat.welcome && (m.messageStubType == 28 || m.messageStubType == 32) && this.user.jid != global.conn.user.jid ) {
 let subject = groupMetadata.subject;
 let userName = `${m.messageStubParameters[0].split`@`[0]}`;
-let defaultBye = `Se fue @${userName}, un gay menos`;
-let textBye = chat.sBye
-    ? chat.sBye
-        .replace(/@user/g, `@${userName}`)
-        .replace(/@group/g, subject)
-    : defaultBye;
-  await this.sendMessage(m.chat, { text: textBye, 
+let defaultBye = `┏━━━━━━━━━━━━\n┃──〘 *ADIOS* 〙───\n┃━━━━━━━━━━━━\n┃ *_☠ Se fue @${userName}_* \n┃ *_Que dios lo bendiga️_* \n┃ *_Y lo atropelle un tren 😇_*\n┗━━━━━━━━━━`;
+let textBye = chat.sBye ? chat.sBye
+.replace(/@user/g, `@${userName}`)
+.replace(/@group/g, subject)
+: defaultBye;
+await this.sendMessage(m.chat, { text: textBye, 
 contextInfo:{
 forwardingScore: 9999999,
 isForwarded: true, 
