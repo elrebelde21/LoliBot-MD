@@ -59,15 +59,16 @@ body: [wm, ' ' + wm + '😊', '🌟'].getRandom(),
 containsAutoReply: true,
 mediaType: 1, 
 sourceUrl: [nna, nna2, nnaa, yt, md].getRandom()}}}, { quoted: fkontak }) 
-} else if (chat.welcome && m.messageStubType == 28 && m.messageStubType == 32 && this.user.jid != global.conn.user.jid) {
-let subject = groupMetadata.subject
+} else if (chat.welcome && (m.messageStubType == 28 || m.messageStubType == 32) && this.user.jid != global.conn.user.jid ) {
+let subject = groupMetadata.subject;
 let userName = `${m.messageStubParameters[0].split`@`[0]}`;
-let defaultBye = `Se fue @${userName} un gays menos`
-let textBye = chat.sBye ? chat.sBye
-.replace(/@user/g, `@${userName}`)
-.replace(/@group/g, subject) 
-: defaultBye;
-await this.sendMessage(m.chat, { text: textBye, 
+let defaultBye = `Se fue @${userName}, un gay menos`;
+let textBye = chat.sBye
+    ? chat.sBye
+        .replace(/@user/g, `@${userName}`)
+        .replace(/@group/g, subject)
+    : defaultBye;
+  await this.sendMessage(m.chat, { text: textBye, 
 contextInfo:{
 forwardingScore: 9999999,
 isForwarded: true, 
