@@ -1167,7 +1167,7 @@ const messageNumber = user.bannedMessageCount + 1;
 const messageText = `⚠️ ESTAS BANEADO ⚠️\nAviso (${messageNumber}/3)${user.bannedReason ? `\n*Motivo:* *${user.bannedReason}*` : ''}
 *👉🏻 Puedes contactar al propietario del Bot si crees que se trata de un error o para charlar sobre tu desbaneo*
 
-👉 wa.me/+57 314 7616444
+👉 wa.me/5214774444444
 👉 ${fb}
 `.trim();
 //m.reply(messageText);
@@ -1180,7 +1180,7 @@ return;
 return;
 }
 
-//Antispam 2		
+//Antispam2		
 if (user.antispam2 && isROwner) return
 let time = global.db.data.users[m.sender].spam + 3000
 if (new Date - global.db.data.users[m.sender].spam < 3000) return console.log(`[ SPAM ]`) 
@@ -1189,24 +1189,24 @@ global.db.data.users[m.sender].spam = new Date * 1
                 
 const hl = _prefix;
 const adminMode = global.db.data.chats[m.chat].modoadmin;
-const mystica = `${plugin.botAdmin || plugin.admin || plugin.group || plugin || noPrefix || hl || m.text.slice(0, 1) == hl || plugin.command}`;
-if (adminMode && !isOwner && !isROwner && m.isGroup && !isAdmin && mystica) return;                         
+const lolibott = `${plugin.botAdmin || plugin.admin || plugin.group || plugin || noPrefix || hl || m.text.slice(0, 1) == hl || plugin.command}`;
+if (adminMode && !isOwner && !isROwner && m.isGroup && !isAdmin && lolibott) return;                         
 if (plugin.rowner && plugin.owner && !(isROwner || isOwner)) { // Both Owner
 fail('owner', m, this)
 continue
 }
-                if (plugin.rowner && !isROwner) { // Real Owner
-                    fail('rowner', m, this)
-                    continue
-                }
-                if (plugin.owner && !isOwner) { // Number Owner
-                    fail('owner', m, this)
-                    continue
-                }
-                if (plugin.mods && !isMods) { // Moderator
-                    fail('mods', m, this)
-                    continue
-                }
+if (plugin.rowner && !isROwner) { // Real Owner
+fail('rowner', m, this)
+continue
+}
+if (plugin.owner && !isOwner) { // Number Owner
+fail('owner', m, this)
+continue
+}
+if (plugin.mods && !isMods) { // Moderator
+fail('mods', m, this)
+continue
+}
                 if (plugin.premium && !isPrems) { // Usuarios Premium
                     fail('premium', m, this)
                     continue
@@ -1236,11 +1236,11 @@ continue
                 else
 m.exp += xp
 if (!isPrems && plugin.limit && global.db.data.users[m.sender].limit < plugin.limit * 1) {
-conn.sendMessage(m.chat, {text: `*⚠ 𝐒𝐮𝐬 𝐝𝐢𝐚𝐦𝐚𝐧𝐭𝐞 💎 𝐬𝐞 𝐡𝐚𝐧 𝐚𝐠𝐨𝐭𝐚𝐝𝐨 𝐩𝐮𝐞𝐝𝐞 𝐜𝐨𝐦𝐩𝐫𝐚𝐫 𝐦𝐚𝐬 𝐮𝐬𝐚𝐧𝐝𝐨 𝐞𝐥 𝐜𝐨𝐦𝐚𝐧𝐝𝐨:* #buy`, contextInfo: {externalAdReply : {mediaUrl: null, mediaType: 1, description: null, "title": wm, body: '', previewType: 0, "thumbnail": img.getRandom(), sourceUrl: [nna, md, yt, nn, tiktok].getRandom()}}}, { quoted: m })         
+conn.sendMessage(m.chat, {text: `*⚠ 𝐒𝐮𝐬 𝐝𝐢𝐚𝐦𝐚𝐧𝐭𝐞 💎 𝐬𝐞 𝐡𝐚𝐧 𝐚𝐠𝐨𝐭𝐚𝐝𝐨 𝐩𝐮𝐞𝐝𝐞 𝐜𝐨𝐦𝐩𝐫𝐚𝐫 𝐦𝐚𝐬 𝐮𝐬𝐚𝐧𝐝𝐨 𝐞𝐥 𝐜𝐨𝐦𝐚𝐧𝐝𝐨:* #buy`, contextInfo: {externalAdReply : {mediaUrl: null, mediaType: 1, description: null, "title": wm, body: '', previewType: 0, "thumbnail": img.getRandom(), sourceUrl: [nna, nna2, md, yt, nnn, nnnt, nnnttt, tiktok].getRandom()}}}, { quoted: m })         
 continue
 }
 if (plugin.level > _user.level) {
-conn.sendMessage(m.chat, {text: `*⚠️𝐍𝐞𝐜𝐞𝐬𝐢𝐭𝐚 𝐞𝐥 𝐧𝐢𝐯𝐞𝐥 ${plugin.level} 𝐩𝐚𝐫𝐚 𝐩𝐨𝐝𝐞𝐫 𝐮𝐬𝐚𝐫 𝐞𝐬𝐭𝐞 𝐜𝐨𝐦𝐚𝐧𝐝𝐨, 𝐓𝐮 𝐧𝐢𝐯𝐞𝐥 𝐚𝐜𝐭𝐮𝐚𝐥 𝐞𝐬:* ${_user.level}`, contextInfo: {externalAdReply : {mediaUrl: null, mediaType: 1, description: null, "title": wm, body: '', previewType: 0, "thumbnail": img.getRandom(), sourceUrl: [nna, md, yt, nn, tiktok].getRandom()}}}, { quoted: m })         
+conn.sendMessage(m.chat, {text: `*⚠️𝐍𝐞𝐜𝐞𝐬𝐢𝐭𝐚 𝐞𝐥 𝐧𝐢𝐯𝐞𝐥 ${plugin.level} 𝐩𝐚𝐫𝐚 𝐩𝐨𝐝𝐞𝐫 𝐮𝐬𝐚𝐫 𝐞𝐬𝐭𝐞 𝐜𝐨𝐦𝐚𝐧𝐝𝐨, 𝐓𝐮 𝐧𝐢𝐯𝐞𝐥 𝐚𝐜𝐭𝐮𝐚𝐥 𝐞𝐬:* ${_user.level}`, contextInfo: {externalAdReply : {mediaUrl: null, mediaType: 1, description: null, "title": wm, body: '', previewType: 0, "thumbnail": img.getRandom(), sourceUrl: [nna, nna2, md, yt, nnn, nnnt, nnnttt, tiktok].getRandom()}}}, { quoted: m })         
 continue // Si no se ha alcanzado el nivel
 }
 let extra = {match, usedPrefix, noPrefix, _args, args, command, text, conn: this, participants, groupMetadata, user, bot, isROwner, isOwner, isRAdmin, isAdmin,  isBotAdmin, isPrems, chatUpdate, __dirname: ___dirname, __filename }
@@ -1384,9 +1384,9 @@ mentionedJid:[user],
 "title": [wm, ' ' + wm + '😊', '🌟'].getRandom(),
 "containsAutoReply": true,
 "mediaType": 1, 
-sourceUrl: [md, nna, yt, nnn, nn, tiktok].getRandom()}}}, { quoted: fkontak2 }) 
+sourceUrl: [md, nna, nna2, nnn, nnnttt, yt, nn, tiktok].getRandom()}}}, { quoted: fkontak2 }) 
 if (media === 'audio')
-this.sendMessage(id, { audio: { url: vn }, contextInfo:{ mentionedJid:[user], "externalAdReply": { "thumbnail": apii.data, "title": `乂 ＷＥＬＣＯＭＥ 乂`, "body": [wm, ' ' + wm + '😊', '🌟'].getRandom(), "previewType": "PHOTO", "thumbnailUrl": null, "showAdAttribution": true,  sourceUrl: [md, nna, yt, nn, tiktok].getRandom()}},  ptt: true, mimetype: 'audio/mpeg', fileName: `error.mp3` }, { quoted: fkontak2 })
+this.sendMessage(id, { audio: { url: vn }, contextInfo:{ mentionedJid:[user], "externalAdReply": { "thumbnail": apii.data, "title": `乂 ＷＥＬＣＯＭＥ 乂`, "body": [wm, ' ' + wm + '😊', '🌟'].getRandom(), "previewType": "PHOTO", "thumbnailUrl": null, "showAdAttribution": true,  sourceUrl: [md, nna, nna2, nnn, nnnttt, yt, nn, tiktok].getRandom()}},  ptt: true, mimetype: 'audio/mpeg', fileName: `error.mp3` }, { quoted: fkontak2 })
 //this.sendFile(id, apii.data, 'pp.jpg', text, null, false, { mentions: [user] }, { quoted: fkontak2 })
 }}}
 			    
@@ -1488,4 +1488,4 @@ for (const userr of users) {
 userr.subreloadHandler(false)
 }}
 */  
-});
+}); 
