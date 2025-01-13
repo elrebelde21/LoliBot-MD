@@ -58,7 +58,7 @@ title: "BIENVENID@ 😄",
 body: [wm, ' ' + wm + '😊', '🌟'].getRandom(),
 containsAutoReply: true,
 mediaType: 1, 
-sourceUrl: [nna, nna2, nnaa, yt, md].getRandom()}}}, { quoted: fkontak }) 
+sourceUrl: [nna, nna2, yt].getRandom()}}}, { quoted: fkontak }) 
 } else if (chat.welcome && (m.messageStubType == 28 || m.messageStubType == 32) && this.user.jid != global.conn.user.jid ) {
 let subject = groupMetadata.subject;
 let userName = `${m.messageStubParameters[0].split`@`[0]}`;
