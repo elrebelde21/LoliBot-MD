@@ -43,7 +43,7 @@ await this.sendMessage(m.chat, { text: textWel,
 contextInfo:{
 forwardingScore: 9999999,
 isForwarded: true, 
-mentions:[m.sender, m.messageStubParameters[0]],
+mentionedJid:[m.sender, m.messageStubParameters[0]],
 externalAdReply: {
 showAdAttribution: true,
 renderLargerThumbnail: true,
@@ -59,7 +59,7 @@ await this.sendMessage(m.chat, { text: textBye,
 contextInfo:{
 forwardingScore: 9999999,
 isForwarded: true, 
-mentions:[m.sender, m.messageStubParameters[0]],
+mentionedJid:[m.sender, m.messageStubParameters[0]],
 externalAdReply: {
 showAdAttribution: true,
 renderLargerThumbnail: true,
