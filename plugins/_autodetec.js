@@ -60,7 +60,7 @@ this.reply(m.chat, `error`, null)
 } else if (chat.welcome && m.messageStubType == 32 && this.user.jid != global.conn.user.jid) {
 //if (global.conn.user.jid.split`@`[0] != conn.user.jid.split`@`[0]) return
 let userName = `${m.messageStubParameters[0].split`@`[0]}`;
-let textBye = = (chat.sBye || `Se fue @${userName} un gays menos`)
+let textBye = (chat.sBye || `Se fue @${userName} un gays menos`)
 .replace('@user', userName)
 .replace('@subject', subject)
 .replace('@desc', descs);
