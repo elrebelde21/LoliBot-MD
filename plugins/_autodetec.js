@@ -38,7 +38,7 @@ await this.sendMessage(m.chat, { text: `𝙀𝙇 𝙂𝙍𝙐𝙋𝙊 *${m.messa
 let subject = groupMetadata.subject
 let descs = groupMetadata.desc || "*ᴜɴ ɢʀᴜᴘᴏ ɢᴇɴɪᴀ😸*\n *sɪɴ ʀᴇɢʟᴀ 😉*";
 let userName = `${m.messageStubParameters[0].split`@`[0]}`;
-let textWel = (chat.sWelcome || `•──〘 *\`WELCOME\`* 〙──•\n\n✨ *Bienvenid@s @${userName} a ${subject} ✨\n\n*En este grupo podras encontrar:*\n➤ *Amistades* 👥\n➤ *Desmadre* 💃🕺\n➤ *Una botsita sexy 😘*\n➤ *Puede solicitar mi lista de comando con:* #menu\n\n> *Aqui tiene la descripción del grupo, léela!! 🙌*\n${descs}\n\n> *🔰 𝗗𝗶𝘀𝗳𝗿𝘂𝘁𝗮 𝗱𝗲 𝘁𝘂 𝗘𝘀𝘁𝗮𝗱𝗶́𝗮 𝗲𝗻 𝗲𝗹 𝗚𝗿𝘂𝗽𝗼 🔰*`)
+let textWel = chat.sWelcome ? chat.sWelcome : `•──〘 *\`WELCOME\`* 〙──•\n\n✨ *Bienvenid@s @${userName} a ${subject} ✨\n\n*En este grupo podras encontrar:*\n➤ *Amistades* 👥\n➤ *Desmadre* 💃🕺\n➤ *Una botsita sexy 😘*\n➤ *Puede solicitar mi lista de comando con:* #menu\n\n> *Aqui tiene la descripción del grupo, léela!! 🙌*\n${descs}\n\n> *🔰 𝗗𝗶𝘀𝗳𝗿𝘂𝘁𝗮 𝗱𝗲 𝘁𝘂 𝗘𝘀𝘁𝗮𝗱𝗶́𝗮 𝗲𝗻 𝗲𝗹 𝗚𝗿𝘂𝗽𝗼 🔰*`
 .replace('@user', userName)
 .replace('@subject', subject)
 .replace('@desc', descs);
