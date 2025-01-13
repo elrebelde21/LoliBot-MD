@@ -54,16 +54,15 @@ externalAdReply: {
 showAdAttribution: true,
 renderLargerThumbnail: true,
 thumbnailUrl: pp, 
-title: [wm, ' ' + wm + '😊', '🌟'].getRandom(),
+title: "BIENVENID@ 😄",
+body: [wm, ' ' + wm + '😊', '🌟'].getRandom(),
 containsAutoReply: true,
 mediaType: 1, 
 sourceUrl: [nna, nna2, nnaa, yt, md].getRandom()}}}, { quoted: fkontak }) 
-} else if (chat.welcome && m.messageStubType == 32 && this.user.jid != global.conn.user.jid) {
-//if (global.conn.user.jid.split`@`[0] != conn.user.jid.split`@`[0]) return
+} else if (chat.welcome && m.messageStubType == 28 && m.messageStubType == 32 && this.user.jid != global.conn.user.jid) {
 let subject = groupMetadata.subject
 let userName = `${m.messageStubParameters[0].split`@`[0]}`;
 let defaultBye = `Se fue @${userName} un gays menos`
-//let textBye = (chat.sBye || `Se fue @${userName} un gays menos`)
 let textBye = chat.sBye ? chat.sBye
 .replace(/@user/g, `@${userName}`)
 .replace(/@subject/g, subject) 
@@ -77,7 +76,8 @@ externalAdReply: {
 showAdAttribution: true,
 renderLargerThumbnail: true,
 thumbnailUrl: pp, 
-title: [wm, ' ' + wm + '😊', '🌟'].getRandom(),
+title: "BYE 👋",
+body: [wm, ' ' + wm + '😊', '🌟'].getRandom(),
 containsAutoReply: true,
 mediaType: 1, 
 sourceUrl: [nna, nna2, nnaa, yt, md].getRandom()}}}, { quoted: fkontak }) 
