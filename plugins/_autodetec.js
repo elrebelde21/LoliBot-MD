@@ -34,7 +34,7 @@ await this.sendMessage(m.chat, { text: `${usuario} 𝙉𝙐𝙀𝙑𝘼 𝘿𝙀
 await this.sendMessage(m.chat, { text: `🔒 𝘼𝙃𝙊𝙍𝘼 *${m.messageStubParameters[0] == 'on' ? '𝙎𝙊𝙇𝙊 𝘼𝘿𝙈𝙄𝙉𝙎' : '𝙏𝙊𝘿𝙊𝙎'}* 𝙋𝙐𝙀𝘿𝙀 𝙀𝘿𝙄𝙏𝘼𝙍 𝙇𝘼 𝙄𝙉𝙁𝙊𝙍𝙈𝘼𝘾𝙄𝙊𝙉 𝘿𝙀𝙇 𝙂𝙍𝙐𝙋𝙊`, mentions: [m.sender] }, { quoted: fkontak, ephemeralExpiration: 24*60*100, disappearingMessagesInChat: 24*60*100})
 } else if (chat.detect && m.messageStubType == 26) {
 await this.sendMessage(m.chat, { text: `𝙀𝙇 𝙂𝙍𝙐𝙋𝙊 *${m.messageStubParameters[0] == 'on' ? '𝙀𝙎𝙏𝘼 𝘾𝙀𝙍𝙍𝘼𝘿𝙊 🔒' : '𝙀𝙎𝙏𝘼 𝘼𝘽𝙄𝙀𝙍𝙏𝙊 🔓'}*\n ${m.messageStubParameters[0] == 'on' ? '𝙎𝙊𝙇𝙊 𝙇𝙊𝙎 𝘼𝘿𝙈𝙄𝙉𝙎 𝙋𝙐𝙀𝘿𝙀𝙉 𝙀𝙎𝘾𝙍𝙄𝘽𝙄𝙍' : '𝙔𝘼 𝙋𝙐𝙀𝘿𝙀𝙉 𝙀𝙎𝘾𝙍𝙄𝘽𝙄𝙍 𝙏𝙊𝘿𝙊𝙎'} 𝙀𝙉 𝙀𝙎𝙏𝙀 𝙂𝙍𝙐𝙋𝙊`, mentions: [m.sender] }, { quoted: fkontak, ephemeralExpiration: 24*60*100, disappearingMessagesInChat: 24*60*100})
-} else if (chat.welcome && m.messageStubType == 27) { 
+} else if (chat.welcome && m.messageStubType == 27 && this.user.jid != global.conn.user.jid) { 
 let subject = groupMetadata.subject
 let descs = groupMetadata.desc || "*ᴜɴ ɢʀᴜᴘᴏ ɢᴇɴɪᴀ😸*\n *sɪɴ ʀᴇɢʟᴀ 😉*";
 let userName = `${m.messageStubParameters[0].split`@`[0]}`;
@@ -60,11 +60,14 @@ mediaType: 1,
 sourceUrl: [nna, nna2, nnaa, yt, md].getRandom()}}}, { quoted: fkontak }) 
 } else if (chat.welcome && m.messageStubType == 32 && this.user.jid != global.conn.user.jid) {
 //if (global.conn.user.jid.split`@`[0] != conn.user.jid.split`@`[0]) return
+let subject = groupMetadata.subject
 let userName = `${m.messageStubParameters[0].split`@`[0]}`;
-let textBye = (chat.sBye || `Se fue @${userName} un gays menos`)
-.replace('@user', userName)
-.replace('@subject', subject)
-.replace('@desc', descs);
+let defaultBye = `Se fue @${userName} un gays menos`
+//let textBye = (chat.sBye || `Se fue @${userName} un gays menos`)
+let textBye = chat.sBye ? chat.sBye
+.replace(/@user/g, `@${userName}`)
+.replace(/@subject/g, subject) 
+: defaultBye;
 await this.sendMessage(m.chat, { text: textBye, 
 contextInfo:{
 forwardingScore: 9999999,
