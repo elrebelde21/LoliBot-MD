@@ -38,12 +38,13 @@ await this.sendMessage(m.chat, { text: `𝙀𝙇 𝙂𝙍𝙐𝙋𝙊 *${m.messa
 let subject = groupMetadata.subject
 let descs = groupMetadata.desc || "*ᴜɴ ɢʀᴜᴘᴏ ɢᴇɴɪᴀ😸*\n *sɪɴ ʀᴇɢʟᴀ 😉*";
 let userName = `${m.messageStubParameters[0].split`@`[0]}`;
-let textWel = (chat.sWelcome || this.welcome || conn.welcome || `•──〘 *\`WELCOME\`* 〙──•\n\n✨ *Bienvenid@s @${userName} a ${subject} ✨\n\n*En este grupo podras encontrar:*\n➤ *Amistades* 👥\n➤ *Desmadre* 💃🕺\n➤ *Una botsita sexy 😘*\n➤ *Puede solicitar mi lista de comando con:* #menu\n\n> *Aqui tiene la descripción del grupo, léela!! 🙌*\n${descs}\n\n> *🔰 𝗗𝗶𝘀𝗳𝗿𝘂𝘁𝗮 𝗱𝗲 𝘁𝘂 𝗘𝘀𝘁𝗮𝗱𝗶́𝗮 𝗲𝗻 𝗲𝗹 𝗚𝗿𝘂𝗽𝗼 🔰*`)
+//let textWel = (chat.sWelcome || `•──〘 *\`WELCOME\`* 〙──•\n\n✨ *Bienvenid@s @${userName} a ${subject} ✨\n\n*En este grupo podras encontrar:*\n➤ *Amistades* 👥\n➤ *Desmadre* 💃🕺\n➤ *Una botsita sexy 😘*\n➤ *Puede solicitar mi lista de comando con:* #menu\n\n> *Aqui tiene la descripción del grupo, léela!! 🙌*\n${descs}\n\n> *🔰 𝗗𝗶𝘀𝗳𝗿𝘂𝘁𝗮 𝗱𝗲 𝘁𝘂 𝗘𝘀𝘁𝗮𝗱𝗶́𝗮 𝗲𝗻 𝗲𝗹 𝗚𝗿𝘂𝗽𝗼 🔰*`)
+let textWel = `•──〘 *\`WELCOME\`* 〙──•\n\n✨ *Bienvenid@s @${userName} a ${subject} ✨\n\n*En este grupo podras encontrar:*\n➤ *Amistades* 👥\n➤ *Desmadre* 💃🕺\n➤ *Una botsita sexy 😘*\n➤ *Puede solicitar mi lista de comando con:* #menu\n\n> *Aqui tiene la descripción del grupo, léela!! 🙌*\n${descs}\n\n> *🔰 𝗗𝗶𝘀𝗳𝗿𝘂𝘁𝗮 𝗱𝗲 𝘁𝘂 𝗘𝘀𝘁𝗮𝗱𝗶́𝗮 𝗲𝗻 𝗲𝗹 𝗚𝗿𝘂𝗽𝗼 🔰*`
 .replace('@user', userName || "")
 .replace('@subject', groupMetadata.subject || "")
 .replace('@desc', groupMetadata.desc || "*ᴜɴ ɢʀᴜᴘᴏ ɢᴇɴɪᴀ😸*\n *sɪɴ ʀᴇɢʟᴀ 😉*");
         
-await this.sendMessage(m.chat, { text: textWel, 
+await this.sendMessage(m.chat, { text: chat.sWelcome ? chat.sWelcome : textWel, 
 contextInfo:{
 forwardingScore: 9999999,
 isForwarded: true, 
@@ -56,7 +57,6 @@ title: [wm, ' ' + wm + '😊', '🌟'].getRandom(),
 containsAutoReply: true,
 mediaType: 1, 
 sourceUrl: [nna, nna2, nnaa, yt, md].getRandom()}}}, { quoted: fkontak }) 
-this.reply(m.chat, `error`, null)
 } else if (chat.welcome && m.messageStubType == 32 && this.user.jid != global.conn.user.jid) {
 //if (global.conn.user.jid.split`@`[0] != conn.user.jid.split`@`[0]) return
 let userName = `${m.messageStubParameters[0].split`@`[0]}`;
