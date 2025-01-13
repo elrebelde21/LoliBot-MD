@@ -41,7 +41,7 @@ let userName = `${m.messageStubParameters[0].split`@`[0]}`;
 let defaultWelcome = `•──〘 *\`WELCOME\`* 〙──•\n\n✨ *Bienvenid@s @${userName} a ${subject}* ✨\n\n*En este grupo podrás encontrar:*\n➤ *Amistades* 👥\n➤ *Desmadre* 💃🕺\n➤ *Una botsita sexy 😘*\n➤ *Puede solicitar mi lista de comandos con:* #menu\n\n> *Aquí tiene la descripción del grupo, léela!! 🙌*\n${descs}\n\n> *🔰 𝗗𝗶𝘀𝗳𝗿𝘂𝘁𝗮 𝗱𝗲 𝘁𝘂 𝗲𝘀𝘁𝗮𝗱𝗶́𝗮 𝗲𝗻 𝗲𝗹 𝗴𝗿𝘂𝗽𝗼 🔰*`;
 let textWel = chat.sWelcome ? chat.sWelcome
 .replace(/@user/g, `@${userName}`)
-.replace(/@subject/g, subject) 
+.replace(/@group/g, subject) 
 .replace(/@desc/g, descs)
 : defaultWelcome;
         
@@ -65,7 +65,7 @@ let userName = `${m.messageStubParameters[0].split`@`[0]}`;
 let defaultBye = `Se fue @${userName} un gays menos`
 let textBye = chat.sBye ? chat.sBye
 .replace(/@user/g, `@${userName}`)
-.replace(/@subject/g, subject) 
+.replace(/@group/g, subject) 
 : defaultBye;
 await this.sendMessage(m.chat, { text: textBye, 
 contextInfo:{
