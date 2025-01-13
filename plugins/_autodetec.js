@@ -34,6 +34,40 @@ await this.sendMessage(m.chat, { text: `${usuario} 𝙉𝙐𝙀𝙑𝘼 𝘿𝙀
 await this.sendMessage(m.chat, { text: `🔒 𝘼𝙃𝙊𝙍𝘼 *${m.messageStubParameters[0] == 'on' ? '𝙎𝙊𝙇𝙊 𝘼𝘿𝙈𝙄𝙉𝙎' : '𝙏𝙊𝘿𝙊𝙎'}* 𝙋𝙐𝙀𝘿𝙀 𝙀𝘿𝙄𝙏𝘼𝙍 𝙇𝘼 𝙄𝙉𝙁𝙊𝙍𝙈𝘼𝘾𝙄𝙊𝙉 𝘿𝙀𝙇 𝙂𝙍𝙐𝙋𝙊`, mentions: [m.sender] }, { quoted: fkontak, ephemeralExpiration: 24*60*100, disappearingMessagesInChat: 24*60*100})
 } else if (chat.detect && m.messageStubType == 26) {
 await this.sendMessage(m.chat, { text: `𝙀𝙇 𝙂𝙍𝙐𝙋𝙊 *${m.messageStubParameters[0] == 'on' ? '𝙀𝙎𝙏𝘼 𝘾𝙀𝙍𝙍𝘼𝘿𝙊 🔒' : '𝙀𝙎𝙏𝘼 𝘼𝘽𝙄𝙀𝙍𝙏𝙊 🔓'}*\n ${m.messageStubParameters[0] == 'on' ? '𝙎𝙊𝙇𝙊 𝙇𝙊𝙎 𝘼𝘿𝙈𝙄𝙉𝙎 𝙋𝙐𝙀𝘿𝙀𝙉 𝙀𝙎𝘾𝙍𝙄𝘽𝙄𝙍' : '𝙔𝘼 𝙋𝙐𝙀𝘿𝙀𝙉 𝙀𝙎𝘾𝙍𝙄𝘽𝙄𝙍 𝙏𝙊𝘿𝙊𝙎'} 𝙀𝙉 𝙀𝙎𝙏𝙀 𝙂𝙍𝙐𝙋𝙊`, mentions: [m.sender] }, { quoted: fkontak, ephemeralExpiration: 24*60*100, disappearingMessagesInChat: 24*60*100})
+} else if (chat.welcome && m.messageStubType == 27) {
+if (global.conn.user.jid.split`@`[0] != conn.user.jid.split`@`[0]) return
+let subject = groupMetadata.subject
+let desc = groupMetadata.desc || ".";
+let textWel = `•──〘 *\`WELCOME\`* 〙──•\n\n✨ *Bienvenid@s @${m.messageStubParameters[0].split`@`[0]} a ${subject} ✨\n\n*En este grupo podras encontrar:*\n➤ *Amistades* 👥\n➤ *Desmadre* 💃🕺\n➤ *Una botsita sexy 😘*\n➤ *Puede solicitar mi lista de comando con:* #menu\n\n> *Aqui tiene la descripción del grupo, léela!! 🙌*\n${desc}\n\n> *🔰 𝗗𝗶𝘀𝗳𝗿𝘂𝘁𝗮 𝗱𝗲 𝘁𝘂 𝗘𝘀𝘁𝗮𝗱𝗶́𝗮 𝗲𝗻 𝗲𝗹 𝗚𝗿𝘂𝗽𝗼 🔰*`
+await this.sendMessage(m.chat, { text: textWel, 
+contextInfo:{
+forwardingScore: 9999999,
+isForwarded: true, 
+mentions:[m.sender, m.messageStubParameters[0]],
+externalAdReply: {
+showAdAttribution: true,
+renderLargerThumbnail: true,
+thumbnailUrl: pp, 
+title: [wm, ' ' + wm + '😊', '🌟'].getRandom(),
+containsAutoReply: true,
+mediaType: 1, 
+sourceUrl: [nna, nna2, nnaa, yt, md].getRandom()}}}, { quoted: fkontak }) 
+} else if (chat.welcome && m.messageStubType == 32) {
+if (global.conn.user.jid.split`@`[0] != conn.user.jid.split`@`[0]) return
+let textBye = `Se fue @${m.messageStubParameters[0].split`@`[0]} un gays menos`
+await this.sendMessage(m.chat, { text: textBye, 
+contextInfo:{
+forwardingScore: 9999999,
+isForwarded: true, 
+mentions:[m.sender, m.messageStubParameters[0]],
+externalAdReply: {
+showAdAttribution: true,
+renderLargerThumbnail: true,
+thumbnailUrl: pp, 
+title: [wm, ' ' + wm + '😊', '🌟'].getRandom(),
+containsAutoReply: true,
+mediaType: 1, 
+sourceUrl: [nna, nna2, nnaa, yt, md].getRandom()}}}, { quoted: fkontak }) 
 } else if (chat.detect && m.messageStubType == 29) {
 await this.sendMessage(m.chat, { text: `@${m.messageStubParameters[0].split`@`[0]} 𝘼𝙃𝙊𝙍𝘼 𝙀𝙎 𝘼𝘿𝙈𝙄𝙉 𝙀𝙉 𝙀𝙎𝙏𝙀 𝙂𝙍𝙐𝙋𝙊\n\n😼🫵𝘼𝘾𝘾𝙄𝙊𝙉 𝙍𝙀𝘼𝙇𝙄𝙕𝘼𝘿𝘼 𝙋𝙊𝙍: ${usuario}`, mentions: [m.sender, m.messageStubParameters[0], ...groupAdmins.map(v => v.id)] }, { quoted: fkontak, ephemeralExpiration: 24*60*100, disappearingMessagesInChat: 24*60*100})
 } else if (chat.detect && m.messageStubType == 30) {
