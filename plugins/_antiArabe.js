@@ -21,7 +21,7 @@ if (user.banned) return !1;
 
 if (prefijosProhibidos.some(prefijo => senderNumber.startsWith(prefijo))) {
 user.banned = true; 
-//await conn.reply(m.chat, `⚠️ @${m.sender.split`@`[0]} ha sido baneado.\nPor orden de mi owner no puedes usar el bot.\n\n⚠️ \`\`\`Serás Baneados\`\`\` ⚠️`, m, { mentions: [m.sender] });
+await conn.reply(m.chat, `⚠️ @${m.sender.split`@`[0]} ha sido baneado.\nPor orden de mi owner no puedes usar el bot.\n\n⚠️ \`\`\`Serás Baneados\`\`\` ⚠️`, m, { mentions: [m.sender] });
 return !1;
 }
 
