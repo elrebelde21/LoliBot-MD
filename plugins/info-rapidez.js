@@ -109,7 +109,7 @@ function clockString(ms) {
   let h = isNaN(ms) ? '--' : Math.floor(ms / 3600000) % 24
   let m = isNaN(ms) ? '--' : Math.floor(ms / 60000) % 60
   let s = isNaN(ms) ? '--' : Math.floor(ms / 1000) % 60
-  return [' ' + d, ' *Días : Days ☀️*\n ', h, ' *Horas : Hours 🕐*\n ', m, ' *Minuto : Minute ⏰*\n ', s, ' *Segundo : Second ⏱️* '].map(v => v.toString().padStart(2, 0)).join('')
+  return [' ' + d, ' dias, ', h, ' hs, ', m, ' min, ', s, ' seg '].map(v => v.toString().padStart(2, 0)).join('')
 }
 
 function toTime(milliseconds) {
@@ -117,5 +117,5 @@ function toTime(milliseconds) {
   const minutes = Math.floor(seconds / 60);
   const hours = Math.floor(minutes / 60);
   const days = Math.floor(hours / 24);
-  return `${days} days, ${hours % 24} hours, ${minutes % 60} minutes, ${seconds % 60} seconds`;
+  return `${days} dias, ${hours % 24} horas, ${minutes % 60} minutos, ${seconds % 60} segundos `;
 }
