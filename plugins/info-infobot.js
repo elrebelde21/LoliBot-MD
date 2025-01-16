@@ -82,9 +82,8 @@ let teks = `*≡ INFOBOT*
 *≡ S E R V E R*
 ▣ *Servidor:* ${hostname()}
 ▣ *Plataforma:* ${platform()}
-▣ *Núcleos de CPU:* ${data.núcleosCPU} 
-▣ *CPU Usada:* ${data.porcentajeCPUUsada} 
-▣ *Ram usada:* ${format(totalmem() - freemem())} / ${format(totalmem())}
+▣ *Cpu:* ${data.núcleosCPU} 
+▣ *Ram usada:* ${format(totalmem() - freemem())} de ${format(totalmem())}
 ▣ *Uptime:* ${toTime(os.uptime() * 1000)}`;
 
 await conn.sendMessage(m.chat, {image: { url: "https://telegra.ph/file/39fb047cdf23c790e0146.jpg" }, caption: teks, contextInfo: {externalAdReply: { title: `INFO - BOT`, sourceUrl: redes.getRandom(), mediaType: 1, showAdAttribution: true, thumbnailUrl: img1,

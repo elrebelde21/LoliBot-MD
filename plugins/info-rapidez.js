@@ -80,7 +80,7 @@ ${readMore}
 *🔵 RAM Libre:* ${format(freemem())}
 *💻 Plataforma :* \`\`\`${os.platform()}\`\`\`
 *📡 Servidor :* _${os.hostname()}_
-*⏳ Uptime :* _${toTime(os.uptime() * 1000)}_
+*⏳ Uptime :* ${toTime(os.uptime() * 1000)}
 ${readMore}
 *NodeJS Uso de memoria : Memory Usage*
 ${'```' + Object.keys(used).map((key, _, arr) => `${key.padEnd(Math.max(...arr.map(v => v.length)), ' ')}: ${format(used[key])}`).join('\n') + '```'}
