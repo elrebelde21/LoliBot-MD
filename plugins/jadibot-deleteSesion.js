@@ -26,7 +26,8 @@ await conn.sendMessage(m.chat, { text: "⚠️ Usted no es un Sub-Bot" }, { quot
 console.error(userS + ' ' + `⚠️ HA CERRADO SESIÓN COMO SUB BOT`, err)
 }}}
 }
-
+handler.help = ['deletesession', 'eliminarsesion'];
+handler.tags = ['jadibot'];
 handler.command = /^(deletesess?ion|eliminarsesion|borrarsesion|delsess?ion|cerrarsesion)$/i
 handler.private = true
 handler.fail = null
