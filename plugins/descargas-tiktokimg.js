@@ -44,7 +44,7 @@ header: proto.Message.InteractiveMessage.Header.create({ hasMediaAttachment: fal
 carouselMessage: proto.Message.InteractiveMessage.CarouselMessage.fromObject({ cards: [...results] })})}}
 }, { quoted: message })
 await conn.relayMessage(m.chat, responseMessage.message, { messageId: responseMessage.key.id })
-} catch (error) {
+} catch (e) {
 await m.react(`❌`) 
 m.reply(`\`\`\`⚠️ OCURRIO UN ERROR ⚠️\`\`\`\n\n> *Reporta el siguiente error a mi creador con el comando:*#report\n\n>>> ${e} <<<< `)       
 console.log(e)
