@@ -1,7 +1,7 @@
 import axios from 'axios'
 const {proto, generateWAMessageFromContent, prepareWAMessageMedia, generateWAMessageContent, getDevice} = (await import("@whiskeysockets/baileys")).default
 
-let handler = async (message, { conn, text, usedPrefix, command }) => {
+let handler = async (m, { conn, text, usedPrefix, command }) => {
 if (!text) return m.reply('Que video buscas?')
 
 async function createVideoMessage(url) {
