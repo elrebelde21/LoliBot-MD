@@ -99,6 +99,7 @@ let phoneNumber = global.botNumberCode
 const methodCodeQR = process.argv.includes("qr")
 const methodCode = !!phoneNumber || process.argv.includes("code")
 const MethodMobile = process.argv.includes("mobile")
+const userDevicesCache = new NodeCache({ stdTTL: 0, checkperiod: 0 });
 let rl = readline.createInterface({
 input: process.stdin,
 output: process.stdout,
