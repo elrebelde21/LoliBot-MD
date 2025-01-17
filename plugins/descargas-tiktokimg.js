@@ -1,8 +1,8 @@
 import axios from 'axios'
 const {proto, generateWAMessageFromContent, prepareWAMessageMedia, generateWAMessageContent, getDevice} = (await import("@whiskeysockets/baileys")).default
 
-let handler = async (m, { conn, text, usedPrefix, command }) => {
-if (!text) return m.reply('Que video buscas?')
+let handler = async (message, { conn, text, usedPrefix, command }) => {
+if (!text) return m.reply(`Que video buscas?`)
 
 async function createVideoMessage(url) {
 const { videoMessage } = await generateWAMessageContent({ video: { url } }, { upload: conn.waUploadToServer })
@@ -16,7 +16,7 @@ const j = Math.floor(Math.random() * (i + 1));
 }
 try {
 let results = []
-let { data: response } = await axios.get(`${apis}/search/tiktoksearch?query=` + text)
+let { data: response } = await axios.get(`${apis}/search/tiktoksearch?query=${text}`)
 let searchResults = response.data
 shuffleArray(searchResults)
 let selectedResults = searchResults.splice(0, 3)
@@ -38,21 +38,18 @@ deviceListMetadata: {},
 deviceListMetadataVersion: 2
 },
 interactiveMessage: proto.Message.InteractiveMessage.fromObject({
-body: proto.Message.InteractiveMessage.Body.create({ text: 'Resultado de:' + text }),
+body: proto.Message.InteractiveMessage.Body.create({ text: '✅️ Resultado de:' + text }),
 footer: proto.Message.InteractiveMessage.Footer.create({ text: wm }),
 header: proto.Message.InteractiveMessage.Header.create({ hasMediaAttachment: false }),
 carouselMessage: proto.Message.InteractiveMessage.CarouselMessage.fromObject({ cards: [...results] })})}}
 }, { quoted: message })
-await conn.relayMessage(m.chat, responseMessage.message, { messageId: responseMessage.key.id })
-} catch (e) {
-await m.react(`❌`) 
-m.reply(`\`\`\`⚠️ OCURRIO UN ERROR ⚠️\`\`\`\n\n> *Reporta el siguiente error a mi creador con el comando:*#report\n\n>>> ${e} <<<< `)       
-console.log(e)
+await conn.relayMessage(message.chat, responseMessage.message, { messageId: responseMessage.key.id })
+} catch (error) {
+await conn.reply(message.chat, error.toString(), message)
 }}
 
-handler.help = ['tiktoksearch']
-handler.tags = ['downloader']
-handler.command = /^(tiktoksearch|ttsearch)$/i
-handler.register = true
-handler.limit = 1
-export default handler
+handler.help = ['tiktoksearch <txt>'];
+handler.tags = ['downloader'];
+handler.command = ['tiktoksearch', 'ttsearch'];
+handler.group = true;
+export default handler;
