@@ -51,5 +51,5 @@ await conn.reply(message.chat, error.toString(), message)
 handler.help = ['tiktoksearch <txt>'];
 handler.tags = ['downloader'];
 handler.command = ['tiktoksearch', 'ttsearch'];
-handler.group = true;
+//handler.group = true;
 export default handler;
