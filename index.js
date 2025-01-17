@@ -7,6 +7,7 @@ import { watchFile, unwatchFile } from 'fs'
 import cfonts from 'cfonts'
 import { createInterface } from 'readline'
 import yargs from 'yargs'
+import diskusage from 'diskusage';  
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const require = createRequire(__dirname)
 const { name, author } = require(join(__dirname, './package.json'))
@@ -23,6 +24,23 @@ align: 'center',
 gradient: ['red', 'magenta']});
 
 let isRunning = false
+
+function checkDiskUsage() {
+const path = process.cwd(); 
+diskusage.check(path, (err, info) => {
+if (err) {
+console.error(err);
+return;
+}
+
+const limit = 10 * 1024 * 1024 * 1024; //10Gbs
+if (info.free < limit) {
+console.log('Se ha superado el límite de 10 GB, reiniciando el bot...');
+process.emit('SIGINT'); //restart 
+}
+});
+}
+
 /**
 * Start a js file
 * @param {String} file `path/to/file`
@@ -68,3 +86,5 @@ p.emit('message', line.trim())
 })
 }}}
 start('main.js')
+
+setInterval(checkDiskUsage, 600000); //10 minutos
