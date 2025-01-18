@@ -92,14 +92,14 @@ fs.mkdirSync(rutaJadiBot)
 }
 
 const {state, saveState, saveCreds} = await useMultiFileAuthState(global.authFile)
-const msgRetryCounterMap = (MessageRetryMap) => { }
-const msgRetryCounterCache = new NodeCache()
+const msgRetryCounterMap = new Map();
+const msgRetryCounterCache = new NodeCache({ stdTTL: 0, checkperiod: 0 });
+const userDevicesCache = new NodeCache({ stdTTL: 0, checkperiod: 0 });
 const {version} = await fetchLatestBaileysVersion()
 let phoneNumber = global.botNumberCode
 const methodCodeQR = process.argv.includes("qr")
 const methodCode = !!phoneNumber || process.argv.includes("code")
 const MethodMobile = process.argv.includes("mobile")
-const userDevicesCache = new NodeCache({ stdTTL: 0, checkperiod: 0 });
 let rl = readline.createInterface({
 input: process.stdin,
 output: process.stdout,
@@ -153,34 +153,28 @@ console.info = () => {}
 console.debug = () => {} 
 ['log', 'warn', 'error'].forEach(methodName => redefineConsoleMethod(methodName, filterStrings))
 const connectionOptions = {
-logger: Pino({ level: 'silent' }),
+logger: pino({ level: 'silent' }),
 printQRInTerminal: opcion == '1' ? true : methodCodeQR ? true : false,
-mobile: MethodMobile,
+mobile: MethodMobile, 
 browser: opcion == '1' ? ['LoliBot-MD', 'Edge', '20.0.04'] : methodCodeQR ? ['LoliBot-MD', 'Edge', '20.0.04'] : ["Ubuntu", "Chrome", "20.0.04"],
 auth: {
 creds: state.creds,
-keys: makeCacheableSignalKeyStore(state.keys, Pino({ level: 'fatal' }).child({ level: 'fatal' })),
+keys: makeCacheableSignalKeyStore(state.keys, Pino({ level: "fatal" }).child({ level: "fatal" })),
 },
-waWebSocketUrl: 'wss://web.whatsapp.com/ws/chat?ED=CAIICA',
-markOnlineOnConnect: true,
-generateHighQualityLinkPreview: true,
-getMessage: async (key) => {
-let jid = jidNormalizedUser(key.remoteJid);
-let msg = await store.loadMessage(jid, key.id);
-return msg?.message || "";
-},
-patchMessageBeforeSending: async (message) => {
-let messages = 0;
-global.conn.uploadPreKeysToServerIfRequired();
-messages++;
-return message;
+markOnlineOnConnect: true, 
+generateHighQualityLinkPreview: true, 
+syncFullHistory: false,
+getMessage: async (clave) => {
+let jid = jidNormalizedUser(clave.remoteJid)
+let msg = await store.loadMessage(jid, clave.id)
+return msg?.message || ""
 },
 msgRetryCounterCache: msgRetryCounterCache,
-userDevicesCache: userDevicesCache,
+userDevicesCache: userDevicesCache, // Resolver mensajes en espera
+//msgRetryCounterMap, 
 defaultQueryTimeoutMs: undefined,
-cachedGroupMetadata: (jid) => global.conn.chats[jid] ?? {},
 version: [2, 3000, 1015901307],
-};
+}
 
 global.conn = makeWASocket(connectionOptions)
 
