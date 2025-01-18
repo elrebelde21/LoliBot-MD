@@ -17,21 +17,21 @@ await conn.sendFile(m.chat, yt_play[0].thumbnail, 'error.jpg', `${yt_play[0].tit
 *⏰ Duración:* ${secondString(yt_play[0].duration.seconds)}
 *👉🏻Aguarde un momento en lo que envío su audio*`, m, null, fake);
 try {
-const res = await fetch(`https://api.siputzx.my.id/api/d/ytmp3?url=${yt_play[0].url}`);
+const res = await fetch(`https://api.siputzx.my.id/api/d/ytmp4?url=${yt_play[0].url}`);
 let { data } = await res.json();
-await conn.sendMessage(m.chat, { audio: { url: data.dl }, mimetype: 'audio/mp3' }, { quoted: m ||null });
+await conn.sendMessage(m.chat, { audio: { url: data.dl }, mimetype: 'audio/mpeg' }, { quoted: m ||null });
 } catch (e1) {
 try {  
 const axeelUrl = `https://axeel.my.id/api/download/audio?url=${yt_play[0].url}`;
 const axeelResponse = await fetch(axeelUrl);
 const axeelData = await axeelResponse.json();
 if (!axeelData || !axeelData.downloads?.url) throw new Error();
-await conn.sendMessage(m.chat, { audio: { url: axeelData.downloads.url }, mimetype: 'audio/mp3' }, { quoted: m });
+await conn.sendMessage(m.chat, { audio: { url: axeelData.downloads.url }, mimetype: 'audio/mpeg' }, { quoted: m });
 } catch {
 try {
 const res = await fetch(`https://api.zenkey.my.id/api/download/ytmp3?apikey=zenkey&url=${yt_play[0].url}`)
 let { result } = await res.json()
-await conn.sendMessage(m.chat, { audio: { url: await result.download.url }, mimetype: 'audio/mp3' }, { quoted: m })
+await conn.sendMessage(m.chat, { audio: { url: await result.download.url }, mimetype: 'audio/mpeg' }, { quoted: m })
 } catch (e1) {
 try {    
 const ryzenUrl = `https://api.ryzendesu.vip/api/downloader/ytmp3?url=${encodeURIComponent(videoUrl)}`;
