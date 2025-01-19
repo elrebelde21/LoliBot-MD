@@ -104,12 +104,15 @@ const backupCreds = () => {
     }
 };
 
-const restoreCreds = () => {
+const restoreCreds = async () => {
     if (!fs.existsSync(credsFile) && fs.existsSync(backupFile)) {
         fs.copyFileSync(backupFile, credsFile);
         console.log(`[✅] creds.json restaurado desde el respaldo.`);
-    } else if (!fs.existsSync(credsFile)) {
+    } else if (!fs.existsSync(backupFile)) {
         console.log('[⚠] No se encontró ni el archivo creds.json ni el respaldo.');
+        throw new Error('No se encontró el archivo ni el respaldo.');
+    } else {
+        console.log('[⚠] El archivo creds.json ya existe.');
     }
 };
 
