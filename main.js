@@ -81,15 +81,37 @@ global.db.chain = chain(global.db.data)
 }
 loadDatabase()
 
-global.creds = 'creds.json'
-global.authFile = `BotSession`
-global.authFileJB  = 'jadibts'
-global.rutaBot = join(__dirname, authFile)
-global.rutaJadiBot = join(__dirname, authFileJB)
+global.creds = 'creds.json';
+global.authFile = 'BotSession';
+global.authFileJB = 'jadibts';
+global.rutaBot = join(__dirname, global.authFile);
+global.rutaJadiBot = join(__dirname, global.authFileJB);
+const respaldoDir = join(__dirname, 'RespaldoSession');
+const credsFile = join(global.rutaBot, global.creds);
+const backupFile = join(respaldoDir, global.creds);
 
 if (!fs.existsSync(rutaJadiBot)) {
-fs.mkdirSync(rutaJadiBot)
-}
+fs.mkdirSync(rutaJadiBot)}
+
+if (!fs.existsSync(respaldoDir)) fs.mkdirSync(respaldoDir);
+
+const backupCreds = () => {
+    if (fs.existsSync(credsFile)) {
+        fs.copyFileSync(credsFile, backupFile);
+        console.log(`[✅] Respaldo creado en ${backupFile}`);
+    } else {
+        console.log('[⚠] No se encontró el archivo creds.json para respaldar.');
+    }
+};
+
+const restoreCreds = () => {
+    if (!fs.existsSync(credsFile) && fs.existsSync(backupFile)) {
+        fs.copyFileSync(backupFile, credsFile);
+        console.log(`[✅] creds.json restaurado desde el respaldo.`);
+    } else if (!fs.existsSync(credsFile)) {
+        console.log('[⚠] No se encontró ni el archivo creds.json ni el respaldo.');
+    }
+};
 
 const {state, saveState, saveCreds} = await useMultiFileAuthState(global.authFile)
 const msgRetryCounterMap = (MessageRetryMap) => { }
@@ -283,6 +305,11 @@ console.log(chalk.bold.cyanBright(`\n╭» 🔵 ${global.authFile} 🔵\n│→ 
 await purgeOldFiles()
 console.log(chalk.bold.cyanBright(`\n╭» 🟠 ARCHIVOS 🟠\n│→ ARCHIVOS RESIDUALES ELIMINADAS\n╰― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― 🗑️♻️`))}, 1000 * 60 * 10)
 
+setInterval(() => {
+    backupCreds();
+    console.log('[♻️] Respaldo periódico realizado.');
+}, 10 * 60 * 1000);
+
 async function connectionUpdate(update) {
 const {connection, lastDisconnect, isNewLogin} = update;
 global.stopped = connection;
@@ -310,13 +337,22 @@ process.send('reset')}
 if (connection === 'close') {
 if (reason === DisconnectReason.badSession) {
 conn.logger.error(`[ ⚠ ] Sesión incorrecta, por favor elimina la carpeta ${global.authFile} y escanea nuevamente.`);
+restoreCreds();
 //process.exit();
 } else if (reason === DisconnectReason.connectionClosed) {
 conn.logger.warn(`[ ⚠ ] Conexión cerrada, reconectando...`);
-await global.reloadHandler(true).catch(console.error);
+restoreCreds()
+.then(() => global.reloadHandler(true)) // Intenta recargar el manejador después de restaurar las credenciales
+.catch(error => {
+console.error('Error al restaurar credenciales o recargar el manejador:', error);
+});
 } else if (reason === DisconnectReason.connectionLost) {
 conn.logger.warn(`[ ⚠ ] Conexión perdida con el servidor, reconectando...`);
-await global.reloadHandler(true).catch(console.error);
+restoreCreds()
+.then(() => global.reloadHandler(true)) 
+.catch(error => {
+console.error('Error al restaurar credenciales o reconectar:', error);
+});
 } else if (reason === DisconnectReason.connectionReplaced) {
 conn.logger.error(`[ ⚠ ] Conexión reemplazada, se ha abierto otra nueva sesión. Por favor, cierra la sesión actual primero.`);
 //process.exit();
@@ -508,3 +544,4 @@ async function joinChannels(conn) {
 for (const channelId of Object.values(global.ch)) {
 await conn.newsletterFollow(channelId).catch(() => {})
 }}
+
