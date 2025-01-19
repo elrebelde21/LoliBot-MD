@@ -341,16 +341,12 @@ restoreCreds();
 //process.exit();
 } else if (reason === DisconnectReason.connectionClosed) {
 conn.logger.warn(`[ ⚠ ] Conexión cerrada, reconectando...`);
-restoreCreds()
-.then(() => global.reloadHandler(true)) // Intenta recargar el manejador después de restaurar las credenciales
-.catch(error => {
+restoreCreds().then(() => global.reloadHandler(true)).catch(error => { // Intenta recargar el manejador después de restaurar las credenciales
 console.error('Error al restaurar credenciales o recargar el manejador:', error);
 });
 } else if (reason === DisconnectReason.connectionLost) {
 conn.logger.warn(`[ ⚠ ] Conexión perdida con el servidor, reconectando...`);
-restoreCreds()
-.then(() => global.reloadHandler(true)) 
-.catch(error => {
+restoreCreds().then(() => global.reloadHandler(true)).catch(error => {
 console.error('Error al restaurar credenciales o reconectar:', error);
 });
 } else if (reason === DisconnectReason.connectionReplaced) {
