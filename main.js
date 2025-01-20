@@ -104,7 +104,7 @@ const backupCreds = () => {
     }
 };
 
-const restoreCreds = async () => {
+const restoreCreds = () => {
     if (!fs.existsSync(credsFile) && fs.existsSync(backupFile)) {
         fs.copyFileSync(backupFile, credsFile);
         console.log(`[✅] creds.json restaurado desde el respaldo.`);
@@ -337,18 +337,15 @@ process.send('reset')}
 if (connection === 'close') {
 if (reason === DisconnectReason.badSession) {
 conn.logger.error(`[ ⚠ ] Sesión incorrecta, por favor elimina la carpeta ${global.authFile} y escanea nuevamente.`);
-restoreCreds();
 //process.exit();
 } else if (reason === DisconnectReason.connectionClosed) {
 conn.logger.warn(`[ ⚠ ] Conexión cerrada, reconectando...`);
-restoreCreds().then(() => global.reloadHandler(true)).catch(error => { // Intenta recargar el manejador después de restaurar las credenciales
-console.error('Error al restaurar credenciales o recargar el manejador:', error);
-});
+restoreCreds();
+await global.reloadHandler(true).catch(console.error);
 } else if (reason === DisconnectReason.connectionLost) {
 conn.logger.warn(`[ ⚠ ] Conexión perdida con el servidor, reconectando...`);
-restoreCreds().then(() => global.reloadHandler(true)).catch(error => {
-console.error('Error al restaurar credenciales o reconectar:', error);
-});
+restoreCreds();
+await global.reloadHandler(true).catch(console.error);
 } else if (reason === DisconnectReason.connectionReplaced) {
 conn.logger.error(`[ ⚠ ] Conexión reemplazada, se ha abierto otra nueva sesión. Por favor, cierra la sesión actual primero.`);
 //process.exit();
