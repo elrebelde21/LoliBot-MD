@@ -506,7 +506,8 @@ Object.freeze(global.support)
 
 _quickTest()
 .then(() => conn.logger.info('Ƈᴀʀɢᴀɴᴅᴏ．．．.\n'))
-restoreCreds().catch(console.error)
+restoreCreds()
+.catch(console.error)
 
 function redefineConsoleMethod(methodName, filterStrings) {
 const originalConsoleMethod = console[methodName]
