@@ -95,29 +95,6 @@ fs.mkdirSync(rutaJadiBot)}
 
 if (!fs.existsSync(respaldoDir)) fs.mkdirSync(respaldoDir);
 
-const backupCreds = () => {
-    if (fs.existsSync(credsFile)) {
-        fs.copyFileSync(credsFile, backupFile);
-        console.log(`[✅] Respaldo creado en ${backupFile}`);
-    } else {
-        console.log('[⚠] No se encontró el archivo creds.json para respaldar.');
-    }
-};
-
-const restoreCreds = () => {
-    if (fs.existsSync(credsFile)) {
-        // Si el archivo creds.json existe, reemplázalo con el respaldo
-        fs.copyFileSync(backupFile, credsFile);
-        console.log(`[✅] creds.json reemplazado desde el respaldo.`);
-    } else if (fs.existsSync(backupFile)) {
-        // Si no existe creds.json pero sí el respaldo, restaura desde el respaldo
-        fs.copyFileSync(backupFile, credsFile);
-        console.log(`[✅] creds.json restaurado desde el respaldo.`);
-    } else {
-        console.log('[⚠] No se encontró ni el archivo creds.json ni el respaldo.');
-    }
-};
-
 const {state, saveState, saveCreds} = await useMultiFileAuthState(global.authFile)
 const msgRetryCounterMap = (MessageRetryMap) => { }
 const msgRetryCounterCache = new NodeCache()
@@ -310,10 +287,31 @@ console.log(chalk.bold.cyanBright(`\n╭» 🔵 ${global.authFile} 🔵\n│→ 
 await purgeOldFiles()
 console.log(chalk.bold.cyanBright(`\n╭» 🟠 ARCHIVOS 🟠\n│→ ARCHIVOS RESIDUALES ELIMINADAS\n╰― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― 🗑️♻️`))}, 1000 * 60 * 10)
 
-setInterval(() => {
-    backupCreds();
-    console.log('[♻️] Respaldo periódico realizado.');
-}, 10 * 60 * 1000);
+const backupCreds = () => {
+    if (fs.existsSync(credsFile)) {
+        fs.copyFileSync(credsFile, backupFile);
+        console.log(`[✅] Respaldo creado en ${backupFile}`);
+    } else {
+        console.log('[⚠] No se encontró el archivo creds.json para respaldar.');
+    }
+};
+
+const restoreCreds = () => {
+    if (fs.existsSync(credsFile)) {
+        fs.copyFileSync(backupFile, credsFile);
+        console.log(`[✅] creds.json reemplazado desde el respaldo.`);
+    } else if (fs.existsSync(backupFile)) {
+        fs.copyFileSync(backupFile, credsFile);
+        console.log(`[✅] creds.json restaurado desde el respaldo.`);
+    } else {
+        console.log('[⚠] No se encontró ni el archivo creds.json ni el respaldo.');
+    }
+};
+
+setInterval(async () => {
+await backupCreds();
+console.log('[♻️] Respaldo periódico realizado.');
+}, 5 * 60 * 1000);
 
 async function connectionUpdate(update) {
 const {connection, lastDisconnect, isNewLogin} = update;
