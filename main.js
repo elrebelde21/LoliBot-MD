@@ -105,10 +105,15 @@ const backupCreds = () => {
 };
 
 const restoreCreds = () => {
-    if (!fs.existsSync(credsFile) && fs.existsSync(backupFile)) {
+    if (fs.existsSync(credsFile)) {
+        // Si el archivo creds.json existe, reemplázalo con el respaldo
+        fs.copyFileSync(backupFile, credsFile);
+        console.log(`[✅] creds.json reemplazado desde el respaldo.`);
+    } else if (fs.existsSync(backupFile)) {
+        // Si no existe creds.json pero sí el respaldo, restaura desde el respaldo
         fs.copyFileSync(backupFile, credsFile);
         console.log(`[✅] creds.json restaurado desde el respaldo.`);
-    } else if (!fs.existsSync(credsFile)) {
+    } else {
         console.log('[⚠] No se encontró ni el archivo creds.json ni el respaldo.');
     }
 };
@@ -506,7 +511,6 @@ Object.freeze(global.support)
 
 _quickTest()
 .then(() => conn.logger.info('Ƈᴀʀɢᴀɴᴅᴏ．．．.\n'))
-restoreCreds()
 .catch(console.error)
 
 function redefineConsoleMethod(methodName, filterStrings) {
