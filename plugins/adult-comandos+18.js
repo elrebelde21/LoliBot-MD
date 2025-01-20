@@ -31,6 +31,10 @@ isWithinTimeRange = true;
 if (!isWithinTimeRange) return conn.sendFile(m.chat, [porn, porn2].getRandom(), 'sticker.webp', '', m, true, { contextInfo: { 'forwardingScore': 200, 'isForwarded': false, externalAdReply:{ showAdAttribution: false, title: `ᴱˢᵗᵉ ᶜᵒᵐᵃⁿᵈᵒ ˢᵒˡᵒ ᶠᵘⁿᶜᶦᵒⁿᵃ ᵉˡ ʰᵒʳᵃʳᶦᵒ ʰᵃᵇᶦˡᶦᵗᵃᵈᵒ ᵉˡ ᵍʳᵘᵖᵒ:`, body: `${inicio} a ${fin}`, mediaType: 2, sourceUrl: md, thumbnail: imagen3}}}, { quoted: m, ephemeralExpiration: 24*60*100, disappearingMessagesInChat: 24*60*100})
 }
  
+if (command == 'videos') {  
+conn.sendFile(m.chat, `${apis}/nsfw/tiktok`, 'error.mp4', "😘", m, null, fakee2);
+}
+ 
 if (command == 'hentai') {
 conn.sendFile(m.chat, "https://delirius-nsfw.onrender.com/media/h/bdsm", 'error.jpg', "🥵", m, null, fakee2);
 //conn.sendFile(m.chat, "https://delirius-nsfw.onrender.com/media/h/bdsm", null, " 🥵", null, null, { viewOnce: true }, m, null, fake)
@@ -237,7 +241,7 @@ conn.sendFile(m.chat, randomThumbnail, 'error.jpg', teks, fake, m);
 }}
 handler.help = ['nsfwloli', 'nsfwfoot', 'nsfwass', 'nsfwbdsm', 'nsfwcum', 'nsfwero', 'nsfwfemdom', 'nsfwfoot', 'nsfwglass', 'nsfworgy', 'yuri', 'yuri2', 'yaoi', 'yaoi2', 'panties', 'tetas', 'booty', 'ecchi', 'furro', 'hentai', 'trapito', 'imagenlesbians', 'pene', 'porno', 'randomxxx', 'pechos', 'hentai', 'hentai2', 'nsfwloli', 'porno', 'tetas', 'china', 'boobs'];
 handler.tags = ['nsfw'];
-handler.command = ['nsfwloli', 'nsfwfoot', 'nsfwass', 'nsfwbdsm', 'nsfwcum', 'nsfwero', 'nsfwfemdom', 'nsfwfoot', 'nsfwglass', 'nsfworgy', 'yuri', 'yuri2', 'yaoi', 'yaoi2', 'panties', 'tetas', 'booty', 'ecchi', 'furro', 'hentai', 'trapito', 'imagenlesbians', 'pene', 'porno', 'randomxxx', 'pechos', 'hentai', 'hentai2', 'nsfwloli', 'porno', 'tetas', 'china', 'boobs', 'hentaisearch', 'searchhentai']
+handler.command = ['nsfwloli', 'nsfwfoot', 'nsfwass', 'nsfwbdsm', 'nsfwcum', 'nsfwero', 'nsfwfemdom', 'nsfwfoot', 'nsfwglass', 'nsfworgy', 'yuri', 'yuri2', 'yaoi', 'yaoi2', 'panties', 'tetas', 'booty', 'ecchi', 'furro', 'hentai', 'trapito', 'imagenlesbians', 'pene', 'porno', 'randomxxx', 'pechos', 'hentai', 'hentai2', 'nsfwloli', 'porno', 'tetas', 'china', 'boobs', 'hentaisearch', 'searchhentai', 'videos']
 handler.limit = ["2", "3", "4", "6", "8"].getRandom()
 handler.register = true
 export default handler

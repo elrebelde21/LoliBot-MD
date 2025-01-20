@@ -70,6 +70,9 @@ if (result && result.trim().length > 0) {
 await this.reply(m.chat, result, m);
 await this.readMessages([m.key])
 } else {
+let gpt = await fetch(`${apis}/ia/gptprompt?text=${m.text}?&prompt=${syms1}`) 
+let res = await gpt.json()
+await this.reply(m.chat, res.data, m)
 }}
 return true;
 }
