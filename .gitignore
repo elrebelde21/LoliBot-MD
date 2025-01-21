@@ -4,3 +4,5 @@ database.json
 node_modules/
 BotSession/
 jadibts/ 
+database/
+BackupSession/
