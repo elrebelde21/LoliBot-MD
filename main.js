@@ -81,19 +81,15 @@ global.db.chain = chain(global.db.data)
 }
 loadDatabase()
 
-global.creds = 'creds.json';
-global.authFile = 'BotSession';
-global.authFileJB = 'jadibts';
-global.rutaBot = join(__dirname, global.authFile);
-global.rutaJadiBot = join(__dirname, global.authFileJB);
-const respaldoDir = join(__dirname, 'RespaldoSession');
-const credsFile = join(global.rutaBot, global.creds);
-const backupFile = join(respaldoDir, global.creds);
+global.creds = 'creds.json'
+global.authFile = `BotSession`
+global.authFileJB  = 'jadibts'
+global.rutaBot = join(__dirname, authFile)
+global.rutaJadiBot = join(__dirname, authFileJB)
 
 if (!fs.existsSync(rutaJadiBot)) {
-fs.mkdirSync(rutaJadiBot)}
-
-if (!fs.existsSync(respaldoDir)) fs.mkdirSync(respaldoDir);
+fs.mkdirSync(rutaJadiBot)
+}
 
 const {state, saveState, saveCreds} = await useMultiFileAuthState(global.authFile)
 const msgRetryCounterMap = (MessageRetryMap) => { }
@@ -144,7 +140,17 @@ console.log(chalk.bold.redBright(`NO SE PERMITE NÚMEROS QUE NO SEAN ${chalk.bol
 }} while (opcion !== '1' && opcion !== '2' || fs.existsSync(`./${authFile}/creds.json`))
 }
 
+const filterStrings = [
+"Q2xvc2luZyBzdGFsZSBvcGVu", // "Closing stable open"
+"Q2xvc2luZyBvcGVuIHNlc3Npb24=", // "Closing open session"
+"RmFpbGVkIHRvIGRlY3J5cHQ=", // "Failed to decrypt"
+"U2Vzc2lvbiBlcnJvcg==", // "Session error"
+"RXJyb3I6IEJhZCBNQUM=", // "Error: Bad MAC" 
+"RGVjcnlwdGVkIG1lc3NhZ2U=" // "Decrypted message" 
+]
 console.info = () => {} 
+console.debug = () => {} 
+['log', 'warn', 'error'].forEach(methodName => redefineConsoleMethod(methodName, filterStrings))
 const connectionOptions = {
 logger: pino({ level: 'silent' }),
 printQRInTerminal: opcion == '1' ? true : methodCodeQR ? true : false,
@@ -287,32 +293,6 @@ console.log(chalk.bold.cyanBright(`\n╭» 🔵 ${global.authFile} 🔵\n│→ 
 await purgeOldFiles()
 console.log(chalk.bold.cyanBright(`\n╭» 🟠 ARCHIVOS 🟠\n│→ ARCHIVOS RESIDUALES ELIMINADAS\n╰― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― 🗑️♻️`))}, 1000 * 60 * 10)
 
-const backupCreds = () => {
-    if (fs.existsSync(credsFile)) {
-        fs.copyFileSync(credsFile, backupFile);
-        console.log(`[✅] Respaldo creado en ${backupFile}`);
-    } else {
-        console.log('[⚠] No se encontró el archivo creds.json para respaldar.');
-    }
-};
-
-const restoreCreds = () => {
-    if (fs.existsSync(credsFile)) {
-        fs.copyFileSync(backupFile, credsFile);
-        console.log(`[✅] creds.json reemplazado desde el respaldo.`);
-    } else if (fs.existsSync(backupFile)) {
-        fs.copyFileSync(backupFile, credsFile);
-        console.log(`[✅] creds.json restaurado desde el respaldo.`);
-    } else {
-        console.log('[⚠] No se encontró ni el archivo creds.json ni el respaldo.');
-    }
-};
-
-setInterval(async () => {
-await backupCreds();
-console.log('[♻️] Respaldo periódico realizado.');
-}, 5 * 60 * 1000);
-
 async function connectionUpdate(update) {
 const {connection, lastDisconnect, isNewLogin} = update;
 global.stopped = connection;
@@ -343,11 +323,9 @@ conn.logger.error(`[ ⚠ ] Sesión incorrecta, por favor elimina la carpeta ${gl
 //process.exit();
 } else if (reason === DisconnectReason.connectionClosed) {
 conn.logger.warn(`[ ⚠ ] Conexión cerrada, reconectando...`);
-restoreCreds();
 await global.reloadHandler(true).catch(console.error);
 } else if (reason === DisconnectReason.connectionLost) {
 conn.logger.warn(`[ ⚠ ] Conexión perdida con el servidor, reconectando...`);
-restoreCreds();
 await global.reloadHandler(true).catch(console.error);
 } else if (reason === DisconnectReason.connectionReplaced) {
 conn.logger.error(`[ ⚠ ] Conexión reemplazada, se ha abierto otra nueva sesión. Por favor, cierra la sesión actual primero.`);
@@ -540,4 +518,3 @@ async function joinChannels(conn) {
 for (const channelId of Object.values(global.ch)) {
 await conn.newsletterFollow(channelId).catch(() => {})
 }}
-
