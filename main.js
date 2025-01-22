@@ -44,47 +44,130 @@ const __dirname = global.__dirname(import.meta.url);
 global.opts = new Object(yargs(process.argv.slice(2)).exitProcess(false).parse());
 global.prefix = new RegExp('^[' + (opts['prefix'] || '*/i!#$%+£¢€¥^°=¶∆×÷π√✓©®&.\\-.@').replace(/[|\\{}()[\]^$+*.\-\^]/g, '\\$&') + ']')
 
-const databasePath = path.join(__dirname, 'database');
+//news
+const databasePath = path.join(__dirname, '.database');
 if (!fs.existsSync(databasePath)) {
-fs.mkdirSync(databasePath);
-}
+fs.mkdirSync(databasePath)}
 
-const files = {
-users: path.join(databasePath, 'users.json'),
-chats: path.join(databasePath, 'chats.json'),
-stats: path.join(databasePath, 'stats.json'),
-msgs: path.join(databasePath, 'msgs.json'),
-sticker: path.join(databasePath, 'sticker.json'),
-settings: path.join(databasePath, 'settings.json'),
-};
+const usersPath = path.join(databasePath, 'users');
+const chatsPath = path.join(databasePath, 'chats');
+const settingsPath = path.join(databasePath, 'settings');
+const msgsPath = path.join(databasePath, 'msgs');
+const stickerPath = path.join(databasePath, 'sticker');
+const statsPath = path.join(databasePath, 'stats');
 
-const databases = {};
-for (const [key, filePath] of Object.entries(files)) {
-if (!fs.existsSync(filePath)) {
-fs.writeFileSync(filePath, '{}'); // Crear archivo vacío si no existe
-}
-databases[key] = new Low(new JSONFile(filePath));
-}
+if (!fs.existsSync(usersPath)) fs.mkdirSync(usersPath);
+if (!fs.existsSync(chatsPath)) fs.mkdirSync(chatsPath);
+if (!fs.existsSync(settingsPath)) fs.mkdirSync(settingsPath);
+if (!fs.existsSync(msgsPath)) fs.mkdirSync(msgsPath);
+if (!fs.existsSync(stickerPath)) fs.mkdirSync(stickerPath);
+if (!fs.existsSync(statsPath)) fs.mkdirSync(statsPath);
 
-// Inicializar la estructura de global.db
+function getFilePath(basePath, id) {
+return path.join(basePath, `${id}.json`)}
+
 global.db = {
-data: {}, 
-chain: null, 
+data: {
+users: {},
+chats: {},
+settings: {},
+msgs: {},
+sticker: {},
+stats: {},
+},
+chain: null,
 };
 
 global.loadDatabase = async function loadDatabase() {
-for (const [key, db] of Object.entries(databases)) {
-await db.read();
-db.data = db.data || {}; 
-global.db.data[key] = db.data; 
+const userFiles = fs.readdirSync(usersPath);
+for (const file of userFiles) {
+const userId = path.basename(file, '.json');
+const userDb = new Low(new JSONFile(getFilePath(usersPath, userId)));
+await userDb.read();
+userDb.data = userDb.data || {};
+global.db.data.users[userId] = userDb.data;
 }
-global.db.chain = chain(global.db.data); 
-};
+
+const chatFiles = fs.readdirSync(chatsPath);
+for (const file of chatFiles) {
+const chatId = path.basename(file, '.json');
+const chatDb = new Low(new JSONFile(getFilePath(chatsPath, chatId)));
+await chatDb.read();
+chatDb.data = chatDb.data || {};
+global.db.data.chats[chatId] = chatDb.data;
+}
+
+const settingsFiles = fs.readdirSync(settingsPath);
+for (const file of settingsFiles) {
+const settingId = path.basename(file, '.json');
+const settingDb = new Low(new JSONFile(getFilePath(settingsPath, settingId)));
+await settingDb.read();
+settingDb.data = settingDb.data || {};
+global.db.data.settings[settingId] = settingDb.data;
+}
+
+const msgsFiles = fs.readdirSync(msgsPath);
+for (const file of msgsFiles) {
+const msgId = path.basename(file, '.json');
+const msgDb = new Low(new JSONFile(getFilePath(msgsPath, msgId)));
+await msgDb.read();
+msgDb.data = msgDb.data || {};
+global.db.data.msgs[msgId] = msgDb.data;
+}
+
+const stickerFiles = fs.readdirSync(stickerPath);
+for (const file of stickerFiles) {
+const stickerId = path.basename(file, '.json');
+const stickerDb = new Low(new JSONFile(getFilePath(stickerPath, stickerId)));
+await stickerDb.read();
+stickerDb.data = stickerDb.data || {};
+global.db.data.sticker[stickerId] = stickerDb.data;
+}
+
+const statsFiles = fs.readdirSync(statsPath);
+for (const file of statsFiles) {
+const statId = path.basename(file, '.json');
+const statDb = new Low(new JSONFile(getFilePath(statsPath, statId)));
+await statDb.read();
+statDb.data = statDb.data || {};
+global.db.data.stats[statId] = statDb.data;
+}};
 
 global.db.save = async function saveDatabase() {
-for (const [key, db] of Object.entries(databases)) {
-db.data = global.db.data[key]; 
-await db.write(); // Escribir en el archivo
+for (const [userId, userData] of Object.entries(global.db.data.users)) {
+const userDb = new Low(new JSONFile(getFilePath(usersPath, userId)));
+userDb.data = userData;
+await userDb.write();
+}
+
+for (const [chatId, chatData] of Object.entries(global.db.data.chats)) {
+const chatDb = new Low(new JSONFile(getFilePath(chatsPath, chatId)));
+chatDb.data = chatData;
+await chatDb.write();
+}
+
+for (const [settingId, settingData] of Object.entries(global.db.data.settings)) {
+const settingDb = new Low(new JSONFile(getFilePath(settingsPath, settingId)));
+settingDb.data = settingData;
+await settingDb.write();
+}
+
+for (const [msgId, msgData] of Object.entries(global.db.data.msgs)) {
+const msgDb = new Low(new JSONFile(getFilePath(msgsPath, msgId)));
+msgDb.data = msgData;
+await msgDb.write();
+}
+
+for (const [stickerId, stickerData] of Object.entries(global.db.data.sticker)) {
+const stickerDb = new Low(new JSONFile(getFilePath(stickerPath, stickerId)));
+stickerDb.data = stickerData;
+await stickerDb.write();
+}
+
+for (const [statId, statData] of Object.entries(global.db.data.stats)) {
+const statDb = new Low(new JSONFile(getFilePath(statsPath, statId)));
+statDb.data = statData;
+await statDb.write();
 }};
 loadDatabase();
 
@@ -118,28 +201,6 @@ loadDatabase();*/
 //if (global.conns instanceof Array) {console.log('Conexiones ya inicializadas...');} else {global.conns = [];}
 
 /* ------------------------------------------------*/
-
-global.chatgpt = new Low(new JSONFile(path.join(__dirname, '/db/chatgpt.json')));
-global.loadChatgptDB = async function loadChatgptDB() {
-if (global.chatgpt.READ) {
-return new Promise((resolve) =>
-setInterval(async function() {
-if (!global.chatgpt.READ) {
-clearInterval(this);
-resolve( global.chatgpt.data === null ? global.loadChatgptDB() : global.chatgpt.data );
-}}, 1 * 1000));
-}
-if (global.chatgpt.data !== null) return;
-global.chatgpt.READ = true;
-await global.chatgpt.read().catch(console.error);
-global.chatgpt.READ = null;
-global.chatgpt.data = {
-users: {},
-...(global.chatgpt.data || {}),
-};
-global.chatgpt.chain = lodash.chain(global.chatgpt.data);
-};
-loadChatgptDB();
 
 global.creds = 'creds.json'
 global.authFile = `BotSession`
@@ -216,18 +277,20 @@ keys: makeCacheableSignalKeyStore(state.keys, Pino({ level: "fatal" }).child({ l
 },
 markOnlineOnConnect: true, 
 generateHighQualityLinkPreview: true, 
+syncFullHistory: false,
 getMessage: async (clave) => {
 let jid = jidNormalizedUser(clave.remoteJid)
 let msg = await store.loadMessage(jid, clave.id)
 return msg?.message || ""
 },
-msgRetryCounterCache,
-msgRetryCounterMap,
-defaultQueryTimeoutMs: undefined,   
-version: [2, 3000, 1015901307]
+msgRetryCounterCache, // Resolver mensajes en espera
+msgRetryCounterMap, // Determinar si se debe volver a intentar enviar un mensaje o no
+defaultQueryTimeoutMs: undefined,
+version: [2, 3000, 1015901307],
 }
 
 global.conn = makeWASocket(connectionOptions)
+
 if (!fs.existsSync(`./${authFile}/creds.json`)) {
 if (opcion === '2' || methodCode) {
 opcion = '2'
