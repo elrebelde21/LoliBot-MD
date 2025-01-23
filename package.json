@@ -50,6 +50,7 @@
 "@sasmeee/igdl": "npm:@sasmeee/igdl",
 "hispamemes": "^1.0.7",
 "aptoide-scraper": "^1.0.1",
+"archiver": "^7.0.1",
 "acrcloud": "^1.4.0",
 "form-data": "^4.0.0",
 "cfonts": "^3.1.1",
