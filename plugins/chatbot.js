@@ -1,8 +1,11 @@
 // by https://github.com/elrebelde21
 
-let handler = m => m
-handler.all = async function (m) {
+//let handler = m => m
+//handler.all = async function (m) {
+export async function before(m, { conn }) {
 let fkontak = { "key": { "participants":"0@s.whatsapp.net", "remoteJid": "status@broadcast", "fromMe": false, "id": "Halo" }, "message": { "contactMessage": { "vcard": `BEGIN:VCARD\nVERSION:3.0\nN:Sy;Bot;;;\nFN:y\nitem1.TEL;waid=${m.sender.split('@')[0]}:${m.sender.split('@')[0]}\nitem1.X-ABLabel:Ponsel\nEND:VCARD` }}, "participant": "0@s.whatsapp.net" }
+m.isBot = m.id.startsWith('BAE5') && m.id.length === 16 || m.id.startsWith('3EB0') && m.id.length === 12 || m.id.startsWith('3EB0') && (m.id.length === 20 || m.id.length === 22) || m.id.startsWith('B24E') && m.id.length === 20;
+if (m.isBot) return
 let chat = global.db.data.chats[m.chat]
 let name = conn.getName(m.sender)
 const user = `@${m.sender.split`@`[0]}`;
@@ -203,7 +206,7 @@ conn.reply(m.chat, `\`☆::¿𝙌𝙐𝙀 𝙀𝙎 𝙐𝙉 𝘽𝙊𝙏 𝘿�
 > 「 🅛🅞🅛🅘🅑🅞🅣-🅜🅓 」`, m)}  
 return !0 
 }
-export default handler
+//export default handler
 
 function pickRandom(list) {
     return list[Math.floor(Math.random() * list.length)]
