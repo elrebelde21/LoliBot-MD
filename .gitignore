@@ -1,6 +1,5 @@
 .npm/
 .git/
-.database/
 package-lock.json
 yarn.lock
 database.json 
@@ -8,3 +7,4 @@ node_modules/
 BotSession/
 jadibts/ 
 BackupSession/
+database/
