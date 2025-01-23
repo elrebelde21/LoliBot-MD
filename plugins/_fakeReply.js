@@ -1,8 +1,8 @@
 import fetch from 'node-fetch'
 
-let handler = m => m
-handler.all = async function (m) {
-	
+//let handler = m => m
+//handler.all = async function (m) {
+export async function before(m, { conn }) {	
 let who = m.mentionedJid && m.mentionedJid[0] ? m.mentionedJid[0] : m.fromMe ? this.user.jid : m.sender
 let pp = await this.profilePictureUrl(who, 'image').catch(_ => "https://telegra.ph/file/33bed21a0eaa789852c30.jpg")
 		
@@ -77,7 +77,7 @@ const textoo = `*⚠️ @${usuarioJid} 𝚃𝚄 𝚃𝙸𝙴𝙼𝙿𝙾 𝙲�
 await this.sendMessage(JID, {text: textoo, mentions: [JID]}, {quoted: ''});
 }}}}
  
-export default handler
+//export default handler
 
  
 async function getRandomChannel() {

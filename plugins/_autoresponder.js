@@ -3,9 +3,9 @@ import fetch from 'node-fetch';
 import translate from '@vitalets/google-translate-api';
 import { sticker } from '../lib/sticker.js';
 
-let handler = m => m;
-
-handler.all = async function (m, {conn}) {
+//let handler = m => m;
+//handler.all = async function (m, {conn}) {
+export async function before(m, { conn }) {
 m.isBot = m.id.startsWith('BAE5') && m.id.length === 16 || m.id.startsWith('3EB0') && m.id.length === 12 || m.id.startsWith('3EB0') && (m.id.length === 20 || m.id.length === 22) || m.id.startsWith('B24E') && m.id.length === 20;
 if (m.isBot) return
 if (m.id.startsWith('NJX-')) return;
@@ -77,4 +77,4 @@ await this.reply(m.chat, res.data, m)
 return true;
 }
 
-export default handler;
+//export default handler;
