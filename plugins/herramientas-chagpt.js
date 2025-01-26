@@ -1,9 +1,17 @@
 import fetch from 'node-fetch';
+import fs from 'fs';
+import path from 'path';
 import axios from 'axios';
 import translate from '@vitalets/google-translate-api';
-import {Configuration, OpenAIApi} from 'openai';
-const configuration = new Configuration({organization: global.openai_org_id, apiKey: global.openai_key});
-const openaiii = new OpenAIApi(configuration);
+import { Configuration, OpenAIApi } from "openai";
+
+const apikey_base64 = "c2stcHJvai1tUzN4bGZueXo0UjBPWV8zbm1DVDlMQmlmYXhYbVdaa0ptUVFJMDVKR2FxdHZCbk9ncWZjRXdCbEJmMU5WN0lYa0pncVJuM3BNc1QzQmxia0ZKMVJ5aEJzUl93NzRXbll5LWdjdkowT0NQUXliWTBOcENCcDZIOTlCVVVtcWxuTjVraEZxMk43TGlMU0RsU0s1cXA5Tm1kWVZXc0E=";
+
+const apikey = Buffer.from(apikey_base64, 'base64').toString('utf-8');
+const configuration = new Configuration({apiKey: apikey, 
+});
+const openai = new OpenAIApi(configuration);
+
 const handler = async (m, {conn, text, usedPrefix, command}) => {
 let who = m.mentionedJid && m.mentionedJid[0] ? m.mentionedJid[0] : m.fromMe ? conn.user.jid : m.sender
 let pp = await conn.profilePictureUrl(who, 'image').catch(_ => 'https://telegra.ph/file/9d38415096b6c46bf03f8.jpg')
@@ -12,9 +20,28 @@ if (!text) return m.reply(`*Hola cómo esta 😊, El que te puedo ayudar?*, ingr
 let syst = `Actuaras como un Bot de WhatsApp el cual fue creado por elrebelde, tu seras LoliBot.`
 
 if (command == 'ia' || command == 'chatgpt') {
-try {     
 await conn.sendPresenceUpdate('composing', m.chat)
+try {     
+async function getResponse(prompt) {
+try {
+await delay(1000); 
+const response = await axios.post('https://api.openai.com/v1/chat/completions', 
+{ model: 'gpt-4o-mini', 
+messages: [{ role: 'user', content: prompt }],
+max_tokens: 300,
+}, { headers: {
+'Content-Type': 'application/json',
+'Authorization': `Bearer ${apikey}`, 
+}});
+return response.data.choices[0].message.content;
+} catch (error) {
+console.error(error);
+}}
 
+const respuesta = await getResponse(text);
+m.reply(respuesta);
+} catch {
+try { 
 async function luminsesi(q, username, logic) {
 try {
 const response = await axios.post("https://luminai.my.id", {
@@ -49,7 +76,7 @@ await m.reply(res.gpt)
 let res = await gpt.json()
 await m.reply(res.data)*/
 } catch {
-}}}}
+}}}}}
 
 if (command == 'openai' || command == 'ia2' || command == 'chatgpt2') {
 conn.sendPresenceUpdate('composing', m.chat);
@@ -99,3 +126,6 @@ handler.help = ["chagpt", "ia", "openai", "gemini", "copilot"]
 handler.tags = ["buscadores"]
 handler.command = /^(openai|chatgpt|ia|ai|openai2|chatgpt2|ia2|gemini|copilot|bing)$/i;
 export default handler;
+
+const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+

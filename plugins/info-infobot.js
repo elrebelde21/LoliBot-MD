@@ -77,7 +77,7 @@ let teks = `*≡ INFOBOT*
 
 *▣ Comando Ejecutando:* ${toNum(totalStats)}/${totalStats}
 *▣ Grupos registrado:* ${toNum(totalchats)}/${totalchats}
-*▣ Usuarios registrado:*  ${rtotalreg} de ${totalreg} usuarios
+*▣ Usuarios registrado:* ${toNum(rtotalreg)} de ${toNum(totalreg)} users totales 
 
 *≡ S E R V E R*
 ▣ *Servidor:* ${hostname()}

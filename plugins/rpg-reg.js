@@ -73,7 +73,7 @@ await conn.sendMessage(m.chat, { text: `[ ✅ REGISTRO COMPLETADO ]
 *◉ Para ver los comandos del bot usar:*
 ${usedPrefix}menu
 
-◉ *Total de usuarios registrados:* ${rtotalreg}
+◉ *Total de usuarios registrados:* ${toNum(rtotalreg)} 
 
 > *Mira tú registro en este canal*
 ${nnaa}`, contextInfo:{forwardedNewsletterMessageInfo: { newsletterJid: ['120363355261011910@newsletter', '120363297379773397@newsletter'].getRandom(), serverMessageId: '', newsletterName: 'LoliBot ✨' }, forwardingScore: 9999999, isForwarded: true, "externalAdReply": {"showAdAttribution": true, "containsAutoReply": true, "title": `𝐑𝐄𝐆𝐈𝐒𝐓𝐑𝐎 𝐂𝐎𝐌𝐏𝐋𝐄𝐓𝐀𝐃𝐎`, "body": wm, "previewType": "PHOTO", thumbnail: img.getRandom(), sourceUrl: [nna, nna2, nn, md, yt, tiktok].getRandom()}}}, { quoted: fkontak, ephemeralExpiration: 24*60*100, disappearingMessagesInChat: 24*60*100})
@@ -117,3 +117,17 @@ handler.help = ['reg', 'verificar', 'myns', 'nserie', 'unreg']
 handler.tags = ['rg']
 handler.command = /^(nserie|unreg|sn|myns|verify|verificar|registrar|reg(ister)?)$/i
 export default handler
+
+function toNum(number) {
+    if (number >= 1000 && number < 1000000) {
+        return (number / 1000).toFixed(1) + 'k';
+    } else if (number >= 1000000) {
+        return (number / 1000000).toFixed(1) + 'M';
+    } else if (number <= -1000 && number > -1000000) {
+        return (number / 1000).toFixed(1) + 'k';
+    } else if (number <= -1000000) {
+        return (number / 1000000).toFixed(1) + 'M';
+    } else {
+        return number.toString();
+    }
+}

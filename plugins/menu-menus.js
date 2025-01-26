@@ -32,7 +32,7 @@ Hola 👋🏻 *%name*
  
 *• Fecha:* %fecha
 *• Hora:* %hora (🇦🇷) 
-*• Usuario:* %totalreg
+*• Usuario:* %toUsers
 *• Tiempo activos:* %muptime
 %botOfc
 
@@ -41,7 +41,7 @@ Hola 👋🏻 *%name*
 *• Rango:* %role
 *• Exp:* %totalexp XP 
 
-*• Usuario registrados:* %rtotalreg de %totalreg
+*• Usuario registrados:* %toUserReg de %toUsers
 
 ${[`*\`✅ Activar tu bot 24/7 activo en SkyPlus\`*\nhttps://youtu.be/qyxhetqeO1U?si=XxWhDOAi3OfmOjBY`, `Unirte a nuestro canal de WhatsApp y informarte de todas la novedades/Actualizaciones del bot y mas\nhttps://whatsapp.com/channel/0029Vau57ykEwEk5CgosvU3v`, `❤ Seguirme el tiktok\nhttps://www.tiktok.com/@elrebelde.21`].getRandom()}
 
@@ -95,6 +95,8 @@ let uptime = clockString(_uptime)
 let taguser = '@' + m.sender.split('@s.whatsapp.net')[0];
 let totalreg = Object.keys(global.db.data.users).length
 let rtotalreg = Object.values(global.db.data.users).filter(user => user.registered == true).length
+let toUsers = `${toNum(totalreg)}`
+let toUserReg = `${toNum(rtotalreg)}`
 let botOfc = (conn.user.jid == global.conn.user.jid) ? `*• Bot Ofc:* wa.me/${global.conn.user.jid.split`@`[0]}` : `• Soy un sub bot del:* wa.me/${global.conn.user.jid.split`@`[0]}`
 let help = Object.values(global.plugins).filter(plugin => !plugin.disabled).map(plugin => {
 return {
@@ -139,7 +141,7 @@ maxexp: xp,
 totalexp: exp,
 xp4levelup: max - exp,
 github: _package.homepage ? _package.homepage.url || _package.homepage : '[unknown github url]',
-level, limit, name, weton, week, date, dateIslamic, time, totalreg, rtotalreg, role,
+level, limit, name, weton, week, date, dateIslamic, time, totalreg, rtotalreg, toUsers, toUserReg, role,
 readmore: readMore, 
 fecha, 
 hora, 
@@ -171,4 +173,18 @@ let h = isNaN(ms) ? '--' : Math.floor(ms / 3600000)
 let m = isNaN(ms) ? '--' : Math.floor(ms / 60000) % 60
 let s = isNaN(ms) ? '--' : Math.floor(ms / 1000) % 60
 return [h, m, s].map(v => v.toString().padStart(2, 0)).join(':')
+}
+
+function toNum(number) {
+    if (number >= 1000 && number < 1000000) {
+        return (number / 1000).toFixed(1) + 'k';
+    } else if (number >= 1000000) {
+        return (number / 1000000).toFixed(1) + 'M';
+    } else if (number <= -1000 && number > -1000000) {
+        return (number / 1000).toFixed(1) + 'k';
+    } else if (number <= -1000000) {
+        return (number / 1000000).toFixed(1) + 'M';
+    } else {
+        return number.toString();
+    }
 }
