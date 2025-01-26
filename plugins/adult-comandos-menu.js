@@ -136,7 +136,7 @@ thumbnailUrl: "https://telegra.ph/file/361c821b05575733b1bb5.jpg",
 }
 
 if (/^sethorario|nwfshorario|hornyHorario$/i.test(m.text)) {   
-handler.group = true
+//handler.group = true
 if (!isAdmin) return await m.reply(`⚠️ *Solo los admins pueden usar este comando.*`)
 const args = m.text.split(' ').slice(1); 
 if (args.length < 2) return conn.reply(m.chat, '⚠️ Por favor ingresa la hora de inicio y fin en formato HH:MM, por ejemplo: 23:00 - 06:00.', m);
