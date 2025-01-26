@@ -1,0 +1,385 @@
+[
+  {
+    "id": "monkey_d_luffy",
+    "name": "Monkey D. Luffy",
+    "url": "https://telegra.ph/file/84c78cc26889b8da9a8f0.jpg",
+    "type": "anime",
+    "price": 9500,
+    "rank": "Legendary",
+    "release_date": "July 22, 1997",
+    "description": "Monkey D. Luffy is the main protagonist of the One Piece series. He is the captain of the Straw Hat Pirates and dreams of becoming the King of the Pirates."
+  },
+   {
+  "id": "alya_san",
+  "name": "Alya San",
+  "url": "https://cloud.dorratz.com/files/e5d2c1046eba5e1bcef348d2c0221deb.jpg",
+  "type": "anime",
+  "price": 25000,
+  "rank": "Epic",
+  "release_date": "July 3, 2023",
+  "description": "Alya San es una joven brillante y carismática conocida por su gran intelecto y habilidades sociales. Con una personalidad encantadora, es un personaje destacado que conquista corazones y se enfrenta a desafíos con valentía."
+  },
+   {
+    "id": "naruto_uzumaki",
+    "name": "Naruto Uzumaki",
+    "url": "https://qu.ax/mDzBA.jpg",
+    "type": "anime",
+    "price": 4500,
+    "rank": "Epic",
+    "release_date": "October 3, 1999",
+    "description": "Naruto Uzumaki is the protagonist of the Naruto series. He is a young ninja with dreams of becoming the Hokage, the leader of his village."
+  },
+  {
+    "id": "goku",
+    "name": "Goku",
+    "url": "https://qu.ax/TOuUu.jpg",
+    "type": "anime",
+    "price": 12000,
+    "rank": "Legendary",
+    "release_date": "February 26, 1986",
+    "description": "Goku is the main character of the Dragon Ball series. He is a Saiyan warrior with unmatched fighting abilities, known for his cheerful personality and strength."
+  },
+  {
+    "id": "lelouch_vi_britannia",
+    "name": "Lelouch vi Britannia",
+    "url": "https://qu.ax/HqVDn.jpg",
+    "type": "anime",
+    "price": 9650,
+    "rank": "Legendary",
+    "release_date": "October 5, 2006",
+    "description": "Lelouch vi Britannia is the protagonist of Code Geass. He is a brilliant strategist and former prince who seeks to overthrow the Holy Britannian Empire using the mysterious power of Geass."
+  },
+  {
+    "id": "light_yagami",
+    "name": "Light Yagami",
+    "url": "https://cloud.dorratz.com/files/cc7a9e0110964f4edf6007a0e72a7c58",
+    "type": "anime",
+    "price": 4500,
+    "rank": "Rare",
+    "release_date": "October 3, 2006",
+    "description": "Light Yagami is the protagonist of Death Note. He is a high school student who discovers a notebook that allows him to kill anyone whose name he writes in it."
+  },
+  {
+    "id": "shikamaru_nara",
+    "name": "Shikamaru Nara",
+    "url": "https://cloud.dorratz.com/files/1e292c29a02d51fe9bd2300dca939ec7.jpg",
+    "type": "anime",
+    "price": 9599,
+    "rank": "Epic",
+    "release_date": "October 3, 1999",
+    "description": "Shikamaru Nara is a brilliant strategist and a loyal ninja from the Naruto series. He is known for his lazy demeanor and unmatched intellect."
+  },
+  {
+    "id": "spike_siegel",
+    "name": "Spike Spiegel",
+    "url": "https://cloud.dorratz.com/files/295c02735d3238291e43cc8428b8c90c.jpg",
+    "type": "anime",
+    "price": 10000,
+    "rank": "Epic",
+    "release_date": "April 3, 1998",
+    "description": "Spike Spiegel is the main character of Cowboy Bebop. A former hitman, now a bounty hunter, known for his cool attitude and martial arts abilities."
+  },
+  {
+    "id": "saitama",
+    "name": "Saitama",
+    "url": "https://cloud.dorratz.com/files/0c9da87c57453ebce259b279fa2f362f.jpg",
+    "type": "anime",
+    "price": 13689,
+    "rank": "Legendary",
+    "release_date": "October 5, 2015",
+    "description": "Saitama, also known as One Punch Man, is the strongest hero in the world. His overwhelming power allows him to defeat any opponent with a single punch."
+  },
+  {
+    "id": "asuna_yuuki",
+    "name": "Asuna Yuuki",
+    "url": "https://cloud.dorratz.com/files/cb22e9854dd64abcc4e1ab15f6391d17",
+    "type": "anime",
+    "price": 10566,
+    "rank": "Epic",
+    "release_date": "July 8, 2012",
+    "description": "Asuna Yuuki is one of the main characters in Sword Art Online. Known for her sword skills, she is one of the top players in the game and a key ally to Kirito."
+  },
+  {
+    "id": "madara_uchiha",
+    "name": "Madara Uchiha",
+    "url": "https://cloud.dorratz.com/files/7255778f3e3a5f289e4fee110c5d7c22.jpg",
+    "type": "anime",
+    "price": 11456,
+    "rank": "Legendary",
+    "release_date": "October 5, 2014",
+    "description": "Madara Uchiha is one of the most powerful shinobi in the Naruto universe. Once the leader of the Uchiha clan, his ambition and battle prowess make him one of the most feared characters in the series."
+  },
+  {
+    "id": "darth_vader",
+    "name": "Darth Vader",
+    "url": "https://cloud.dorratz.com/files/d8b3931d547552e5faa0c37287cf1bfa.jpg",
+    "type": "movie",
+    "price": 9500,
+    "rank": "Legendary",
+    "release_date": "May 25, 1977",
+    "description": "Darth Vader is a central antagonist in the Star Wars saga. A former Jedi Knight turned Sith Lord, he plays a major role in the galactic conflict and the fall of the Galactic Republic."
+  },
+{
+    "id": "kaito_kid",
+    "name": "Kaito KID",
+    "url": "https://cloud.dorratz.com/files/7ce844243ffd34bb5f55aa171d2f1f8a.jpg",
+    "type": "anime",
+    "price": 8500,
+    "rank": "Rare",
+    "release_date": "August 24, 1994",
+    "description": "Kaito KID is a master thief and the main rival of Conan Edogawa in the Detective Conan series. He is known for his clever heists and disguises."
+  },
+  {
+    "id": "todoroki_shoto",
+    "name": "Shoto Todoroki",
+    "url": "https://cloud.dorratz.com/files/9edbf8fb3aec3f6772a90e262b30caad.jpg",
+    "type": "anime",
+    "price": 10999,
+    "rank": "Epic",
+    "release_date": "April 3, 2006",
+    "description": "Shoto Todoroki is one of the main characters of My Hero Academia. He is a powerful hero-in-training with the ability to control both fire and ice."
+  },
+  {
+    "id": "hanzo_hattori",
+    "name": "Hanzo Hattori",
+    "url": "https://cloud.dorratz.com/files/2009ecc1843c31e8aac90264bfa9178e.png",
+    "type": "anime",
+    "price": 9000,
+    "rank": "Epic",
+    "release_date": "June 6, 1581",
+    "description": "Hanzo Hattori was a famous samurai and ninja during the Sengoku period of Japan. In anime, he appears as a skilled assassin known for his stealth and loyalty."
+  },
+  {
+    "id": "holo",
+    "name": "Holo",
+    "url": "https://cloud.dorratz.com/files/4728489eeabbeca3055cb9ec5299d623.jpg",
+    "type": "anime",
+    "price": 7650,
+    "rank": "Rare",
+    "release_date": "November 13, 2006",
+    "description": "Holo is a wise wolf deity from the anime *Spice and Wolf*. She is known for her sharp wit and her desire to return to her homeland."
+  },
+  {
+    "id": "frieza",
+    "name": "Frieza",
+    "url": "https://cloud.dorratz.com/files/090b342b211a60d58261674b7f9a046f.jpg",
+    "type": "anime",
+    "price": 15000,
+    "rank": "Legendary",
+    "release_date": "February 15, 1990",
+    "description": "Frieza is one of the most powerful and infamous villains in the *Dragon Ball* series. His ruthless pursuit of power makes him a constant threat to the heroes."
+  },
+  {
+    "id": "rem",
+    "name": "Rem",
+    "url": "https://cloud.dorratz.com/files/03da618fa74691223681372a505fb512.jpg",
+    "type": "anime",
+    "price": 8600,
+    "rank": "Rare",
+    "release_date": "April 14, 2012",
+    "description": "Rem is a character from *Re:Zero* known for her blue hair and her unshakable loyalty. She is a demon maid who plays a key role in the series."
+  },
+  {
+    "id": "jotaro_kujo",
+    "name": "Jotaro Kujo",
+    "url": "https://cloud.dorratz.com/files/cb6c0c987ac6eb214ddaf2d8a24ba971.jpg",
+    "type": "anime",
+    "price": 15600,
+    "rank": "Legendary",
+    "release_date": "April 5, 1989",
+    "description": "Jotaro Kujo is one of the main characters in *JoJo's Bizarre Adventure*, known for his indomitable spirit and his Stand, Star Platinum, which is capable of incredible feats of strength and time manipulation."
+  },
+  {
+    "id": "vegeta",
+    "name": "Vegeta",
+    "url": "https://cloud.dorratz.com/files/7f1d61f71a6361243994dd3cb157ebdd.jpg",
+    "type": "anime",
+    "price": 19500,
+    "rank": "Legendary",
+    "release_date": "February 6, 1989",
+    "description": "Vegeta is the prince of the Saiyan race in *Dragon Ball*. Initially an antagonist, his rivalry with Goku evolves into a complex relationship that drives his growth as a fighter."
+  },
+  {
+    "id": "lelouch_mille_feuille",
+    "name": "Lelouch Mille Feuille",
+    "url": "https://cloud.dorratz.com/files/cbd5d922be667e9140747aac8de8f437.jpg",
+    "type": "anime",
+    "price": 10897,
+    "rank": "Epic",
+    "release_date": "September 6, 2006",
+    "description": "Lelouch Mille Feuille from *Code Geass* appears as a different persona, revealing even more of his intelligence and mastermind behind the scenes."
+  },
+{
+    "id": "esdeath",
+    "name": "Esdeath",
+    "url": "https://cloud.dorratz.com/files/80304c238b90bde137cc1d778d2d53ac.jpg",
+    "type": "anime",
+    "price": 16500,
+    "rank": "Legendary",
+    "release_date": "April 30, 2010",
+    "description": "Esdeath is the main antagonist of *Akame ga Kill*. She is a sadistic and powerful general with control over ice, known for her immense strength and ruthless nature."
+  },
+  {
+    "id": "asuna_yuuki",
+    "name": "Asuna Yuuki",
+    "url": "https://cloud.dorratz.com/files/8b663cb137d0cc1f0232e356ae8cee25.jpg",
+    "type": "anime",
+    "price": 10400,
+    "rank": "Epic",
+    "release_date": "July 8, 2009",
+    "description": "Asuna Yuuki is the female protagonist of *Sword Art Online*. She is a strong and skilled warrior, known for her leadership in the virtual world of Aincrad."
+  },
+  {
+    "id": "shanks",
+    "name": "Shanks",
+    "url": "https://cloud.dorratz.com/files/fdbb8da21c7d7e6ab20a02dcc1765f0d.jpg",
+    "type": "anime",
+    "price": 16500,
+    "rank": "Legendary",
+    "release_date": "October 20, 1999",
+    "description": "Shanks is one of the Four Emperors in *One Piece*. He is known for his leadership as a pirate captain and his friendship with Monkey D. Luffy."
+  },
+  {
+    "id": "izuku_midoriya",
+    "name": "Izuku Midoriya",
+    "url": "https://cloud.dorratz.com/files/d9625c00c8ddd69c5f5c8f0e7014fd29.jpg",
+    "type": "anime",
+    "price": 6500,
+    "rank": "Epic",
+    "release_date": "April 3, 2016",
+    "description": "Izuku Midoriya is the main protagonist of *My Hero Academia*. A kind-hearted boy born without powers, he inherits the power of the greatest hero, All Might."
+  },
+  {
+    "id": "kakashi_hatake",
+    "name": "Kakashi Hatake",
+    "url": "https://cloud.dorratz.com/files/177b7acdd2f802d50205e77508a95a31.jpg",
+    "type": "anime",
+    "price": 1600,
+    "rank": "Legendary",
+    "release_date": "October 3, 1999",
+    "description": "Kakashi Hatake is a beloved character from *Naruto*. Known for his Sharingan and laid-back demeanor, he is a brilliant ninja and a former leader of Team 7."
+  },
+  {
+    "id": "aizen_sosuke",
+    "name": "Sosuke Aizen",
+    "url": "https://cloud.dorratz.com/files/71e04475b52584d23ceeab86ee56109b.jpg",
+    "type": "anime",
+    "price": 1800,
+    "rank": "Legendary",
+    "release_date": "August 7, 2001",
+    "description": "Sosuke Aizen is the main antagonist of *Bleach*. A former Soul Reaper captain, he is one of the most cunning and dangerous figures in the series, able to manipulate others with ease."
+  },
+  {
+    "id": "haruhi_suzumiya",
+    "name": "Haruhi Suzumiya",
+    "url": "https://cloud.dorratz.com/files/da22fa3bf28ef0c38044a564cc33bdc4.jpg",
+    "type": "anime",
+    "price": 3987,
+    "rank": "Epic",
+    "release_date": "April 2, 2006",
+    "description": "Haruhi Suzumiya is the energetic and unpredictable protagonist of *The Melancholy of Haruhi Suzumiya*. She possesses the ability to change the world without even realizing it."
+  },
+  {
+    "id": "kiryuu_saber",
+    "name": "Saber (Kiryuu)",
+    "url": "https://cloud.dorratz.com/files/75a443f631c7f6d4a1b080535a1ad806.jpg",
+    "type": "anime",
+    "price": 13966,
+    "rank": "Legendary",
+    "release_date": "March 6, 2014",
+    "description": "Saber is an alternative version from the Fate series, bearing similar attributes and background but differing in her portrayal of honor and faithfulness in battle."
+  },
+  {
+    "id": "gon_freecss",
+    "name": "Gon Freecss",
+    "url": "https://cloud.dorratz.com/files/15507651905b47f3541a6fdb9de9df35.jpg",
+    "type": "anime",
+    "price": 4670,
+    "rank": "Epic",
+    "release_date": "March 3, 1999",
+    "description": "Gon Freecss is the protagonist of *Hunter x Hunter*. A brave and optimistic young boy, he sets out to become a Hunter and reunite with his father."
+  },
+  {
+    "id": "kenpachi_zyaraki",
+    "name": "Kenpachi Zaraki",
+    "url": "https://cloud.dorratz.com/files/b2365deb0ef02159f9269de3bb2f1eda.png",
+    "type": "anime",
+    "price": 14677,
+    "rank": "Legendary",
+    "release_date": "August 7, 2001",
+    "description": "Kenpachi Zaraki is one of the most powerful Soul Reapers from *Bleach*, known for his immense strength and love of combat. He is the 11th Division captain in the Gotei 13."
+  },
+  {
+    "id": "natsu_dragneel",
+    "name": "Natsu Dragneel",
+    "url": "https://cloud.dorratz.com/files/f16defb6c10f4c653abca73051431ad9.png",
+    "type": "anime",
+    "price": 6500,
+    "rank": "Epic",
+    "release_date": "October 12, 2009",
+    "description": "Natsu Dragneel is the main protagonist of *Fairy Tail*. He is a powerful fire mage and a member of the Fairy Tail Guild, known for his fiery temper and loyalty."
+  },
+  {
+    "id": "mob_kiyotaka",
+    "name": "Mob Kiyotaka",
+    "url": "https://cloud.dorratz.com/files/0891cf0bafa54eedf2f0d7034450c054.jpg",
+    "type": "anime",
+    "price": 6800,
+    "rank": "Rare",
+    "release_date": "July 12, 2016",
+    "description": "Kiyotaka Mob is the protagonist of *Mob Psycho 100*. A talented psychic trying to live a normal life, his powers can overwhelm him, leading to dangerous situations when he loses control."
+  },
+  {
+    "id": "shiro",
+    "name": "Shiro",
+    "url": "https://cloud.dorratz.com/files/767bc68056e562add6c9f3d5a6bf4e7c.jpg",
+    "type": "anime",
+    "price": 4999,
+    "rank": "Rare",
+    "release_date": "April 1, 2010",
+    "description": "Shiro is the younger sister of Kirito in *Sword Art Online*. A skilled gamer, she also appears as one of the more influential secondary characters."
+  },
+  {
+    "id": "hinata_hyuga",
+    "name": "Hinata Hyuga",
+    "url": "https://cloud.dorratz.com/files/5c7a993c3e6a9d5c03738e53a3064819.jpg",
+    "type": "anime",
+    "price": 5600,
+    "rank": "Epic",
+    "release_date": "October 3, 1999",
+    "description": "Hinata Hyuga is a member of the Hyuga clan from *Naruto*. Known for her kindness and determination, she possesses the Byakugan, a powerful kekkei genkai that gives her incredible sight."
+  },
+  {
+    "id": "yamato_kurosawa",
+    "name": "Yamato Kurosawa",
+    "url": "https://cloud.dorratz.com/files/06aecf2fe593703c955400e6ef287154.jpg",
+    "type": "anime",
+    "price": 6988,
+    "rank": "Epic",
+    "release_date": "April 22, 2003",
+    "description": "Yamato Kurosawa is a character from *Naruto*. He becomes a powerful shinobi with his wood release ability, especially after becoming the temporary leader of Team 7."
+  },
+  {
+    "id": "elizabeth_liones",
+    "name": "Elizabeth Liones",
+    "url": "https://cloud.dorratz.com/files/a735d1180930005290e001a8405da455.jpg",
+    "type": "anime",
+    "price": 7500,
+    "rank": "Rare",
+    "release_date": "October 5, 2012",
+    "description": "Elizabeth Liones is the princess and main protagonist of *The Seven Deadly Sins*. She seeks to bring the Seven Deadly Sins together to fight against the corrupt Holy Knights."
+  },
+  {
+    "id": "kaguya_otsutsuki",
+    "name": "Kaguya Otsutsuki",
+    "url": "https://cloud.dorratz.com/files/590d7cb0f1bec382ac17e98f17c45027.jpg",
+    "type": "anime",
+    "price": 13689,
+    "rank": "Legendary",
+    "release_date": "October 3, 1999",
+    "description": "Kaguya Otsutsuki is the progenitor of chakra and the final antagonist of *Naruto Shippuden*. She is incredibly powerful and was once known as the most feared being on the planet."
+  }
+]
+
+
+
