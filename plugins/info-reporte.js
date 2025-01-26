@@ -1,5 +1,6 @@
 //Código elaborado por: https://github.com/elrebelde21 
 
+/*FUNCIONA PERO NO COMO QUIERO LUEGO LOS ARREGLOS :v
 import { webp2png } from '../lib/webp2mp4.js';
 import uploadFile from '../lib/uploadFile.js';
 import uploadImage from '../lib/uploadImage.js';
@@ -188,7 +189,7 @@ handler.private = true
 export default handler
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
 
-/*
+*/
 let handler = async (m, { conn, text, usedPrefix, command }) => {
 if (!text) return conn.reply(m.chat, `⚠️ 𝐄𝐬𝐜𝐫𝐢𝐛𝐚 𝐞𝐥 𝐞𝐫𝐫𝐨𝐫/𝐜𝐨𝐦𝐚𝐧𝐝𝐨 𝐜𝐨𝐧 𝐟𝐚𝐥𝐥𝐚\n\n*𝐄𝐣:* ${usedPrefix + command} los sticker no funka`, m, {contextInfo: { externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: mg, previewType: 0, thumbnail: imagen4, sourceUrl: [md, yt, tiktok].getRandom()}}}) 
 if (text.length < 8) throw `${fg} ✨ *𝑴𝒊́𝒏𝒊𝒎𝒐 10 𝒄𝒂𝒓𝒂𝒄𝒕𝒆𝒓𝒆𝒔 𝒑𝒂𝒓𝒂 𝒉𝒂𝒄𝒆𝒓 𝒆𝒍 𝒓𝒆𝒑𝒐𝒓𝒕𝒆...*`
@@ -213,4 +214,3 @@ handler.command = /^(report|request|reporte|bugs|bug|report-owner|reportes|repor
 handler.register = true 
 export default handler
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
-*/
