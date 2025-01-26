@@ -86,13 +86,13 @@ const [min, max] = rankPriceRanges[formattedRank] || rankPriceRanges['Común'];
 return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-async function handler(m, { conn }) {
-if (!m.text.includes(',')) return await conn.sendMessage(m.chat, { text: '⚠️ Usa el formato: `/addpersonajes Nombre, URL, Tipo`' }, { quoted: m });
+let handler = async (m, { conn, usedPrefix, command}) => {
+if (!m.text.includes(',')) return await conn.sendMessage(m.chat, { text: `⚠️ Usa el formato: ${usedPrefix + command} Nombre, URL, Tipo`}, { quoted: m });
 
 const extractedData = m.text.trim().slice(m.text.indexOf(' ') + 1);
 const params = extractedData.split(',');
 
-if (params.length < 3) return await conn.sendMessage(m.chat, { text: '⚠️ Formato inválido. Ejemplo: `/addpersonajes Light Yagami, URL, Tipo`' }, { quoted: m });    
+if (params.length < 3) return await conn.sendMessage(m.chat, { text: `⚠️ Formato inválido. Ejemplo: ${usedPrefix + command} Light Yagami, URL, Tipo` }, { quoted: m });    
 
 const name = params[0].trim();
 const url = params[1].trim();

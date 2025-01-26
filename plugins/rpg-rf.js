@@ -50,9 +50,7 @@ const availableCharacters = syncCharacters();
 
 let time = global.db.data.users[m.sender].timeRy + 300000 //5min
 if (new Date - global.db.data.users[m.sender].timeRy < 300000) return conn.fakeReply(m.chat,  `Bueno pa 🤚 para con emoción esperar ${msToTime(time - new Date())} para volver usar este comando `, m.sender, `No haga spam perra`, 'status@broadcast', null, fake)
-
-if (!availableCharacters || availableCharacters.length === 0) return await conn.sendMessage(m.chat, { text: '⚠️ No hay personajes disponibles en este momento.' }, { quoted: m });
-
+if (!availableCharacters || availableCharacters.length === 0) return 
 const randomCharacter = availableCharacters[Math.floor(Math.random() * availableCharacters.length)];
 const status = randomCharacter.claimedBy ? `🔒 Estado: Comprado por @${randomCharacter.claimedBy.split('@')[0]}` : `🆓 Estado: Libre`;
 const sentMessage = await conn.sendFile(m.chat, randomCharacter.url, 'lp.jpg', `💥 Nombre: ${randomCharacter.name}\n💰 Precio: ${randomCharacter.price} exp\n${status}\n\n> Responde con "c" para comprarlo`, m, false, { contextInfo: { mentionedJid: randomCharacter.claimedBy ? [randomCharacter.claimedBy] : [],
