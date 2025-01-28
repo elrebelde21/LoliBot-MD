@@ -76,7 +76,7 @@ global.db.data.tempCharacter = { ...randomCharacter, messageId: sentMessage.id }
 
 handler.before = async (m, { conn }) => {
 const character = global.db.data.tempCharacter;
-if (m.quoted && m.text.toLowerCase() === 'c' && character && character.messageId === m.quoted.id) {
+if (m.quoted && /^[.]*c$/i.test(m.text) && character && character.messageId === m.quoted.id) {
 const user = global.db.data.users[m.sender];
 const characters = syncCharacters();
 const claimedCharacter = characters.find(c => c.url === character.url);
