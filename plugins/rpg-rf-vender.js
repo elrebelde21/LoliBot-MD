@@ -74,14 +74,15 @@ mentions: [mentioned],
 conn.sendMessage(mentioned, {text: `📜 @${m.sender.split('@')[0]} quiere venderte *${characterToSell.name}* por ${price} exp.\n\nResponde:\n- *Aceptar*: para completar la compra.\n- *Rechazar*: para cancelar.`, mentions: [m.sender, mentioned]}, { quoted: m });
 m.reply(`✅ Solicitud de venta enviada al privado de @${mentioned.split('@')[0]}.`, null, { mentions: [mentioned] });
 } else {
-characterToSell.price = Math.floor(price * 0.75); 
-characterToSell.claimedBy = m.sender; 
+const previousPrice = characterToSell.price;
 characterToSell.price = price;         
-characterToSell.forSale = true;
-characterToSell.price = price;
+characterToSell.claimedBy = m.sender; 
+characterToSell.forSale = true;     
 characterToSell.seller = m.sender; 
+if (characterToSell.forSale) {
+characterToSell.previousPrice = previousPrice;
+}
 saveCharacters(characters);  
-
 m.reply(`✅ Has puesto a la venta *${characterToSell.name}* en el mercado por ${price} exp (ganancia neta después de comisión de 10%).`);
 }};
 

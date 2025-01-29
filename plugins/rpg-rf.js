@@ -57,7 +57,14 @@ const randomCharacter = availableCharacters[Math.floor(Math.random() * available
 //const status = randomCharacter.claimedBy ? `🔒 Estado: Comprado por @${randomCharacter.claimedBy.split('@')[0]}` : `🆓 Estado: Libre`;
 const status = randomCharacter.forSale ? `💸 Estado: @${randomCharacter.claimedBy.split('@')[0]} está vendiendo este personaje.` : randomCharacter.claimedBy ? `🔒 Estado: Comprado por @${randomCharacter.claimedBy.split('@')[0]}` : `🆓 Estado: Libre`;
 
-const sentMessage = await conn.sendFile(m.chat, randomCharacter.url, 'lp.jpg', `💥 Nombre: ${randomCharacter.name}\n💰 Precio: ${randomCharacter.price} exp\n${status}\n\n> Responde con "c" para comprarlo`, m, false, {
+let priceMessage;
+if (randomCharacter.previousPrice) {
+priceMessage = `~💰 Precio Anterior: ${randomCharacter.previousPrice} exp~\n💰 Precio Actual: ${randomCharacter.price} exp`;
+} else {
+priceMessage = `💰 Precio: ${randomCharacter.price} exp`;
+}
+
+const sentMessage = await conn.sendFile(m.chat, randomCharacter.url, 'lp.jpg', `💥 Nombre: ${randomCharacter.name}\n${priceMessage}\n${status}\n\n> Responde con "c" para comprarlo`, m, false, {
 contextInfo: { 
 mentionedJid: randomCharacter.claimedBy ? [randomCharacter.claimedBy] : [], 
 externalAdReply: {
@@ -92,7 +99,7 @@ claimedCharacter.claimedBy = m.sender;
 claimedCharacter.forSale = false; 
 claimedCharacter.seller = null; 
 saveCharacters(claimedFilePath, characters);
-await conn.sendMessage(m.chat, { text: `🎉 ¡Has comprado a ${character.name} por ${character.price} exp!\n💰 ${character.price} exp han sido transferidos al vendedor.`, image: { url: character.url }}, { quoted: m });      
+await conn.sendMessage(m.chat, { text: `🎉 ¡Has comprado a ${character.name} por ${character.price} exp!`, image: { url: character.url }}, { quoted: m });      
 if (seller) {
 await conn.sendMessage(seller, {text: `🎉 ¡Tu personaje ${character.name} ha sido comprando por @${m.sender.split('@')[0]}\n💰 ${sellerExp} exp han sido transferidos a tu cuenta (después de la comisión).\n\n- Precio original: ${character.price} exp\n- Precio recibido: ${sellerExp} exp.`, image: { url: character.url }, contextInfo: { mentionedJid: [m.sender] }}, { quoted: m })
 }} else {
