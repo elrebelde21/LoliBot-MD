@@ -1,116 +1,171 @@
-import fs from 'fs'
+import fs from 'fs';
 import fetch from 'node-fetch';
+import similarity from 'similarity';
 import axios from 'axios';
 
-let timeout = 30000
-let poin = 500 
- 
+let timeout = 30000; //30s
+let timeout2 = 10000; //10s
+let poin = 500; 
+const threshold = 0.72; 
+let juegos = {};
+
 let handler = async (m, { conn, command, usedPrefix }) => {
-let fkontak = { "key": { "participants":"0@s.whatsapp.net", "remoteJid": "status@broadcast", "fromMe": false, "id": "Halo" }, "message": { "contactMessage": { "vcard": `BEGIN:VCARD\nVERSION:3.0\nN:Sy;Bot;;;\nFN:y\nitem1.TEL;waid=${m.sender.split('@')[0]}:${m.sender.split('@')[0]}\nitem1.X-ABLabel:Ponsel\nEND:VCARD` }}, "participant": "0@s.whatsapp.net" }   
-conn.tekateki = conn.tekateki ? conn.tekateki : {}
-let id = m.chat
-if (id in conn.tekateki) {
-conn.reply(m.chat, 'Todavía hay un juegos sin responder en este chat', conn.tekateki[id][0])
-throw false
-}
+let id = m.chat;
+if (juegos[id]) return conn.reply(m.chat, '⚠️ ¡Ya hay un juego en curso en este chat! Responde primero.', m); 
+try {
+// ---------- Adivina acertijos ----------
+if (/^(acertijo|acert|adivinanza|tekateki)$/i.test(command)) {
+let acertijos = JSON.parse(fs.readFileSync(`./src/game/acertijo.json`));
+let pregunta = acertijos[Math.floor(Math.random() * acertijos.length)];
 
-try {    
-if (command == 'acertijo' || command == 'acert' || command == 'adivinanza' || command == 'tekateki') {
-let tekateki = JSON.parse(fs.readFileSync(`./src/game/acertijo.json`))
-let json = tekateki[Math.floor(Math.random() * tekateki.length)]
-let _clue = json.response
-let clue = _clue.replace(/[A-Za-z]/g, '_')
-let caption = `
-ⷮ *${json.question}*
+let caption = `${pregunta.question}
 
-*• Tiempo:* ${(timeout / 1000).toFixed(2)} segundos
-*• Bono:* +${poin} Exp
-`.trim()
-conn.tekateki[id] = [
-await conn.sendMessage(m.chat, { text: caption, contextInfo:{forwardingScore: 9999999, isForwarded: true, "externalAdReply": {"showAdAttribution": true, "containsAutoReply": true, "body": `• 𝐀𝐂𝐄𝐍𝐓𝐈𝐉𝐎 •`, "previewType": "PHOTO", thumbnail: imagen1, sourceUrl: md}}}, { quoted: m, ephemeralExpiration: 24*60*100, disappearingMessagesInChat: 24*60*100}),
-json, poin, setTimeout(async () => {
-if (conn.tekateki[id]) await conn.reply(m.chat, `*👾 Perdiste*\n\nSe acabó el tiempo!`, conn.tekateki[id][0])
-delete conn.tekateki[id]
-}, timeout)]}
+*• Tiempo:* ${(timeout / 1000)}s
+*• Premio:* +${poin} XP
+`.trim()            
+let enviado = await conn.sendMessage(m.chat, { text: caption, contextInfo:{forwardingScore: 9999999, isForwarded: true, "externalAdReply": {"showAdAttribution": true, "containsAutoReply": true, "body": `• 𝐀𝐂𝐄𝐍𝐓𝐈𝐉𝐎 •`, "previewType": "PHOTO", thumbnail: imagen1, sourceUrl: md}}}, { quoted: m, ephemeralExpiration: 24*60*100, disappearingMessagesInChat: 24*60*100})
+                      
+juegos[id] = { tipo: 'acertijo',
+pregunta,
+caption: enviado,
+puntos: poin,
+timeout: setTimeout(() => {
+if (juegos[id]) {
+conn.reply(m.chat, `*👾 Perdiste*\n\nSe acabó el tiempo!`, enviado);
+delete juegos[id];
+}}, timeout)
+}}
 
-if (command == 'advpe' || command == 'adv' || command == 'peliculas' || command == 'pelicula') {    
-let tekateki = JSON.parse(fs.readFileSync(`./src/game/peliculas.json`))
-let json = tekateki[Math.floor(Math.random() * tekateki.length)]
-let _clue = json.response
-let clue = _clue.replace(/[A-Za-z]/g, '_')
-let caption = `
-ⷮ *${json.question}*
+// ---------- Adivina la Película ----------
+if (/^(advpe|adv|peliculas|pelicula)$/i.test(command)) {
+let tekateki = JSON.parse(fs.readFileSync(`./src/game/peliculas.json`));
+let json = tekateki[Math.floor(Math.random() * tekateki.length)];
+let clue = json.response.replace(/[A-Za-z]/g, '_');
 
-*• Tiempo:* ${(timeout / 1000).toFixed(2)} segundos
-*• Bono:* +${poin} Exp
-`.trim()
-conn.tekateki[id] = [
-await //conn.reply(m.chat, caption, m),
-conn.sendMessage(m.chat, { text: caption, contextInfo:{forwardingScore: 9999999, isForwarded: true, "externalAdReply": {"showAdAttribution": true, "containsAutoReply": true, "body": `• ADIVINAN LA PELÍCULA CON EMOJIS •`, "previewType": "PHOTO", thumbnail: imagen1, sourceUrl: md}}}, { quoted: m, ephemeralExpiration: 24*60*100, disappearingMessagesInChat: 24*60*100}), json, poin, setTimeout(async () => {
-if (conn.tekateki[id]) await conn.reply(m.chat, `*👾 Perdiste*\n\nSe acabó el tiempo!`, conn.tekateki[id][0])
-delete conn.tekateki[id]
-}, timeout)
-]}
+let caption = `*${json.question}*
 
-if (command == 'cancion' || command == 'canción') {
-conn.tebaklagu = conn.tebaklagu ? conn.tebaklagu : {};
-const id = m.chat;
-if (id in conn.tebaklagu) {
-conn.reply(m.chat, 'Todavía hay canciones sin respuesta en este chat.', conn.tebaklagu[id][0]);
-throw false;
-} // 5LTV57azwaid7dXfz5fzJu
-const res = await fetchJson(`https://raw.githubusercontent.com/elrebelde21/LoliBot-MD/master/src/JSON/tebaklagu.json`);
-const json = res[Math.floor(Math.random() * res.length)];
-const caption = `• *Tiempo :* ${(timeout / 1000).toFixed(2)} segundos\n• *Escribe :* ${usedPrefix}pista Para obtener una pista ♨️\n• *Premio :* ${poin} XP⚡
+*• Tiempo:* ${(timeout / 1000)}s
+*• Bono:* +${poin} XP
 `.trim();
-conn.tebaklagu[id] = [
-await conn.reply(m.chat,  caption, m, {contextInfo: { externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: 'ADIVINA LA CANCION', body: '𝐒𝐮𝐩𝐞𝐫 𝐁𝐨𝐭 𝐃𝐞 𝐖𝐡𝐚𝐭𝐬𝐀𝐩𝐩', previewType: 0, thumbnail: imagen4, sourceUrl: [md, yt, tiktok].getRandom()}}}), 
-json, poin, setTimeout(() => {
-if (conn.tebaklagu[id]) conn.reply(m.chat, `*👾 Perdiste*\n\nSe acabó el tiempo!`, conn.tebaklagu[id][0]);
-delete conn.tebaklagu[id];
-}, timeout),
-];
-const aa = await conn.sendMessage(m.chat, {audio: {url: json.link_song}, fileName: `error.mp3`, mimetype: 'audio/mpeg'}, {quoted: m});
-if (!aa) return conn.sendFile(m.chat, json.link_song, 'coba-lagi.mp3', '', m);
+let enviado = await conn.sendMessage(m.chat, { text: caption, contextInfo:{forwardingScore: 9999999, isForwarded: true, "externalAdReply": {"showAdAttribution": true, "containsAutoReply": true, "title": "🎬 ADIVINAN", "body": `LA PELÍCULA CON EMOJIS •`, "previewType": "PHOTO", thumbnail: imagen1, sourceUrl: md}}}, { quoted: m, ephemeralExpiration: 24*60*100, disappearingMessagesInChat: 24*60*100})
+
+juegos[id] = { tipo: 'pelicula',
+pregunta: json,
+caption: enviado,
+puntos: poin,
+timeout: setTimeout(() => {
+if (juegos[id]) {
+conn.reply(m.chat, `⏳ ¡Tiempo agotado! La respuesta era: *${json.response}*`, enviado);
+delete juegos[id];
+}}, timeout)
+}}
+
+// ---------- Adivina trivia ----------
+if (/^(trivia|triviador)$/i.test(command)) {
+let tekateki = JSON.parse(fs.readFileSync(`./src/game/trivia.json`));
+let json = tekateki[Math.floor(Math.random() * tekateki.length)];
+let clue = json.response.replace(/[A-Za-z]/g, '_');
+
+let caption = `${json.question}
+
+*• Tiempo:* ${(timeout2 / 1000)}s
+*• Bono:* +${poin} XP
+`.trim();
+let enviado = await conn.sendMessage(m.chat, { text: caption, contextInfo:{forwardingScore: 9999999, isForwarded: true, "externalAdReply": {"showAdAttribution": true, "containsAutoReply": true, "body": `• 𝐓𝐑𝐈𝐕𝐈𝐀 •`, "previewType": "PHOTO", thumbnail: imagen1, sourceUrl: md}}}, { quoted: m, ephemeralExpiration: 24*60*100, disappearingMessagesInChat: 24*60*100})
+
+juegos[id] = { tipo: 'trivia',
+pregunta: json,
+caption: enviado,
+puntos: poin,
+timeout2: setTimeout(() => {
+if (juegos[id]) {
+conn.reply(m.chat, `*👾 Perdiste*\n\nSe acabó el tiempo!`, enviado);
+delete juegos[id];
+}}, timeout2)
+}}
+} catch (e) {
+console.log(e);
+}};
+
+handler.before = async (m) => {
+let id = m.chat;
+if (!juegos[id] || !m.quoted || !m.quoted.fromMe || !m.quoted.id) return;
+let juego = juegos[id];
+if (m.quoted.id !== juego.caption.key.id) return;
+
+if (juego.tipo === 'acertijo') {
+let respuestaCorrecta = juego.pregunta.response.toLowerCase().trim();
+let respuestaUsuario = m.text.toLowerCase().trim();
+if (respuestaUsuario === respuestaCorrecta) {
+global.db.data.users[m.sender].exp += juego.puntos;
+m.reply(`✅ *¡Correcto!*\nGanaste +${juego.puntos} XP`);
+m.react("✅")
+clearTimeout(juego.timeout);
+delete juegos[id];
+} else if (similarity(respuestaUsuario, respuestaCorrecta) >= threshold) {
+m.reply(`🔥 *Casi!* La respuesta es muy parecida.`);
+} else {
+m.react("❌")
+m.reply(`❌ *Incorrecto!* Intenta de nuevo.`);
+}}
+
+if (juego.tipo === 'cancion') {
+let respuestaCorrecta = juego.pregunta.jawaban.toLowerCase().trim();
+let respuestaUsuario = m.text.toLowerCase().trim();
+
+if (respuestaUsuario === respuestaCorrecta) {
+global.db.data.users[m.sender].exp += juego.puntos;
+m.reply(`✅ *¡Correcto!*\nGanaste +${juego.puntos} XP`);
+m.react("✅️")
+clearTimeout(juego.timeout);
+delete juegos[id];
+} else if (similarity(respuestaUsuario, respuestaCorrecta) >= threshold) {
+m.reply(`🎶 *Casi!* Intenta de nuevo.`);
+} else {
+m.reply(`❌ *Incorrecto!*`);
+m.react("❌")
+}}
+
+if (juego.tipo === 'pelicula') {
+let respuestaCorrecta = juego.pregunta.response.toLowerCase().trim();
+let respuestaUsuario = m.text.toLowerCase().trim();
+
+if (respuestaUsuario === respuestaCorrecta) {
+global.db.data.users[m.sender].exp += juego.puntos;
+m.reply(`🎬 ✅ *¡Correcto!*\nGanaste +${juego.puntos} XP`);
+m.react("✅️")
+clearTimeout(juego.timeout);
+delete juegos[id];
+} else if (similarity(respuestaUsuario, respuestaCorrecta) >= threshold) {
+m.reply(`🎥 *Casi!* La respuesta es muy parecida.`);
+} else {
+m.reply(`❌ *Incorrecto!*`);
+m.react("❌")
+}}
+
+if (juego.tipo === 'trivia') {
+let respuestaCorrecta = juego.pregunta.response.toLowerCase().trim();
+let respuestaUsuario = m.text.toLowerCase().trim();
+
+if (respuestaUsuario === respuestaCorrecta) {
+global.db.data.users[m.sender].exp += juego.puntos;
+m.reply(`🎉 ✅ *¡Correcto!*\nGanaste +${juego.puntos} XP`);
+m.react("✅️")
+clearTimeout(juego.timeout);
+delete juegos[id];
+} else if (similarity(respuestaUsuario, respuestaCorrecta) >= threshold) {
+m.reply(`💡 *Casi!* Intenta de nuevo.`);
+} else {
+m.reply(`❌ *Incorrecto!*`);
+m.react("❌")
+}}
 };
-
-if (command == 'trivia' || command == 'triviador') {
-let tekateki = JSON.parse(fs.readFileSync(`./src/game/trivia.json`))
-let json = tekateki[Math.floor(Math.random() * tekateki.length)]
-let _clue = json.response
-let clue = _clue.replace(/[A-Za-z]/g, '_')
-let caption = `
-ⷮ${json.question}
-
-*• Tiempo:* ${(timeout / 1000).toFixed(2)} segundos
-*• Bono:* +${poin} Exp
-`.trim()
-conn.tekateki[id] = [
-await //conn.reply(m.chat, caption, m),
-conn.sendMessage(m.chat, { text: caption, contextInfo:{forwardingScore: 9999999, isForwarded: true, "externalAdReply": {"showAdAttribution": true, "containsAutoReply": true, "body": `• 𝐓𝐑𝐈𝐕𝐈𝐀 •`, "previewType": "PHOTO", thumbnail: imagen1, sourceUrl: md}}}, { quoted: m, ephemeralExpiration: 24*60*100, disappearingMessagesInChat: 24*60*100}),
-json, poin, setTimeout(async () => {
-if (conn.tekateki[id]) await conn.reply(m.chat, `Se acabó el tiempo!`, conn.tekateki[id][0])
-delete conn.tekateki[id]
-}, timeout)
-]}
-
-if (command == 'hint' || command == 'pista') {
-conn.tebaklagu = conn.tebaklagu ? conn.tebaklagu : {};
-const id = m.chat;
-if (!(id in conn.tebaklagu)) throw false;
-const json = conn.tebaklagu[id][1];
-const nya = json.jawaban;
-const nyanya = nya.replace(/[bcdfghjklmnñpqrstvwxyzBCDEFGHJKLMNÑPQRSTVWXYZ]/g, '_');
-m.reply('' + nyanya + '');
-}} catch (e) {
-//await conn.reply(m.chat, `${lenguajeGB['smsMalError3']()}#report ${lenguajeGB['smsMensError2']()} ${usedPrefix + command}\n\n${wm}`, fkontak, m)
-//console.log(`❗❗ ${lenguajeGB['smsMensError2']()} ${usedPrefix + command} ❗❗`)
-console.log(e)}}
-handler.help = ['acertijo', 'advpe', 'cancion', 'trivia', 'pista']
+handler.help = ['acertijo', 'cancion', 'advpe', 'adv', 'peliculas', 'pelicula', 'trivia', 'triviador'];
 handler.tags = ['game'];
-handler.command = /^(acertijo|acert|adivinanza|tekateki|advpe|adv|peliculas|pelicula|cancion|canción|palabra|word|ordenar|order|trivia|triviador|hint|pista)$/i
-handler.register = true
-export default handler
+handler.command = /^(acertijo|acert|adivinanza|tekateki|cancion|canción|advpe|adv|peliculas|pelicula|trivia|triviador)$/i;
+handler.register = true;
+
+export default handler;
 
 async function fetchJson(url, options) {
   try {
