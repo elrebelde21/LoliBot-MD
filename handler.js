@@ -406,6 +406,7 @@ if (!isNumber(user.limit)) user.limit = 8
         if (!isNumber(user.rhinoceroslastfeed)) user.rhinoceroslastfeed = 0;
         if (!isNumber(user.robo)) user.robo = 0;
         if (!isNumber(user.timeRy)) user.timeRy = 0;  
+        if (!isNumber(user.timevot)) user.timevot = 0;  
         if (!isNumber(user.roboxp)) user.roboxp = 0;
         if (!isNumber(user.rock)) user.rock = 0;
         if (!isNumber(user.roket)) user.roket = 0;
@@ -536,6 +537,7 @@ if (!isNumber(user.limit)) user.limit = 8
           bibitapel: 0,
           bibitjeruk: 0,
           bibitmangga: 0,
+          timevot: 0,
           banco: 0,
           timeRy: 0,
           bibitpisang: 0,
