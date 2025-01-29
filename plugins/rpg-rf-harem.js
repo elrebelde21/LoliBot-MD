@@ -50,7 +50,7 @@ message += `\n> *• Página:* ${page} de ${totalPages}`;
 conn.reply(m.chat, message, m, {mentions: [targetUser] });
 }
 handler.help = ['harem @tag'];
-handler.tags = ['econ'];
+handler.tags = ['gacha'];
 handler.command = ['harem'];
 handler.register = true;
 

@@ -118,7 +118,7 @@ conn.sendMessage(sale.seller, { text: `❌ @${buyerId.split('@')[0]} rechazó tu
 }
 };
 handler.help = ['rf-vender'];
-handler.tags = ['econ'];
+handler.tags = ['gacha'];
 handler.command = ['rf-vender', 'vender'];
 handler.register = true;
 export default handler;

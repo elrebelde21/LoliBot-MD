@@ -113,7 +113,7 @@ delete global.db.data.tempCharacter;
 }
 };
 handler.help = ['rf', 'rm'];
-handler.tags = ['econ'];
+handler.tags = ['gacha'];
 handler.command = ['rf', 'rm'];
 handler.register = true;
 

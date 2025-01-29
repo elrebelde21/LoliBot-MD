@@ -47,7 +47,7 @@ conn.reply(m.chat, `✨️ Votaste por el personaje *${character.name}*, su nuev
 global.db.data.users[m.sender].timevot = new Date() * 1;
 }
 handler.help = ['vote <nombre del personaje>'];
-handler.tags = ['econ'];
+handler.tags = ['gacha'];
 handler.command = ['vote'];
 handler.register = true;
 

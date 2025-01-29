@@ -35,7 +35,7 @@ saveCharacters(characters);
 m.reply(`✅ Has retirado el personaje *${characterToRemove.name}* del mercado.`);
 };
 handler.help = ['rf-retirar'];
-handler.tags = ['econ'];
+handler.tags = ['gacha'];
 handler.command = ['rf-retirar'];
 handler.register = true;
 

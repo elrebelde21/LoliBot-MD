@@ -42,7 +42,7 @@ saveCharacters(mainFilePath, characters);
 conn.reply(m.chat,  `🎉 ¡Has regalado a *${character.name}* a @${recipient.split('@')[0]}!`, m, {mentions: [recipient] });
 } 
 handler.help = ['give @tag nombre_del_personaje'];
-handler.tags = ['econ'];
+handler.tags = ['gacha'];
 handler.command = ['give', 'regalar-personajes'];
 handler.register = true;
 

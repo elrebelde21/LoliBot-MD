@@ -64,7 +64,7 @@ topUsers.forEach(([user, count], index) => { textt += `\n${index + 1}- @${user.s
 await conn.sendMessage(m.chat, {text: textt + `\n\n> _*¡Sigue usando el bot para reclamar más personajes!*_`, contextInfo: { mentionedJid: topUsers.map(([user]) => user) }}, { quoted: m });
 }
 handler.help = ['rf-personajes'];
-handler.tags = ['econ'];
+handler.tags = ['gacha'];
 handler.command = ['rf-personajes',  'ranking'];
 handler.register = true;
 export default handler;
