@@ -21,8 +21,7 @@ let pregunta = acertijos[Math.floor(Math.random() * acertijos.length)];
 let caption = `${pregunta.question}
 
 *• Tiempo:* ${(timeout / 1000)}s
-*• Premio:* +${poin} XP
-`.trim()            
+*• Premio:* +${poin} XP`           
 let enviado = await conn.sendMessage(m.chat, { text: caption, contextInfo:{forwardingScore: 9999999, isForwarded: true, "externalAdReply": {"showAdAttribution": true, "containsAutoReply": true, "body": `• 𝐀𝐂𝐄𝐍𝐓𝐈𝐉𝐎 •`, "previewType": "PHOTO", thumbnail: imagen1, sourceUrl: md}}}, { quoted: m, ephemeralExpiration: 24*60*100, disappearingMessagesInChat: 24*60*100})
                       
 juegos[id] = { tipo: 'acertijo',
@@ -42,11 +41,11 @@ let tekateki = JSON.parse(fs.readFileSync(`./src/game/peliculas.json`));
 let json = tekateki[Math.floor(Math.random() * tekateki.length)];
 let clue = json.response.replace(/[A-Za-z]/g, '_');
 
-let caption = `*${json.question}*
+let caption = `
+${json.question}
 
 *• Tiempo:* ${(timeout / 1000)}s
-*• Bono:* +${poin} XP
-`.trim();
+*• Bono:* +${poin} XP`
 let enviado = await conn.sendMessage(m.chat, { text: caption, contextInfo:{forwardingScore: 9999999, isForwarded: true, "externalAdReply": {"showAdAttribution": true, "containsAutoReply": true, "title": "🎬 ADIVINAN", "body": `LA PELÍCULA CON EMOJIS •`, "previewType": "PHOTO", thumbnail: imagen1, sourceUrl: md}}}, { quoted: m, ephemeralExpiration: 24*60*100, disappearingMessagesInChat: 24*60*100})
 
 juegos[id] = { tipo: 'pelicula',
@@ -66,11 +65,11 @@ let tekateki = JSON.parse(fs.readFileSync(`./src/game/trivia.json`));
 let json = tekateki[Math.floor(Math.random() * tekateki.length)];
 let clue = json.response.replace(/[A-Za-z]/g, '_');
 
-let caption = `${json.question}
+let caption = `
+${json.question}
 
 *• Tiempo:* ${(timeout2 / 1000)}s
-*• Bono:* +${poin} XP
-`.trim();
+*• Bono:* +${poin} XP`
 let enviado = await conn.sendMessage(m.chat, { text: caption, contextInfo:{forwardingScore: 9999999, isForwarded: true, "externalAdReply": {"showAdAttribution": true, "containsAutoReply": true, "body": `• 𝐓𝐑𝐈𝐕𝐈𝐀 •`, "previewType": "PHOTO", thumbnail: imagen1, sourceUrl: md}}}, { quoted: m, ephemeralExpiration: 24*60*100, disappearingMessagesInChat: 24*60*100})
 
 juegos[id] = { tipo: 'trivia',
@@ -154,9 +153,9 @@ m.react("✅️")
 clearTimeout(juego.timeout);
 delete juegos[id];
 } else if (similarity(respuestaUsuario, respuestaCorrecta) >= threshold) {
-m.reply(`💡 *Casi!* Intenta de nuevo.`);
+//m.reply(`💡 *Casi!* Intenta de nuevo.`);
+m.react("🤏")
 } else {
-m.reply(`❌ *Incorrecto!*`);
 m.react("❌")
 }}
 };
