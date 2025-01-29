@@ -1,7 +1,5 @@
 //Código elaborado por: https://github.com/elrebelde21
 
-//PD: ME ESTOY CLONADO A NEKO"S JJJJJJJJJJJJJJJJJJJJJJJJJJ 
-
 import fs from 'fs';
 import path from 'path';
 
