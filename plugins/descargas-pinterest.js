@@ -1,22 +1,21 @@
-import {pinterest} from '@bochilteam/scraper';
-const handler = async (m, {conn, text, usedPrefix, command}) => {
-if (!text) throw `*⚠️ Ejemplo:* ${usedPrefix + command} Loli`;
-try {
-const json = await pinterest(text);
-conn.sendFile(m.chat, json.getRandom(), 'error.jpg', `_🔎 𝙍𝙚𝙨𝙪𝙡𝙩𝙖𝙙𝙤𝙨 𝙙𝙚: ${text}_`, m, null, fake);
-} catch (error1) {
-try {
-const response=await fetch(`${apis}/search/pinterest?text=${text}`)
-const dataR = await response.json()
-const json = dataR.result
-conn.sendFile(m.chat, json.getRandom(), 'error.jpg', `_🔎 𝙍𝙚𝙨𝙪𝙡𝙩𝙖𝙙𝙤𝙨 𝙙𝙚: ${text}_`, m, null, fake);
-//conn.sendButton(m.chat, `💞 ${mid.buscador} ${text}`, `𝙋𝙞𝙣𝙩𝙚𝙧𝙚𝙨𝙩 | ${wm}`, json.getRandom(), [['🔄 𝙎𝙞𝙜𝙪𝙞𝙚𝙣𝙩𝙚 | 𝙉𝙚𝙭𝙩', `${usedPrefix}pinterest ${text}`]], null, null, m)
-} catch (e) {
-console.log(e) 
-}}}
+import axios from 'axios'
+let handler = async (m, { conn, usedPrefix, command, text }) => {
+if (!text) return m.reply(`*⚠️ Ingresa el término de búsqueda.*\nEj: ${usedPrefix + command} nayeon`);
+try { 
+let { data: response } = await axios.get(`${apis}/search/pinterestv2?text=${encodeURIComponent(text)}`);
+if (!response.status || !response.data || response.data.length === 0) return m.reply(`❌ No se encontraron resultados para "${text}".`);
+let searchResults = response.data;
+let selectedResults = searchResults.slice(0, 6);
+let messages = selectedResults.map(result => [
+result.description || null, `🔎 Autor: ${result.name} (@${result.username})`, result.image]);
+await conn.sendCarousel(m.chat, `✅ Resultados para: ${text}`, "🔍 Pinterest Search", messages, m);
+} catch (error) {
+console.error(error);
+}};
 handler.help = ['pinterest <keyword>'];
 handler.tags = ['buscadores'];
 handler.command = /^(pinterest)$/i;
-handler.register = true 
-handler.limit = 1
+handler.register = true;
+handler.limit = 1;
+
 export default handler;

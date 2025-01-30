@@ -1,55 +1,36 @@
-import axios from 'axios'
-const {proto, generateWAMessageFromContent, prepareWAMessageMedia, generateWAMessageContent, getDevice} = (await import("@whiskeysockets/baileys")).default
+import axios from 'axios';
 
-let handler = async (message, { conn, text, usedPrefix, command }) => {
-if (!text) return m.reply(`Que video buscas?`)
-
-async function createVideoMessage(url) {
-const { videoMessage } = await generateWAMessageContent({ video: { url } }, { upload: conn.waUploadToServer })
-return videoMessage
-}
-async function shuffleArray(array) {
-for (let i = array.length - 1; i > 0; i--) {
-const j = Math.floor(Math.random() * (i + 1));
-[array[i], array[j]] = [array[j], array[i]]
-}
-}
+let handler = async (m, { conn, usedPrefix, command, text }) => {
+if (!text) return m.reply(`*⚠️ Ingresa el nombre del video que buscas.*\nEj: ${usedPrefix + command} emilia_mernes`);
+m.react("⏳")
 try {
-let results = []
-let { data: response } = await axios.get(`${apis}/search/tiktoksearch?query=${text}`)
-let searchResults = response.data
-shuffleArray(searchResults)
-let selectedResults = searchResults.splice(0, 3)
-for (let result of selectedResults) {
-results.push({
-body: proto.Message.InteractiveMessage.Body.fromObject({ text: null }),
-footer: proto.Message.InteractiveMessage.Footer.fromObject({ text: wm }),
-header: proto.Message.InteractiveMessage.Header.fromObject({
-title: '' + result.title,
-hasMediaAttachment: true,
-videoMessage: await createVideoMessage(result.nowm)
-}),
-nativeFlowMessage: proto.Message.InteractiveMessage.NativeFlowMessage.fromObject({ buttons: [] })})}
-const responseMessage = generateWAMessageFromContent(message.chat, {
-viewOnceMessage: {
-message: {
-messageContextInfo: {
-deviceListMetadata: {},
-deviceListMetadataVersion: 2
-},
-interactiveMessage: proto.Message.InteractiveMessage.fromObject({
-body: proto.Message.InteractiveMessage.Body.create({ text: '✅️ Resultado de:' + text }),
-footer: proto.Message.InteractiveMessage.Footer.create({ text: wm }),
-header: proto.Message.InteractiveMessage.Header.create({ hasMediaAttachment: false }),
-carouselMessage: proto.Message.InteractiveMessage.CarouselMessage.fromObject({ cards: [...results] })})}}
-}, { quoted: message })
-await conn.relayMessage(message.chat, responseMessage.message, { messageId: responseMessage.key.id })
+let { data: response } = await axios.get(`${apis}/search/tiktoksearch?query=${text}`);
+if (!response || !response.meta || !Array.isArray(response.meta) || response.meta.length === 0) return m.reply(`❌ No se encontraron resultados para "${text}".`);
+let searchResults = response.meta;
+shuffleArray(searchResults);
+let selectedResults = searchResults.slice(0, 3)
+let messages = selectedResults.map(result => [
+`${result.title}`, 
+wm,
+result.hd
+]);
+await conn.sendCarousel(m.chat, `✅ Resultados para: ${text}`, "🔍 TikTok Search", messages, m);
+m.react("✅️")
 } catch (error) {
-await conn.reply(message.chat, error.toString(), message)
-}}
-
-handler.help = ['tiktoksearch <txt>'];
+m.react("❌️")
+console.error(error);    
+}};
+handler.help = ['tiktoksearch <texto>'];
 handler.tags = ['downloader'];
 handler.command = ['tiktoksearch', 'ttsearch'];
-//handler.group = true;
+handler.register = true;
+handler.limit = 4;
+
 export default handler;
+
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+  }
