@@ -2,61 +2,54 @@ import fs from 'fs'
 import archiver from 'archiver'
 
 let handler = async (m, { conn, text, usedPrefix, command }) => {
-const databaseFolder = './database'
-const zipPath = './database_backup.zip'
-  
-let fkontak = { "key": { "participants":"0@s.whatsapp.net", "remoteJid": "status@broadcast", "fromMe": false, "id": "Halo" }, "message": { "contactMessage": { "vcard": `BEGIN:VCARD\nVERSION:3.0\nN:Sy;Bot;;;\nFN:y\nitem1.TEL;waid=${m.sender.split('@')[0]}:${m.sender.split('@')[0]}\nitem1.X-ABLabel:Ponsel\nEND:VCARD` }}, "participant": "0@s.whatsapp.net" }
+const databaseFolder = './database';
+const zipPath = './database_backup.zip';
+let option = parseInt(text);
 
-if (!fs.existsSync(databaseFolder)) {
-await m.reply('⚠️ La carpeta *database* no existe.')
-return
-}
-
-if (conn.user.jid != global.conn.user.jid) {
-if (!fs.existsSync(`./jadibts/${conn.user.jid.split`@`[0]}/creds.json`)) {
-await m.reply('⚠️ El archivo *creds.json* del Sub Bot no existe.')
-return
-}
-} else if (!fs.existsSync('./BotSession/creds.json')) {
-await m.reply('⚠️ El archivo *creds.json* no existe.')
-return
-}
-
-await m.reply(`_*🗂️ Preparando envío de base de datos...*_`)
+if (![1, 2].includes(option)) return await m.reply(`*⚠️ Que Hago un backup de la sesión o base de datos?*. Usar de la seguiente manera. ejemplo:*\n${usedPrefix + command} 1 _(Enviar sesión "creds.json")_\n${usedPrefix + command} 2 _(Enviar base de datos)_`);
 try {
-let d = new Date()
-let date = d.toLocaleDateString('es', { day: 'numeric', month: 'long', year: 'numeric' })
-const path = conn.user.jid != global.conn.user.jid ? `./jadibts/${conn.user.jid.split`@`[0]}/creds.json` : `./BotSession/creds.json`
-let creds = await fs.readFileSync(path)
+let d = new Date();
+let date = d.toLocaleDateString('es', { day: 'numeric', month: 'long', year: 'numeric' });
 
-const output = fs.createWriteStream(zipPath)
-const archive = archiver('zip', { zlib: { level: 9 } })
+if (option === 1) {  
+const path = conn.user.jid !== global.conn.user.jid
+? `./jadibts/${conn.user.jid.split`@`[0]}/creds.json`
+: `./BotSession/creds.json`;
+if (!fs.existsSync(path)) return await m.reply('⚠️ El archivo *creds.json* no existe.');            
 
+let creds = fs.readFileSync(path);
+await conn.reply(m.sender, `📁 *Sesión* (${date})`, fkontak);
+await conn.sendMessage(m.sender, { document: creds, mimetype: 'application/json', fileName: `creds.json` }, { quoted: m });
+
+} else if (option === 2) { 
+if (!fs.existsSync(databaseFolder)) return await m.reply('⚠️ La carpeta *database* no existe.');
+
+await m.reply(`_*📂 Preparando la base de datos...*_`);
+const output = fs.createWriteStream(zipPath);
+const archive = archiver('zip', { zlib: { level: 9 } });
 output.on('close', async () => {
-console.log(`Archivo .zip creado: ${archive.pointer()} bytes`)
+console.log(`Archivo .zip creado: ${archive.pointer()} bytes`);
+await conn.reply(m.sender, `📂 *Base de datos* (${date})`, fkontak);
+await conn.sendMessage(m.sender, { document: fs.readFileSync(zipPath), mimetype: 'application/zip', fileName: `database.zip` }, { quoted: m });
+fs.unlinkSync(zipPath);
+});
 
-await conn.reply(m.sender, `*🗓️ Database:* ${date}`, fkontak)
-await conn.sendMessage(m.sender, { document: creds, mimetype: 'application/json', fileName: `creds.json`}, { quoted: m })
-await conn.sendMessage(m.sender, { document: fs.readFileSync(zipPath), mimetype: 'application/zip', fileName: `database.zip` }, { quoted: m })
-fs.unlinkSync(zipPath)
-})
-
-archive.on('error', (err) => {
-throw err
-})
-
+archive.on('error', (err) => { throw err; });
 archive.pipe(output);
-archive.directory(databaseFolder, false)
-archive.finalize()
+archive.directory(databaseFolder, false);
+archive.finalize();
+}
 } catch (e) {
-await m.react(`❌`) 
-console.log(e)
-}}
-handler.help = ['backup']
-handler.tags = ['owner']
-handler.command = /^(backup|respaldo|copia)$/i
-handler.owner = true
-export default handler
+await m.react(`❌`);
+console.log(e);
+}
+};
+handler.help = ['backup'];
+handler.tags = ['owner'];
+handler.command = /^(backup|respaldo|copia)$/i;
+handler.owner = true;
+
+export default handler;
 
 /*import fs from 'fs'
 
