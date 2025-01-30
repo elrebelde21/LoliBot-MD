@@ -27,14 +27,6 @@ if (command == 'verify' || command == 'reg' || command == 'verificar') {
 if (user.registered === true) throw `*Ya estás registrado 🤨*`
 if (!Reg.test(text)) throw `*⚠️ ¿No sabes cómo usar este comando?* Sigue estos pasos:\n\n• Unirte al grupo:\n${[nnn, nnnttt, nnnt].getRandom()}\n• Después usa el comando de la siguiente manera: *${usedPrefix + command} nombre.edad*\n*• Ejemplo:* ${usedPrefix + command} ${name2}.16`
   
-/*let groupID = '120363043118239234@g.us'; 
-let groupMetadata = await conn.groupMetadata(groupID);
-let groupMembers = groupMetadata.participants.map(participant => participant.id || participant.jid); //
-  
-if (!groupMembers.includes(m.sender)) {
-throw `*⚠️ ¿No sabes cómo usar este comando?* Antes de registrarte primero debes unirte al grupo requerido:*\nhttps://chat.whatsapp.com/HNDVUxHphPzG3cJHIwCaX5\n\n*• Después usar el comando de la siguiente manera:*\n> ${usedPrefix + command} nombre.edad`;
-}*/
-
 let [_, name, splitter, age] = text.match(Reg);
 if (!name) throw '*¿Y el nombre?*'
 if (!age) throw '*La edad no puede estar vacía, agrega tu edad*'
@@ -52,7 +44,6 @@ user.registered = true;
 global.db.data.users[m.sender].money += 400;
 global.db.data.users[m.sender].limit += 2;
 global.db.data.users[m.sender].exp += 150;
-global.db.data.users[m.sender].joincount += 2;
   
 let sn = createHash('md5').update(m.sender).digest('hex');
 await conn.sendMessage(m.chat, { text: `[ ✅ REGISTRO COMPLETADO ]
@@ -109,7 +100,6 @@ if (args[0] !== sn) throw '⚠️ *Número de serie incorrecto*'
 global.db.data.users[m.sender].money -= 400
 global.db.data.users[m.sender].limit -= 2
 global.db.data.users[m.sender].exp -= 150
-global.db.data.users[m.sender].joincount -= 2  
 user.registered = false
 conn.fakeReply(m.chat, `😢 Ya no estas registrado`, '0@s.whatsapp.net', `ᴿᵉᵍᶦˢᵗʳᵒ ᵉˡᶦᵐᶦⁿᵃᵈᵒ`, 'status@broadcast', null, fake)
 }}

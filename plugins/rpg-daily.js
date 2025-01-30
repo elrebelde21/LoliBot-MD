@@ -1,40 +1,46 @@
-const free = 5000
-const prem = 20000
+const free = 5000;
+const expIncrease = 1000; 
 
-let handler = async (m, {conn, isPrems }) => {
-let time = global.db.data.users[m.sender].lastclaim + 86400000
-if (new Date - global.db.data.users[m.sender].lastclaim < 86400000) throw `⚠️ 𝙔𝙖 𝙧𝙚𝙘𝙡𝙖𝙢𝙖𝙨𝙩𝙚 𝙩𝙪 𝙧𝙚𝙜𝙖𝙡𝙤 🎁\n𝙑𝙪𝙚𝙡𝙫𝙚 𝙚𝙣 *${msToTime(time - new Date())}* 𝙋𝙖𝙧𝙖 𝙫𝙤𝙡𝙫𝙚𝙧 𝙖 𝙧𝙚𝙘𝙡𝙖𝙢𝙖𝙧*`
-const limit = Math.floor(Math.random() * 30)
-const money = Math.floor(Math.random() * 800)
-global.db.data.users[m.sender].limit += limit;
-global.db.data.users[m.sender].money += money
-global.db.data.users[m.sender].exp += isPrems ? prem : free
-
-let text = `*🔸 𝐇𝐀𝐒 𝐑𝐄𝐂𝐈𝐁𝐈𝐃𝐎:*
-
-*💎 Diamante:* ${limit}
-*🪙 LoliCoins:* ${money}
-*🆙 Xp:* ${isPrems ? prem : free}`
-conn.fakeReply(m.chat, text, '13135550002@s.whatsapp.net', `🎁 Obtener un regalo 🎁`, 'status@broadcast', null, fake)
-//m.reply(text)
-global.db.data.users[m.sender].lastclaim = new Date * 1
+let handler = async (m, { conn, isPrems }) => {
+let user = global.db.data.users[m.sender];
+let now = new Date().getTime();
+let time = user.lastclaim + 86400000;
+if (now - user.lastclaim < 86400000) throw `⚠️ 𝙔𝙖 𝙧𝙚𝙘𝙡𝙖𝙢𝙖𝙨𝙩𝙚 𝙩𝙪 𝙧𝙚𝙜𝙖𝙡𝙤 🎁\n𝙑𝙪𝙚𝙡𝙫𝙚 𝙚𝙣 *${msToTime(time - now)}* 𝙥𝙖𝙧𝙖 𝙫𝙤𝙡𝙫𝙚𝙧 𝙖 𝙧𝙚𝙘𝙡𝙖𝙢𝙖𝙧*`;
+   
+if (user.lastclaim && now - user.lastclaim < 172800000) { 
+user.dailyStreak = (user.dailyStreak || 0) + 1;
+} else {
+user.dailyStreak = 1;
 }
-handler.help = ['daily']
-handler.tags = ['econ']
-handler.command = ['daily', 'claim'] 
-handler.register = true
-export default handler
+let currentExp = free;
+let nextExp = currentExp + expIncrease;
+
+user.exp += currentExp;
+user.lastclaim = now;
+
+let text = `*🔸 𝐇𝐀𝐒 𝐑𝐄𝐂𝐈𝐁𝐈𝐃𝐎:* Tu recompensa Diaria de: *${formatNumber(currentExp)} XP* (Día ${user.dailyStreak})  
+
+_*Mañana no te olviden de seguir reclamado tu recompensa ganaras: ${formatK(nextExp)} (${formatNumber(nextExp)}) XP*_`
+conn.fakeReply(m.chat, text, '13135550002@s.whatsapp.net', `🎁 Obtener un regalo 🎁`, 'status@broadcast', null, fake)    
+};
+handler.help = ['daily', 'claim'];
+handler.tags = ['econ'];
+handler.command = ['daily', 'claim'];
+handler.register = true;
+
+export default handler;
 
 function msToTime(duration) {
-var milliseconds = parseInt((duration % 1000) / 100),
-seconds = Math.floor((duration / 1000) % 60),
-minutes = Math.floor((duration / (1000 * 60)) % 60),
-hours = Math.floor((duration / (1000 * 60 * 60)) % 24)
+    var hours = Math.floor((duration / (1000 * 60 * 60)) % 24);
+    var minutes = Math.floor((duration / (1000 * 60)) % 60);
 
-hours = (hours < 10) ? "0" + hours : hours
-minutes = (minutes < 10) ? "0" + minutes : minutes
-seconds = (seconds < 10) ? "0" + seconds : seconds
-
-return hours + " Horas " + minutes + " Minutos"
+    return `${hours} Horas ${minutes} Minutos`;
 }
 
+function formatNumber(num) {
+    return num.toLocaleString('en').replace(/,/g, '.'); // Convierte a formato "25,000" → "25.000"
+}
+
+function formatK(num) {
+    return (num / 1000).toFixed(1) + 'k'; // Convierte 25000 → "25.0k"
+}

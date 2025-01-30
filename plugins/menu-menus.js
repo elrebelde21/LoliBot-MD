@@ -8,7 +8,7 @@ let tags = {'main': 'ℹ️ INFOBOT',
 'jadibot': '✨ SER SUB BOT', 
 'downloader': '🚀 DESCARGAS',
 'game': '👾 JUEGOS', 
-'gacha': '✨️ New Rpg Gacha',
+'gacha': '✨️ NEW - RPG GACHA',
 'rg': '🟢 REGISTRO', 
 'group': '⚙️ GRUPO',
 'nable': '🕹 ENABLE/DISABLE', 
@@ -44,12 +44,12 @@ Hola 👋🏻 *%name*
 
 *• Usuario registrados:* %toUserReg de %toUsers
 
-${[`*\`✅ Activar tu bot 24/7 activo en SkyPlus\`*\nhttps://youtu.be/qyxhetqeO1U?si=XxWhDOAi3OfmOjBY`, `Unirte a nuestro canal de WhatsApp y informarte de todas la novedades/Actualizaciones del bot y mas\nhttps://whatsapp.com/channel/0029Vau57ykEwEk5CgosvU3v`, `❤ Seguirme el tiktok\nhttps://www.tiktok.com/@elrebelde.21`].getRandom()}
+${[`*\`✅ Activar tu bot 24/7 activo en SkyPlus\`*\nhttps://youtu.be/z2kHwbu8e8s?si=M9iHLdVv7yXe_dvJ`, `Unirte a nuestro canal de WhatsApp y informarte de todas la novedades/Actualizaciones del bot y mas\nhttps://whatsapp.com/channel/0029Vau57ykEwEk5CgosvU3v`, `❤ Seguirme el tiktok\nhttps://www.tiktok.com/@elrebelde.21`].getRandom()}
 
 `.trimStart(),
-header: '◉ %category  ',
-body: ' ║\n╠ ○%cmd %islimit %isPremium',
-footer: `╚• \n`,
+header: ' `<[ %category ]>` ',
+body: ' \n%cmd %islimit %isPremium',
+footer: `\n`,
 after: `
 `,
 }
@@ -98,7 +98,7 @@ let totalreg = Object.keys(global.db.data.users).length
 let rtotalreg = Object.values(global.db.data.users).filter(user => user.registered == true).length
 let toUsers = `${toNum(totalreg)}`
 let toUserReg = `${toNum(rtotalreg)}`
-let botOfc = (conn.user.jid == global.conn.user.jid) ? `*• Bot Ofc:* wa.me/${global.conn.user.jid.split`@`[0]}` : `• Soy un sub bot del:* wa.me/${global.conn.user.jid.split`@`[0]}`
+let botOfc = (conn.user.jid == global.conn.user.jid) ? `*• Bot Ofc:* wa.me/${global.conn.user.jid.split`@`[0]}` : `*• Soy un sub bot del:* wa.me/${global.conn.user.jid.split`@`[0]}`
 let help = Object.values(global.plugins).filter(plugin => !plugin.disabled).map(plugin => {
 return {
 help: Array.isArray(plugin.tags) ? plugin.help : [plugin.help],
@@ -122,8 +122,8 @@ let _text = [before, ...Object.keys(tags).map(tag => {
 return header.replace(/%category/g, tags[tag]) + '\n' + [...help.filter(menu => menu.tags && menu.tags.includes(tag) && menu.help).map(menu => {
 return menu.help.map(help => {
 return body.replace(/%cmd/g, menu.prefix ? help : '%p' + help)
-.replace(/%islimit/g, menu.limit ? '(ⓓ)' : '')
-.replace(/%isPremium/g, menu.premium ? '(Ⓟ)' : '')
+.replace(/%islimit/g, menu.limit ? '(💎)' : '')
+.replace(/%isPremium/g, menu.premium ? '(💵)' : '')
 .trim()}).join('\n')
 }),
 footer

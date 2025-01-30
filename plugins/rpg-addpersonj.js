@@ -130,7 +130,7 @@ await conn.reply('5214774444444@s.whatsapp.net', `Nuevo personaje agregado: \n\`
 });
 }
 handler.help = ['addpersonajes']
-handler.tags = ['econ']
+handler.tags = ['gacha']
 handler.command = ['addpersonajes', 'addcharacter'];
 handler.register = true
 export default handler
