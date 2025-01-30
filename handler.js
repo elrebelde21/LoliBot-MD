@@ -443,8 +443,8 @@ await plugin.after.call(this, m, extra)
 } catch (e) {
 console.error(e)
 }}
-if (m.limit) m.reply(`*${+m.limit}* Pesos 💵 usados`)
-if (m.money) m.reply(+m.money + ' Dolar usados 💶') 
+if (m.limit) m.reply(`*${+m.limit}* diamante 💎usados`)
+if (m.money) m.reply(+m.money + ' LoliCoins usados 🪙') 
 }
 break
 }}} catch (e) {
