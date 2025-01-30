@@ -56,7 +56,7 @@ const stickerPath = path.join(databasePath, 'sticker');
 const statsPath = path.join(databasePath, 'stats');
 
 [usersPath, chatsPath, settingsPath, msgsPath, stickerPath, statsPath].forEach((dir) => {
-if (!fs.existsSync(dir)) fs.mkdirSync(dir);
+    if (!fs.existsSync(dir)) fs.mkdirSync(dir);
 });
 
 function getFilePath(basePath, id) {
@@ -64,128 +64,91 @@ return path.join(basePath, `${id}.json`);
 }
 
 global.db = {
-data: {
-users: {},
-chats: {},
-settings: {},
-msgs: {},
-sticker: {},
-stats: {},
-},
-READ: false, 
+    data: {
+        users: {},
+        chats: {},
+        settings: {},
+        msgs: {},
+        sticker: {},
+        stats: {},
+    },
+    READ: false, 
 };
 
 global.loadDatabase = async function loadDatabase() {
-if (global.db.READ) {
-return new Promise((resolve) => {
-const interval = setInterval(() => {
-if (!global.db.READ) {
-clearInterval(interval);
-resolve(global.db.data);
-}}, 1000);
-});
-}
+    if (global.db.READ) {
+        return new Promise((resolve) => {
+            const interval = setInterval(() => {
+                if (!global.db.READ) {
+                    clearInterval(interval);
+                    resolve(global.db.data);
+                }
+            }, 1000);
+        });
+    }
 
-global.db.READ = true;
-try {
-const userFiles = fs.readdirSync(usersPath);
-for (const file of userFiles) {
-const userId = path.basename(file, '.json');
-const userDb = new Low(new JSONFile(getFilePath(usersPath, userId)));
-await userDb.read();
-userDb.data = userDb.data || {};
-global.db.data.users[userId] = { ...global.db.data.users[userId], ...userDb.data };
-}
+    global.db.READ = true;
+    try {
+        const loadFiles = async (dirPath, targetObj) => {
+            const files = fs.readdirSync(dirPath);
+            for (const file of files) {
+                const id = path.basename(file, '.json');
+                const db = new Low(new JSONFile(getFilePath(dirPath, id)));
+                await db.read();
+                db.data = db.data || {};
+                targetObj[id] = { ...targetObj[id], ...db.data };
+            }
+        };
 
-const chatFiles = fs.readdirSync(chatsPath);
-for (const file of chatFiles) {
-const chatId = path.basename(file, '.json');
-const chatDb = new Low(new JSONFile(getFilePath(chatsPath, chatId)));
-await chatDb.read();
-chatDb.data = chatDb.data || {};
-global.db.data.chats[chatId] = { ...global.db.data.chats[chatId], ...chatDb.data };
-}
-
-const settingsFiles = fs.readdirSync(settingsPath);
-for (const file of settingsFiles) {
-const settingId = path.basename(file, '.json');
-const settingDb = new Low(new JSONFile(getFilePath(settingsPath, settingId)));
-await settingDb.read();
-settingDb.data = settingDb.data || {};
-global.db.data.settings[settingId] = { ...global.db.data.settings[settingId], ...settingDb.data };
-}
-
-const msgsFiles = fs.readdirSync(msgsPath);
-for (const file of msgsFiles) {
-const msgId = path.basename(file, '.json');
-const msgDb = new Low(new JSONFile(getFilePath(msgsPath, msgId)));
-await msgDb.read();
-msgDb.data = msgDb.data || {};
-global.db.data.msgs[msgId] = { ...global.db.data.msgs[msgId], ...msgDb.data };
-}
-
-const stickerFiles = fs.readdirSync(stickerPath);
-for (const file of stickerFiles) {
-const stickerId = path.basename(file, '.json');
-const stickerDb = new Low(new JSONFile(getFilePath(stickerPath, stickerId)));
-await stickerDb.read();
-stickerDb.data = stickerDb.data || {};
-global.db.data.sticker[stickerId] = { ...global.db.data.sticker[stickerId], ...stickerDb.data };
-}
-
-const statsFiles = fs.readdirSync(statsPath);
-for (const file of statsFiles) {
-const statId = path.basename(file, '.json');
-const statDb = new Low(new JSONFile(getFilePath(statsPath, statId)));
-await statDb.read();
-statDb.data = statDb.data || {};
-global.db.data.stats[statId] = { ...global.db.data.stats[statId], ...statDb.data };
-}} catch (error) {
-console.error('Error al cargar la base de datos:', error);
-} finally {
-global.db.READ = false;
-}};
+        await Promise.all([
+            loadFiles(usersPath, global.db.data.users),
+            loadFiles(chatsPath, global.db.data.chats),
+            loadFiles(settingsPath, global.db.data.settings),
+            loadFiles(msgsPath, global.db.data.msgs),
+            loadFiles(stickerPath, global.db.data.sticker),
+            loadFiles(statsPath, global.db.data.stats),
+        ]);
+    } catch (error) {        
+    } finally {
+        global.db.READ = false;
+    }
+};
 
 global.db.save = async function saveDatabase() {
-while (global.db.READ) {
-await new Promise((resolve) => setTimeout(resolve, 100)); 
-}
+    if (global.db.READ) {
+        await new Promise((resolve) => {
+            const interval = setInterval(() => {
+                if (!global.db.READ) {
+                    clearInterval(interval);
+                    resolve();
+                }
+            }, 100);
+        });
+    }
 
-for (const [userId, userData] of Object.entries(global.db.data.users)) {
-const userDb = new Low(new JSONFile(getFilePath(usersPath, userId)));
-userDb.data = userData;
-await userDb.write();
-}
+    global.db.READ = true;
+    try {
+        const saveFiles = async (dirPath, dataObj) => {
+            for (const [id, data] of Object.entries(dataObj)) {
+                const db = new Low(new JSONFile(getFilePath(dirPath, id)));
+                db.data = data;
+                await db.write();
+            }
+        };
 
-for (const [chatId, chatData] of Object.entries(global.db.data.chats)) {
-const chatDb = new Low(new JSONFile(getFilePath(chatsPath, chatId)));
-chatDb.data = chatData;
-await chatDb.write();
-}
-
-for (const [settingId, settingData] of Object.entries(global.db.data.settings)) {
-const settingDb = new Low(new JSONFile(getFilePath(settingsPath, settingId)));
-settingDb.data = settingData;
-await settingDb.write();
-}
-
-for (const [msgId, msgData] of Object.entries(global.db.data.msgs)) {
-const msgDb = new Low(new JSONFile(getFilePath(msgsPath, msgId)));
-msgDb.data = msgData;
-await msgDb.write();
-}
-
-for (const [stickerId, stickerData] of Object.entries(global.db.data.sticker)) {
-const stickerDb = new Low(new JSONFile(getFilePath(stickerPath, stickerId)));
-stickerDb.data = stickerData;
-await stickerDb.write();
-}
-
-for (const [statId, statData] of Object.entries(global.db.data.stats)) {
-const statDb = new Low(new JSONFile(getFilePath(statsPath, statId)));
-statDb.data = statData;
-await statDb.write();
-}};
+        await Promise.all([
+            saveFiles(usersPath, global.db.data.users),
+            saveFiles(chatsPath, global.db.data.chats),
+            saveFiles(settingsPath, global.db.data.settings),
+            saveFiles(msgsPath, global.db.data.msgs),
+            saveFiles(stickerPath, global.db.data.sticker),
+            saveFiles(statsPath, global.db.data.stats),
+        ]);
+    } catch (error) {        
+    } finally {
+        global.db.READ = false;
+    }
+};
 loadDatabase();
 
 /*global.db = new Low(/https?:\/\//.test(opts['db'] || '') ? new cloudDBAdapter(opts['db']) : new JSONFile('database.json'))
