@@ -42,8 +42,11 @@ if (typeof user !== 'object')
 global.db.data.users[m.sender] = {}
 if (user) {
 if (!isNumber(user.exp)) user.exp = 0;
-if (!isNumber(user.money)) user.money = 10
-if (!isNumber(user.limit)) user.limit = 8     
+if (user.exp < 0) user.exp = 0; 
+if (!isNumber(user.money)) user.money = 10;
+if (user.money < 0) user.money = 0; 
+if (!isNumber(user.limit)) user.limit = 8;
+if (user.limit < 0) user.limit = 0; 
 if (!('premium' in user)) user.premium = false;
 if (!('registered' in user)) user.registered = false;
 if (!user.registered) {
