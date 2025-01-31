@@ -29,8 +29,8 @@ function saveCharacters(filePath, characters) {
 async function handler(m, { conn, args }) {
 const characters = loadCharacters(mainFilePath);
 const characterName = args.join(' ').trim();
-let time = global.db.data.users[m.sender].timevot + 3600000; //1hora
-if (new Date() - global.db.data.users[m.sender].timevot < 3600000) return conn.fakeReply(m.chat,  `Bueno pa 🤚 para con emoción esperar ${msToTime(time - new Date())} para volver usar este comando `, m.sender, `No haga spam perra`, 'status@broadcast', null, fake);
+let time = global.db.data.users[m.sender].timevot + 1800000; //1800000 = 30min
+if (new Date() - global.db.data.users[m.sender].timevot < 1800000) return conn.fakeReply(m.chat,  `Bueno pa 🤚 para con emoción esperar ${msToTime(time - new Date())} para volver usar este comando `, m.sender, `No haga spam perra`, 'status@broadcast', null, fake);
 if (!characterName) return conn.reply(m.chat, '⚠️ Por favor, especifica el nombre del personaje.', m);
 const character = characters.find(c => c.name.toLowerCase() === characterName.toLowerCase());
 if (!character) return conn.reply(m.chat, `⚠️ No se encontró el personaje "${characterName}".`, m);

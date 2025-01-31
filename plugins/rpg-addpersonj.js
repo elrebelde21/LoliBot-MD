@@ -2,16 +2,18 @@
 
 import fs from 'fs';
 import path from 'path';
-import fetch from 'node-fetch'; 
+import fetch from 'node-fetch';
 
 const filePath = path.resolve('./database/claimed_characters.json');
 
 const rankPriceRanges = {
-  'Legendary': [12000, 20000],
-  'Epic': [9000, 11999],
-  'Raro': [7600, 8999],
-  'Común': [4500, 7599],
-  'Mítico': [20000, 30000],
+  'Común': [6500, 8599],
+  'Raro': [8600, 10999],
+  'Épico': [11000, 14999],
+  'Legendario': [15000, 19999],
+  'Mítico': [20000, 34999],
+  'Divino': [35000, 49999],
+  'Supremo': [50000, 100000],
 };
 
 function getAvailableCharacters() {
@@ -35,23 +37,23 @@ function saveCharacters(characters) {
 
 async function fetchCharacterDetails(query) {
 const prompt = `Proporciona los siguientes detalles del personaje "${query}":
-  - Breve descripción en 20 palabras o menos relacionada con su historia o habilidades.
-  - Rango según su nivel de poder, importancia o rareza en su universo (elige entre: "Legendary", "Epic", "Raro", "Común", "Mítico").
-  - Fecha de lanzamiento si está disponible, en formato: dd/mm/yyyy.
-  Devuelve cada dato en líneas separadas en este formato:
-  - Descripción: [breve descripción]
-  - Rango: [rango]
-  - Fecha de lanzamiento: [fecha]`;
+- Breve descripción en 20 palabras o menos relacionada con su historia o habilidades.
+- Rango según su nivel de poder, importancia o rareza en su universo (elige entre: "Común", "Raro", "Épico", "Legendario", "Mítico", "Divino", "Supremo").
+- Fecha de lanzamiento si está disponible, en formato: dd/mm/yyyy.
+Devuelve cada dato en líneas separadas en este formato:
+- Descripción: [breve descripción]
+- Rango: [rango]
+- Fecha de lanzamiento: [fecha]`;
 try {
-let gpt = await fetch(`https://delirius-apiofc.vercel.app/ia/gptweb?text=${prompt}`)
-let res = await gpt.json()
-const content = res.data
+let gpt = await fetch(`${apis}/ia/gptweb?text=${prompt}`);
+let res = await gpt.json();
+const content = res.data;
 const description = content.match(/Descripción:\s*(.+)/i)?.[1]?.trim() || 'Descripción no disponible';
 const rank = content.match(/Rango:\s*(.+)/i)?.[1]?.trim() || 'Común';
 const release_date = content.match(/Fecha de lanzamiento:\s*(.+)/i)?.[1]?.trim() || 'Desconocida';
 return { description, rank, release_date };
 } catch (error) {
-console.error('Error api1:', error);
+console.error('Error en la API 1:', error);
 try {
 const response = await fetch(`https://api.dorratz.com/ai/bing?prompt=${prompt}`);
 const data = await response.json();
@@ -61,23 +63,22 @@ const description = responseText.match(/Descripción:\s*(.+)/i)?.[1]?.trim();
 const rank = responseText.match(/Rango:\s*(.+)/i)?.[1]?.trim();
 let release_date = responseText.match(/Fecha de lanzamiento:\s*(.+)/i)?.[1]?.trim();
 release_date = release_date?.replace(/\[\d+\](?![^[]*\])/g, '').trim();
-
-return { 
+return {
 description: description || null,
-rank: rank || null,
+rank: rank || 'Común',
 release_date: release_date || null,
-}} else {
-}} catch (e) {
-console.error(e);
+}}
+} catch (e) {
+console.error('Error en la API 2:', e);
 return {
 description: null,
 rank: 'Común',
 release_date: null,
-}}}}
+}}}
+}
 
 function calculatePriceByRank(rank) {
 if (!rank) {
-console.warn("Rango no disponible, se asignará el valor 'Común'.");
 rank = 'Común';
 }
 
@@ -86,29 +87,24 @@ const [min, max] = rankPriceRanges[formattedRank] || rankPriceRanges['Común'];
 return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-let handler = async (m, { conn, usedPrefix, command}) => {
-if (!m.text.includes(',')) return await conn.sendMessage(m.chat, { text: `⚠️ Usa el formato: ${usedPrefix + command} Nombre, URL, Tipo`}, { quoted: m });
+let handler = async (m, { conn, usedPrefix, command }) => {
+if (!m.text.includes(',')) return await m.reply(`⚠️ Usa el formato: ${usedPrefix + command} Nombre, URL, Tipo`)
 
 const extractedData = m.text.trim().slice(m.text.indexOf(' ') + 1);
 const params = extractedData.split(',');
-
-if (params.length < 3) return await conn.sendMessage(m.chat, { text: `⚠️ Formato inválido. Ejemplo: ${usedPrefix + command} Light Yagami, URL, Tipo` }, { quoted: m });    
+if (params.length < 3) return await m.reply(`⚠️ Formato inválido. Ejemplo: ${usedPrefix + command} Light Yagami, URL, Tipo`)
 
 const name = params[0].trim();
 const url = params[1].trim();
 const type = params[2].trim();
-
-if (!name || !url || !type) return await conn.sendMessage(m.chat, { text: '⚠️ Faltan datos: asegúrate de incluir nombre, URL y tipo.' }, { quoted: m });
-    
+if (!name || !url || !type) return await m.reply('⚠️ Faltan datos: asegúrate de incluir nombre, URL y tipo.')
 const availableCharacters = getAvailableCharacters();
 const characterExists = availableCharacters.some(c => c.name.toLowerCase() === name.toLowerCase());
-
-if (characterExists) return await conn.sendMessage(m.chat, { text: `⚠️ El personaje "${name}" ya está registrado.` }, { quoted: m });
-    
+if (characterExists) return await m.reply(`⚠️ El personaje "${name}" ya está registrado.`)
 const { description, rank, release_date } = await fetchCharacterDetails(name);
 const price = calculatePriceByRank(rank);
 
-const newCharacter = { id: `${name.toLowerCase().replace(/\s+/g, '_')}`,
+const newCharacter = {id: `${name.toLowerCase().replace(/\s+/g, '_')}`,
 name,
 url,
 type,
@@ -119,18 +115,13 @@ description,
 };
 availableCharacters.push(newCharacter);
 saveCharacters(availableCharacters);
-
 const priceFormatted = price.toLocaleString('en-US');
-
-await conn.sendMessage(m.chat, { text: `*\`¡NUEVO PERSONAJE AÑADIDO CON ÉXITO!\`*\n\n*• Nombre:* ${name}\n*• Precio:* ${priceFormatted} exp\n*• Imagen:* ${url}\n*• Tipo:* ${type}\n*• Rango:* ${rank}\n*• Fecha de lanzamiento:* ${release_date}\n*• Descripción:* ${description}` }, { quoted: m });
-
+await conn.sendMessage(m.chat, {text: `*\`¡NUEVO PERSONAJE AÑADIDO CON ÉXITO!\`*\n\n*• Nombre:* ${name}\n*• Precio:* ${priceFormatted} exp\n*• Imagen:* ${url}\n*• Tipo:* ${type}\n*• Rango:* ${rank}\n*• Fecha de lanzamiento:* ${release_date}\n*• Descripción:* ${description}` }, { quoted: m });
 const newCharacterJson = JSON.stringify(newCharacter, null, 2);
-await conn.reply('5214774444444@s.whatsapp.net', `Nuevo personaje agregado: \n\`\`\`${newCharacterJson}\`\`\``, null, {
-  contextInfo: { mentionedJid: [m.sender] }
-});
-}
-handler.help = ['addpersonajes']
-handler.tags = ['gacha']
+await conn.reply('5214774444444@s.whatsapp.net', `Nuevo personaje agregado: \n\`\`\`${newCharacterJson}\`\`\``, null, {contextInfo: { mentionedJid: [m.sender] }});
+};
+handler.help = ['addpersonajes'];
+handler.tags = ['gacha'];
 handler.command = ['addpersonajes', 'addcharacter'];
-handler.register = true
-export default handler
+handler.register = true;
+export default handler;

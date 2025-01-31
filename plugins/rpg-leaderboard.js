@@ -15,12 +15,12 @@ let topUsers = sortedUsers.slice(start, end);
 let text = `\`🏆 𝚃𝙰𝙱𝙻𝙰 𝙳𝙴 𝙲𝙻𝙰𝚂𝙸𝙲𝙰𝙲𝙸𝙾𝙽\`\n\n`;
 text += topUsers.map(({ jid, money, limit, exp }, i) => {
 let tag = `@${jid.replace(/@s\.whatsapp\.net$/, '')}`;
-return `*${start + i + 1} ›* ${tag}\n*🪙 Coins:* ${formatNumber(money)} (${money.toLocaleString()})\n*💎 Limit:* ${formatNumber(limit)} (${limit.toLocaleString()})\n*✨ Exp:* ${formatNumber(exp)} (${exp.toLocaleString()})\n`;
+return `*${start + i + 1} ›* ${tag}\n*💎 Diamante:* ${formatNumber(limit)} (${limit.toLocaleString()})\n*🪙 LoliCoins:* ${formatNumber(money)} (${money.toLocaleString()})\n*✨ Exp:* ${formatNumber(exp)} (${exp.toLocaleString()})\n`;
 }).join('\n');
 text += `\n*• Página:* ${page}/${totalPages}`;
 await m.reply(text, null, { mentions: conn.parseMention(text) });
 };
-handler.help = ['leaderboard [página]'];
+handler.help = ['leaderboard', 'lb'];
 handler.tags = ['econ'];
 handler.command = ['leaderboard', 'lb', 'top'];
 handler.register = true;

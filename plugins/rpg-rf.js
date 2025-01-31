@@ -49,8 +49,8 @@ let who = m.mentionedJid && m.mentionedJid[0] ? m.mentionedJid[0] : m.fromMe ? c
 let pp = await conn.profilePictureUrl(who, 'image').catch(_ => imageUrl.getRandom());
 const availableCharacters = syncCharacters();
 
-let time = global.db.data.users[m.sender].timeRy + 300000; //5min
-if (new Date() - global.db.data.users[m.sender].timeRy < 300000) return conn.fakeReply(m.chat,  `Bueno pa 🤚 para con emoción esperar ${msToTime(time - new Date())} para volver usar este comando `, m.sender, `No haga spam perra`, 'status@broadcast', null, fake);
+let time = global.db.data.users[m.sender].timeRy + 600000; //10min
+if (new Date() - global.db.data.users[m.sender].timeRy < 600000) return conn.fakeReply(m.chat,  `Bueno pa 🤚 para con emoción esperar ${msToTime(time - new Date())} para volver usar este comando `, m.sender, `No haga spam perra`, 'status@broadcast', null, fake);
 if (!availableCharacters || availableCharacters.length === 0) return;
 
 const randomCharacter = availableCharacters[Math.floor(Math.random() * availableCharacters.length)];
@@ -88,10 +88,10 @@ const user = global.db.data.users[m.sender];
 const characters = syncCharacters();
 const claimedCharacter = characters.find(c => c.url === character.url);
 if (claimedCharacter.claimedBy) {
-if (!claimedCharacter.forSale) return await conn.sendMessage(m.chat, {text: `❌ Este personaje ya ha sido comprado por @${claimedCharacter.claimedBy.split('@')[0]}`, contextInfo: { mentionedJid: [claimedCharacter.claimedBy] }}, { quoted: m });
+if (!claimedCharacter.forSale) return await conn.sendMessage(m.chat, {text: `⚠️ Este personaje ya ha sido comprado por @${claimedCharacter.claimedBy.split('@')[0]}`, contextInfo: { mentionedJid: [claimedCharacter.claimedBy] }}, { quoted: m });
 const seller = claimedCharacter.seller;
-if (claimedCharacter.seller === m.sender) return await conn.sendMessage(m.chat, { text: '❌ No puedes comprar tu propio personaje.' }, { quoted: m });
-if (user.exp < character.price) return await conn.sendMessage(m.chat, { text: '❌ No tienes suficientes exp para comprar este personaje.' }, { quoted: m });
+if (claimedCharacter.seller === m.sender) return await conn.sendMessage(m.chat, { text: '⚠️ No puedes comprar tu propio personaje.' }, { quoted: m });
+if (user.exp < character.price) return await conn.sendMessage(m.chat, { text: '⚠️ No tienes suficientes exp para comprar este personaje.' }, { quoted: m });
 user.exp -= character.price;
 const sellerExp = character.price * 0.90;
 global.db.data.users[seller].exp += sellerExp; 
@@ -103,7 +103,7 @@ await conn.sendMessage(m.chat, { text: `🎉 ¡Has comprado a ${character.name} 
 if (seller) {
 await conn.sendMessage(seller, {text: `🎉 ¡Tu personaje ${character.name} ha sido comprando por @${m.sender.split('@')[0]}\n💰 ${sellerExp} exp han sido transferidos a tu cuenta (después de la comisión).\n\n- Precio original: ${character.price} exp\n- Precio recibido: ${sellerExp} exp.`, image: { url: character.url }, contextInfo: { mentionedJid: [m.sender] }}, { quoted: m })
 }} else {
-if (user.exp < character.price) return await conn.sendMessage(m.chat, { text: '❌ No tienes suficientes exp para comprar este personaje.' }, { quoted: m });
+if (user.exp < character.price) return await conn.sendMessage(m.chat, { text: '⚠️ No tienes suficientes exp para comprar este personaje.' }, { quoted: m });
 user.exp -= character.price;
 claimedCharacter.claimedBy = m.sender;      
 saveCharacters(claimedFilePath, characters);
