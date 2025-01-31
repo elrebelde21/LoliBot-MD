@@ -9,7 +9,8 @@ for (let i = 0; i < hawemod.length; i++) {
 await new Promise(resolve => setTimeout(resolve, 1000)); 
 await conn.sendMessage(m.chat, {text: hawemod[i], edit: key}, {quoted: m})}
 await conn.sendMessage(m.chat, {text: `🚀 Reiniciando Bot...\nPor favor espere un momento`, edit: key}, {quoted: m});         
-process.send('reset')
+//process.send("reset")
+process.exit()
 }
 loading()     
 } else throw 'eh'

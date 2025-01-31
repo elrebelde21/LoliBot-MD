@@ -6,6 +6,7 @@ if (!text in msgs) throw `*⚠️ '${text}' 𝐍𝐨 𝐫𝐞𝐠𝐢𝐬𝐭�
 let _m = await conn.serializeM(msgs[text])
 await _m.copyNForward(m.chat, true)
 }
+handler.tags = ['owner'];
 handler.command = /^ver(vn|msg|video|audio|img|sticker)$/
 handler.rowner = true
 export default handler 

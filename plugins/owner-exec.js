@@ -39,7 +39,7 @@ if (m.fromMe) return
   }
 }
 handler.help = ['> ', '=> ']
-handler.tags = ['advanced']
+handler.tags = ['owner'];
 handler.customPrefix = /^=?> /
 handler.command = /(?:)/i
 handler.rowner = true
