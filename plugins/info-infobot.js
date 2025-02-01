@@ -14,14 +14,13 @@ async function getSystemInfo() {
 let cpuInfo = os.cpus();
 let modeloCPU = cpuInfo && cpuInfo.length > 0 ? cpuInfo[0].model : null
 
-const data = {
-plataforma: os.platform(),
+const data = {plataforma: os.platform(),
 núcleosCPU: cpuInfo ? cpuInfo.length : null,
 modeloCPU: modeloCPU,
 arquitecturaSistema: os.arch(),
 versiónSistema: os.release(),
-procesosActivos: os.loadavg()[0],       
-memory: humanFileSize(used.free, true, 1) + ' libre de ' + humanFileSize(used.total, true, 1),
+procesosActivos: os.loadavg()[0],
+memory: humanFileSize(used.free, true, 1) + ' libre de ' + humanFileSize(used.total, true, 1),        
 tiempoActividad: 'No disponible',
 cargaPromedio: os.loadavg().map((avg, index) => `${index + 1} min: ${avg.toFixed(2)}.`).join('\n'),
 horaActual: new Date().toLocaleString(),
@@ -40,7 +39,6 @@ return total + stat.total;
 return total;
 }}, 0);
 let formattedTotalStats = !isNaN(totalStats) ? toNum(totalStats) : 'N/A';
-
 let bot = global.db.data.settings[conn.user.jid];
 let _uptime = process.uptime() * 1000;
 let uptime = new Date(_uptime).toISOString().substr(11, 8);
@@ -74,14 +72,13 @@ let teks = `*≡ INFOBOT*
 
 *▣ Comando Ejecutando:* ${formattedTotalStats}/${totalStats}
 *▣ Grupos registrado:* ${toNum(totalchats)}/${totalchats}
-*▣ Usuarios registrado:*  ${rtotalreg} de ${totalreg} usuarios
+*▣ Usuarios registrado:* ${toNum(rtotalreg)} de ${toNum(totalreg)} users totales 
 
 *≡ S E R V E R*
 ▣ *Servidor:* ${hostname()}
 ▣ *Plataforma:* ${platform()}
-▣ *Núcleos de CPU:* ${data.núcleosCPU} 
-▣ *CPU Usada:* ${data.porcentajeCPUUsada} 
-▣ *Ram usada:* ${format(totalmem() - freemem())} / ${format(totalmem())}
+▣ *Cpu:* ${data.núcleosCPU} 
+▣ *Ram usada:* ${format(totalmem() - freemem())} de ${format(totalmem())}
 ▣ *Uptime:* ${toTime(os.uptime() * 1000)}`;
 
 await conn.sendMessage(m.chat, {image: { url: "https://telegra.ph/file/39fb047cdf23c790e0146.jpg" }, caption: teks, contextInfo: {externalAdReply: { title: `INFO - BOT`, sourceUrl: redes.getRandom(), mediaType: 1, showAdAttribution: true, thumbnailUrl: img1,
