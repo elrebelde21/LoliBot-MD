@@ -25,7 +25,7 @@ let name2 = conn.getName(m.sender)
 
 if (command == 'verify' || command == 'reg' || command == 'verificar') {
 if (user.registered === true) throw `*Ya estás registrado 🤨*`
-if (!Reg.test(text)) throw `*⚠️ ¿No sabes cómo usar este comando?* Sigue estos pasos:\n\n• Unirte al grupo:\n${[nnn, nnnttt, nnnt].getRandom()}\n• Después usa el comando de la siguiente manera: *${usedPrefix + command} nombre.edad*\n*• Ejemplo:* ${usedPrefix + command} ${name2}.16`
+if (!Reg.test(text)) throw `*⚠️ ¿No sabes cómo usar este comando?* Usar de la seguiente manera:\n\n*${usedPrefix + command} nombre.edad*\n*• Ejemplo:* ${usedPrefix + command} ${name2}.16`
   
 let [_, name, splitter, age] = text.match(Reg);
 if (!name) throw '*¿Y el nombre?*'
