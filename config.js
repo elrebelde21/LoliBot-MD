@@ -97,7 +97,7 @@ global.nnnt2 = 'https://chat.whatsapp.com/JqcMEpuH7OW9gZNWbtZMnx' // Grupo COL 2
 global.nnntt = 'https://chat.whatsapp.com/JqcMEpuH7OW9gZNWbtZMnx' //Grupo COL 3
 global.nnnttt = 'https://chat.whatsapp.com/Em4Byf4w5VgHObPvZQlfnM' //enlace lolibot
 global.nnntttt = 'https://chat.whatsapp.com/FRkr7jJHSJA5OjVtE64dDs' //Grupo ayuda sobre el bot
-global.bot = 'wa.me/573007487856'
+global.bot = 'wa.me/5213121663423'
 global.asistencia = `${fb}`
 global.redes = [nna, nna2, yt, nn, nnn, nnnt, nnnttt, md, tiktok, fb, nnn, face]
 
