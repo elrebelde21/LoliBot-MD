@@ -99,6 +99,7 @@
 "mime-types": "^2.1.35",
 "api-dylux": "^1.7.2",
 "yargs": "^17.6.0",
+"@hiudyy/ytdl": "^0.2.3",   
 "ytdl-core": "latest"    
 },
 "optionalDependencies": {
