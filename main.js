@@ -82,7 +82,7 @@ const interval = setInterval(() => {
 if (!global.db.READ) {
 clearInterval(interval);
 resolve(global.db.data);
-}}, 1000);
+}}, 1 * 1000);
 });
 }
 
@@ -122,7 +122,7 @@ const interval = setInterval(() => {
 if (!global.db.READ) {
 clearInterval(interval);
 resolve();
-}}, 100);
+}}, 1 * 1000);
 });
 }
 
@@ -260,22 +260,17 @@ keys: makeCacheableSignalKeyStore(state.keys, Pino({ level: "fatal" }).child({ l
 },
 markOnlineOnConnect: true, 
 generateHighQualityLinkPreview: true, 
-syncFullHistory: true,
-getMessage: async (key) => {
-try {
-let jid = jidNormalizedUser(key.remoteJid);
-let msg = await store.loadMessage(jid, key.id);
-return msg?.message || "";
-} catch (error) {
-return "";
-}},
-msgRetryCounterCache: msgRetryCounterCache || new Map(),
-userDevicesCache: userDevicesCache || new Map(),
-//msgRetryCounterMap,
+syncFullHistory: false,
+getMessage: async (clave) => {
+let jid = jidNormalizedUser(clave.remoteJid)
+let msg = await store.loadMessage(jid, clave.id)
+return msg?.message || ""
+},
+msgRetryCounterCache, // Resolver mensajes en espera
+msgRetryCounterMap, // Determinar si se debe volver a intentar enviar un mensaje o no
 defaultQueryTimeoutMs: undefined,
-cachedGroupMetadata: (jid) => global.conn.chats[jid] ?? {},
 version: [2, 3000, 1015901307],
-};
+}
 
 global.conn = makeWASocket(connectionOptions)
 

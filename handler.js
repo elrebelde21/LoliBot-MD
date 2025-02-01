@@ -72,6 +72,7 @@ if (!user.crime) user.crime = 0;
 if (!user.lastrob) user.lastrob = 0;
 if (!user.timeRy) user.timeRy = 0;
 if (!user.timevot) user.timevot = 0;
+if (!user.mensaje) user.mensaje = 0;
 if (!user.rtrofi) user.rtrofi = 'Bronce';
 } else
 global.db.data.users[m.sender] = {
@@ -103,6 +104,7 @@ crime: 0,
 lastrob: 0,
 timevot: 0,
 rtrofi: 'bronce',          
+mensaje: 0,
 }
 let chat = global.db.data.chats[m.chat]
 if (typeof chat !== 'object')
