@@ -11,55 +11,52 @@ let format = sizeFormatter({std: 'JEDEC', decimalPlaces: 2, keepTrailingZeroes: 
 const used = process.memoryUsage();
 
 async function getSystemInfo() {
-    let cpuInfo = os.cpus();
-    let modeloCPU = cpuInfo && cpuInfo.length > 0 ? cpuInfo[0].model : 'Modelo de CPU no disponible';
-    let espacioTotalDisco = 'Información no disponible';
+let cpuInfo = os.cpus();
+let modeloCPU = cpuInfo && cpuInfo.length > 0 ? cpuInfo[0].model : null
 
-    const data = {
-        latencia: 'No disponible',
-        plataforma: os.platform(),
-        núcleosCPU: cpuInfo ? cpuInfo.length : 'No disponible',
-        modeloCPU: modeloCPU,
-        arquitecturaSistema: os.arch(),
-        versiónSistema: os.release(),
-        procesosActivos: os.loadavg()[0],
-        porcentajeCPUUsada: 'No disponible',
-        memory: humanFileSize(used.free, true, 1) + ' libre de ' + humanFileSize(used.total, true, 1),
-        ramUsada: 'No disponible',
-        ramTotal: 'No disponible',
-        ramLibre: 'No disponible',
-        porcentajeRAMUsada: 'No disponible',
-        espacioTotalDisco: espacioTotalDisco,
-        tiempoActividad: 'No disponible',
-        cargaPromedio: os.loadavg().map((avg, index) => `${index + 1} min: ${avg.toFixed(2)}.`).join('\n'),
-        horaActual: new Date().toLocaleString(),
-    };
-
-    const startTime = Date.now();
-    const endTime = Date.now();
-    data.latencia = `${endTime - startTime} ms`;
-
-    return data;
+const data = {
+plataforma: os.platform(),
+núcleosCPU: cpuInfo ? cpuInfo.length : null,
+modeloCPU: modeloCPU,
+arquitecturaSistema: os.arch(),
+versiónSistema: os.release(),
+procesosActivos: os.loadavg()[0],       
+memory: humanFileSize(used.free, true, 1) + ' libre de ' + humanFileSize(used.total, true, 1),
+tiempoActividad: 'No disponible',
+cargaPromedio: os.loadavg().map((avg, index) => `${index + 1} min: ${avg.toFixed(2)}.`).join('\n'),
+horaActual: new Date().toLocaleString(),
+};
+const startTime = Date.now();
+const endTime = Date.now();
+data.latencia = `${endTime - startTime} ms`;
+return data;
 }
 
 let handler = async (m, { conn, usedPrefix }) => {
-    let bot = global.db.data.settings[conn.user.jid];
-    let _uptime = process.uptime() * 1000;
-    let uptime = new Date(_uptime).toISOString().substr(11, 8);
-    let totalreg = Object.keys(global.db.data.users).length;
-    let rtotalreg = Object.values(global.db.data.users).filter(user => user.registered == true).length;
-    let totalbots = Object.keys(global.db.data.settings).length;
-    let totalStats = Object.values(global.db.data.stats).reduce((total, stat) => total + stat.total, 0);
-    const chats = Object.entries(conn.chats).filter(([id, data]) => id && data.isChats);
-    let totalchats = Object.keys(global.db.data.chats).length;
-    let totalf = Object.values(global.plugins).filter(v => v.help && v.tags).length;
-    const groupsIn = chats.filter(([id]) => id.endsWith('@g.us'));
-    let totaljadibot = [...new Set([...global.conns.filter((conn) => conn.user && conn.ws.socket && conn.ws.socket.readyState !== ws.CLOSED).map((conn) => conn)])];
-    const totalUsers = totaljadibot.length;
-    let timestamp = speed();
-    let latensi = speed() - timestamp;
-    const { restrict } = global.db.data.settings[conn.user.jid] || {}
-    const { autoread } = global.opts    
+let totalStats = Object.values(global.db.data.stats).reduce((total, stat) => {
+if (typeof stat.total === 'number' && !isNaN(stat.total)) {
+return total + stat.total;
+} else {
+return total;
+}}, 0);
+let formattedTotalStats = !isNaN(totalStats) ? toNum(totalStats) : 'N/A';
+
+let bot = global.db.data.settings[conn.user.jid];
+let _uptime = process.uptime() * 1000;
+let uptime = new Date(_uptime).toISOString().substr(11, 8);
+let totalreg = Object.keys(global.db.data.users).length;
+let rtotalreg = Object.values(global.db.data.users).filter(user => user.registered == true).length;
+let totalbots = Object.keys(global.db.data.settings).length;
+const chats = Object.entries(conn.chats).filter(([id, data]) => id && data.isChats);
+let totalchats = Object.keys(global.db.data.chats).length;
+let totalf = Object.values(global.plugins).filter(v => v.help && v.tags).length;
+const groupsIn = chats.filter(([id]) => id.endsWith('@g.us'));
+let totaljadibot = [...new Set([...global.conns.filter((conn) => conn.user && conn.ws.socket && conn.ws.socket.readyState !== ws.CLOSED).map((conn) => conn)])];
+const totalUsers = totaljadibot.length;
+let timestamp = speed();
+let latensi = speed() - timestamp;
+const { restrict } = global.db.data.settings[conn.user.jid] || {}
+const { autoread } = global.opts    
 
 getSystemInfo().then(async (data) => {
 let teks = `*≡ INFOBOT*
@@ -75,15 +72,16 @@ let teks = `*≡ INFOBOT*
 *▣ Velocidad:* ${latensi.toFixed(4)} ms
 *▣ Actividad:* ${uptime}
 
-*▣ Comando Ejecutando:* ${toNum(totalStats)}/${totalStats}
+*▣ Comando Ejecutando:* ${formattedTotalStats}/${totalStats}
 *▣ Grupos registrado:* ${toNum(totalchats)}/${totalchats}
-*▣ Usuarios registrado:* ${toNum(rtotalreg)} de ${toNum(totalreg)} users totales 
+*▣ Usuarios registrado:*  ${rtotalreg} de ${totalreg} usuarios
 
 *≡ S E R V E R*
 ▣ *Servidor:* ${hostname()}
 ▣ *Plataforma:* ${platform()}
-▣ *Cpu:* ${data.núcleosCPU} 
-▣ *Ram usada:* ${format(totalmem() - freemem())} de ${format(totalmem())}
+▣ *Núcleos de CPU:* ${data.núcleosCPU} 
+▣ *CPU Usada:* ${data.porcentajeCPUUsada} 
+▣ *Ram usada:* ${format(totalmem() - freemem())} / ${format(totalmem())}
 ▣ *Uptime:* ${toTime(os.uptime() * 1000)}`;
 
 await conn.sendMessage(m.chat, {image: { url: "https://telegra.ph/file/39fb047cdf23c790e0146.jpg" }, caption: teks, contextInfo: {externalAdReply: { title: `INFO - BOT`, sourceUrl: redes.getRandom(), mediaType: 1, showAdAttribution: true, thumbnailUrl: img1,
