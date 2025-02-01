@@ -1,5 +1,5 @@
 const handler = async (m, {isPrems, conn}) => {
-const time = global.db.data.users[m.sender].lastcofre + 122400000; // 36000000 10 Horas //86400000 24 Horas
+const time = global.db.data.users[m.sender].lastcofre + 122400000; //3 dias
 if (new Date - global.db.data.users[m.sender].lastcofre < 122400000) throw `🕛 𝐘𝐚 𝐫𝐞𝐜𝐥𝐚𝐦𝐚𝐬𝐭𝐞 𝐭𝐮 𝐜𝐨𝐟𝐫𝐞 𝐯𝐮𝐞𝐥𝐯𝐞 𝐞𝐧: *${msToTime(time - new Date())}* 𝐏𝐚𝐫𝐚 𝐯𝐨𝐥𝐯𝐞𝐫 𝐚 𝐫𝐞𝐬𝐜𝐥𝐚𝐦𝐚𝐫`;
 
 const img = 'https://img.freepik.com/vector-gratis/cofre-monedas-oro-piedras-preciosas-cristales-trofeo_107791-7769.jpg?w=2000';

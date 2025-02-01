@@ -12,6 +12,11 @@ let usedPrefix = m.text.match(prefixRegex)[0]
 let command = m.text.slice(usedPrefix.length).trim().split(' ')[0]
 }
 
+if (!global.db.data.users[m.sender]) global.db.data.users[m.sender] = {};
+if (!global.db.data.users[m.sender].mensaje) global.db.data.users[m.sender].mensaje = {};
+if (!global.db.data.users[m.sender].mensaje[m.chat]) global.db.data.users[m.sender].mensaje[m.chat] = 0;
+global.db.data.users[m.sender].mensaje[m.chat]++;
+
 if (m.fromMe) return
 if (m.isGroup) return !1
 if (!m.message) return !0 

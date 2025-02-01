@@ -8,7 +8,7 @@ global.db.data.users[m.sender].lastwork = new Date() * 1;
 };
 handler.help = ['work', 'trabaja', 'w']
 handler.tags = ['econ']
-handler.command = /^(work|trabajar|chambear|w)$/i
+handler.command = /^(work|trabajar|chambear|w|chamba)$/i
 handler.register = true
 export default handler
 
