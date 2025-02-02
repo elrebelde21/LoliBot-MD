@@ -266,9 +266,11 @@ let jid = jidNormalizedUser(clave.remoteJid)
 let msg = await store.loadMessage(jid, clave.id)
 return msg?.message || ""
 },
-msgRetryCounterCache, // Resolver mensajes en espera
-msgRetryCounterMap, // Determinar si se debe volver a intentar enviar un mensaje o no
+msgRetryCounterCache: msgRetryCounterCache || new Map(),
+userDevicesCache: userDevicesCache || new Map(),
+msgRetryCounterMap,
 defaultQueryTimeoutMs: undefined,
+cachedGroupMetadata: (jid) => global.conn.chats[jid] ?? {},
 version: [2, 3000, 1015901307],
 }
 
