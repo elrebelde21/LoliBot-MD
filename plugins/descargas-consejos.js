@@ -38,7 +38,7 @@ await m.react(`❌`)
 m.reply(`\`\`\`⚠️ OCURRIO UN ERROR ⚠️\`\`\`\n\n> *Reporta el siguiente error a mi creador con el comando:*#report\n\n>>> ${e} <<<< `)       
 console.log(e)}}
 handler.help = ['consejo']
-handler.tags = ['downloader']
+handler.tags = ['game']
 handler.command = ['consejo', 'advice', 'frase2', 'phrase2']
 handler.register = true
 handler.limit = 1

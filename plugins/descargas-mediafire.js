@@ -5,9 +5,27 @@ import {mediafiredl} from '@bochilteam/scraper';
 
 const handler = async (m, {conn, args, usedPrefix, command}) => {
 let sticker = 'https://qu.ax/Wdsb.webp'
-if (!args[0]) return conn.reply(m.chat, `⚠️ 𝙄𝙣𝙜𝙧𝙚𝙨𝙚 𝙪𝙣 𝙀𝙣𝙡𝙖𝙘𝙚 𝙫𝙖𝙡𝙞𝙙𝙤 𝙙𝙚𝙡 𝙢𝙚𝙙𝙞𝙖𝙛𝙞𝙧𝙚 𝙀𝙟:*\n${usedPrefix + command} https://www.mediafire.com/file/cv64tns6co3272q/Lolibot.zip/file`, m, {contextInfo: {externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: wm, previewType: 0, thumbnail: img.getRandom(), sourceUrl: redes.getRandom()}}})   
+if (!args[0]) return m.reply(`⚠️ 𝙄𝙣𝙜𝙧𝙚𝙨𝙚 𝙪𝙣 𝙀𝙣𝙡𝙖𝙘𝙚 𝙫𝙖𝙡𝙞𝙙𝙤 𝙙𝙚𝙡 𝙢𝙚𝙙𝙞𝙖𝙛𝙞𝙧𝙚 𝙀𝙟:*\n${usedPrefix + command} https://www.mediafire.com/file/cv64tns6co3272q/Lolibot.zip/file`)
 m.react(`🚀`) 
- try {
+try {
+const res = await fetch(`https://api.siputzx.my.id/api/d/mediafire?url=${args[0]}`);
+if (!res.ok) throw new Error(`Error en la API 1: ${res.statusText}`);
+const data = await res.json();
+if (!data.status || !data.data) return 
+const fileDataArray = data.data;
+for (const fileData of fileDataArray) {
+const caption = `┏━━『 𝐌𝐄𝐃𝐈𝐀𝐅𝐈𝐑𝐄 』━━•
+┃❥ 𝐍𝐨𝐦𝐛𝐫𝐞 : ${fileData.filename}
+┃❥ 𝐏𝐞𝐬𝐨 : ${fileData.size}
+┃❥ 𝐓𝐢𝐩𝐨 : ${fileData.mime}
+╰━━━⊰ 𓃠 ${vs} ⊱━━━━•
+> ⏳ ᴱˢᵖᵉʳᵉ ᵘⁿ ᵐᵒᵐᵉⁿᵗᵒ ᵉⁿ ˡᵒˢ ᵠᵘᵉ ᵉⁿᵛᶦᵒˢ ˢᵘˢ ᵃʳᶜʰᶦᵛᵒˢ
+`.trim(); 
+await conn.sendFile(m.chat, fileData.link, fileData.filename, caption, m, null, {mimetype: fileData.mime, asDocument: true });
+m.react('✅'); 
+}
+} catch (error) {
+try {
 const res = await fetch(`${apis}/api/mediafire?url=${args[0]}`);
 if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
 const data = await res.json();
@@ -38,7 +56,7 @@ m.react(`✅`)
 console.error(error3);
 conn.sendFile(m.chat, sticker, 'error.webp', '', m, null, fake)
 m.react(`❌`) 
-}}}}
+}}}}}
 handler.help = ['mediafire', 'mediafiredl'];
 handler.tags = ['downloader'];
 handler.command = /^(mediafire|mediafiredl|dlmediafire)$/i
