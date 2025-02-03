@@ -285,7 +285,7 @@ auth: {
 creds: state.creds,
 keys: makeCacheableSignalKeyStore(state.keys, Pino({ level: "fatal" }).child({ level: "fatal" })),
 },
-browser: Browsers.ubuntu("Edge"),
+browser: opcion == '1' ? ['LoliBot-MD', 'Edge', '20.0.04'] : methodCodeQR ? ['LoliBot-MD', 'Edge', '20.0.04'] : ["Ubuntu", "Chrome", "20.0.04"],
 version: version,
 generateHighQualityLinkPreview: true
 };
