@@ -12,9 +12,9 @@
    {
   "id": "alya_san",
   "name": "Alya San",
-  "url": "https://cloud.dorratz.com/files/e5d2c1046eba5e1bcef348d2c0221deb.jpg",
+  "url": "https://tinyurl.com/28k4w7g5",
   "type": "anime",
-  "price": 25000,
+  "price": 45000,
   "rank": "Epic",
   "release_date": "July 3, 2023",
   "description": "Alya San es una joven brillante y carismática conocida por su gran intelecto y habilidades sociales. Con una personalidad encantadora, es un personaje destacado que conquista corazones y se enfrenta a desafíos con valentía."
@@ -52,7 +52,7 @@
   {
     "id": "light_yagami",
     "name": "Light Yagami",
-    "url": "https://cloud.dorratz.com/files/cc7a9e0110964f4edf6007a0e72a7c58",
+    "url": "https://tinyurl.com/26y9acxm",
     "type": "anime",
     "price": 4500,
     "rank": "Rare",
@@ -62,7 +62,7 @@
   {
     "id": "shikamaru_nara",
     "name": "Shikamaru Nara",
-    "url": "https://cloud.dorratz.com/files/1e292c29a02d51fe9bd2300dca939ec7.jpg",
+    "url": "https://tinyurl.com/26y9acxm",
     "type": "anime",
     "price": 9599,
     "rank": "Epic",
@@ -72,7 +72,7 @@
   {
     "id": "spike_siegel",
     "name": "Spike Spiegel",
-    "url": "https://cloud.dorratz.com/files/295c02735d3238291e43cc8428b8c90c.jpg",
+    "url": "https://tinyurl.com/2xh3qfla",
     "type": "anime",
     "price": 10000,
     "rank": "Epic",
@@ -82,7 +82,7 @@
   {
     "id": "saitama",
     "name": "Saitama",
-    "url": "https://cloud.dorratz.com/files/0c9da87c57453ebce259b279fa2f362f.jpg",
+    "url": "https://tinyurl.com/2665otac",
     "type": "anime",
     "price": 13689,
     "rank": "Legendary",
@@ -92,7 +92,7 @@
   {
     "id": "asuna_yuuki",
     "name": "Asuna Yuuki",
-    "url": "https://cloud.dorratz.com/files/cb22e9854dd64abcc4e1ab15f6391d17",
+    "url": "https://tinyurl.com/22f8lmxo",
     "type": "anime",
     "price": 10566,
     "rank": "Epic",
@@ -102,7 +102,7 @@
   {
     "id": "madara_uchiha",
     "name": "Madara Uchiha",
-    "url": "https://cloud.dorratz.com/files/7255778f3e3a5f289e4fee110c5d7c22.jpg",
+    "url": "https://tinyurl.com/2d46tzd9",
     "type": "anime",
     "price": 11456,
     "rank": "Legendary",
@@ -112,7 +112,7 @@
   {
     "id": "darth_vader",
     "name": "Darth Vader",
-    "url": "https://cloud.dorratz.com/files/d8b3931d547552e5faa0c37287cf1bfa.jpg",
+    "url": "https://tinyurl.com/297sl3k4",
     "type": "movie",
     "price": 9500,
     "rank": "Legendary",
@@ -122,7 +122,7 @@
 {
     "id": "kaito_kid",
     "name": "Kaito KID",
-    "url": "https://cloud.dorratz.com/files/7ce844243ffd34bb5f55aa171d2f1f8a.jpg",
+    "url": "https://tinyurl.com/2946nwqo",
     "type": "anime",
     "price": 8500,
     "rank": "Rare",
@@ -132,7 +132,7 @@
   {
     "id": "todoroki_shoto",
     "name": "Shoto Todoroki",
-    "url": "https://cloud.dorratz.com/files/9edbf8fb3aec3f6772a90e262b30caad.jpg",
+    "url": "https://tinyurl.com/22ga2q4w",
     "type": "anime",
     "price": 10999,
     "rank": "Epic",
@@ -142,7 +142,7 @@
   {
     "id": "hanzo_hattori",
     "name": "Hanzo Hattori",
-    "url": "https://cloud.dorratz.com/files/2009ecc1843c31e8aac90264bfa9178e.png",
+    "url": "https://tinyurl.com/2by6kbhq",
     "type": "anime",
     "price": 9000,
     "rank": "Epic",
@@ -152,7 +152,7 @@
   {
     "id": "holo",
     "name": "Holo",
-    "url": "https://cloud.dorratz.com/files/4728489eeabbeca3055cb9ec5299d623.jpg",
+    "url": "https://tinyurl.com/28ko4qdt",
     "type": "anime",
     "price": 7650,
     "rank": "Rare",
@@ -162,7 +162,7 @@
   {
     "id": "frieza",
     "name": "Frieza",
-    "url": "https://cloud.dorratz.com/files/090b342b211a60d58261674b7f9a046f.jpg",
+    "url": "https://tinyurl.com/246lpmwe",
     "type": "anime",
     "price": 15000,
     "rank": "Legendary",
@@ -172,7 +172,7 @@
   {
     "id": "rem",
     "name": "Rem",
-    "url": "https://cloud.dorratz.com/files/03da618fa74691223681372a505fb512.jpg",
+    "url": "https://tinyurl.com/28y8eu7o",
     "type": "anime",
     "price": 8600,
     "rank": "Rare",
@@ -182,7 +182,7 @@
   {
     "id": "jotaro_kujo",
     "name": "Jotaro Kujo",
-    "url": "https://cloud.dorratz.com/files/cb6c0c987ac6eb214ddaf2d8a24ba971.jpg",
+    "url": "https://tinyurl.com/24jn8rya",
     "type": "anime",
     "price": 15600,
     "rank": "Legendary",
@@ -192,7 +192,7 @@
   {
     "id": "vegeta",
     "name": "Vegeta",
-    "url": "https://cloud.dorratz.com/files/7f1d61f71a6361243994dd3cb157ebdd.jpg",
+    "url": "https://tinyurl.com/27bbxwla",
     "type": "anime",
     "price": 19500,
     "rank": "Legendary",
@@ -202,7 +202,7 @@
   {
     "id": "lelouch_mille_feuille",
     "name": "Lelouch Mille Feuille",
-    "url": "https://cloud.dorratz.com/files/cbd5d922be667e9140747aac8de8f437.jpg",
+    "url": "https://tinyurl.com/28r4qaop",
     "type": "anime",
     "price": 10897,
     "rank": "Epic",
@@ -212,7 +212,7 @@
 {
     "id": "esdeath",
     "name": "Esdeath",
-    "url": "https://cloud.dorratz.com/files/80304c238b90bde137cc1d778d2d53ac.jpg",
+    "url": "https://tinyurl.com/2bsu7eao",
     "type": "anime",
     "price": 16500,
     "rank": "Legendary",
@@ -222,7 +222,7 @@
   {
     "id": "asuna_yuuki",
     "name": "Asuna Yuuki",
-    "url": "https://cloud.dorratz.com/files/8b663cb137d0cc1f0232e356ae8cee25.jpg",
+    "url": "https://tinyurl.com/2yeem8cl",
     "type": "anime",
     "price": 10400,
     "rank": "Epic",
@@ -232,7 +232,7 @@
   {
     "id": "shanks",
     "name": "Shanks",
-    "url": "https://cloud.dorratz.com/files/fdbb8da21c7d7e6ab20a02dcc1765f0d.jpg",
+    "url": "https://tinyurl.com/229b3o56",
     "type": "anime",
     "price": 16500,
     "rank": "Legendary",
@@ -242,7 +242,7 @@
   {
     "id": "izuku_midoriya",
     "name": "Izuku Midoriya",
-    "url": "https://cloud.dorratz.com/files/d9625c00c8ddd69c5f5c8f0e7014fd29.jpg",
+    "url": "https://tinyurl.com/22zr55nc",
     "type": "anime",
     "price": 6500,
     "rank": "Epic",
@@ -252,7 +252,7 @@
   {
     "id": "kakashi_hatake",
     "name": "Kakashi Hatake",
-    "url": "https://cloud.dorratz.com/files/177b7acdd2f802d50205e77508a95a31.jpg",
+    "url": "https://tinyurl.com/28oa3qlx",
     "type": "anime",
     "price": 1600,
     "rank": "Legendary",
@@ -262,7 +262,7 @@
   {
     "id": "aizen_sosuke",
     "name": "Sosuke Aizen",
-    "url": "https://cloud.dorratz.com/files/71e04475b52584d23ceeab86ee56109b.jpg",
+    "url": "https://tinyurl.com/26n5ba32",
     "type": "anime",
     "price": 1800,
     "rank": "Legendary",
@@ -272,7 +272,7 @@
   {
     "id": "haruhi_suzumiya",
     "name": "Haruhi Suzumiya",
-    "url": "https://cloud.dorratz.com/files/da22fa3bf28ef0c38044a564cc33bdc4.jpg",
+    "url": "https://tinyurl.com/288hasg5",
     "type": "anime",
     "price": 3987,
     "rank": "Epic",
@@ -282,7 +282,7 @@
   {
     "id": "kiryuu_saber",
     "name": "Saber (Kiryuu)",
-    "url": "https://cloud.dorratz.com/files/75a443f631c7f6d4a1b080535a1ad806.jpg",
+    "url": "https://tinyurl.com/23jwnlyp",
     "type": "anime",
     "price": 13966,
     "rank": "Legendary",
@@ -292,7 +292,7 @@
   {
     "id": "gon_freecss",
     "name": "Gon Freecss",
-    "url": "https://cloud.dorratz.com/files/15507651905b47f3541a6fdb9de9df35.jpg",
+    "url": "https://tinyurl.com/24bvb3gg",
     "type": "anime",
     "price": 4670,
     "rank": "Epic",
@@ -302,7 +302,7 @@
   {
     "id": "kenpachi_zyaraki",
     "name": "Kenpachi Zaraki",
-    "url": "https://cloud.dorratz.com/files/b2365deb0ef02159f9269de3bb2f1eda.png",
+    "url": "https://tinyurl.com/26nqpsuz",
     "type": "anime",
     "price": 14677,
     "rank": "Legendary",
@@ -312,7 +312,7 @@
   {
     "id": "natsu_dragneel",
     "name": "Natsu Dragneel",
-    "url": "https://cloud.dorratz.com/files/f16defb6c10f4c653abca73051431ad9.png",
+    "url": "https://tinyurl.com/2xkwqfhe",
     "type": "anime",
     "price": 6500,
     "rank": "Epic",
@@ -322,7 +322,7 @@
   {
     "id": "mob_kiyotaka",
     "name": "Mob Kiyotaka",
-    "url": "https://cloud.dorratz.com/files/0891cf0bafa54eedf2f0d7034450c054.jpg",
+    "url": "https://tinyurl.com/2a5bdoaj",
     "type": "anime",
     "price": 6800,
     "rank": "Rare",
@@ -332,7 +332,7 @@
   {
     "id": "shiro",
     "name": "Shiro",
-    "url": "https://cloud.dorratz.com/files/767bc68056e562add6c9f3d5a6bf4e7c.jpg",
+    "url": "https://tinyurl.com/2xps5lrz",
     "type": "anime",
     "price": 4999,
     "rank": "Rare",
@@ -342,7 +342,7 @@
   {
     "id": "hinata_hyuga",
     "name": "Hinata Hyuga",
-    "url": "https://cloud.dorratz.com/files/5c7a993c3e6a9d5c03738e53a3064819.jpg",
+    "url": "https://tinyurl.com/244vxc36",
     "type": "anime",
     "price": 5600,
     "rank": "Epic",
@@ -352,7 +352,7 @@
   {
     "id": "yamato_kurosawa",
     "name": "Yamato Kurosawa",
-    "url": "https://cloud.dorratz.com/files/06aecf2fe593703c955400e6ef287154.jpg",
+    "url": "https://tinyurl.com/26g6zko2",
     "type": "anime",
     "price": 6988,
     "rank": "Epic",
@@ -362,7 +362,7 @@
   {
     "id": "elizabeth_liones",
     "name": "Elizabeth Liones",
-    "url": "https://cloud.dorratz.com/files/a735d1180930005290e001a8405da455.jpg",
+    "url": "https://tinyurl.com/23xgbsnb",
     "type": "anime",
     "price": 7500,
     "rank": "Rare",
@@ -372,13 +372,63 @@
   {
     "id": "kaguya_otsutsuki",
     "name": "Kaguya Otsutsuki",
-    "url": "https://cloud.dorratz.com/files/590d7cb0f1bec382ac17e98f17c45027.jpg",
+    "url": "https://tinyurl.com/2xsjqex5",
     "type": "anime",
     "price": 13689,
     "rank": "Legendary",
     "release_date": "October 3, 1999",
     "description": "Kaguya Otsutsuki is the progenitor of chakra and the final antagonist of *Naruto Shippuden*. She is incredibly powerful and was once known as the most feared being on the planet."
-  }
+  },
+  {
+  "id": "asuna",
+  "name": "Asuna",
+  "url": "https://tinyurl.com/23lg9egd",
+  "type": "Mujer",
+  "price": 13354,
+  "rank": "Épico",
+  "release_date": "01/07/2012",
+  "description": "Asuna es una experta espadachina y protagonista de \"Sword Art Online\", destacándose en habilidades de combate y liderazgo."
+  },
+  {
+  "id": "hu-tao",
+  "name": "Hu-tao",
+  "url": "https://tinyurl.com/25uq9mu2",
+  "type": "legendario",
+  "price": 35968,
+  "rank": "Mítico",
+  "release_date": "02/03/2021",
+  "description": "Hu Tao es la directora del funeral de Wangsheng y tiene habilidades de Pyro y control de espíritus."
+},
+{
+  "id": "miku_hatsune_",
+  "name": "Miku Hatsune",
+  "url": "https://tinyurl.com/2y4csmoy",
+  "type": "anime",
+  "price": 54750,
+  "rank": "Legendario",
+  "release_date": "31/08/2007",
+  "description": "Miku Hatsune es una cantante virtual que utiliza la tecnología Vocaloid para crear música y conectar culturas."
+},
+{
+  "id": "zenles_zone_zero",
+  "name": "Zenles zone zero",
+  "url": "https://tinyurl.com/24rka77h",
+  "type": "raro",
+  "price": 6579,
+  "rank": "Legendario",
+  "release_date": "01/12/2023",
+  "description": "Zenles es un guerrero adaptativo con habilidades que cambian según el entorno y sus oponentes, siempre buscando la victoria."
+},
+{
+  "id": "rias_gremory",
+  "name": "Rias Gremory",
+  "url": "https://tinyurl.com/25pzkoze",
+  "type": "anime",
+  "price": 36500,
+  "rank": "Legendario",
+  "release_date": "06/09/2012",
+  "description": "Rias Gremory es una demonio noble con habilidades sobresalientes en magia y líder del grupo de protagonistas."
+}
 ]
 
 
