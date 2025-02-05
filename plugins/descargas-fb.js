@@ -8,7 +8,7 @@ const handler = async (m, {conn, args, command, usedPrefix}) => {
 if (!args[0]) return conn.reply(m.chat,  `⚠️ 𝙄𝙣𝙜𝙧𝙚𝙨𝙚 𝙪𝙣 𝙚𝙣𝙡𝙖𝙘𝙚 𝙙𝙚 𝙁𝙖𝙘𝙚𝙗𝙤𝙤𝙠 𝙥𝙖𝙧𝙖 𝙙𝙚𝙨𝙘𝙖𝙧𝙜𝙖𝙧 𝙚𝙡 𝙑𝙞𝙙𝙚𝙤\n• *𝙀𝙟 :* ${usedPrefix + command} https://www.facebook.com/watch?v=636541475139`, m, {contextInfo: { externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: wm, body: '', previewType: 0, thumbnail: imagen4, sourceUrl: redes.getRandom()}}})
 if (!args[0].match(/www.facebook.com|fb.watch/g)) return m.reply(`⚠️ 𝙄𝙣𝙜𝙧𝙚𝙨𝙚 𝙪𝙣 𝙚𝙣𝙡𝙖𝙘𝙚 𝙙𝙚 𝙁𝙖𝙘𝙚𝙗𝙤𝙤𝙠 𝙥𝙖𝙧𝙖 𝙙𝙚𝙨𝙘𝙖𝙧𝙜𝙖𝙧 𝙚𝙡 𝙑𝙞𝙙𝙚𝙤\n• *𝙀𝙟 :* ${usedPrefix + command} https://www.facebook.com/watch?v=636541475139`) 
 m.react(`⌛`) 
-try {
+try { 
 const apiUrl = `${apis}/download/facebook?url=${encodeURIComponent(args[0])}`;
 const apiResponse = await fetch(apiUrl);
 const delius = await apiResponse.json();
@@ -16,7 +16,7 @@ if (!delius || !delius.urls || delius.urls.length === 0) return m.react("❌")
 const downloadUrl = delius.urls[0].hd || delius.urls[0].sd;
 if (!downloadUrl) return m.react("❌");
 await conn.sendFile(m.chat, downloadUrl, 'video.mp4', '✅ Aquí está tu video de Facebook', m);
-}} catch (err1) {
+} catch (err1) {
 try {
 const apiUrl = `https://api.dorratz.com/fbvideo?url=${encodeURIComponent(args[0])}`;
 const response = await fetch(apiUrl);
@@ -27,7 +27,7 @@ const sdUrl = data.result.sd;
 const audioUrl = data.result.audio;        
 const downloadUrl = hdUrl || sdUrl; 
 await conn.sendFile(m.chat, downloadUrl, 'video.mp4', '✅ Aquí está tu video de Facebook', m, null, fake);
-} catch (err2) {
+}} catch (err2) {
 try {
 const d2ata = await facebook.v1(args[0]);
 let r2es = '';
