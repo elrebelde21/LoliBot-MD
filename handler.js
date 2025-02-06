@@ -339,28 +339,13 @@ m.plugin = name
 if (m.chat in global.db.data.chats || m.sender in global.db.data.users) {
 let chat = global.db.data.chats[m.chat]
 let user = global.db.data.users[m.sender]
-let botSpam = global.db.data.settings[this.user.jid]
-if (!['owner-unbanchat.js', 'gc-link.js', 'gc-hidetag.js', 'info-creator.js'].includes(name) && chat && chat.isBanned && !isROwner) return // Except this
+if (!['owner-unbanchat.js'].includes(name) && chat && chat.isBanned && !isROwner) return // Except this
 if (name != 'owner-unbanchat.js' && name != 'owner-exec.js' && name != 'owner-exec2.js' && name != 'tool-delete.js' && chat?.isBanned && !isROwner) return 
 if (m.text && user.banned && !isROwner) {
-if (typeof user.bannedMessageCount === 'undefined') {
-user.bannedMessageCount = 0;
-}
-if (user.bannedMessageCount < 3) {
-const messageNumber = user.bannedMessageCount + 1;
-const messageText = `⚠️ ESTAS BANEADO ⚠️\nAviso (${messageNumber}/3)${user.bannedReason ? `\n*Motivo:* *${user.bannedReason}*` : ''}
-*👉🏻 Puedes contactar al propietario del Bot si crees que se trata de un error o para charlar sobre tu desbaneo*
-
-👉 ${fb}
-`.trim();
-m.reply(messageText);
-user.bannedMessageCount++;
-} else if (user.bannedMessageCount === 3) {
-user.bannedMessageSent = true;
-} else {
-return;
-}
-return;
+if (user.antispam > 2) return
+m.reply(`⚠️ ESTAS BANEADO ⚠️\n*• Motivo: ${user.messageSpam === 0 ? 'Spam' : user.messageSpam}*\n*👉🏻 Puedes contactar al propietario del Bot si crees que se trata de un error o para charlar sobre tu desbaneo*\n\n👉 ${fb}`)
+user.antispam++	
+return
 }
 
 //Antispam2		
@@ -628,13 +613,13 @@ console.error(e)
 
 global.dfail = (type, m, conn, usedPrefix) => {
 let msg = {
-rowner: '⚠️ Este comando es solo para mi propietario. ¡Lo siento, este es exclusivo! 🔒',
-owner: '⚠️ Este comando es solo para mi propietario. ¡Lo siento, este es exclusivo! 🔒',
+rowner: '⚠️ Tu que? este comando es solo para mi propietario',
+owner: '⚠️ Tu que? este comando es solo para mi propietario.',
 mods: '⚠️ Este comando solo lo puedo usar yo. ¡Privilegios de mod! 😘',
 premium: '⚠️ Este comando es solo para usuarios Premium (VIP). ¡Ser VIP tiene sus beneficios! 🌟',
 group: '⚠️ Pendejo este comando es solo para grupos.',
 private: '⚠️ Vamos al privado, este comando solo funciona en el privado del bot. ¡Hablemos en privado! 🤫',
-admin: '🤨 No eres admins. Solo los admins pueden usar este comando. ¡Necesito a los jefes aquí! 🛡️',
+admin: '🤨 No eres admins. Solo los admins pueden usar este comando.',
 botAdmin: '⚠️ haz admin al Bot "YO" para poder usar este comando.',
 unreg: '「NO ESTAS REGISTRADO」\n\nPA NO APARECES EN MI BASE DE DATOS ✋🥸🤚\n\nPara poder usarme escribe el siguente comando\n\nComando: #reg nombre.edad\nEjemplo: #reg elrebelde.21',
 restrict: '[ 🔐 ] Este comando esta desactivado por mi jefe'
