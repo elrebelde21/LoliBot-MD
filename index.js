@@ -56,6 +56,12 @@ gradient: ['red', 'magenta']
 setupMaster({exec: args[0], args: args.slice(1),
 })
 let p = fork()
+
+setTimeout(() => {
+console.log('Reiniciando....');
+p.process.kill(); 
+}, 4 * 60 * 60 * 1000); //4hs
+  
 p.on('message', (data) => {
 //console.log('╭--------- - - - ✓\n┆ ✅ TIEMPO DE ACTIVIDAD ACTUALIZADA\n╰-------------------- - - -', data)
 switch (data) {
@@ -87,3 +93,5 @@ p.emit('message', line.trim())
 })}
 
 start('main.js')
+
+
