@@ -14,7 +14,7 @@ await conn.sendFile(m.chat, res, 'error.jpg', null, m, null, fake)
 }
 }
 handler.help = ['txt', 'brat']
-handler.tags = ['fun']
+handler.tags = ['game']
 handler.command = ['txt', 'escribir', 'brat']
 handler.limit = 1
 handler.register = true 

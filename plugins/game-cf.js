@@ -16,7 +16,7 @@ user.exp -= bet;
 m.reply(`💀 La moneda cayó en *${outcome}* y perdiste *${bet.toLocaleString()}* exp.`);
 }};
 handler.help = ['cf <cantidad>'];
-handler.tags = ['games'];
+handler.tags = ['game'];
 handler.command = ['cf']; 
 handler.register = true;
 
