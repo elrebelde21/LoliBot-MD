@@ -201,6 +201,10 @@ const texto1 = `${yt_play[0].title}
 
 await conn.sendFile(m.chat, yt_play[0].thumbnail, 'error.jpg', texto1, m, null, fake);
 try {
+const audiodlp = await ytmp3(yt_play[0].url);
+conn.sendMessage(m.chat, { document: audiodlp, mimetype: "audio/mpeg" }, { quoted: m });
+} catch (e1) {
+try {  
 const res = await fetch(`https://api.zenkey.my.id/api/download/ytmp3?apikey=zenkey&url=${yt_play[0].url}`)
 let { result } = await res.json()
 await conn.sendMessage(m.chat, { document: { url: result.download.url }, mimetype: 'audio/mpeg', fileName: `${yt_play[0].title}.mp3` }, { quoted: m });
@@ -245,7 +249,7 @@ await conn.sendMessage(m.chat, { document: { url: audioData.result.downloadUrl }
 } catch (e) {    
 await m.react('❌');
 console.log(e);
-}}}}}}}}
+}}}}}}}}}
 
 if (command == 'play4' || command == 'playdoc2') {
 if (!text) return m.reply(`*🤔Que está buscando? 🤔*\n*Ingrese el nombre de la canción*\n\n*Ejemplo:*\n#play emilia 420`) 
@@ -261,6 +265,10 @@ const texto1 = `${yt_play[0].title}
 
 await conn.sendFile(m.chat, yt_play[0].thumbnail, 'error.jpg', texto1, m, null, fake);
 try {
+const video = await ytmp4(text);
+await conn.sendMessage(m.chat, { document: { url: video }, fileName: `${yt_play[0].title}.mp4`, caption: `🔰 Aquí está tu video \n🔥 Título: ${yt_play[0].title}` }, { quoted: m });
+} catch (e1) {
+try {   
 const res = await fetch(`https://api.zenkey.my.id/api/download/ytmp3?apikey=zenkey&url=${yt_play[0].url}`)
 let { result } = await res.json()
 await conn.sendMessage(m.chat, { document: { url: result.download.url }, fileName: `${yt_play[0].title}.mp4`, caption: `${wm}`, thumbnail: yt_play[0].thumbnail, mimetype: 'video/mp4' }, { quoted: m })     
@@ -282,7 +290,7 @@ await conn.sendMessage(m.chat, { document: { url: audiop }, fileName: `${yt_play
 } catch (e2) {    
 await m.react('❌');
 console.log(e2);
-}}}}
+}}}}}
 
 /*if (command == 'play4') {
 if (!text) return conn.reply(m.chat, `*🤔Que esta buscado? 🤔*\n*Ingrese el nombre del la canción*\n\n*Ejemplo:*\n#play emilia 420`, m, {contextInfo: {externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: wm, body: '', previewType: 0, thumbnail: img.getRandom(), sourceUrl: redes.getRandom()}}})
