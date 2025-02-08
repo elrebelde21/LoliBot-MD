@@ -68,6 +68,7 @@ if (!user.lastmiming) user.lastmiming = 0;
 if (!user.lastwork) user.lastwork = 0;
 if (!user.lastcofre) user.lastcofre = 0;
 if (!user.lastclaim) user.lastclaim = 0;
+if (!user.messageSpam) user.messageSpam = 0;
 if (!user.crime) user.crime = 0;
 if (!user.lastrob) user.lastrob = 0;
 if (!user.timeRy) user.timeRy = 0;
@@ -89,6 +90,7 @@ banned: false,
 afk: -1,
 afkReason: '',
 lastwork: 0,
+messageSpam: 0,
 lastclaim: 0,
 level: 0,
 wait: 0,
@@ -343,7 +345,7 @@ if (!['owner-unbanchat.js'].includes(name) && chat && chat.isBanned && !isROwner
 if (name != 'owner-unbanchat.js' && name != 'owner-exec.js' && name != 'owner-exec2.js' && name != 'tool-delete.js' && chat?.isBanned && !isROwner) return 
 if (m.text && user.banned && !isROwner) {
 if (user.antispam > 2) return
-m.reply(`⚠️ ESTAS BANEADO ⚠️\n*• Motivo: ${user.messageSpam === 0 ? 'Spam' : user.messageSpam}*\n*👉🏻 Puedes contactar al propietario del Bot si crees que se trata de un error o para charlar sobre tu desbaneo*\n\n👉 ${fb}`)
+m.reply(`⚠️ ESTAS BANEADO ⚠️\n*• Motivo:* ${user.messageSpam === 0 ? 'Spam' : user.messageSpam}\n*👉🏻 Puedes contactar al propietario del Bot si crees que se trata de un error o para charlar sobre tu desbaneo*\n\n👉 ${fb}`)
 user.antispam++	
 return
 }
