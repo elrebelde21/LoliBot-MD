@@ -2,11 +2,29 @@ import axios from 'axios';
 import fetch from 'node-fetch';
 import cheerio from 'cheerio';
 import {mediafiredl} from '@bochilteam/scraper';
+import fg from 'api-dylux'
+let free = 150 
+let prem = 500
 
 const handler = async (m, {conn, args, usedPrefix, command}) => {
 let sticker = 'https://qu.ax/Wdsb.webp'
 if (!args[0]) return m.reply(`⚠️ 𝙄𝙣𝙜𝙧𝙚𝙨𝙚 𝙪𝙣 𝙀𝙣𝙡𝙖𝙘𝙚 𝙫𝙖𝙡𝙞𝙙𝙤 𝙙𝙚𝙡 𝙢𝙚𝙙𝙞𝙖𝙛𝙞𝙧𝙚 𝙀𝙟:*\n${usedPrefix + command} https://www.mediafire.com/file/cv64tns6co3272q/Lolibot.zip/file`)
 m.react(`🚀`) 
+try {
+let res = await fg.mediafireDl(args[0])
+let { url, url2, filename, ext, upload_date, filesize, filesizeB } = res
+let isLimit = limit * 1024 < filesizeB
+let caption = `┏━━『 𝐌𝐄𝐃𝐈𝐀𝐅𝐈𝐑𝐄 』━━•
+┃❥ 𝐍𝐨𝐦𝐛𝐫𝐞 : ${filename}
+┃❥ 𝐏𝐞𝐬𝐨 : ${filesize}
+┃❥ 𝐓𝐢𝐩𝐨 : ${upload_date}
+╰━━━⊰ 𓃠 ${vs} ⊱━━━━•
+${isLimit ? `\n> no puedo descargar en archivos superar el limit de descargar que es *+${free} MB*` : '\n> ⏳ ᴱˢᵖᵉʳᵉ ᵘⁿ ᵐᵒᵐᵉⁿᵗᵒ ᵉⁿ ˡᵒˢ ᵠᵘᵉ ᵉⁿᵛᶦᵒˢ ˢᵘˢ ᵃʳᶜʰᶦᵛᵒˢ'}
+`.trim()
+await conn.sendFile(m.chat, ss, 'ssweb.png', caption, m, null, fake)
+if(!isLimit) await conn.sendFile(m.chat, url, filename, '', m, null, { mimetype: ext, asDocument: true })
+m.react('✅'); 
+} catch (error) {
 try {
 const res = await fetch(`https://api.siputzx.my.id/api/d/mediafire?url=${args[0]}`);
 if (!res.ok) throw new Error(`Error en la API 1: ${res.statusText}`);
@@ -56,7 +74,7 @@ m.react(`✅`)
 console.error(error3);
 conn.sendFile(m.chat, sticker, 'error.webp', '', m, null, fake)
 m.react(`❌`) 
-}}}}}
+}}}}}}
 handler.help = ['mediafire', 'mediafiredl'];
 handler.tags = ['downloader'];
 handler.command = /^(mediafire|mediafiredl|dlmediafire)$/i
