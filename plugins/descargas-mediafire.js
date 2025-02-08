@@ -8,21 +8,18 @@ let prem = 500
 
 const handler = async (m, {conn, args, usedPrefix, command}) => {
 let sticker = 'https://qu.ax/Wdsb.webp'
-if (!args[0]) return m.reply(`⚠️ 𝙄𝙣𝙜𝙧𝙚𝙨𝙚 𝙪𝙣 𝙀𝙣𝙡𝙖𝙘𝙚 𝙫𝙖𝙡𝙞𝙙𝙤 𝙙𝙚𝙡 𝙢𝙚𝙙𝙞𝙖𝙛𝙞𝙧𝙚 𝙀𝙟:*\n${usedPrefix + command} https://www.mediafire.com/file/cv64tns6co3272q/Lolibot.zip/file`)
+if (!args[0]) return m.reply(`⚠️ 𝙄𝙣𝙜𝙧𝙚𝙨𝙚 𝙪𝙣 𝙀𝙣𝙡𝙖𝙘𝙚 𝙫𝙖𝙡𝙞𝙙𝙤 𝙙𝙚𝙡 𝙢𝙚𝙙𝙞𝙖𝙛𝙞𝙧𝙚 𝙀𝙟:*\n${usedPrefix + command} https://www.mediafire.com/file/sd9hl31vhhzf76v/EvolutionV1.1-beta_%2528Recomendado%2529.apk/file`)
 m.react(`🚀`) 
 try {
-let res = await fg.mediafireDl(args[0])
-let { url, url2, filename, ext, upload_date, filesize, filesizeB } = res
-let isLimit = limit * 1024 < filesizeB
-let caption = `┏━━『 𝐌𝐄𝐃𝐈𝐀𝐅𝐈𝐑𝐄 』━━•
-┃❥ 𝐍𝐨𝐦𝐛𝐫𝐞 : ${filename}
-┃❥ 𝐏𝐞𝐬𝐨 : ${filesize}
-┃❥ 𝐓𝐢𝐩𝐨 : ${upload_date}
-╰━━━⊰ 𓃠 ${vs} ⊱━━━━•
-${isLimit ? `\n> no puedo descargar en archivos superar el limit de descargar que es *+${free} MB*` : '\n> ⏳ ᴱˢᵖᵉʳᵉ ᵘⁿ ᵐᵒᵐᵉⁿᵗᵒ ᵉⁿ ˡᵒˢ ᵠᵘᵉ ᵉⁿᵛᶦᵒˢ ˢᵘˢ ᵃʳᶜʰᶦᵛᵒˢ'}
-`.trim()
-await conn.sendFile(m.chat, ss, 'ssweb.png', caption, m, null, fake)
-if(!isLimit) await conn.sendFile(m.chat, url, filename, '', m, null, { mimetype: ext, asDocument: true })
+const res = await fetch(`https://api.fgmods.xyz/api/downloader/mediafire?url=${args[0]}&apikey=${fgkeysapi}`);
+const data = await res.json();
+const fileData = data.result;
+const caption = `┏━━『 𝐌𝐄𝐃𝐈𝐀𝐅𝐈𝐑𝐄 』━━•
+┃❥ 𝐍𝐨𝐦𝐛𝐫𝐞 : ${fileData.title}
+┃❥ 𝐏𝐞𝐬𝐨 : ${fileData.filesize}
+┃❥ 𝐓𝐢𝐩𝐨 : ${fileData.mimetype}
+╰━━━⊰ 𓃠 ${vs} ⊱━━━━•`.trim();
+await conn.sendFile(m.chat, fileData.url, fileData.title, caption, m, null, {mimetype: fileData.mimetype, asDocument: true });
 m.react('✅'); 
 } catch (error) {
 try {
