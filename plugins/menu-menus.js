@@ -152,7 +152,7 @@ wm
 text = text.replace(new RegExp(`%(${Object.keys(replace).sort((a, b) => b.length - a.length).join`|`})`, 'g'), (_, name) => '' + replace[name])
 
 let pp = './Menu2.jpg'
-conn.sendFile(m.chat, pp, 'menu.jpg', text.trim(), m, null, rpl)
+conn.sendFile(m.chat, pp, 'menu.jpg', text.trim(), m, null, fake)
 m.react('🙌') 
 } catch (e) {
 m.react(`❌`) 
