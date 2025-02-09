@@ -152,7 +152,26 @@ wm
 text = text.replace(new RegExp(`%(${Object.keys(replace).sort((a, b) => b.length - a.length).join`|`})`, 'g'), (_, name) => '' + replace[name])
 
 let pp = './Menu2.jpg'
-conn.sendFile(m.chat, pp, 'menu.jpg', text.trim(), m, null, fake2)
+conn.sendMessage(m.chat, { text: text,  
+contextInfo:{  
+forwardedNewsletterMessageInfo: { 
+newsletterJid: '120363355261011910@newsletter', 
+serverMessageId: '', 
+newsletterName: 'LoliBot ✨️' },
+forwardingScore: 9999999,  
+isForwarded: true,   
+mentionedJid:[m.sender],  
+externalAdReply: {  
+showAdAttribution: true,  
+renderLargerThumbnail: true,  
+title: "Actualización/novedades",   
+body: 'Canal update'
+containsAutoReply: true,  
+mediaType: 1,   
+thumbnail: imagen2, 
+sourceUrl: [nna, nna2, nnaa].getRandom()
+}}}, { quoted: m })
+//conn.sendFile(m.chat, pp, 'menu.jpg', text.trim(), m, null, fake2)
 m.react('🙌') 
 } catch (e) {
 m.react(`❌`) 

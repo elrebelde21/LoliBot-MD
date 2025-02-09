@@ -10,15 +10,40 @@ const LimitAud = 725 * 1024 * 1024; //700MB
 const LimitVid = 425 * 1024 * 1024; //425MB
 const handler = async (m, {conn, command, args, text, usedPrefix}) => {
 
-if (command == 'play' || command == 'musica') {
 if (!text) return m.reply(`*🤔Que está buscando? 🤔*\n*Ingrese el nombre de la canción*\n\n*Ejemplo:*\n#play emilia 420`) 
+const tipoDescarga = command === 'play' ? 'audio' : command === 'play2' ? 'video' : command === 'play3' ? 'audio doc' : command === 'play4' ? 'video doc' : '';
 const yt_play = await search(args.join(' '));
 const ytplay2 = await yts(text);
-await conn.sendFile(m.chat, yt_play[0].thumbnail, 'error.jpg', `${yt_play[0].title}
+await conn.sendMessage(m.chat, { text: `${yt_play[0].title}
 *⇄ㅤ     ◁   ㅤ  ❚❚ㅤ     ▷ㅤ     ↻*
 
 *⏰ Duración:* ${secondString(yt_play[0].duration.seconds)}
-*👉🏻Aguarde un momento en lo que envío su audio*`, m, null, fake);
+*👉🏻Aguarde un momento en lo que envío su ${tipoDescarga}*`,  
+contextInfo:{  
+forwardedNewsletterMessageInfo: { 
+newsletterJid: '120363355261011910@newsletter', 
+serverMessageId: '', 
+newsletterName: 'LoliBot ✨️' },
+forwardingScore: 9999999,  
+isForwarded: true,   
+mentionedJid: null,  
+externalAdReply: {  
+showAdAttribution: true,  
+renderLargerThumbnail: true,  
+title: yt_play[0].title,   
+body: wm,
+containsAutoReply: true,  
+mediaType: 1,   
+thumbnailUrl: yt_play[0].thumbnail, 
+sourceUrl: [nna, nna2, nnaa].getRandom()
+}}}, { quoted: m })
+/*conn.sendFile(m.chat, yt_play[0].thumbnail, 'error.jpg', `${yt_play[0].title}
+*⇄ㅤ     ◁   ㅤ  ❚❚ㅤ     ▷ㅤ     ↻*
+
+*⏰ Duración:* ${secondString(yt_play[0].duration.seconds)}
+*👉🏻Aguarde un momento en lo que envío su audio*`, m, null, fake);*/
+
+if (command == 'play' || command == 'musica') {
 try {
 const audiodlp = await ytmp3(yt_play[0].url);
 conn.sendMessage(m.chat, { audio: audiodlp, mimetype: "audio/mpeg" }, { quoted: m });
@@ -86,14 +111,6 @@ console.log(e);
 }}}}}}}}}}
 
 if (command == 'play2' || command == 'video') {
-if (!text) return m.reply(`*🤔Que está buscando? 🤔*\n*Ingrese el nombre de la canción*\n\n*Ejemplo:*\n#play emilia 420`) 
-const yt_play = await search(args.join(' '));
-const ytplay2 = await yts(text);
-await conn.sendFile(m.chat, yt_play[0].thumbnail, 'error.jpg', `${yt_play[0].title}
-*⇄ㅤ     ◁   ㅤ  ❚❚ㅤ     ▷ㅤ     ↻*
-
-*⏰ Duración:* ${secondString(yt_play[0].duration.seconds)}
-*👉🏻Aguarde un momento en lo que envío su video*`, m, null, fake);
 try {
 const video = await ytmp4(text);
 if (fileSize > LimitVid) {
@@ -188,18 +205,6 @@ console.log(e);
 }}}}}}}}}}}}
 
 if (command == 'play3' || command == 'playdoc') {
-if (!text) return m.reply(`*🤔Que está buscando? 🤔*\n*Ingrese el nombre de la canción*\n\n*Ejemplo:*\n#play emilia 420`) 
-const yt_play = await search(args.join(' '));
-const ytplay2 = await yts(text);
-const texto1 = `${yt_play[0].title}
-*⇄ㅤ     ◁   ㅤ  ❚❚ㅤ     ▷ㅤ     ↻*
-
-*⏰ Duración:* ${secondString(yt_play[0].duration.seconds)}
-*👉🏻 Descargado el audio 🔊 en documentos, aguarden un momento por favor....*
-
-> _*Si este comando falla usar de la seguirte manera:*_ #ytmp3doc ${yt_play[0].url}`.trim();
-
-await conn.sendFile(m.chat, yt_play[0].thumbnail, 'error.jpg', texto1, m, null, fake);
 try {
 const audiodlp = await ytmp3(yt_play[0].url);
 conn.sendMessage(m.chat, { document: audiodlp, mimetype: "audio/mpeg" }, { quoted: m });
@@ -252,18 +257,6 @@ console.log(e);
 }}}}}}}}}
 
 if (command == 'play4' || command == 'playdoc2') {
-if (!text) return m.reply(`*🤔Que está buscando? 🤔*\n*Ingrese el nombre de la canción*\n\n*Ejemplo:*\n#play emilia 420`) 
-const yt_play = await search(args.join(' '));
-const ytplay2 = await yts(text);
-const texto1 = `${yt_play[0].title}
-*⇄ㅤ     ◁   ㅤ  ❚❚ㅤ     ▷ㅤ     ↻*
-
-*⏰ Duración:* ${secondString(yt_play[0].duration.seconds)}
-*👉🏻 Descargado el vídeo 🎥 en documentos, aguarden un momento por favor....*
-
-> _*Si este comando falla usar de la seguirte manera:*_ #ytmp4doc ${yt_play[0].url}`.trim();
-
-await conn.sendFile(m.chat, yt_play[0].thumbnail, 'error.jpg', texto1, m, null, fake);
 try {
 const video = await ytmp4(text);
 await conn.sendMessage(m.chat, { document: { url: video }, fileName: `${yt_play[0].title}.mp4`, caption: `🔰 Aquí está tu video \n🔥 Título: ${yt_play[0].title}` }, { quoted: m });
