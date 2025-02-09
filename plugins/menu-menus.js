@@ -164,7 +164,6 @@ mentionedJid:[m.sender],
 externalAdReply: {  
 showAdAttribution: true,  
 renderLargerThumbnail: true,  
-title: `${name} 👋`,
 body: wm,
 containsAutoReply: true,  
 mediaType: 1,   
