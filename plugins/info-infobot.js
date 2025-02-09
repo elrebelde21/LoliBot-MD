@@ -82,7 +82,13 @@ let teks = `*≡ INFOBOT*
 ▣ *Uptime:* ${toTime(os.uptime() * 1000)}`;
 
 await conn.sendMessage(m.chat, { text: teks,  
-contextInfo:{ mentionedJid: null,  
+contextInfo:{ forwardedNewsletterMessageInfo: { 
+newsletterJid: '120363355261011910@newsletter', 
+serverMessageId: '', 
+newsletterName: 'LoliBot ✨️' },
+forwardingScore: 9999999,  
+isForwarded: true,   
+mentionedJid: null,  
 externalAdReply: {  
 showAdAttribution: true,  
 renderLargerThumbnail: true,  
