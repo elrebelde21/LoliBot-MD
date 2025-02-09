@@ -74,7 +74,7 @@ thumbnailUrl: pp,
 sourceUrl: [nna, nna2, nn, md, yt, tiktok].getRandom(),
 mediaType: 1,
 showAdAttribution: false,
-renderLargerThumbnail: false
+renderLargerThumbnail: true
 }}});
 
 global.db.data.users[m.sender].timeRy = new Date() * 1;

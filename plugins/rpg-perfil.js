@@ -33,7 +33,7 @@ let str = ` *「 PERFIL 」*
 
 *•━━━━⪻ 𝙿𝙴𝚁𝙵𝙸𝙻 ⪼━━━━•*`
 let mentionedJid = [who]
-await conn.sendFile(m.chat, img, 'lp.jpg', str, m, false, { contextInfo: {forwardingScore: 9999999, isForwarded: true, mentionedJid, externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: wm, body: '𝐒𝐮𝐩𝐞𝐫 𝐁𝐨𝐭 𝐃𝐞 𝐖𝐡𝐚𝐭𝐬𝐀𝐩𝐩', previewType: 0, thumbnail: imagen4, sourceUrl: [md, yt, tiktok].getRandom()}}})
+await conn.sendFile(m.chat, img, 'lp.jpg', str, m, false, { contextInfo: {forwardingScore: 9999999, isForwarded: true, mentionedJid, externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: wm, body: '𝐒𝐮𝐩𝐞𝐫 𝐁𝐨𝐭 𝐃𝐞 𝐖𝐡𝐚𝐭𝐬𝐀𝐩𝐩', previewType: 0, renderLargerThumbnail: true, thumbnail: imagen4, sourceUrl: [md, yt, tiktok].getRandom()}}})
 //conn.sendFile(m.chat, img, 'thumbnail.jpg', text, m)
 }
 handler.help = ['perfil', 'perfil *@user*']

@@ -81,7 +81,7 @@ let teks = `*≡ INFOBOT*
 ▣ *Ram usada:* ${format(totalmem() - freemem())} de ${format(totalmem())}
 ▣ *Uptime:* ${toTime(os.uptime() * 1000)}`;
 
-await conn.sendMessage(m.chat, {image: { url: "https://telegra.ph/file/39fb047cdf23c790e0146.jpg" }, caption: teks, contextInfo: {externalAdReply: { title: `INFO - BOT`, sourceUrl: redes.getRandom(), mediaType: 1, showAdAttribution: true, thumbnailUrl: img1,
+await conn.sendMessage(m.chat, {image: { url: "https://telegra.ph/file/39fb047cdf23c790e0146.jpg" }, caption: teks, contextInfo: {externalAdReply: { title: `INFO - BOT`, sourceUrl: redes.getRandom(), mediaType: 1, renderLargerThumbnail: true, showAdAttribution: true, thumbnailUrl: img1,
 }}}, { quoted: m })});
 }
 handler.help = ['infobot'];
