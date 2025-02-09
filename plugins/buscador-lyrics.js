@@ -5,6 +5,13 @@ const handler = async (m, {conn, text, usedPrefix, command}) => {
 const teks = text ? text : m.quoted && m.quoted.text ? m.quoted.text : '';
 if (!teks) throw `*⚠️ ¿Que esta buscando? ingresa el nombre del tema para buscar la letra de la canción, ejemplo:* ${usedPrefix + command} ozuna te vas`;
 try {
+const res = await fetch(`https://api.fgmods.xyz/api/other/lyrics?text=${text}&apikey=${fgkeysapi}`)
+const data = await res.json();
+const textoLetra = `*🎤 𝙏𝙞𝙩𝙪𝙡𝙤:* ${data.result.title}\n*👤 𝘼𝙪𝙩𝙤𝙧:* ${data.result.artist}\n*🎶 𝙐𝙧𝙡:* ${data.result.url || 'No disponible'}\n\n*📃🎵 𝙇𝙚𝙩𝙧𝙖:*\n${data.result.lyrics}`;
+const img = data.result.image
+conn.sendFile(m.chat, img, 'error,jpg', textoLetra, m, null, fake);
+} catch (error) {
+try {
 const res = await fetch(`${apis}/search/letra?query=${encodeURIComponent(text)}`);
 const data = await res.json();
 if (data.status !== "200" || !data.data) return conn.reply(m.chat, 'No se encontró la letra de la canción especificada.', m);
@@ -35,7 +42,8 @@ conn.sendFile(m.chat, img, 'error,jpg', textoLetra, m, null, fake);
 await conn.sendMessage(m.chat, {audio: {url: result[0].preview}, fileName: `${result[0].artist} ${result[0].title}.mp3`, mimetype: 'audio/mp4'}, {quoted: m});
 } catch (e) {
 m.reply(`\`\`\`⚠️ OCURRIO UN ERROR ⚠️\`\`\`\n\n> *Reporta el siguiente error a mi creador con el comando:*#report\n\n>>> ${e} <<<< `)       
-console.log(e)}}}
+console.log(e)
+}}}}
 handler.help = ['lirik', 'letra'].map((v) => v + ' <Apa>');
 handler.tags = ['buscadores'];
 handler.command = /^(lirik|lyrics|lyric|letra)$/i;

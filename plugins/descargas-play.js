@@ -49,9 +49,14 @@ const audiodlp = await ytmp3(yt_play[0].url);
 conn.sendMessage(m.chat, { audio: audiodlp, mimetype: "audio/mpeg" }, { quoted: m });
 } catch (e1) {
 try {  
+const res = await fetch(`https://api.fgmods.xyz/api/downloader/ytmp3?url=${yt_play[0].url}&apikey=${fgkeysapi}`)
+let data = await res.json();
+await conn.sendMessage(m.chat, { audio: { url: data.result.dl_url }, mimetype: 'audio/mpeg' }, { quoted: m });
+} catch (e1) {
+try {  
 const res = await fetch(`https://api.siputzx.my.id/api/d/ytmp4?url=${yt_play[0].url}`);
 let { data } = await res.json();
-await conn.sendMessage(m.chat, { audio: { url: data.dl }, mimetype: 'audio/mpeg' }, { quoted: m ||null });
+await conn.sendMessage(m.chat, { audio: { url: data.dl }, mimetype: 'audio/mpeg' }, { quoted: m });
 } catch (e1) {
 try {  
 const axeelUrl = `https://axeel.my.id/api/download/audio?url=${yt_play[0].url}`;
@@ -108,7 +113,7 @@ if (fileSize > LimitAud) return await conn.sendMessage(m.chat, { document: { url
 } catch (e) {    
 await m.react('❌');
 console.log(e);
-}}}}}}}}}}
+}}}}}}}}}}}
 
 if (command == 'play2' || command == 'video') {
 try {

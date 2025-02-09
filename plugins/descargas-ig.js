@@ -7,10 +7,27 @@ import instagramDl from '@sasmeee/igdl';
 import {fileTypeFromBuffer} from 'file-type';
 
 const handler = async (m, {conn, args, command, usedPrefix}) => {
-  const datas = global
- 
+const datas = global
 if (!args[0]) return conn.reply(m.chat, `⚠️ Ingresa el enlace del vídeo de Instagram junto al comando.\n\nEjemplo: *${usedPrefix + command}* https://www.instagram.com/p/C60xXk3J-sb/?igsh=YzljYTk1ODg3Zg==`, m)
 await m.react('⌛')
+try {
+const res = await fetch(`https://api.fgmods.xyz/api/downloader/igdl?url=${args}&apikey=${fgkeysapi}`);
+const data = await res.json();
+if (!data || !data.result || data.result.length === 0) return m.react("❌");  
+const result = data.result[0];  
+const thumbnail = result.thumbnail;  
+const downloadUrl = result.url;  
+if (!downloadUrl) return m.react("❌");
+if (thumbnail && downloadUrl) {
+if (downloadUrl.endsWith('.jpg') || downloadUrl.endsWith('.png')) {
+await conn.sendFile(m.chat, downloadUrl, 'ig.jpg', '_*Aqui tiene tu imagen de Instagram*', m, null, fake);
+m.react('✅');  
+} else if (downloadUrl.endsWith('.mp4')) {
+await conn.sendFile(m.chat, downloadUrl, 'ig.mp4', '**Aqui esta el video de Instagram*', m, null, fake);
+m.react('✅');  
+}} else {
+m.react("❌");  
+} catch {   
 try {
 const apiUrl = `${apis}/download/instagram?url=${encodeURIComponent(args[0])}`;
 const apiResponse = await fetch(apiUrl);
@@ -73,7 +90,8 @@ await conn.sendFile(m.chat, videoig, 'error.mp4', txt1, m, null, fake);
 await m.react('✅')
 } catch (e) {
 await m.react('❌')
-console.log(e)}}}}}}}
+console.log(e)
+}}}}}}}}
 handler.help = ['instagram *<link ig>*']
 handler.tags = ['downloader']
 handler.command = /^(instagramdl|instagram|igdl|ig|instagramdl2|instagram2|igdl2|ig2|instagramdl3|instagram3|igdl3|ig3)$/i

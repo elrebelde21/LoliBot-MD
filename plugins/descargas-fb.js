@@ -9,13 +9,17 @@ if (!args[0]) return conn.reply(m.chat,  `⚠️ 𝙄𝙣𝙜𝙧𝙚𝙨𝙚 �
 if (!args[0].match(/www.facebook.com|fb.watch/g)) return m.reply(`⚠️ 𝙄𝙣𝙜𝙧𝙚𝙨𝙚 𝙪𝙣 𝙚𝙣𝙡𝙖𝙘𝙚 𝙙𝙚 𝙁𝙖𝙘𝙚𝙗𝙤𝙤𝙠 𝙥𝙖𝙧𝙖 𝙙𝙚𝙨𝙘𝙖𝙧𝙜𝙖𝙧 𝙚𝙡 𝙑𝙞𝙙𝙚𝙤\n• *𝙀𝙟 :* ${usedPrefix + command} https://www.facebook.com/watch?v=636541475139`) 
 m.react(`⌛`) 
 try { 
-const apiUrl = `${apis}/download/facebook?url=${encodeURIComponent(args[0])}`;
+const api = await fetch(`https://api.fgmods.xyz/api/downloader/fbdl?url=${args}&apikey=${fgkeysapi}`)
+const data = await api.json();
+const downloadUrl = data.result[0].hd || data.result[0].sd;
+await conn.sendFile(m.chat, downloadUrl, 'video.mp4', '✅ Aquí está tu video de Facebook', m, null, fake);
+} catch (err1) {
+try {
+const apiUrl = `${apis}/download/facebook?url=${args}`;
 const apiResponse = await fetch(apiUrl);
 const delius = await apiResponse.json();
-if (!delius || !delius.urls || delius.urls.length === 0) return m.react("❌")
 const downloadUrl = delius.urls[0].hd || delius.urls[0].sd;
-if (!downloadUrl) return m.react("❌");
-await conn.sendFile(m.chat, downloadUrl, 'video.mp4', '✅ Aquí está tu video de Facebook', m);
+await conn.sendFile(m.chat, downloadUrl, 'video.mp4', '✅ Aquí está tu video de Facebook', m, null, fake);
 } catch (err1) {
 try {
 const apiUrl = `https://api.dorratz.com/fbvideo?url=${encodeURIComponent(args[0])}`;
@@ -51,7 +55,7 @@ m.react(`✅`)
 try {
 const ress = await fg.fbdl(args[0]);
 const urll = await ress.data[0].url;
-await conn.sendFile(m.chat, urll, 'error.mp4', '✅ 𝐀𝐐𝐔𝐈 𝐄𝐒𝐓𝐀 𝐓𝐔 𝐕𝐈𝐃𝐄𝐎 𝐃𝐄 𝐅𝐀𝐂𝐄𝐁𝐎𝐎𝐊\n\n', m);
+await conn.sendFile(m.chat, urll, 'error.mp4', '✅ 𝐀𝐐𝐔𝐈 𝐄𝐒𝐓𝐀 𝐓𝐔 𝐕𝐈𝐃𝐄𝐎 𝐃𝐄 𝐅𝐀𝐂𝐄𝐁𝐎𝐎𝐊\n\n', m, null, fake);
 m.react(`✅`) 
 } catch (err6) {
 try {
@@ -76,7 +80,7 @@ m.react(`✅`)
 m.react(`❌`) 
 //m.reply(`\`\`\`⚠️ OCURRIO UN ERROR ⚠️\`\`\`\n\n> *Reporta el siguiente error a mi creador con el comando:*#report\n\n>>> ${err6} <<<< `)       
 console.log(e) 
-}}}}}}}}}}
+}}}}}}}}}}}
 handler.help = ['fb', 'facebook', 'fbdl']
 handler.tags = ['downloader']
 handler.command = /^(facebook|fb|facebookdl|fbdl|facebook2|fb2|facebookdl2|fbdl2|facebook3|fb3|facebookdl3|fbdl3|facebook4|fb4|facebookdl4|fbdl4|facebook5|fb5|facebookdl5|fbdl5)$/i
