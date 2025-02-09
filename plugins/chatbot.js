@@ -169,7 +169,7 @@ isForwarded: false,
 title: `🤖 𝐒𝐊𝐘𝐏𝐋𝐔𝐒-𝐇𝐎𝐒𝐓 🤖`,
 body: `✅ Hosting de Calidad`,
 "previewType": "PHOTO",
-thumbnailUrl: 'https://qu.ax/wXciz.jpg', 
+thumbnailUrl: 'https://cdn.dorratz.com/files/1739136628132.jpg', 
 sourceUrl: nna}}}, { quoted: m})
 } 
     
