@@ -64,7 +64,8 @@ priceMessage = `~💰 Precio Anterior: ${randomCharacter.previousPrice} exp~\n�
 priceMessage = `💰 Precio: ${randomCharacter.price} exp`;
 }
 
-const sentMessage = await conn.sendFile(m.chat, randomCharacter.url, 'lp.jpg', `💥 Nombre: ${randomCharacter.name}\n${priceMessage}\n${status}\n\n> Responde con "c" para comprarlo`, m, false, {
+const sentMessage = await conn.sendFile(m.chat, randomCharacter.url, 'lp.jpg', `💥 Nombre: ${randomCharacter.name}\n${priceMessage}\n${status}\n\n> Responde con "c" para comprarlo`, m, null, fake)
+/*false, {
 contextInfo: { 
 mentionedJid: randomCharacter.claimedBy ? [randomCharacter.claimedBy] : [], 
 externalAdReply: {
@@ -74,8 +75,8 @@ thumbnailUrl: pp,
 sourceUrl: [nna, nna2, nn, md, yt, tiktok].getRandom(),
 mediaType: 1,
 showAdAttribution: false,
-renderLargerThumbnail: true
-}}});
+renderLargerThumbnail: false
+}}});*/
 
 global.db.data.users[m.sender].timeRy = new Date() * 1;
 global.db.data.tempCharacter = { ...randomCharacter, messageId: sentMessage.id };

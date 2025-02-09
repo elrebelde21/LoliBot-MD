@@ -168,7 +168,7 @@ title: "Actualización/novedades",
 body: 'Canal update',
 containsAutoReply: true,  
 mediaType: 1,   
-thumbnail: imagen2, 
+thumbnail: imagen, 
 sourceUrl: [nna, nna2, nnaa].getRandom()
 }}}, { quoted: m })
 //conn.sendFile(m.chat, pp, 'menu.jpg', text.trim(), m, null, fake2)
