@@ -165,7 +165,7 @@ externalAdReply: {
 showAdAttribution: true,  
 renderLargerThumbnail: true,  
 title: "Actualización/novedades",   
-body: 'Canal update'
+body: 'Canal update',
 containsAutoReply: true,  
 mediaType: 1,   
 thumbnail: imagen2, 
