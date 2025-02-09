@@ -27,7 +27,7 @@ await conn.sendFile(m.chat, downloadUrl, 'ig.mp4', '**Aqui esta el video de Inst
 m.react('✅');  
 }} else {
 m.react("❌");  
-} catch {   
+}} catch {   
 try {
 const apiUrl = `${apis}/download/instagram?url=${encodeURIComponent(args[0])}`;
 const apiResponse = await fetch(apiUrl);
