@@ -44,6 +44,6 @@ if (bot.antiPrivate) {
   }
 }
 
-return !1;
+//return !1;
 }
 
