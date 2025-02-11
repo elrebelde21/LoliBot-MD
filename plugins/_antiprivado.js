@@ -33,14 +33,41 @@ let user = global.db.data.users[m.sender] || {};
 await m.reply(`Hola esta prohibido usar los comando al privado del bot, por lo cual seras bloqueado...\n\n> _*Para usar mi funciones unirte al  grupo oficial 👇*_\n${[nnn, nnnttt, nnnt].getRandom()}`, false, { mentions: [m.sender] })
 await this.updateBlockStatus(m.chat, 'block')
 }*/
-if (bot.antiPrivate && !m.text.toLowerCase().includes('jadibot')) {
-  if (!user.warnPriv) {
-    await m.reply(`Hola esta prohibido usar los comando al privado del bot, por lo cual no responder a ningún comandos por aqui...\n\n> _*Para usar mi funciones unirte al  grupo oficial 👇*_\n${[nnn, nnnttt, nnnt].getRandom()}`);
-    user.warnPriv = true; 
-    global.db.data.users[m.sender] = user;
+if (bot.antiPrivate && !m.chat.endsWith('g.us')) {
+if (!m.text.toLowerCase().includes('jadibot')) {
+    if (!user.warnPriv) {
+      await m.reply(`Hola esta prohibido usar los comando al privado del bot, por lo cual seras bloqueado...\n\n> _*Para usar mi funciones unirte al  grupo oficial 👇*_\n${[nnn, nnnttt, nnnt].getRandom()}`, false, { mentions: [m.sender] })
+      user.warnPriv = true; 
+      global.db.data.users[m.sender] = user; 
+    }
+    return;
   }
-  return !0; 
 }
 
 return !1;
 }
+
+
+/*
+if (m.fromMe) return;
+if (m.isGroup) return !1;
+if (!m.message) return !0;
+
+let bot = global.db.data.settings[this.user.jid] || {};
+let user = global.db.data.users[m.sender] || {};
+
+// Si antiPrivate está activado y el chat NO es un grupo
+if (bot.antiPrivate && !m.chat.endsWith('g.us')) {
+  // Si el mensaje NO es "jadibot", ignorarlo completamente
+  if (!m.text.toLowerCase().includes('jadibot')) {
+    if (!user.warnPriv) {
+      await m.reply(`⚠️ *Atención* ⚠️\n\nEl uso del bot en privado no está permitido. Solo puedes usar el comando *jadibot*. Para más funciones, únete al grupo oficial.`);
+      user.warnPriv = true; // Marcar que ya recibió la advertencia
+      global.db.data.users[m.sender] = user; // Guardar el estado del usuario
+    }
+    return;
+  }
+}
+
+// Si el mensaje es "jadibot", responder normalmente
+return !1;
