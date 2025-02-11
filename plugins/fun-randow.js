@@ -1,24 +1,64 @@
 let handler = async (m, { conn, command, text, usedPrefix, args}) => {
 
 if (command == 'piropo') {
-await conn.reply(m.chat,  `*╭╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼*\n➢ *${pickRandom(global.piropo)}*\n*╰╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼*`, m, {contextInfo: { externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: '💞 PIROPO', body: '𝐒𝐮𝐩𝐞𝐫 𝐁𝐨𝐭 𝐃𝐞 𝐖𝐡𝐚𝐭𝐬𝐀𝐩𝐩', previewType: 0, thumbnail: imagen4, sourceUrl: [md, yt, tiktok].getRandom()}}})
+let query = 'Cuéntame un piropo, solo di el piropo no agregue mas texto.';
+let username = m.sender;
+let logic = "piropo";
+let result;
+try {
+result = await luminsesi(query, username, logic);
+if (!result || result.trim() === "") throw new Error("Respuesta vacía");
+} catch (error) {
+result = pickRandom(global.piropo); 
+}
+await conn.reply(m.chat,  `*╭╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼*\n➢ ${result}\n*╰╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼*`, m, {contextInfo: { externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: '💞 PIROPO', body: '𝐒𝐮𝐩𝐞𝐫 𝐁𝐨𝐭 𝐃𝐞 𝐖𝐡𝐚𝐭𝐬𝐀𝐩𝐩', previewType: 0, thumbnail: imagen4, sourceUrl: [md, yt, tiktok].getRandom()}}})
 }
 
 if (command == 'chiste') {
-await conn.reply(m.chat,  `*┏━━━━━━━━━━━━┓*\n *😹 ${pickRandom(global.chiste)} 😹*\n*┗━━━━━━━━━━━━┛*`, m, {contextInfo: { externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: '😹 CHISTE', body: '𝐒𝐮𝐩𝐞𝐫 𝐁𝐨𝐭 𝐃𝐞 𝐖𝐡𝐚𝐭𝐬𝐀𝐩𝐩', previewType: 0, thumbnail: imagen4, sourceUrl: [md, yt, tiktok].getRandom()}}})
+let query = 'Cuéntame un chiste, puede ser de cualquier tipo de humor, no repita los chiste haz chiste como jaimito, yayo, solo di el chiste no agregue mas texto y haz chiste nuevo 2024 no repitan los mismo chiste pasado xD.'; 
+let username = m.sender;
+let logic = "chiste";
+let result;
+try {
+result = await luminsesi(query, username, logic);
+if (!result || result.trim() === "") throw new Error("Respuesta vacía");
+} catch (error) {
+result = pickRandom(global.chiste);
+}
+await conn.reply(m.chat,  `*┏━━━━━━━━━━━━┓*\n😹 ${result} 😹\n*┗━━━━━━━━━━━━┛*`, m, {contextInfo: { externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: '😹 CHISTE', body: '𝐒𝐮𝐩𝐞𝐫 𝐁𝐨𝐭 𝐃𝐞 𝐖𝐡𝐚𝐭𝐬𝐀𝐩𝐩', previewType: 0, thumbnail: imagen4, sourceUrl: [md, yt, tiktok].getRandom()}}})
 }
 
 if (command == 'reto') {
-await conn.reply(m.chat,  `╭━━━━━[ 𝙍𝙀𝙏𝙊 😏 ]━━━━⬣\n*“${pickRandom(global.bucin)}”*\n╰━━━━━━[ ${vs} ]━━━━━⬣*`, m, {contextInfo: { externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: '😏 HE COJISTE RETO', body: '𝐒𝐮𝐩𝐞𝐫 𝐁𝐨𝐭 𝐃𝐞 𝐖𝐡𝐚𝐭𝐬𝐀𝐩𝐩', previewType: 0, thumbnail: imagen4, sourceUrl: [md, yt, tiktok].getRandom()}}})
+let query = 'Dame un reto interesante para hacer, solo di el reto no agregue mas texto y no repitan los reto, que sea diferentes y divertido.'; 
+let username = m.sender; 
+let logic = "reto"; 
+let result;
+try {
+result = await luminsesi(query, username, logic);
+if (!result || result.trim() === "") throw new Error("Respuesta vacía");
+} catch (error) {
+result = pickRandom(global.bucin);
+}
+await conn.reply(m.chat,  `╭━━━━━[ 𝙍𝙀𝙏𝙊 😏 ]━━━━⬣\n*“${result}”*\n╰━━━━━━[ ${vs} ]━━━━━⬣*`, m, {contextInfo: { externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: '😏 HE COJISTE RETO', body: '𝐒𝐮𝐩𝐞𝐫 𝐁𝐨𝐭 𝐃𝐞 𝐖𝐡𝐚𝐭𝐬𝐀𝐩𝐩', previewType: 0, thumbnail: imagen4, sourceUrl: [md, yt, tiktok].getRandom()}}})
 }
 
 if (command == 'verdad') {
-await conn.reply(m.chat,  `╭━━━━[ 𝙑𝙀𝙍𝘿𝘼𝘿 🤔 ]━━━━⬣\n*“${pickRandom(global.bucin)}”*\n╰━━━━━━[ ${vs} ]━━━━━⬣*`, m, {contextInfo: { externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: '🤔 ELIGIRTE VERDAD', body: '𝐒𝐮𝐩𝐞𝐫 𝐁𝐨𝐭 𝐃𝐞 𝐖𝐡𝐚𝐭𝐬𝐀𝐩𝐩', previewType: 0, thumbnail: imagen4, sourceUrl: [md, yt, tiktok].getRandom()}}})
+let query = 'Dame una pregunta de verdad intrigante'; 
+let username = m.sender;
+let logic = "verdad"; 
+let result;
+try {
+result = await luminsesi(query, username, logic);
+if (!result || result.trim() === "") throw new Error("Respuesta vacía");
+} catch (error) {
+result = pickRandom(global.bucin);
+}
+await conn.reply(m.chat,  `╭━━━━[ 𝙑𝙀𝙍𝘿𝘼𝘿 🤔 ]━━━━⬣\n*“${result}”*\n╰━━━━━━[ ${vs} ]━━━━━⬣*`, m, {contextInfo: { externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: '🤔 ELIGIRTE VERDAD', body: '𝐒𝐮𝐩𝐞𝐫 𝐁𝐨𝐭 𝐃𝐞 𝐖𝐡𝐚𝐭𝐬𝐀𝐩𝐩', previewType: 0, thumbnail: imagen4, sourceUrl: [md, yt, tiktok].getRandom()}}})
 }
 
-if (command == 'frases') {
-const contoh = `*Asmaul Husna*`
-const anjuran = `Desde Abu Hurairah radhiallahu anhu, Rasulullah SAW dijo: "Tengo noventa y nueve nombres, cien menos 1. Quien los memorice entrará en el Paraíso, y él es un acorde que ama el acorde."
+if (command == 'frases') { 
+const ejemplo = `*Asmaul Husna*` 
+const organizar = `Desde Abu Hurairah radhiallahu anhu, Rasulullah SAW dijo: "Tengo noventa y nueve nombres, cien menos 1. Quien los memorice entrará en el Paraíso, y él es un acorde que ama el acorde."
 Significado: "De hecho, yo tengo noventa y nueve nombres, también conocido como cien menos uno. Quien los cuente, entrará en el cielo; Él es Witr y ama a Witr".`
 let json = JSON.parse(JSON.stringify(global.asmaulhusna))
 let data = json.map((v, i) => `${i + 1}. ${v.latin}\n${v.arabic}\n${v.translation_id}`).join('\n\n')
@@ -28,19 +68,32 @@ if (args[0] < 1 || args[0] > 99) throw `mínimo 1 y máximo 99!`
 let { index, latin, arabic, translation_id, translation_en } = json.find(v => v.index == args[0].replace(/[^0-9]/g, ''))
 return m.reply(`🔢 *Número:* ${index}
 ${arabic}
-
+ 
 ${latin}
 
 ${translation_id}
 
 ${translation_en}
 `.trim())}
-m.reply(contoh + data + anjuran)
+m.reply(ejemplo + data + organizar)
 }}
 handler.help = handler.command = ['piropo', 'chiste', 'reto', 'verdad', 'frases']
 handler.tags = ['game'];
 handler.register = true
 export default handler
+
+async function luminsesi(q, username, logic) {
+try {
+const response = await axios.post("https://luminai.my.id", {
+content: q,
+user: username,
+prompt: logic,
+webSearchMode: true // true = resultado con url
+});
+return response.data.result;
+} catch (error) {
+console.error(error);
+}}
 
 function pickRandom(list) {
 return list[Math.floor(list.length * Math.random())]}
