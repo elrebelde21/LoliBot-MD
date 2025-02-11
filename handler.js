@@ -62,6 +62,7 @@ if (!isNumber(user.level)) user.level = 0;
 if (!isNumber(user.antispam)) user.antispam = 0;
 if (!isNumber(user.banco)) user.banco = 0        
 if (!user.premium) user.premium = false;
+if (!user.warnPriv) user.warnPriv = false;
 if (!user.premium) user.premiumTime = 0;
 if (!user.wait) user.wait = 0;
 if (!user.lastmiming) user.lastmiming = 0;
@@ -98,6 +99,7 @@ age: -1,
 bank: 0,
 BannedReason: '',
 Banneduser: false,          
+warnPriv: false,
 banco: 0,
 timeRy: 0,               
 lastmiming: 0,
