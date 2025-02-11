@@ -33,12 +33,14 @@ let user = global.db.data.users[m.sender] || {};
 await m.reply(`Hola esta prohibido usar los comando al privado del bot, por lo cual seras bloqueado...\n\n> _*Para usar mi funciones unirte al  grupo oficial 👇*_\n${[nnn, nnnttt, nnnt].getRandom()}`, false, { mentions: [m.sender] })
 await this.updateBlockStatus(m.chat, 'block')
 }*/
-if (bot.antiPrivate && !comandosPermitidos.some(cmd => m.text.includes(cmd))) {
-if (!user.warnPriv) {
-await m.reply(`Hola esta prohibido usar los comando al privado del bot, por lo cual no responder a ningún comandos por aqui...\n\n> _*Para usar mi funciones unirte al  grupo oficial 👇*_\n${[nnn, nnnttt, nnnt].getRandom()}`);
-user.warnPriv = true; 
+if (bot.antiPrivate && !m.text.toLowerCase().includes('jadibot')) {
+  if (!user.warnPriv) {
+    await m.reply(`Hola esta prohibido usar los comando al privado del bot, por lo cual no responder a ningún comandos por aqui...\n\n> _*Para usar mi funciones unirte al  grupo oficial 👇*_\n${[nnn, nnnttt, nnnt].getRandom()}`);
+    user.warnPriv = true; 
+    global.db.data.users[m.sender] = user;
+  }
+  return !0; 
 }
-return !0; 
-}
+
 return !1;
-}
+
