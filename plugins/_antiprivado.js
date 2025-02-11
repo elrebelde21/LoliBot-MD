@@ -43,4 +43,4 @@ if (bot.antiPrivate && !m.text.toLowerCase().includes('jadibot')) {
 }
 
 return !1;
-
+}
