@@ -34,16 +34,17 @@ await m.reply(`Hola esta prohibido usar los comando al privado del bot, por lo c
 await this.updateBlockStatus(m.chat, 'block')
 }*/
 if (bot.antiPrivate) {
-  // Solo permitir el mensaje "jadibot" exactamente (sin espacios ni variaciones)
-  if (m.text.trim().toLowerCase() !== "jadibot") {
+  if (!/^jadibot$/i.test(m.text.trim())) {
     if (!user.warnPriv) {
       await m.reply(`⚠️ *Atención* ⚠️\n\nEl bot no responde en privado. Solo puedes usar el comando *jadibot*. Para más funciones, únete al grupo oficial.`);
       user.warnPriv = true; 
+      global.db.data.users[m.sender] = user;
     }
-    return !0; 
+    return; 
   }
 }
 
 return !1;
 }
+
 
