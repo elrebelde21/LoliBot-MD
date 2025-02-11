@@ -24,7 +24,7 @@ let bot = global.db.data.settings[this.user.jid] || {};
 let user = global.db.data.users[m.sender] || {};
 
 if (bot.antiPrivate) {
-if (!m.chat.endsWith('g.us') && command !== 'jadibot') {
+if (!m.chat.endsWith('g.us')) {
 if (!user.warnPriv) {
 await m.reply("⚠️ *Atención* ⚠️\n\nEl bot solo responde al comando *jadibot* en privado. Por favor, usa el comando *jadibot* para interactuar. Únete al grupo oficial para más funciones.");
         user.warnPriv = true;       
