@@ -12,23 +12,32 @@ const used = process.memoryUsage();
 
 async function getSystemInfo() {
 let cpuInfo = os.cpus();
-let modeloCPU = cpuInfo && cpuInfo.length > 0 ? cpuInfo[0].model : null
+let modeloCPU = cpuInfo && cpuInfo.length > 0 ? cpuInfo[0].model : null;
 
-const data = {plataforma: os.platform(),
-núcleosCPU: cpuInfo ? cpuInfo.length : null,
-modeloCPU: modeloCPU,
-arquitecturaSistema: os.arch(),
-versiónSistema: os.release(),
-procesosActivos: os.loadavg()[0],
-memory: humanFileSize(used.free, true, 1) + ' libre de ' + humanFileSize(used.total, true, 1),        
-tiempoActividad: 'No disponible',
-cargaPromedio: os.loadavg().map((avg, index) => `${index + 1} min: ${avg.toFixed(2)}.`).join('\n'),
-horaActual: new Date().toLocaleString(),
-};
-const startTime = Date.now();
-const endTime = Date.now();
-data.latencia = `${endTime - startTime} ms`;
-return data;
+    let memoriaUso = process.memoryUsage();
+    let usoRam = humanFileSize(memoriaUso.rss); 
+
+    let cpuUsage = process.cpuUsage();
+    let usoCpu = ((cpuUsage.user + cpuUsage.system) / 1000000).toFixed(2) + ' %';
+    const data = {
+        plataforma: os.platform(),
+        núcleosCPU: cpuInfo ? cpuInfo.length : null,
+        modeloCPU: modeloCPU,
+        arquitecturaSistema: os.arch(),
+        versiónSistema: os.release(),
+        procesosActivos: os.loadavg()[0],
+        usoRam: usoRam, 
+        usoCpu: usoCpu,  
+        memory: humanFileSize(memoriaUso.free, true, 1) + ' libre de ' + humanFileSize(memoriaUso.total, true, 1),
+        tiempoActividad: 'No disponible',
+        cargaPromedio: os.loadavg().map((avg, index) => `${index + 1} min: ${avg.toFixed(2)}.`).join('\n'),
+        horaActual: new Date().toLocaleString(),
+    };
+
+    const startTime = Date.now();
+    const endTime = Date.now();
+    data.latencia = `${endTime - startTime} ms`;
+    return data;
 }
 
 let handler = async (m, { conn, usedPrefix }) => {
@@ -78,7 +87,9 @@ let teks = `*≡ INFOBOT*
 ▣ *Servidor:* ${hostname()}
 ▣ *Plataforma:* ${platform()}
 ▣ *Cpu:* ${data.núcleosCPU} 
-▣ *Ram usada:* ${format(totalmem() - freemem())} de ${format(totalmem())}
+▣ *Uso de CPU:* ${data.usoCpu}  
+▣ *Ram total:* ${format(totalmem())}
+▣ *Ram usada:* ${data.usoRam}  
 ▣ *Uptime:* ${toTime(os.uptime() * 1000)}`;
 
 await conn.sendMessage(m.chat, {text: teks, contextInfo: { mentionedJid: null, forwardingScore: 1, isForwarded: true, forwardedNewsletterMessageInfo: { newsletterJid: '120363355261011910@newsletter', serverMessageId: '', newsletterName: 'LoliBot ✨' }, externalAdReply : {mediaUrl: null, mediaType: 1, description: null, title: `INFO - BOT`, previewType: 0, thumbnailUrl: img1, sourceUrl: redes.getRandom()}}}, { quoted: m })
