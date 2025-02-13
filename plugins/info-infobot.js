@@ -115,15 +115,10 @@ export default handler;
 
 async function getDiskUsage() {
     try {
-        const path = "/home/container/";
-        const { total, free } = diskusage.checkSync(path);
-        const used = total - free; 
-        return {
-            total: humanFileSize(total),
-            usado: humanFileSize(used),
-            libre: humanFileSize(free)
-        };
-    } catch (err) {     
+        const path = "/home/container"; 
+        const usado = execSync(`du -sh ${path} | cut -f1`).toString().trim();
+        return { total: 'N/A', usado, libre: 'N/A' };
+    } catch (err) {
         return { total: 'N/A', usado: 'N/A', libre: 'N/A' };
     }
 }
