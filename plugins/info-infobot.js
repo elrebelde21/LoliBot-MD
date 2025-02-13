@@ -99,7 +99,7 @@ let teks = `*≡ INFOBOT*
 *≡ S E R V E R*
 ▣ *Servidor:* ${hostname()}
 ▣ *Plataforma:* ${platform()}
-▣ *Ram usada:* ${humanFileSize(memoriaUso.rss)} de ${humanFileSize(memoriaUso.total)}
+▣ *Ram usada:* ${data.usoRam} de ${humanFileSize(memoriaUso.total)}
 *▣ Espacio usado en disco:* ${data.espacioUsado} de ${data.espacioTotal}
 ▣ *Uso de CPU:* ${data.usoCpu}  
 ▣ *Uptime:* ${toTime(os.uptime() * 1000)}`;
