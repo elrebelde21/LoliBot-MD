@@ -39,8 +39,8 @@ let diskUsage = await getDiskUsage();
         usoCpu: usoCpu,  
         memory: humanFileSize(memoriaUso.free, true, 1) + ' libre de ' + humanFileSize(memoriaUso.total, true, 1),
         espacioUsado: diskUsage.usado,
-    espacioTotal: diskUsage.total,
-    espacioLibre: diskUsage.libre,
+        espacioTotal: diskUsage.total,
+        espacioLibre: diskUsage.libre,
     tiempoActividad: toTime(os.uptime() * 1000),
         cargaPromedio: os.loadavg().map((avg, index) => `${index + 1} min: ${avg.toFixed(2)}.`).join('\n'),
         horaActual: new Date().toLocaleString(),
@@ -113,21 +113,19 @@ handler.command = /^(infobot|informacionbot|infololi)$/i;
 handler.register = true;
 export default handler;
 
-function getDiskUsage() {
-    return new Promise((resolve, reject) => {
-        try {
-            const path = '/'; 
-            const { total, free } = diskusage.checkSync(path);
-            const used = total - free;
-            resolve({
-                total: humanFileSize(total),
-                usado: humanFileSize(used),
-                libre: humanFileSize(free)
-            });
-        } catch (err) {
-            reject(err);
-        }
-    });
+async function getDiskUsage() {
+    try {
+        const path = '/' || 'C:\\'
+        const { total, free } = diskusage.checkSync(path);
+        const used = total - free;
+        return {
+            total: humanFileSize(total),
+            usado: humanFileSize(used),
+            libre: humanFileSize(free)
+        };
+    } catch (err) {     
+        return { total: 'N/A', usado: 'N/A', libre: 'N/A' };
+    }
 }
 
 function toNum(number) {
