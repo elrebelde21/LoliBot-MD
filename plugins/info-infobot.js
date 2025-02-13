@@ -26,6 +26,7 @@ async function getSystemInfo() {
     let memoriaUso = process.memoryUsage();
     let usoRam = humanFileSize(memoriaUso.rss); 
     let usoCpu = getCpuUsage();
+   let diskUsage = await getDiskUsage();
 
     const data = {
         plataforma: os.platform(),
@@ -99,7 +100,7 @@ let teks = `*≡ INFOBOT*
 ▣ *Plataforma:* ${platform()}
 ▣ *Ram usada:* ${data.usoRam} de ${format(totalmem())}
 ▣ *Espacio usado en disco:* ${data.espacioUsado} de ${data.espacioTotal}  
-▣ *Uso de CPU:* ${data.usoCpu}
+▣ *Uso de CPU:* ${data.usoCpu}  
 ▣ *Uptime:* ${toTime(os.uptime() * 1000)}`;
 
 await conn.sendMessage(m.chat, {text: teks, contextInfo: { mentionedJid: null, forwardingScore: 1, isForwarded: true, forwardedNewsletterMessageInfo: { newsletterJid: '120363355261011910@newsletter', serverMessageId: '', newsletterName: 'LoliBot ✨' }, externalAdReply : {mediaUrl: null, mediaType: 1, description: null, title: `INFO - BOT`, previewType: 0, thumbnailUrl: img1, sourceUrl: redes.getRandom()}}}, { quoted: m })
