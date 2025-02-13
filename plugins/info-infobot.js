@@ -14,8 +14,8 @@ let format = sizeFormatter({std: 'JEDEC', decimalPlaces: 2, keepTrailingZeroes: 
 const used = process.memoryUsage();
 
 function getCpuUsage() {
-    let load = os.loadavg()[0]; 
-    let cores = os.cpus().length;
+    let load = os.loadavg()[0];
+    let cores = cpus().length;
     let usage = (load / cores) * 100;
     return usage.toFixed(2) + '%';
 }
@@ -35,10 +35,10 @@ async function getSystemInfo() {
         modeloCPU: modeloCPU,
         arquitecturaSistema: os.arch(),
         versiónSistema: os.release(),
-        procesosActivos: os.loadavg()[0],
-        usoRam: usoRam,  
-        usoCpu: usoCpu,  
-        memory: humanFileSize(memoriaUso.free, true, 1) + ' libre de ' + humanFileSize(memoriaUso.total, true, 1),
+          procesosActivos: os.loadavg()[0],
+        usoRam: usoRam,
+        usoCpu: usoCpu,
+        memory: humanFileSize(memoriaUso.free) + ' libre de ' + humanFileSize(memoriaUso.total),
         espacioUsado: diskUsage.usado,
         espacioTotal: diskUsage.total,
         espacioLibre: diskUsage.libre,
@@ -99,9 +99,9 @@ let teks = `*≡ INFOBOT*
 *≡ S E R V E R*
 ▣ *Servidor:* ${hostname()}
 ▣ *Plataforma:* ${platform()}
-▣ *Ram usada:* ${data.usoRam} de ${format(totalmem())}
-▣ *Espacio usado en disco:* ${data.espacioUsado} de ${data.espacioTotal}  
-▣ *Uso de CPU:* ${data.usoCpu}  
+*▣ RAM usada:* ${data.usoRam}/${format(totalmem())}
+*▣ Espacio usado en disco:* ${data.espacioUsado}/${data.espacioTotal}
+*▣ Uso de CPU:* ${data.usoCpu}
 ▣ *Uptime:* ${toTime(os.uptime() * 1000)}`;
 
 await conn.sendMessage(m.chat, {text: teks, contextInfo: { mentionedJid: null, forwardingScore: 1, isForwarded: true, forwardedNewsletterMessageInfo: { newsletterJid: '120363355261011910@newsletter', serverMessageId: '', newsletterName: 'LoliBot ✨' }, externalAdReply : {mediaUrl: null, mediaType: 1, description: null, title: `INFO - BOT`, previewType: 0, thumbnailUrl: "https://telegra.ph/file/39fb047cdf23c790e0146.jpg", sourceUrl: redes.getRandom()}}}, { quoted: m })
@@ -115,10 +115,10 @@ handler.register = true;
 export default handler;
 
 function getFolderSize(folderPath) {
-    let totalSize = 0;
+let totalSize = 0;
 
-    function calculateSize(directory) {
-        const files = fs.readdirSync(directory);
+function calculateSize(directory) {
+const files = fs.readdirSync(directory);
 
         for (const file of files) {
             const filePath = path.join(directory, file);
@@ -138,7 +138,7 @@ function getFolderSize(folderPath) {
 
 async function getDiskUsage() {
     try {
-        const path = "/home/container"; // Asegúrate de que este sea el directorio del bot
+        const path = "/home/container"; 
         const usado = getFolderSize(path);
         return { total: 'N/A', usado, libre: 'N/A' };
     } catch (err) {
