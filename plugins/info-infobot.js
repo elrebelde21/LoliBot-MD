@@ -5,6 +5,7 @@ import { cpus as _cpus, totalmem, freemem, platform, hostname, version, release,
 import os from 'os';
 import moment from 'moment';
 import speed from 'performance-now';
+import diskusage from 'diskusage';
 import { sizeFormatter } from 'human-readable';
 
 let format = sizeFormatter({std: 'JEDEC', decimalPlaces: 2, keepTrailingZeroes: false, render: (literal, symbol) => `${literal} ${symbol}B`,});
@@ -38,9 +39,9 @@ let diskUsage = await getDiskUsage();
         usoCpu: usoCpu,  
         memory: humanFileSize(memoriaUso.free, true, 1) + ' libre de ' + humanFileSize(memoriaUso.total, true, 1),
         espacioUsado: diskUsage.usado,
-        espacioTotal: diskUsage.total,
-        espacioLibre: diskUsage.libre,
-        tiempoActividad: '',
+    espacioTotal: diskUsage.total,
+    espacioLibre: diskUsage.libre,
+    tiempoActividad: toTime(os.uptime() * 1000),
         cargaPromedio: os.loadavg().map((avg, index) => `${index + 1} min: ${avg.toFixed(2)}.`).join('\n'),
         horaActual: new Date().toLocaleString(),
     };
@@ -114,26 +115,18 @@ export default handler;
 
 function getDiskUsage() {
     return new Promise((resolve, reject) => {
-        fs.stat("/", (err, stats) => {
-            if (err) {
-                reject(err);
-            } else {
-                fs.stat("/", (err, disk) => {
-                    if (err) {
-                        reject(err);
-                    } else {
-                        const totalSpace = os.totalmem(); 
-                        const freeSpace = os.freemem(); 
-                        const usedSpace = totalSpace - freeSpace;
-                        resolve({
-                            total: humanFileSize(totalSpace),
-                            usado: humanFileSize(usedSpace),
-                            libre: humanFileSize(freeSpace)
-                        });
-                    }
-                });
-            }
-        });
+        try {
+            const path = '/'; 
+            const { total, free } = diskusage.checkSync(path);
+            const used = total - free;
+            resolve({
+                total: humanFileSize(total),
+                usado: humanFileSize(used),
+                libre: humanFileSize(free)
+            });
+        } catch (err) {
+            reject(err);
+        }
     });
 }
 
