@@ -1,5 +1,6 @@
 import db from '../lib/database.js';
 import fs from 'fs';
+import path from 'path';
 import ws from 'ws';
 import { cpus as _cpus, totalmem, freemem, platform, hostname, version, release, arch } from 'os';
 import os from 'os';
@@ -113,17 +114,34 @@ handler.command = /^(infobot|informacionbot|infololi)$/i;
 handler.register = true;
 export default handler;
 
+function getFolderSize(folderPath) {
+    let totalSize = 0;
+
+    function calculateSize(directory) {
+        const files = fs.readdirSync(directory);
+
+        for (const file of files) {
+            const filePath = path.join(directory, file);
+            const stats = fs.statSync(filePath);
+
+            if (stats.isDirectory()) {
+                calculateSize(filePath);
+            } else {
+                totalSize += stats.size;
+            }
+        }
+    }
+
+    calculateSize(folderPath);
+    return humanFileSize(totalSize);
+}
+
 async function getDiskUsage() {
     try {
-        const path = "/home/container"; 
-        const { total, free } = diskusage.checkSync(path);
-        const used = total - free; 
-        return {
-            total: humanFileSize(total),
-            usado: humanFileSize(used),
-            libre: humanFileSize(free)
-        };
-    } catch (err) {     
+        const path = "/home/container"; // Asegúrate de que este sea el directorio del bot
+        const usado = getFolderSize(path);
+        return { total: 'N/A', usado, libre: 'N/A' };
+    } catch (err) {
         return { total: 'N/A', usado: 'N/A', libre: 'N/A' };
     }
 }
