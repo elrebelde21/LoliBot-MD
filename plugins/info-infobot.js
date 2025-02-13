@@ -1,4 +1,5 @@
 import db from '../lib/database.js';
+import fs from 'fs';
 import ws from 'ws';
 import { cpus as _cpus, totalmem, freemem, platform, hostname, version, release, arch } from 'os';
 import os from 'os';
@@ -23,7 +24,8 @@ async function getSystemInfo() {
     let elapsedSystem = (endCpuUsage.system - startCpuUsage.system) / 1000; 
     let elapsedTime = 100;
 
-    let usoCpu = ((elapsedUser + elapsedSystem) / elapsedTime / os.cpus().length).toFixed(2) + ' %';
+    let usoCpu = ((elapsedUser + elapsedSystem) / elapsedTime / os.cpus().length).toFixed(2) + '%';
+let diskUsage = await getDiskUsage();
 
     const data = {
         plataforma: os.platform(),
@@ -35,7 +37,10 @@ async function getSystemInfo() {
         usoRam: usoRam,  
         usoCpu: usoCpu,  
         memory: humanFileSize(memoriaUso.free, true, 1) + ' libre de ' + humanFileSize(memoriaUso.total, true, 1),
-        tiempoActividad: 'No disponible',
+        espacioUsado: diskUsage.usado,
+        espacioTotal: diskUsage.total,
+        espacioLibre: diskUsage.libre,
+        tiempoActividad: '',
         cargaPromedio: os.loadavg().map((avg, index) => `${index + 1} min: ${avg.toFixed(2)}.`).join('\n'),
         horaActual: new Date().toLocaleString(),
     };
@@ -92,9 +97,9 @@ let teks = `*≡ INFOBOT*
 *≡ S E R V E R*
 ▣ *Servidor:* ${hostname()}
 ▣ *Plataforma:* ${platform()}
-▣ *Cpu:* ${data.núcleosCPU} 
-▣ *Uso de CPU:* ${data.usoCpu}  
 ▣ *Ram usada:* ${data.usoRam} de ${format(totalmem())}
+▣ *Espacio usado en disco:* ${data.espacioUsado} de ${data.espacioTotal}  
+▣ *Uso de CPU:* ${data.usoCpu}  
 ▣ *Uptime:* ${toTime(os.uptime() * 1000)}`;
 
 await conn.sendMessage(m.chat, {text: teks, contextInfo: { mentionedJid: null, forwardingScore: 1, isForwarded: true, forwardedNewsletterMessageInfo: { newsletterJid: '120363355261011910@newsletter', serverMessageId: '', newsletterName: 'LoliBot ✨' }, externalAdReply : {mediaUrl: null, mediaType: 1, description: null, title: `INFO - BOT`, previewType: 0, thumbnailUrl: img1, sourceUrl: redes.getRandom()}}}, { quoted: m })
@@ -106,6 +111,31 @@ handler.tags = ['main'];
 handler.command = /^(infobot|informacionbot|infololi)$/i;
 handler.register = true;
 export default handler;
+
+function getDiskUsage() {
+    return new Promise((resolve, reject) => {
+        fs.stat("/", (err, stats) => {
+            if (err) {
+                reject(err);
+            } else {
+                fs.stat("/", (err, disk) => {
+                    if (err) {
+                        reject(err);
+                    } else {
+                        const totalSpace = os.totalmem(); 
+                        const freeSpace = os.freemem(); 
+                        const usedSpace = totalSpace - freeSpace;
+                        resolve({
+                            total: humanFileSize(totalSpace),
+                            usado: humanFileSize(usedSpace),
+                            libre: humanFileSize(freeSpace)
+                        });
+                    }
+                });
+            }
+        });
+    });
+}
 
 function toNum(number) {
     if (number >= 1000 && number < 1000000) {
