@@ -27,7 +27,7 @@ async function getSystemInfo() {
     let memoriaUso = process.memoryUsage();
     let usoRam = humanFileSize(memoriaUso.rss); 
     let usoCpu = getCpuUsage();
-   let diskUsage = await getDiskUsage();
+    let diskUsage = await getDiskUsage();
 
     const data = {
         plataforma: os.platform(),
@@ -42,7 +42,7 @@ async function getSystemInfo() {
         espacioUsado: diskUsage.usado,
         espacioTotal: diskUsage.total,
         espacioLibre: diskUsage.libre,
-    tiempoActividad: toTime(os.uptime() * 1000),
+        tiempoActividad: toTime(os.uptime() * 1000),
         cargaPromedio: os.loadavg().map((avg, index) => `${index + 1} min: ${avg.toFixed(2)}.`).join('\n'),
         horaActual: new Date().toLocaleString(),
     };
@@ -99,8 +99,8 @@ let teks = `*≡ INFOBOT*
 *≡ S E R V E R*
 ▣ *Servidor:* ${hostname()}
 ▣ *Plataforma:* ${platform()}
-▣ *Ram usada:* ${data.usoRam} de ${format(totalmem())}
-▣ *Espacio usado en disco:* ${data.espacioUsado}
+▣ *Ram usada:* ${data.usoRam} de ${humanFileSize(totalmem())} 
+▣ *Espacio usado en disco:* ${data.espacioUsado} de ${data.espacioTotal}
 ▣ *Uso de CPU:* ${data.usoCpu}  
 ▣ *Uptime:* ${toTime(os.uptime() * 1000)}`;
 
@@ -138,10 +138,17 @@ const files = fs.readdirSync(directory);
 
 async function getDiskUsage() {
     try {
-        const path = "/home/container"; // Asegúrate de que este sea el directorio del bot
-        const usado = getFolderSize(path);
-        return { total: 'N/A', usado, libre: 'N/A' };
+        // Este es el directorio raíz de tu servidor
+        const { available, total, free } = await diskusage.check('/');
+        
+        // Convirtiendo los valores a un formato legible
+        const totalFormatted = humanFileSize(total);
+        const freeFormatted = humanFileSize(free);
+        const usedFormatted = humanFileSize(total - free);
+        
+        return { total: totalFormatted, usado: usedFormatted, libre: freeFormatted };
     } catch (err) {
+        console.error("Error al obtener el uso de disco: ", err);
         return { total: 'N/A', usado: 'N/A', libre: 'N/A' };
     }
 }
