@@ -99,8 +99,8 @@ let teks = `*≡ INFOBOT*
 *≡ S E R V E R*
 ▣ *Servidor:* ${hostname()}
 ▣ *Plataforma:* ${platform()}
-▣ *Ram usada:* ${data.usoRam} de ${humanFileSize(memoriaUso.total)}
-*▣ Espacio usado en disco:* ${data.espacioUsado} de ${data.espacioTotal}
+▣ *Ram usada:* ${data.usoRam} de ${format(totalmem())}
+▣ *Espacio usado en disco:* ${data.espacioUsado}
 ▣ *Uso de CPU:* ${data.usoCpu}  
 ▣ *Uptime:* ${toTime(os.uptime() * 1000)}`;
 
@@ -138,17 +138,10 @@ const files = fs.readdirSync(directory);
 
 async function getDiskUsage() {
     try {
-        const path = "/home/container"; 
-        const usado = getFolderSize(path);  
-
-        const diskStats = diskusage.checkSync(path);  
-        return { 
-            total: humanFileSize(diskStats.total), 
-            usado: usado, 
-            libre: humanFileSize(diskStats.free) 
-        };
+        const path = "/home/container"; // Asegúrate de que este sea el directorio del bot
+        const usado = getFolderSize(path);
+        return { total: 'N/A', usado, libre: 'N/A' };
     } catch (err) {
-        console.error(err);
         return { total: 'N/A', usado: 'N/A', libre: 'N/A' };
     }
 }
