@@ -12,21 +12,20 @@ let format = sizeFormatter({std: 'JEDEC', decimalPlaces: 2, keepTrailingZeroes: 
 
 const used = process.memoryUsage();
 
+function getCpuUsage() {
+    let load = os.loadavg()[0]; 
+    let cores = os.cpus().length;
+    let usage = (load / cores) * 100;
+    return usage.toFixed(2) + '%';
+}
+
 async function getSystemInfo() {
     let cpuInfo = os.cpus();
     let modeloCPU = cpuInfo && cpuInfo.length > 0 ? cpuInfo[0].model : null;
 
     let memoriaUso = process.memoryUsage();
     let usoRam = humanFileSize(memoriaUso.rss); 
-    let startCpuUsage = process.cpuUsage();
-    await new Promise(resolve => setTimeout(resolve, 100)); 
-    let endCpuUsage = process.cpuUsage();
-    let elapsedUser = (endCpuUsage.user - startCpuUsage.user) / 1000; 
-    let elapsedSystem = (endCpuUsage.system - startCpuUsage.system) / 1000; 
-    let elapsedTime = 100;
-
-    let usoCpu = ((elapsedUser + elapsedSystem) / elapsedTime / os.cpus().length).toFixed(2) + '%';
-let diskUsage = await getDiskUsage();
+    let usoCpu = getCpuUsage();
 
     const data = {
         plataforma: os.platform(),
@@ -100,7 +99,7 @@ let teks = `*≡ INFOBOT*
 ▣ *Plataforma:* ${platform()}
 ▣ *Ram usada:* ${data.usoRam} de ${format(totalmem())}
 ▣ *Espacio usado en disco:* ${data.espacioUsado} de ${data.espacioTotal}  
-▣ *Uso de CPU:* ${data.usoCpu}  
+▣ *Uso de CPU:* ${data.usoCpu}
 ▣ *Uptime:* ${toTime(os.uptime() * 1000)}`;
 
 await conn.sendMessage(m.chat, {text: teks, contextInfo: { mentionedJid: null, forwardingScore: 1, isForwarded: true, forwardedNewsletterMessageInfo: { newsletterJid: '120363355261011910@newsletter', serverMessageId: '', newsletterName: 'LoliBot ✨' }, externalAdReply : {mediaUrl: null, mediaType: 1, description: null, title: `INFO - BOT`, previewType: 0, thumbnailUrl: img1, sourceUrl: redes.getRandom()}}}, { quoted: m })
@@ -115,9 +114,9 @@ export default handler;
 
 async function getDiskUsage() {
     try {
-        const path = '/' || 'C:\\'
+        const path = '/'; 
         const { total, free } = diskusage.checkSync(path);
-        const used = total - free;
+        const used = total - free; 
         return {
             total: humanFileSize(total),
             usado: humanFileSize(used),
