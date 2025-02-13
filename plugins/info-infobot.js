@@ -11,14 +11,20 @@ let format = sizeFormatter({std: 'JEDEC', decimalPlaces: 2, keepTrailingZeroes: 
 const used = process.memoryUsage();
 
 async function getSystemInfo() {
-let cpuInfo = os.cpus();
-let modeloCPU = cpuInfo && cpuInfo.length > 0 ? cpuInfo[0].model : null;
+    let cpuInfo = os.cpus();
+    let modeloCPU = cpuInfo && cpuInfo.length > 0 ? cpuInfo[0].model : null;
 
     let memoriaUso = process.memoryUsage();
     let usoRam = humanFileSize(memoriaUso.rss); 
+    let startCpuUsage = process.cpuUsage();
+    await new Promise(resolve => setTimeout(resolve, 100)); 
+    let endCpuUsage = process.cpuUsage();
+    let elapsedUser = (endCpuUsage.user - startCpuUsage.user) / 1000; 
+    let elapsedSystem = (endCpuUsage.system - startCpuUsage.system) / 1000; 
+    let elapsedTime = 100;
 
-    let cpuUsage = process.cpuUsage();
-    let usoCpu = ((cpuUsage.user + cpuUsage.system) / 1000000).toFixed(2) + ' %';
+    let usoCpu = ((elapsedUser + elapsedSystem) / elapsedTime / os.cpus().length).toFixed(2) + ' %';
+
     const data = {
         plataforma: os.platform(),
         núcleosCPU: cpuInfo ? cpuInfo.length : null,
@@ -26,7 +32,7 @@ let modeloCPU = cpuInfo && cpuInfo.length > 0 ? cpuInfo[0].model : null;
         arquitecturaSistema: os.arch(),
         versiónSistema: os.release(),
         procesosActivos: os.loadavg()[0],
-        usoRam: usoRam, 
+        usoRam: usoRam,  
         usoCpu: usoCpu,  
         memory: humanFileSize(memoriaUso.free, true, 1) + ' libre de ' + humanFileSize(memoriaUso.total, true, 1),
         tiempoActividad: 'No disponible',
@@ -88,8 +94,7 @@ let teks = `*≡ INFOBOT*
 ▣ *Plataforma:* ${platform()}
 ▣ *Cpu:* ${data.núcleosCPU} 
 ▣ *Uso de CPU:* ${data.usoCpu}  
-▣ *Ram total:* ${format(totalmem())}
-▣ *Ram usada:* ${data.usoRam}  
+▣ *Ram usada:* ${data.usoRam} de ${format(totalmem())}
 ▣ *Uptime:* ${toTime(os.uptime() * 1000)}`;
 
 await conn.sendMessage(m.chat, {text: teks, contextInfo: { mentionedJid: null, forwardingScore: 1, isForwarded: true, forwardedNewsletterMessageInfo: { newsletterJid: '120363355261011910@newsletter', serverMessageId: '', newsletterName: 'LoliBot ✨' }, externalAdReply : {mediaUrl: null, mediaType: 1, description: null, title: `INFO - BOT`, previewType: 0, thumbnailUrl: img1, sourceUrl: redes.getRandom()}}}, { quoted: m })
