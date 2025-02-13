@@ -16,7 +16,7 @@ function getCpuUsage() {
     let load = os.loadavg()[0]; 
     let cores = os.cpus().length;
     let usage = (load / cores) * 100;
-    return usage.toFixed(2) + '%';
+    return usage.toFixed(2) + '';
 }
 
 async function getSystemInfo() {
@@ -100,10 +100,10 @@ let teks = `*≡ INFOBOT*
 ▣ *Plataforma:* ${platform()}
 ▣ *Ram usada:* ${data.usoRam} de ${format(totalmem())}
 ▣ *Espacio usado en disco:* ${data.espacioUsado} de ${data.espacioTotal}  
-▣ *Uso de CPU:* ${data.usoCpu}  
+▣ *Uso de CPU:* %${data.usoCpu}  
 ▣ *Uptime:* ${toTime(os.uptime() * 1000)}`;
 
-await conn.sendMessage(m.chat, {text: teks, contextInfo: { mentionedJid: null, forwardingScore: 1, isForwarded: true, forwardedNewsletterMessageInfo: { newsletterJid: '120363355261011910@newsletter', serverMessageId: '', newsletterName: 'LoliBot ✨' }, externalAdReply : {mediaUrl: null, mediaType: 1, description: null, title: `INFO - BOT`, previewType: 0, thumbnailUrl: img1, sourceUrl: redes.getRandom()}}}, { quoted: m })
+await conn.sendMessage(m.chat, {text: teks, contextInfo: { mentionedJid: null, forwardingScore: 1, isForwarded: true, forwardedNewsletterMessageInfo: { newsletterJid: '120363355261011910@newsletter', serverMessageId: '', newsletterName: 'LoliBot ✨' }, externalAdReply : {mediaUrl: null, mediaType: 1, description: null, title: `INFO - BOT`, previewType: 0, thumbnailUrl: "https://telegra.ph/file/39fb047cdf23c790e0146.jpg", sourceUrl: redes.getRandom()}}}, { quoted: m })
 //conn.sendMessage(m.chat, {image: { url: "https://telegra.ph/file/39fb047cdf23c790e0146.jpg" }, caption: teks, contextInfo: {externalAdReply: { title: `INFO - BOT`, sourceUrl: redes.getRandom(), mediaType: 1, renderLargerThumbnail: true, showAdAttribution: true, thumbnailUrl: img1}}}, { quoted: m })
 });
 }
@@ -115,9 +115,9 @@ export default handler;
 
 async function getDiskUsage() {
     try {
-        const path = '/'; 
+        const path = process.cwd(); 
         const { total, free } = diskusage.checkSync(path);
-        const used = total - free; 
+        const used = total - free;
         return {
             total: humanFileSize(total),
             usado: humanFileSize(used),
