@@ -99,12 +99,12 @@ try {
 let prefixRegex = new RegExp('^[' + (opts['prefix'] || '‎z/i!#$%+£¢€¥^°=¶∆×÷π√✓©®:;?&.,\\-').replace(/[|\\{}()[\]^$+*?.\-\^]/g, '\\$&') + ']');
 if (prefixRegex.test(m.text)) return true;
 conn.sendPresenceUpdate('composing', m.chat);
-async function luminsesi(q, username, logic) {
-try {
 let gpt = await fetch(`${apis}/tools/simi?text=${m.text}`);
 let res = await gpt.json();
 await m.reply(res.data.message);
 } catch (e) {
+try {
+async function luminsesi(q, username, logic) {
 try {
 const response = await axios.post("https://luminai.my.id", {
 content: q,
