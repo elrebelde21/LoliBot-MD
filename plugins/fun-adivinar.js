@@ -14,40 +14,52 @@ pelicula: "peliculas.json",
 trivia: "trivia.json"
 };
 
-async function obtenerPregunta(tipo) {
-let prompt = "";
-if (tipo === "acertijo") {
-prompt = "Genera un acertijo con su respuesta en formato JSON: {\"question\": \"<pregunta>\", \"response\": \"<respuesta>\"}. Solo genera el JSON sin ningún comentario adicional.";
-} else if (tipo === "pelicula") {
-prompt = "Genera un juego de adivinar película usando emojis como pista, en formato JSON: {\"question\": \"<pregunta>\", \"response\": \"<respuesta>\"}. Solo genera el JSON sin ningún comentario adicional.";
-} else if (tipo === "trivia") {
-prompt = "Genera una pregunta de trivia con opciones múltiples en formato JSON, siguiendo este formato: {\"question\": \"<pregunta>\\n\\nA) ...\\n\\nB) ...\\n\\nC) ...\", \"response\": \"<letra de la respuesta correcta>\"}. Solo genera el JSON sin ningún comentario adicional.";
-}
+let preguntasRecientes = {}; 
 
-try {
-let gpt = await fetch(`${apis}/ia/gptweb?text=${encodeURIComponent(prompt)}`);
-let res = await gpt.json();
-if (res.data) {
-let dataText = res.data;
-const match = dataText.match(/```json\s*([\s\S]*?)\s*```/);
-if (match) {
-dataText = match[1];
-}
-try {
-return JSON.parse(dataText);
-} catch (error) {
-console.error(error);
-}}} catch (error) {
-console.error(error);
-}
+async function obtenerPregunta(tipo, idChat) {
+    let prompt = "";
+    if (tipo === "trivia") {
+        prompt = "Genera una pregunta de trivia con opciones múltiples en formato JSON, siguiendo este formato: {\"question\": \"<pregunta>\\n\\nA) ...\\n\\nB) ...\\n\\nC) ...\", \"response\": \"<letra de la respuesta correcta>\"}. Solo genera el JSON sin ningún comentario adicional.";
+    } else if (tipo === "acertijo") {
+        prompt = "Genera un acertijo con su respuesta en formato JSON: {\"question\": \"<pregunta>\", \"response\": \"<respuesta>\"}. Solo genera el JSON sin ningún comentario adicional.";
+    } else if (tipo === "pelicula") {
+        prompt = "Genera un juego de adivinar película usando emojis como pista, en formato JSON: {\"question\": \"<pregunta>\", \"response\": \"<respuesta>\"}. Solo genera el JSON sin ningún comentario adicional.";
+    }
 
-try {
-let archivo = `./src/game/${archivosRespaldo[tipo]}`;
-let data = JSON.parse(fs.readFileSync(archivo));
-return data[Math.floor(Math.random() * data.length)];
-} catch (error) {
-return null;
-}}
+    try {
+        let gpt = await fetch(`${apis}/ia/gptweb?text=${encodeURIComponent(prompt)}`);
+        let res = await gpt.json();
+        if (res.data) {
+            let dataText = res.data;
+            const match = dataText.match(/```json\s*([\s\S]*?)\s*```/);
+            if (match) {
+                dataText = match[1];
+            }
+            let pregunta = JSON.parse(dataText);
+
+if (!preguntasRecientes[idChat]) preguntasRecientes[idChat] = [];
+            if (preguntasRecientes[idChat].includes(pregunta.question)) {
+                return obtenerPregunta(tipo, idChat);
+            }
+
+preguntasRecientes[idChat].push(pregunta.question);
+if (preguntasRecientes[idChat].length > 30) { //
+preguntasRecientes[idChat].shift();
+ }
+return pregunta;
+        }
+    } catch (error) {
+        console.error(error);
+    }
+
+    try {
+        let archivo = `./src/game/${archivosRespaldo[tipo]}`;
+        let data = JSON.parse(fs.readFileSync(archivo));
+        return data[Math.floor(Math.random() * data.length)];
+    } catch (error) {
+        return null;
+    }
+}
 
 let handler = async (m, { conn, command }) => {
 let id = m.chat;
