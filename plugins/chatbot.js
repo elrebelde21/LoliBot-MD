@@ -99,11 +99,6 @@ try {
 let prefixRegex = new RegExp('^[' + (opts['prefix'] || '‎z/i!#$%+£¢€¥^°=¶∆×÷π√✓©®:;?&.,\\-').replace(/[|\\{}()[\]^$+*?.\-\^]/g, '\\$&') + ']');
 if (prefixRegex.test(m.text)) return true;
 conn.sendPresenceUpdate('composing', m.chat);
-let gpt = await fetch(`${apis}/tools/simi?text=${m.text}`);
-let res = await gpt.json();
-await m.reply(res.data.message);
-} catch (e) {
-try {
 async function luminsesi(q, username, logic) {
 try {
 const response = await axios.post("https://luminai.my.id", {
@@ -154,6 +149,11 @@ result = deepseekResponse;
 if (result && result.trim().length > 0) {
 await conn.reply(m.chat, result, m);
 }} catch (e) {
+try {
+let gpt = await fetch(`${apis}/tools/simi?text=${m.text}`);
+let res = await gpt.json();
+await m.reply(res.data.message);
+} catch (e) {
 return m.reply([`Simsimi esta durmiendo no molesta 🥱`, `Callarte`, `Api simsimi caida`, `Simsimi esta ocupado cojieron con tu hermana vuelva mas tarde 🥵`, `NO MOLESTE PUTA`, `No hay señar`, `No estoy disponible`].getRandom());
 console.log(e);
 }}}
