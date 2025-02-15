@@ -8,8 +8,21 @@ import {fileTypeFromBuffer} from 'file-type';
 
 const handler = async (m, {conn, args, command, usedPrefix}) => {
 const datas = global
-if (!args[0]) return conn.reply(m.chat, `⚠️ Ingresa el enlace del vídeo de Instagram junto al comando.\n\nEjemplo: *${usedPrefix + command}* https://www.instagram.com/p/C60xXk3J-sb/?igsh=YzljYTk1ODg3Zg==`, m)
+if (!args[0]) throw `⚠️ Ingresa el enlace del vídeo de Instagram junto al comando.\n\nEjemplo: *${usedPrefix + command}* https://www.instagram.com/p/C60xXk3J-sb/?igsh=YzljYTk1ODg3Zg==`
 await m.react('⌛')
+try {
+const res = await fetch(`https://api.siputzx.my.id/api/d/igdl?url=${args}`);
+const data = await res.json();
+const fileType = data.data[0].url.includes('.webp') ? 'image' : 'video'; 
+const downloadUrl = data.data[0].url;
+if (fileType === 'image') {
+await conn.sendFile(m.chat, downloadUrl, 'ig.jpg', '_*Aqui tiene tu imagen de Instagram*', m, null, fake);
+m.react('✅');
+} else if (fileType === 'video') {
+await conn.sendFile(m.chat, downloadUrl, 'ig.mp4', '*Aqui esta el video de Instagram*', m, null, fake);
+m.react('✅');
+}
+} catch {   
 try {
 const res = await fetch(`https://api.fgmods.xyz/api/downloader/igdl?url=${args}&apikey=${fgkeysapi}`);
 const data = await res.json();
@@ -91,7 +104,8 @@ await m.react('✅')
 } catch (e) {
 await m.react('❌')
 console.log(e)
-}}}}}}}}
+handler.limit = 0
+}}}}}}}}}
 handler.help = ['instagram *<link ig>*']
 handler.tags = ['downloader']
 handler.command = /^(instagramdl|instagram|igdl|ig|instagramdl2|instagram2|igdl2|ig2|instagramdl3|instagram3|igdl3|ig3)$/i

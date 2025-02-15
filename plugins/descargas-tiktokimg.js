@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 let handler = async (m, { conn, usedPrefix, command, text }) => {
-if (!text) return m.reply(`*⚠️ Ingresa el nombre del video que buscas.*\nEj: ${usedPrefix + command} emilia_mernes`);
+if (!text) throw `*⚠️ Ingresa el nombre del video que buscas.*\nEj: ${usedPrefix + command} emilia_mernes`
 m.react("⏳")
 try {
 let { data: response } = await axios.get(`${apis}/search/tiktoksearch?query=${text}`);

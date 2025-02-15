@@ -110,7 +110,7 @@ thumbnailUrl: pp ? pp : thumb,
 sourceUrl: args[0] ? args[0] : inviteCode ? `https://chat.whatsapp.com/${inviteCode}` : md,
 mediaType: 1,
 showAdAttribution: false,
-renderLargerThumbnail: false
+renderLargerThumbnail: true
 }}}, { quoted: fkontak })
 } else {
 // Manejo de enlaces de canales
@@ -136,7 +136,7 @@ thumbnailUrl: pp,
 sourceUrl: args[0],
 mediaType: 1,
 showAdAttribution: false,
-renderLargerThumbnail: false
+renderLargerThumbnail: true
 }}}, { quoted: fkontak })}
 newsletterInfo.id ? conn.sendMessage(m.chat, { text: newsletterInfo.id }, { quoted: null }) : ''
 } catch (e) {

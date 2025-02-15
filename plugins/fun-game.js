@@ -12,8 +12,8 @@ let fkontak = { "key": { "participants":"0@s.whatsapp.net", "remoteJid": "status
 try {
 
 if (command == 'ppt' || command == 'pvp' || command == 'suit' || command == 'suitpvp') {
-const time = global.db.data.users[m.sender].wait + 10000;
-if (new Date - global.db.data.users[m.sender].wait < 10000) throw `*🕓 𝙃𝙚𝙮, 𝙀𝙨𝙥𝙚𝙧𝙖 ${Math.floor((time - new Date()) / 1000)} 𝙖𝙣𝙩𝙚𝙨 𝙙𝙚 𝙪𝙨𝙖𝙧 𝙤𝙩𝙧𝙤𝙨 𝙘𝙤𝙢𝙖𝙣𝙙𝙤*\n\n*ᴺᵒ ʰᵃᵍᵃⁿ ˢᵖᵃᵐ*`
+const time = global.db.data.users[m.sender].wait + 30000;
+if (new Date - global.db.data.users[m.sender].wait < 30000) return conn.fakeReply(m.chat,  `*🕓 𝙃𝙚𝙮, 𝙀𝙨𝙥𝙚𝙧𝙖 ${Math.floor((time - new Date()) / 1000)} 𝙖𝙣𝙩𝙚𝙨 𝙙𝙚 𝙪𝙨𝙖𝙧 𝙤𝙩𝙧𝙤𝙨 𝙘𝙤𝙢𝙖𝙣𝙙𝙤*`, m.sender, `ᴺᵒ ʰᵃᵍᵃⁿ ˢᵖᵃᵐ`, 'status@broadcast', null, fake);
 let textquien = `𝐏𝐢𝐞𝐝𝐫𝐚 🗿, 𝐏𝐚𝐩𝐞𝐥 📄 𝐨 𝐓𝐢𝐣𝐞𝐫𝐚 ✂️\n\n👾 𝙅𝙪𝙜𝙖𝙧 𝙪𝙣 𝙋𝙋𝙏 𝙘𝙤𝙣 𝙚𝙡 𝙗𝙤𝙩 𝙪𝙨𝙖𝙧 𝙡𝙤𝙨 𝙨𝙞𝙜𝙪𝙞𝙚𝙣𝙩𝙚𝙨 𝙘𝙤𝙢𝙖𝙣𝙙𝙤 :\n• ${usedPrefix + command} piedra\n• ${usedPrefix + command} papel\n• ${usedPrefix + command} tijera\n\n🕹 𝙅𝙪𝙜𝙖𝙧 𝙪𝙣 𝙋𝙋𝙏 𝙘𝙤𝙣 𝙪𝙣 𝙪𝙨𝙪𝙖𝙧𝙞𝙤, 𝙀𝙩𝙞𝙦𝙪𝙚𝙩𝙖𝙧𝙡𝙤 𝙚𝙟𝙚𝙢𝙥𝙡𝙤 :\n${usedPrefix + command} @0`
 if (!m.mentionedJid[0] && !args[0]) return conn.sendButton(m.chat, textquien, wm, pp, [['Piedra 🗿', `${usedPrefix + command} piedra`], ['Papel 📄', `${usedPrefix + command} papel`], ['Tijera ✂️', `${usedPrefix + command} tijera`]], m)
 //m.reply(textquien, m.chat, {mentions: conn.parseMention(textquien)}, {quoted: fkontak })

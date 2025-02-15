@@ -1,7 +1,7 @@
 import axios from 'axios'
 import fetch from 'node-fetch'
 let handler = async (m, { conn, usedPrefix, command, text }) => {
-if (!text) return m.reply(`*⚠️ Ingresa el término de búsqueda.*\nEj: ${usedPrefix + command} nayeon`);
+if (!text) throw `*⚠️ Ingresa el término de búsqueda.*\nEj: ${usedPrefix + command} nayeon`
 try { 
 let response = await axios.get(`https://api.siputzx.my.id/api/s/pinterest?query=${encodeURIComponent(text)}`);
 if (!response.data.status) return await m.reply("❌ No se encontraron resultados.")

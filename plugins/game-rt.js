@@ -12,6 +12,8 @@ function formatExp(amount) {
 
 async function handler(m, { conn, args, command, usedPrefix }) {
 let user = global.db.data.users[m.sender];
+const time = global.db.data.users[m.sender].wait + 30000;
+if (new Date - global.db.data.users[m.sender].wait < 30000) return conn.fakeReply(m.chat,  `*🕓 Calma crack 🤚, Espera ${msToTime(time - new Date())} antes de volver usar en comando*`, m.sender, `ᴺᵒ ʰᵃᵍᵃⁿ ˢᵖᵃᵐ`, 'status@broadcast', null, fake);
 
 if (args.length < 2) return conn.reply(m.chat, `⚠️ Formato incorrecto. Usa: ${usedPrefix + command} <color> <cantidad>\n\nEjemplo: ${usedPrefix + command} black 100`, m);
 
@@ -32,6 +34,7 @@ winAmount = betAmount * 14;
 winAmount = betAmount; 
 }}
 user.exp = (user.exp || 0) - betAmount + winAmount;
+global.db.data.users[m.sender].wait = new Date * 1;
 conn.reply(m.chat, `😱 La ruleta cayó en *${resultColor}* y ${isWin ? 'ganaste' : 'perdiste'} *${formatExp(isWin ? winAmount : betAmount)}* exp.`, m);
 }
 handler.help = ['rt <color> <cantidad>'];
@@ -40,3 +43,14 @@ handler.command = ['rt'];
 handler.register = true;
 
 export default handler;
+
+function msToTime(duration) {
+const milliseconds = parseInt((duration % 1000) / 100);
+let seconds = Math.floor((duration / 1000) % 60);
+let minutes = Math.floor((duration / (1000 * 60)) % 60);
+let hours = Math.floor((duration / (1000 * 60 * 60)) % 24);
+hours = (hours < 10) ? '0' + hours : hours;
+minutes = (minutes < 10) ? '0' + minutes : minutes;
+seconds = (seconds < 10) ? '0' + seconds : seconds;
+return seconds + ' segundos ';
+}

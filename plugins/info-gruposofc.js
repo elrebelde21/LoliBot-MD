@@ -5,7 +5,7 @@ let info = `*✅ BIENVENIDO A LOS GRUPOS OFICIALES*
   
   2) *${nnn}*
 
-➤ Grupo del Colaboracion LoliBot, GataBot-MD
+➤ Grupo del Colaboracion LoliBot & GataBot-MD
  *${nnnt}*
 
 ➤ Infomarte sobre las nuevas actualizaciones/novedades/test sobre LoliBot aqui:
@@ -13,9 +13,6 @@ let info = `*✅ BIENVENIDO A LOS GRUPOS OFICIALES*
  
 ➤ Canal oficial donde encontrarán memes, video, novedades sobre cualquier bot, etc:
 *${nna}*
-
-➤ *¡Visita todos los enlaces oficiales en un único lugar!*
-https://atom.bio/lolibot
 
  ┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈
 

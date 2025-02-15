@@ -3,18 +3,17 @@ import cheerio from 'cheerio';
 import qs from 'qs';
 
 let handler = async (m, { conn, text, usedPrefix, command }) => {
-if (!text) return m.reply(`Ejemplo de uso: ${usedPrefix + command} https://music.apple.com/us/album/glimpse-of-us/1625328890?i=1625328892`);
+if (!text) throw `Ejemplo de uso: ${usedPrefix + command} https://music.apple.com/us/album/glimpse-of-us/1625328890?i=1625328892`
   
 const apiUrl = `${apis}/applemusicdl?url=${encodeURIComponent(text)}`;
 const apiResponse = await fetch(apiUrl);
 const delius = await apiResponse.json();
- const { name, artists, image, duration, download } = delius.data;
-  m.react("⌛");
+const { name, artists, image, duration, download } = delius.data;
+m.react("⌛");
 try {
 if (delius.status) {
 const texto = `*• Titulo:* ${name}\n*• Artistas:* ${artists}\n*• Duración:* ${duration}`;
 conn.sendFile(m.chat, image, 'cover.jpg', texto, m, null, fake);
-
 await conn.sendMessage(m.chat, { document: { url: download }, fileName: `${name}.mp3`, mimetype: 'audio/mp3', }, { quoted: m });
 m.react("✅");
 } else {

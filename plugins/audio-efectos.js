@@ -4,6 +4,7 @@ import { exec } from 'child_process'
 
 let handler = async (m, { conn, args, __dirname, usedPrefix, command }) => {
 try {
+m.react("⌛")
 let q = m.quoted ? m.quoted : m
 let mime = ((m.quoted ? m.quoted : m.msg).mimetype || '')
 let set
@@ -27,11 +28,12 @@ exec(`ffmpeg -i ${media} ${set} ${filename}`, async (err, stderr, stdout) => {
 await unlinkSync(media)
 if (err) throw `_*Error!*_`
 let buff = await readFileSync(filename)
-conn.sendFile(m.chat, buff, ran, null, m, true, {
+conn.sendFile(m.chat, buff, ran, null, m, null, fake, true, {
 type: 'audioMessage', 
 ptt: true 
 })})
-} else throw `⚡ 𝙍𝙚𝙨𝙥𝙤𝙣𝙙𝙖𝙣 𝙖𝙡 𝙖𝙪𝙙𝙞𝙤 𝙤 𝙣𝙤𝙩𝙖 𝙙𝙚𝙡 𝙫𝙤𝙯 𝙥𝙖𝙧𝙖 𝙢𝙤𝙙𝙞𝙛𝙞𝙘𝙖𝙧 𝙪𝙨𝙚 𝙚𝙨𝙩𝙚 𝙘𝙤𝙢𝙖𝙣𝙙𝙤 *${usedPrefix + command}*`
+m.react("✅️")
+} else return m.reply(`⚡ 𝙍𝙚𝙨𝙥𝙤𝙣𝙙𝙖𝙣 𝙖𝙡 𝙖𝙪𝙙𝙞𝙤 𝙤 𝙣𝙤𝙩𝙖 𝙙𝙚𝙡 𝙫𝙤𝙯 𝙥𝙖𝙧𝙖 𝙢𝙤𝙙𝙞𝙛𝙞𝙘𝙖𝙧 𝙪𝙨𝙚 𝙚𝙨𝙩𝙚 𝙘𝙤𝙢𝙖𝙣𝙙𝙤 *${usedPrefix + command}*`)
 } catch (e) {
 m.reply(`\`\`\`⚠️ OCURRIO UN ERROR ⚠️\`\`\`\n\n> *Reporta el siguiente error a mi creador con el comando:*#report\n\n>>> ${e} <<<< `)       
 console.log(e) 

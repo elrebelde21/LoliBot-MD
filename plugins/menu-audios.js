@@ -204,13 +204,28 @@ let str = `\`Hola ${taguser} 💖彡\`
 * 🔊 _Las reglas del grupo_
 
 *🅛🅞🅛🅘🅑🅞🅣-🅜🅓*`.trim()
-conn.sendFile(m.chat, pp, 'lp.jpg', str, m, false, { contextInfo: {mentionedJid, externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: wm, body: '𝐒𝐮𝐩𝐞𝐫 𝐁𝐨𝐭 𝐃𝐞 𝐖𝐡𝐚𝐭𝐬𝐀𝐩𝐩', previewType: 0, thumbnail: imagen4, sourceUrl: [md, yt, tiktok].getRandom()}}})
-
+conn.sendMessage(m.chat, { text: str,  
+contextInfo:{  
+forwardedNewsletterMessageInfo: { 
+newsletterJid: '120363355261011910@newsletter', 
+serverMessageId: '', 
+newsletterName: 'LoliBot ✨️' },
+forwardingScore: 9999999,  
+isForwarded: true,   
+mentionedJid:[m.sender],  
+externalAdReply: {  
+showAdAttribution: true,  
+renderLargerThumbnail: true,  
+body: wm,
+containsAutoReply: true,  
+mediaType: 1,   
+thumbnail: img.getRandom(),
+sourceUrl: [nna, nna2, nnaa, md, yt, tiktok].getRandom()
+}}}, { quoted: m })
+//conn.sendFile(m.chat, pp, 'lp.jpg', str, m, false, { contextInfo: {mentionedJid, externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: wm, body: '𝐒𝐮𝐩𝐞𝐫 𝐁𝐨𝐭 𝐃𝐞 𝐖𝐡𝐚𝐭𝐬𝐀𝐩𝐩', previewType: 0, thumbnail: imagen4, sourceUrl: [md, yt, tiktok].getRandom()}}})
 } catch (e) {
-//console.log(`❗❗ ${lenguajeGB['smsMensError2']()} ${usedPrefix + command} ❗❗`)
 console.log(e)	
 }}
-
 handler.help = ['infomenu'].map(v => v + 'able <option>')
 handler.tags = ['group', 'owner']
 handler.command = /^(menu2|audios|menú2|memu2|menuaudio|menuaudios|memuaudios|memuaudio|audios|audio)$/i

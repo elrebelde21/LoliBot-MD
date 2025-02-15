@@ -96,8 +96,7 @@ mentions: [mentioned]});
 }, 60000), // 1 minuto 
 });
 
-conn.sendMessage(mentioned, { text: `📜 @${m.sender.split('@')[0]} quiere venderte *${characterToSell.name}* por ${price} exp.\n\nResponde:\n- *Aceptar*: para completar la compra.\n- *Rechazar*: para cancelar.`, mentions: [m.sender, mentioned] }, { quoted: m });
-m.reply(`✅ Solicitud de venta enviada al privado de @${mentioned.split('@')[0]}.`, null, { mentions: [mentioned] });
+m.reply(`📜 Hey @${mentioned.split('@')[0]}, el usuario @${m.sender.split('@')[0]} quiere venderte *${characterToSell.name}* por ${price} exp.\n\nResponde con:\n- *Aceptar* para comprar.\n- *Rechazar* para cancelar.`, null, { mentions: [mentioned, m.sender] });
 } else {
 const previousPrice = characterToSell.price;
 characterToSell.price = price;
@@ -108,14 +107,14 @@ if (characterToSell.forSale) {
 characterToSell.previousPrice = previousPrice;
 }
 saveCharacters(characters);
-m.reply(`✅ Has puesto a la venta *${characterToSell.name}* en el mercado por ${price} exp (ganancia neta después de comisión de 10%).`);
-}
-};
+m.reply(`✅ Has puesto a la venta *${characterToSell.name}* en el mercado por ${price} exp.`);
+}};
 
 handler.before = async (m) => {
 const buyerId = m.sender;
 const sale = pendingSales.get(buyerId);
 if (!sale) return;
+
 const response = m.text.toLowerCase();
 if (response === 'aceptar') {
 const { seller, buyer, character, price } = sale;
@@ -124,24 +123,24 @@ if (global.db.data.users[buyer].exp < price) {
 pendingSales.delete(buyerId);
 return m.reply('⚠️ No tienes suficiente exp para comprar este personaje.');
 }
-const sellerExp = character.price * 0.75;
+
+const sellerExp = price * 0.75; 
 global.db.data.users[buyer].exp -= price;
 global.db.data.users[seller].exp += sellerExp;
 character.claimedBy = buyer;
 character.price = price;
-character.forSale = false; 
+character.forSale = false;
 const characters = loadCharacters();
 const updatedCharacters = characters.map(c => c.id === character.id ? character : c);
 saveCharacters(updatedCharacters);
 clearTimeout(sale.timer);
 pendingSales.delete(buyerId);
-m.reply(`✅ Has comprado *${character.name}* de @${seller.split('@')[0]} por ${price} exp.`, null, { mentions: [seller] });
-conn.sendMessage(seller, { text: `✅ @${buyer.split('@')[0]} compró tu personaje *${character.name}* por ${price} exp.\n> _💸 Tu dinero ya fue depositado a tu cuentas recibirte: ${sellerExp} por la comisión que es de %25_`, mentions: [seller, buyer] }, { quoted: m });
+//conn.sendMessage(seller, { text: `✅ @${buyer.split('@')[0]} compró tu personaje *${character.name}* por ${price} exp.\n> _💸 Tu dinero ya fue depositado a tu cuentas recibirte: ${sellerExp} por la comisión que es de %25_`, mentions: [seller, buyer] }, { quoted: m });
+m.reply(`✅ @${buyer.split('@')[0]} ha comprado *${character.name}* de @${seller.split('@')[0]} por ${price} exp.`, null, { mentions: [buyer, seller] });
 } else if (response === 'rechazar') {
 clearTimeout(sale.timer);
 pendingSales.delete(buyerId);
 m.reply(`⚠️ Has rechazado la oferta de compra para *${sale.character.name}*.`);
-conn.sendMessage(sale.seller, { text: `⚠️ @${buyerId.split('@')[0]} rechazó tu oferta para vender *${sale.character.name}*.`, mentions: [buyerId] }, { quoted: m });
 }};
 handler.help = ['rf-vender'];
 handler.tags = ['gacha'];
