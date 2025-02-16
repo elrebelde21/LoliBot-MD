@@ -49,13 +49,13 @@ const audiodlp = await ytmp3(yt_play[0].url);
 conn.sendMessage(m.chat, { audio: audiodlp, mimetype: "audio/mpeg" }, { quoted: m });
 } catch {   
 try {
-const api = await fetch(`https://exonity.tech/api/dl/ytmp3?url=https://youtube.com/watch?v=SoDed_2SN-8&apikey=ex-ed81df6621`);
+const api = await fetch(`https://exonity.tech/api/dl/ytmp3?url=${yt_play[0].url}&apikey=ex-ed81df6621`);
 const data = await api.json();
 const downloadUrl = data.result.dl
 await conn.sendMessage(m.chat, { audio: { url: downloadUrl }, mimetype: 'audio/mpeg' }, { quoted: m });
 } catch {   
 try {
-const res = await fetch(`https://api.alyachan.dev/api/ytv?url=https%3A%2F%2Fyoutu.be%2FcV2gBU6hKfY&apikey=Gata-Dios`)
+const res = await fetch(`https://api.alyachan.dev/api/ytv?url=${yt_play[0].url}&apikey=Gata-Dios`)
 let data = await res.json();
 await conn.sendMessage(m.chat, { video: { url: data.data.url }, fileName: `video.mp4`, mimetype: 'video/mp4', caption: `video`}, { quoted: m })
 } catch {   
