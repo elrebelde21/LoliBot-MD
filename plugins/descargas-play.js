@@ -6,7 +6,7 @@ import axios from 'axios'
 import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
 const { ytmp3, ytmp4 } = require("@hiudyy/ytdl");
-const LimitAud = 725 * 1024 * 1024; //700MB
+const LimitAud = 725; //700MB
 const LimitVid = 425 * 1024 * 1024; //425MB
 
 const handler = async (m, {conn, command, args, text, usedPrefix}) => {
@@ -49,9 +49,9 @@ const audiodlp = await ytmp3(yt_play[0].url);
 conn.sendMessage(m.chat, { audio: audiodlp, mimetype: "audio/mpeg" }, { quoted: m });
 } catch {   
 try {
-const res = await fetch(`https://api.alyachan.dev/api/ytv?url=${yt_play[0].url}&apikey=Gata-Dios`)
+const res = await fetch(`https://api.alyachan.dev/api/yta?url=${yt_play[0].url}&apikey=Gata-Dios`)
 let data = await res.json();
-await conn.sendMessage(m.chat, { video: { url: data.data.url }, fileName: `video.mp4`, mimetype: 'video/mp4', caption: `video`}, { quoted: m })
+await conn.sendMessage(m.chat, { audio: { url: data.data.url }, mimetype: 'audio/mpeg' }, { quoted: m });
 } catch {   
 try {
 const res = await fetch(`https://api.fgmods.xyz/api/downloader/ytmp3?url=${yt_play[0].url}&apikey=${fgkeysapi}`)
@@ -121,6 +121,16 @@ if (fileSize > LimitVid) {
 await conn.sendMessage(m.chat, { document: { url: data.dl }, fileName: `${yt_play[0].title}.mp4`, caption: `🔰 Aquí está tu video \n🔥 Título: ${yt_play[0].title}` }, { quoted: m });
 } else {
 await conn.sendMessage(m.chat, { video: { url: data.dl }, fileName: `video.mp4`, mimetype: 'video/mp4', caption: `🔰 Aquí está tu video \n🔥 Título: ${yt_play[0].title}`}, { quoted: m })
+}
+} catch {   
+try {
+const res = await fetch(`https://api.alyachan.dev/api/ytv?url=${yt_play[0].url}&apikey=Gata-Dios`)
+let data = await res.json();
+let isLimit = LimitAud * 1024 < data.data.size
+if (!isLimit) {
+await conn.sendMessage(m.chat, { document: { url: data.data.url }, fileName: `${yt_play[0].title}.mp4`, caption: `🔰 Aquí está tu video \n🔥 Título: ${yt_play[0].title}` }, { quoted: m });
+} else {
+await conn.sendMessage(m.chat, { video: { url: data.data.url }, fileName: `${yt_play[0].title}.mp4`, caption: `🔰 Aquí está tu video \n🔥 Título: ${yt_play[0].title}` }, { quoted: m }) 
 }
 } catch {   
 try {
@@ -197,7 +207,7 @@ await conn.sendMessage(m.chat, { video: { url: audiop }, fileName: `${yt_play[0]
 }} catch (e) {    
 await m.react('❌');
 console.log(e);
-}}}}}}}}}}}}
+}}}}}}}}}}}}}
 
 if (command == 'play3' || command == 'playdoc') {
 try {
