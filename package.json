@@ -100,7 +100,7 @@
 "api-dylux": "^1.7.2",
 "diskusage": "^1.2.0",
 "yargs": "^17.6.0",
-"@hiudyy/ytdl": "^0.2.3",   
+"@hiudyy/ytdl": "^0.2.0",   
 "ytdl-core": "latest"    
 },
 "optionalDependencies": {
