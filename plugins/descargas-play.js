@@ -107,7 +107,7 @@ console.log(e);
 
 if (command == 'play2' || command == 'video') {
 try {
-const video = await ytmp4(text);
+const video = await ytmp4(yt_play[0].url);
 if (fileSize > LimitVid) {
 await conn.sendMessage(m.chat, { document: { url: video }, fileName: `${yt_play[0].title}.mp4`, caption: `🔰 Aquí está tu video \n🔥 Título: ${yt_play[0].title}` }, { quoted: m });
 } else {
@@ -128,9 +128,9 @@ const res = await fetch(`https://api.alyachan.dev/api/ytv?url=${yt_play[0].url}&
 let data = await res.json();
 let isLimit = LimitAud * 1024 < data.data.size
 if (!isLimit) {
-await conn.sendMessage(m.chat, { document: { url: data.data.url }, fileName: `${yt_play[0].title}.mp4`, caption: `🔰 Aquí está tu video \n🔥 Título: ${yt_play[0].title}` }, { quoted: m });
+await conn.sendMessage(m.chat, { document: { url: data.data.url }, fileName: `${yt_play[0].title}.mp4`, caption: `${yt_play[0].title}` }, { quoted: m });
 } else {
-await conn.sendMessage(m.chat, { video: { url: data.data.url }, fileName: `${yt_play[0].title}.mp4`, caption: `🔰 Aquí está tu video \n🔥 Título: ${yt_play[0].title}` }, { quoted: m }) 
+await conn.sendMessage(m.chat, { video: { url: data.data.url }, fileName: `video.mp4`, mimetype: 'video/mp4', caption: `🔰 Aquí está tu video \n🔥 Título: ${yt_play[0].title}`}, { quoted: m })
 }
 } catch {   
 try {
@@ -167,28 +167,6 @@ await conn.sendMessage(m.chat, { document: { url: downloadUrl }, fileName: `${yt
 await conn.sendMessage(m.chat, { video: { url: downloadUrl }, fileName: `${yt_play[0].title}.mp4`, caption: `🔰 Aquí está tu video \n🔥 Título: ${yt_play[0].title}`, thumbnail: yt_play[0].thumbnail, mimetype: 'video/mp4' }, { quoted: m });
 }} catch {   
 try {
-let qu = args[1] || '360'
-let q = qu + 'p'
-const yt = await youtubedl(yt_play[0].url).catch(async _ => await youtubedlv2(yt_play[0].url))
-const dl_url = await yt.video[q].download()
-const ttl = await yt.title
-const size = await yt.video[q].fileSizeH
-await await conn.sendMessage(m.chat, { video: { url: dl_url }, fileName: `${ttl}.mp4`, mimetype: 'video/mp4', caption: `🔰 𝘼𝙦𝙪𝙞 𝙚𝙨𝙩𝙖 𝙩𝙪 𝙫𝙞𝙙𝙚𝙤 \n🔥 𝙏𝙞𝙩𝙪𝙡𝙤: ${ttl}`, thumbnail: await fetch(yt.thumbnail) }, { quoted: m })
-} catch {   
-try {
-const downloadUrl = await fetch9Convert(yt_play[0].url); 
-await conn.sendMessage(m.chat, { video: { url: downloadUrl }, fileName: `${yt_play[0].title}.mp4`, caption: `🔰 Aquí está tu video \n🔥 Título: ${yt_play[0].title}`, thumbnail: yt_play[0].thumbnail, mimetype: 'video/mp4' }, { quoted: m });
-} catch {   
-try {
-const downloadUrl = await fetchY2mate(yt_play[0].url);
-await conn.sendMessage(m.chat, { video: { url: downloadUrl }, fileName: `${yt_play[0].title}.mp4`, caption: `🔰 Aquí está tu video \n🔥 Título: ${yt_play[0].title}`, thumbnail: yt_play[0].thumbnail, mimetype: 'video/mp4' }, { quoted: m });
-} catch {   
-try {
-const videoInfo = await fetchInvidious(yt_play[0].url)
-const downloadUrl = videoInfo.videoFormats.find(format => format.mimeType === "audio/mp4").url;
-await conn.sendMessage(m.chat, { video: { url: downloadUrl }, fileName: `${yt_play[0].title}.mp4`, caption: `🔰 Aquí está tu video \n🔥 Título: ${yt_play[0].title}`, thumbnail: yt_play[0].thumbnail, mimetype: 'video/mp4' }, { quoted: m });
-} catch {   
-try {
 let searchh = await yts(yt_play[0].url)
 let __res = searchh.all.map(v => v).filter(v => v.type == "video")
 let infoo = await ytdl.getInfo('https://youtu.be/' + __res[0].videoId)
@@ -207,7 +185,7 @@ await conn.sendMessage(m.chat, { video: { url: audiop }, fileName: `${yt_play[0]
 }} catch (e) {    
 await m.react('❌');
 console.log(e);
-}}}}}}}}}}}}}
+}}}}}}}}}
 
 if (command == 'play3' || command == 'playdoc') {
 try {
