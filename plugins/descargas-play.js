@@ -49,12 +49,6 @@ const audiodlp = await ytmp3(yt_play[0].url);
 conn.sendMessage(m.chat, { audio: audiodlp, mimetype: "audio/mpeg" }, { quoted: m });
 } catch {   
 try {
-const api = await fetch(`https://exonity.tech/api/dl/ytmp3?url=${yt_play[0].url}&apikey=ex-ed81df6621`);
-const data = await api.json();
-const downloadUrl = data.result.dl
-await conn.sendMessage(m.chat, { audio: { url: downloadUrl }, mimetype: 'audio/mpeg' }, { quoted: m });
-} catch {   
-try {
 const res = await fetch(`https://api.alyachan.dev/api/ytv?url=${yt_play[0].url}&apikey=Gata-Dios`)
 let data = await res.json();
 await conn.sendMessage(m.chat, { video: { url: data.data.url }, fileName: `video.mp4`, mimetype: 'video/mp4', caption: `video`}, { quoted: m })
@@ -100,21 +94,6 @@ const downloadUrl = delius.data.download.url;
 await conn.sendMessage(m.chat, { audio: { url: downloadUrl }, mimetype: 'audio/mpeg' }, { quoted: m });
 } catch {   
 try {
-let q = '128kbps'
-const yt = await youtubedl(yt_play[0].url).catch(async _ => await youtubedlv2(yt_play[0].url))
-const dl_url = await yt.audio[q].download()
-const ttl = await yt.title
-const size = await yt.audio[q].fileSizeH
-await conn.sendFile(m.chat, dl_url, ttl + '.mp3', null, m, false, { mimetype: 'audio/mp4' })
-} catch {   
-try {
-const res = await fetch(`https://api.zenkey.my.id/api/download/ytmp3?apikey=zenkey&url=${yt_play[0].url}`)
-const audioData = await res.json()
-if (audioData.status && audioData.result?.downloadUrl) {
-await conn.sendMessage(m.chat, { audio: { url: audioData.result.downloadUrl }, mimetype: 'audio/mpeg' }, { quoted: m })
-}
-} catch {   
-try {
 let d2 = await fetch(`https://exonity.tech/api/ytdlp2-faster?apikey=adminsepuh&url=${yt_play[0].url}`);
 let dp = await d2.json();
 const audiop = await getBuffer(dp.result.media.mp3);
@@ -124,7 +103,7 @@ if (fileSize > LimitAud) return await conn.sendMessage(m.chat, { document: { url
 } catch (e) {    
 await m.react('❌');
 console.log(e);
-}}}}}}}}}}}}}
+}}}}}}}}}}
 
 if (command == 'play2' || command == 'video') {
 try {
