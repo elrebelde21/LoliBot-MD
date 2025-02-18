@@ -20,7 +20,8 @@ let api = await axios.get(`${apis}/tools/country?text=${PhoneNumber('+' + who.re
 let userNationalityData = api.data.result
 let userNationality = userNationalityData ? `${userNationalityData.name} ${userNationalityData.emoji}` : 'Desconocido'
 let img = await (await fetch(`${pp}`)).buffer()
-  
+let relacion = user.marry ? `💍 *Esta en una relación con:* ${conn.getName(user.marry)}` : '❌ *No estas en ninguna relación, solter@ 🤑.*'
+//${user.marry.split('@')[0]}
 let str = ` *「 PERFIL 」*
  
 👤 *Nombre :* ${name}
@@ -30,6 +31,8 @@ let str = ` *「 PERFIL 」*
 💎 *Limite :* ${limit} 
 ⚙️ *Nivel :* ${level}
 ◯ *Registrado :* ${registered ? 'Si': 'No'}
+
+${relacion}
 
 *•━━━━⪻ 𝙿𝙴𝚁𝙵𝙸𝙻 ⪼━━━━•*`
 let mentionedJid = [who]
@@ -61,3 +64,4 @@ minute: 'numeric',
 second: 'numeric',
 hour12: true
 })}
+

@@ -36,6 +36,8 @@ conn.sendMessage(m.chat, {sticker: mediax, mentions: users}, { quoted: m })
 await conn.sendMessage(m.chat, { text : text ? text : '' , mentions: users}, { quoted: null, ephemeralExpiration: 24*60*100, disappearingMessagesInChat: 24*60*100})
 //await conn.relayMessage(m.chat, {extendedTextMessage:{text: `${masss}\n${htextos}\n`, ...{ contextInfo: { mentionedJid: users, externalAdReply: { thumbnail: imagen1, sourceUrl: md }}}}}, {})
 }}}
+handler.help = ['hidetag']
+handler.tags = ['group']
 handler.command = /^(hidetag|notificar|notify)$/i
 handler.group = true
 handler.admin = true

@@ -9,9 +9,7 @@ m.react("⌛")
 try {   
 const res = await fetch(`${apis}/download/apk?query=${text}`);
 const data = await res.json();
-if (!data.status || !data.data) {
-return conn.reply(m.chat, `⚠️ No se pudo encontrar el APK solicitado. Intenta con otro nombre.`, m);
-}
+if (!data.status || !data.data) throw `⚠️ No se pudo encontrar el APK solicitado. Intenta con otro nombre.`
 const apkData = data.data;
 const response = `≪ＤＥＳＣＡＲＧＡＤＯ ＡＰＫＳ🚀≫
 

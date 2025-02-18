@@ -12,7 +12,7 @@ conn.sendFile(m.chat, url, 'sticker.webp', '',m, true, { contextInfo: { 'forward
 //conn.sendFile(m.chat, url, 'error.webp', null, m, { asSticker: true })
 }
 handler.help = ['dados'];
-handler.tags = ['fun'];
+handler.tags = ['game'];
 handler.command = ['dado', 'dados', 'dadu'] 
 handler.register = true
 export default handler

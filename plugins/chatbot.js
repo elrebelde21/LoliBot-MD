@@ -98,8 +98,8 @@ ${fb}
 try {
 let prefixRegex = new RegExp('^[' + (opts['prefix'] || '‎z/i!#$%+£¢€¥^°=¶∆×÷π√✓©®:;?&.,\\-').replace(/[|\\{}()[\]^$+*?.\-\^]/g, '\\$&') + ']');
 if (prefixRegex.test(m.text)) return true;
-let time = global.db.data.users[m.sender].spam + 1000
-if (new Date - global.db.data.users[m.sender].spam < 1000) return console.log(`[ SPAM ]`) 
+let time = global.db.data.users[m.sender].spam + 3000
+if (new Date - global.db.data.users[m.sender].spam < 3000) return console.log(`[ SPAM ]`) 
 
 conn.sendPresenceUpdate('composing', m.chat);
 async function luminsesi(q, username, logic) {
@@ -115,12 +115,15 @@ return response.data.result;
 console.error(error);
 }}
 
-async function deepseek(query) {
+async function SimSimi(text, language = 'es') {
 try {
-const { data } = await axios.post("https://api.blackbox.ai/api/chat", { messages: [{ id: null, role: "user", content: query }], userSelectedModel: "deepseek-v3" });
-return data;
+const { data } = await axios.post("https://api.simsimi.vn/v1/simtalk", new URLSearchParams({
+text,
+lc: language }).toString(), {
+headers: {'Content-Type': 'application/x-www-form-urlencoded', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36' }});
+return data.message;
 } catch (error) {
-console.error('Error en la API de DeepSeek:', error);
+console.error(error);
 return null;
 }}
 
@@ -144,10 +147,8 @@ result = result.replace(/and for API requests replace https:\/\/www\.blackbox\.a
 }
 
 if (!result || result.trim().length === 0) {
-const deepseekResponse = await deepseek(query);
-if (deepseekResponse) {
-result = deepseekResponse;
-}}
+result = await SimSimi(query);
+}
 
 if (result && result.trim().length > 0) {
 await conn.reply(m.chat, result, m);

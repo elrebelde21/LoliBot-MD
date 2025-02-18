@@ -36,12 +36,14 @@ conn.sendFile(m.chat, img,  'error.jpg', texto.trim(), fkontak, false, fake)}
 } catch (e) {
 await m.react(`❌`) 
 m.reply(`\`\`\`⚠️ OCURRIO UN ERROR ⚠️\`\`\`\n\n> *Reporta el siguiente error a mi creador con el comando:*#report\n\n>>> ${e} <<<< `)       
-console.log(e)}}
+console.log(e)
+handler.money = false
+}}
 handler.help = ['consejo']
 handler.tags = ['game']
 handler.command = ['consejo', 'advice', 'frase2', 'phrase2']
 handler.register = true
-handler.limit = 1
+handler.money = 95
 handler.level = 2
 export default handler
 

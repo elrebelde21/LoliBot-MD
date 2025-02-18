@@ -71,6 +71,7 @@ m.react(`✅`)
 conn.sendFile(m.chat, sticker, 'error.webp', '', m, null, fake)
 m.react(`❌`) 
 console.error(e);
+handler.limit = false
 }}}}}}
 handler.help = ['mediafire', 'mediafiredl'];
 handler.tags = ['downloader'];
