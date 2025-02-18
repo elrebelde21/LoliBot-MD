@@ -2,13 +2,31 @@ import axios from 'axios'
 import fetch from 'node-fetch'
 let handler = async (m, { conn, usedPrefix, command, text }) => {
 if (!text) throw `*⚠️ Ingresa el término de búsqueda.*\nEj: ${usedPrefix + command} nayeon`
+m.react("⌛")
 try { 
+let response = await axios.get(`https://api.dorratz.com/v2/pinterest?q=${text}`);
+let searchResults = response.data; 
+if (m.isWABusiness) {
+await conn.sendFile(m.chat, searchResults[0].image, 'thumbnail.jpg', `\`\`\`🔍 Resultados de: ${text}\`\`\``, m, null, fake);
+} else {
+let selectedResults = searchResults.slice(0, 6);
+let messages = selectedResults.map(result => [
+``,
+`*${result.fullname || text}*\n*🔸️Autor:* ${result.upload_by}\n*🔸️ Seguidores:* ${result.followers}`, 
+result.image 
+]);
+await conn.sendCarousel(m.chat, `✅ Resultados para: ${text}`, "🔍 Pinterest Search\n" + wm, messages, m);
+m.react("✅️")
+}
+} catch {
+try {
 let response = await axios.get(`https://api.siputzx.my.id/api/s/pinterest?query=${encodeURIComponent(text)}`);
 if (!response.data.status) return await m.reply("❌ No se encontraron resultados.")
 let searchResults = response.data.data; 
 let selectedResults = searchResults.slice(0, 6); 
 let messages = selectedResults.map(result => [result.grid_title || text, wm, result.images_url]);
 await conn.sendCarousel(m.chat, `✅ Resultados para: ${text}`, "🔍 Pinterest Search", messages, m);
+m.react("✅️")
 } catch {
 try {
 let { data: response } = await axios.get(`${apis}/search/pinterestv2?text=${encodeURIComponent(text)}`);
@@ -18,9 +36,11 @@ let selectedResults = searchResults.slice(0, 6);
 let messages = selectedResults.map(result => [
 result.description || null, `🔎 Autor: ${result.name} (@${result.username})`, result.image]);
 await conn.sendCarousel(m.chat, `✅ Resultados para: ${text}`, "🔍 Pinterest Search", messages, m);
+m.react("✅️")
 } catch (error) {
 console.error(error);
-}}}
+m.react("❌️")
+}}}}
 handler.help = ['pinterest <keyword>'];
 handler.tags = ['buscadores'];
 handler.command = /^(pinterest)$/i;
