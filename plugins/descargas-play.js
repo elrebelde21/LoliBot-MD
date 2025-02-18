@@ -133,7 +133,7 @@ const res = await fetch(`https://api.alyachan.dev/api/ytv?url=${yt_play[0].url}&
 let data = await res.json();
 let isLimit = LimitAud * 1024 < data.data.size
 if (!isLimit) {
-await conn.sendMessage(m.chat, { document: { url: data.data.url }, fileName: `${yt_play[0].title}.mp4`, caption: `${yt_play[0].title}` }, { quoted: m });
+await conn.sendMessage(m.chat, { document: { url: data.data.url }, fileName: `video.mp4`, mimetype: 'video/mp4', caption: `🔰 Aquí está tu video \n🔥 Título: ${yt_play[0].title}` }, { quoted: m });
 } else {
 await conn.sendMessage(m.chat, { video: { url: data.data.url }, fileName: `video.mp4`, mimetype: 'video/mp4', caption: `🔰 Aquí está tu video \n🔥 Título: ${yt_play[0].title}`}, { quoted: m })
 }
