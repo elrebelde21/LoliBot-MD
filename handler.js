@@ -64,6 +64,7 @@ if (!isNumber(user.banco)) user.banco = 0
 if (!user.premium) user.premium = false;
 if (!user.warnPriv) user.warnPriv = false;
 if (!user.premium) user.premiumTime = 0;
+if (!user.marry) user.marry = 0;
 if (!user.wait) user.wait = 0;
 if (!user.lastmiming) user.lastmiming = 0;
 if (!user.lastwork) user.lastwork = 0;
@@ -96,6 +97,7 @@ lastclaim: 0,
 level: 0,
 wait: 0,
 age: -1,             
+marry: 0,
 bank: 0,
 BannedReason: '',
 Banneduser: false,          
