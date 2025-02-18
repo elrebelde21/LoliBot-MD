@@ -71,7 +71,7 @@ p.emit('message', line.trim())
 setInterval(() => {
 console.log('♻️ Reiniciando bot automáticamente...');
 process.exit(0); 
-}, 14400000) //4hs
+}, 10800000) //4hs
 
 start('main.js');
 
