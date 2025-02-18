@@ -98,14 +98,11 @@ global.nna2 = 'https://whatsapp.com/channel/0029Vau57ykEwEk5CgosvU3v' //LoliBot 
 global.nnaa = 'https://whatsapp.com/channel/0029Vae6j714Y9loutP3Au29' //LoliBot - Test
 global.nn = 'https://chat.whatsapp.com/HNDVUxHphPzG3cJHIwCaX5' //Grupo 1
 global.nnn = 'https://chat.whatsapp.com/KDBt6S54riRCIpSZspkxhg' //Grupo 2
-global.nnnt = 'https://chat.whatsapp.com/IO5k0UOF7hOJHE1eH3Fcxh' //Grupo del Colaboracion
-global.nnnt2 = 'https://chat.whatsapp.com/JqcMEpuH7OW9gZNWbtZMnx' // Grupo COL 2
-global.nnntt = 'https://chat.whatsapp.com/JqcMEpuH7OW9gZNWbtZMnx' //Grupo COL 3
-global.nnnttt = 'https://chat.whatsapp.com/Em4Byf4w5VgHObPvZQlfnM' //enlace lolibot
-global.nnntttt = 'https://chat.whatsapp.com/ILAHJeZsHh973tQ96i2aqS' //Grupo ayuda sobre el bot
+global.nnnt = 'https://chat.whatsapp.com/GXNXKWSEckU1j1c7sItTxK' //Grupo del Colaboracion
+global.nnntt = 'https://chat.whatsapp.com/Em4Byf4w5VgHObPvZQlfnM' //enlace lolibot
+global.nnnttt = 'https://chat.whatsapp.com/ILAHJeZsHh973tQ96i2aqS' //Grupo ayuda sobre el bot
 global.bot = 'wa.me/5213121663423'
-global.asistencia = `${fb}`
-global.redes = [nna, nna2, yt, nn, nnn, nnnt, nnnttt, md, tiktok, fb, nnn, face]
+global.redes = [nna, nna2, yt, nn, nnn, nnnt, nnntt, nnnttt, md, tiktok, fb, face]
 
 //------------------------[ Info | Datos ]---------------------------
 
