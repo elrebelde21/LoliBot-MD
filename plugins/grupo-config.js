@@ -9,8 +9,7 @@ let isClose = { // Switch Case Like :v
 'cerrar': 'announcement',
 }[(args[0] || '')]
 if (isClose === undefined)
-throw `*⚠️ ACCION MAL USADA*\n\n*• Usar j
-ejemplo:*\n${usedPrefix + command} abrir*\n${usedPrefix + command} cerrar*`.trim()
+throw `*⚠️ ACCION MAL USADA*\n\n*• Usar ejemplo:*\n${usedPrefix + command} abrir\n${usedPrefix + command} cerrar`.trim()
 await conn.groupSettingUpdate(m.chat, isClose)
   
 if (isClose === 'not_announcement'){

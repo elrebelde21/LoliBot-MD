@@ -104,6 +104,21 @@ const msgRetryCache = new NodeCache()
 const { state, saveState, saveCreds } = await useMultiFileAuthState(pathGataJadiBot)
 
 const connectionOptions = {
+logger: pino({ level: "fatal" }),
+printQRInTerminal: false,
+mobile: MethodMobile, 
+auth: {
+creds: state.creds,
+keys: makeCacheableSignalKeyStore(state.keys, Pino({ level: "fatal" }).child({ level: "fatal" })),
+},
+msgRetry,
+msgRetryCache,
+browser: mcode ? ['Ubuntu', 'Chrome', '110.0.5585.95'] : ['LoliBot-MD (Sub Bot)', 'Chrome','2.0.0'],
+version: version,
+generateHighQualityLinkPreview: true
+};
+
+/*const connectionOptions = {
 printQRInTerminal: false,
 logger: pino({ level: 'silent' }),
 auth: { creds: state.creds, keys: makeCacheableSignalKeyStore(state.keys, pino({level: 'silent'})) },
@@ -119,7 +134,7 @@ if (store) {
 //return msg.message && undefined
 } return {
 conversation: 'LoliBot-MD',
-}}} 
+}}} */
 
 let sock = makeWASocket(connectionOptions)
 sock.isInit = false

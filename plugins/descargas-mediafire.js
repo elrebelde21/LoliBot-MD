@@ -21,7 +21,7 @@ const caption = `┏━━『 𝐌𝐄𝐃𝐈𝐀𝐅𝐈𝐑𝐄 』━━•
 ╰━━━⊰ 𓃠 ${vs} ⊱━━━━•`.trim();
 await conn.sendFile(m.chat, fileData.url, fileData.title, caption, m, null, {mimetype: fileData.mimetype, asDocument: true });
 m.react('✅'); 
-} catch (error) {
+} catch {
 try {
 const res = await fetch(`https://api.siputzx.my.id/api/d/mediafire?url=${args[0]}`);
 if (!res.ok) throw new Error(`Error en la API 1: ${res.statusText}`);
@@ -39,7 +39,7 @@ const caption = `┏━━『 𝐌𝐄𝐃𝐈𝐀𝐅𝐈𝐑𝐄 』━━•
 await conn.sendFile(m.chat, fileData.link, fileData.filename, caption, m, null, {mimetype: fileData.mime, asDocument: true });
 m.react('✅'); 
 }
-} catch (error) {
+} catch {
 try {
 const res = await fetch(`${apis}/api/mediafire?url=${args[0]}`);
 if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
@@ -52,14 +52,14 @@ conn.sendFile(m.chat, fileData.link, fileData.filename, '', m, null, {mimetype: 
 });
 m.react(`✅`);
 });
-} catch (error) {
+} catch {
 try {
 const resEX = await mediafiredl(args[0]);
 const captionES = `┏━━『 𝐌𝐄𝐃𝐈𝐀𝐅𝐈𝐑𝐄 』━━•\n┃❥ 𝐍𝐨𝐦𝐛𝐫𝐞 :\n┃${resEX.filename}\n┃——————«•»——————\n┃❥ 𝐏𝐞𝐬𝐨 :\n┃ ${resEX.filesizeH}\n\n┃——————«•»——————\n┃❥ 𝐓𝐢𝐩𝐨 :\n┃${resEX.ext}\n\n╰━━━⊰ 𓃠 ${vs} ⊱━━━━•\n\n> ⏳ ᴱˢᵖᵉʳᵉ ᵘⁿ ᵐᵒᵐᵉⁿᵗᵒ ᵉⁿ ˡᵒˢ ᵠᵘᵉ ᵉⁿᵛᶦᵒˢ ˢᵘˢ ᵃʳᶜʰᶦᵛᵒˢ`.trim();
 m.reply(captionES);
 await conn.sendFile(m.chat, resEX.url, resEX.filename, '', m, null, {mimetype: resEX.ext, asDocument: true});
 m.react(`✅`)     
-} catch (error2) {
+} catch {
 try {
 const res = await mediafireDl(args[0]);
 const {name, size, date, mime, link} = res;
@@ -67,10 +67,10 @@ const caption = `┏━━『 𝐌𝐄𝐃𝐈𝐀𝐅𝐈𝐑𝐄 』━━•\
 await m.reply(caption);
 await conn.sendFile(m.chat, link, name, '', m, null, {mimetype: mime, asDocument: true});      
 m.react(`✅`) 
-} catch (error3) {
-console.error(error3);
+} catch (e) {
 conn.sendFile(m.chat, sticker, 'error.webp', '', m, null, fake)
 m.react(`❌`) 
+console.error(e);
 }}}}}}
 handler.help = ['mediafire', 'mediafiredl'];
 handler.tags = ['downloader'];

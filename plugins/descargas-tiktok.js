@@ -1,6 +1,5 @@
 import fg from 'api-dylux';
 import axios from 'axios';
-import { Tiktok } from '../lib/tiktok.js';
 const handler = async (m, {conn, text, args, usedPrefix, command}) => {
 if (!text) throw `⚠️ *Que tiktok buscar? 🤔*\n\n⚡ *Ingrese un enlace de tiktok para descarga el video*\n*Ej:* ${usedPrefix + command} https://vm.tiktok.com/ZM6T4X1RY/` 
 if (!/(?:https:?\/{2})?(?:w{3}|vm|vt|t)?\.?tiktok.com\/([^\s&]+)/gi.test(text)) throw `❌ Error`
@@ -10,14 +9,18 @@ await conn.sendMessage(m.chat, {text: `⌛ 𝙀𝙨𝙥𝙚𝙧𝙚 ✋ \n▰▰
 await delay(1000);
 await conn.sendMessage(m.chat, {text: `⌛ 𝙔𝙖 𝙘𝙖𝙨𝙞 🏃‍♂️💨\n▰▰▰▰▰▰▰▱▱`, edit: key});
 try {
-const data = await Tiktok(args);
-conn.sendMessage(m.chat, {video: {url: data.nowm}, caption: `*🔰 Aqui esta tu video de tiktok*`}, {quoted: m});
-} catch {
-try {
 const tTiktok = await tiktokdlF(args[0]);
 await conn.sendMessage(m.chat, {video: {url: tTiktok.video}, caption: `*🔰 Aqui esta tu video de tiktok*`}, {quoted: m});
 await conn.sendMessage(m.chat, {text: `✅ 𝘾𝙤𝙢𝙥𝙡𝙚𝙩𝙖𝙙𝙤\n▰▰▰▰▰▰▰▰▰\n𝘼𝙦𝙪𝙞 𝙚𝙨𝙩𝙖 𝙩𝙪 𝙫𝙞𝙙𝙚𝙤 💫`, edit: key})             
 } catch {
+try {
+const response = await axios.get(`https://api.dorratz.com/v2/tiktok-dl?url=${args[0]}`);
+if (response.data.status && response.data.data) {
+const videoData = response.data.data.media;
+const videoUrl = videoData.org; 
+await conn.sendMessage(m.chat, { video: { url: videoUrl }, caption: `*🔰 Aqui esta tu video de tiktok*` }, { quoted: m });
+await conn.sendMessage(m.chat, {text: `✅ 𝘾𝙤𝙢𝙥𝙡𝙚𝙩𝙖𝙙𝙤\n▰▰▰▰▰▰▰▰▰\n𝘼𝙦𝙪𝙞 𝙚𝙨𝙩𝙖 𝙩𝙪 𝙫𝙞𝙙𝙚𝙤 💫`, edit: key})   
+}} catch {
 try {
 const p = await fg.tiktok(args[0]);
 await conn.sendMessage(m.chat, {video: {url: p.nowm}, caption: `*✅ Aquí esta tu video de tiktok*`}, {quoted: m});

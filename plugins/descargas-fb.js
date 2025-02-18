@@ -16,20 +16,20 @@ m.react('✅');
 await conn.sendFile(m.chat, downloadUrl, 'ig.mp4', '✅ Aquí está tu video de Facebook', m, null, fake);
 m.react('✅');
 }
-} catch (err1) {
+} catch {   
 try {
 const api = await fetch(`https://api.fgmods.xyz/api/downloader/fbdl?url=${args}&apikey=${fgkeysapi}`)
 const data = await api.json();
 const downloadUrl = data.result[0].hd || data.result[0].sd;
 await conn.sendFile(m.chat, downloadUrl, 'video.mp4', '✅ Aquí está tu video de Facebook', m, null, fake);
-} catch (err1) {
+} catch {   
 try {
 const apiUrl = `${apis}/download/facebook?url=${args}`;
 const apiResponse = await fetch(apiUrl);
 const delius = await apiResponse.json();
 const downloadUrl = delius.urls[0].hd || delius.urls[0].sd;
 await conn.sendFile(m.chat, downloadUrl, 'video.mp4', '✅ Aquí está tu video de Facebook', m, null, fake);
-} catch (err1) {
+} catch {   
 try {
 const apiUrl = `https://api.dorratz.com/fbvideo?url=${encodeURIComponent(args[0])}`;
 const response = await fetch(apiUrl);
@@ -40,11 +40,7 @@ const sdUrl = data.result.sd;
 const audioUrl = data.result.audio;        
 const downloadUrl = hdUrl || sdUrl; 
 await conn.sendFile(m.chat, downloadUrl, 'video.mp4', '✅ Aquí está tu video de Facebook', m, null, fake);
-}} catch (err2) {
-try {
-const req = await igeh(args[0]);
-conn.sendMessage(m.chat, {video: {url: req.url_list}}, m);
-} catch (err1_4) {
+}} catch {   
 try {
 const ress = await fg.fbdl(args[0]);
 const urll = await ress.data[0].url;
@@ -54,7 +50,7 @@ m.react(`✅`)
 m.react(`❌`) 
 //m.reply(`\`\`\`⚠️ OCURRIO UN ERROR ⚠️\`\`\`\n\n> *Reporta el siguiente error a mi creador con el comando:*#report\n\n>>> ${err6} <<<< `)       
 console.log(e) 
-}}}}}}}
+}}}}}}
 handler.help = ['fb', 'facebook', 'fbdl']
 handler.tags = ['downloader']
 handler.command = /^(facebook|fb|facebookdl|fbdl|facebook2|fb2|facebookdl2|fbdl2|facebook3|fb3|facebookdl3|fbdl3|facebook4|fb4|facebookdl4|fbdl4|facebook5|fb5|facebookdl5|fbdl5)$/i

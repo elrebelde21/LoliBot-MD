@@ -16,7 +16,7 @@ const archivosRespaldo = {
 };
 
 async function obtenerPregunta(tipo) {
-  let maxIntentos = 6;
+  let maxIntentos = 9;
   let pregunta = null;
   
 for (let i = 0; i < maxIntentos; i++) {

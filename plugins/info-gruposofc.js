@@ -8,6 +8,9 @@ let info = `*✅ BIENVENIDO A LOS GRUPOS OFICIALES*
 ➤ Grupo del Colaboracion LoliBot & GataBot-MD
  *${nnnt}*
 
+➤ Grupo soporte para responder a tu dudas/sugerencia/etc
+${nnnttt}
+
 ➤ Infomarte sobre las nuevas actualizaciones/novedades/test sobre LoliBot aqui:
 *${nna2}*
  
@@ -17,7 +20,7 @@ let info = `*✅ BIENVENIDO A LOS GRUPOS OFICIALES*
  ┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈
 
 ⇶⃤꙰𝑬𝒏𝒍𝒂𝒄𝒆 𝒍𝒐𝒍𝒊𝒃𝒐𝒕ꦿ⃟⃢
-*${nnnttt}*`.trim() 
+*${nnntt}*`.trim() 
 conn.reply(m.chat, info, m) 
 //conn.fakeReply(m.chat, info, '0@s.whatsapp.net', '𝙏𝙝𝙚-𝙇𝙤𝙡𝙞𝘽𝙤𝙩-𝙈𝘿', 'status@broadcast')
 }
