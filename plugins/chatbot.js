@@ -98,6 +98,9 @@ ${fb}
 try {
 let prefixRegex = new RegExp('^[' + (opts['prefix'] || '‎z/i!#$%+£¢€¥^°=¶∆×÷π√✓©®:;?&.,\\-').replace(/[|\\{}()[\]^$+*?.\-\^]/g, '\\$&') + ']');
 if (prefixRegex.test(m.text)) return true;
+let time = global.db.data.users[m.sender].spam + 1000
+if (new Date - global.db.data.users[m.sender].spam < 1000) return console.log(`[ SPAM ]`) 
+
 conn.sendPresenceUpdate('composing', m.chat);
 async function luminsesi(q, username, logic) {
 try {
@@ -148,6 +151,7 @@ result = deepseekResponse;
 
 if (result && result.trim().length > 0) {
 await conn.reply(m.chat, result, m);
+global.db.data.users[m.sender].spam = new Date * 1
 }} catch (e) {
 try {
 let gpt = await fetch(`${apis}/tools/simi?text=${m.text}`);
