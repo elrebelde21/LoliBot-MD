@@ -106,10 +106,7 @@ const { state, saveState, saveCreds } = await useMultiFileAuthState(pathGataJadi
 const connectionOptions = {
 logger: pino({ level: "fatal" }),
 printQRInTerminal: false,
-auth: {
-creds: state.creds,
-keys: makeCacheableSignalKeyStore(state.keys, Pino({ level: "fatal" }).child({ level: "fatal" })),
-},
+auth: { creds: state.creds, keys: makeCacheableSignalKeyStore(state.keys, pino({level: 'silent'})) },
 msgRetry,
 msgRetryCache,
 browser: mcode ? ['Ubuntu', 'Chrome', '110.0.5585.95'] : ['LoliBot-MD (Sub Bot)', 'Chrome','2.0.0'],
