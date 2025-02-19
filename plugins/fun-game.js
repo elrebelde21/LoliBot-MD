@@ -168,8 +168,8 @@ for (let i = 0; i < maxIterations; i++) {
 
 await conn.sendMessage(m.chat, { text: `🎰 | *RANURAS* | 🎰\n────────\n` + `${array[i]}` + `\n ────────\n🎰 |   *SLOTS*   | 🎰`, edit: key }, { quoted: m });
 await new Promise((resolve) => setTimeout(resolve, 1))}
-  
-return await conn.sendMessage(m.chat, {text: `
+
+conn.sendMessage(m.chat, {text: `
 🎰 | *RANURAS* | 🎰 
 ────────
 ${x[0]} : ${y[0]} : ${z[0]}
@@ -179,7 +179,7 @@ ${x[2]} : ${y[2]} : ${z[2]}
 🎰 |   *SLOTS*   | 🎰\n\n${end}`, edit: key}, {quoted: m})}
 
 if (users.money < apuesta)  { 
-throw `⚠️ 𝐍𝐨 𝐚𝐥𝐜𝐚𝐧𝐳𝐚 𝐩𝐚𝐫𝐚 𝐚𝐩𝐨𝐬𝐭𝐚𝐫 𝐋𝐨𝐥𝐢𝐂𝐨𝐢𝐧𝐬, 𝐥𝐞 𝐫𝐞𝐜𝐨𝐦𝐢𝐞𝐧𝐝𝐨 𝐢𝐧𝐭𝐞𝐫𝐚𝐜𝐭𝐮𝐚𝐫 𝐜𝐨𝐧 𝐞𝐥 𝐛𝐨𝐭 𝐩𝐚𝐫𝐚 𝐨𝐛𝐭𝐞𝐧𝐞𝐫 𝐫𝐞𝐜𝐮𝐫𝐬𝐨𝐬`    
+return m.reply( `⚠️ 𝐍𝐨 𝐚𝐥𝐜𝐚𝐧𝐳𝐚 𝐩𝐚𝐫𝐚 𝐚𝐩𝐨𝐬𝐭𝐚𝐫 𝐋𝐨𝐥𝐢𝐂𝐨𝐢𝐧𝐬, 𝐥𝐞 𝐫𝐞𝐜𝐨𝐦𝐢𝐞𝐧𝐝𝐨 𝐢𝐧𝐭𝐞𝐫𝐚𝐜𝐭𝐮𝐚𝐫 𝐜𝐨𝐧 𝐞𝐥 𝐛𝐨𝐭 𝐩𝐚𝐫𝐚 𝐨𝐛𝐭𝐞𝐧𝐞𝐫 𝐫𝐞𝐜𝐮𝐫𝐬𝐨𝐬`)
 }
 if (command == 'slot2') {
 let time = global.db.data.users[m.sender].lastslot + 60000
@@ -243,17 +243,18 @@ for (let i = 1; i <= maxIterations; i++) {
 await conn.sendMessage(m.chat, { text: `🎰 | *RANURAS* | 🎰\n────────\n` + `${array[i]}` + `\n ────────\n🎰 |   *SLOTS*   | 🎰`, edit: key }, { quoted: m });
 await new Promise((resolve) => setTimeout(resolve, 50))}
   
-return await conn.sendMessage(m.chat, {text: `
+conn.sendMessage(m.chat, {text: `
 🎰 | *RANURAS* | 🎰 
 ────────
 ${x[0]} : ${y[0]} : ${z[0]}
 ${x[1]} : ${y[1]} : ${z[1]}
 ${x[2]} : ${y[2]} : ${z[2]}
  ────────
-🎰 |   *SLOTS*   | 🎰\n\n${end}`, edit: key}, {quoted: m})}
+🎰 |   *SLOTS*   | 🎰\n\n${end}`, edit: key}, {quoted: m})
+}
 
 if (users.limit < apuesta) {  
-throw `⚠️ 𝑵𝒐 𝒂𝒍𝒄𝒂𝒏𝒛𝒂 𝒑𝒂𝒓𝒂 𝒂𝒑𝒐𝒔𝒕𝒂𝒓 𝑫𝒊𝒂𝒎𝒂𝒏𝒕𝒆, 𝒍𝒆 𝒓𝒆𝒄𝒐𝒎𝒊𝒆𝒏𝒅𝒐 𝒊𝒏𝒕𝒆𝒓𝒂𝒄𝒕𝒖𝒂𝒓 𝒄𝒐𝒏 𝒆𝒍 𝒃𝒐𝒕 𝒑𝒂𝒓𝒂 𝒐𝒃𝒕𝒆𝒏𝒆𝒓 𝒎𝒂́𝒔 𝒓𝒆𝒄𝒖𝒓𝒔𝒐𝒔`    
+return m.reply(`⚠️ 𝑵𝒐 𝒂𝒍𝒄𝒂𝒏𝒛𝒂 𝒑𝒂𝒓𝒂 𝒂𝒑𝒐𝒔𝒕𝒂𝒓 𝑫𝒊𝒂𝒎𝒂𝒏𝒕𝒆, 𝒍𝒆 𝒓𝒆𝒄𝒐𝒎𝒊𝒆𝒏𝒅𝒐 𝒊𝒏𝒕𝒆𝒓𝒂𝒄𝒕𝒖𝒂𝒓 𝒄𝒐𝒏 𝒆𝒍 𝒃𝒐𝒕 𝒑𝒂𝒓𝒂 𝒐𝒃𝒕𝒆𝒏𝒆𝒓 𝒎𝒂́𝒔 𝒓𝒆𝒄𝒖𝒓𝒔𝒐𝒔`)
 }
 if (command == 'slot3') {
 let time = global.db.data.users[m.sender].lastslot + 30000
@@ -317,21 +318,19 @@ for (let i = 1; i <= maxIterations; i++) {
 await conn.sendMessage(m.chat, { text: `🎰 | *RANURAS* | 🎰\n────────\n` + `${array[i]}` + `\n ────────\n🎰 |   *SLOTS*   | 🎰`, edit: key }, { quoted: m });
 await new Promise((resolve) => setTimeout(resolve, 50))}
   
-return await conn.sendMessage(m.chat, {text: `
+await conn.sendMessage(m.chat, {text: `
 🎰 | *RANURAS* | 🎰 
 ────────
 ${x[0]} : ${y[0]} : ${z[0]}
 ${x[1]} : ${y[1]} : ${z[1]}
 ${x[2]} : ${y[2]} : ${z[2]}
  ────────
-🎰 |   *SLOTS*   | 🎰\n\n${end}`, edit: key}, {quoted: m})}
-        
-if (command == 'slot') {       
-await conn.sendButton(m.chat, `*Elija en que apostará ${apuesta}*`, botname, null, [['⚡ Exp', `.slot1 ${apuesta}`], ['🪙 Lolicoins', `.slot2 ${apuesta}`], ['💎 diamante', `.slot3 ${apuesta}`]], null, null, m)   
+🎰 |   *SLOTS*   | 🎰\n\n${end}`, edit: key}, {quoted: m})
 }
         
-if (command == 'apostar') {       
-await conn.sendButton(m.chat, `*Elija en que apostará ${apuesta}*`, botname, null, [['⚡ Exp', `.slot1 ${apuesta}`], ['🪙 Lolicoins', `.slot2 ${apuesta}`], ['💎 diamante', `.slot3 ${apuesta}`]], null, null, m)}
+if (command == 'apostar' || command == 'slot') {   
+await conn.sendButton(m.chat, `*Elija en que apostará ${apuesta}*`, botname, null, [['⚡ Exp', `.slot1 ${apuesta}`], ['🪙 Lolicoins', `.slot2 ${apuesta}`], ['💎 diamante', `.slot3 ${apuesta}`]], null, null, m)   
+}
 }
 
 if (command == 'tictactoe' || command == 'ttc' || command == 'ttt' || command == 'xo') {

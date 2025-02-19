@@ -2,6 +2,7 @@
 
 //let handler = m => m
 //handler.all = async function (m) {
+const antiSpam = new Map();
 export async function before(m, { conn }) {
 let fkontak = { "key": { "participants":"0@s.whatsapp.net", "remoteJid": "status@broadcast", "fromMe": false, "id": "Halo" }, "message": { "contactMessage": { "vcard": `BEGIN:VCARD\nVERSION:3.0\nN:Sy;Bot;;;\nFN:y\nitem1.TEL;waid=${m.sender.split('@')[0]}:${m.sender.split('@')[0]}\nitem1.X-ABLabel:Ponsel\nEND:VCARD` }}, "participant": "0@s.whatsapp.net" } 
 m.isBot = m.id.startsWith('BAE5') && m.id.length === 16 || m.id.startsWith('3EB0') && m.id.length === 12 || m.id.startsWith('3EB0') && (m.id.length === 20 || m.id.length === 22) || m.id.startsWith('B24E') && m.id.length === 20;
@@ -46,6 +47,10 @@ https://WhatsApp.skyultraplus.com
 • wa.me/15167096032
 • ${fb}
 • https://instagram.com/gata_dios` 
+const lastMessageTime = antiSpam.get(m.sender) || 0;
+const currentTime = Date.now();
+if (currentTime - lastMessageTime < 5000) return 
+antiSpam.set(m.sender, currentTime); 
 
 //if (/^bot|simi|alexa$/i.test(m.text)) {   
 if (m.text.includes(`bot`) || m.text.includes(`Bot`) || m.text.includes(`simsimi`) || m.text.includes(`simi`) || m.text.includes(`alexa`)) {   

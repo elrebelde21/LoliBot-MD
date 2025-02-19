@@ -6,6 +6,18 @@ if (!args[0]) throw `⚠️ 𝙄𝙣𝙜𝙧𝙚𝙨𝙚 𝙪𝙣 𝙚𝙣𝙡�
 if (!args[0].match(/www.facebook.com|fb.watch/g)) throw `⚠️ 𝙄𝙣𝙜𝙧𝙚𝙨𝙚 𝙪𝙣 𝙚𝙣𝙡𝙖𝙘𝙚 𝙙𝙚 𝙁𝙖𝙘𝙚𝙗𝙤𝙤𝙠 𝙥𝙖𝙧𝙖 𝙙𝙚𝙨𝙘𝙖𝙧𝙜𝙖𝙧 𝙚𝙡 𝙑𝙞𝙙𝙚𝙤\n• *𝙀𝙟 :* ${usedPrefix + command} https://www.facebook.com/watch?v=636541475139`
 m.react(`⌛`) 
 try { 
+const api = await fetch(`https://api.agatz.xyz/api/facebook?url=${args}`);
+const data = await api.json();
+const videoUrl = data.data.hd || data.data.sd; 
+const imageUrl = data.data.thumbnail; 
+if (videoUrl && videoUrl.endsWith('.mp4')) {
+await conn.sendFile(m.chat, videoUrl, 'video.mp4', '✅ Aquí está tu video de Facebook', m, null, fake);
+m.react('✅');
+} else if (imageUrl && (imageUrl.endsWith('.jpg') || imageUrl.endsWith('.png'))) {
+await conn.sendFile(m.chat, imageUrl, 'thumbnail.jpg', '✅ Aquí está la imagen de Facebook', m, null, fake);
+m.react('✅');
+}} catch {   
+try {
 const api = await fetch(`https://api.alyachan.dev/api/fb?url=${args}&apikey=Gata-Dios`);
 const data = await api.json();
 const downloadUrl = data.data[0].url;
@@ -50,7 +62,7 @@ m.react(`✅`)
 m.react(`❌`) 
 //m.reply(`\`\`\`⚠️ OCURRIO UN ERROR ⚠️\`\`\`\n\n> *Reporta el siguiente error a mi creador con el comando:*#report\n\n>>> ${err6} <<<< `)       
 console.log(e) 
-}}}}}}
+}}}}}}}
 handler.help = ['fb', 'facebook', 'fbdl']
 handler.tags = ['downloader']
 handler.command = /^(facebook|fb|facebookdl|fbdl|facebook2|fb2|facebookdl2|fbdl2|facebook3|fb3|facebookdl3|fbdl3|facebook4|fb4|facebookdl4|fbdl4|facebook5|fb5|facebookdl5|fbdl5)$/i

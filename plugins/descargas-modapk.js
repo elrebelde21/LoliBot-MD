@@ -5,11 +5,33 @@ const handler = async (m, {conn, usedPrefix, command, text}) => {
 const apkpureApi = 'https://apkpure.com/api/v2/search?q=';
 const apkpureDownloadApi = 'https://apkpure.com/api/v2/download?id=';
 if (!text) throw `⚠️ *𝙀𝙨𝙘𝙧𝙞𝙗𝙖 𝙚𝙡 𝙣𝙤𝙢𝙗𝙧𝙚 𝙙𝙚𝙡 𝘼𝙋𝙆*`
+
+const apk = await fetch(`https://api.dorratz.com/v3/fdroid-search?query=${text}`);
+const dataApk = await apk.json();
 m.react("⌛") 
 try {   
+const resV2 = await fetch(`https://api.dorratz.com/v3/fdroid-dl?url=${dataApk.link}`);
+const data2 = await resV2.json();
+const response = `≪ＤＥＳＣＡＲＧＡＤＯ ＡＰＫＳ🚀≫
+
+┏━━━━━━━━━━━━━━━━━━━━━━• 
+┃💫 𝙉𝙊𝙈𝘽𝙍𝙀: ${dataApk.name}
+┃👤 𝘿𝙀𝙎𝘼𝙍𝙍𝙊𝙇𝙇𝙊: ${dataApk.creator}
+┃💪 𝙋𝙀𝙎𝙊: ${data2.apkSize}
+┗━━━━━━━━━━━━━━━━━━━━━━━•
+
+> *⏳ ᴱˢᵖᵉʳᵉ ᵘⁿ ᵐᵒᵐᵉⁿᵗᵒ ˢᵘˢ ᵃᵖᵏ ˢᵉ ᵉˢᵗᵃ ᵉⁿᵛᶦᵃⁿᵈᵒ...*`;
+await conn.sendFile(m.chat, dataApk.icon, 'error.jpg', response, m, null, fake);
+const apkSize = data2.apkSize.toLowerCase();
+if (apkSize.includes('gb') || (apkSize.includes('mb') && parseFloat(apkSize) > 999)) {
+return await m.reply('*𝙀𝙡 𝙖𝙥𝙠 𝙚𝙨 𝙢𝙪𝙮 𝙥𝙚𝙨𝙖𝙙𝙤.*');
+}
+await conn.sendMessage(m.chat, {document: { url: data2.downloadLink }, mimetype: 'application/vnd.android.package-archive', fileName: `${dataApk.name}.apk`, caption: null }, { quoted: m });
+await m.react("✅");
+} catch {
+try {
 const res = await fetch(`${apis}/download/apk?query=${text}`);
 const data = await res.json();
-if (!data.status || !data.data) throw `⚠️ No se pudo encontrar el APK solicitado. Intenta con otro nombre.`
 const apkData = data.data;
 const response = `≪ＤＥＳＣＡＲＧＡＤＯ ＡＰＫＳ🚀≫
 
@@ -52,7 +74,7 @@ m.react("✅")
 m.react(`❌`) 
 console.log(e)
 handler.limit = false
-}}}
+}}}}
 handler.help = ['apk', 'apkmod'];
 handler.tags = ['downloader'];
 handler.command = /^(apkmod|apk|modapk|dapk2|aptoide|aptoidedl)$/i;
