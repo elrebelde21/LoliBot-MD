@@ -7,9 +7,11 @@ return {...value, jid: key}
 let sortedExp = users.map(toNumber('exp')).sort(sort('exp'))
 let sortedLim = users.map(toNumber('limit')).sort(sort('limit'))
 let sortedMoney = users.map(toNumber('money')).sort(sort('money'))
+let sortedBanc = users.map(toNumber('banco')).sort(sort('banco'))
 let usersExp = sortedExp.map(enumGetKey)
 let usersLim = sortedLim.map(enumGetKey)
 let usersMoney = sortedMoney.map(enumGetKey)
+let usersBanc = sortedBanc.map(enumGetKey)
            
 let len = args[0] && args[0].length > 0 ? Math.min(100, Math.max(parseInt(args[0]), 10)) : Math.min(10, sortedExp.length)
 let text = `\`🏆 𝚃𝙰𝙱𝙻𝙰 𝙳𝙴 𝙲𝙻𝙰𝚂𝙸𝙲𝙰𝙲𝙸𝙾𝙽\`
@@ -32,6 +34,13 @@ ${sortedLim.slice(0, len).map(({ jid, limit }, i) => `${i + 1}. ${participants.s
 𝐓𝐮 : *${usersMoney.indexOf(m.sender) + 1}* 𝐝𝐞 *${usersMoney.length} 𝐮𝐬𝐮𝐚𝐫𝐢𝐨𝐬*
 
 ${sortedMoney.slice(0, len).map(({ jid, money }, i) => `${i + 1}. ${participants.some(p => jid === p.jid) ? `(${conn.getName(jid)}) wa.me/` : '@'}${jid.split`@`[0]} *${formatNumber(money)}* (${money}) 🪙`).join`\n`}
+
+┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈
+
+💠 *𝐓𝐎𝐏 ${len} 𝐌𝐈𝐋𝐋𝐎𝐍𝐀𝐑𝐈𝐎𝐒 💵* _(Usuarios con mas dinero en el banco)_
+𝐓𝐮 : *${usersBanc.indexOf(m.sender) + 1}* 𝐝𝐞 *${usersBanc.length} 𝐮𝐬𝐮𝐚𝐫𝐢𝐨𝐬*
+
+${sortedBanc.slice(0, len).map(({ jid, banco }, i) => `${i + 1}. ${participants.some(p => jid === p.jid) ? `(${conn.getName(jid)}) wa.me/` : '@'}${jid.split`@`[0]} *${formatNumber(banco)}* (${banco}) 💵`).join`\n`}
 `.trim()
 await m.reply(text, null, { mentions: conn.parseMention(text) })
 }
