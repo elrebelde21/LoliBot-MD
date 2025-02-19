@@ -62,7 +62,7 @@ if (!isNumber(user.level)) user.level = 0;
 if (!isNumber(user.antispam)) user.antispam = 0;
 if (!isNumber(user.banco)) user.banco = 0        
 if (!user.premium) user.premium = false;
-if (!user.warnPriv) user.warnPriv = false;
+if (!user.warnPv) user.warnPv = false
 if (!user.premium) user.premiumTime = 0;
 if (!user.marry) user.marry = 0;
 if (!user.wait) user.wait = 0;
@@ -101,7 +101,7 @@ marry: 0,
 bank: 0,
 BannedReason: '',
 Banneduser: false,          
-warnPriv: false,
+warnPv: false,
 banco: 0,
 timeRy: 0,               
 lastmiming: 0,
@@ -353,6 +353,21 @@ m.reply(`⚠️ ESTAS BANEADO ⚠️\n*• Motivo:* ${user.messageSpam === 0 ? '
 user.antispam++	
 return
 }
+
+/*if (settings.antiPrivate && !m.isGroup && !m.fromMe) {
+let user = global.db.data.users[m.sender] || {};
+if (user.warnPv && !m.text.includes('code')) {
+console.log(`[AntiPrivate]`);
+return;
+}
+
+if (!user.warnPv) {
+m.reply(`Hola esta prohibido usar los comando al privado del bot...\n\n> _*Para usar mi funciones unirte al  grupo oficial 👇*_\n${[nnn, nnnttt, nnnt].getRandom()}`); 
+user.warnPv = true;
+global.db.data.users[m.sender] = user;
+return;
+}}
+*/
 
 //Antispam2		
 if (user.antispam2 && isROwner) return

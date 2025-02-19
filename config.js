@@ -100,9 +100,10 @@ global.nn = 'https://chat.whatsapp.com/HNDVUxHphPzG3cJHIwCaX5' //Grupo 1
 global.nnn = 'https://chat.whatsapp.com/KDBt6S54riRCIpSZspkxhg' //Grupo 2
 global.nnnt = 'https://chat.whatsapp.com/GXNXKWSEckU1j1c7sItTxK' //Grupo del Colaboracion
 global.nnntt = 'https://chat.whatsapp.com/Em4Byf4w5VgHObPvZQlfnM' //enlace lolibot
-global.nnnttt = 'https://chat.whatsapp.com/ILAHJeZsHh973tQ96i2aqS' //Grupo ayuda sobre el bot
+global.nnnttt = 'https://chat.whatsapp.com/JqcMEpuH7OW9gZNWbtZMnx' //A.T.T.M
+global.nnntttt = 'https://chat.whatsapp.com/ILAHJeZsHh973tQ96i2aqS' //Grupo ayuda sobre el bot
 global.bot = 'wa.me/5213121663423'
-global.redes = [nna, nna2, yt, nn, nnn, nnnt, nnntt, nnnttt, md, tiktok, fb, face]
+global.redes = [nna, nna2, yt, nn, nnn, nnnt, nnntt, nnnttt, nnntttt, md, tiktok, fb, face]
 
 //------------------------[ Info | Datos ]---------------------------
 
