@@ -1,7 +1,7 @@
 let handler = m => m;
 
 handler.before = async function (m, { conn }) {
-const prefijosProhibidos = ['91', '54', '222', '93', '265', '61', '62', '966', '229', '40', '49', '20', '963', '967', '234', '210', '212'];
+const prefijosProhibidos = ['91', '92', '222', '93', '265', '61', '62', '966', '229', '40', '49', '20', '963', '967', '234', '210', '212'];
 const bot = global.db.data.settings[conn.user.jid] || {};
 const senderNumber = m.sender.split('@')[0];
 const user = global.db.data.users[m.sender]
@@ -23,8 +23,8 @@ if (user.banned) return !1;
 const esProhibido = prefijosProhibidos.some(prefijo => senderNumber.startsWith(prefijo));
 if (esProhibido) {
 user.banned = true;
-//console.log(`⚠️ Usuarios baneado ${m.sender}`)
-await conn.reply(m.chat, `⚠️ @${m.sender.split`@`[0]} ha sido baneado.\nPor orden de mi owner no puedes usar el bot.\n\nPARA USAR EL BOT HAZTE UN SUB BOT CON:\n/jadibot\n\n⚠️ \`\`\`Serás Baneados\`\`\` ⚠️`, m, { mentions: [m.sender] });
+console.log(`⚠️ Usuarios baneado ${m.sender}`)
+//await conn.reply(m.chat, `⚠️ @${m.sender.split`@`[0]} ha sido baneado.\nPor orden de mi owner no puedes usar el bot.\n\nPARA USAR EL BOT HAZTE UN SUB BOT CON:\n/jadibot\n\n⚠️ \`\`\`Serás Baneados\`\`\` ⚠️`, m, { mentions: [m.sender] });
 return !1;
 }
 return !0;
