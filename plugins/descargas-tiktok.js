@@ -1,6 +1,7 @@
 import fg from 'api-dylux';
 import axios from 'axios';
 import fetch from 'node-fetch'
+import { Tiktok } from '../lib/tiktok.js';
 const handler = async (m, {conn, text, args, usedPrefix, command}) => {
 if (!text) throw `⚠️ *Que tiktok buscar? 🤔*\n\n⚡ *Ingrese un enlace de tiktok para descarga el video*\n*Ej:* ${usedPrefix + command} https://vm.tiktok.com/ZM6T4X1RY/` 
 if (!/(?:https:?\/{2})?(?:w{3}|vm|vt|t)?\.?tiktok.com\/([^\s&]+)/gi.test(text)) throw `❌ Error`
@@ -9,6 +10,11 @@ await delay(1000);
 await conn.sendMessage(m.chat, {text: `⌛ 𝙀𝙨𝙥𝙚𝙧𝙚 ✋ \n▰▰▰▰▰▱▱▱▱\n𝙔𝙖 𝙚𝙨𝙩𝙤𝙮 𝙙𝙚𝙨𝙘𝙖𝙧𝙜𝙖𝙙𝙤... 𝙨𝙪𝙨 𝙫𝙞𝙙𝙚𝙤 𝙙𝙚𝙡 𝙏𝙞𝙠𝙏𝙤𝙠 🔰`, edit: key});
 await delay(1000);
 await conn.sendMessage(m.chat, {text: `⌛ 𝙔𝙖 𝙘𝙖𝙨𝙞 🏃‍♂️💨\n▰▰▰▰▰▰▰▱▱`, edit: key});
+try {
+const data = await Tiktok(args)
+conn.sendMessage(m.chat, {video: {url: data.nowm}, caption: `*🔰 Aqui esta tu video de tiktok*`}, {quoted: m})
+await conn.sendMessage(m.chat, {text: `✅ 𝘾𝙤𝙢𝙥𝙡𝙚𝙩𝙖𝙙𝙤\n▰▰▰▰▰▰▰▰▰\n𝘼𝙦𝙪𝙞 𝙚𝙨𝙩𝙖 𝙩𝙪 𝙫𝙞𝙙𝙚𝙤 💫`, edit: key})    
+} catch {
 try {
 const tTiktok = await tiktokdlF(args);
 await conn.sendMessage(m.chat, {video: {url: tTiktok.video}, caption: `*🔰 Aqui esta tu video de tiktok*`}, {quoted: m});
@@ -31,7 +37,7 @@ await conn.sendMessage(m.chat, {text: `✅ 𝘾𝙤𝙢𝙥𝙡𝙚𝙩𝙖𝙙�
 console.log(e) 
 m.react(`❌`)         
 handler.limit = false
-}}}}
+}}}}}
 handler.help = ['tiktok']
 handler.tags = ['downloader']
 handler.command = /^(tt|tiktok)(dl|nowm)?$/i
@@ -40,7 +46,7 @@ export default handler
 const delay = time => new Promise(res => setTimeout(res, time))
 
 async function tiktokdlF(url) {
-  if (!/tiktok/.test(url)) return `_*< DESCARGAS - TIKTOK />*_\n\n*[ ℹ️ ] Ingrese un enlace de TikTok.*\n\n*[ 💡 ] Ejemplo:* _${usedPrefix + command} https://vm.tiktok.com/ZM686Q4ER/_`;
+  if (!/tiktok/.test(url)) return `*• Ejemplo:* _${usedPrefix + command} https://vm.tiktok.com/ZM686Q4ER/_`;
   const gettoken = await axios.get('https://tikdown.org/id');
   const $ = cheerio.load(gettoken.data);
   const token = $('#download-form > input[type=hidden]:nth-child(2)').attr( 'value' );

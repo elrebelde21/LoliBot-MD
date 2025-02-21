@@ -469,7 +469,7 @@ break
     
 case 'anticall': case 'antillamar':
 isAll = true
-if (!isROwner) {
+if (!isOwner) {
 global.dfail('rowner', m, conn)
 throw false
 }
@@ -505,7 +505,7 @@ break
    
 case 'pconly': case 'privateonly': case 'soloprivados':
 isAll = true
-if (!isROwner) {
+if (!isOwner) {
 global.dfail('rowner', m, conn)
 throw false
 }
@@ -514,7 +514,7 @@ break
     
 case 'gconly': case 'grouponly': case 'sologrupos':
 isAll = true
-if (!isROwner) {
+if (!isOwner) {
 global.dfail('rowner', m, conn)
 throw false
 }
@@ -523,7 +523,7 @@ break
 case 'antiprivado': case 'antiprivate':
 case 'privado':
 isAll = true
-if (!isROwner) {
+if (!isOwner) {
 global.dfail('rowner', m, conn)
 throw false
 }
@@ -557,7 +557,7 @@ break
 		
 case 'anticommand': case 'antiarabe': case 'antiarabe2': case 'AntiCommand':
 isAll = true
-if (!isROwner) {
+if (!isOwner) {
 global.dfail('rowner', m, conn)
 throw false
 }
@@ -575,7 +575,7 @@ break;
       
 case 'swonly': case 'statusonly':
 isAll = true
-if (!isROwner) {
+if (!isOwner) {
 global.dfail('rowner', m, conn)
 throw false
 }

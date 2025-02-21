@@ -58,24 +58,27 @@ _roles: null,
 generateRoles() {
 if (this._roles) return this._roles; 
 const ranks = ['NOVATO(A)', 'APRENDIS', 'EXPLORADOR(A)', 'MAESTRO(A)', 'IRON', 'PLATA', 'ORO', 'Bard', 'Necromancer', 'Warlock', 'Wizard', 'Sage', 'Priest', 'Rogue', 'Brawler', 'Archer', 'Sniper', 'Ninja', 'Samurai', 'Berserker', 'Legend', 'Champion', 'Grandmaster', 'Elder', 'Immortal', 'Nephalem', 'Eternal', 'Neptune', 'Pluto', 'Eris', 'Ascension', 'Elysium', 'Ether', 'Gaea', 'Hades', 'DIAMANTE', 'PRO EN LOLIBOT-MD', 'SUPER PRO', 'LEGENDARIO(A)', 'Nova', 'LEYENDA', 'ESTELAR', 'TOP ASTRAL', 'ÉLITE GLOBAL'];
-
+    
 const subLevels = ['V', 'IV', 'III', 'II', 'I'];
 let roles = [];
 let currentLevel = 0;
-const step = 2; 
+const step = 1; 
 
 ranks.forEach(rank => {
 subLevels.forEach(numeral => {
-roles.push({name: `${rank} ${numeral}`,
+roles.push({
+name: `${rank} ${numeral}`,
 level: currentLevel
 });
-currentLevel += step;
+currentLevel += step; 
 });
 });
+
 roles.sort((a, b) => b.level - a.level);
 this._roles = roles;
 return roles;
 },
+
 role(level) {
 level = parseInt(level, 10);
 if (isNaN(level)) return { name: '', level: '' };
