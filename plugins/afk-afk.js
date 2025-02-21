@@ -7,7 +7,7 @@ conn.fakeReply(m.chat, `『 ＡＦＫ 』
 > ᴇʟ ᴜsᴜᴀʀɪᴏ ${conn.getName(m.sender)} ᴇsᴛᴀ ɪɴᴀᴄᴛɪᴠᴏ. 
 
 \`💤 ＮＯ ＬＯＳ ＥＴＩＱＵＥＴＥ 💤\`
-*☣️ ᴍᴏᴛɪᴠᴏs :* ${text ? ': ' + text : 'paja'}`, '0@s.whatsapp.net', `💤 NO MOLESTAR 💤`, 'status@broadcast', null, fake)
+*☣️ ᴍᴏᴛɪᴠᴏs :* ${text ? ': ' + text : 'paja'}`, m.sender, `💤 NO MOLESTAR 💤`, 'status@broadcast', null, fake)
 /*m.reply(`『 ＡＦＫ 』
 
 > ᴇsᴛᴇ ᴜsᴜᴀʀɪᴏ : ${conn.getName(m.sender)} ᴇsᴛᴀ ɪɴᴀᴄᴛɪᴠᴏ. 

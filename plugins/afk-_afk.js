@@ -1,4 +1,5 @@
-export function before(m) {
+export async function before(m, { conn }) {
+//export function before(m) {
 const user = global.db.data.users[m.sender];
 if (user.afk > -1) {
 m.reply(`『 ＤＥＪＡＳＴＥ ＤＥ ＥＳＴＡ ＡＦＫ 』
@@ -24,7 +25,7 @@ conn.fakeReply(m.chat, `『 💤 ＮＯ ＬＯＳ ＥＴＩＱＵＥＴＥ 💤 
 > *ᴇʟ ᴜsᴜᴀʀɪᴏ ǫᴜᴇ ᴍᴇɴᴄɪᴏɴᴀs ᴇsᴛᴀ ᴀғᴋ*
 
 *🔸 ${reason ? 'ᴍᴏᴛɪᴠᴏ ᴅᴇ ɪɴᴀᴄᴛɪᴠɪᴅᴀᴅ (ᴀғᴋ): ' + reason : 'ᴍᴏᴛɪᴠᴏ ᴅᴇ ɪɴᴀᴄᴛɪᴠɪᴅᴀᴅ (ᴀғᴋ): Paja xD\n> _El usuario no especificó un motivo_'}*
-*🔸 ᴛɪᴇᴍᴘᴏ ᴛʀᴀɴsᴄᴜʀʀɪᴅᴏ ᴅᴇ ɪɴᴀᴄᴛɪᴠɪᴅᴀᴅ (ᴀғᴋ): ${(new Date - afkTime).toTimeString()}*`, '0@s.whatsapp.net', `💤 NO MOLESTAR 💤`, 'status@broadcast', null, fake)
+*🔸 ᴛɪᴇᴍᴘᴏ ᴛʀᴀɴsᴄᴜʀʀɪᴅᴏ ᴅᴇ ɪɴᴀᴄᴛɪᴠɪᴅᴀᴅ (ᴀғᴋ): ${(new Date - afkTime).toTimeString()}*`, m.sender, `💤 NO MOLESTAR 💤`, 'status@broadcast', null, fake)
 }
 return true;
 }
