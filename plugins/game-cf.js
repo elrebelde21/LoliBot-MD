@@ -1,4 +1,4 @@
-let handler = async (m, { args }) => {
+const handler = async (m, {conn, args}) => {
 const bet = parseInt(args[0], 10); 
 let user = global.db.data.users[m.sender]; 
 const time = global.db.data.users[m.sender].wait + 30000;
