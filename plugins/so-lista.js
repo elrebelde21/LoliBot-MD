@@ -3,8 +3,6 @@ handler.all = async function (m) {
 let chat = global.db.data.chats[m.chat];
 if (m.isBot || m.sender.includes('bot') || m.sender.includes('Bot')) return true;
 if (chat.isBanned) return
-global.db.data.users[m.sender].money += 50
-global.db.data.users[m.sender].exp += 50  
 if (m.fromMe) return
 if (!db.data.chats[m.chat].audios) return
 
