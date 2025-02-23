@@ -159,7 +159,7 @@ npm start
 [![GataNina-Li](https://github.com/GataNina-Li.png?size=100)](https://github.com/GataNina-Li) 
 [![Yesenia57](https://github.com/Yesenia57.png?size=100)](https://github.com/Yesenia57) 
 [![AzamiJs](https://github.com/AzamiJs.png?size=100)](https://github.com/AzamiJs)  
-[![KatashiFukushima](https://github.com/KatashiFukushima.png?size=100)](https://github.com/KatashiFukushima)
+[![Alba070503](https://github.com/Alba070503.png?size=100)](https://github.com/Alba070503)
 [![DanixlJs](https://github.com/DanixlJs.png?size=100)](https://github.com/DanixlJs)
 [![edar123](https://github.com/edar123.png?size=100)](https://github.com/edar123)
 
