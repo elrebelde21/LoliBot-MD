@@ -428,8 +428,215 @@
   "rank": "Legendario",
   "release_date": "06/09/2012",
   "description": "Rias Gremory es una demonio noble con habilidades sobresalientes en magia y líder del grupo de protagonistas."
+},
+{
+  "id": "kaname_arisugawa",
+  "name": "Kaname Arisugawa",
+  "url": "https://qu.ax/pOzug.jpg",
+  "type": "anime",
+  "price": 14500,
+  "rank": "Epic",
+  "release_date": "03-10-2020",
+  "description": "Kaname Arisugawa es una chica enérgica y astuta del anime Tonikaku Kawaii. Trabaja en el baño público de su familia y disfruta molestando a Nasa con consejos descarados sobre el matrimonio."
+},
+{
+  "id": "aya_arisugawa",
+  "name": "Aya Arisugawa",
+  "url": "https://qu.ax/wVuqA.jpg",
+  "type": "anime",
+  "price": 16700,
+  "rank": "Epic",
+  "release_date": "03-10-2020",
+  "description": "Aya Arisugawa es la hermana mayor de Kaname en Tonikaku Kawaii. Es despreocupada, algo torpe y le cuesta tomarse las cosas en serio"
+},
+{
+  "id": "tsukasa_tsukuyomi",
+  "name": "Tsukasa Tsukuyomi",
+  "url": "https://qu.ax/cneli.jpg",
+  "type": "anime",
+  "price": 25600,
+  "rank": "Legendary",
+  "release_date": "03-10-2020",
+  "description": "Tsukasa Tsukuyomi es la misteriosa y encantadora esposa de Nasa en Tonikaku Kawaii. Es tranquila, inteligente y tiene un aire enigmático"
+},
+{
+  "id": "chitose_kaginoji",
+  "name": "Chitose Kaginoji",
+  "url": "https://qu.ax/NYSqn.jpg",
+  "type": "anime",
+  "price": 23500,
+  "rank": "Legendary",
+  "release_date": "03-10-2020",
+  "description": "Chitose Kaginoji es una chica rica y obstinada en Tonikaku Kawaii. Admira profundamente a Tsukasa y ve a Nasa como su rival, tratando de separarlos"
+},
+{
+  "id": "aurora_tkk",
+  "name": "Aurora",
+  "url": "https://qu.ax/ozNkm.jpg",
+  "type": "anime",
+  "price": 9000,
+  "rank": "Rare",
+  "release_date": "03-10-2020",
+  "description": "Aurora es una de las sirvientas de Chitose Kaginoji en Tonikaku Kawaii. Es elegante, calmada y siempre mantiene la compostura"
+},
+{
+  "id": "charlotte_tkk",
+  "name": "Charlotte",
+  "url": "https://qu.ax/ovuYm.jpg",
+  "type": "anime",
+  "price": 11000,
+  "rank": "Rare",
+  "release_date": "03-10-2020",
+  "description": "Charlotte es una de las sirvientas de Chitose Kaginoji en Tonikaku Kawaii. Es enérgica, juguetona y suele actuar de manera más impulsiva que Aurora"
+},
+{
+  "id": "yuzaki_naza",
+  "name": "Nasa Yuzaki",
+  "url": "https://qu.ax/hHJwD.jpg",
+  "type": "anime",
+  "price": 23500,
+  "rank": "Legendary",
+  "release_date": "03-10-2020",
+  "description": "Nasa Yuzaki es el protagonista de Tonikaku Kawaii. Es un joven inteligente y determinado, con un gran talento para el estudio y la tecnología"
+},
+{
+  "id": "yumeko_jabami",
+  "name": "Yumeko Jabami",
+  "url": "https://qu.ax/UKGeg.jpg",
+  "type": "anime",
+  "price": 28300,
+  "rank": "Legendary",
+  "release_date": "01-07-2017",
+  "description": "Yumeko Jabami es la protagonista de Kakegurui. Es una estudiante nueva en la Academia Hyakkaou con una personalidad carismática y misteriosa"
+},
+{
+  "id": "kirari_momobomi",
+  "name": "Kikari Momobami",
+  "url": "https://qu.ax/RBemt.jpg",
+  "type": "anime",
+  "price": 27600,
+  "rank": "Legendary",
+  "release_date": "01-07-2017",
+  "description": "Kikari Momobami es una de las protagonistas del anime Kakegurui. Es la presidenta del consejo estudiantil y una miembro de la poderosa familia Momobami."
+},
+{
+  "id": "ririka_momobami",
+  "name": "Ririka Momobami",
+  "url": "https://qu.ax/RhuJj.jpg",
+  "type": "anime",
+  "price": 26740,
+  "rank": "Epic",
+  "release_date": "",
+  "description": "Ririka Momobami es un personaje del anime Kakegurui y es la hermana gemela de Kikari Momobami. Aunque parece ser más tranquila y reservada en comparación con su hermana"
+},
+{
+  "id": "midari_ikishima",
+  "name": "Midari Ikishima",
+  "url": "https://qu.ax/NZjEK.jpg",
+  "type": "anime",
+  "price": 18500,
+  "rank": "Epic",
+  "release_date": "01-07-2017",
+  "description": "Midari Ikishima es una de las estudiantes más excéntricas y peligrosas del anime Kakegurui. Miembro del consejo estudiantil"
+},
+{
+  "id": "mary_saotome",
+  "name": "Mary Saotome",
+  "url": "https://qu.ax/lblgL.jpg",
+  "type": "anime",
+  "price": 16300,
+  "rank": "Rare",
+  "release_date": "01-07-2017",
+  "description": "Mary Saotome es una de las protagonistas de Kakegurui. Inicialmente, es una estudiante popular y confiada, conocida por su habilidad en los juegos de azar y su actitud competitiva."
+},
+{
+  "id": "runa_yomozuki",
+  "name": "Runa Yomozuki",
+  "url": "https://qu.ax/ybhEx.jpg",
+  "type": "anime",
+  "price": 24300,
+  "rank": "Epic",
+  "release_date": "",
+  "description": "Runa Yomozuki es un miembro del consejo estudiantil en Kakegurui. Es una joven tranquila y despreocupada, pero con una gran habilidad para manipular y jugar con las emociones de los demás"
+},
+{
+  "id": "itsuki_suneragi",
+  "name": "Itsuki Sumeragi",
+  "url": "https://qu.ax/jNJJV.jpg",
+  "type": "anime",
+  "price": 17600,
+  "rank": "Rare",
+  "release_date": "01-07-2017",
+  "description": "Itsuki Sumeragi es un personaje de Kakegurui y uno de los miembros del consejo estudiantil. Es un joven calmado y sereno"
+},
+{
+  "id": "sachiko_juraku",
+  "name": "Sachiko Juraku",
+  "url": "https://qu.ax/rqDNg.jpg",
+  "type": "anime",
+  "price": 22300,
+  "rank": "Epic",
+  "release_date": "01-07-2017",
+  "description": "Sachiko Juraku es un personaje secundario en Kakegurui. Es miembro del consejo estudiantil y una de las figuras más misteriosas de la serie."
+},
+{
+  "id": "shirakawa_runa",
+  "name": "Runa Shirakawa",
+  "url": "",
+  "type": "anime",
+  "price": 27800,
+  "rank": "Legendary",
+  "release_date": "",
+  "description": "Runa Shirakawa es una de las protagonistas del anime Keiken Zumi na Kimi to Keiken Zero na Ore ga Otsukiai Suru Hanashi. Es una chica inteligente, atractiva y algo tsundere"
+},
+{
+  "id": "yamana_nicole",
+  "name": "Nicole Yamana",
+  "url": "20300",
+  "type": "anime",
+  "price": 24200,
+  "rank": "Epic",
+  "release_date": "",
+  "description": "Nicole Yamana es una amiga extrovertida y competitiva"
+},
+{
+  "id": "ryuto_kashima",
+  "name": "Ryuto Kashima",
+  "url": "",
+  "type": "anime",
+  "price": 26400,
+  "rank": "Legendary",
+  "release_date": "",
+  "description": "Ryuto Kashima es un joven algo torpe y sin experiencia en relaciones amorosas."
+},
+{
+  "id": "sekiya_shugo",
+  "name": "Shugo Sekiya",
+  "url": "",
+  "type": "anime",
+  "price": 18400,
+  "rank": "Epic",
+  "release_date": "",
+  "description": "Shugo Sekiya es un amigo cercano del protagonista, conocido por su actitud relajada y su naturaleza bromista. A menudo actúa como un apoyo cómico en la historia"
+},
+{
+  "id": "kurose_maria",
+  "name": "Maria Kurose",
+  "url": "",
+  "type": "anime",
+  "price": 25300,
+  "rank": "Legendary",
+  "release_date": "",
+  "description": "Maria Kurose es una chica atractiva y algo arrogante, conocida por su comportamiento directo y su confianza"
+},
+{
+  "id": "akari_tanikita",
+  "name": "Akari Tanikita",
+  "url": "",
+  "type": "anime",
+  "price": 17600,
+  "rank": "Epic",
+  "release_date": "",
+  "description": "Es una chica energética y amigable, con una personalidad optimista y un enfoque alegre hacia la vida"
 }
 ]
-
-
-
