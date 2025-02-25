@@ -51,10 +51,10 @@ if (!fs.existsSync(databasePath)) fs.mkdirSync(databasePath);
 const paths = {
     users: path.join(databasePath, 'users'),
     chats: path.join(databasePath, 'chats'),
-    settings: path.join(databasePath, 'settings'),
+    stats: path.join(databasePath, 'stats'),
     msgs: path.join(databasePath, 'msgs'),
     sticker: path.join(databasePath, 'sticker'),
-    stats: path.join(databasePath, 'stats'),
+    settings: path.join(databasePath, 'settings'),
 };
 
 Object.values(paths).forEach(dir => {
@@ -66,20 +66,18 @@ function getFilePath(basePath, id) {
 }
 
 global.db = {
-    data: { users: {}, chats: {}, settings: {}, msgs: {}, sticker: {}, stats: {} },
+    data: { users: {}, chats: {}, stats: {}, msgs: {}, sticker: {}, settings: {} },
     READ: false,
 };
 
-async function loadFiles(dirPath, targetObj, ignorePatterns = []) {
+async function loadFiles(dirPath, targetObj) {
     const files = fs.readdirSync(dirPath);
     for (const file of files) {
         const id = path.basename(file, '.json');
-        if (ignorePatterns.some(pattern => id.includes(pattern))) continue;
-
         const db = new Low(new JSONFile(getFilePath(dirPath, id)));
         await db.read();
         db.data = db.data || {};
-        targetObj[id] = { ...db.data, ...targetObj[id] }; 
+        targetObj[id] = { ...targetObj[id], ...db.data };
     }
 }
 
@@ -98,12 +96,12 @@ global.loadDatabase = async function () {
     global.db.READ = true;
     try {
         await Promise.all([
-            loadFiles(paths.users, global.db.data.users, ['@newsletter', 'lid']),
-            loadFiles(paths.chats, global.db.data.chats, ['@newsletter']),
-            loadFiles(paths.settings, global.db.data.settings),
+            loadFiles(paths.users, global.db.data.users),
+            loadFiles(paths.chats, global.db.data.chats),
+            loadFiles(paths.stats, global.db.data.stats),
             loadFiles(paths.msgs, global.db.data.msgs),
             loadFiles(paths.sticker, global.db.data.sticker),
-            loadFiles(paths.stats, global.db.data.stats),
+            loadFiles(paths.settings, global.db.data.settings),
         ]);
     } catch (error) {
         console.error('❌ Error al cargar la base de datos:', error);
@@ -112,14 +110,13 @@ global.loadDatabase = async function () {
     }
 };
 
-async function saveFiles(dirPath, dataObj, ignorePatterns = []) {
+// **Guardar solo los datos nuevos sin borrar los anteriores**
+async function saveFiles(dirPath, dataObj) {
     for (const [id, newData] of Object.entries(dataObj)) {
-        if (ignorePatterns.some(pattern => id.includes(pattern))) continue;
-
         const db = new Low(new JSONFile(getFilePath(dirPath, id)));
         await db.read();
         db.data = db.data || {}; 
-        db.data = { ...db.data, ...newData }; 
+        db.data = { ...db.data, ...newData };
         await db.write();
     }
 }
@@ -139,12 +136,12 @@ global.db.save = async function () {
     global.db.READ = true;
     try {
         await Promise.all([
-            saveFiles(paths.users, global.db.data.users, ['@newsletter', 'lid']),
-            saveFiles(paths.chats, global.db.data.chats, ['@newsletter']),
-            saveFiles(paths.settings, global.db.data.settings),
+            saveFiles(paths.users, global.db.data.users),
+            saveFiles(paths.chats, global.db.data.chats),
+            saveFiles(paths.stats, global.db.data.stats),
             saveFiles(paths.msgs, global.db.data.msgs),
             saveFiles(paths.sticker, global.db.data.sticker),
-            saveFiles(paths.stats, global.db.data.stats),
+            saveFiles(paths.settings, global.db.data.settings),
         ]);
     } catch (error) {
         console.error('❌ Error al guardar la base de datos:', error);
@@ -154,7 +151,7 @@ global.db.save = async function () {
 };
 
 loadDatabase();
-//setInterval(global.db.save, 30 * 1000);
+setInterval(global.db.save, 30 * 1000);
 
 /*global.db = new Low(/https?:\/\//.test(opts['db'] || '') ? new cloudDBAdapter(opts['db']) : new JSONFile('database.json'))
 global.DATABASE = global.db; 
