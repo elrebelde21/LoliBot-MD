@@ -5,7 +5,7 @@ const handler = async (m, { conn, usedPrefix }) => {
 if (global.conn.user.jid !== conn.user.jid) {
 return conn.sendMessage(m.chat, {text: '*⚠️ Utiliza este comando directamente en el número principal del Bot*'}, {quoted: m})}
 const chatId = m.isGroup ? [m.chat, m.sender] : [m.sender];
-const sessionPath = './sessions'
+const sessionPath = './BotSession'
 try {
 const files = await fs.readdir(sessionPath);
 let filesDeleted = 0;
@@ -24,7 +24,7 @@ await conn.sendMessage(m.chat, {text: `*Se eliminaron ${filesDeleted} archivos d
 console.error('Error al leer la carpeta o los archivos de sesión:', err);
 await conn.sendMessage(m.chat, {text: '*Ocurrió un error al eliminar los archivos de sesión*'}, {quoted: m});
 }
-await conn.sendMessage(m.chat, {text: `*Hola, Ya funciona? :v`}, {quoted: m});
+await conn.sendMessage(m.chat, {text: `Hola, Ya funciona? :v`}, {quoted: m});
 };
 handler.help = ['ds']
 handler.tags = ['tools']

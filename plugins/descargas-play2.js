@@ -37,14 +37,19 @@ conn.sendMessage(m.chat, { audio: audiodlp, mimetype: "audio/mpeg" }, { quoted: 
 try {  
 const res = await fetch(`https://api.siputzx.my.id/api/d/ytmp3?url=${args}`);
 let { data } = await res.json();
-await conn.sendMessage(m.chat, { audio: { url: data.dl }, mimetype: 'audio/mpeg' }, { quoted: m ||null });
+await conn.sendMessage(m.chat, { audio: { url: data.dl }, mimetype: 'audio/mpeg' }, { quoted: m});
 } catch {
 try {  
+const res = await fetch(`https://api.agatz.xyz/api/ytmp3?url=${args}`)
+let data = await res.json();
+await conn.sendMessage(m.chat, { audio: { url: data.data.downloadUrl }, mimetype: 'audio/mpeg' }, { quoted: m });
+} catch {
+try {
 const res = await fetch(`https://api.zenkey.my.id/api/download/ytmp3?apikey=zenkey&url=${args}`)
 let { result } = await res.json()
 await conn.sendMessage(m.chat, { audio: { url: await result.download.url }, mimetype: 'audio/mpeg' }, { quoted: m })
 } catch {
-try {
+try { 
 const apiUrl = `${apis}/download/ytmp3?url=${args}`;
 const apiResponse = await fetch(apiUrl);
 const delius = await apiResponse.json();
@@ -70,7 +75,7 @@ let infoo = await ytdl.getInfo('https://youtu.be/' + __res[0].videoId)
 let ress = await ytdl.chooseFormat(infoo.formats, { filter: 'audioonly' })
 conn.sendMessage(m.chat, { audio: { url: ress.url }, fileName: __res[0].title + '.mp3', mimetype: 'audio/mp4' }, { quoted: m })  
 } catch {
-}}}}}}}
+}}}}}}}}
 
 if (command == 'ytmp4' || command == 'fgmp4') {
 let youtubeLink = '';
@@ -99,10 +104,15 @@ await conn.sendMessage(m.chat, { video: { url: video }, fileName: `video.mp4`, m
 try {   
 const res = await fetch(`https://api.siputzx.my.id/api/d/ytmp4?url=${args}`);
 let { data } = await res.json();
-await conn.sendMessage(m.chat, { video: { url: data.dl }, fileName: `video.mp4`, mimetype: 'video/mp4', caption: `🔰 Aquí está tu video`}, { quoted: m || null })
+await conn.sendMessage(m.chat, { video: { url: data.dl }, fileName: `video.mp4`, mimetype: 'video/mp4', caption: `🔰 Aquí está tu video`}, { quoted: m })
 } catch {
 try {  
-const res = await fetch(`https://api.zenkey.my.id/api/download/ytmp3?apikey=zenkey&url=${args}`)
+const res = await fetch(`https://api.agatz.xyz/api/ytmp4?url=${args}`)
+let data = await res.json();
+await conn.sendMessage(m.chat, { video: { url: data.data.downloadUrl }, fileName: `video.mp4`, caption: `${wm}` }, { quoted: m }) 
+} catch {
+try {
+const res = await fetch(`https://api.zenkey.my.id/api/download/ytmp4?apikey=zenkey&url=${args}`)
 let { result } = await res.json()
 await conn.sendMessage(m.chat, { video: { url: result.download.url }, fileName: `video.mp4`, caption: `${wm}` }, { quoted: m }) 
 } catch {
@@ -129,7 +139,7 @@ let mediaa = await ytMp4(youtubeLink)
 await conn.sendMessage(m.chat, { video: { url: mediaa.result }, fileName: `error.mp4`, caption: `_${wm}_`, thumbnail: mediaa.thumb, mimetype: 'video/mp4' }, { quoted: m })     
 } catch (e) {
 console.log(e)   
-}}}}}}}}
+}}}}}}}}}
 handler.help = ['ytmp4', 'ytmp3'];
 handler.tags = ['downloader'];
 handler.command = /^ytmp3|ytmp4|fgmp4|audio|fgmp3|dlmp3?$/i

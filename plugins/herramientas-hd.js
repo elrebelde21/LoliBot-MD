@@ -6,17 +6,18 @@ try {
 let q = m.quoted ? m.quoted : m
 let mime = (q.msg || q).mimetype || q.mediaType || ""
 
-if (!mime.startsWith('image')) return m.reply(`⚠️ 𝐑𝐞𝐬𝐩𝐨𝐧𝐝𝐞 𝐚 𝐮𝐧𝐚 𝐢𝐦𝐚𝐠𝐞𝐧!`) 
+if (!mime.startsWith('image')) throw `⚠️ 𝐑𝐞𝐬𝐩𝐨𝐧𝐝𝐞 𝐚 𝐮𝐧𝐚 𝐢𝐦𝐚𝐠𝐞𝐧!`
 await m.react('⌛')
 
 let img = await q.download?.()
-if (!img) return m.reply(`⚠️ No se pudo descargar la imagen. Por favor intenta nuevamente.`)
+if (!img) throw `⚠️ No se pudo descargar la imagen. Por favor intenta nuevamente.`
 let pr = await remini(img, "enhance")
     
-if (!pr) return m.reply(`⚠️ Hubo un problema al procesar la imagen. Intenta nuevamente más tarde.`)
-await conn.sendFile(m.chat, pr, 'thumbnail.jpg', "¡Imagen procesada!", m, null, fake)
+if (!pr) throw `⚠️ Hubo un problema al procesar la imagen. Intenta nuevamente más tarde.`
+await conn.sendFile(m.chat, pr, 'thumbnail.jpg', "*Aqui tiene sus imagen en HD*", m, null, fake)
 await m.react('✅')
 } catch (e) {
+handler.limit = 0
 await m.react('❌')
 console.error(e)
 m.reply(`⚠️ Ocurrió un error: ${e.message}`)
