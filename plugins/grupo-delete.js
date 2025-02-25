@@ -1,6 +1,6 @@
 let handler = async (m, { conn, args, usedPrefix, command }) => {
 
-if (!m.quoted && !m.mentionedJid?.length && !args[0]) return m.reply(`⚠️ Responde al mensaje que quiere eliminar pelutudito.`) 
+if (!m.quoted && !m.mentionedJid?.length && !args[0]) return m.reply(`⚠️ Responde al mensaje que quiere eliminar pelotudito.`) 
 try {
 if (m.quoted) {
 let delet = m.quoted.sender;
@@ -14,14 +14,14 @@ target = m.mentionedJid[0];
 } else if (args[0] && args[0].startsWith('+')) {
 target = args[0].replace(/[^0-9]/g, '') + '@s.whatsapp.net';
 } else {
-return m.reply(`⚠️ Debes mencionar a alguien, responder a un mensaje o proporcionar un número válido.`);
+return m.reply(`⚠️ Mencionar a alguien o responder a un mensaje.`);
 }
 
 let chats = await conn.chats[m.chat]?.messages || [];
 let messagesToDelete = Object.values(chats).filter(
 msg => (msg.key.participant === target || msg.key.remoteJid === target));
 
-if (!messagesToDelete.length) return m.reply(`⚠️ No se encontraron mensajes recientes del usuario/número.`);
+if (!messagesToDelete.length) return 
 let totalToDelete = Math.min(messagesToDelete.length, 200); // Máximo 200 mensajes
 let deletedCount = 0;
 
@@ -32,13 +32,13 @@ await conn.sendMessage(m.chat, { delete: message.key });
 deletedCount++;
 await delay(100); 
 } catch (err) {
-console.log(`❌ No se pudo eliminar un mensaje:`, err);
+console.log(err);
 }}
-m.reply(`✅ Se eliminaron ${deletedCount} mensajes de ${target.includes('@s.whatsapp.net') ? `el número ${args[0]}` : 'el usuario mencionado'}.`);
+m.reply(`✅ Se eliminaron ${deletedCount} mensajes de ${target.includes('@s.whatsapp.net')}.`);
 } catch (err) {
 console.error(err);
 }};
-handler.help = ['delete *@user* | +number'];
+handler.help = ['delete *@user*'];
 handler.tags = ['group'];
 handler.command = /^del(ete)?$/i;
 handler.group = true; 
