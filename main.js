@@ -79,7 +79,7 @@ async function loadFiles(dirPath, targetObj, ignorePatterns = []) {
         const db = new Low(new JSONFile(getFilePath(dirPath, id)));
         await db.read();
         db.data = db.data || {};
-        targetObj[id] = { ...targetObj[id], ...db.data };
+        targetObj[id] = { ...db.data, ...targetObj[id] }; 
     }
 }
 
@@ -113,11 +113,13 @@ global.loadDatabase = async function () {
 };
 
 async function saveFiles(dirPath, dataObj, ignorePatterns = []) {
-    for (const [id, data] of Object.entries(dataObj)) {
+    for (const [id, newData] of Object.entries(dataObj)) {
         if (ignorePatterns.some(pattern => id.includes(pattern))) continue;
 
         const db = new Low(new JSONFile(getFilePath(dirPath, id)));
-        db.data = data;
+        await db.read();
+        db.data = db.data || {}; 
+        db.data = { ...db.data, ...newData }; 
         await db.write();
     }
 }
@@ -152,7 +154,7 @@ global.db.save = async function () {
 };
 
 loadDatabase();
-setInterval(global.db.save, 30 * 1000);
+//setInterval(global.db.save, 30 * 1000);
 
 /*global.db = new Low(/https?:\/\//.test(opts['db'] || '') ? new cloudDBAdapter(opts['db']) : new JSONFile('database.json'))
 global.DATABASE = global.db; 
