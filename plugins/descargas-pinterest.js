@@ -6,8 +6,11 @@ m.react("⌛")
 try { 
 let response = await axios.get(`https://api.dorratz.com/v2/pinterest?q=${text}`);
 let searchResults = response.data; 
+let selectedResults = searchResults.slice(0, 6); 
 if (m.isWABusiness) {
-await conn.sendFile(m.chat, searchResults[0].image, 'thumbnail.jpg', `\`\`\`🔍 Resultados de: ${text}\`\`\``, m, null, fake);
+let album = selectedResults.map(result => ({type: "image", data: { url: result.image }}));
+await conn.sendAlbumMessage(m.chat, album, { caption: `✅ Resultados para: ${text}` });
+//await conn.sendFile(m.chat, searchResults[0].image, 'thumbnail.jpg', `\`\`\`🔍 Resultados de: ${text}\`\`\``, m, null, fake);
 } else {
 let selectedResults = searchResults.slice(0, 6);
 let messages = selectedResults.map(result => [
