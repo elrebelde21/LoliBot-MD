@@ -51,10 +51,10 @@ if (!fs.existsSync(databasePath)) fs.mkdirSync(databasePath);
 const paths = {
     users: path.join(databasePath, 'users'),
     chats: path.join(databasePath, 'chats'),
-    stats: path.join(databasePath, 'stats'),
+    settings: path.join(databasePath, 'settings'),
     msgs: path.join(databasePath, 'msgs'),
     sticker: path.join(databasePath, 'sticker'),
-    settings: path.join(databasePath, 'settings'),
+    stats: path.join(databasePath, 'stats'),
 };
 
 Object.values(paths).forEach(dir => {
@@ -66,43 +66,45 @@ function getFilePath(basePath, id) {
 }
 
 global.db = {
-    data: { users: {}, chats: {}, stats: {}, msgs: {}, sticker: {}, settings: {} },
+    data: {
+        users: {},
+        chats: {},
+        settings: {},
+        msgs: {},
+        sticker: {},
+        stats: {},
+    },
     READ: false,
 };
 
-async function loadFiles(dirPath, targetObj) {
-    const files = fs.readdirSync(dirPath);
-    for (const file of files) {
-        const id = path.basename(file, '.json');
-        const db = new Low(new JSONFile(getFilePath(dirPath, id)));
-        await db.read();
-        db.data = db.data || {};
-        targetObj[id] = { ...targetObj[id], ...db.data };
-    }
-}
-
-global.loadDatabase = async function () {
-    if (global.db.READ) {
-        return new Promise(resolve => {
-            const interval = setInterval(() => {
-                if (!global.db.READ) {
-                    clearInterval(interval);
-                    resolve(global.db.data);
-                }
-            }, 1000);
-        });
-    }
-
+global.loadDatabase = async function loadDatabase() {
+    if (global.db.READ) return;
     global.db.READ = true;
+
     try {
+        const loadFiles = async (dirPath, targetObj, ignorePatterns = []) => {
+            const files = fs.readdirSync(dirPath);
+            for (const file of files) {
+                const id = path.basename(file, '.json');
+                if (ignorePatterns.some(pattern => id.includes(pattern))) continue;
+
+                const db = new Low(new JSONFile(getFilePath(dirPath, id)));
+                await db.read();
+                db.data = db.data || {};
+                targetObj[id] = { ...(targetObj[id] || {}), ...db.data };
+            }
+        };
+
         await Promise.all([
-            loadFiles(paths.users, global.db.data.users),
-            loadFiles(paths.chats, global.db.data.chats),
-            loadFiles(paths.stats, global.db.data.stats),
+            loadFiles(paths.users, global.db.data.users, ['@newsletter', 'lid']),
+            loadFiles(paths.chats, global.db.data.chats, ['@newsletter']),
+            loadFiles(paths.settings, global.db.data.settings),
             loadFiles(paths.msgs, global.db.data.msgs),
             loadFiles(paths.sticker, global.db.data.sticker),
-            loadFiles(paths.settings, global.db.data.settings),
+            loadFiles(paths.stats, global.db.data.stats),
         ]);
+
+        console.log('✅ Base de datos cargada correctamente.');
     } catch (error) {
         console.error('❌ Error al cargar la base de datos:', error);
     } finally {
@@ -110,48 +112,39 @@ global.loadDatabase = async function () {
     }
 };
 
-// **Guardar solo los datos nuevos sin borrar los anteriores**
-async function saveFiles(dirPath, dataObj) {
-    for (const [id, newData] of Object.entries(dataObj)) {
-        const db = new Low(new JSONFile(getFilePath(dirPath, id)));
-        await db.read();
-        db.data = db.data || {}; 
-        db.data = { ...db.data, ...newData };
-        await db.write();
-    }
-}
-
-global.db.save = async function () {
-    if (global.db.READ) {
-        return new Promise(resolve => {
-            const interval = setInterval(() => {
-                if (!global.db.READ) {
-                    clearInterval(interval);
-                    resolve();
-                }
-            }, 1000);
-        });
-    }
-
+global.db.save = async function saveDatabase() {
+    if (global.db.READ) return;
     global.db.READ = true;
+
     try {
+        const saveFiles = async (dirPath, dataObj, ignorePatterns = []) => {
+            for (const [id, data] of Object.entries(dataObj)) {
+                if (ignorePatterns.some(pattern => id.includes(pattern))) continue;
+
+                const db = new Low(new JSONFile(getFilePath(dirPath, id)));
+                await db.read();                
+                db.data = { ...(db.data || {}), ...data };
+                await db.write();
+            }
+        };
+
         await Promise.all([
-            saveFiles(paths.users, global.db.data.users),
-            saveFiles(paths.chats, global.db.data.chats),
-            saveFiles(paths.stats, global.db.data.stats),
+            saveFiles(paths.users, global.db.data.users, ['@newsletter', 'lid']),
+            saveFiles(paths.chats, global.db.data.chats, ['@newsletter']),
+            saveFiles(paths.settings, global.db.data.settings),
             saveFiles(paths.msgs, global.db.data.msgs),
             saveFiles(paths.sticker, global.db.data.sticker),
-            saveFiles(paths.settings, global.db.data.settings),
+            saveFiles(paths.stats, global.db.data.stats),
         ]);
+
+        console.log('✅ Base de datos guardada correctamente.');
     } catch (error) {
         console.error('❌ Error al guardar la base de datos:', error);
     } finally {
         global.db.READ = false;
     }
 };
-
-loadDatabase();
-setInterval(global.db.save, 30 * 1000);
+global.loadDatabase();
 
 /*global.db = new Low(/https?:\/\//.test(opts['db'] || '') ? new cloudDBAdapter(opts['db']) : new JSONFile('database.json'))
 global.DATABASE = global.db; 
