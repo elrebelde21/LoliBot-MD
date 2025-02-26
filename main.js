@@ -73,18 +73,10 @@ global.db = {
         sticker: {},
         stats: {},
     },
-    dirty: {
-        users: new Set(),
-        chats: new Set(),
-        settings: new Set(),
-        msgs: new Set(),
-        sticker: new Set(),
-        stats: new Set(),
-    },
 };
 
 function getFilePath(category, id) {
-    return path.join(paths[category], `${id}.json`);
+return path.join(paths[category], `${id}.json`);
 }
 
 async function readFile(category, id) {
@@ -99,7 +91,7 @@ async function writeFile(category, id, data) {
     const filePath = getFilePath(category, id);
     const db = new Low(new JSONFile(filePath));
     await db.read();
-    db.data = { ...db.data, ...data };
+    db.data = { ...db.data, ...data };    
     await db.write();
 }
 
@@ -113,7 +105,7 @@ global.db.readData = async function (category, id) {
 
 global.db.writeData = async function (category, id, data) {
     global.db.data[category][id] = { ...global.db.data[category][id], ...data };
-    global.db.dirty[category].add(id);
+    await queue.add(() => writeFile(category, id, global.db.data[category][id]));
 };
 
 global.db.loadDatabase = async function () {
@@ -124,6 +116,9 @@ global.db.loadDatabase = async function () {
         const files = fs.readdirSync(paths[category]);
         for (const file of files) {
             const id = path.basename(file, '.json');
+            if (category === 'users' && (id.includes('@newsletter') || id.includes('lid'))) continue;
+            if (category === 'chats' && id.includes('@newsletter')) continue;
+
             loadPromises.push(
                 queue.add(() => readFile(category, id))
                     .then(data => {
@@ -138,20 +133,21 @@ global.db.loadDatabase = async function () {
     console.log('Base de datos cargada');
 };
 
-// Guardar cambios automáticamente
 global.db.save = async function () {
     const categories = ['users', 'chats', 'settings', 'msgs', 'sticker', 'stats'];
+
     for (const category of categories) {
-        const dirtyIds = Array.from(global.db.dirty[category]);
-        for (const id of dirtyIds) {
-            await queue.add(() => writeFile(category, id, global.db.data[category][id]));
-            global.db.dirty[category].delete(id);
+        for (const [id, data] of Object.entries(global.db.data[category])) {
+            if (Object.keys(data).length > 0) {
+                if (category === 'users' && (id.includes('@newsletter') || id.includes('lid'))) continue;
+                if (category === 'chats' && id.includes('@newsletter')) continue;
+
+                await queue.add(() => writeFile(category, id, data));                
+            }
         }
     }
-    console.log('Datos guardados');
 };
 
-// Iniciar carga y guardado automático
 global.db.loadDatabase().then(() => {
 }).catch(err => console.error(err));
 
