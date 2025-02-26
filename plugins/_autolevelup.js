@@ -38,7 +38,7 @@ sourceUrl: redes.getRandom(),
 mediaType: 1,
 showAdAttribution: false,
 renderLargerThumbnail: false
-}}}, { quoted: null })
+}}}, { quoted: null }).catch(err => console.error(err));
 }}		
 
 global.rpg = {

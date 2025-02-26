@@ -243,7 +243,7 @@ sourceUrl: [nna, nna2, nn, md, yt, tiktok].getRandom(),
 mediaType: 1,
 showAdAttribution: false,
 renderLargerThumbnail: false
-}}}, { quoted: null })
+}}}, { quoted: null }).catch(err => console.error(err));
 await sleep(3000) 
 await joinChannels(sock)
 }}

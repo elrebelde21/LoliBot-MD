@@ -78,13 +78,13 @@ await global.conn.sendMessage(global.ch.ch1, { text: `◉ *Usuarios:* ${m.pushNa
 ⤷ ${sn}`, contextInfo: {
 externalAdReply: {
 title: "『 𝙉𝙊𝙏𝙄𝙁𝙄𝘾𝘼𝘾𝙄𝙊́𝙉 📢 』",
-body: "Nuevo usuario registrado 🥳",
+body: "Nuevo usuario registrado 🥳", 
 thumbnailUrl: ppch, 
 sourceUrl: [nna, nna2, nn, md, yt, tiktok].getRandom(),
 mediaType: 1,
 showAdAttribution: false,
 renderLargerThumbnail: false
-}}}, { quoted: null })
+}}}, { quoted: null }).catch(err => console.error(err));
 }
 
 if (command == 'nserie' || command == 'myns' || command == 'sn') {
