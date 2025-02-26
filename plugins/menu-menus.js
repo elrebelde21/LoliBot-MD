@@ -33,7 +33,7 @@ Hola 👋🏻 *%name*
  
 *• Fecha:* %fecha
 *• Hora:* %hora (🇦🇷) 
-*• Usuario:* %toUsers
+*• Usuario:* %totalreg
 *• Tiempo activos:* %muptime
 %botOfc
 
