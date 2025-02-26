@@ -62,7 +62,7 @@ Object.values(paths).forEach(dir => {
     if (!fs.existsSync(dir)) fs.mkdirSync(dir);
 });
 
-const queue = new PQueue({ concurrency: 1 });
+const queue = new PQueue({ concurrency: 5 });
 
 global.db = {
     data: {
@@ -72,6 +72,14 @@ global.db = {
         msgs: {},
         sticker: {},
         stats: {},
+    },
+    dirty: {
+        users: new Set(),
+        chats: new Set(),
+        settings: new Set(),
+        msgs: new Set(),
+        sticker: new Set(),
+        stats: new Set(),
     },
 };
 
@@ -90,8 +98,8 @@ async function readFile(category, id) {
 async function writeFile(category, id, data) {
     const filePath = getFilePath(category, id);
     const db = new Low(new JSONFile(filePath));
-    await db.read(); // Lee primero
-    db.data = { ...db.data, ...data }; // Combina datos
+    await db.read();
+    db.data = { ...db.data, ...data };
     await db.write();
 }
 
@@ -105,33 +113,47 @@ global.db.readData = async function (category, id) {
 
 global.db.writeData = async function (category, id, data) {
     global.db.data[category][id] = { ...global.db.data[category][id], ...data };
-    await queue.add(() => writeFile(category, id, global.db.data[category][id]));
+    global.db.dirty[category].add(id);
 };
 
-global.db.save = async function () {
+global.db.loadDatabase = async function () {
     const categories = ['users', 'chats', 'settings', 'msgs', 'sticker', 'stats'];
-    for (const category of categories) {
-        for (const [id, data] of Object.entries(global.db.data[category])) {
-            await queue.add(() => writeFile(category, id, data));
-        }
-    }
-    console.log('Datos guardados automáticamente');
-};
+    const loadPromises = [];
 
-global.loadDatabase = async function () {
-    const categories = ['users', 'chats', 'settings', 'msgs', 'sticker', 'stats'];
     for (const category of categories) {
         const files = fs.readdirSync(paths[category]);
         for (const file of files) {
             const id = path.basename(file, '.json');
-            const data = await queue.add(() => readFile(category, id));
-            global.db.data[category][id] = data;
+            loadPromises.push(
+                queue.add(() => readFile(category, id))
+                    .then(data => {
+                        global.db.data[category][id] = data;
+                    })
+                    .catch(err => console.error(`Error cargando ${category}/${id}:`, err))
+            );
         }
     }
+
+    await Promise.all(loadPromises);
     console.log('Base de datos cargada');
 };
 
-loadDatabase()
+// Guardar cambios automáticamente
+global.db.save = async function () {
+    const categories = ['users', 'chats', 'settings', 'msgs', 'sticker', 'stats'];
+    for (const category of categories) {
+        const dirtyIds = Array.from(global.db.dirty[category]);
+        for (const id of dirtyIds) {
+            await queue.add(() => writeFile(category, id, global.db.data[category][id]));
+            global.db.dirty[category].delete(id);
+        }
+    }
+    console.log('Datos guardados');
+};
+
+// Iniciar carga y guardado automático
+global.db.loadDatabase().then(() => {
+}).catch(err => console.error(err));
 
 /*global.db = new Low(/https?:\/\//.test(opts['db'] || '') ? new cloudDBAdapter(opts['db']) : new JSONFile('database.json'))
 global.DATABASE = global.db; 
