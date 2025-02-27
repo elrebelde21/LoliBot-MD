@@ -58,14 +58,9 @@ let audioData = null;
 const apis = [
 { url: () => ytmp3(yt_play[0].url), extract: (data) => ({ data, isDirect: true }) },
 { url: () => fetch(`https://api.neoxr.eu/api/youtube?url=${yt_play[0].url}&type=audio&quality=128kbps&apikey=GataDios`).then(res => res.json()), extract: (data) => ({ data: data.data.url, isDirect: false }) },
-{ url: () => fetch(`https://api.agatz.xyz/api/ytmp4?url=${yt_play[0].url}`).then(res => res.json()), extract: (data) => ({ data: data.data.downloadUrl, isDirect: false }) },
-{ url: () => fetch(`https://api.fgmods.xyz/api/downloader/ytmp3?url=${yt_play[0].url}&apikey=${fgkeysapi}`).then(res => res.json()), extract: (data) => ({ data: data.result.dl_url, isDirect: false }) },
+{ url: () => fetch(`https://api.fgmods.xyz/api/downloader/ytmp4?url=${yt_play[0].url}&apikey=${fgkeysapi}`).then(res => res.json()), extract: (data) => ({ data: data.result.dl_url, isDirect: false }) },
 { url: () => fetch(`https://api.siputzx.my.id/api/d/ytmp4?url=${yt_play[0].url}`).then(res => res.json()), extract: (data) => ({ data: data.dl, isDirect: false }) },
-{ url: () => fetch(`https://axeel.my.id/api/download/audio?url=${yt_play[0].url}`).then(res => res.json()), extract: (data) => ({ data: data.downloads?.url, isDirect: false }) },
-{ url: () => fetch(`https://api.zenkey.my.id/api/download/ytmp3?apikey=zenkey&url=${yt_play[0].url}`).then(res => res.json()), extract: (data) => ({ data: data.result.download.url, isDirect: false }) },
-{ url: () => fetch(`https://api.ryzendesu.vip/api/downloader/ytmp3?url=${encodeURIComponent(yt_play[0].url)}`).then(res => res.json()), extract: (data) => ({ data: data.status === 'tunnel' ? data.url : null, isDirect: false }) },
-{ url: () => fetch(`${apis}/download/ytmp3?url=${encodeURIComponent(yt_play[0].url)}`).then(res => res.json()), extract: (data) => ({ data: data.status ? data.data.download.url : null, isDirect: false }) },
-{ url: () => fetch(`https://exonity.tech/api/ytdlp2-faster?apikey=adminsepuh&url=${yt_play[0].url}`).then(res => res.json()), extract: (data) => ({ data: data.result.media.mp3, isDirect: false }) }];
+{ url: () => fetch(`${apis}/download/ytmp3?url=${encodeURIComponent(yt_play[0].url)}`).then(res => res.json()), extract: (data) => ({ data: data.status ? data.data.download.url : null, isDirect: false }) }];
 
 for (const api of apis) {
 try {
@@ -99,10 +94,7 @@ const apis = [
 { url: () => ytmp4(yt_play[0].url), extract: (data) => ({ data, isDirect: false }) },
 { url: () => fetch(`https://api.siputzx.my.id/api/d/ytmp4?url=${yt_play[0].url}`).then(res => res.json()), extract: (data) => ({ data: data.dl, isDirect: false }) },
 { url: () => fetch(`https://api.neoxr.eu/api/youtube?url=${yt_play[0].url}&type=video&quality=720p&apikey=GataDios`).then(res => res.json()), extract: (data) => ({ data: data.data.url, isDirect: false }) },
-{ url: () => fetch(`https://api.zenkey.my.id/api/download/ytmp3?apikey=zenkey&url=${yt_play[0].url}`).then(res => res.json()), extract: (data) => ({ data: data.result.download.url, isDirect: false }) },
-{ url: () => fetch(`https://axeel.my.id/api/download/video?url=${yt_play[0].url}`).then(res => res.json()), extract: (data) => ({ data: data.downloads?.url, isDirect: false }) },
-{ url: () => fetch(`${apis}/download/ytmp4?url=${encodeURIComponent(yt_play[0].url)}`).then(res => res.json()), extract: (data) => ({ data: data.status ? data.data.download.url : null, isDirect: false }) },
-{ url: () => fetch(`https://exonity.tech/api/ytdlp2-faster?apikey=adminsepuh&url=${yt_play[0].url}`).then(res => res.json()), extract: (data) => ({ data: data.result.media.mp4, isDirect: false }) }];
+{ url: () => fetch(`${apis}/download/ytmp4?url=${encodeURIComponent(yt_play[0].url)}`).then(res => res.json()), extract: (data) => ({ data: data.status ? data.data.download.url : null, isDirect: false }) }];
 
 for (const api of apis) {
 try {
@@ -138,8 +130,7 @@ const apis = [
 { url: () => ytmp3(yt_play[0].url), extract: (data) => ({ data, isDirect: true }) },
 { url: () => fetch(`https://api.zenkey.my.id/api/download/ytmp3?apikey=zenkey&url=${yt_play[0].url}`).then(res => res.json()), extract: (data) => ({ data: data.result.download.url, isDirect: false }) },
 { url: () => fetch(`${apis}/download/ytmp3?url=${encodeURIComponent(yt_play[0].url)}`).then(res => res.json()), extract: (data) => ({ data: data.status ? data.data.download.url : null, isDirect: false }) },
-{ url: () => fetch(`https://api.zenkey.my.id/api/download/ytmp3?apikey=zenkey&url=${yt_play[0].url}`).then(res => res.json()), extract: (data) => ({ data: data.status && data.result?.downloadUrl ? data.result.downloadUrl : null, isDirect: false }) },
-{ url: () => fetch(`https://exonity.tech/api/ytdlp2-faster?apikey=adminsepuh&url=${yt_play[0].url}`).then(res => res.json()), extract: (data) => ({ data: data.result.media.mp3, isDirect: false }) 
+{ url: () => fetch(`https://api.zenkey.my.id/api/download/ytmp3?apikey=zenkey&url=${yt_play[0].url}`).then(res => res.json()), extract: (data) => ({ data: data.status && data.result?.downloadUrl ? data.result.downloadUrl : null, isDirect: false })
 }];
 
 for (const api of apis) {
