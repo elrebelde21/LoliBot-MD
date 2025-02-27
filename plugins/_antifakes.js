@@ -8,7 +8,7 @@ let bot = global.db.data.settings[conn.user.jid] || {};
 if (isBotAdmin && chat.antifake && !isAdmin && !isOwner && !isROwner) {
 const fkontak = {"key": { "participants": "0@s.whatsapp.net", "remoteJid": "status@broadcast", "fromMe": false, "id": "Halo" }, "message": { "contactMessage": { "vcard": `BEGIN:VCARD\nVERSION:3.0\nN:Sy;Bot;;;\nFN:y\nitem1.TEL;waid=${m.sender.split('@')[0]}:${m.sender.split('@')[0]}\nitem1.X-ABLabel:Ponsel\nEND:VCARD` } }, "participant": "0@s.whatsapp.net" };
 
-const prefijosProhibidos = ['91', '92', '222', '93', '265', '61', '62', '966', '229', '40', '49', '20', '963', '967', '234', '210', '249', ,'212'];
+const prefijosProhibidos = ['91', '92', '222', '93', '265', '61', '249', '62', '966', '229', '40', '49', '20', '963', '967', '234', '210', '249', ,'212'];
 
 const senderNumber = m.sender.split('@')[0]; 
 if (prefijosProhibidos.some(prefijo => senderNumber.startsWith(prefijo))) {
