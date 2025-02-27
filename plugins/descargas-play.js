@@ -75,7 +75,7 @@ if (extractedData) {
 const size = await getFileSize(extractedData);
 if (size >= 1024) { 
 audioData = extractedData;
-isDirectAudio = isDirect;
+isDirectVideo = isDirect;
 break; 
 }}} catch (e) {
 console.log(`Error con API: ${e}`);
@@ -85,9 +85,9 @@ continue;
 if (audioData) {
 const fileSize = await getFileSize(audioData);
 if (fileSize > LimitAud) {
-await conn.sendMessage(m.chat, { document: isDirectAudio ? audioData : { url: audioData }, mimetype: 'audio/mpeg', fileName: `${yt_play[0].title}.mp3` }, { quoted: m });
+await conn.sendMessage(m.chat, { document: isDirectVideo ? audioData : { url: audioData }, mimetype: 'audio/mpeg', fileName: `${yt_play[0].title}.mp3` }, { quoted: m });
 } else {
-await conn.sendMessage(m.chat, { audio: isDirectAudio ? audioData : { url: audioData }, mimetype: 'audio/mpeg' }, { quoted: m });
+await conn.sendMessage(m.chat, { audio: isDirectVideo ? audioData : { url: audioData }, mimetype: 'audio/mpeg' }, { quoted: m });
 }} else {
 await m.react('❌');
 }}
@@ -153,7 +153,7 @@ if (extractedData) {
 const size = await getFileSize(extractedData);
 if (size >= 1024) { 
 audioData = extractedData;
-isDirectAudio = isDirect;
+isDirectVideo = isDirect;
 break; 
 }}} catch (e) {
 console.log(`Error con API: ${e}`);
@@ -161,7 +161,7 @@ continue;
 }}
 
 if (audioData) {
-await conn.sendMessage(m.chat, { document: isDirectAudio ? audioData : { url: audioData }, mimetype: 'audio/mpeg', fileName: `${yt_play[0].title}.mp3`, quoted: m });
+await conn.sendMessage(m.chat, { document: isDirectVideo ? audioData : { url: audioData }, mimetype: 'audio/mpeg', fileName: `${yt_play[0].title}.mp3`, quoted: m });
 } else {
 await m.react('❌');
 }}
