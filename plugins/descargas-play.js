@@ -8,7 +8,7 @@ const require = createRequire(import.meta.url);
 const { ytmp3, ytmp4 } = require("@hiudyy/ytdl");
 const LimitAud = 725 * 1024 * 1024; //725MB
 const LimitVid = 425 * 1024 * 1024; //425MB
-let isDirectVideo = false; 
+const isDirectVideo = false; 
 const youtubeRegexID = /(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/))([a-zA-Z0-9_-]{11})/
 
 const handler = async (m, {conn, command, args, text, usedPrefix}) => {
