@@ -8,19 +8,32 @@ participant: m.quoted.sender
 };
 
 if (command === 'pin') {
-await conn.sendMessage(m.chat, {pin: {type: 1, time: 604800, key: messageKey }});
+await conn.sendMessage(m.chat, { pin: messageKey,type: 1, time: 604800 })
+//conn.sendMessage(m.chat, {pin: {type: 1, time: 604800, key: messageKey }});
 m.react("✅️")
 }
    
 if (command === 'unpin') {
-await conn.sendMessage(m.chat, { pin: { type: 0, key: messageKey }});
+await conn.sendMessage(m.chat, { pin: messageKey,type: 2, time: 86400 })
+//conn.sendMessage(m.chat, { pin: { type: 0, key: messageKey }});
 m.react("✅️")
-}} catch (error) {
+}
+
+if (command === 'destacar') {
+conn.sendMessage(m.chat, {keep: messageKey, type: 1, time: 15552000 })
+m.react("✅️")
+}
+
+if (command === 'desmarcar') {
+conn.sendMessage(m.chat, {keep: messageKey, type: 2, time: 86400 })
+m.react("✅️")
+}
+} catch (error) {
 console.error(error);
 }};
 handler.help = ['pin']
 handler.tags = ['group']
-handler.command = ['pin', 'unpin'] 
+handler.command = ['pin', 'unpin', 'destacar', 'desmarcar'] 
 handler.admin = true
 handler.group = true
 handler.botAdmin = true

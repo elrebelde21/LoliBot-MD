@@ -1,8 +1,8 @@
 import fetch from 'node-fetch'
 import { format } from 'util'
-let handler = async (m, { text }) => {
+let handler = async (m, { conn, text }) => {
 if (m.fromMe) return
-if (!/^https?:\/\//.test(text)) throw 'Ejemplo:\nhttps://pornhub.com'
+if (!/^https?:\/\//.test(text)) throw 'Ejemplo:\nhttps://skyultraplus.com'
 let _url = new URL(text)
 let url = global.API(_url.origin, _url.pathname, Object.fromEntries(_url.searchParams.entries()), 'APIKEY')
 let res = await fetch(url)
@@ -20,5 +20,7 @@ m.reply(txt.slice(0, 65536) + '')}}
 handler.help = ['fetch'].map(v => v + ' *<url>*')
 handler.tags = ['owner']
 handler.command = /^(fetch|get)$/i
-handler.rowner = true 
+//handler.rowner = true 
+handler.limit = 1
+handler.register = true 
 export default handler

@@ -6,10 +6,10 @@ import { createRequire } from 'module'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const require = createRequire(__dirname)
-
 let handler = async (m, _2) => {
 if (m.fromMe) return
-  let { conn, usedPrefix, noPrefix, args, groupMetadata } = _2
+let { conn, isROwner, usedPrefix, noPrefix, args, groupMetadata } = _2
+if (!isROwner) return
   let _return
   let _syntax = ''
   let _text = (/^=/.test(usedPrefix) ? 'return ' : '') + noPrefix
@@ -42,7 +42,7 @@ handler.help = ['> ', '=> ']
 handler.tags = ['owner'];
 handler.customPrefix = /^=?> /
 handler.command = /(?:)/i
-handler.rowner = true
+//handler.rowner = true
 
 export default handler
 
