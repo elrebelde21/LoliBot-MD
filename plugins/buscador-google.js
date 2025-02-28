@@ -1,7 +1,7 @@
 //import {googleIt} from '@bochilteam/scraper';
 import axios from 'axios';
 import fetch from 'node-fetch';
-let handler = async (m, { conn, command, args, usedPrefix }) => {
+let handler = async (m, { conn, text, command, args, usedPrefix }) => {
 if (!text) throw `⚠️ 𝙌𝙪𝙚 𝙚𝙨𝙩𝙖 𝙗𝙪𝙨𝙘𝙖𝙣𝙙𝙤 🤔 𝙀𝙨𝙘𝙧𝙞𝙗𝙖 𝙡𝙤 𝙦𝙪𝙚 𝙦𝙪𝙞𝙚𝙧𝙖 𝙗𝙪𝙨𝙘𝙖𝙧\n• 𝙀𝙟: ${usedPrefix + command} loli`
 m.react("⌛") 
 try {
