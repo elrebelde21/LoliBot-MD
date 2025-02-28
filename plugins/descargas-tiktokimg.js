@@ -8,14 +8,20 @@ let { data: response } = await axios.get(`${apis}/search/tiktoksearch?query=${te
 if (!response || !response.meta || !Array.isArray(response.meta) || response.meta.length === 0) return m.reply(`❌ No se encontraron resultados para "${text}".`);
 let searchResults = response.meta;
 shuffleArray(searchResults);
-let selectedResults = searchResults.slice(0, 3)
+let selectedResults = searchResults.slice(0, 5);
+if (m.isWABusiness) {
+const medias = selectedResults.map(result => ({video: { url: result.hd }}));
+await conn.sendAlbumMessage(m.chat, medias, { quoted: m, delay: 2000, caption: `✅ Resultados para: ${text}` });
+m.react("✅️");
+} else {
 let messages = selectedResults.map(result => [
 `${result.title}`, 
 wm,
 result.hd
 ]);
 await conn.sendCarousel(m.chat, `✅ Resultados para: ${text}`, "🔍 TikTok Search", messages, m);
-m.react("✅️")
+m.react("✅️");
+}
 } catch (error) {
 m.react("❌️")
 console.error(error);    

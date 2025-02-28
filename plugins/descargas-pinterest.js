@@ -8,18 +8,16 @@ let response = await axios.get(`https://api.dorratz.com/v2/pinterest?q=${text}`)
 let searchResults = response.data; 
 let selectedResults = searchResults.slice(0, 6); 
 if (m.isWABusiness) {
-let album = selectedResults.map(result => ({type: "image", data: { url: result.image }}));
-await conn.sendAlbumMessage(m.chat, album, { caption: `✅ Resultados para: ${text}` });
-//await conn.sendFile(m.chat, searchResults[0].image, 'thumbnail.jpg', `\`\`\`🔍 Resultados de: ${text}\`\`\``, m, null, fake);
+const medias = selectedResults.map(result => ({image: { url: result.image }, caption: result.fullname || text }));
+await conn.sendAlbumMessage(m.chat, medias, { quoted: m, delay: 2000, caption: `✅ Resultados para: ${text}` });
 } else {
-let selectedResults = searchResults.slice(0, 6);
 let messages = selectedResults.map(result => [
 ``,
 `*${result.fullname || text}*\n*🔸️Autor:* ${result.upload_by}\n*🔸️ Seguidores:* ${result.followers}`, 
 result.image 
 ]);
 await conn.sendCarousel(m.chat, `✅ Resultados para: ${text}`, "🔍 Pinterest Search\n" + wm, messages, m);
-m.react("✅️")
+m.react("✅️");
 }
 } catch {
 try {
