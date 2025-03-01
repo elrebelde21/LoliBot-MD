@@ -13,81 +13,61 @@ try {
 
 if (command == 'ppt' || command == 'pvp' || command == 'suit' || command == 'suitpvp') {
 const time = global.db.data.users[m.sender].wait + 30000;
-if (new Date - global.db.data.users[m.sender].wait < 30000) return conn.fakeReply(m.chat,  `*🕓 𝙃𝙚𝙮, 𝙀𝙨𝙥𝙚𝙧𝙖 ${msToTime(time - new Date())} 𝙖𝙣𝙩𝙚𝙨 𝙙𝙚 𝙪𝙨𝙖𝙧 𝙤𝙩𝙧𝙤𝙨 𝙘𝙤𝙢𝙖𝙣𝙙𝙤*`, m.sender, `ᴺᵒ ʰᵃᵍᵃⁿ ˢᵖᵃᵐ`, 'status@broadcast', null, fake);
-let textquien = `𝐏𝐢𝐞𝐝𝐫𝐚 🗿, 𝐏𝐚𝐩𝐞𝐥 📄 𝐨 𝐓𝐢𝐣𝐞𝐫𝐚 ✂️\n\n👾 𝙅𝙪𝙜𝙖𝙧 𝙪𝙣 𝙋𝙋𝙏 𝙘𝙤𝙣 𝙚𝙡 𝙗𝙤𝙩 𝙪𝙨𝙖𝙧 𝙡𝙤𝙨 𝙨𝙞𝙜𝙪𝙞𝙚𝙣𝙩𝙚𝙨 𝙘𝙤𝙢𝙖𝙣𝙙𝙤 :\n• ${usedPrefix + command} piedra\n• ${usedPrefix + command} papel\n• ${usedPrefix + command} tijera\n\n🕹 𝙅𝙪𝙜𝙖𝙧 𝙪𝙣 𝙋𝙋𝙏 𝙘𝙤𝙣 𝙪𝙣 𝙪𝙨𝙪𝙖𝙧𝙞𝙤, 𝙀𝙩𝙞𝙦𝙪𝙚𝙩𝙖𝙧𝙡𝙤 𝙚𝙟𝙚𝙢𝙥𝙡𝙤 :\n${usedPrefix + command} @0`
-if (!m.mentionedJid[0] && !args[0]) return conn.sendButton(m.chat, textquien, wm, pp, [['Piedra 🗿', `${usedPrefix + command} piedra`], ['Papel 📄', `${usedPrefix + command} papel`], ['Tijera ✂️', `${usedPrefix + command} tijera`]], m)
-//m.reply(textquien, m.chat, {mentions: conn.parseMention(textquien)}, {quoted: fkontak })
-let who
-if (m.isGroup) who = m.mentionedJid[0] ? m.mentionedJid[0] : m.sender
-else who = m.sender 
-let name = conn.getName(who) 
-  
-let astro = Math.random();
-if (astro < 0.34) {
-astro = 'piedra';
-} else if (astro > 0.34 && astro < 0.67) {
-astro = 'tijera';
+if (new Date() - global.db.data.users[m.sender].wait < 30000) return conn.fakeReply(m.chat, `*🕓 𝙃𝙚𝙮, 𝙀𝙨𝙥𝙚𝙧𝙖 ${msToTime(time - new Date())} 𝙖𝙣𝙩𝙚𝙨 𝙙𝙚 𝙪𝙨𝙖𝙧 𝙤𝙩𝙧𝙤𝙨 𝙘𝙤𝙢𝙖𝙣𝙙𝙤*`, m.sender, `ᴺᵒ ʰᵃᵍᵃⁿ ˢᵖᵃᵐ`, 'status@broadcast', null, fake);
+
+const guideText = `𝐏𝐢𝐞𝐝𝐫𝐚 🗿, 𝐏𝐚𝐩𝐞𝐥 📄 𝐨 𝐓𝐢𝐣𝐞𝐫𝐚 ✂️\n\n👾 𝙅𝙪𝙜𝙖𝙧 𝙘𝙤𝙣 𝙚𝙡 𝙗𝙤𝙩:\n• ${usedPrefix + command} piedra\n• ${usedPrefix + command} papel\n• ${usedPrefix + command} tijera\n\n🕹 𝙅𝙪𝙜𝙖𝙧 𝙘𝙤𝙣 𝙪𝙣 𝙪𝙨𝙪𝙖𝙧𝙞𝙤:\n${usedPrefix + command} @usuario`;
+if (!m.mentionedJid[0] && !args[0]) return conn.sendButton(m.chat, guideText, wm, pp, [['Piedra 🗿', `${usedPrefix + command} piedra`], ['Papel 📄', `${usedPrefix + command} papel`], ['Tijera ✂️', `${usedPrefix + command} tijera`]], m);
+const user = global.db.data.users[m.sender];
+const playerChoice = args[0]?.toLowerCase();
+const choices = ['piedra', 'papel', 'tijera'];
+const botChoice = choices[Math.floor(Math.random() * 3)];
+const name = conn.getName(m.sender);
+
+if (!m.mentionedJid[0] && choices.includes(playerChoice)) {
+global.db.data.users[m.sender].wait = new Date() * 1;
+        
+const rules = { piedra: { beats: 'tijera', win: 1000, lose: 300, winType: 'coins', loseType: 'coins' },
+papel: { beats: 'piedra', win: 1000, lose: 300, winType: 'coins', loseType: 'xp' },
+tijera: { beats: 'papel', win: 1000, lose: 300, winType: 'coins', loseType: 'coins' }};
+let result, message;
+if (playerChoice === botChoice) {
+user.exp += 500;
+result = '𝙀𝙈𝙋𝘼𝙏𝙀 🤝';
+message = '🎁 Premios : 500 XP';
+} else if (rules[playerChoice].beats === botChoice) {
+user[rules[playerChoice].winType] += rules[playerChoice].win;
+result = '𝙃𝘼 𝙂𝘼𝙉𝘼𝘿𝙊! 🎉';
+message = `🎁 Premios :  ${rules[playerChoice].win} ${rules[playerChoice].winType}`;
 } else {
-astro = 'papel';
+user[rules[playerChoice].loseType] -= rules[playerChoice].lose;
+result = '𝙃𝘼 𝙋𝙀𝙍𝘿𝙄𝘿𝙊! 🤡';
+message = `❌ Pérdida: -${rules[playerChoice].lose} ${rules[playerChoice].loseType}`;
 }
-global.db.data.users[m.sender].wait = new Date * 1;
-if (text == astro) {
-let money = global.db.data.users[m.sender].exp += 500;
-conn.reply(m.chat, `\`「 𝙀𝙈𝙋𝘼𝙏𝙀 🤝」\`\n\n👉 Tu: ${text}\n👉 El Bot : ${astro}\n🎁 Premios : ${money} XP`, m, {contextInfo: {externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: name, body: wm, previewType: 0, thumbnail: img.getRandom(), sourceUrl: redes.getRandom()}}})
-} else if (text == 'papel') {
-if (astro == 'piedra') {
-let money = global.db.data.users[m.sender].money += 100
-conn.reply(m.chat, `\`「 𝙃𝘼 𝙂𝘼𝙉𝘼𝘿𝙊! 🎉 」\`\n\n👉 Tu: ${text}\n👉 El Bot : ${astro}\n🎁 Premios : ${money} Coins`, m, {contextInfo: {externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: name, body: wm, previewType: 0, thumbnail: img.getRandom(), sourceUrl: redes.getRandom()}}});
-} else {
-let money = global.db.data.users[m.sender].exp -= 300
-conn.reply(m.chat, `\`「 𝙃𝘼 𝙋𝙀𝙍𝘿𝙄𝘿𝙊! 🤡 」\`\n\n👉 Tu: ${text}\n👉 El Bot : ${astro}\n❌ Premios : -${money} XP`, m, {contextInfo: {externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: name, body: wm, previewType: 0, thumbnail: img.getRandom(), sourceUrl: redes.getRandom()}}})
-}} else if (text == 'tijera') {
-if (astro == 'papel') {
-let money = global.db.data.users[m.sender].money += 900
-conn.reply(m.chat, `\`「 𝙃𝘼 𝙂𝘼𝙉𝘼𝘿𝙊! 🎉 」\`\n\n👉 Tu: ${text}\n👉 El Bot : ${astro}\n🎁 Premios : ${money} Coins`, m, {contextInfo: {externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: name, body: wm, previewType: 0, thumbnail: img.getRandom(), sourceUrl: redes.getRandom()}}});
-} else {
-let money = global.db.data.users[m.sender].money -= 300
-conn.reply(m.chat, `\`「 𝙃𝘼 𝙋𝙀𝙍𝘿𝙄𝘿𝙊! 🤡 」\`\n\n👉 Tu: ${text}\n👉 El Bot : ${astro}\n❌ Premios : -${money} Coins`, m, {contextInfo: {externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: name, body: wm, previewType: 0, thumbnail: img.getRandom(), sourceUrl: redes.getRandom()}}})
-}} else if (text == 'tijera') {
-if (astro == 'papel') {
-let money = global.db.data.users[m.sender].exp += 1000
-conn.reply(m.chat, `\`「 𝙃𝘼 𝙂𝘼𝙉𝘼𝘿𝙊! 🎉 」\`\n\n👉 Tu: ${text}\n👉 El Bot : ${astro}\n🎁 Premios : ${money} XP`, m, {contextInfo: {externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: name, body: wm, previewType: 0, thumbnail: img.getRandom(), sourceUrl: redes.getRandom()}}});
-} else {
-let money = global.db.data.users[m.sender].exp -= 300
-conn.reply(m.chat, `\`「 𝙃𝘼 𝙋𝙀𝙍𝘿𝙄𝘿𝙊! 🤡 」\`\n\n👉 Tu: ${text}\n👉 El Bot : ${astro}\n❌ Premios : -${money} XP`, m, {contextInfo: {externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: name, body: wm, previewType: 0, thumbnail: img.getRandom(), sourceUrl: redes.getRandom()}}})
-}} else if (text == 'papel') {
-if (astro == 'piedra') {
-let money = global.db.data.users[m.sender].money += 1000
-conn.reply(m.chat, `\`「 𝙃𝘼 𝙂𝘼𝙉𝘼𝘿𝙊! 🎉 」\`\n\n👉 Tu: ${text}\n👉 El Bot : ${astro}\n🎁 Premios : ${money} coins`, m, {contextInfo: {externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: name, body: wm, previewType: 0, thumbnail: img.getRandom(), sourceUrl: redes.getRandom()}}});
-} else {
-let money = global.db.data.users[m.sender].exp -= 300
-conn.reply(m.chat, `\`「 𝙃𝘼 𝙋𝙀𝙍𝘿𝙄𝘿𝙊! 🤡 」\`\n\n👉 Tu: ${text}\n👉 El Bot : ${astro}\n❌ Premios : -${money} XP`, m, {contextInfo: {externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: name, body: wm, previewType: 0, thumbnail: img.getRandom(), sourceUrl: redes.getRandom()}}})
-}} else if (text == 'piedra') {
-if (astro == 'tijera') {
-let money = global.db.data.users[m.sender].money += 1000
-conn.reply(m.chat, `\`「 𝙃𝘼 𝙂𝘼𝙉𝘼𝘿𝙊! 🎉 」\`\n\n👉 Tu: ${text}\n👉 El Bot : ${astro}\n🎁 Premios : ${money} coins`, m, {contextInfo: {externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: name, body: wm, previewType: 0, thumbnail: img.getRandom(), sourceUrl: redes.getRandom()}}});
-//m.reply(`*╭━━━━[ 𝙃𝘼 𝙂𝘼𝙉𝘼𝘿𝙊! 🎉 ]━━━⬣*\n┃${name} 𝙐𝙨𝙩𝙚𝙙: ${text}\n┃🐱 𝙂𝙖𝙩𝙖𝘽𝙤𝙩: ${astro}\n┃💰 𝙋𝙧𝙚𝙢𝙞𝙤: ${[money0].getRandom()} 𝙂𝙖𝙩𝙖𝘾𝙤𝙞𝙣𝙨\n┃💵 𝙎𝙪 𝘿𝙞𝙣𝙚𝙧𝙤: ${money} 𝙂𝙖𝙩𝙖𝘾𝙤𝙞𝙣𝙨\n╰━━━━━━[ ${vs} ]━━━━━⬣`);
-} else {
-let money = global.db.data.users[m.sender].money -= 300
-conn.reply(m.chat, `\`「 𝙃𝘼 𝙋𝙀𝙍𝘿𝙄𝘿𝙊! 🤡 」\`\n\n👉 Tu: ${text}\n👉 El Bot : ${astro}\n❌ Premios : -${money} coins`, m, {contextInfo: {externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: name, body: wm, previewType: 0, thumbnail: img.getRandom(), sourceUrl: redes.getRandom()}}})}
+conn.reply(m.chat, `\`「 ${result} 」\`\n\n👉 Tu: ${playerChoice}\n👉 El Bot: ${botChoice}\n${message}`, m, { contextInfo: {externalAdReply: { title: name, body: wm, thumbnail: img.getRandom(), sourceUrl: redes.getRandom()}}});
 }
 
-if (Object.values(conn.suit).find(room => room.id.startsWith('suit') && [room.p, room.p2].includes(m.sender))) return m.reply(`⚠️ 𝙏𝙚𝙧𝙢𝙞𝙣𝙖 𝙩𝙪 𝙥𝙖𝙧𝙩𝙞𝙙𝙖 𝙖𝙣𝙩𝙚𝙨 𝙙𝙚 𝙞𝙣𝙞𝙘𝙞𝙖 𝙤𝙩𝙧𝙖`) 
-if (Object.values(conn.suit).find(room => room.id.startsWith('suit') && [room.p, room.p2].includes(m.mentionedJid[0]))) return m.reply(`⚠️𝙇𝙖 𝙥𝙚𝙧𝙨𝙤𝙣𝙖 𝙖 𝙡𝙖 𝙦𝙪𝙚 𝙦𝙪𝙞𝙚𝙧𝙚𝙨 𝙙𝙚𝙨𝙖𝙛𝙞𝙖𝙧 𝙖 𝙪𝙣 𝙚𝙨𝙩𝙖 𝙟𝙪𝙜𝙖𝙣𝙙𝙤 𝙤𝙩𝙧𝙖 𝙥𝙖𝙧𝙩𝙞𝙙𝙖, 𝙀𝙨𝙥𝙚𝙧𝙚 𝙖 𝙦𝙪𝙚 𝙩𝙚𝙧𝙢𝙞𝙣𝙚 𝙙𝙚 𝙟𝙪𝙜𝙖𝙧`) 
-let id = 'suit_' + new Date() * 1
-let caption = `🎮👾 𝙂𝘼𝙈𝙀𝙎 - 𝙋𝙑𝙋 - 𝙂𝘼𝙈𝙀𝙎 🎮👾\n\n@${m.sender.split`@`[0]} 𝘿𝙀𝙎𝘼𝙁𝙄𝘼 𝘼 @${m.mentionedJid[0].split`@`[0]} 𝘼 𝙐𝙉 (𝙋𝙑𝙋) 𝘿𝙀 𝙋𝙄𝙀𝘿𝙍𝘼, 𝙋𝘼𝙋𝙀𝙇 𝙊 𝙏𝙄𝙅𝙀𝙍𝘼\n\n> _*Escribe (aceptar) para aceptar*_\n> _*Escribe (rechazar) para rechazar*_`
-let imgplaygame = `https://www.merca2.es/wp-content/uploads/2020/05/Piedra-papel-o-tijera-0003318_1584-825x259.jpeg`
+if (m.mentionedJid[0]) {
+if (Object.values(conn.suit).find(room => room.id.startsWith('suit') && [room.p, room.p2].includes(m.sender))) return m.reply(`⚠️ 𝙏𝙚𝙧𝙢𝙞𝙣𝙖 𝙩𝙪 𝙥𝙖𝙧𝙩𝙞𝙙𝙖 𝙖𝙣𝙩𝙚𝙨 𝙙𝙚 𝙞𝙣𝙞𝙘𝙞𝙖 𝙤𝙩𝙧𝙖`);
+if (Object.values(conn.suit).find(room => room.id.startsWith('suit') && [room.p, room.p2].includes(m.mentionedJid[0]))) return m.reply(`⚠️ 𝙀𝙡 𝙪𝙨𝙪𝙖𝙧𝙞𝙤 𝙮𝙖 𝙚𝙨𝙩𝙖́ 𝙟𝙪𝙜𝙖𝙣𝙙𝙤, 𝙚𝙨𝙥𝙚𝙧𝙖 𝙖 𝙦𝙪𝙚 𝙩𝙚𝙧𝙢𝙞𝙣𝙚`);
+
+const id = 'suit_' + new Date() * 1;
+const caption = `🎮👾 𝙋𝙑𝙋 - 𝙋𝙄𝙀𝘿𝙍𝘼, 𝙋𝘼𝙋𝙀𝙇 𝙊 𝙏𝙄𝙅𝙀𝙍𝘼 👾🎮\n\n@${m.sender.split`@`[0]} 𝘿𝙀𝙎𝘼𝙁𝙄𝘼 𝘼 @${m.mentionedJid[0].split`@`[0]}\n\n> _*Escribe (aceptar) para aceptar*_\n> _*Escribe (rechazar) para rechazar*_`;
 conn.suit[id] = {
-chat: await conn.sendMessage(m.chat, { text: caption, mentions: [m.sender, m.mentionedJid]}),
-//await conn.sendButton(m.chat, caption, footer, imgplaygame, [[`Aceptar`], [`Rechazar`]], null, {mentions: conn.parseMention(caption)}),
+chat: await conn.sendMessage(m.chat, { text: caption, mentions: [m.sender, m.mentionedJid[0]] }),
 id: id,
 p: m.sender,
 p2: m.mentionedJid[0],
 status: 'wait',
 waktu: setTimeout(() => {
-if (conn.suit[id]) conn.reply(m.chat, `⏳ 𝙏𝙄𝙀𝙈𝙋𝙊 𝘿𝙀 𝙀𝙎𝙋𝙀𝙍𝘼 𝙁𝙄𝙉𝘼𝙇𝙄𝙕𝘼𝘿𝙊, 𝙀𝙇 𝙋𝙑𝙋 𝙎𝙀 𝘾𝘼𝙉𝘾𝙀𝙇𝘼 𝙋𝙊𝙍 𝙁𝘼𝙇𝙏𝘼 𝘿𝙀 𝙍𝙀𝙎𝙋𝙐𝙀𝙎𝙏𝘼`, m)
-delete conn.suit[id]}, timeout), poin, poin_lose, poin_bot, timeout
+if (conn.suit[id]) conn.reply(m.chat, `⏳ 𝙏𝙄𝙀𝙈𝙋𝙊 𝘼𝙂𝙊𝙏𝘼𝘿𝙊, 𝙀𝙇 𝙋𝙑𝙋 𝙎𝙀 𝘾𝘼𝙉𝘾𝙀𝙇𝘼`, m);
+delete conn.suit[id];
+}, timeout),
+poin: 1000,
+poin_lose: 300,
+poin_bot: 500,
+timeout
 }}
+}
 
 if (command == 'slot'  || command == 'apostar' || command == 'slot1' || command == 'slot2' || command == 'slot3') {
 let fa = `${mg}𝙐𝙨𝙖𝙧 𝙙𝙚𝙡 𝙡𝙖 𝙨𝙞𝙜𝙪𝙞𝙚𝙣𝙩𝙚 𝙢𝙖𝙣𝙚𝙧𝙖:
