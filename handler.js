@@ -377,11 +377,10 @@ return;
 */
 
 //Antispam2		
-/*if (user.antispam2 && isROwner) return
+if (user.antispam2 && isROwner) return
 let time = global.db.data.users[m.sender].spam + 3000
 if (new Date - global.db.data.users[m.sender].spam < 3000) return console.log(`[ SPAM ]`) 
 global.db.data.users[m.sender].spam = new Date * 1
-*/
 }
                 
 const hl = _prefix;
