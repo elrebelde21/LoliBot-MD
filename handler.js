@@ -450,11 +450,19 @@ m.limit = m.limit || plugin.limit || false
 m.error = e
 console.error(e)
 if (e) {
+let text = format(e) || 'Error desconocido';
+for (let api in global.APIs) {
+let key = global.APIs[api].key;
+if (key) text = text.replace(new RegExp(key, 'g'), '#HIDDEN#');
+}
+m.reply(text);
+}
+/*if (e) {
 let text = format(e)
-for (let key of Object.values(global.APIKeys))
+for (let key of Object.values(global.APIs))
 text = text.replace(new RegExp(key, 'g'), '#HIDDEN#')
 m.reply(text)
-}
+}*/
 } finally {
 // m.reply(util.format(_user))
 if (typeof plugin.after === 'function') {
