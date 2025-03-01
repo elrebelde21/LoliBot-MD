@@ -4,11 +4,12 @@ import uploadImage from '../lib/uploadImage.js'
 import { webp2png } from '../lib/webp2mp4.js'
 
 let handler = async (m, { conn, args, usedPrefix, command }) => {
+let user = global.db.data.users[m.sender]
 let stiker = false
 let stick = args.join(" ").split("|");
-let f = stick[0] !== "" ? stick[0] : packname;
-let g = typeof stick[1] !== "undefined" ? stick[1] : author;
-try { 	
+let f = stick[0] && stick[0] !== "" ? stick[0] : (global.db.data.users[m.sender].packname || global.packname)
+let g = typeof stick[1] !== "undefined" ? stick[1] : (global.db.data.users[m.sender].author || global.author)
+try {
 let q = m.quoted ? m.quoted : m
 let mime = (q.msg || q).mimetype || q.mediaType || ''
 if (/webp|image|video/g.test(mime)) {
@@ -29,7 +30,7 @@ else if (/video/g.test(mime)) out = await uploadFile(img)
 if (typeof out !== 'string') out = await uploadImage(img)
 stiker = await sticker(false, out, f, g)
 }}} else if (args[0]) {
-if (isUrl(args[0])) stiker = await sticker(false, args[0], global.packname, global.author)
+if (isUrl(args[0])) stiker = await sticker(false, args[0], f, g)
 else return m.reply('URL invalido')
 }} catch (e) {
 console.error(e)
