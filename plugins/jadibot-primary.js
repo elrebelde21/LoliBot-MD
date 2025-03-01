@@ -17,7 +17,6 @@ selectedBot = users.find(conn => conn.user.jid === botJid);
 if (!selectedBot) return conn.sendMessage(m.chat, { text: "⚠️ No se encontró un bot conectado con esa mención o número. Usa /listjadibot para ver los bots disponibles." }, { quoted: m });
 let chat = global.db.data.chats[m.chat];
 chat.primaryBot = botJid; 
-await global.db.write(); 
 const botName = selectedBot.user.name || botJid.split('@')[0];
 conn.sendMessage(m.chat, { text: `✅ El bot *${botName}* ha sido establecido como primario en este grupo. Los demás bots no responderán aquí.` }, { quoted: m });
 }
