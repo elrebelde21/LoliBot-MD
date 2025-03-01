@@ -21,7 +21,7 @@ const spouseName = spouse ? spouse.name : 'sin name';
 throw `⚠️ El usuario @${mentionedUser.split('@')[0]} (${targetUser.name}) ya está casado con @${spouse.marry.split('@')[0]} (${spouseName}).`;
 }
 
-let text = `💍 *@${mentionedUser.split('@')[0]}* se quiere casar contigo @${m.sender.split('@')[0]}.\n\nPara aceptar o rechazar, responde con:\n\n- *Aceptar* para casarte.\n- *Rechazar* para cancelar la solicitud.`;
+let text = `💍 *@${m.sender.split('@')[0]}* se esta declarado!! 😳\nPor favor @${mentionedUser.split('@')[0]} Responder a la declaración 🙀\n\n❤️ *_Si quieres una Relacion escriba:_*\n\n- *Aceptar*\n\n💔 *_De no querer una Relacion escriba:_*\n- *Rechazar*.`;
 targetUser.marryRequest = m.sender;
 conn.reply(m.chat, text, m, { mentions: [mentionedUser, m.sender] });
 
