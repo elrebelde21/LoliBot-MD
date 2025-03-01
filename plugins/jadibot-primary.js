@@ -1,3 +1,4 @@
+import ws from 'ws';
 async function handler(m, { conn, usedPrefix, args }) {
 if (!args[0]) return conn.sendMessage(m.chat, { text: `⚠️ Por favor, especifica el bot primario con una mención (@tag) o un número (wa.me/...).\nEjemplo: ${usedPrefix}setprimary @tag o ${usedPrefix}setprimary wa.me/123456789` }, { quoted: m });
 
