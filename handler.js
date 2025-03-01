@@ -73,6 +73,8 @@ if (!user.lastclaim) user.lastclaim = 0;
 if (!user.messageSpam) user.messageSpam = 0;
 if (!user.crime) user.crime = 0;
 if (!user.lastrob) user.lastrob = 0;
+if (!user.packname) user.packname = null
+if (!user.author) user.author = null
 if (!user.timeRy) user.timeRy = 0;
 if (!user.timevot) user.timevot = 0;
 if (!user.mensaje) user.mensaje = 0;
@@ -102,6 +104,8 @@ bank: 0,
 BannedReason: '',
 Banneduser: false,          
 warnPv: false,
+packname: null,
+author: null,
 banco: 0,
 timeRy: 0,               
 lastmiming: 0,
@@ -147,6 +151,7 @@ if (!('game' in chat)) chat.game = true
 if (!('game2' in chat)) chat.game2 = false
 if (!('simi' in chat)) chat.simi = false
 if (!('antiTraba' in chat)) chat.antiTraba = true 
+if (!('primaryBot' in chat)) chat.primaryBot = null
 if (!('autorespond' in chat)) chat.autorespond = true 
 if (!('autolevelup' in chat))  chat.autolevelup = true
 if (!isNumber(chat.expired)) chat.expired = 0
@@ -189,6 +194,7 @@ antitoxic: false,
 game: true, 
 game2: false, 
 simi: false,
+primaryBot: null,
 antiTraba: true,
 autorespond: true, 
 autolevelup: true,
@@ -248,6 +254,9 @@ await delay(time)
 
 //if(m.id.startsWith('NJX-') || m.id.startsWith('BAE5') && m.id.length === 16 || m.id.startsWith('3EB0') && m.id.length === 12 || m.id.startsWith('3EB0') && (m.id.length === 20 || m.id.length === 22) || m.id.startsWith('B24E') && m.id.length === 20 || m.id.startsWith('FizzxyTheGreat-')) return
 if(m.id.startsWith('NJX-') || m.id.startsWith('Lyru-') || m.id.startsWith('BAE5') && m.id.length === 16 || m.id.startsWith('3EB0') && m.id.length === 12 || m.id.startsWith('3EB0') && (m.id.length === 20 || m.id.length === 22) || m.id.startsWith('B24E') && m.id.length === 20 || m.id.startsWith('FizzxyTheGreat-')) return
+if (m.isGroup && chat.primaryBot && chat.primaryBot !== conn.user.jid) {
+return; // Ignorar si no es el bot primario
+}
 if (opts['nyimak']) return
 if (!isROwner && opts['self']) return 
 if (opts['pconly'] && m.chat.endsWith('g.us')) return
