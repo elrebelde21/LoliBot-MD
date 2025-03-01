@@ -21,7 +21,7 @@ m.react('✅');
 }
 } catch {   
 try {
-const res = await fetch(`https://api.fgmods.xyz/api/downloader/igdl?url=${args}&apikey=${fgkeysapi}`);
+const res = await fetch(`${APIs.fgmods.url}/downloader/igdl?url=${args}&apikey=${APIs.fgmods.key}`);
 const data = await res.json();
 if (!data || !data.result || data.result.length === 0) return m.react("❌");  
 const result = data.result[0];  

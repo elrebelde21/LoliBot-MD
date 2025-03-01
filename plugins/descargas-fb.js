@@ -30,7 +30,7 @@ m.react('✅');
 }
 } catch {   
 try {
-const api = await fetch(`https://api.fgmods.xyz/api/downloader/fbdl?url=${args}&apikey=${fgkeysapi}`)
+const api = await fetch(`${APIs.fgmods.url}/downloader/fbdl?url=${args}&apikey=${APIs.fgmods.key}`)
 const data = await api.json();
 const downloadUrl = data.result[0].hd || data.result[0].sd;
 await conn.sendFile(m.chat, downloadUrl, 'video.mp4', '✅ Aquí está tu video de Facebook', m, null, fake);

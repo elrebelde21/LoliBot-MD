@@ -11,7 +11,7 @@ let sticker = 'https://qu.ax/Wdsb.webp'
 if (!args[0]) throw `⚠️ 𝙄𝙣𝙜𝙧𝙚𝙨𝙚 𝙪𝙣 𝙀𝙣𝙡𝙖𝙘𝙚 𝙫𝙖𝙡𝙞𝙙𝙤 𝙙𝙚𝙡 𝙢𝙚𝙙𝙞𝙖𝙛𝙞𝙧𝙚 𝙀𝙟:*\n${usedPrefix + command} https://www.mediafire.com/file/sd9hl31vhhzf76v/EvolutionV1.1-beta_%2528Recomendado%2529.apk/file`
 m.react(`🚀`) 
 try {
-const res = await fetch(`https://api.fgmods.xyz/api/downloader/mediafire?url=${args}&apikey=${fgkeysapi}`);
+const res = await fetch(`${APIs.fgmods.url}/downloader/mediafire?url=${args}&apikey=${APIs.fgmods.key}`);
 const data = await res.json();
 const fileData = data.result;
 const caption = `┏━━『 𝐌𝐄𝐃𝐈𝐀𝐅𝐈𝐑𝐄 』━━•

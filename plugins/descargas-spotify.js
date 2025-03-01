@@ -5,7 +5,7 @@ import search from 'yt-search'
 let handler = async (m, { conn, text, usedPrefix, command }) => {
 if (!text) throw `*🤔 ¿Que esta buscando? ingresa el nombre para descargar sus música de Spotify, Ejemplo:* ${usedPrefix + command} ozuna`
 m.react(`⌛`) 
-const spotify = await fetch(`https://delirius-apiofc.vercel.app/search/spotify?q=${text}`);
+const spotify = await fetch(`${apis}/search/spotify?q=${text}`);
 const song = await spotify.json();
 if (!song.data || song.data.length === 0) throw '⚠️ No se encontraron resultados para esa búsqueda.';
 const track = song.data[0]; 

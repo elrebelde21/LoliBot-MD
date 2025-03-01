@@ -1,14 +1,30 @@
+import ws from 'ws';
 export async function before(m, { conn, isAdmin, isBotAdmin, isOwner, isROwner }) {
 let prefixRegex = new RegExp('^[' + (opts['prefix'] || '‎z/i!#$%+£¢€¥^°=¶∆×÷π√✓©®:;?&.,\\-').replace(/[|\\{}()[\]^$+*?.\-\^]/g, '\\$&') + ']')
 let chat = global.db.data.chats[m.chat]
 let user = global.db.data.users[m.sender] || {};
 let setting = global.db.data.settings[this.user.jid]
 const settingsREAD = global.db.data.settings[this.user.jid] || {}
-
+const users = [...new Set([...global.conns.filter((conn) => conn.user && conn.ws.socket && conn.ws.socket.readyState !== ws.CLOSED).map((conn) => conn)])];
+const participants = m.isGroup ? (await conn.groupMetadata(m.chat)).participants : [];
+const mainBotInGroup = participants.some(p => p.id === global.conn.user.jid);
+const primaryBot = chat.primaryBot;
+const primaryBotConnected = users.some(conn => conn.user.jid === primaryBot);
+const primaryBotInGroup = participants.some(p => p.id === primaryBot);
+    
 if (!global.db.data.users[m.sender]) global.db.data.users[m.sender] = {};
 if (!global.db.data.users[m.sender].mensaje) global.db.data.users[m.sender].mensaje = {};
 if (!global.db.data.users[m.sender].mensaje[m.chat]) global.db.data.users[m.sender].mensaje[m.chat] = 0;
 global.db.data.users[m.sender].mensaje[m.chat]++;
+
+if (m.isGroup) {
+if (primaryBot) {
+if (primaryBotConnected && primaryBotInGroup) {
+if (this.user.jid !== primaryBot) throw !1; 
+}
+else if (mainBotInGroup) {
+if (this.user.jid !== global.conn.user.jid) throw !1;
+}}}
 
 if (m.fromMe) return
 if (m.isGroup) return !1
