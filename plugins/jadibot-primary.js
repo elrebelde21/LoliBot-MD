@@ -1,7 +1,7 @@
 import ws from 'ws';
 
 let handler = async (m, { conn, usedPrefix, args }) => {
-if (!args[0]) return m.reply(`⚠️ Por favor, especifica el bot primario con una mención (@tag) o un número (wa.me/...).\nEjemplo: ${usedPrefix}setprimary @tag o ${usedPrefix}setprimary wa.me/123456789`);
+if (!args[0]) return m.reply(`⚠️ Etiquetas en numero de algun bot\nEjemplo: ${usedPrefix}setprimary @tag`);
 
 const users = [...new Set([...global.conns.filter((conn) => conn.user && conn.ws.socket && conn.ws.socket.readyState !== ws.CLOSED).map((conn) => conn)])];
 let botJid;
@@ -27,7 +27,7 @@ let chat = global.db.data.chats[m.chat];
 chat.primaryBot = botJid;
 conn.sendMessage(m.chat, { text: `✅ El bot @${botJid.split('@')[0]} ha sido establecido como primario en este grupo. Los demás bots no responderán aquí.`, mentions: [botJid] }, { quoted: m });
 };
-handler.help = ['setprimary <@tag | wa.me/number>'];
+handler.help = ['setprimary <@tag>'];
 handler.tags = ['jadibot'];
 handler.command = ['setprimary'];
 handler.group = true;
