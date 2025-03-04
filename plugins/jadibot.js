@@ -235,6 +235,7 @@ let chtxt = `*Se detectó un nuevo Sub-Bot conectado 💻✨*
 `.trim()
 let ppch = await sock.profilePictureUrl(userJid, 'image').catch(_ => imageUrl.getRandom())
 await sleep(3000)
+if (options.fromCommand) {
 await global.conn.sendMessage(ch.ch1, { text: chtxt, contextInfo: {
 externalAdReply: {
 title: "【 📢 Notificación General 📢 】",
@@ -245,6 +246,7 @@ mediaType: 1,
 showAdAttribution: false,
 renderLargerThumbnail: false
 }}}, { quoted: null }).catch(err => console.error(err));
+}
 await sleep(3000) 
 await joinChannels(sock)
 }}
