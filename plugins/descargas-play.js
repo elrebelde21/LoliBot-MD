@@ -64,8 +64,12 @@ const audioApis = [
 { url: () => fetch(`https://api.siputzx.my.id/api/d/ytmp4?url=${yt_play[0].url}`).then(res => res.json()), extract: (data) => ({ data: data.dl, isDirect: false }) },
 { url: () => fetch(`${apis}/download/ytmp3?url=${encodeURIComponent(yt_play[0].url)}`).then(res => res.json()), extract: (data) => ({ data: data.status ? data.data.download.url : null, isDirect: false }) },
 { url: () => fetch(`https://api.zenkey.my.id/api/download/ytmp3?apikey=zenkey&url=${yt_play[0].url}`).then(res => res.json()), extract: (data) => ({ data: data.result.download.url, isDirect: false }) },
-{ url: () => fetch(`https://exonity.tech/api/dl/playmp3?query=${encodeURIComponent(yt_play[0].title)}`).then(res => res.json()), extract: (data) => ({ data: data.result.download, isDirect: false }) }
-];
+{ url: () => fetch(`https://exonity.tech/api/dl/playmp3?query=${encodeURIComponent(yt_play[0].title)}`).then(res => res.json()), extract: (data) => ({ data: data.result.download, isDirect: false }) },
+
+{ url: () => fetch(`https://api.dorratz.com/v3/ytdl?url=${encodeURIComponent(yt_play[0].url)}`).then(res => res.json()), extract: (data) => { 
+const mp3 = data.medias.find(media => media.quality === "160kbps" && media.extension === "mp3");
+return { data: mp3.url, isDirect: false }}
+}];
 
 const videoApis = [
 { url: () => ogmp3.download(yt_play[0].url, selectedQuality, 'video'), extract: (data) => ({ data: data.result.download, isDirect: false }) },
