@@ -264,7 +264,12 @@ global.conns.splice(i, 1)
 
 let handler = await import('../handler.js')
 async function creloadHandler(restatConn, sockInstance = null) {
-let sock = sockInstance || global.sock; 
+  let sock = sockInstance || global.sock; // Usar el socket proporcionado o un valor por defecto (si global.sock existe)
+  if (!sock) {
+    console.error(chalk.bold.redBright('[ERROR] No se proporcionó un socket válido en creloadHandler.'));
+    return false;
+  }
+
   try {
     const Handler = await import(`../handler.js?update=${Date.now()}`).catch(console.error);
     if (Object.keys(Handler || {}).length) handler = Handler;
@@ -273,11 +278,11 @@ let sock = sockInstance || global.sock;
   }
 
   if (restatConn) {
-    const oldChats = sock.chats;
-    try { sock.ws.close(); } catch { }
+    const oldChats = sock.chats || [];
+    try { sock.ws?.close(); } catch { }
     sock.ev.removeAllListeners();
     sock = makeWASocket(connectionOptions, { chats: oldChats });
-    sock.isInit = true;
+    sock.isInit = true; // Establecer isInit como true durante el reinicio
   }
 
   if (!sock.isInit) {
@@ -354,21 +359,19 @@ const jadibtsDir = path.join(__dirname, 'jadibts');
     // Si no está conectado, intentar reconectarlo
     console.log(chalk.bold.redBright(`[MONITOR] Sub-bot ${subBotId} desconectado. Intentando reconectar...`));
     try {
-      // Buscar el socket correspondiente en global.conns (si existe)
-      let sock = global.conns.find(s => s.user?.jid?.split('@')[0] === subBotId);
       const subBotPath = path.join(jadibtsDir, subBotId);
+      const { state, saveState, saveCreds } = await useMultiFileAuthState(subBotPath);
 
-      if (sock) {
-        // Si el socket existe pero está desconectado, reiniciarlo
-        await creloadHandler(true, sock);
-      } else {
-        // Si no existe en global.conns, crear un nuevo socket
-        const { state, saveState, saveCreds } = await useMultiFileAuthState(subBotPath);
-        sock = makeWASocket(connectionOptions);
-        sock.isInit = false;
-        global.conns.push(sock);
-        await creloadHandler(false, sock); // Inicializar el socket
-      }
+      // Crear un nuevo socket con las connectionOptions ya definidas
+      let sock = makeWASocket(connectionOptions);
+      sock.isInit = false; // Inicializar isInit explícitamente
+      sock.authState = { state, saveState, saveCreds }; // Asegurar que las credenciales estén asignadas
+
+      // Agregar el socket a global.conns antes de inicializarlo
+      global.conns.push(sock);
+
+      // Usar creloadHandler para inicializar el socket
+      await creloadHandler(false, sock);
       console.log(chalk.bold.greenBright(`[MONITOR] Sub-bot ${subBotId} reconectado exitosamente.`));
     } catch (error) {
       console.error(chalk.bold.redBright(`[MONITOR] Error al reconectar sub-bot ${subBotId}:`), error);
