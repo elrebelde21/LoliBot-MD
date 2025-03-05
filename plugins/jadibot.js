@@ -263,21 +263,21 @@ global.conns.splice(i, 1)
 }}, 60000)
 
 let handler = await import('../handler.js')
-let creloadHandler = async function (restatConn) {
-try {
-const Handler = await import(`../handler.js?update=${Date.now()}`).catch(console.error)
-if (Object.keys(Handler || {}).length) handler = Handler
-
-} catch (e) {
-console.error('Nuevo error: ', e)
-}
-if (restatConn) {
-const oldChats = sock.chats
-try { sock.ws.close() } catch { }
-sock.ev.removeAllListeners()
-sock = makeWASocket(connectionOptions, { chats: oldChats })
-isInit = true
-}
+async function creloadHandler(restatConn, sockInstance = null) {
+  let sock = sockInstance || null;
+  try {
+    const Handler = await import(`../handler.js?update=${Date.now()}`).catch(console.error);
+    if (Object.keys(Handler || {}).length) handler = Handler;
+  } catch (e) {
+    console.error('Nuevo error: ', e);
+  }
+  if (restatConn && sock) {
+    const oldChats = sock.chats;
+    try { sock.ws.close(); } catch { }
+    sock.ev.removeAllListeners();
+    sock = makeWASocket(connectionOptions, { chats: oldChats });
+    isInit = true;
+  }
 if (!isInit) {
 sock.ev.off('messages.upsert', sock.handler)
 sock.ev.off('group-participants.update', sock.participantsUpdate)
@@ -327,19 +327,21 @@ for (const channelId of Object.values(global.ch)) {
 await conn.newsletterFollow(channelId).catch(() => {})
 }}
 
-/*async function checkSubBots() {
-  for (let sock of global.conns) {
+async function monitorSubBots() {
+for (let [index, sock] of global.conns.entries()) {
+    const subBotId = sock.user?.jid || `Sub-bot ${index}`;
     if (!sock.ws || sock.ws.readyState !== ws.OPEN) {
-      console.log(`Sub bot ${sock.user.jid} está desconectado, intentando reiniciar...`);
+      console.log(chalk.bold.redBright(`[MONITOR] Sub-bot ${subBotId} desconectado. Intentando reconectar...`));
       try {
-        await creloadHandler(true).catch(console.error);
-        console.log(`Sub bot ${sock.user.jid} reiniciado exitosamente`);
+        await creloadHandler(true, sock);
+        console.log(chalk.bold.greenBright(`[MONITOR] Sub-bot ${subBotId} reconectado exitosamente.`));
       } catch (error) {
-        console.error(`Error al reiniciar el sub bot ${sock.user.jid}:`, error);
+        console.error(chalk.bold.redBright(`[MONITOR] Error al reconectar sub-bot ${subBotId}:`), error);
       }
+    } else {
+      console.log(chalk.bold.greenBright(`[MONITOR] Sub-bot ${subBotId} está activo.`));
     }
   }
 }
 
-setInterval(checkSubBots, 300000) //5 min
-*/
+setInterval(monitorSubBots, 300000); //5 min
