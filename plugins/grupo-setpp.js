@@ -1,33 +1,16 @@
-import Jimp from 'jimp';
-
-const handler = async (message, { conn, usedPrefix, command, args, isOwner, isAdmin, isROwner }) => {
-try {
-const chatId = message.chat;
-const quotedMessage = message.quoted ? message.quoted : message;
-if (!message.quoted) throw '*⚠️️ Responde a una imagen.*';
-
-const mimeType = quotedMessage.mimetype || '';
-const imageBuffer = await quotedMessage.download();
-const targetChatId = await chatId;
-
-async function processImage(imageBuffer) {
-const image = await Jimp.read(imageBuffer);
-const resizedImage = image.getHeight() > image.getWidth()
-? image.resize(Jimp.AUTO, 720)
-: image.resize(720, Jimp.AUTO);
-return { img: await resizedImage.getBufferAsync(Jimp.MIME_JPEG) }}
-
-const { img } = await processImage(imageBuffer);
-await conn.query({tag: 'iq', attrs: {to: targetChatId, type: 'set', xmlns: 'w:profile:picture', }, content: [{tag: 'picture', attrs: { type: 'image' }, content: img,}], });
-
-message.reply('_*• Imagen actualizada con éxito.*_');
-} catch {
-throw '*⚠️️ Responde a una imagen.*';
-}};
-handler.help = ['setppgc']
-handler.tags = ['group']
-handler.command = ['setppgc', 'setppgrup', 'setppgroup'];
-handler.botAdmin = true;
-handler.admin = true;
-handler.register = true 
-export default handler;
+let handler = async (m, { conn, usedPrefix, command }) => {
+let q = m.quoted ? m.quoted : m
+let mime = (q.msg || q).mimetype || q.mediaType || ''
+if (/image/.test(mime)) {
+let img = await q.download()
+if (!img) throw `⚠️ ️𝙍𝙀𝙎𝙋𝙊𝙉𝘿𝙀 𝘼 𝙐𝙉𝘼 𝙄𝙈𝘼𝙂𝙀𝙉`
+await conn.updateProfilePicture(m.chat, img).then(_ => m.react("✅️"))
+} else throw `⚠️ 𝙍𝙀𝙎𝙋𝙊𝙉𝘿𝙀 𝘼 𝙐𝙉𝘼 𝙄𝙈𝘼𝙂𝙀𝙉`
+}
+handler.help = ['setppgc'];
+handler.tags = ['group'];
+handler.command = /^setpp(group|grup|gc)?$/i
+handler.group = true
+handler.admin = true
+handler.botAdmin = true
+export default handler

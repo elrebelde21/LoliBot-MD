@@ -7,8 +7,8 @@ let handler = async (m, { conn, args, usedPrefix, command }) => {
 let user = global.db.data.users[m.sender]
 let stiker = false
 let stick = args.join(" ").split("|");
-let f = stick[0] && stick[0] !== "" ? stick[0] : (user.packname || global.packname)
-let g = typeof stick[1] !== "undefined" ? stick[1] : (user.packname && user.author ? user.author : (user.packname && !user.author ? '' : global.author))
+let f = user.packname || global.packname
+let g = (user.packname && user.author ? user.author : (user.packname && !user.author ? '' : global.author))
 try {
 let q = m.quoted ? m.quoted : m
 let mime = (q.msg || q).mimetype || q.mediaType || ''

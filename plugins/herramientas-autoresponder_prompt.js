@@ -16,6 +16,7 @@ conn.reply(m.chat, "🗑️ *Prompt borrado con éxito.*", m)
 conn.reply(m.chat, `⚠️ *No hay ningún prompt establecido para este chat.*\n\n💡 *Para establecer un nuevo prompt, utiliza el comando seguido del texto que describa las instrucciones para el bot.*\n\n*Por ejemplo:*\n*${usedPrefix + command}* Actúa como un psicólogo y brinda apoyo emocional a los usuarios.`, m)
 }}
 }
-
+handler.help = ['autorespond <text>'];
+handler.tags = ['tools'];
 handler.command = /^(autorespond|autoresponder)$/i
 export default handler

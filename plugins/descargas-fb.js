@@ -18,18 +18,6 @@ await conn.sendFile(m.chat, imageUrl, 'thumbnail.jpg', '✅ Aquí está la image
 m.react('✅');
 }} catch {   
 try {
-const api = await fetch(`https://api.alyachan.dev/api/fb?url=${args}&apikey=Gata-Dios`);
-const data = await api.json();
-const downloadUrl = data.data[0].url;
-if (downloadUrl.endsWith('.jpg') || downloadUrl.endsWith('.png')) {
-await conn.sendFile(m.chat, downloadUrl, 'ig.jpg', '✅ Aquí está tu imagen de Facebook', m, null, fake);
-m.react('✅');
-} else if (downloadUrl.endsWith('.mp4')) {
-await conn.sendFile(m.chat, downloadUrl, 'ig.mp4', '✅ Aquí está tu video de Facebook', m, null, fake);
-m.react('✅');
-}
-} catch {   
-try {
 const api = await fetch(`${APIs.fgmods.url}/downloader/fbdl?url=${args}&apikey=${APIs.fgmods.key}`)
 const data = await api.json();
 const downloadUrl = data.result[0].hd || data.result[0].sd;
@@ -62,7 +50,7 @@ m.react(`✅`)
 m.react(`❌`) 
 //m.reply(`\`\`\`⚠️ OCURRIO UN ERROR ⚠️\`\`\`\n\n> *Reporta el siguiente error a mi creador con el comando:*#report\n\n>>> ${err6} <<<< `)       
 console.log(e) 
-}}}}}}}
+}}}}}}
 handler.help = ['fb', 'facebook', 'fbdl']
 handler.tags = ['downloader']
 handler.command = /^(facebook|fb|facebookdl|fbdl|facebook2|fb2|facebookdl2|fbdl2|facebook3|fb3|facebookdl3|fbdl3|facebook4|fb4|facebookdl4|fbdl4|facebook5|fb5|facebookdl5|fbdl5)$/i

@@ -17,7 +17,7 @@ conn.reply(m.chat, `*𝐋𝐢𝐬𝐭𝐚 𝐝𝐞 𝐧𝐮𝐦𝐞𝐫𝐨 𝐜
 break;
 case 'kicknum':
 if (!bot.restrict) return m.reply('*⚠️ El propietario del bot tiene desactivo el restrict, contacte con el para que lo habilite:* #on restrict');
-if (!isBotAdmin) return m.reply('*⚠️ Pinche pendejo, el bot no es admins, hazme admins para poder usar este comando inútil**');
+if (!isBotAdmin) return m.reply('*⚠️ Pinche pendejo, el bot no es admins, hazme admins para poder usar este comando inútil*');
 conn.reply(m.chat, `*⚠️ 𝐈𝐧𝐢𝐜𝐢𝐚𝐧𝐝𝐨 𝐞𝐥𝐢𝐦𝐢𝐧𝐚𝐜𝐢𝐨𝐧 𝐝𝐞 𝐧𝐮𝐦𝐞𝐫𝐨𝐬 𝐜𝐨𝐧 𝐞𝐥 𝐩𝐫𝐞𝐟𝐢𝐣𝐨: +${lol}, 𝐜𝐚𝐝𝐚 10 𝐬𝐞𝐠𝐮𝐧𝐝𝐨𝐬 𝐬𝐞 𝐞𝐥𝐢𝐦𝐢𝐧𝐚𝐫𝐚 𝐚 𝐮𝐧 𝐮𝐬𝐮𝐚𝐫𝐢𝐨*`, m);
 const ownerGroup = m.chat.split`-`[0] + '@s.whatsapp.net';
 const users = participants.map((u) => u.id).filter((v) => v !== conn.user.jid && v.startsWith(lol || lol));
@@ -28,7 +28,8 @@ await delay(2000);
 const responseb = await conn.groupParticipantsUpdate(m.chat, [user], 'remove');
 if (responseb[0].status === '404') m.reply(error, m.chat, {mentions: conn.parseMention(error)});
 await delay(10000);
-} else return m.reply('*[❗] 𝙴𝚁𝚁𝙾𝚁*')}
+} else return m.reply('*[❗] 𝙴𝚁𝚁𝙾𝚁*')
+}
 break;
 }};
 handler.command = /^(listanum|kicknum|listnum)$/i;

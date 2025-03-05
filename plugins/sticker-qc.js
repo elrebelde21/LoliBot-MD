@@ -2,9 +2,8 @@ import { sticker } from '../lib/sticker.js';
 import axios from 'axios';
 const handler = async (m, {conn, args, usedPrefix, command}) => {
 let user = global.db.data.users[m.sender]
-let stick = args.join(" ").split("|");
-let f = stick[0] && stick[0] !== "" ? stick[0] : (user.packname || global.packname)
-let g = typeof stick[1] !== "undefined" ? stick[1] : (user.packname && user.author ? user.author : (user.packname && !user.author ? '' : global.author))
+let f = user.packname || global.packname
+let g = (user.packname && user.author ? user.author : (user.packname && !user.author ? '' : global.author))
 let text
 if (args.length >= 1) {
 text = args.slice(0).join(" ");
@@ -12,10 +11,11 @@ text = args.slice(0).join(" ");
 text = m.quoted.text;
 } else return m.reply("╰⊱❗️⊱ *𝙇𝙊 𝙐𝙎𝙊́ 𝙈𝘼𝙇* ⊱❗️⊱╮\n\n𝘼𝙂𝙍𝙀𝙂𝙐𝙀́ 𝙐𝙉 𝙏𝙀𝙓𝙏𝙊 𝙋𝘼𝙍𝘼 𝘾𝙍𝙀𝘼𝙍 𝙀𝙇 𝙎𝙏𝙄𝘾𝙆𝙀𝙍") 
 if (!text) return m.reply("╰⊱❗️⊱ *𝙇𝙊 𝙐𝙎𝙊́ 𝙈𝘼𝙇* ⊱❗️⊱╮\n\n𝘼𝙂𝙍𝙀𝙂𝙐𝙀́ 𝙐𝙉 𝙏𝙀𝙓𝙏𝙊 𝙋𝘼𝙍𝘼 𝘾𝙍𝙀𝘼𝙍 𝙀𝙇 𝙎𝙏𝙄𝘾𝙆𝙀𝙍") 
+conn.fakeReply(m.chat, `Calma crack estoy procesando 👏\n\n> *Esto puede demorar unos minutos*`, '0@s.whatsapp.net', `No haga spam gil`, 'status@broadcast', null, fake)
 const who = m.mentionedJid && m.mentionedJid[0] ? m.mentionedJid[0] : m.fromMe ? conn.user.jid : m.sender; 
 const mentionRegex = new RegExp(`@${who.split('@')[0].replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\s*`, 'g');
 const mishi = text.replace(mentionRegex, '');
-if (mishi.length > 45) return m.reply('*⚠️ El texto no puede tener mas de 45 caracteres*');
+if (mishi.length > 65) return m.reply('*⚠️ El texto no puede tener mas de 65 caracteres*');
 const pp = await conn.profilePictureUrl(who).catch((_) => 'https://telegra.ph/file/24fa902ead26340f3df2c.png')
 const nombre = await conn.getName(who)
 const obj = {"type": "quote", "format": "png", "backgroundColor": "#000000", "width": 512, "height": 768, "scale": 2, "messages": [{"entities": [], "avatar": true, "from": {"id": 1, "name": `${who?.name || nombre}`, "photo": {url: `${pp}`}}, "text": mishi, "replyMessage": {}}]};

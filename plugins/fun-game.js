@@ -70,248 +70,108 @@ timeout
 }
 
 if (command == 'slot'  || command == 'apostar' || command == 'slot1' || command == 'slot2' || command == 'slot3') {
-let fa = `${mg}𝙐𝙨𝙖𝙧 𝙙𝙚𝙡 𝙡𝙖 𝙨𝙞𝙜𝙪𝙞𝙚𝙣𝙩𝙚 𝙢𝙖𝙣𝙚𝙧𝙖:
+const slotTypes = {
+slot1: { currency: 'exp',
+name: 'Exp',
+emojis: ['💎', '⚡', '🪙'],
+cooldown: 60000,
+bonusWin: apuesta => apuesta * 2,
+consolation: 50,
+symbol: '⚡'
+},
+slot2: { currency: 'money',
+name: 'LoliCoins',
+emojis: ['🪙', '🔮', '🧿'],
+cooldown: 60000,
+bonusWin: apuesta => apuesta * 2,
+consolation: 30,
+symbol: '🪙'
+},
+slot3: {
+currency: 'limit',
+name: 'Diamantes',
+emojis: ['🪙', '💣', '💎'],
+cooldown: 30000,
+bonusWin: apuesta => apuesta * 2,
+consolation: 2,
+symbol: '💎'
+}}
 
-𝙀𝙟𝙚𝙢𝙥𝙡𝙤:
-*${usedPrefix + command} 50*`.trim()
+const fa = `${mg}𝙐𝙨𝙖𝙧 𝙙𝙚 𝙡𝙖 𝙨𝙞𝙜𝙪𝙞𝙚𝙣𝙩𝙚 𝙢𝙖𝙣𝙚𝙧𝙖:\n\n𝙀𝙟𝙚𝙢𝙥𝙡𝙤:\n*• ${usedPrefix}slot1 50* (aportas exp)\n*• ${usedPrefix}slot2 50* (aportas LoliCoins)\n*• ${usedPrefix}slot3 50* (aportas Diamantes)`.trim()
 
-if (!args[0]) return m.reply(fa) 
-if (isNaN(args[0])) return m.reply(fa) 
-let apuesta = parseInt(args[0])
-
-let users = global.db.data.users[m.sender]
-
-if (apuesta < 10) return m.reply(`⚠️ 𝐃𝐞𝐛𝐞𝐬 𝐝𝐞𝐥 𝐚𝐩𝐨𝐬𝐭𝐚𝐫 𝐮𝐧 𝐦𝐢𝐧𝐢𝐦𝐨𝐬 𝐝𝐞 *10*`) 
-
-if (users.exp < apuesta) {
-return m.reply(`⚠️ 𝐍𝒐 𝒂𝒍𝒄𝒂𝒏𝒛𝒂 𝒑𝒂𝒓𝒂 𝒂𝒑𝒐𝒔𝒕𝒂𝒓 𝒆𝒙𝒑, 𝒍𝒆 𝒓𝒆𝒄𝒐𝒎𝒊𝒆𝒏𝒅𝒐 𝒊𝒏𝒕𝒆𝒓𝒂𝒄𝒕𝒖𝒂𝒓 𝒄𝒐𝒏 𝒆𝒍 𝒃𝒐𝒕 𝒑𝒂𝒓𝒂 𝒐𝒃𝒕𝒆𝒏𝒆𝒓 𝒎𝒂́𝒔 𝒓𝒆𝒄𝒖𝒓𝒔𝒐𝒔`) 
+const validateBet = (users, apuesta, currency, name) => {
+if (apuesta < 10) throw `⚠️ 𝐃𝐞𝐛𝐞𝐬 𝐚𝐩𝐨𝐬𝐭𝐚𝐫 𝐮𝐧 𝐦𝐢𝐧𝐢𝐦𝐨 𝐝𝐞 *10 ${name}*`
+if (users[currency] < apuesta) throw `⚠️ 𝐍𝐨 𝐭𝐢𝐞𝐧𝐞𝐬 𝐬𝐮𝐟𝐢𝐜𝐢𝐞𝐧𝐭𝐞𝐬 *${name}* 𝐩𝐚𝐫𝐚 𝐚𝐩𝐨𝐬𝐭𝐚r. 𝐈𝐧𝐭𝐞𝐫𝐚𝐜𝐭𝐮𝐚 𝐜𝐨𝐧 𝐞𝐥 𝐛𝐨𝐭 𝐩𝐚𝐫𝐚 𝐨𝐛𝐭𝐞𝐧𝐞𝐫 𝐦𝐚́𝐬 𝐫𝐞𝐜𝐮𝐫𝐬𝐨𝐬.`
 }
-if (command == 'slot1') {
-let time = global.db.data.users[m.sender].lastslot + 60000
-if (new Date - users.lastslot < 60000) return m.reply(`*𝐕𝐮𝐞𝐥𝐯𝐚 𝐞𝐧: ${msToTime(time - new Date())} 𝐏𝐚𝐫𝐚 𝐜𝐨𝐧𝐭𝐢𝐧𝐮𝐚𝐫 𝐚𝐩𝐨𝐬𝐭𝐚𝐧𝐝𝐨 𝐞𝐱𝐩* 🎰`) 
-users.lastslot = new Date * 1
-    
-let emojis = ["💎", "⚡", "🪙"];
-let a = Math.floor(Math.random() * emojis.length);
-let b = Math.floor(Math.random() * emojis.length);
-let c = Math.floor(Math.random() * emojis.length);
-let x = [],
-y = [],
-z = [];
+
+const playSlot = async (m, conn, apuesta, config, users) => {
+const { currency, name, emojis, cooldown, bonusWin, consolation } = config
+const time = users.lastslot + cooldown
+if (new Date() - users.lastslot < cooldown) throw `*𝐕𝐮𝐞𝐥𝐯𝐚 𝐞𝐧: ${msToTime(time - new Date())} 𝐩𝐚𝐫𝐚 𝐜𝐨𝐧𝐭𝐢𝐧𝐮𝐚𝐫 𝐚𝐩𝐨𝐬𝐭𝐚𝐧𝐝𝐨 ${name}* 🎰`
+users.lastslot = Date.now()
+
+const a = Math.floor(Math.random() * emojis.length)
+const b = Math.floor(Math.random() * emojis.length)
+const c = Math.floor(Math.random() * emojis.length)
+const [x, y, z] = [[], [], []]
 for (let i = 0; i < 3; i++) {
-x[i] = emojis[a];
-a++;
-if (a == emojis.length) a = 0;
+x[i] = emojis[(a + i) % emojis.length]
+y[i] = emojis[(b + i) % emojis.length]
+z[i] = emojis[(c + i) % emojis.length]
 }
-for (let i = 0; i < 3; i++) {
-y[i] = emojis[b];
-b++;
-if (b == emojis.length) b = 0;
-}
-for (let i = 0; i < 3; i++) {
-z[i] = emojis[c];
-c++;
-if (c == emojis.length) c = 0;
-}
-let end;
-if (a == b && b == c) {
-end = `🥳 *QUE PRO!! HAS GANADO +${apuesta + apuesta} EXP*`
-users.exp += apuesta
-} else if (a == b || a == c || b == c) {
-end = `😯 *CASI!!, VUELVA A INTENTAR*\n*BONO DE +50 EXP*`
-users.exp += 50
+
+let end
+if (a === b && b === c) {
+end = `🥳 *¡QUÉ PRO! HAS GANADO +${bonusWin(apuesta)} ${name}*`
+users[currency] += apuesta
+} else if (a === b || a === c || b === c) {
+end = `😯 *¡CASI! VUELVE A INTENTAR*\n*BONO DE +${consolation} ${name}*`
+users[currency] += consolation
 } else {
-end = `😿 *HA PERDIDO!! ❌ -${apuesta} EXP*`
-users.exp -= apuesta
+end = `😿 *¡HAS PERDIDO! ❌ -${apuesta} ${name}*`
+users[currency] -= apuesta
 }
 
-var hawemod = [
-`${x[1]} : ${y[0]} : ${z[0]}
-${z[0]} : ${y[1]} : ${x[1]}
-${z[1]} : ${x[2]} : ${y[0]}`, 
-`${x[0]} : ${y[1]} : ${z[2]}
-${y[1]} : ${z[2]} : ${x[1]}
-${x[2]} : ${y[0]} : ${z[0]}`, 
-`${x[1]} : ${y[2]} : ${z[1]}
-${y[0]} : ${z[0]} : ${x[2]}
-${x[2]} : ${y[1]} : ${z[0]}`
+const hawemod = [
+`${x[0]} : ${y[1]} : ${z[0]}\n${z[1]} : ${y[0]} : ${x[0]}\n${z[2]} : ${x[1]} : ${y[2]}`,
+`${x[0]} : ${y[0]} : ${z[0]}\n${y[1]} : ${z[1]} : ${x[1]}\n${x[2]} : ${y[2]} : ${z[2]}`,
+`${x[0]} : ${y[1]} : ${z[0]}\n${y[1]} : ${z[2]} : ${x[1]}\n${x[2]} : ${y[1]} : ${z[2]}`
 ]
 
-const maxIterations = 25;
-const arrayCasuale = generaArrayCasuale(hawemod, maxIterations);
-
-const array = [...arrayCasuale, ];
-  
-let { key } = await conn.sendMessage(m.chat, { text: `🕹` }, { quoted: m });
+const maxIterations = 25
+const arrayCasuale = generaArrayCasuale(hawemod, maxIterations)
+const array = [...arrayCasuale]
+const { key } = await conn.sendMessage(m.chat, { text: `🕹` }, { quoted: m })
 
 for (let i = 0; i < maxIterations; i++) {
-
-await conn.sendMessage(m.chat, { text: `🎰 | *RANURAS* | 🎰\n────────\n` + `${array[i]}` + `\n ────────\n🎰 |   *SLOTS*   | 🎰`, edit: key }, { quoted: m });
-await new Promise((resolve) => setTimeout(resolve, 1))}
-
-conn.sendMessage(m.chat, {text: `
-🎰 | *RANURAS* | 🎰 
-────────
-${x[0]} : ${y[0]} : ${z[0]}
-${x[1]} : ${y[1]} : ${z[1]}
-${x[2]} : ${y[2]} : ${z[2]}
- ────────
-🎰 |   *SLOTS*   | 🎰\n\n${end}`, edit: key}, {quoted: m})}
-
-if (users.money < apuesta)  { 
-return m.reply( `⚠️ 𝐍𝐨 𝐚𝐥𝐜𝐚𝐧𝐳𝐚 𝐩𝐚𝐫𝐚 𝐚𝐩𝐨𝐬𝐭𝐚𝐫 𝐋𝐨𝐥𝐢𝐂𝐨𝐢𝐧𝐬, 𝐥𝐞 𝐫𝐞𝐜𝐨𝐦𝐢𝐞𝐧𝐝𝐨 𝐢𝐧𝐭𝐞𝐫𝐚𝐜𝐭𝐮𝐚𝐫 𝐜𝐨𝐧 𝐞𝐥 𝐛𝐨𝐭 𝐩𝐚𝐫𝐚 𝐨𝐛𝐭𝐞𝐧𝐞𝐫 𝐫𝐞𝐜𝐮𝐫𝐬𝐨𝐬`)
-}
-if (command == 'slot2') {
-let time = global.db.data.users[m.sender].lastslot + 60000
-if (new Date - users.lastslot < 60000) return m.reply(`*𝐕𝐮𝐞𝐥𝐯𝐚 𝐞𝐧:${msToTime(time - new Date())} 𝐏𝐚𝐫𝐚 𝐜𝐨𝐧𝐭𝐢𝐧𝐮𝐚𝐫 𝐚𝐩𝐨𝐬𝐭𝐚𝐧𝐝𝐨 𝐋𝐨𝐥𝐢𝐂𝐨𝐢𝐧𝐬* 🎰`) 
-users.lastslot = new Date * 1
-    
-let emojis = ["🪙", "🔮", "🧿"];
-let a = Math.floor(Math.random() * emojis.length);
-let b = Math.floor(Math.random() * emojis.length);
-let c = Math.floor(Math.random() * emojis.length);
-let x = [],
-y = [],
-z = [];
-for (let i = 0; i < 3; i++) {
-x[i] = emojis[a];
-a++;
-if (a == emojis.length) a = 0;
-}
-for (let i = 0; i < 3; i++) {
-y[i] = emojis[b];
-b++;
-if (b == emojis.length) b = 0;
-}
-for (let i = 0; i < 3; i++) {
-z[i] = emojis[c];
-c++;
-if (c == emojis.length) c = 0;
-}
-let end;
-if (a == b && b == c) {
-end = `🥳 *QUE PRO!! HAS GANADO +${apuesta + apuesta} LoliCoins*`
-users.money += apuesta
-} else if (a == b || a == c || b == c) {
-end = `😯 *CASI!!, VUELVA A INTENTAR*\n*BONO DE +30 LoliCoins*`
-users.money += 30
-} else {
-end = `😿 *HA PERDIDO!! ❌ -${apuesta} LoliCoins*`
-users.money -= apuesta
+await conn.sendMessage(m.chat, {text: `🎰 | *RANURAS* | 🎰\n────────\n${array[i]}\n────────\n🎰 | *SLOTS* | 🎰`, edit: key }, { quoted: m })
+await new Promise(resolve => setTimeout(resolve, 50))
 }
 
-var hawemod = [
-`${x[0]} : ${y[1]} : ${z[0]}
-${z[0]} : ${y[0]} : ${x[1]}
-${z[2]} : ${x[2]} : ${y[2]}`, 
-`${x[0]} : ${y[0]} : ${z[0]}
-${y[1]} : ${z[1]} : ${x[1]}
-${x[2]} : ${y[2]} : ${z[2]}`, 
-`${x[0]} : ${y[1]} : ${z[0]}
-${y[1]} : ${z[0]} : ${x[1]}
-${x[2]} : ${y[1]} : ${z[0]}`
-]
-
-const maxIterations = 25;
-const arrayCasuale = generaArrayCasuale(hawemod, maxIterations);
-
-const array = [...arrayCasuale, ];
-  
-let { key } = await conn.sendMessage(m.chat, { text: `🕹` }, { quoted: m });
-
-for (let i = 1; i <= maxIterations; i++) {
-await conn.sendMessage(m.chat, { text: `🎰 | *RANURAS* | 🎰\n────────\n` + `${array[i]}` + `\n ────────\n🎰 |   *SLOTS*   | 🎰`, edit: key }, { quoted: m });
-await new Promise((resolve) => setTimeout(resolve, 50))}
-  
-conn.sendMessage(m.chat, {text: `
-🎰 | *RANURAS* | 🎰 
-────────
-${x[0]} : ${y[0]} : ${z[0]}
-${x[1]} : ${y[1]} : ${z[1]}
-${x[2]} : ${y[2]} : ${z[2]}
- ────────
-🎰 |   *SLOTS*   | 🎰\n\n${end}`, edit: key}, {quoted: m})
+await conn.sendMessage(m.chat, { text: `🎰 | *RANURAS* | 🎰\n────────\n${x[0]} : ${y[0]} : ${z[0]}\n${x[1]} : ${y[1]} : ${z[1]}\n${x[2]} : ${y[2]} : ${z[2]}\n────────\n🎰 | *SLOTS* | 🎰\n\n${end}`, edit: key }, { quoted: m })
 }
 
-if (users.limit < apuesta) {  
-return m.reply(`⚠️ 𝑵𝒐 𝒂𝒍𝒄𝒂𝒏𝒛𝒂 𝒑𝒂𝒓𝒂 𝒂𝒑𝒐𝒔𝒕𝒂𝒓 𝑫𝒊𝒂𝒎𝒂𝒏𝒕𝒆, 𝒍𝒆 𝒓𝒆𝒄𝒐𝒎𝒊𝒆𝒏𝒅𝒐 𝒊𝒏𝒕𝒆𝒓𝒂𝒄𝒕𝒖𝒂𝒓 𝒄𝒐𝒏 𝒆𝒍 𝒃𝒐𝒕 𝒑𝒂𝒓𝒂 𝒐𝒃𝒕𝒆𝒏𝒆𝒓 𝒎𝒂́𝒔 𝒓𝒆𝒄𝒖𝒓𝒔𝒐𝒔`)
-}
-if (command == 'slot3') {
-let time = global.db.data.users[m.sender].lastslot + 30000
-if (new Date - users.lastslot < 30000) return m.reply(`*𝐕𝐮𝐞𝐥𝐯𝐚 𝐞𝐧: ${msToTime(time - new Date())} 𝐏𝐚𝐫𝐚 𝐜𝐨𝐧𝐭𝐢𝐧𝐮𝐚𝐫 𝐚𝐩𝐨𝐬𝐭𝐚𝐧𝐝𝐨 𝐃𝐢𝐚𝐦𝐚𝐧𝐭𝐞* 🎰`) 
-users.lastslot = new Date * 1
-    
-let emojis = ["🪙", "💣", "💎"];
-let a = Math.floor(Math.random() * emojis.length);
-let b = Math.floor(Math.random() * emojis.length);
-let c = Math.floor(Math.random() * emojis.length);
-let x = [],
-y = [],
-z = [];
-for (let i = 0; i < 3; i++) {
-x[i] = emojis[a];
-a++;
-if (a == emojis.length) a = 0;
-}
-for (let i = 0; i < 3; i++) {
-y[i] = emojis[b];
-b++;
-if (b == emojis.length) b = 0;
-}
-for (let i = 0; i < 3; i++) {
-z[i] = emojis[c];
-c++;
-if (c == emojis.length) c = 0;
-}
-let end;
-if (a == b && b == c) {
-end = `🥳 *QUE PRO!! HAS GANADO +${apuesta + apuesta} Diamantes*`
-users.limit += apuesta
-} else if (a == b || a == c || b == c) {
-end = `🙀 *CASI!!, VUELVA A INTENTAR*\n*BONO DE +2 Diamantes*`
-users.limit += 2
-} else {
-end = `😿 *HA PERDIDO!! ❌ -${apuesta} Diamante*`
-users.limit -= apuesta
-}
-
-var hawemod = [
-`${x[0]} : ${y[1]} : ${z[0]}
-${z[1]} : ${y[0]} : ${x[0]}
-${z[2]} : ${x[1]} : ${y[2]}`, 
-`${x[0]} : ${y[1]} : ${z[0]}
-${y[1]} : ${z[2]} : ${x[1]}
-${x[2]} : ${y[1]} : ${z[2]}`, 
-`${x[0]} : ${y[0]} : ${z[1]}
-${y[1]} : ${z[2]} : ${x[0]}
-${x[0]} : ${y[2]} : ${z[1]}`
-]
-
-const maxIterations = 25;
-const arrayCasuale = generaArrayCasuale(hawemod, maxIterations);
-
-const array = [...arrayCasuale, ];
-  
-let { key } = await conn.sendMessage(m.chat, { text: `🕹` }, { quoted: m });
-
-for (let i = 1; i <= maxIterations; i++) {
-await conn.sendMessage(m.chat, { text: `🎰 | *RANURAS* | 🎰\n────────\n` + `${array[i]}` + `\n ────────\n🎰 |   *SLOTS*   | 🎰`, edit: key }, { quoted: m });
-await new Promise((resolve) => setTimeout(resolve, 50))}
-  
-await conn.sendMessage(m.chat, {text: `
-🎰 | *RANURAS* | 🎰 
-────────
-${x[0]} : ${y[0]} : ${z[0]}
-${x[1]} : ${y[1]} : ${z[1]}
-${x[2]} : ${y[2]} : ${z[2]}
- ────────
-🎰 |   *SLOTS*   | 🎰\n\n${end}`, edit: key}, {quoted: m})
-}
+if (command === 'apostar' || command === 'slot') {
+if (!args[0]) return m.reply(fa)
+if (isNaN(args[0])) return m.reply(fa)
+const apuesta = parseInt(args[0])
         
-if (command == 'apostar' || command == 'slot') {   
-await conn.sendButton(m.chat, `*Elija en que apostará ${apuesta}*`, botname, null, [['⚡ Exp', `.slot1 ${apuesta}`], ['🪙 Lolicoins', `.slot2 ${apuesta}`], ['💎 diamante', `.slot3 ${apuesta}`]], null, null, m)   
+await conn.sendButton(m.chat, `*Elige en qué apostar tus ${apuesta}*`, botname, null, [['⚡ Exp', `.slot1 ${apuesta}`], ['🪙 LoliCoins', `.slot2 ${apuesta}`], ['💎 Diamantes', `.slot3 ${apuesta}`]], null, null, m)
+return
 }
-}
+
+if (!args[0]) return m.reply(fa)
+if (isNaN(args[0])) return m.reply(fa)
+const apuesta = parseInt(args[0])
+const users = global.db.data.users[m.sender]
+const slotType = slotTypes[command]
+if (!slotType) return 
+try {
+validateBet(users, apuesta, slotType.currency, slotType.name)
+await playSlot(m, conn, apuesta, slotType, users)
+} catch (e) {
+m.reply(e)
+}}
 
 if (command == 'tictactoe' || command == 'ttc' || command == 'ttt' || command == 'xo') {
 conn.game = conn.game ? conn.game : {}
