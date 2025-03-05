@@ -263,8 +263,7 @@ global.conns.splice(i, 1)
 }}, 60000)
 
 let handler = await import('../handler.js')
-let creloadHandler = async function (restatConn, sockInstance = null) {
-let sock = sockInstance || null;
+let creloadHandler = async function (restatConn) {
 try {
 const Handler = await import(`../handler.js?update=${Date.now()}`).catch(console.error)
 if (Object.keys(Handler || {}).length) handler = Handler
@@ -272,7 +271,7 @@ if (Object.keys(Handler || {}).length) handler = Handler
 } catch (e) {
 console.error('Nuevo error: ', e)
 }
-if (restatConn && sock) {
+if (restatConn) {
 const oldChats = sock.chats
 try { sock.ws.close() } catch { }
 sock.ev.removeAllListeners()
