@@ -341,3 +341,4 @@ function startSubBotMonitor() {
 
 // Iniciar el monitoreo
 startSubBotMonitor();
+}
