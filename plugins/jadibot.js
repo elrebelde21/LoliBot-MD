@@ -263,8 +263,8 @@ global.conns.splice(i, 1)
 }}, 60000)
 
 let handler = await import('../handler.js')
-async function creloadHandler(restatConn, sockInstance = null) {
-  let sock = sockInstance || null;
+let creloadHandler = async function (restatConn, sockInstance = null) {
+let sock = sockInstance || null;
   try {
     const Handler = await import(`../handler.js?update=${Date.now()}`).catch(console.error);
     if (Object.keys(Handler || {}).length) handler = Handler;
@@ -277,7 +277,7 @@ async function creloadHandler(restatConn, sockInstance = null) {
     sock.ev.removeAllListeners();
     sock = makeWASocket(connectionOptions, { chats: oldChats });
     isInit = true;
-  }
+  } 
 if (!isInit) {
 sock.ev.off('messages.upsert', sock.handler)
 sock.ev.off('group-participants.update', sock.participantsUpdate)
