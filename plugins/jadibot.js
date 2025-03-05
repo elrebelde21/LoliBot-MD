@@ -103,18 +103,6 @@ const msgRetry = (MessageRetryMap) => { }
 const msgRetryCache = new NodeCache()
 const { state, saveState, saveCreds } = await useMultiFileAuthState(pathGataJadiBot)
 
-/*const connectionOptions = {
-logger: pino({ level: "fatal" }),
-printQRInTerminal: false,
-auth: { creds: state.creds, keys: makeCacheableSignalKeyStore(state.keys, pino({level: 'silent'})) },
-msgRetry,
-msgRetryCache,
-browser: mcode ? ['Ubuntu', 'Chrome', '110.0.5585.95'] : ['LoliBot-MD (Sub Bot)', 'Chrome','2.0.0'],
-version: version,
-generateHighQualityLinkPreview: true
-};
-*/
-
 const connectionOptions = {
 printQRInTerminal: false,
 logger: pino({ level: 'silent' }),
@@ -327,21 +315,42 @@ for (const channelId of Object.values(global.ch)) {
 await conn.newsletterFollow(channelId).catch(() => {})
 }}
 
+// Script simplificado para monitorear y reiniciar sub-bots apagados desde ./jadibts/
 async function monitorSubBots() {
-for (let [index, sock] of global.conns.entries()) {
-    const subBotId = sock.user?.jid || `Sub-bot ${index}`;
-    if (!sock.ws || sock.ws.readyState !== ws.OPEN) {
-      console.log(chalk.bold.redBright(`[MONITOR] Sub-bot ${subBotId} desconectado. Intentando reconectar...`));
+  console.log(chalk.bold.blue(`🔍 Revisando sub-bots apagados en ./jadibts/...`));
+  const subBotDirs = fs.readdirSync('./jadibts/', { withFileTypes: true })
+    .filter(dirent => dirent.isDirectory())
+    .map(dirent => dirent.name);
+
+  for (const subBotId of subBotDirs) {
+    const pathGataJadiBot = path.join("./jadibts/", subBotId);
+    const subBotIndex = global.conns.findIndex(bot => bot.pathGataJadiBot === pathGataJadiBot);
+    if (subBotIndex === -1 || !global.conns[subBotIndex]?.user || global.conns[subBotIndex]?.ws?.readyState !== ws.OPEN) {
+      console.log(chalk.bold.red(`⚠️ Sub-bot (+${subBotId}) apagado o desconectado. Intentando reconectar...`));
       try {
-        await creloadHandler(true, sock);
-        console.log(chalk.bold.greenBright(`[MONITOR] Sub-bot ${subBotId} reconectado exitosamente.`));
-      } catch (error) {
-        console.error(chalk.bold.redBright(`[MONITOR] Error al reconectar sub-bot ${subBotId}:`), error);
+        // Crear un nuevo socket usando la lógica existente de gataJadiBot
+        const { state, saveCreds } = await useMultiFileAuthState(pathGataJadiBot);
+        let newSock = makeWASocket(connectionOptions);
+        newSock.pathGataJadiBot = pathGataJadiBot;
+        newSock.isInit = false;
+        newSock.connectionUpdate = connectionUpdate; // Reutilizar la lógica de eventos
+        newSock.credsUpdate = saveCreds.bind(newSock);
+        newSock.ev.on('connection.update', newSock.connectionUpdate);
+        newSock.ev.on('creds.update', newSock.credsUpdate);
+        if (subBotIndex === -1) {
+          global.conns.push(newSock);
+        } else {
+          global.conns[subBotIndex] = newSock;
+        }
+        console.log(chalk.bold.green(`✅ Sub-bot (+${subBotId}) reconectado exitosamente.`));
+      } catch (err) {
+        console.error(chalk.bold.red(`❌ Error al reconectar sub-bot (+${subBotId}): ${err.message}`));
       }
     } else {
-      console.log(chalk.bold.greenBright(`[MONITOR] Sub-bot ${subBotId} está activo.`));
+      console.log(chalk.bold.green(`✅ Sub-bot (+${subBotId}) está activo.`));
     }
   }
 }
 
-setInterval(monitorSubBots, 300000); //5 min
+// Iniciar monitoreo cada 5 minutos
+setInterval(monitorSubBots, 5 * 60 * 1000); // 5 minutos
