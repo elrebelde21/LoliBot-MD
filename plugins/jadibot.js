@@ -249,71 +249,69 @@ if (i < 0) return
 delete global.conns[i]
 global.conns.splice(i, 1)
 }}, 60000)
+}
 
-let handler = await import('../handler.js')
 let creloadHandler = async function (restatConn) {
-try {
-const Handler = await import(`../handler.js?update=${Date.now()}`).catch(console.error)
-if (Object.keys(Handler || {}).length) handler = Handler
+  try {
+    const Handler = await import(`../handler.js?update=${Date.now()}`).catch(console.error);
+    if (Object.keys(Handler || {}).length) handler = Handler;
+  } catch (e) {
+    console.error('Nuevo error: ', e);
+  }
+  if (restatConn) {
+    const oldChats = sock.chats;
+    try { sock.ws.close(); } catch {}
+    sock.ev.removeAllListeners();
+    sock = makeWASocket(connectionOptions, { chats: oldChats });
+    isInit = true;
+  }
+  if (!isInit) {
+    sock.ev.off('messages.upsert', sock.handler);
+    sock.ev.off('group-participants.update', sock.participantsUpdate);
+    sock.ev.off('groups.update', sock.groupsUpdate);
+    sock.ev.off('message.delete', sock.onDelete);
+    sock.ev.off('call', sock.onCall);
+    sock.ev.off('connection.update', sock.connectionUpdate);
+    sock.ev.off('creds.update', sock.credsUpdate);
+  }
+  sock.welcome = global.conn.welcome + '';
+  sock.bye = global.conn.bye + '';
+  sock.spromote = global.conn.spromote + '';
+  sock.sdemote = global.conn.sdemote + '';
+  sock.sDesc = global.conn.sDesc + '';
+  sock.sSubject = global.conn.sSubject + '';
+  sock.sIcon = global.conn.sIcon + '';
+  sock.sRevoke = global.conn.sRevoke + '';
 
-} catch (e) {
-console.error('Nuevo error: ', e)
-}
-if (restatConn) {
-const oldChats = sock.chats
-try { sock.ws.close() } catch { }
-sock.ev.removeAllListeners()
-sock = makeWASocket(connectionOptions, { chats: oldChats })
-isInit = true
-}
-if (!isInit) {
-sock.ev.off('messages.upsert', sock.handler)
-sock.ev.off('group-participants.update', sock.participantsUpdate)
-sock.ev.off('groups.update', sock.groupsUpdate)
-sock.ev.off('message.delete', sock.onDelete)
-sock.ev.off('call', sock.onCall)
-sock.ev.off('connection.update', sock.connectionUpdate)
-sock.ev.off('creds.update', sock.credsUpdate)
-}
-sock.welcome = global.conn.welcome + ''
-sock.bye = global.conn.bye + ''
-sock.spromote = global.conn.spromote + ''
-sock.sdemote = global.conn.sdemote + '' 
-sock.sDesc = global.conn.sDesc + '' 
-sock.sSubject = global.conn.sSubject + '' 
-sock.sIcon = global.conn.sIcon + '' 
-sock.sRevoke = global.conn.sRevoke + '' 
+  sock.handler = handler.handler.bind(sock);
+  sock.participantsUpdate = handler.participantsUpdate.bind(sock);
+  sock.groupsUpdate = handler.groupsUpdate.bind(sock);
+  sock.onDelete = handler.deleteUpdate.bind(sock);
+  sock.onCall = handler.callUpdate.bind(sock);
+  sock.connectionUpdate = connectionUpdate.bind(sock);
+  sock.credsUpdate = saveCreds.bind(sock, true);
 
-sock.handler = handler.handler.bind(sock)
-sock.participantsUpdate = handler.participantsUpdate.bind(sock)
-sock.groupsUpdate = handler.groupsUpdate.bind(sock)
-sock.onDelete = handler.deleteUpdate.bind(sock)
-sock.onCall = handler.callUpdate.bind(sock)
-sock.connectionUpdate = connectionUpdate.bind(sock)
-sock.credsUpdate = saveCreds.bind(sock, true)
-
-sock.ev.on(`messages.upsert`, sock.handler)
-sock.ev.on(`group-participants.update`, sock.participantsUpdate)
-sock.ev.on(`groups.update`, sock.groupsUpdate)
-sock.ev.on(`message.delete`, sock.onDelete)
-sock.ev.on(`call`, sock.onCall)
-sock.ev.on(`connection.update`, sock.connectionUpdate)
-sock.ev.on(`creds.update`, sock.credsUpdate)
-isInit = false
-return true
-}
-creloadHandler(false)
-})
-}
+  sock.ev.on(`messages.upsert`, sock.handler);
+  sock.ev.on(`group-participants.update`, sock.participantsUpdate);
+  sock.ev.on(`groups.update`, sock.groupsUpdate);
+  sock.ev.on(`message.delete`, sock.onDelete);
+  sock.ev.on(`call`, sock.onCall);
+  sock.ev.on(`connection.update`, sock.connectionUpdate);
+  sock.ev.on(`creds.update`, sock.credsUpdate);
+  isInit = false;
+  return true;
+};
 
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
 function sleep(ms) {
-return new Promise(resolve => setTimeout(resolve, ms));}
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
 
 async function joinChannels(conn) {
-for (const channelId of Object.values(global.ch)) {
-await conn.newsletterFollow(channelId).catch(() => {})
-}}
+  for (const channelId of Object.values(global.ch)) {
+    await conn.newsletterFollow(channelId).catch(() => {})
+  }
+}
 
 // Script simplificado para monitorear y reiniciar sub-bots
 function monitorSubBots() {
