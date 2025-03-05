@@ -103,18 +103,6 @@ const msgRetry = (MessageRetryMap) => { }
 const msgRetryCache = new NodeCache()
 const { state, saveState, saveCreds } = await useMultiFileAuthState(pathGataJadiBot)
 
-/*const connectionOptions = {
-logger: pino({ level: "fatal" }),
-printQRInTerminal: false,
-auth: { creds: state.creds, keys: makeCacheableSignalKeyStore(state.keys, pino({level: 'silent'})) },
-msgRetry,
-msgRetryCache,
-browser: mcode ? ['Ubuntu', 'Chrome', '110.0.5585.95'] : ['LoliBot-MD (Sub Bot)', 'Chrome','2.0.0'],
-version: version,
-generateHighQualityLinkPreview: true
-};
-*/
-
 const connectionOptions = {
 printQRInTerminal: false,
 logger: pino({ level: 'silent' }),
@@ -263,57 +251,57 @@ global.conns.splice(i, 1)
 }}, 60000)
 
 let handler = await import('../handler.js')
-let creloadHandler = async function (restatConn, sockToReload = null) {
-  let sock = sockToReload || (restatConn ? null : sock);
-  try {
-    const Handler = await import(`../handler.js?update=${Date.now()}`).catch(console.error);
-    if (Object.keys(Handler || {}).length) handler = Handler;
-  } catch (e) {
-    console.error('Nuevo error: ', e);
-  }
-  if (restatConn) {
-    const oldChats = sock.chats;
-    try { sock.ws.close(); } catch {}
-    sock.ev.removeAllListeners();
-    sock = makeWASocket(connectionOptions, { chats: oldChats });
-    isInit = true;
-  }
-  if (!isInit) {
-    sock.ev.off('messages.upsert', sock.handler);
-    sock.ev.off('group-participants.update', sock.participantsUpdate);
-    sock.ev.off('groups.update', sock.groupsUpdate);
-    sock.ev.off('message.delete', sock.onDelete);
-    sock.ev.off('call', sock.onCall);
-    sock.ev.off('connection.update', sock.connectionUpdate);
-    sock.ev.off('creds.update', sock.credsUpdate);
-  }
-  sock.welcome = global.conn.welcome + '';
-  sock.bye = global.conn.bye + '';
-  sock.spromote = global.conn.spromote + '';
-  sock.sdemote = global.conn.sdemote + '';
-  sock.sDesc = global.conn.sDesc + '';
-  sock.sSubject = global.conn.sSubject + '';
-  sock.sIcon = global.conn.sIcon + '';
-  sock.sRevoke = global.conn.sRevoke + '';
+let creloadHandler = async function (restatConn) {
+try {
+const Handler = await import(`../handler.js?update=${Date.now()}`).catch(console.error)
+if (Object.keys(Handler || {}).length) handler = Handler
 
-  sock.handler = handler.handler.bind(sock);
-  sock.participantsUpdate = handler.participantsUpdate.bind(sock);
-  sock.groupsUpdate = handler.groupsUpdate.bind(sock);
-  sock.onDelete = handler.deleteUpdate.bind(sock);
-  sock.onCall = handler.callUpdate.bind(sock);
-  sock.connectionUpdate = connectionUpdate.bind(sock);
-  sock.credsUpdate = saveCreds.bind(sock, true);
+} catch (e) {
+console.error('Nuevo error: ', e)
+}
+if (restatConn) {
+const oldChats = sock.chats
+try { sock.ws.close() } catch { }
+sock.ev.removeAllListeners()
+sock = makeWASocket(connectionOptions, { chats: oldChats })
+isInit = true
+}
+if (!isInit) {
+sock.ev.off('messages.upsert', sock.handler)
+sock.ev.off('group-participants.update', sock.participantsUpdate)
+sock.ev.off('groups.update', sock.groupsUpdate)
+sock.ev.off('message.delete', sock.onDelete)
+sock.ev.off('call', sock.onCall)
+sock.ev.off('connection.update', sock.connectionUpdate)
+sock.ev.off('creds.update', sock.credsUpdate)
+}
+sock.welcome = global.conn.welcome + ''
+sock.bye = global.conn.bye + ''
+sock.spromote = global.conn.spromote + ''
+sock.sdemote = global.conn.sdemote + '' 
+sock.sDesc = global.conn.sDesc + '' 
+sock.sSubject = global.conn.sSubject + '' 
+sock.sIcon = global.conn.sIcon + '' 
+sock.sRevoke = global.conn.sRevoke + '' 
 
-  sock.ev.on(`messages.upsert`, sock.handler);
-  sock.ev.on(`group-participants.update`, sock.participantsUpdate);
-  sock.ev.on(`groups.update`, sock.groupsUpdate);
-  sock.ev.on(`message.delete`, sock.onDelete);
-  sock.ev.on(`call`, sock.onCall);
-  sock.ev.on(`connection.update`, sock.connectionUpdate);
-  sock.ev.on(`creds.update`, sock.credsUpdate);
-  isInit = false;
-  return true;
-};
+sock.handler = handler.handler.bind(sock)
+sock.participantsUpdate = handler.participantsUpdate.bind(sock)
+sock.groupsUpdate = handler.groupsUpdate.bind(sock)
+sock.onDelete = handler.deleteUpdate.bind(sock)
+sock.onCall = handler.callUpdate.bind(sock)
+sock.connectionUpdate = connectionUpdate.bind(sock)
+sock.credsUpdate = saveCreds.bind(sock, true)
+
+sock.ev.on(`messages.upsert`, sock.handler)
+sock.ev.on(`group-participants.update`, sock.participantsUpdate)
+sock.ev.on(`groups.update`, sock.groupsUpdate)
+sock.ev.on(`message.delete`, sock.onDelete)
+sock.ev.on(`call`, sock.onCall)
+sock.ev.on(`connection.update`, sock.connectionUpdate)
+sock.ev.on(`creds.update`, sock.credsUpdate)
+isInit = false
+return true
+}
 creloadHandler(false)
 })
 }
@@ -327,46 +315,31 @@ for (const channelId of Object.values(global.ch)) {
 await conn.newsletterFollow(channelId).catch(() => {})
 }}
 
-
-async function reconnectSubBot(subBot, index) {
-  const pathGataJadiBot = subBot.pathGataJadiBot;
-  if (!pathGataJadiBot || !fs.existsSync(pathGataJadiBot)) {
-    throw new Error('Directorio de credenciales no encontrado.');
-  }
-
-  // Cerrar conexión previa si existe
-  try { subBot.ws?.close(); } catch {}
-  subBot.ev?.removeAllListeners();
-
-  // Reutilizar credenciales existentes
-  const { state, saveCreds } = await useMultiFileAuthState(pathGataJadiBot);
-  const connectionOptions = {
-    printQRInTerminal: false,
-    logger: pino({ level: 'silent' }),
-    auth: { creds: state.creds, keys: makeCacheableSignalKeyStore(state.keys, pino({ level: 'silent' })) },
-    msgRetry: subBot.msgRetry,
-    msgRetryCache: subBot.msgRetryCache,
-    version: [2, 3000, 1015901307],
-    syncFullHistory: true,
-    browser: subBot.browser || ['LoliBot-MD (Sub Bot)', 'Chrome', '2.0.0'],
-    defaultQueryTimeoutMs: undefined,
-    getMessage: async (key) => ({ conversation: 'LoliBot-MD' }),
-  };
-
-  // Crear nueva conexión
-  const newSock = makeWASocket(connectionOptions);
-  newSock.pathGataJadiBot = pathGataJadiBot;
-
-  // Reasignar handlers usando creloadHandler
-  await creloadHandler(false, newSock);
-
-  // Actualizar global.conns
-  global.conns[index] = newSock;
+// Script simplificado para monitorear y reiniciar sub-bots
+function monitorSubBots() {
+  console.log(chalk.bold.blue(`🔍 Revisando ${global.conns.length} sub-bots...`));
+  global.conns.forEach(async (subBot, index) => {
+    const subBotId = path.basename(subBot?.pathGataJadiBot || `sub-bot-${index}`);
+    if (!subBot?.user || subBot?.ws?.readyState !== 1) { // 1 = OPEN en WebSocket
+      console.log(chalk.bold.red(`⚠️ Sub-bot (+${subBotId}) desconectado. Reiniciando...`));
+      try {
+        // Usar creloadHandler para reiniciar, aprovechando la lógica existente
+        await creloadHandler(true);
+        console.log(chalk.bold.green(`✅ Sub-bot (+${subBotId}) reiniciado.`));
+      } catch (err) {
+        console.error(chalk.bold.red(`❌ Error al reiniciar sub-bot (+${subBotId}): ${err.message}`));
+      }
+    } else {
+      console.log(chalk.bold.green(`✅ Sub-bot (+${subBotId}) está activo.`));
+    }
+  });
 }
 
+// Iniciar monitoreo cada 5 minutos
 function startSubBotMonitor() {
-setInterval(monitorSubBots, 5 * 60 * 1000); // 5 minutos
-  monitorSubBots(); 
+  setInterval(monitorSubBots, 5 * 60 * 1000); // 5 minutos
+  monitorSubBots(); // Ejecutar inmediatamente al iniciar
 }
 
+// Iniciar el monitoreo
 startSubBotMonitor();
