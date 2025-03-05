@@ -250,7 +250,7 @@ console.log(chalk.bold.redBright(`NO SE PERMITE NÚMEROS QUE NO SEAN ${chalk.bol
 
 console.info = () => {} 
 const connectionOptions = {
-logger: pino({ level: "fatal" }),
+logger: pino({ level: 'silent' }),
 printQRInTerminal: opcion == '1' ? true : methodCodeQR ? true : false,
 mobile: MethodMobile, 
 browser: opcion == '1' ? ['LoliBot-MD', 'Edge', '20.0.04'] : methodCodeQR ? ['LoliBot-MD', 'Edge', '20.0.04'] : ["Ubuntu", "Chrome", "20.0.04"],
@@ -274,11 +274,11 @@ userDevicesCache: userDevicesCache || new Map(),
 //msgRetryCounterMap,
 defaultQueryTimeoutMs: undefined,
 cachedGroupMetadata: (jid) => global.conn.chats[jid] ?? {},
-version: [2, 3000, 1015901307],
+version: version,
 };
 
 /*const connectionOptions = {
-logger: pino({ level: "fatal" }),
+logger: pino({ level: 'silent' }),
 printQRInTerminal: opcion == '1' ? true : methodCodeQR ? true : false,
 mobile: MethodMobile, 
 auth: {
