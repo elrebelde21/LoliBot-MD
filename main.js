@@ -260,7 +260,7 @@ keys: makeCacheableSignalKeyStore(state.keys, Pino({ level: "fatal" }).child({ l
 },
 markOnlineOnConnect: false, 
 generateHighQualityLinkPreview: true, 
-syncFullHistory: false,
+syncFullHistory: true,
 getMessage: async (key) => {
 try {
 let jid = jidNormalizedUser(key.remoteJid);
