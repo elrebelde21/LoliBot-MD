@@ -6,6 +6,8 @@ import {fileURLToPath, pathToFileURL} from 'url'
 import { platform } from 'process'
 import * as ws from 'ws'
 import fs, { watchFile, unwatchFile, writeFileSync, readdirSync, statSync, unlinkSync, existsSync, readFileSync, copyFileSync, watch, rmSync, readdir, stat, mkdirSync, rename } from 'fs'
+import { promises as fsPromises } from 'fs';
+const { readdir, stat, unlink } = fsPromises;
 import yargs from 'yargs'
 import { spawn } from 'child_process'
 import lodash from 'lodash'
