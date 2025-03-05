@@ -249,7 +249,6 @@ if (i < 0) return
 delete global.conns[i]
 global.conns.splice(i, 1)
 }}, 60000)
-}
 
 let creloadHandler = async function (restatConn) {
   try {
@@ -341,4 +340,3 @@ function startSubBotMonitor() {
 
 // Iniciar el monitoreo
 startSubBotMonitor();
-}
