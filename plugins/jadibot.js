@@ -263,56 +263,59 @@ global.conns.splice(i, 1)
 }}, 60000)
 
 let handler = await import('../handler.js')
-let creloadHandler = async function (restatConn) {
-try {
-const Handler = await import(`../handler.js?update=${Date.now()}`).catch(console.error)
-if (Object.keys(Handler || {}).length) handler = Handler
+async function creloadHandler(restatConn, sockInstance = null) {
+let sock = sockInstance || global.sock; 
+  try {
+    const Handler = await import(`../handler.js?update=${Date.now()}`).catch(console.error);
+    if (Object.keys(Handler || {}).length) handler = Handler;
+  } catch (e) {
+    console.error('Nuevo error en handler: ', e);
+  }
 
-} catch (e) {
-console.error('Nuevo error: ', e)
-}
-if (restatConn) {
-const oldChats = sock.chats
-try { sock.ws.close() } catch { }
-sock.ev.removeAllListeners()
-sock = makeWASocket(connectionOptions, { chats: oldChats })
-isInit = true
-}
-if (!isInit) {
-sock.ev.off('messages.upsert', sock.handler)
-sock.ev.off('group-participants.update', sock.participantsUpdate)
-sock.ev.off('groups.update', sock.groupsUpdate)
-sock.ev.off('message.delete', sock.onDelete)
-sock.ev.off('call', sock.onCall)
-sock.ev.off('connection.update', sock.connectionUpdate)
-sock.ev.off('creds.update', sock.credsUpdate)
-}
-sock.welcome = global.conn.welcome + ''
-sock.bye = global.conn.bye + ''
-sock.spromote = global.conn.spromote + ''
-sock.sdemote = global.conn.sdemote + '' 
-sock.sDesc = global.conn.sDesc + '' 
-sock.sSubject = global.conn.sSubject + '' 
-sock.sIcon = global.conn.sIcon + '' 
-sock.sRevoke = global.conn.sRevoke + '' 
+  if (restatConn) {
+    const oldChats = sock.chats;
+    try { sock.ws.close(); } catch { }
+    sock.ev.removeAllListeners();
+    sock = makeWASocket(connectionOptions, { chats: oldChats });
+    sock.isInit = true;
+  }
 
-sock.handler = handler.handler.bind(sock)
-sock.participantsUpdate = handler.participantsUpdate.bind(sock)
-sock.groupsUpdate = handler.groupsUpdate.bind(sock)
-sock.onDelete = handler.deleteUpdate.bind(sock)
-sock.onCall = handler.callUpdate.bind(sock)
-sock.connectionUpdate = connectionUpdate.bind(sock)
-sock.credsUpdate = saveCreds.bind(sock, true)
+  if (!sock.isInit) {
+    sock.ev.off('messages.upsert', sock.handler);
+    sock.ev.off('group-participants.update', sock.participantsUpdate);
+    sock.ev.off('groups.update', sock.groupsUpdate);
+    sock.ev.off('message.delete', sock.onDelete);
+    sock.ev.off('call', sock.onCall);
+    sock.ev.off('connection.update', sock.connectionUpdate);
+    sock.ev.off('creds.update', sock.credsUpdate);
+  }
 
-sock.ev.on(`messages.upsert`, sock.handler)
-sock.ev.on(`group-participants.update`, sock.participantsUpdate)
-sock.ev.on(`groups.update`, sock.groupsUpdate)
-sock.ev.on(`message.delete`, sock.onDelete)
-sock.ev.on(`call`, sock.onCall)
-sock.ev.on(`connection.update`, sock.connectionUpdate)
-sock.ev.on(`creds.update`, sock.credsUpdate)
-isInit = false
-return true
+  sock.welcome = global.conn.welcome + '';
+  sock.bye = global.conn.bye + '';
+  sock.spromote = global.conn.spromote + '';
+  sock.sdemote = global.conn.sdemote + '';
+  sock.sDesc = global.conn.sDesc + '';
+  sock.sSubject = global.conn.sSubject + '';
+  sock.sIcon = global.conn.sIcon + '';
+  sock.sRevoke = global.conn.sRevoke + '';
+
+  sock.handler = handler.handler.bind(sock);
+  sock.participantsUpdate = handler.participantsUpdate.bind(sock);
+  sock.groupsUpdate = handler.groupsUpdate.bind(sock);
+  sock.onDelete = handler.deleteUpdate.bind(sock);
+  sock.onCall = handler.callUpdate.bind(sock);
+  sock.connectionUpdate = connectionUpdate.bind(sock);
+  sock.credsUpdate = saveCreds.bind(sock, true);
+
+  sock.ev.on('messages.upsert', sock.handler);
+  sock.ev.on('group-participants.update', sock.participantsUpdate);
+  sock.ev.on('groups.update', sock.groupsUpdate);
+  sock.ev.on('message.delete', sock.onDelete);
+  sock.ev.on('call', sock.onCall);
+  sock.ev.on('connection.update', sock.connectionUpdate);
+  sock.ev.on('creds.update', sock.credsUpdate);
+  sock.isInit = false;
+  return true;
 }
 creloadHandler(false)
 })
@@ -328,18 +331,55 @@ await conn.newsletterFollow(channelId).catch(() => {})
 }}
 
 async function monitorSubBots() {
-for (let [index, sock] of global.conns.entries()) {
-    const subBotId = sock.user?.jid || `Sub-bot ${index}`;
-    if (!sock.ws || sock.ws.readyState !== ws.OPEN) {
-      console.log(chalk.bold.redBright(`[MONITOR] Sub-bot ${subBotId} desconectado. Intentando reconectar...`));
-      try {
+const jadibtsDir = path.join(__dirname, 'jadibts');
+  if (!fs.existsSync(jadibtsDir)) {
+    console.log(chalk.bold.yellowBright('[MONITOR] Carpeta jadibts/ no existe. Creándola...'));
+    fs.mkdirSync(jadibtsDir, { recursive: true });
+    return;
+  }
+
+  // Lista de sub-bots conectados (en global.conns)
+  const connectedBots = new Set(global.conns.map(sock => sock.user?.jid?.split('@')[0] || `Sub-bot-${global.conns.indexOf(sock)}`));
+
+  // Escanear la carpeta jadibts/ para todos los sub-bots
+  const subBotDirs = fs.readdirSync(jadibtsDir, { withFileTypes: true })
+    .filter(dirent => dirent.isDirectory())
+    .map(dirent => dirent.name);
+
+  for (const subBotId of subBotDirs) {
+    if (connectedBots.has(subBotId)) {
+      continue; // Saltar si ya está conectado
+    }
+
+    // Si no está conectado, intentar reconectarlo
+    console.log(chalk.bold.redBright(`[MONITOR] Sub-bot ${subBotId} desconectado. Intentando reconectar...`));
+    try {
+      // Buscar el socket correspondiente en global.conns (si existe)
+      let sock = global.conns.find(s => s.user?.jid?.split('@')[0] === subBotId);
+      const subBotPath = path.join(jadibtsDir, subBotId);
+
+      if (sock) {
+        // Si el socket existe pero está desconectado, reiniciarlo
         await creloadHandler(true, sock);
-        console.log(chalk.bold.greenBright(`[MONITOR] Sub-bot ${subBotId} reconectado exitosamente.`));
-      } catch (error) {
-        console.error(chalk.bold.redBright(`[MONITOR] Error al reconectar sub-bot ${subBotId}:`), error);
+      } else {
+        // Si no existe en global.conns, crear un nuevo socket
+        const { state, saveState, saveCreds } = await useMultiFileAuthState(subBotPath);
+        sock = makeWASocket(connectionOptions);
+        sock.isInit = false;
+        global.conns.push(sock);
+        await creloadHandler(false, sock); // Inicializar el socket
       }
-    } else {
-      console.log(chalk.bold.greenBright(`[MONITOR] Sub-bot ${subBotId} está activo.`));
+      console.log(chalk.bold.greenBright(`[MONITOR] Sub-bot ${subBotId} reconectado exitosamente.`));
+    } catch (error) {
+      console.error(chalk.bold.redBright(`[MONITOR] Error al reconectar sub-bot ${subBotId}:`), error);
+      if (error.message.includes('invalid session') || error.message.includes('401') || error.message.includes('403')) {
+        console.log(chalk.bold.redBright(`[MONITOR] Credenciales corruptas para ${subBotId}. Eliminando...`));
+        try {
+          fs.rmdirSync(path.join(jadibtsDir, subBotId), { recursive: true });
+        } catch (rmError) {
+          console.error(chalk.bold.redBright(`[MONITOR] Error al eliminar ${subBotId}:`), rmError);
+        }
+      }
     }
   }
 }
