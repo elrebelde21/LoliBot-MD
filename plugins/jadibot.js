@@ -263,7 +263,6 @@ export async function gataJadiBot(options) {
   });
 }
 
-// Mover creloadHandler al ámbito global
 let creloadHandler = async function (restatConn) {
   try {
     const Handler = await import(`../handler.js?update=${Date.now()}`).catch(console.error);
@@ -326,16 +325,36 @@ async function joinChannels(conn) {
   }
 }
 
-// Script simplificado para monitorear y reiniciar sub-bots
+// Script simplificado para monitorear y reiniciar sub-bots desde ./jadibts/ usando la lógica existente
 function monitorSubBots() {
-  console.log(chalk.bold.blue(`🔍 Revisando ${global.conns.length} sub-bots...`));
-  global.conns.forEach(async (subBot, index) => {
-    const subBotId = path.basename(subBot?.pathGataJadiBot || `sub-bot-${index}`);
-    if (!subBot?.user || subBot?.ws?.readyState !== 1) { // 1 = OPEN en WebSocket
-      console.log(chalk.bold.red(`⚠️ Sub-bot (+${subBotId}) desconectado. Reiniciando...`));
+  console.log(chalk.bold.blue(`🔍 Revisando sub-bots en ./jadibts/...`));
+  const subBotDirs = fs.readdirSync('./jadibts/', { withFileTypes: true })
+    .filter(dirent => dirent.isDirectory())
+    .map(dirent => dirent.name);
+
+  subBotDirs.forEach(async (subBotId) => {
+    const pathGataJadiBot = path.join("./jadibts/", subBotId);
+    const subBotIndex = global.conns.findIndex(bot => bot.pathGataJadiBot === pathGataJadiBot);
+    if (subBotIndex === -1 || !global.conns[subBotIndex]?.user || global.conns[subBotIndex]?.ws?.readyState !== 1) {
+      console.log(chalk.bold.red(`⚠️ Sub-bot (+${subBotId}) desconectado o no registrado. Reiniciando...`));
       try {
-        // Usar creloadHandler para reiniciar, aprovechando la lógica existente
-        await creloadHandler(true);
+        // Reutilizar la lógica existente de conexión desde gataJadiBot
+        const { state, saveCreds } = await useMultiFileAuthState(pathGataJadiBot);
+        let newSock = makeWASocket({
+          ...connectionOptions, // Usar la connectionOptions ya definida
+          auth: { creds: state.creds, keys: makeCacheableSignalKeyStore(state.keys, pino({ level: 'silent' })) },
+        });
+        newSock.pathGataJadiBot = pathGataJadiBot;
+        newSock.isInit = false;
+        newSock.connectionUpdate = connectionUpdate; // Reutilizar la lógica de eventos
+        newSock.credsUpdate = saveCreds.bind(newSock);
+        newSock.ev.on('connection.update', newSock.connectionUpdate);
+        newSock.ev.on('creds.update', newSock.credsUpdate);
+        if (subBotIndex === -1) {
+          global.conns.push(newSock);
+        } else {
+          global.conns[subBotIndex] = newSock;
+        }
         console.log(chalk.bold.green(`✅ Sub-bot (+${subBotId}) reiniciado.`));
       } catch (err) {
         console.error(chalk.bold.red(`❌ Error al reiniciar sub-bot (+${subBotId}): ${err.message}`));
