@@ -371,11 +371,11 @@ if (reason === DisconnectReason.badSession) {
 conn.logger.error(`[ ⚠ ] Sesión incorrecta, por favor elimina la carpeta ${global.authFile} y escanea nuevamente.`);
 } else if (reason === DisconnectReason.connectionClosed) {
 conn.logger.warn(`[ ⚠ ] Conexión cerrada, reconectando...`);
-restoreCreds().catch(console.error)
+restoreCreds();
 await global.reloadHandler(true).catch(console.error)
 } else if (reason === DisconnectReason.connectionLost) {
 conn.logger.warn(`[ ⚠ ] Conexión perdida con el servidor, reconectando...`);
-restoreCreds().catch(console.error)
+//restoreCreds();
 await global.reloadHandler(true).catch(console.error)
 } else if (reason === DisconnectReason.connectionReplaced) {
 conn.logger.error(`[ ⚠ ] Conexión reemplazada, se ha abierto otra nueva sesión. Por favor, cierra la sesión actual primero.`);
