@@ -326,22 +326,3 @@ async function joinChannels(conn) {
 for (const channelId of Object.values(global.ch)) {
 await conn.newsletterFollow(channelId).catch(() => {})
 }}
-
-async function monitorSubBots() {
-for (let [index, sock] of global.conns.entries()) {
-    const subBotId = sock.user?.jid || `Sub-bot ${index}`;
-    if (!sock.ws || sock.ws.readyState !== ws.OPEN) {
-      console.log(chalk.bold.redBright(`[MONITOR] Sub-bot ${subBotId} desconectado. Intentando reconectar...`));
-      try {
-        await creloadHandler(true, sock);
-        console.log(chalk.bold.greenBright(`[MONITOR] Sub-bot ${subBotId} reconectado exitosamente.`));
-      } catch (error) {
-        console.error(chalk.bold.redBright(`[MONITOR] Error al reconectar sub-bot ${subBotId}:`), error);
-      }
-    } else {
-      console.log(chalk.bold.greenBright(`[MONITOR] Sub-bot ${subBotId} está activo.`));
-    }
-  }
-}
-
-setInterval(monitorSubBots, 300000); //5 min
