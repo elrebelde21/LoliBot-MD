@@ -559,54 +559,110 @@ const filePath = join(tmpDir, file)
 unlinkSync(filePath)})
 }
 
-function purgeSession() {
-let prekey = []
-let directorio = readdirSync("./BotSession")
-let filesFolderPreKeys = directorio.filter(file => {
-return file.startsWith('pre-key-')
-})
-prekey = [...prekey, ...filesFolderPreKeys]
-filesFolderPreKeys.forEach(files => {
-unlinkSync(`./BotSession/${files}`)
-})
-} 
-function purgeSessionSB() {
-try {
-const listaDirectorios = readdirSync('./jadibts/');
-let SBprekey = [];
-listaDirectorios.forEach(directorio => {
-if (statSync(`./jadibts/${directorio}`).isDirectory()) {
-const DSBPreKeys = readdirSync(`./jadibts/${directorio}`).filter(fileInDir => {
-return fileInDir.startsWith('pre-key-')
-})
-SBprekey = [...SBprekey, ...DSBPreKeys];
-DSBPreKeys.forEach(fileInDir => {
-if (fileInDir !== 'creds.json') {
-unlinkSync(`./jadibts/${directorio}/${fileInDir}`)
-}})
-}})
-if (SBprekey.length === 0) {
-//console.log(chalk.bold.green(lenguajeGB.smspurgeSessionSB1()))
-} else {
-//console.log(chalk.bold.cyanBright(lenguajeGB.smspurgeSessionSB2()))
-}} catch (err) {
-//console.log(chalk.bold.red(lenguajeGB.smspurgeSessionSB3() + err))
-}}
-function purgeOldFiles() {
-const directories = ['./BotSession/', './jadibts/']
-directories.forEach(dir => {
-readdirSync(dir, (err, files) => {
-if (err) throw err
-files.forEach(file => {
-if (file !== 'creds.json') {
-const filePath = path.join(dir, file);
-unlinkSync(filePath, err => {
-if (err) {
-console.log(chalk.bold.green(`Archivo ${file} borrado con éxito`))
-} else {
-console.log(chalk.bold.red(`Archivo ${file} no borrado` + err))
-} }) }
-}) }) }) }
+async function purgeSession() {
+  const sessionDir = './BotSession';
+  try {
+    if (!existsSync(sessionDir)) {
+      console.log(chalk.yellow(`[⚠] Carpeta BotSession no existe: ${sessionDir}`));
+      return;
+    }
+    const files = await readdir(sessionDir);
+    const preKeys = files.filter(file => file.startsWith('pre-key-'));
+    const now = Date.now();
+    const oneHourAgo = now - (60 * 60 * 1000);
+
+    for (const file of preKeys) {
+      const filePath = join(sessionDir, file);
+      const fileStats = await stat(filePath);
+      if (fileStats.mtimeMs < oneHourAgo) { 
+        try {
+          await unlink(filePath);
+          console.log(chalk.green(`[🗑️] Pre-key antigua eliminada: ${file}`));
+        } catch (err) {
+          console.error(chalk.red(`[⚠] Error al eliminar pre-key antigua ${file}: ${err.message}`));
+        }
+      } else {
+        console.log(chalk.yellow(`[ℹ️] Manteniendo pre-key activa: ${file}`));
+      }
+    }
+    console.log(chalk.cyanBright(`[🔵] Sesiones no esenciales eliminadas de ${global.authFile}`));
+  } catch (err) {
+    console.error(chalk.red(`[⚠] Error al limpiar BotSession: ${err.message}`));
+  }
+}
+
+async function purgeSessionSB() {
+  const jadibtsDir = './jadibts/';
+  try {
+    if (!existsSync(jadibtsDir)) {
+      console.log(chalk.yellow(`[⚠] Carpeta jadibts no existe: ${jadibtsDir}`));
+      return;
+    }
+    const directories = await readdir(jadibtsDir);
+    let SBprekey = [];
+    const now = Date.now();
+    const oneHourAgo = now - (60 * 60 * 1000); // 1 hora en milisegundos
+
+    for (const dir of directories) {
+      const dirPath = join(jadibtsDir, dir);
+      const stats = await stat(dirPath);
+      if (stats.isDirectory()) {
+        const files = await readdir(dirPath);
+        const preKeys = files.filter(file => file.startsWith('pre-key-') && file !== 'creds.json');
+        SBprekey = [...SBprekey, ...preKeys];
+        for (const file of preKeys) {
+          const filePath = join(dirPath, file);
+          const fileStats = await stat(filePath);
+          if (fileStats.mtimeMs < oneHourAgo) { // Solo eliminar si es más vieja que 1 hora
+            try {
+              await unlink(filePath);
+              console.log(chalk.green(`[🗑️] Pre-key antigua eliminada de sub-bot ${dir}: ${file}`));
+            } catch (err) {
+              console.error(chalk.red(`[⚠] Error al eliminar pre-key antigua ${file} en ${dir}: ${err.message}`));
+            }
+          } else {
+            console.log(chalk.yellow(`[ℹ️] Manteniendo pre-key activa en sub-bot ${dir}: ${file}`));
+          }
+        }
+      }
+    }
+    if (SBprekey.length === 0) {
+      console.log(chalk.green(`[ℹ️] No se encontraron pre-keys en sub-bots.`));
+    } else {
+      console.log(chalk.cyanBright(`[🔵] Pre-keys antiguas eliminadas de sub-bots: ${SBprekey.length}`));
+    }
+  } catch (err) {
+    console.error(chalk.red(`[⚠] Error al limpiar sub-bots: ${err.message}`));
+  }
+}
+
+async function purgeOldFiles() {
+  const directories = ['./BotSession/', './jadibts/'];
+  for (const dir of directories) {
+    try {
+      if (!existsSync(dir)) {
+        console.log(chalk.yellow(`[⚠] Carpeta no existe: ${dir}`));
+        continue;
+      }
+      const files = await readdir(dir);
+      for (const file of files) {
+        if (file !== 'creds.json') {
+          const filePath = join(dir, file);
+          try {
+            await unlink(filePath);
+            console.log(chalk.green(`[🗑️] Archivo residual eliminado: ${file} en ${dir}`));
+          } catch (err) {
+            console.error(chalk.red(`[⚠] Error al eliminar ${file} en ${dir}: ${err.message}`));
+          }
+        }
+      }
+    } catch (err) {
+      console.error(chalk.red(`[⚠] Error al limpiar ${dir}: ${err.message}`));
+    }
+  }
+  console.log(chalk.cyanBright(`[🟠] Archivos residuales eliminados de ${directories.join(', ')}`));
+}
+
 function redefineConsoleMethod(methodName, filterStrings) {
 const originalConsoleMethod = console[methodName]
 console[methodName] = function() {
@@ -618,17 +674,19 @@ originalConsoleMethod.apply(console, arguments)
 }}
 
 setInterval(async () => {
-if (stopped === 'close' || !conn || !conn.user) return
-await clearTmp()
-console.log(chalk.cyan(`┏━━━━━━⪻♻️ AUTO-CLEAR 🗑️⪼━━━━━━•\n┃→ ARCHIVOS DE LA CARPETA TMP ELIMINADAS\n┗━━━━━━━━━━━━━━━━━━━━━━━━━━━•`))}, 1000 * 60 * 4) // 4 min 
+if (stopped === 'close' || !conn || !conn.user) return;
+  await clearTmp();
+  console.log(chalk.cyan(`┏━━━━━━⪻♻️ AUTO-CLEAR 🗑️⪼━━━━━━•\n┃→ ARCHIVOS DE LA CARPETA TMP ELIMINADOS\n┗━━━━━━━━━━━━━━━━━━━━━━━━━━━•`));
+}, 1000 * 60 * 3); //3 min
 
 setInterval(async () => {
-if (stopped === 'close' || !conn || !conn.user) return
-await purgeSessionSB()
-await purgeSession()
-console.log(chalk.bold.cyanBright(`\n╭» 🔵 ${global.authFile} 🔵\n│→ SESIONES NO ESENCIALES ELIMINADAS\n╰― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― 🗑️♻️`))
-await purgeOldFiles()
-console.log(chalk.bold.cyanBright(`\n╭» 🟠 ARCHIVOS 🟠\n│→ ARCHIVOS RESIDUALES ELIMINADAS\n╰― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― 🗑️♻️`))}, 1000 * 60 * 10)
+  if (stopped === 'close' || !conn || !conn.user) return;
+  await purgeSessionSB();
+  await purgeSession();
+  console.log(chalk.bold.cyanBright(`\n╭» 🔵 ${global.authFile} 🔵\n│→ SESIONES NO ESENCIALES ELIMINADAS\n╰― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― 🗑️♻️`));
+  await purgeOldFiles();
+  console.log(chalk.bold.cyanBright(`\n╭» 🟠 ARCHIVOS 🟠\n│→ ARCHIVOS RESIDUALES ELIMINADAS\n╰― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― 🗑️♻️`));
+}, 1000 * 60 * 10); //10 min
 
 _quickTest().then(() => conn.logger.info('Ƈᴀʀɢᴀɴᴅᴏ．．．.\n'))
 .catch(console.error)
