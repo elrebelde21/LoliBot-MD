@@ -10,8 +10,8 @@ let searchResults = response.meta;
 shuffleArray(searchResults);
 let selectedResults = searchResults.slice(0, 5);
 if (m.isWABusiness) {
-const medias = selectedResults.map(result => ({video: { url: result.hd }}));
-await conn.sendAlbumMessage(m.chat, medias, { quoted: m, delay: 2000, caption: `✅ Resultados para: ${text}` });
+const medias = selectedResults.map(result => ({type: "video", data: { url: result.hd }}));
+await conn.sendAlbumMessage(m.chat, medias, `✅ Resultados para: ${text}`, m);
 m.react("✅️");
 } else {
 let messages = selectedResults.map(result => [
