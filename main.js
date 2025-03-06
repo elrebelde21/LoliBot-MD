@@ -5,7 +5,8 @@ import path, { join } from 'path'
 import {fileURLToPath, pathToFileURL} from 'url'
 import { platform } from 'process'
 import * as ws from 'ws'
-import fs, { watchFile, unwatchFile, writeFileSync, readdirSync, statSync, unlinkSync, existsSync, readFileSync, copyFileSync, watch, rmSync, readdir, stat, mkdirSync, rename } from 'fs'
+import fs, { watchFile, unwatchFile, writeFileSync, readdirSync, statSync, unlinkSync, existsSync, readFileSync, copyFileSync, watch, rmSync, readdir, stat, mkdirSync, rename } from 'fs';
+import { promises as fsPromises } from 'fs';
 import yargs from 'yargs'
 import { spawn } from 'child_process'
 import lodash from 'lodash'
@@ -50,29 +51,29 @@ const databasePath = path.join(__dirname, 'database');
 if (!fs.existsSync(databasePath)) fs.mkdirSync(databasePath);
 
 const paths = {
-    users: path.join(databasePath, 'users'),
-    chats: path.join(databasePath, 'chats'),
-    settings: path.join(databasePath, 'settings'),
-    msgs: path.join(databasePath, 'msgs'),
-    sticker: path.join(databasePath, 'sticker'),
-    stats: path.join(databasePath, 'stats'),
+users: path.join(databasePath, 'users'),
+chats: path.join(databasePath, 'chats'),
+settings: path.join(databasePath, 'settings'),
+msgs: path.join(databasePath, 'msgs'),
+sticker: path.join(databasePath, 'sticker'),
+stats: path.join(databasePath, 'stats'),
 };
 
 Object.values(paths).forEach(dir => {
-    if (!fs.existsSync(dir)) fs.mkdirSync(dir);
+if (!fs.existsSync(dir)) fs.mkdirSync(dir);
 });
 
 const queue = new PQueue({ concurrency: 5 });
 
 global.db = {
-    data: {
-        users: {},
-        chats: {},
-        settings: {},
-        msgs: {},
-        sticker: {},
-        stats: {},
-    },
+data: {
+users: {},
+chats: {},
+settings: {},
+msgs: {},
+sticker: {},
+stats: {},
+},
 };
 
 function getFilePath(category, id) {
@@ -80,73 +81,65 @@ return path.join(paths[category], `${id}.json`);
 }
 
 async function readFile(category, id) {
-    const filePath = getFilePath(category, id);
-    const db = new Low(new JSONFile(filePath));
-    await db.read();
-    db.data = db.data || {};
-    return db.data;
+const filePath = getFilePath(category, id);
+const db = new Low(new JSONFile(filePath));
+await db.read();
+db.data = db.data || {};
+return db.data;
 }
 
 async function writeFile(category, id, data) {
-    const filePath = getFilePath(category, id);
-    const db = new Low(new JSONFile(filePath));
-    await db.read();
-    db.data = { ...db.data, ...data };    
-    await db.write();
+const filePath = getFilePath(category, id);
+const db = new Low(new JSONFile(filePath));
+await db.read();
+db.data = { ...db.data, ...data };    
+await db.write();
 }
 
 global.db.readData = async function (category, id) {
-    if (!global.db.data[category][id]) {
-        const data = await queue.add(() => readFile(category, id));
-        global.db.data[category][id] = data;
-    }
-    return global.db.data[category][id];
+if (!global.db.data[category][id]) {
+const data = await queue.add(() => readFile(category, id));
+global.db.data[category][id] = data;
+}
+return global.db.data[category][id];
 };
 
 global.db.writeData = async function (category, id, data) {
-    global.db.data[category][id] = { ...global.db.data[category][id], ...data };
-    await queue.add(() => writeFile(category, id, global.db.data[category][id]));
+global.db.data[category][id] = { ...global.db.data[category][id], ...data };
+await queue.add(() => writeFile(category, id, global.db.data[category][id]));
 };
 
 global.db.loadDatabase = async function () {
-    const categories = ['users', 'chats', 'settings', 'msgs', 'sticker', 'stats'];
-    const loadPromises = [];
+const categories = ['users', 'chats', 'settings', 'msgs', 'sticker', 'stats'];
+const loadPromises = [];
 
-    for (const category of categories) {
-        const files = fs.readdirSync(paths[category]);
-        for (const file of files) {
-            const id = path.basename(file, '.json');
-            if (category === 'users' && (id.includes('@newsletter') || id.includes('lid'))) continue;
-            if (category === 'chats' && id.includes('@newsletter')) continue;
+for (const category of categories) {
+const files = fs.readdirSync(paths[category]);
+for (const file of files) {
+const id = path.basename(file, '.json');
+if (category === 'users' && (id.includes('@newsletter') || id.includes('lid'))) continue;
+if (category === 'chats' && id.includes('@newsletter')) continue;
 
-            loadPromises.push(
-                queue.add(() => readFile(category, id))
-                    .then(data => {
-                        global.db.data[category][id] = data;
-                    })
-                    .catch(err => console.error(`Error cargando ${category}/${id}:`, err))
-            );
-        }
-    }
-
-    await Promise.all(loadPromises);
-    console.log('Base de datos cargada');
+loadPromises.push(queue.add(() => readFile(category, id)).then(data => {
+global.db.data[category][id] = data;
+}).catch(err => console.error(`Error cargando ${category}/${id}:`, err))
+);
+}}
+await Promise.all(loadPromises);
+console.log('Base de datos cargada');
 };
 
 global.db.save = async function () {
-    const categories = ['users', 'chats', 'settings', 'msgs', 'sticker', 'stats'];
+const categories = ['users', 'chats', 'settings', 'msgs', 'sticker', 'stats'];
 
-    for (const category of categories) {
-        for (const [id, data] of Object.entries(global.db.data[category])) {
-            if (Object.keys(data).length > 0) {
-                if (category === 'users' && (id.includes('@newsletter') || id.includes('lid'))) continue;
-                if (category === 'chats' && id.includes('@newsletter')) continue;
+for (const category of categories) {
+for (const [id, data] of Object.entries(global.db.data[category])) {
+if (Object.keys(data).length > 0) {
+if (category === 'users' && (id.includes('@newsletter') || id.includes('lid'))) continue;
+if (category === 'chats' && id.includes('@newsletter')) continue;
 
-                await queue.add(() => writeFile(category, id, data));                
-            }
-        }
-    }
-};
+await queue.add(() => writeFile(category, id, data))
+}}}};
 
 global.db.loadDatabase().then(() => {
 }).catch(err => console.error(err));
@@ -560,107 +553,89 @@ unlinkSync(filePath)})
 }
 
 async function purgeSession() {
-  const sessionDir = './BotSession';
-  try {
-    if (!existsSync(sessionDir)) {
-      console.log(chalk.yellow(`[⚠] Carpeta BotSession no existe: ${sessionDir}`));
-      return;
-    }
-    const files = await readdir(sessionDir);
-    const preKeys = files.filter(file => file.startsWith('pre-key-'));
-    const now = Date.now();
-    const oneHourAgo = now - (60 * 60 * 1000);
-
-    for (const file of preKeys) {
-      const filePath = join(sessionDir, file);
-      const fileStats = await stat(filePath);
-      if (fileStats.mtimeMs < oneHourAgo) { 
-        try {
-          await unlink(filePath);
-          console.log(chalk.green(`[🗑️] Pre-key antigua eliminada: ${file}`));
-        } catch (err) {
-          console.error(chalk.red(`[⚠] Error al eliminar pre-key antigua ${file}: ${err.message}`));
-        }
-      } else {
-        console.log(chalk.yellow(`[ℹ️] Manteniendo pre-key activa: ${file}`));
-      }
-    }
-    console.log(chalk.cyanBright(`[🔵] Sesiones no esenciales eliminadas de ${global.authFile}`));
-  } catch (err) {
-    console.error(chalk.red(`[⚠] Error al limpiar BotSession: ${err.message}`));
-  }
-}
+const sessionDir = './BotSession';
+try {
+if (!existsSync(sessionDir)) return;
+const files = await readdir(sessionDir);
+const preKeys = files.filter(file => file.startsWith('pre-key-'));
+const now = Date.now();
+const oneHourAgo = now - (24 * 60 * 60 * 1000); //24 horas
+    
+for (const file of preKeys) {
+const filePath = join(sessionDir, file);
+const fileStats = await stat(filePath);
+if (fileStats.mtimeMs < oneHourAgo) { 
+try {
+await unlink(filePath);
+console.log(chalk.green(`[🗑️] Pre-key antigua eliminada: ${file}`));
+} catch (err) {
+//console.error(chalk.red(`[⚠] Error al eliminar pre-key antigua ${file}: ${err.message}`));
+}} else {
+//console.log(chalk.yellow(`[ℹ️] Manteniendo pre-key activa: ${file}`));
+}}
+console.log(chalk.cyanBright(`[🔵] Sesiones no esenciales eliminadas de ${global.authFile}`));
+} catch (err) {
+//console.error(chalk.red(`[⚠] Error al limpiar BotSession: ${err.message}`));
+}}
 
 async function purgeSessionSB() {
-  const jadibtsDir = './jadibts/';
-  try {
-    if (!existsSync(jadibtsDir)) {
-      console.log(chalk.yellow(`[⚠] Carpeta jadibts no existe: ${jadibtsDir}`));
-      return;
-    }
-    const directories = await readdir(jadibtsDir);
-    let SBprekey = [];
-    const now = Date.now();
-    const oneHourAgo = now - (60 * 60 * 1000); // 1 hora en milisegundos
-
-    for (const dir of directories) {
-      const dirPath = join(jadibtsDir, dir);
-      const stats = await stat(dirPath);
-      if (stats.isDirectory()) {
-        const files = await readdir(dirPath);
-        const preKeys = files.filter(file => file.startsWith('pre-key-') && file !== 'creds.json');
-        SBprekey = [...SBprekey, ...preKeys];
-        for (const file of preKeys) {
-          const filePath = join(dirPath, file);
-          const fileStats = await stat(filePath);
-          if (fileStats.mtimeMs < oneHourAgo) { // Solo eliminar si es más vieja que 1 hora
-            try {
-              await unlink(filePath);
-              console.log(chalk.green(`[🗑️] Pre-key antigua eliminada de sub-bot ${dir}: ${file}`));
-            } catch (err) {
-              console.error(chalk.red(`[⚠] Error al eliminar pre-key antigua ${file} en ${dir}: ${err.message}`));
-            }
-          } else {
-            console.log(chalk.yellow(`[ℹ️] Manteniendo pre-key activa en sub-bot ${dir}: ${file}`));
-          }
-        }
-      }
-    }
-    if (SBprekey.length === 0) {
-      console.log(chalk.green(`[ℹ️] No se encontraron pre-keys en sub-bots.`));
-    } else {
-      console.log(chalk.cyanBright(`[🔵] Pre-keys antiguas eliminadas de sub-bots: ${SBprekey.length}`));
-    }
-  } catch (err) {
-    console.error(chalk.red(`[⚠] Error al limpiar sub-bots: ${err.message}`));
-  }
-}
+const jadibtsDir = './jadibts/';
+try {
+if (!existsSync(jadibtsDir)) return;
+const directories = await readdir(jadibtsDir);
+let SBprekey = [];
+const now = Date.now();
+const oneHourAgo = now - (24 * 60 * 60 * 1000); //24 horas
+    
+for (const dir of directories) {
+const dirPath = join(jadibtsDir, dir);
+const stats = await stat(dirPath);
+if (stats.isDirectory()) {
+const files = await readdir(dirPath);
+const preKeys = files.filter(file => file.startsWith('pre-key-') && file !== 'creds.json');
+SBprekey = [...SBprekey, ...preKeys];
+for (const file of preKeys) {
+const filePath = join(dirPath, file);
+const fileStats = await stat(filePath);
+if (fileStats.mtimeMs < oneHourAgo) { 
+try {
+await unlink(filePath);
+console.log(chalk.green(`[🗑️] Pre-key antigua eliminada de sub-bot ${dir}: ${file}`));
+} catch (err) {
+//console.error(chalk.red(`[⚠] Error al eliminar pre-key antigua ${file} en ${dir}: ${err.message}`));
+}} else {
+//console.log(chalk.yellow(`[ℹ️] Manteniendo pre-key activa en sub-bot ${dir}: ${file}`));
+}}}}
+if (SBprekey.length === 0) {
+//console.log(chalk.green(`[ℹ️] No se encontraron pre-keys en sub-bots.`));
+} else {
+console.log(chalk.cyanBright(`[🔵] Pre-keys antiguas eliminadas de sub-bots: ${SBprekey.length}`));
+}} catch (err) {
+//console.error(chalk.red(`[⚠] Error al limpiar sub-bots: ${err.message}`));
+}}
 
 async function purgeOldFiles() {
-  const directories = ['./BotSession/', './jadibts/'];
-  for (const dir of directories) {
-    try {
-      if (!existsSync(dir)) {
-        console.log(chalk.yellow(`[⚠] Carpeta no existe: ${dir}`));
-        continue;
-      }
-      const files = await readdir(dir);
-      for (const file of files) {
-        if (file !== 'creds.json') {
-          const filePath = join(dir, file);
-          try {
-            await unlink(filePath);
-            console.log(chalk.green(`[🗑️] Archivo residual eliminado: ${file} en ${dir}`));
-          } catch (err) {
-            console.error(chalk.red(`[⚠] Error al eliminar ${file} en ${dir}: ${err.message}`));
-          }
-        }
-      }
-    } catch (err) {
-      console.error(chalk.red(`[⚠] Error al limpiar ${dir}: ${err.message}`));
-    }
-  }
-  console.log(chalk.cyanBright(`[🟠] Archivos residuales eliminados de ${directories.join(', ')}`));
+const directories = ['./BotSession/', './jadibts/'];
+for (const dir of directories) {
+try {
+if (!fs.existsSync(dir)) { 
+console.log(chalk.yellow(`[⚠] Carpeta no existe: ${dir}`));
+continue;
+}
+const files = await fsPromises.readdir(dir); 
+for (const file of files) {
+if (file !== 'creds.json') {
+const filePath = join(dir, file);
+try {
+await fsPromises.unlink(filePath);
+//console.log(chalk.green(`[🗑️] Archivo residual eliminado: ${file} en ${dir}`));
+} catch (err) {
+//console.error(chalk.red(`[⚠] Error al eliminar ${file} en ${dir}: ${err.message}`));
+}}}
+} catch (err) {
+//console.error(chalk.red(`[⚠] Error al limpiar ${dir}: ${err.message}`));
+}}
+//console.log(chalk.cyanBright(`[🟠] Archivos residuales eliminados de ${directories.join(', ')}`));
 }
 
 function redefineConsoleMethod(methodName, filterStrings) {
