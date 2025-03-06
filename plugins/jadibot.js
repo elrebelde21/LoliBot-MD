@@ -262,44 +262,6 @@ delete global.conns[i]
 global.conns.splice(i, 1)
 }}, 60000)
 
-setInterval(() => {
-        console.log(chalk.bold.blue(`🔍 Revisando sub-bots en ./jadibts/...`));
-        const subBotDirs = fs.readdirSync('./jadibts/', { withFileTypes: true })
-          .filter(dirent => dirent.isDirectory())
-          .map(dirent => dirent.name);
-
-        for (const subBotId of subBotDirs) {
-          const subPath = path.join("./jadibts/", subBotId);
-          const subBotIndex = global.conns.findIndex(bot => bot.pathGataJadiBot === subPath);
-          if (subBotIndex === -1 || !global.conns[subBotIndex]?.user || global.conns[subBotIndex]?.ws?.readyState !== ws.OPEN) {
-            console.log(chalk.bold.red(`⚠️ Sub-bot (+${subBotId}) apagado. Reconectando...`));
-            try {
-              const { state, saveCreds } = useMultiFileAuthState.sync(subPath);
-              let newSock = makeWASocket(connectionOptions);
-              newSock.pathGataJadiBot = subPath;
-              newSock.isInit = false;
-              newSock.connectionUpdate = connectionUpdate;
-              newSock.credsUpdate = saveCreds.bind(newSock);
-              newSock.ev.on('connection.update', newSock.connectionUpdate);
-              newSock.ev.on('creds.update', newSock.credsUpdate);
-              if (subBotIndex === -1) global.conns.push(newSock);
-              else global.conns[subBotIndex] = newSock;
-              creloadHandler(true).catch(console.error);
-              console.log(chalk.bold.green(`✅ Sub-bot (+${subBotId}) reconectado.`));
-            } catch (err) {
-              console.error(chalk.bold.red(`❌ Error al reconectar (+${subBotId}): ${err.message}`));
-            }
-          } else {
-            console.log(chalk.bold.green(`✅ Sub-bot (+${subBotId}) activo.`));
-          }
-        }
-      }, 5 * 60 * 1000);
-    }
-
-    setInterval(() => {
-      if (!sock.user) endSesion(false);
-    }, 60000);
-    
 let handler = await import('../handler.js')
 let creloadHandler = async function (restatConn) {
 try {
@@ -364,3 +326,22 @@ async function joinChannels(conn) {
 for (const channelId of Object.values(global.ch)) {
 await conn.newsletterFollow(channelId).catch(() => {})
 }}
+
+async function monitorSubBots() {
+for (let [index, sock] of global.conns.entries()) {
+    const subBotId = sock.user?.jid || `Sub-bot ${index}`;
+    if (!sock.ws || sock.ws.readyState !== ws.OPEN) {
+      console.log(chalk.bold.redBright(`[MONITOR] Sub-bot ${subBotId} desconectado. Intentando reconectar...`));
+      try {
+        await creloadHandler(true, sock);
+        console.log(chalk.bold.greenBright(`[MONITOR] Sub-bot ${subBotId} reconectado exitosamente.`));
+      } catch (error) {
+        console.error(chalk.bold.redBright(`[MONITOR] Error al reconectar sub-bot ${subBotId}:`), error);
+      }
+    } else {
+      console.log(chalk.bold.greenBright(`[MONITOR] Sub-bot ${subBotId} está activo.`));
+    }
+  }
+}
+
+setInterval(monitorSubBots, 300000); //5 min
