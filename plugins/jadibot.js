@@ -228,12 +228,12 @@ fs.rmdirSync(pathGataJadiBot, { recursive: true })
 
 if (global.db.data == null) loadDatabase()
 if (connection == `open`) {
+reconnectAttempts = 0;
 if (!global.db.data?.users) loadDatabase()
 let userName, userJid 
 userName = sock.authState.creds.me.name || 'Anónimo'
 userJid = sock.authState.creds.me.jid || `${path.basename(pathGataJadiBot)}@s.whatsapp.net`
 console.log(chalk.bold.cyanBright(`\n▣─────────────────────────────···\n│\n│❧ ${userName} (+${path.basename(pathGataJadiBot)}) 𝙲𝙾𝙽𝙴𝙲𝚃𝙰𝙳𝙾 𝙲𝙾𝚁𝚁𝙴𝙲𝚃𝙰𝙼𝙴𝙽𝚃𝙴✅\n│\n▣─────────────────────────────···`))
-reconnectAttempts = 0;
 sock.isInit = true
 global.conns.push(sock)
 
