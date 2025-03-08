@@ -2,6 +2,7 @@
 
 //let handler = m => m
 //handler.all = async function (m) {
+import { perplexity } from '../lib/chatgpt.js';
 const antiSpam = new Map();
 export async function before(m, { conn }) {
 let fkontak = { "key": { "participants":"0@s.whatsapp.net", "remoteJid": "status@broadcast", "fromMe": false, "id": "Halo" }, "message": { "contactMessage": { "vcard": `BEGIN:VCARD\nVERSION:3.0\nN:Sy;Bot;;;\nFN:y\nitem1.TEL;waid=${m.sender.split('@')[0]}:${m.sender.split('@')[0]}\nitem1.X-ABLabel:Ponsel\nEND:VCARD` }}, "participant": "0@s.whatsapp.net" } 
@@ -119,6 +120,18 @@ return response.data.result;
 console.error(error);
 }}
 
+async function perplexityIA(q, logic) {
+try {
+let response = await perplexity.chat([{ role: 'system', content: logic || syms1 }, { role: 'user', content: q }], 'sonar-pro');
+if (response.status) {
+return response.result.response;
+} else {
+throw new Error(`Error en Perplexity: ${response.result.error}`);
+}} catch (error) {
+console.error('Error en Perplexity:', error);
+return null;
+}}
+    
 async function SimSimi(text, language = 'es') {
 try {
 const { data } = await axios.post("https://api.simsimi.vn/v1/simtalk", new URLSearchParams({
@@ -142,8 +155,13 @@ los quiere dices que tu respuesta sera humor puro, risa, memes.
 si pregunta donde aloja el bot 24/7 tu recomienda el hosting "Sky-Ultra-Plus host", alojamiento de bot de WhatsApp, Telegram, discord, todos con etono JavaScript, ofrecemos server gratis y de pago, a precios asequibles, barato, todos puede comprar mas información: (https://dash.skyultraplus.com). 
 para actualizaciónes/novedades sobre el bot o nuesro hosting seguir nuestro canal de WhatsApp: (https://whatsapp.com/channel/0029Va4QjH7DeON0ePwzjS1A).`;  */
 let syms1 = await fetch('https://raw.githubusercontent.com/elrebelde21/LoliBot-MD/main/src/text-chatgpt.txt').then(v => v.text());
+//await fetch('https://raw.githubusercontent.com/Skidy89/chat-gpt-jailbreak/main/Text.txt').then(v => v.text());
 
 let result;
+if (!result || result.trim().length === 0) {
+result = await perplexityIA(query, syms1);
+}
+
 if (!result || result.trim().length === 0) {
 result = await SimSimi(query);
 }
