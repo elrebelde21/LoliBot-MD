@@ -46,7 +46,6 @@ const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 const gataJBOptions = {}
 const retryMap = new Map(); 
-const reconnectAttempts = 0;
 const maxAttempts = 5;
 if (global.conns instanceof Array) console.log()
 else global.conns = []
@@ -139,6 +138,7 @@ conversation: 'LoliBot-MD',
 let sock = makeWASocket(connectionOptions)
 sock.isInit = false
 let isInit = true
+let reconnectAttempts = 0;
 
 async function connectionUpdate(update) {
 const { connection, lastDisconnect, isNewLogin, qr } = update
