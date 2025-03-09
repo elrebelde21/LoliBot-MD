@@ -55,7 +55,6 @@ antiSpam.set(m.sender, currentTime);
 //if (/^bot|simi|alexa$/i.test(m.text)) {   
 if (m.text.includes(`bot`) || m.text.includes(`Bot`) || m.text.includes(`simsimi`) || m.text.includes(`simi`) || m.text.includes(`alexa`)) {   
 if (m.text.includes('jadibot') || m.text.includes('bots') || m.text.includes('serbot') || m.text.includes('instalarbot') || m.text.includes('infobot')) return;
-conn.sendPresenceUpdate('composing', m.chat);
 if (/^¿que es un bot?|Que es un bot?|que es un bot?|que es un bot$/i.test(m.text) ) {
 return conn.reply(m.chat, `\`☆::¿𝙌𝙐𝙀 𝙀𝙎 𝙐𝙉 𝘽𝙊𝙏 𝘿𝙀 𝙒𝙃𝘼𝙏𝙎𝘼𝙋𝙋?::☆\`
 
@@ -102,6 +101,18 @@ ${fb}
 > 「 🅛🅞🅛🅘🅑🅞🅣-🅜🅓 」`, m, {contextInfo: {externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: `Hola ${name} 👋`, body: wm, previewType: 0, thumbnail: img.getRandom(), sourceUrl: redes.getRandom()}}})
 }
 try {
+let prefixRegex = new RegExp('^[' + (opts['prefix'] || '‎z/i!#$%+£¢€¥^°=¶∆×÷π√✓©®:;?&.,\\-').replace(/[|\\{}()[\]^$+*?.\-\^]/g, '\\$&') + ']');
+let hasPrefixWithKeyword = prefixRegex.test(m.text) && (m.text.match(/^[‎z/i!#$%+£¢€¥^°=¶∆×÷π√✓©®:;?&.,\\-](bot|Bot|simsimi|simi|alexa)/));
+let hasKeywordWithoutPrefix = (m.text.includes('bot') || m.text.includes('Bot') || m.text.includes('simsimi') || m.text.includes('simi') || m.text.includes('alexa')) && !prefixRegex.test(m.text);
+if (!hasPrefixWithKeyword && !hasKeywordWithoutPrefix) return;
+let query = m.text;
+if (hasPrefixWithKeyword) {
+query = m.text.replace(prefixRegex, '').replace(/(bot|Bot|simsimi|simi|alexa)/i, '').trim(); 
+} else if (hasKeywordWithoutPrefix) {
+query = m.text.replace(/(bot|Bot|simsimi|simi|alexa)/i, '').trim()}
+if (!query) return;
+
+conn.sendPresenceUpdate('composing', m.chat);
 async function luminsesi(q, username, logic) {
 try {
 const response = await axios.post("https://luminai.my.id", {
@@ -139,7 +150,6 @@ console.error(error);
 return null;
 }}
 
-let query = m.text;
 let username = `${m.pushName}`;
 /*let syms1 = `Tomarás el rol de un bot de Whatsapp creado por elrebelde21. Tu nombre sera LoliBot, Tu idioma es el español, pero puedes responder en diferentes idiomas. tiene este rol que chat divertido con exploit incluido osea los quiere dices es que este rol solo es humor, divertido, no que tome nada real, tu respuesta sera divertida, humor, y usar mucho emojis el tu respuesta.
 
