@@ -53,7 +53,7 @@ if (currentTime - lastMessageTime < 5000) return
 antiSpam.set(m.sender, currentTime); 
 
 //if (/^bot|simi|alexa$/i.test(m.text)) {   
-if (m.text.includes(`bot`) || m.text.includes(`Bot`) || m.text.includes(`simsimi`) || m.text.includes(`simi`) || m.text.includes(`alexa`)) {   
+if (m.text.includes(`bot`) || m.text.includes(`Bot`) || m.text.includes(`simsimi`) ||  m.text.includes('lolibot') || m.text.includes(`simi`) || m.text.includes(`alexa`)) {   
 if (m.text.includes('jadibot') || m.text.includes('bots') || m.text.includes('serbot') || m.text.includes('instalarbot') || m.text.includes('infobot')) return;
 if (/^¿que es un bot?|Que es un bot?|que es un bot?|que es un bot$/i.test(m.text) ) {
 return conn.reply(m.chat, `\`☆::¿𝙌𝙐𝙀 𝙀𝙎 𝙐𝙉 𝘽𝙊𝙏 𝘿𝙀 𝙒𝙃𝘼𝙏𝙎𝘼𝙋𝙋?::☆\`
@@ -102,14 +102,14 @@ ${fb}
 }
 try {
 let prefixRegex = new RegExp('^[' + (opts['prefix'] || '‎z/i!#$%+£¢€¥^°=¶∆×÷π√✓©®:;?&.,\\-').replace(/[|\\{}()[\]^$+*?.\-\^]/g, '\\$&') + ']');
-let hasPrefixWithKeyword = prefixRegex.test(m.text) && (m.text.match(/^[‎z/i!#$%+£¢€¥^°=¶∆×÷π√✓©®:;?&.,\\-](bot|Bot|simsimi|simi|alexa)/));
-let hasKeywordWithoutPrefix = (m.text.includes('bot') || m.text.includes('Bot') || m.text.includes('simsimi') || m.text.includes('simi') || m.text.includes('alexa')) && !prefixRegex.test(m.text);
+let hasPrefixWithKeyword = prefixRegex.test(m.text) && (m.text.match(/^[‎z/i!#$%+£¢€¥^°=¶∆×÷π√✓©®:;?&.,\\-](bot|Bot|simsimi|simi|alexa|lolibot)/));
+let hasKeywordWithoutPrefix = (m.text.includes('bot') || m.text.includes('Bot') || m.text.includes('simsimi') || m.text.includes('simi') || m.text.includes('lolibot') || m.text.includes('alexa')) && !prefixRegex.test(m.text);
 if (!hasPrefixWithKeyword && !hasKeywordWithoutPrefix) return;
 let query = m.text;
 if (hasPrefixWithKeyword) {
-query = m.text.replace(prefixRegex, '').replace(/(bot|Bot|simsimi|simi|alexa)/i, '').trim(); 
+query = m.text.replace(prefixRegex, '').replace(/(bot|Bot|simsimi|simi|lolibot|alexa)/i, '').trim(); 
 } else if (hasKeywordWithoutPrefix) {
-query = m.text.replace(/(bot|Bot|simsimi|simi|alexa)/i, '').trim()}
+query = m.text.replace(/(bot|Bot|simsimi|simi|lolibot|alexa)/i, '').trim()}
 if (!query) return;
 
 conn.sendPresenceUpdate('composing', m.chat);
