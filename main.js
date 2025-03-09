@@ -331,14 +331,13 @@ console.log('[⚠] No se encontró el archivo creds.json para respaldar.');
 }};
 
 const restoreCreds = () => {
-if (fs.existsSync(credsFile)) {
-fs.copyFileSync(backupFile, credsFile);
-console.log(`[✅] creds.json reemplazado desde el respaldo.`);
-} else if (fs.existsSync(backupFile)) {
+if (fs.existsSync(backupFile)) {
 fs.copyFileSync(backupFile, credsFile);
 console.log(`[✅] creds.json restaurado desde el respaldo.`);
+} else if (fs.existsSync(credsFile)) {
+console.log(`[ℹ️] No hay respaldo, pero creds.json ya existe. Continuando...`);
 } else {
-console.log('[⚠] No se encontró ni el archivo creds.json ni el respaldo.');
+console.log('[⚠] No se encontró ni el archivo creds.json ni el respaldo. Continuando...');
 }};
 
 setInterval(async () => {
@@ -375,7 +374,7 @@ restoreCreds();
 await global.reloadHandler(true).catch(console.error)
 } else if (reason === DisconnectReason.connectionLost) {
 conn.logger.warn(`[ ⚠ ] Conexión perdida con el servidor, reconectando...`);
-//restoreCreds();
+restoreCreds(); 
 await global.reloadHandler(true).catch(console.error)
 } else if (reason === DisconnectReason.connectionReplaced) {
 conn.logger.error(`[ ⚠ ] Conexión reemplazada, se ha abierto otra nueva sesión. Por favor, cierra la sesión actual primero.`);
