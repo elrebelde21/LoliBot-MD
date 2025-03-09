@@ -107,7 +107,7 @@ if (!hasPrefixWithKeyword && !hasKeywordWithoutPrefix) return;
 let query = m.text;
 if (hasPrefixWithKeyword) {
 query = m.text.replace(prefixRegex, '').replace(/(bot|Bot|simsimi|simi|lolibot|alexa)/i, '').trim(); 
-} else if (hasKeywordWithoutPrefix) 
+} else if (hasKeywordWithoutPrefix) {
 const keywordRegex = /^(bot|Bot|simsimi|simi|lolibot|alexa)\s+/i;
 if (keywordRegex.test(m.text)) {
 query = m.text.replace(keywordRegex, '').trim();
