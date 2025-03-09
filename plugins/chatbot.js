@@ -107,8 +107,13 @@ if (!hasPrefixWithKeyword && !hasKeywordWithoutPrefix) return;
 let query = m.text;
 if (hasPrefixWithKeyword) {
 query = m.text.replace(prefixRegex, '').replace(/(bot|Bot|simsimi|simi|lolibot|alexa)/i, '').trim(); 
-} else if (hasKeywordWithoutPrefix) {
-query = m.text.replace(/(bot|Bot|simsimi|simi|lolibot|alexa)/i, '').trim()}
+} else if (hasKeywordWithoutPrefix) 
+const keywordRegex = /^(bot|Bot|simsimi|simi|lolibot|alexa)\s+/i;
+if (keywordRegex.test(m.text)) {
+query = m.text.replace(keywordRegex, '').trim();
+} else {
+query = m.text.trim();
+}}
 if (!query) return;
 
 conn.sendPresenceUpdate('composing', m.chat);
