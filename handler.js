@@ -204,8 +204,9 @@ inicio: "00:00",
 fin: "23:59"
 }
 }
-var settings = global.db.data.settings[this.user.jid]
-if (typeof settings !== 'object') global.db.data.settings[this.user.jid] = {}
+const userJid = this.user?.jid || 'undefined@unknown';
+var settings = global.db.data.settings[userJid] || {};
+if (typeof settings !== 'object') global.db.data.settings[userJid] = {};
 if (settings) {
 if (!('self' in settings)) settings.self = false
 if (!('autoread' in settings)) settings.autoread = false
@@ -220,7 +221,7 @@ if (!('anticommand' in settings)) settings.anticommand = false
 if (!('jadibotmd' in settings)) settings.jadibotmd = true
 if (!('prefix' in settings)) settings.prefix = opts['prefix'] || '*/i!#$%+£¢€¥^°=¶∆×÷π√✓©®&.\\-.@';
 if (!('status' in settings)) settings.status = 0
-} else global.db.data.settings[this.user.jid] = {
+} else global.db.data.settings[userJid] = {
 self: false,
 autoread: false,
 autoread2: false,
@@ -238,7 +239,7 @@ status: 0
 console.error(e)
 }
 
-var settings = global.db.data.settings[this.user.jid]
+var settings = global.db.data.settings[userJid]
 const prefix = new RegExp('^[' + settings.prefix.replace(/[|\\{}()[\]^$+*.\-\^]/g, '\\$&') + ']');        
 const isROwner = [conn.decodeJid(global.conn.user.id), ...global.owner.map(([number]) => number)].map(v => v.replace(/[^0-9]/g, '') + '@s.whatsapp.net').includes(m.sender)
 const isOwner = isROwner || m.fromMe
