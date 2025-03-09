@@ -240,7 +240,7 @@ console.error(e)
 }
 
 const userJid = this.user?.jid || 'undefined@unknown';
-var settings = global.db.data.settings[userJid] || {};
+var settings = global.db.data.settings[userJid]
 const prefix = new RegExp('^[' + settings.prefix.replace(/[|\\{}()[\]^$+*.\-\^]/g, '\\$&') + ']');        
 const isROwner = [conn.decodeJid(global.conn.user.id), ...global.owner.map(([number]) => number)].map(v => v.replace(/[^0-9]/g, '') + '@s.whatsapp.net').includes(m.sender)
 const isOwner = isROwner || m.fromMe
