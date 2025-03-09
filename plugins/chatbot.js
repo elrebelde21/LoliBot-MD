@@ -49,11 +49,10 @@ https://WhatsApp.skyultraplus.com
 • https://instagram.com/gata_dios` 
 const lastMessageTime = antiSpam.get(m.sender) || 0;
 const currentTime = Date.now();
-if (currentTime - lastMessageTime < 5000) return 
-antiSpam.set(m.sender, currentTime); 
+if (currentTime - lastMessageTime < 5000) return;
 
 //if (/^bot|simi|alexa$/i.test(m.text)) {   
-if (m.text.includes(`bot`) || m.text.includes(`Bot`) || m.text.includes(`simsimi`) ||  m.text.includes('lolibot') || m.text.includes(`simi`) || m.text.includes(`alexa`)) {   
+if (m.text.includes(`bot`) || m.text.includes(`Bot`) || m.text.includes(`simsimi`) || m.text.includes('lolibot') || m.text.includes(`simi`) || m.text.includes(`alexa`)) {   
 if (m.text.includes('jadibot') || m.text.includes('bots') || m.text.includes('serbot') || m.text.includes('instalarbot') || m.text.includes('infobot')) return;
 if (/^¿que es un bot?|Que es un bot?|que es un bot?|que es un bot$/i.test(m.text) ) {
 return conn.reply(m.chat, `\`☆::¿𝙌𝙐𝙀 𝙀𝙎 𝙐𝙉 𝘽𝙊𝙏 𝘿𝙀 𝙒𝙃𝘼𝙏𝙎𝘼𝙋𝙋?::☆\`
@@ -180,12 +179,13 @@ result = result.replace(/and for API requests replace https:\/\/www\.blackbox\.a
 
 if (result && result.trim().length > 0) {
 await conn.reply(m.chat, result, m);
-global.db.data.users[m.sender].spam = new Date * 1
+antiSpam.set(m.sender, currentTime);
 }} catch (e) {
 try {
 let gpt = await fetch(`${apis}/tools/simi?text=${m.text}`);
 let res = await gpt.json();
 await m.reply(res.data.message);
+antiSpam.set(m.sender, Date.now());
 } catch (e) {
 return m.reply([`Simsimi esta durmiendo no molesta 🥱`, `Callarte`, `Api simsimi caida`, `Simsimi esta ocupado cojieron con tu hermana vuelva mas tarde 🥵`, `NO MOLESTE PUTA`, `No hay señar`, `No estoy disponible`].getRandom());
 console.log(e);
