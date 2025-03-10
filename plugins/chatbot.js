@@ -47,13 +47,14 @@ https://WhatsApp.skyultraplus.com
 • wa.me/15167096032
 • ${fb}
 • https://instagram.com/gata_dios` 
-const lastMessageTime = antiSpam.get(m.sender) || 0;
-const currentTime = Date.now();
-if (currentTime - lastMessageTime < 5000) return;
 
 //if (/^bot|simi|alexa$/i.test(m.text)) {   
 if (m.text.includes(`bot`) || m.text.includes(`Bot`) || m.text.includes(`simsimi`) || m.text.includes('lolibot') || m.text.includes(`simi`) || m.text.includes(`alexa`)) {   
 if (m.text.includes('jadibot') || m.text.includes('bots') || m.text.includes('serbot') || m.text.includes('instalarbot') || m.text.includes('infobot')) return;
+const lastMessageTime = antiSpam.get(m.sender) || 0;
+const currentTime = Date.now();
+if (currentTime - lastMessageTime < 9000) throw !0; 
+    
 if (/^¿que es un bot?|Que es un bot?|que es un bot?|que es un bot$/i.test(m.text) ) {
 return conn.reply(m.chat, `\`☆::¿𝙌𝙐𝙀 𝙀𝙎 𝙐𝙉 𝘽𝙊𝙏 𝘿𝙀 𝙒𝙃𝘼𝙏𝙎𝘼𝙋𝙋?::☆\`
 

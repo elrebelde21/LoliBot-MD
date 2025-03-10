@@ -12,7 +12,7 @@ let prefixRegex = new RegExp('^[' + (opts['prefix'] || '‎z/i!#$%+£¢€¥^°=
 if (prefixRegex.test(m.text)) return true;
 const lastMessageTime = antiSpam.get(m.sender) || 0;
 const currentTime = Date.now();
-if (currentTime - lastMessageTime < 5000) return; 
+if (currentTime - lastMessageTime < 5000) throw !0; 
 if (m.fromMe) return;
 try {
 await conn.sendPresenceUpdate('composing', m.chat)
