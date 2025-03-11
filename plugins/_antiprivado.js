@@ -1,10 +1,10 @@
 import ws from 'ws';
 export async function before(m, { conn, isAdmin, isBotAdmin, isOwner, isROwner }) {
-let prefixRegex = new RegExp('^[' + (opts['prefix'] || '‎z/i!#$%+£¢€¥^°=¶∆×÷π√✓©®:;?&.,\\-').replace(/[|\\{}()[\]^$+*?.\-\^]/g, '\\$&') + ']')
 let chat = global.db.data.chats[m.chat]
 let user = global.db.data.users[m.sender] || {};
 let setting = global.db.data.settings[this.user.jid]
 const settingsREAD = global.db.data.settings[this.user.jid] || {}
+let prefixRegex = new RegExp('^[' + setting.prefix.replace(/[|\\{}()[\]^$+*.\-\^]/g, '\\$&') + ']');
 const users = [...new Set([...global.conns.filter((conn) => conn.user && conn.ws.socket && conn.ws.socket.readyState !== ws.CLOSED).map((conn) => conn)])];
 const participants = m.isGroup ? (await conn.groupMetadata(m.chat)).participants : [];
 const mainBotInGroup = participants.some(p => p.id === global.conn.user.jid);

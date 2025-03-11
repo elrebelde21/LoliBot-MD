@@ -9,7 +9,8 @@ import { perplexity } from '../lib/chatgpt.js';
 export async function before(m, { conn }) {
 let user = global.db.data.users[m.sender]
 let chat = global.db.data.chats[m.chat];
-let prefixRegex = new RegExp('^[' + (opts['prefix'] || '‎z/i!#$%+£¢€¥^°=¶∆×÷π√✓©®:;?&.,\\-').replace(/[|\\{}()[\]^$+*?.\-\^]/g, '\\$&') + ']');
+let setting = global.db.data.settings[this.user.jid]
+let prefixRegex = new RegExp('^[' + setting.prefix.replace(/[|\\{}()[\]^$+*.\-\^]/g, '\\$&') + ']');
 
 //if (prefixRegex.test(m.text)) return true;
 if (m.mentionedJid.includes(this.user.jid)) {
