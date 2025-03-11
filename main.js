@@ -322,76 +322,79 @@ cp.spawn('find', [dir, '-amin', '2', '-type', 'f', '-delete']);
 if (opts['server']) (await import('./server.js')).default(global.conn, PORT)
 
 //respaldo de la sesión
-const backupCreds = () => {
-if (fs.existsSync(credsFile)) {
-fs.copyFileSync(credsFile, backupFile);
+function manageCredentials(action) {
+const credsFile = join(global.rutaBot, global.creds);
+const backupFile = join(respaldoDir, global.creds);
+if (action === 'backup' && existsSync(credsFile)) {
+copyFileSync(credsFile, backupFile);
 console.log(`[✅] Respaldo creado en ${backupFile}`);
-} else {
-console.log('[⚠] No se encontró el archivo creds.json para respaldar.');
-}};
-
-const restoreCreds = () => {
-if (fs.existsSync(backupFile)) {
-fs.copyFileSync(backupFile, credsFile);
-console.log(`[✅] creds.json restaurado desde el respaldo.`);
-} else if (fs.existsSync(credsFile)) {
-console.log(`[ℹ️] No hay respaldo, pero creds.json ya existe. Continuando...`);
-} else {
-console.log('[⚠] No se encontró ni el archivo creds.json ni el respaldo. Continuando...');
-}};
-
-setInterval(async () => {
-await backupCreds();
-console.log('[♻️] Respaldo periódico realizado.');
-}, 5 * 60 * 1000);
-
-async function connectionUpdate(update) {  
-const {connection, lastDisconnect, isNewLogin} = update
-global.stopped = connection
-if (isNewLogin) conn.isInit = true
-const code = lastDisconnect?.error?.output?.statusCode || lastDisconnect?.error?.output?.payload?.statusCode
-if (code && code !== DisconnectReason.loggedOut && conn?.ws.socket == null) {
-await global.reloadHandler(true).catch(console.error)
-//console.log(await global.reloadHandler(true).catch(console.error));
-global.timestamp.connect = new Date
+} else if (action === 'restore' && existsSync(backupFile)) {
+copyFileSync(backupFile, credsFile);
+console.log(`[✅] creds.json restaurado desde el respaldo`);
 }
-if (global.db.data == null) loadDatabase()
-if (update.qr != 0 && update.qr != undefined || methodCodeQR) {
-if (opcion == '1' || methodCodeQR) {
-console.log(chalk.cyan('✅ ESCANEA EL CÓDIGO QR EXPIRA EN 45 SEGUNDOS ✅.'))
+}
+
+setInterval(() => manageCredentials('backup'), 5 * 60 * 1000);
+
+//tmp
+async function cleanUp(type) {
+const targets = {
+tmp: join(__dirname, 'tmp'),
+session: './BotSession',
+subbots: './jadibts/'
+};
+if (type === 'tmp') {
+const files = readdirSync(targets.tmp);
+files.forEach(file => unlinkSync(join(targets.tmp, file)));
+console.log(chalk.cyan(`┏━━━━━━⪻♻️ AUTO-CLEAR 🗑️⪼━━━━━━•\n┃→ ARCHIVOS DE LA CARPETA TMP ELIMINADOS\n┗━━━━━━━━━━━━━━━━━━━━━━━━━━━•`));
+} else if (type === 'session' || type === 'subbots') {
+const dir = targets[type];
+const files = readdirSync(dir).filter(f => f.startsWith('pre-key-'));
+const threshold = Date.now() - (24 * 60 * 60 * 1000);
+for (const file of files) {
+const filePath = join(dir, file);
+const { mtimeMs } = statSync(filePath);
+if (mtimeMs < threshold) await unlinkSync(filePath);
+}
+console.log(chalk.bold.cyanBright(`\n╭» 🔵 ${type} 🔵\n│→ SESIONES NO ESENCIALES ELIMINADAS\n╰― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― 🗑️♻️`));
 }}
-if (connection == 'open') {
-console.log(chalk.bold.greenBright('\n▣─────────────────────────────···\n│\n│❧ 𝙲𝙾𝙽𝙴𝙲𝚃𝙰𝙳𝙾 𝙲𝙾𝚁𝚁𝙴𝙲𝚃𝙰𝙼𝙴𝙽𝚃𝙴 𝙰𝙻 𝚆𝙷𝙰𝚃𝚂𝙰𝙿𝙿 ✅\n│\n▣─────────────────────────────···'))
-await joinChannels(conn)
-}
-let reason = new Boom(lastDisconnect?.error)?.output?.statusCode
-if (connection === 'close') {
-if (reason === DisconnectReason.badSession) {
-conn.logger.error(`[ ⚠ ] Sesión incorrecta, por favor elimina la carpeta ${global.authFile} y escanea nuevamente.`);
-} else if (reason === DisconnectReason.connectionClosed) {
-conn.logger.warn(`[ ⚠ ] Conexión cerrada, reconectando...`);
-restoreCreds();
-await global.reloadHandler(true).catch(console.error)
-} else if (reason === DisconnectReason.connectionLost) {
-conn.logger.warn(`[ ⚠ ] Conexión perdida con el servidor, reconectando...`);
-restoreCreds(); 
-await global.reloadHandler(true).catch(console.error)
-} else if (reason === DisconnectReason.connectionReplaced) {
-conn.logger.error(`[ ⚠ ] Conexión reemplazada, se ha abierto otra nueva sesión. Por favor, cierra la sesión actual primero.`);
-} else if (reason === DisconnectReason.loggedOut) {
-conn.logger.error(`[ ⚠ ] Conexion cerrada, por favor elimina la carpeta ${global.authFile} y escanea nuevamente.`);
-await global.reloadHandler(true).catch(console.error)
-} else if (reason === DisconnectReason.restartRequired) {
-conn.logger.info(`[ ⚠ ] Reinicio necesario, reinicie el servidor si presenta algún problema.`);
-await global.reloadHandler(true).catch(console.error)
-} else if (reason === DisconnectReason.timedOut) {
-conn.logger.warn(`[ ⚠ ] Tiempo de conexión agotado, reconectando...`);
-await global.reloadHandler(true).catch(console.error) //process.send('reset')
-} else {
-conn.logger.warn(`[ ⚠ ] Razón de desconexión desconocida. ${reason || ''}: ${connection || ''}`);
-}}}
 
-process.on('uncaughtException', console.error);
+setInterval(() => cleanUp('tmp'), 1000 * 60 * 3);
+setInterval(() => { cleanUp('session'); cleanUp('subbots'); }, 1000 * 60 * 10);
+
+async function connectionUpdate(update) {
+const { connection, lastDisconnect, isNewLogin } = update;
+global.stopped = connection;
+if (isNewLogin) conn.isInit = true;
+const code = lastDisconnect?.error?.output?.statusCode;
+if (code && code !== DisconnectReason.loggedOut && !conn?.ws.socket) {
+await global.reloadHandler(true).catch(err => console.error(chalk.redBright(`Error en reloadHandler: ${err.message}`)));
+global.timestamp.connect = new Date();
+}
+
+if (connection === 'open') {
+console.log(chalk.bold.greenBright('\n▣─────────────────────────────···\n│\n│❧ 𝙲𝙾𝙽𝙴𝙲𝚃𝙰𝙳𝙾 𝙲𝙾𝚁𝚁𝙴𝙲𝚃𝙰𝙼𝙴𝙽𝚃𝙴 𝙰𝙻 𝚆𝙷𝙰𝚃𝚂𝙰𝙿𝙿 ✅\n│\n▣─────────────────────────────···'));
+await joinChannels(conn);
+} else if (connection === 'close') {
+const reason = new Boom(lastDisconnect?.error)?.output?.statusCode;
+const messages = {[DisconnectReason.badSession]: chalk.redBright(`[ ⚠ ] Sesión incorrecta, por favor elimina la carpeta ${global.authFile} y escanea nuevamente.`),
+[DisconnectReason.connectionClosed]: chalk.yellowBright(`[ ⚠ ] Conexión cerrada, reconectando...`),
+[DisconnectReason.connectionLost]: chalk.yellowBright(`[ ⚠ ] Conexión perdida con el servidor, reconectando...`),
+[DisconnectReason.connectionReplaced]: chalk.redBright(`[ ⚠ ] Conexión reemplazada, se ha abierto otra nueva sesión. Por favor, cierra la sesión actual primero.`),
+[DisconnectReason.loggedOut]: chalk.redBright(`[ ⚠ ] Conexión cerrada, por favor elimina la carpeta ${global.authFile} y escanea nuevamente.`),
+[DisconnectReason.restartRequired]: chalk.cyanBright(`[ ⚠ ] Reinicio necesario, reinicie el servidor si presenta algún problema.`),
+[DisconnectReason.timedOut]: chalk.yellowBright(`[ ⚠ ] Tiempo de conexión agotado, reconectando...`),
+};
+
+if (reason in messages) {
+conn.logger.warn(messages[reason]);
+if ([DisconnectReason.connectionClosed, DisconnectReason.connectionLost].includes(reason)) {
+manageCredentials('restore');
+}
+await global.reloadHandler(true).catch(err => console.error(chalk.redBright(`[ ⚠ ] Error en reconexión: ${err.message}`)));
+} else {
+console.warn(chalk.magentaBright(`[ ⚠ ] Razón de desconexión desconocida: ${reason || ''}`));
+}}}
 
 let isInit = true;
 let handler = await import('./handler.js');
@@ -533,100 +536,6 @@ const s = global.support = {ffmpeg, ffprobe, ffmpegWebp, convert, magick, gm, fi
 Object.freeze(global.support);
 }
 
-function clearTmp() {
-const tmpDir = join(__dirname, 'tmp')
-const filenames = readdirSync(tmpDir)
-filenames.forEach(file => {
-const filePath = join(tmpDir, file)
-unlinkSync(filePath)})
-}
-
-async function purgeSession() {
-const sessionDir = './BotSession';
-try {
-if (!existsSync(sessionDir)) return;
-const files = await readdir(sessionDir);
-const preKeys = files.filter(file => file.startsWith('pre-key-'));
-const now = Date.now();
-const oneHourAgo = now - (24 * 60 * 60 * 1000); //24 horas
-    
-for (const file of preKeys) {
-const filePath = join(sessionDir, file);
-const fileStats = await stat(filePath);
-if (fileStats.mtimeMs < oneHourAgo) { 
-try {
-await unlink(filePath);
-console.log(chalk.green(`[🗑️] Pre-key antigua eliminada: ${file}`));
-} catch (err) {
-//console.error(chalk.red(`[⚠] Error al eliminar pre-key antigua ${file}: ${err.message}`));
-}} else {
-//console.log(chalk.yellow(`[ℹ️] Manteniendo pre-key activa: ${file}`));
-}}
-console.log(chalk.cyanBright(`[🔵] Sesiones no esenciales eliminadas de ${global.authFile}`));
-} catch (err) {
-//console.error(chalk.red(`[⚠] Error al limpiar BotSession: ${err.message}`));
-}}
-
-async function purgeSessionSB() {
-const jadibtsDir = './jadibts/';
-try {
-if (!existsSync(jadibtsDir)) return;
-const directories = await readdir(jadibtsDir);
-let SBprekey = [];
-const now = Date.now();
-const oneHourAgo = now - (24 * 60 * 60 * 1000); //24 horas
-    
-for (const dir of directories) {
-const dirPath = join(jadibtsDir, dir);
-const stats = await stat(dirPath);
-if (stats.isDirectory()) {
-const files = await readdir(dirPath);
-const preKeys = files.filter(file => file.startsWith('pre-key-') && file !== 'creds.json');
-SBprekey = [...SBprekey, ...preKeys];
-for (const file of preKeys) {
-const filePath = join(dirPath, file);
-const fileStats = await stat(filePath);
-if (fileStats.mtimeMs < oneHourAgo) { 
-try {
-await unlink(filePath);
-console.log(chalk.green(`[🗑️] Pre-key antigua eliminada de sub-bot ${dir}: ${file}`));
-} catch (err) {
-//console.error(chalk.red(`[⚠] Error al eliminar pre-key antigua ${file} en ${dir}: ${err.message}`));
-}} else {
-//console.log(chalk.yellow(`[ℹ️] Manteniendo pre-key activa en sub-bot ${dir}: ${file}`));
-}}}}
-if (SBprekey.length === 0) {
-//console.log(chalk.green(`[ℹ️] No se encontraron pre-keys en sub-bots.`));
-} else {
-console.log(chalk.cyanBright(`[🔵] Pre-keys antiguas eliminadas de sub-bots: ${SBprekey.length}`));
-}} catch (err) {
-//console.error(chalk.red(`[⚠] Error al limpiar sub-bots: ${err.message}`));
-}}
-
-async function purgeOldFiles() {
-const directories = ['./BotSession/', './jadibts/'];
-for (const dir of directories) {
-try {
-if (!fs.existsSync(dir)) { 
-console.log(chalk.yellow(`[⚠] Carpeta no existe: ${dir}`));
-continue;
-}
-const files = await fsPromises.readdir(dir); 
-for (const file of files) {
-if (file !== 'creds.json') {
-const filePath = join(dir, file);
-try {
-await fsPromises.unlink(filePath);
-//console.log(chalk.green(`[🗑️] Archivo residual eliminado: ${file} en ${dir}`));
-} catch (err) {
-//console.error(chalk.red(`[⚠] Error al eliminar ${file} en ${dir}: ${err.message}`));
-}}}
-} catch (err) {
-//console.error(chalk.red(`[⚠] Error al limpiar ${dir}: ${err.message}`));
-}}
-//console.log(chalk.cyanBright(`[🟠] Archivos residuales eliminados de ${directories.join(', ')}`));
-}
-
 function redefineConsoleMethod(methodName, filterStrings) {
 const originalConsoleMethod = console[methodName]
 console[methodName] = function() {
@@ -636,21 +545,6 @@ arguments[0] = ""
 }
 originalConsoleMethod.apply(console, arguments)
 }}
-
-setInterval(async () => {
-if (stopped === 'close' || !conn || !conn.user) return;
-  await clearTmp();
-  console.log(chalk.cyan(`┏━━━━━━⪻♻️ AUTO-CLEAR 🗑️⪼━━━━━━•\n┃→ ARCHIVOS DE LA CARPETA TMP ELIMINADOS\n┗━━━━━━━━━━━━━━━━━━━━━━━━━━━•`));
-}, 1000 * 60 * 3); //3 min
-
-setInterval(async () => {
-  if (stopped === 'close' || !conn || !conn.user) return;
-  await purgeSessionSB();
-  await purgeSession();
-  console.log(chalk.bold.cyanBright(`\n╭» 🔵 ${global.authFile} 🔵\n│→ SESIONES NO ESENCIALES ELIMINADAS\n╰― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― 🗑️♻️`));
-  await purgeOldFiles();
-  console.log(chalk.bold.cyanBright(`\n╭» 🟠 ARCHIVOS 🟠\n│→ ARCHIVOS RESIDUALES ELIMINADAS\n╰― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― 🗑️♻️`));
-}, 1000 * 60 * 10); //10 min
 
 _quickTest().then(() => conn.logger.info('Ƈᴀʀɢᴀɴᴅᴏ．．．.\n'))
 .catch(console.error)
