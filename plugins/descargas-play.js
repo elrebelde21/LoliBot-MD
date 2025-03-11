@@ -3,6 +3,7 @@ import fetch from 'node-fetch';
 import yts from 'yt-search';
 import ytdl from 'ytdl-core';
 import axios from 'axios';
+import { savetube } from '../lib/yt-savetube.js'
 import { ogmp3 } from '../lib/youtubedl.js'; 
 import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
@@ -55,8 +56,11 @@ const audioQualities = ['64', '96', '128', '192', '256', '320'];
 const videoQualities = ['240', '360', '480', '720', '1080'];
 const isAudioCommand = command === 'play' || command === 'musica' || command === 'play3';
 const selectedQuality = (isAudioCommand ? audioQualities : videoQualities).includes(qualityInput) ? qualityInput : (isAudioCommand ? '320' : '720');
+const isAudio = command.toLowerCase().includes('mp3') || command.toLowerCase().includes('audio')
+const format = isAudio ? 'mp3' : '720' 
 
 const audioApis = [
+{ url: () => savetube.download(yt_play[0].url, format), extract: (data) => ({ data: data.result.download, isDirect: false }) },
 { url: () => ogmp3.download(yt_play[0].url, selectedQuality, 'audio'), extract: (data) => ({ data: data.result.download, isDirect: false }) },
 { url: () => ytmp3(yt_play[0].url), extract: (data) => ({ data, isDirect: true }) },
 { url: () => fetch(`https://api.dorratz.com/v3/ytdl?url=${yt_play[0].url}`).then(res => res.json()), extract: (data) => { 
@@ -71,14 +75,15 @@ return { data: mp3.url, isDirect: false }}},
 }];
 
 const videoApis = [
+{ url: () => savetube.download(yt_play[0].url, '720'), extract: (data) => ({ data: data.result.download, isDirect: false }) },
 { url: () => ogmp3.download(yt_play[0].url, selectedQuality, 'video'), extract: (data) => ({ data: data.result.download, isDirect: false }) },
 { url: () => ytmp4(yt_play[0].url), extract: (data) => ({ data, isDirect: true }) },
 { url: () => fetch(`https://api.siputzx.my.id/api/d/ytmp4?url=${yt_play[0].url}`).then(res => res.json()), extract: (data) => ({ data: data.dl, isDirect: false }) },
 { url: () => fetch(`${APIs.neoxr.url}/youtube?url=${yt_play[0].url}&type=video&quality=720p&apikey=${APIs.neoxr.key}`).then(res => res.json()), extract: (data) => ({ data: data.data.url, isDirect: false }) },
 { url: () => fetch(`https://api.fgmods.xyz/api/downloader/ytmp4?url=${yt_play[0].url}&apikey=${APIs.fgmods.key}`).then(res => res.json()), extract: (data) => ({ data: data.result.dl_url, isDirect: false }) },
 { url: () => fetch(`${apis}/download/ytmp4?url=${encodeURIComponent(yt_play[0].url)}`).then(res => res.json()), extract: (data) => ({ data: data.status ? data.data.download.url : null, isDirect: false }) },
-{ url: () => fetch(`https://exonity.tech/api/dl/playmp4?query=${encodeURIComponent(yt_play[0].title)}`).then(res => res.json()), extract: (data) => ({ data: data.result.download, isDirect: false }) }
-];
+{ url: () => fetch(`https://exonity.tech/api/dl/playmp4?query=${encodeURIComponent(yt_play[0].title)}`).then(res => res.json()), extract: (data) => ({ data: data.result.download, isDirect: false })
+}];
 
 const download = async (apis) => {
 let mediaData = null;

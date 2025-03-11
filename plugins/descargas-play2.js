@@ -3,6 +3,7 @@ import fetch from 'node-fetch'
 import yts from 'yt-search'
 import ytdl from 'ytdl-core'
 import axios from 'axios'
+import { savetube } from '../lib/yt-savetube.js' 
 import { ogmp3 } from '../lib/youtubedl.js'; 
 import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
@@ -29,6 +30,13 @@ throw `⚠️ 𝙉𝙤 𝙨𝙚 𝙚𝙣𝙘𝙤𝙣𝙩𝙧𝙤 𝙪𝙣 𝙚�
 if (command == 'ytmp3' || command == 'fgmp3') {
 m.reply([`*⌛ 𝙀𝙨𝙥𝙚𝙧𝙚 ✋ 𝙪𝙣 𝙢𝙤𝙢𝙚𝙣𝙩𝙤... 𝙔𝙖 𝙚𝙨𝙩𝙤𝙮 𝙙𝙚𝙨𝙘𝙖𝙧𝙜𝙖𝙙𝙤 𝙩𝙪 𝙖𝙪𝙙𝙞𝙤🍹*`, `⌛ 𝙋𝙍𝙊𝘾𝙀𝙎𝘼𝙉𝘿𝙊...\n*𝘌𝘴𝘵𝘰𝘺 𝘪𝘯𝘵𝘦𝘯𝘵𝘢𝘯𝘥𝘰 𝘥𝘦𝘴𝘤𝘢𝘳𝘨𝘢 𝘴𝘶𝘴 𝘈𝘶𝘥𝘪𝘰 𝘦𝘴𝘱𝘦𝘳𝘦 🏃‍♂️💨*`, `Calmao pa estoy bucando tu canción 😎\n\n*Recuerda colocar bien el nombre de la cancion o el link del video de youtube*\n\n> *Si el comando *play no funciona utiliza el comando *ytmp3*`].getRandom())  
 try {
+const isAudio = command.toLowerCase().includes('mp3') || command.toLowerCase().includes('audio')
+const format = isAudio ? 'mp3' : '720' 
+const result = await savetube.download(args[0], format)
+const data = result.result
+await conn.sendMessage(m.chat, { audio: { url: data.download }, mimetype: 'audio/mpeg', fileName: `audio.mp3` }, { quoted: m });
+} catch {   
+try {                   
 const [input, quality = '320'] = text.split(' '); 
 const validQualities = ['64', '96', '128', '192', '256', '320'];
 const selectedQuality = validQualities.includes(quality) ? quality : '320';
@@ -80,11 +88,16 @@ let infoo = await ytdl.getInfo('https://youtu.be/' + __res[0].videoId)
 let ress = await ytdl.chooseFormat(infoo.formats, { filter: 'audioonly' })
 conn.sendMessage(m.chat, { audio: { url: ress.url }, fileName: __res[0].title + '.mp3', mimetype: 'audio/mp4' }, { quoted: m })  
 } catch {
-}}}}}}}}}
+}}}}}}}}}}
 
 if (command == 'ytmp4' || command == 'fgmp4') {
 m.reply([`*⌛ 𝙀𝙨𝙥𝙚𝙧𝙚 ✋ 𝙪𝙣 𝙢𝙤𝙢𝙚𝙣𝙩𝙤... 𝙔𝙖 𝙚𝙨𝙩𝙤𝙮 𝙙𝙚𝙨𝙘𝙖𝙧𝙜𝙖𝙙𝙤 𝙩𝙪 𝙑𝙞𝙙𝙚𝙤 🍹*`, `⌛ 𝙋𝙍𝙊𝘾𝙀𝙎𝘼𝙉𝘿𝙊...\n*𝘌𝘴𝘵𝘰𝘺 𝘪𝘯𝘵𝘦𝘯𝘵𝘢𝘯𝘥𝘰 𝘥𝘦𝘴𝘤𝘢𝘳𝘨𝘢 𝘴𝘶𝘴 𝘝𝘪𝘥𝘦𝘰 𝘦𝘴𝘱𝘦𝘳𝘦 🏃‍♂️💨*`, `Calma ✋🥸🤚\n\n*Estoy descargando tu video 🔄*\n\n> *Aguarde un momento, por favor*`].getRandom())   
 try {
+const result = await savetube.download(args[0], "720")
+const data = result.result
+await conn.sendMessage(m.chat, { video: { url: data.download }, mimetype: 'video/mp4', fileName: `${data.title}.mp4`, caption: `🔰 Aquí está tu video\n🔥 Título: ${data.title}` }, { quoted: m })
+} catch {   
+try {              
 const video = await ytmp4(args);
 await conn.sendMessage(m.chat, { video: { url: video }, fileName: `video.mp4`, mimetype: 'video/mp4', caption: `🔰 Aquí está tu video`}, { quoted: m })
 } catch {
@@ -133,7 +146,7 @@ let mediaa = await ytMp4(youtubeLink)
 await conn.sendMessage(m.chat, { video: { url: mediaa.result }, fileName: `error.mp4`, caption: `_${wm}_`, thumbnail: mediaa.thumb, mimetype: 'video/mp4' }, { quoted: m })     
 } catch (e) {
 console.log(e)   
-}}}}}}}}}}
+}}}}}}}}}}}
 handler.help = ['ytmp4', 'ytmp3'];
 handler.tags = ['downloader'];
 handler.command = /^ytmp3|ytmp4|fgmp4|audio|fgmp3|dlmp3?$/i
