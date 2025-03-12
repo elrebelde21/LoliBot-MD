@@ -362,39 +362,53 @@ console.log(chalk.bold.cyanBright(`\n╭» 🔵 ${type} 🔵\n│→ SESIONES NO
 setInterval(() => cleanUp('tmp'), 1000 * 60 * 3);
 setInterval(() => { cleanUp('session'); cleanUp('subbots'); }, 1000 * 60 * 10);
 
-async function connectionUpdate(update) {
-const { connection, lastDisconnect, isNewLogin } = update;
-global.stopped = connection;
-if (isNewLogin) conn.isInit = true;
-const code = lastDisconnect?.error?.output?.statusCode;
-if (code && code !== DisconnectReason.loggedOut && !conn?.ws.socket) {
-await global.reloadHandler(true).catch(err => console.error(chalk.redBright(`Error en reloadHandler: ${err.message}`)));
-global.timestamp.connect = new Date();
+async function connectionUpdate(update) {  
+const {connection, lastDisconnect, isNewLogin} = update
+global.stopped = connection
+if (isNewLogin) conn.isInit = true
+const code = lastDisconnect?.error?.output?.statusCode || lastDisconnect?.error?.output?.payload?.statusCode
+if (code && code !== DisconnectReason.loggedOut && conn?.ws.socket == null) {
+await global.reloadHandler(true).catch(console.error)
+//console.log(await global.reloadHandler(true).catch(console.error));
+global.timestamp.connect = new Date
 }
-
-if (connection === 'open') {
-console.log(chalk.bold.greenBright('\n▣─────────────────────────────···\n│\n│❧ 𝙲𝙾𝙽𝙴𝙲𝚃𝙰𝙳𝙾 𝙲𝙾𝚁𝚁𝙴𝙲𝚃𝙰𝙼𝙴𝙽𝚃𝙴 𝙰𝙻 𝚆𝙷𝙰𝚃𝚂𝙰𝙿𝙿 ✅\n│\n▣─────────────────────────────···'));
-await joinChannels(conn);
-} else if (connection === 'close') {
-const reason = new Boom(lastDisconnect?.error)?.output?.statusCode;
-const messages = {[DisconnectReason.badSession]: chalk.redBright(`[ ⚠ ] Sesión incorrecta, por favor elimina la carpeta ${global.authFile} y escanea nuevamente.`),
-[DisconnectReason.connectionClosed]: chalk.yellowBright(`[ ⚠ ] Conexión cerrada, reconectando...`),
-[DisconnectReason.connectionLost]: chalk.yellowBright(`[ ⚠ ] Conexión perdida con el servidor, reconectando...`),
-[DisconnectReason.connectionReplaced]: chalk.redBright(`[ ⚠ ] Conexión reemplazada, se ha abierto otra nueva sesión. Por favor, cierra la sesión actual primero.`),
-[DisconnectReason.loggedOut]: chalk.redBright(`[ ⚠ ] Conexión cerrada, por favor elimina la carpeta ${global.authFile} y escanea nuevamente.`),
-[DisconnectReason.restartRequired]: chalk.cyanBright(`[ ⚠ ] Reinicio necesario, reinicie el servidor si presenta algún problema.`),
-[DisconnectReason.timedOut]: chalk.yellowBright(`[ ⚠ ] Tiempo de conexión agotado, reconectando...`),
-};
-
-if (reason in messages) {
-conn.logger.warn(messages[reason]);
-if ([DisconnectReason.connectionClosed, DisconnectReason.connectionLost].includes(reason)) {
+if (global.db.data == null) loadDatabase()
+if (update.qr != 0 && update.qr != undefined || methodCodeQR) {
+if (opcion == '1' || methodCodeQR) {
+console.log(chalk.cyan('✅ ESCANEA EL CÓDIGO QR EXPIRA EN 45 SEGUNDOS ✅.'))
+}}
+if (connection == 'open') {
+console.log(chalk.bold.greenBright('\n▣─────────────────────────────···\n│\n│❧ 𝙲𝙾𝙽𝙴𝙲𝚃𝙰𝙳𝙾 𝙲𝙾𝚁𝚁𝙴𝙲𝚃𝙰𝙼𝙴𝙽𝚃𝙴 𝙰𝙻 𝚆𝙷𝙰𝚃𝚂𝙰𝙿𝙿 ✅\n│\n▣─────────────────────────────···'))
+await joinChannels(conn)
+}
+let reason = new Boom(lastDisconnect?.error)?.output?.statusCode
+if (connection === 'close') {
+if (reason === DisconnectReason.badSession) {
+conn.logger.error(`[ ⚠ ] Sesión incorrecta, por favor elimina la carpeta ${global.authFile} y escanea nuevamente.`);
+} else if (reason === DisconnectReason.connectionClosed) {
+conn.logger.warn(`[ ⚠ ] Conexión cerrada, reconectando...`);
 manageCredentials('restore');
-}
-await global.reloadHandler(true).catch(err => console.error(chalk.redBright(`[ ⚠ ] Error en reconexión: ${err.message}`)));
+await global.reloadHandler(true).catch(console.error)
+} else if (reason === DisconnectReason.connectionLost) {
+conn.logger.warn(`[ ⚠ ] Conexión perdida con el servidor, reconectando...`);
+manageCredentials('restore');
+await global.reloadHandler(true).catch(console.error)
+} else if (reason === DisconnectReason.connectionReplaced) {
+conn.logger.error(`[ ⚠ ] Conexión reemplazada, se ha abierto otra nueva sesión. Por favor, cierra la sesión actual primero.`);
+} else if (reason === DisconnectReason.loggedOut) {
+conn.logger.error(`[ ⚠ ] Conexion cerrada, por favor elimina la carpeta ${global.authFile} y escanea nuevamente.`);
+await global.reloadHandler(true).catch(console.error)
+} else if (reason === DisconnectReason.restartRequired) {
+conn.logger.info(`[ ⚠ ] Reinicio necesario, reinicie el servidor si presenta algún problema.`);
+await global.reloadHandler(true).catch(console.error)
+} else if (reason === DisconnectReason.timedOut) {
+conn.logger.warn(`[ ⚠ ] Tiempo de conexión agotado, reconectando...`);
+await global.reloadHandler(true).catch(console.error) //process.send('reset')
 } else {
-console.warn(chalk.magentaBright(`[ ⚠ ] Razón de desconexión desconocida: ${reason || ''}`));
+conn.logger.warn(`[ ⚠ ] Razón de desconexión desconocida. ${reason || ''}: ${connection || ''}`);
 }}}
+
+process.on('uncaughtException', console.error);
 
 let isInit = true;
 let handler = await import('./handler.js');
