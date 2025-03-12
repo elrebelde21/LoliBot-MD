@@ -34,7 +34,6 @@ m.react(`✅`);
 try {
 const res = await fetch(`https://api.siputzx.my.id/api/d/mediafire?url=${args}`);
 const data = await res.json();
-if (!data.status || !data.data) return 
 const fileDataArray = data.data;
 for (const fileData of fileDataArray) {
 const caption = `┏━━『 𝐌𝐄𝐃𝐈𝐀𝐅𝐈𝐑𝐄 』━━•
@@ -50,7 +49,6 @@ m.react('✅');
 } catch {
 try {
 const res = await fetch(`${apis}/api/mediafire?url=${args[0]}`);
-if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
 const data = await res.json();
 const fileDataArray = data.data;
 fileDataArray.forEach((fileData) => {
