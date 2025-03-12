@@ -29,7 +29,7 @@
 "url": "https://github.com/elrebelde21/LoliBot-MD/issues" },
 "license": "GPL-3.0-or-later",
 "dependencies": {
-"@whiskeysockets/baileys": "github:ds6/fuckers",
+"@whiskeysockets/baileys": "github:elrebelde21/baileys",
 "@adiwajshing/keyed-db": "^0.2.4",
 "@bochilteam/scraper": "^5.0.1",
 "@vitalets/google-translate-api": "^8.0.0",
