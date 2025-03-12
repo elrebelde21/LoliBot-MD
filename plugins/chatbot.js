@@ -119,6 +119,7 @@ query = m.text.trim();
 if (!query) return;
 
 conn.sendPresenceUpdate('composing', m.chat);
+antiSpam.set(m.sender, currentTime);
 async function luminsesi(q, username, logic) {
 try {
 const response = await axios.post("https://luminai.my.id", {
