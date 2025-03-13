@@ -11,6 +11,15 @@ let sticker = 'https://qu.ax/Wdsb.webp'
 if (!args[0]) throw `⚠️ 𝙄𝙣𝙜𝙧𝙚𝙨𝙚 𝙪𝙣 𝙀𝙣𝙡𝙖𝙘𝙚 𝙫𝙖𝙡𝙞𝙙𝙤 𝙙𝙚𝙡 𝙢𝙚𝙙𝙞𝙖𝙛𝙞𝙧𝙚 𝙀𝙟:*\n${usedPrefix + command} https://www.mediafire.com/file/sd9hl31vhhzf76v/EvolutionV1.1-beta_%2528Recomendado%2529.apk/file`
 m.react(`🚀`) 
 try {
+const res = await fetch(`https://api.agatz.xyz/api/mediafire?url=${args}`)
+const data = await res.json();
+const caption = `┏━━『 𝐌𝐄𝐃𝐈𝐀𝐅𝐈𝐑𝐄 』━━•\n┃❥ 𝐍𝐨𝐦𝐛𝐫𝐞 :\n┃${data.data.nama}\n┃——————«•»——————\n┃❥ 𝐏𝐞𝐬𝐨 :\n┃${data.data.size}\n\n┃——————«•»——————\n┃❥ 𝐓𝐢𝐩𝐨 :\n┃${data.data.mime}\n╰━━━⊰ 𓃠 ${vs} ⊱━━━━•\n\n> ⏳ ᴱˢᵖᵉʳᵉ ᵘⁿ ᵐᵒᵐᵉⁿᵗᵒ ᵉⁿ ˡᵒˢ ᵠᵘᵉ ᵉⁿᵛᶦᵒˢ ˢᵘˢ ᵃʳᶜʰᶦᵛᵒˢ`.trim();
+m.reply(caption);
+conn.sendFile(m.chat, data.data.link, data.data.nama, '', m, null, {mimetype: data.data.mime, asDocument: true, 
+});
+m.react(`✅`);
+} catch {
+try {
 const res = await fetch(`${APIs.fgmods.url}/downloader/mediafire?url=${args}&apikey=${APIs.fgmods.key}`);
 const data = await res.json();
 const fileData = data.result;
@@ -23,17 +32,9 @@ await conn.sendFile(m.chat, fileData.url, fileData.title, caption, m, null, {mim
 m.react('✅'); 
 } catch {
 try {
-const res = await fetch(`https://api.agatz.xyz/api/mediafire?url=${args}`)
-const data = await res.json();
-const caption = `┏━━『 𝐌𝐄𝐃𝐈𝐀𝐅𝐈𝐑𝐄 』━━•\n┃❥ 𝐍𝐨𝐦𝐛𝐫𝐞 :\n┃${data.data.nama}\n┃——————«•»——————\n┃❥ 𝐏𝐞𝐬𝐨 :\n┃${data.data.size}\n\n┃——————«•»——————\n┃❥ 𝐓𝐢𝐩𝐨 :\n┃${data.data.mime}\n╰━━━⊰ 𓃠 ${vs} ⊱━━━━•\n\n> ⏳ ᴱˢᵖᵉʳᵉ ᵘⁿ ᵐᵒᵐᵉⁿᵗᵒ ᵉⁿ ˡᵒˢ ᵠᵘᵉ ᵉⁿᵛᶦᵒˢ ˢᵘˢ ᵃʳᶜʰᶦᵛᵒˢ`.trim();
-m.reply(caption);
-conn.sendFile(m.chat, data.data.link, data.data.nama, '', m, null, {mimetype: data.data.mime, asDocument: true, 
-});
-m.react(`✅`);
-} catch {
-try {
 const res = await fetch(`https://api.siputzx.my.id/api/d/mediafire?url=${args}`);
 const data = await res.json();
+if (!data.status || !data.data) return 
 const fileDataArray = data.data;
 for (const fileData of fileDataArray) {
 const caption = `┏━━『 𝐌𝐄𝐃𝐈𝐀𝐅𝐈𝐑𝐄 』━━•
@@ -49,6 +50,7 @@ m.react('✅');
 } catch {
 try {
 const res = await fetch(`${apis}/api/mediafire?url=${args[0]}`);
+if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
 const data = await res.json();
 const fileDataArray = data.data;
 fileDataArray.forEach((fileData) => {
