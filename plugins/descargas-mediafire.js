@@ -11,11 +11,25 @@ let sticker = 'https://qu.ax/Wdsb.webp'
 if (!args[0]) throw `⚠️ 𝙄𝙣𝙜𝙧𝙚𝙨𝙚 𝙪𝙣 𝙀𝙣𝙡𝙖𝙘𝙚 𝙫𝙖𝙡𝙞𝙙𝙤 𝙙𝙚𝙡 𝙢𝙚𝙙𝙞𝙖𝙛𝙞𝙧𝙚 𝙀𝙟:*\n${usedPrefix + command} https://www.mediafire.com/file/sd9hl31vhhzf76v/EvolutionV1.1-beta_%2528Recomendado%2529.apk/file`
 m.react(`🚀`) 
 try {
-const res = await fetch(`https://api.agatz.xyz/api/mediafire?url=${args}`)
+const res = await fetch(`https://api.agatz.xyz/api/mediafire?url=${args}`);
 const data = await res.json();
-const caption = `┏━━『 𝐌𝐄𝐃𝐈𝐀𝐅𝐈𝐑𝐄 』━━•\n┃❥ 𝐍𝐨𝐦𝐛𝐫𝐞 :\n┃${data.data.nama}\n┃——————«•»——————\n┃❥ 𝐏𝐞𝐬𝐨 :\n┃${data.data.size}\n\n┃——————«•»——————\n┃❥ 𝐓𝐢𝐩𝐨 :\n┃${data.data.mime}\n╰━━━⊰ 𓃠 ${vs} ⊱━━━━•\n\n> ⏳ ᴱˢᵖᵉʳᵉ ᵘⁿ ᵐᵒᵐᵉⁿᵗᵒ ᵉⁿ ˡᵒˢ ᵠᵘᵉ ᵉⁿᵛᶦᵒˢ ˢᵘˢ ᵃʳᶜʰᶦᵛᵒˢ`.trim();
+const file = data.data[0];
+const caption = `┏━━『 𝐌𝐄𝐃𝐈𝐀𝐅𝐈𝐑𝐄 』━━•
+┃❥ 𝐍𝐨𝐦𝐛𝐫𝐞 :
+┃${file.nama}
+┃——————«•»——————
+┃❥ 𝐏𝐞𝐬𝐨 :
+┃${file.size}
+┃——————«•»——————
+┃❥ 𝐓𝐢𝐩𝐨 :
+┃${file.mime}
+╰━━━⊰ 𓃠 ${vs} ⊱━━━━•
+
+> ⏳ ᴱˢᵖᵉʳᵉ ᵘⁿ ᵐᵒᵐᵉⁿᵗᵒ ᵉⁿ ˡᵒˢ ᵠᵘᵉ ᵉⁿᵛᶦᵒˢ ˢᵘˢ ᵃʳᶜʰᶦᵛᵒˢ`.trim();
 m.reply(caption);
-conn.sendFile(m.chat, data.data.link, data.data.nama, '', m, null, {mimetype: data.data.mime, asDocument: true, 
+conn.sendFile(m.chat, file.link, file.nama, '', m, null, {
+  mimetype: file.mime,
+  asDocument: true,
 });
 m.react(`✅`);
 } catch {
