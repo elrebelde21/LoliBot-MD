@@ -31,19 +31,19 @@ for (let i = 0; i < maxIntentos; i++) {
     }
   
     try {
-    let syms1 = await fetch('https://raw.githubusercontent.com/Skidy89/chat-gpt-jailbreak/main/Text.txt').then(v => v.text());
-   let resPerplexity = await perplexityIA(prompt, syms1);
+      let syms1 = await fetch('https://raw.githubusercontent.com/Skidy89/chat-gpt-jailbreak/main/Text.txt').then(v => v.text());
+    let resPerplexity = await perplexityIA(prompt, syms1);
       if (resPerplexity) {
         try {
           pregunta = JSON.parse(resPerplexity);
-          if (pregunta.question && pregunta.response) break; 
+          if (pregunta.question && pregunta.response) break;
         } catch (error) {
           console.error("Error parseando JSON de Perplexity:", error);
         }
       }
 
       if (!pregunta) {
-        let gpt = await fetch(`${apis}/ia/gptweb?text=${encodeURIComponent(prompt)}`);
+        let gpt = await fetch(`${apis}/ia/gptweb?text=${prompt}`);
         let resGPT = await gpt.json();
         if (resGPT.data) {
           let dataText = resGPT.data;
@@ -198,11 +198,11 @@ handler.register = true;
 
 export default handler;
 
-async function perplexityIA(q, logic) {
+async function perplexityIA(prompt, syms1) {
             try {
                 let response = await perplexity.chat([
-                    { role: 'system', content: logic || syms1 },
-                    { role: 'user', content: q }
+                    { role: 'system', content: syms1 },
+                    { role: 'user', content: prompt }
                 ], 'sonar-pro');
                 if (response.status) {
                     return response.result.response;
@@ -224,4 +224,3 @@ return res.data;
     return err;
   }
 }
-
