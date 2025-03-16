@@ -1,6 +1,7 @@
 import fs from 'fs';
 import fetch from 'node-fetch';
 import similarity from 'similarity';
+import { perplexity } from '../lib/chatgpt.js';
 
 let timeout = 50000;  // 50s
 let timeout2 = 20000; // 20s
@@ -30,22 +31,35 @@ for (let i = 0; i < maxIntentos; i++) {
     }
   
     try {
-      let gpt = await fetch(`${apis}/ia/gptweb?text=${encodeURIComponent(prompt)}`);
-      let res = await gpt.json();
-      if (res.data) {
-        let dataText = res.data;
-        const match = dataText.match(/```json\s*([\s\S]*?)\s*```/);
-        if (match) {
-          dataText = match[1];
-        }
+    let syms1 = await fetch('https://raw.githubusercontent.com/Skidy89/chat-gpt-jailbreak/main/Text.txt').then(v => v.text());
+   let resPerplexity = await perplexityIA(prompt, syms1);
+      if (resPerplexity) {
         try {
-          pregunta = JSON.parse(dataText);
+          pregunta = JSON.parse(resPerplexity);
+          if (pregunta.question && pregunta.response) break; 
         } catch (error) {
-          console.error("Error parseando JSON de GPT:", error);
+          console.error("Error parseando JSON de Perplexity:", error);
+        }
+      }
+
+      if (!pregunta) {
+        let gpt = await fetch(`${apis}/ia/gptweb?text=${encodeURIComponent(prompt)}`);
+        let resGPT = await gpt.json();
+        if (resGPT.data) {
+          let dataText = resGPT.data;
+          const match = dataText.match(/```json\s*([\s\S]*?)\s*```/);
+          if (match) dataText = match[1];
+
+          try {
+            pregunta = JSON.parse(dataText);
+            if (pregunta.question && pregunta.response) break; // Si es válida, terminamos
+          } catch (error) {
+            console.error("Error parseando JSON de GPT:", error);
+          }
         }
       }
     } catch (error) {
-      console.error("Error en fetch a GPT:", error);
+      console.error("Error en fetch de IA:", error);
     }
   
     if (!pregunta) {
@@ -184,6 +198,23 @@ handler.register = true;
 
 export default handler;
 
+async function perplexityIA(q, logic) {
+            try {
+                let response = await perplexity.chat([
+                    { role: 'system', content: logic || syms1 },
+                    { role: 'user', content: q }
+                ], 'sonar-pro');
+                if (response.status) {
+                    return response.result.response;
+                } else {
+                    throw new Error(`Error en Perplexity: ${response.result.error}`);
+                }
+            } catch (error) {
+                console.error('❌ Error en Perplexity:', error);
+                return null;
+            }
+        }
+        
 async function fetchJson(url, options) {
   try {
 options ? options : {};
@@ -193,3 +224,4 @@ return res.data;
     return err;
   }
 }
+
