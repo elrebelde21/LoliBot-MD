@@ -12,7 +12,7 @@ if (m.isWABusiness) {
 const medias = selectedResults.map(result => ({type: "image", data: { url: result.images_url }}));
 await conn.sendAlbumMessage(m.chat, medias, `✅ Resultados para: ${text}`, m);
 } else {
-let messages = selectedResults.map(result => [result.grid_title || text, wm, result.images_url]);
+let messages = selectedResults.map(result => ["", result.grid_title || text, result.images_url]);
 await conn.sendCarousel(m.chat, `✅ Resultados para: ${text}`, "🔍 Pinterest Search", messages, m);
 m.react("✅️")
 }
@@ -44,7 +44,7 @@ const medias = selectedResults.map(result => ({type: "image", data: { url: resul
 await conn.sendAlbumMessage(m.chat, medias, `✅ Resultados para: ${text}`, m);
 } else {
 let messages = selectedResults.map(result => [
-result.description || null, `🔎 Autor: ${result.name} (@${result.username})`, result.image]);
+"", `${result.description || text}\n🔎 Autor: ${result.name} (@${result.username})`, result.image]);
 await conn.sendCarousel(m.chat, `✅ Resultados para: ${text}`, "🔍 Pinterest Search", messages, m);
 m.react("✅️")
 }

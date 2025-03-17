@@ -14,9 +14,8 @@ const medias = selectedResults.map(result => ({type: "video", data: { url: resul
 await conn.sendAlbumMessage(m.chat, medias, `✅ Resultados para: ${text}`, m);
 m.react("✅️");
 } else {
-let messages = selectedResults.map(result => [
+let messages = selectedResults.map(result => [``,
 `${result.title}`, 
-wm,
 result.hd
 ]);
 await conn.sendCarousel(m.chat, `✅ Resultados para: ${text}`, "🔍 TikTok Search", messages, m);
