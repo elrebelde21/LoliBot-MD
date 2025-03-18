@@ -5,16 +5,22 @@ import ytdl from 'ytdl-core';
 import axios from 'axios';
 import { savetube } from '../lib/yt-savetube.js'
 import { ogmp3 } from '../lib/youtubedl.js'; 
+import { amdl } from '../lib/scraper.js';  
 import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
 const { ytmp3, ytmp4 } = require("@hiudyy/ytdl");
 const LimitAud = 725 * 1024 * 1024; // 725MB
 const LimitVid = 425 * 1024 * 1024; // 425MB
 const youtubeRegexID = /(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/))([a-zA-Z0-9_-]{11})/;
+const userRequests = {};
 
 const handler = async (m, { conn, command, args, text, usedPrefix }) => {
 if (!text) return m.reply(`*🤔Que está buscando? 🤔*\n*Ingrese el nombre de la canción*\n\n*Ejemplo:*\n${usedPrefix + command} emilia 420`);
 const tipoDescarga = command === 'play' || command === 'musica' ? 'audio' : command === 'play2' ? 'video' : command === 'play3' ? 'audio (documento)' : command === 'play4' ? 'video (documento)' : '';
+
+if (userRequests[m.sender]) return m.reply('⏳ *Espera...* Ya hay una solicitud en proceso. Por favor, espera a que termine antes de hacer otra.')
+userRequests[m.sender] = true;
+try {
 let videoIdToFind = text.match(youtubeRegexID) || null;
 const yt_play = await search(args.join(' ')); 
 let ytplay2 = await yts(videoIdToFind === null ? text : 'https://youtu.be/' + videoIdToFind[1]);
@@ -63,6 +69,7 @@ const audioApis = [
 { url: () => savetube.download(yt_play[0].url, format), extract: (data) => ({ data: data.result.download, isDirect: false }) },
 { url: () => ogmp3.download(yt_play[0].url, selectedQuality, 'audio'), extract: (data) => ({ data: data.result.download, isDirect: false }) },
 { url: () => ytmp3(yt_play[0].url), extract: (data) => ({ data, isDirect: true }) },
+{ url: () => amdl.download(yt_play[0].url, "720p"), extract: (data) => ({ data: data.result.download, isDirect: false }) },
 { url: () => fetch(`https://api.dorratz.com/v3/ytdl?url=${yt_play[0].url}`).then(res => res.json()), extract: (data) => { 
 const mp3 = data.medias.find(media => media.quality === "160kbps" && media.extension === "mp3");
 return { data: mp3.url, isDirect: false }}},
@@ -78,6 +85,7 @@ const videoApis = [
 { url: () => savetube.download(yt_play[0].url, '720'), extract: (data) => ({ data: data.result.download, isDirect: false }) },
 { url: () => ogmp3.download(yt_play[0].url, selectedQuality, 'video'), extract: (data) => ({ data: data.result.download, isDirect: false }) },
 { url: () => ytmp4(yt_play[0].url), extract: (data) => ({ data, isDirect: true }) },
+{ url: () => amdl.download(yt_play[0].url, '720p'), extract: (data) => ({ data: data.result.download, isDirect: false }) },
 { url: () => fetch(`https://api.siputzx.my.id/api/d/ytmp4?url=${yt_play[0].url}`).then(res => res.json()), extract: (data) => ({ data: data.dl, isDirect: false }) },
 { url: () => fetch(`${APIs.neoxr.url}/youtube?url=${yt_play[0].url}&type=video&quality=720p&apikey=${APIs.neoxr.key}`).then(res => res.json()), extract: (data) => ({ data: data.data.url, isDirect: false }) },
 { url: () => fetch(`https://api.fgmods.xyz/api/downloader/ytmp4?url=${yt_play[0].url}&apikey=${APIs.fgmods.key}`).then(res => res.json()), extract: (data) => ({ data: data.result.dl_url, isDirect: false }) },
@@ -114,7 +122,7 @@ await conn.sendMessage(m.chat, { document: isDirect ? mediaData : { url: mediaDa
 } else {
 await conn.sendMessage(m.chat, { audio: isDirect ? mediaData : { url: mediaData }, mimetype: 'audio/mpeg' }, { quoted: m });
 }} else {
-await m.react('❌');
+//await m.react('❌');
 }}
 
 if (command === 'play2' || command === 'video') {
@@ -127,7 +135,7 @@ await conn.sendMessage(m.chat, { document: isDirect ? mediaData : { url: mediaDa
 } else {
 await conn.sendMessage(m.chat, { video: isDirect ? mediaData : { url: mediaData }, thumbnail: yt_play[0].thumbnail, ...messageOptions }, { quoted: m });
 }} else {
-await m.react('❌');
+//await m.react('❌');
 }}
 
 if (command === 'play3' || command === 'playdoc') {
@@ -143,8 +151,14 @@ const { mediaData, isDirect } = await download(videoApis);
 if (mediaData) {
 await conn.sendMessage(m.chat, { document: isDirect ? mediaData : { url: mediaData }, fileName: `${yt_play[0].title}.mp4`, caption: `🔰Título: ${yt_play[0].title}`, thumbnail: yt_play[0].thumbnail, mimetype: 'video/mp4'}, { quoted: m })
 } else {
-await m.react('❌');
-}}};
+//await m.react('❌');
+}}
+} catch (error) {
+console.error(error);
+m.react("❌️")
+} finally {
+delete userRequests[m.sender];
+}}
 handler.help = ['play', 'play2', 'play3', 'play4', 'playdoc'];
 handler.tags = ['downloader'];
 handler.command = ['play', 'play2', 'play3', 'play4', 'audio', 'video', 'playdoc', 'playdoc2', 'musica'];

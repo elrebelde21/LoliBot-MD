@@ -1,5 +1,5 @@
 import fetch from 'node-fetch';
-import { perplexity } from '../lib/chatgpt.js';
+import { perplexity } from '../lib/scraper.js';
 const antiSpam = new Map();
 const handler = (m) => m;
 

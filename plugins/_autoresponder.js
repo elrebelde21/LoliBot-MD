@@ -2,7 +2,7 @@ import axios from 'axios';
 import fetch from 'node-fetch';
 import translate from '@vitalets/google-translate-api';
 import { sticker } from '../lib/sticker.js';
-import { perplexity } from '../lib/chatgpt.js';
+import { perplexity } from '../lib/scraper.js';
 
 //let handler = m => m;
 //handler.all = async function (m, {conn}) {
