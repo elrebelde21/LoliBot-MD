@@ -1,9 +1,13 @@
 import fg from 'api-dylux';
 import fetch from 'node-fetch';
 import axios from 'axios';
+const userRequests = {};
+
 const handler = async (m, {conn, args, command, usedPrefix}) => {
 if (!args[0]) throw `⚠️ 𝙄𝙣𝙜𝙧𝙚𝙨𝙚 𝙪𝙣 𝙚𝙣𝙡𝙖𝙘𝙚 𝙙𝙚 𝙁𝙖𝙘𝙚𝙗𝙤𝙤𝙠 𝙥𝙖𝙧𝙖 𝙙𝙚𝙨𝙘𝙖𝙧𝙜𝙖𝙧 𝙚𝙡 𝙑𝙞𝙙𝙚𝙤\n• *𝙀𝙟 :* ${usedPrefix + command} https://www.facebook.com/watch?v=636541475139`
 if (!args[0].match(/www.facebook.com|fb.watch/g)) throw `⚠️ 𝙄𝙣𝙜𝙧𝙚𝙨𝙚 𝙪𝙣 𝙚𝙣𝙡𝙖𝙘𝙚 𝙙𝙚 𝙁𝙖𝙘𝙚𝙗𝙤𝙤𝙠 𝙥𝙖𝙧𝙖 𝙙𝙚𝙨𝙘𝙖𝙧𝙜𝙖𝙧 𝙚𝙡 𝙑𝙞𝙙𝙚𝙤\n• *𝙀𝙟 :* ${usedPrefix + command} https://www.facebook.com/watch?v=636541475139`
+if (userRequests[m.sender]) return m.reply('⏳ *Espera...* Ya hay una solicitud en proceso. Por favor, espera a que termine antes de hacer otra.')
+userRequests[m.sender] = true;
 m.react(`⌛`) 
 try { 
 const api = await fetch(`https://api.agatz.xyz/api/facebook?url=${args}`);
@@ -50,6 +54,8 @@ m.react(`✅`)
 m.react(`❌`) 
 //m.reply(`\`\`\`⚠️ OCURRIO UN ERROR ⚠️\`\`\`\n\n> *Reporta el siguiente error a mi creador con el comando:*#report\n\n>>> ${err6} <<<< `)       
 console.log(e) 
+} finally {
+delete userRequests[m.sender];
 }}}}}}
 handler.help = ['fb', 'facebook', 'fbdl']
 handler.tags = ['downloader']

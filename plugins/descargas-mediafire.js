@@ -5,10 +5,13 @@ import {mediafiredl} from '@bochilteam/scraper';
 import fg from 'api-dylux'
 let free = 150 
 let prem = 500
+const userRequests = {};
 
 const handler = async (m, {conn, args, usedPrefix, command}) => {
 let sticker = 'https://qu.ax/Wdsb.webp'
 if (!args[0]) throw `⚠️ 𝙄𝙣𝙜𝙧𝙚𝙨𝙚 𝙪𝙣 𝙀𝙣𝙡𝙖𝙘𝙚 𝙫𝙖𝙡𝙞𝙙𝙤 𝙙𝙚𝙡 𝙢𝙚𝙙𝙞𝙖𝙛𝙞𝙧𝙚 𝙀𝙟:*\n${usedPrefix + command} https://www.mediafire.com/file/sd9hl31vhhzf76v/EvolutionV1.1-beta_%2528Recomendado%2529.apk/file`
+if (userRequests[m.sender]) return m.reply('⏳ *Espera...* Ya hay una solicitud en proceso. Por favor, espera a que termine antes de hacer otra.')
+userRequests[m.sender] = true;
 m.react(`🚀`) 
 try {
 const res = await fetch(`https://api.agatz.xyz/api/mediafire?url=${args}`);
@@ -94,6 +97,8 @@ conn.sendFile(m.chat, sticker, 'error.webp', '', m, null, fake)
 m.react(`❌`) 
 console.error(e);
 handler.limit = false
+} finally {
+delete userRequests[m.sender];
 }}}}}}}
 handler.help = ['mediafire', 'mediafiredl'];
 handler.tags = ['downloader'];

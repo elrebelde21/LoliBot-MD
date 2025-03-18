@@ -1,10 +1,13 @@
 import axios from 'axios';
 import cheerio from 'cheerio';
 import qs from 'qs';
+const userRequests = {};
 
 let handler = async (m, { conn, text, usedPrefix, command }) => {
 if (!text) throw `Ejemplo de uso: ${usedPrefix + command} https://music.apple.com/us/album/glimpse-of-us/1625328890?i=1625328892`
-  
+if (userRequests[m.sender]) return m.reply('⏳ *Espera...* Ya hay una solicitud en proceso. Por favor, espera a que termine antes de hacer otra.')
+userRequests[m.sender] = true;
+try {
 const apiUrl = `${apis}/applemusicdl?url=${encodeURIComponent(text)}`;
 const apiResponse = await fetch(apiUrl);
 const delius = await apiResponse.json();
@@ -85,7 +88,13 @@ m.reply("No se pudo obtener la canción.");
 console.error("Error final:", err);
 m.react("❌");
 m.reply("Ocurrió un error al intentar obtener el enlace de descarga.");
-}}};
+}}
+} catch (error) {
+console.error(error);
+m.react("❌️")
+} finally {
+delete userRequests[m.sender];
+}}
 handler.help = ['applemusic'];
 handler.tags = ['downloader'];
 handler.command = /^(applemusic)$/i;

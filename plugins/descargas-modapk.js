@@ -1,10 +1,14 @@
 import axios from 'axios';
 import cheerio from 'cheerio';
 //import {search, download} from 'aptoide-scraper';
+const userRequests = {};
+
 const handler = async (m, {conn, usedPrefix, command, text}) => {
 const apkpureApi = 'https://apkpure.com/api/v2/search?q=';
 const apkpureDownloadApi = 'https://apkpure.com/api/v2/download?id=';
 if (!text) throw `⚠️ *𝙀𝙨𝙘𝙧𝙞𝙗𝙖 𝙚𝙡 𝙣𝙤𝙢𝙗𝙧𝙚 𝙙𝙚𝙡 𝘼𝙋𝙆*`
+if (userRequests[m.sender]) return m.reply('⏳ *Espera...* Ya hay una solicitud en proceso. Por favor, espera a que termine antes de hacer otra.')
+userRequests[m.sender] = true;
 m.react("⌛") 
 try {   
 const res = await fetch(`https://api.dorratz.com/v2/apk-dl?text=${text}`);
@@ -72,6 +76,8 @@ m.react("✅")
 m.react(`❌`) 
 console.log(e)
 handler.limit = false
+} finally {
+delete userRequests[m.sender];
 }}}}
 handler.help = ['apk', 'apkmod'];
 handler.tags = ['downloader'];

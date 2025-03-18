@@ -1,9 +1,12 @@
 import axios from 'axios'
 import fetch from 'node-fetch'
 import search from 'yt-search'
+const userRequests = {};
 
 let handler = async (m, { conn, text, usedPrefix, command }) => {
 if (!text) throw `*🤔 ¿Que esta buscando? ingresa el nombre para descargar sus música de Spotify, Ejemplo:* ${usedPrefix + command} ozuna`
+if (userRequests[m.sender]) return m.reply('⏳ *Espera...* Ya hay una solicitud en proceso. Por favor, espera a que termine antes de hacer otra.')
+userRequests[m.sender] = true;
 m.react(`⌛`) 
 const spotify = await fetch(`${apis}/search/spotify?q=${text}`);
 const song = await spotify.json();
@@ -41,6 +44,8 @@ m.reply(`\`\`\`⚠️ OCURRIO UN ERROR ⚠️\`\`\`\n\n> *Reporta el siguiente e
 console.log(error) 
 m.react('❌')
 handler.limit = false 
+} finally {
+delete userRequests[m.sender];
 }}}
 handler.help = ['spotify']
 handler.tags = ['downloader']

@@ -1,8 +1,12 @@
 import fetch from 'node-fetch'
 const regex = /(?:https|git)(?::\/\/|@)github\.com[\/:]([^\/:]+)\/(.+)/i
+const userRequests = {};
+
 let handler = async (m, { args, usedPrefix, command }) => {
 if (!args[0]) throw `⚠️*𝙄𝙣𝙜𝙧𝙚𝙨𝙚 𝙪𝙣 𝙚𝙣𝙡𝙖𝙘𝙚 𝙙𝙚 𝙂𝙞𝙩𝙝𝙪𝙗*\n• *𝙀𝙟 :* ${usedPrefix + command} ${md}`
 if (!regex.test(args[0])) throw `⚠️ 𝙚𝙨𝙤 𝙣𝙤 𝙚𝙨 𝙪𝙣 𝙚𝙣𝙡𝙖𝙘𝙚 𝙙𝙚 𝙜𝙞𝙩𝙝𝙪𝙗 𝙗𝙤𝙡𝙪𝙙𝙤 🤡`
+if (userRequests[m.sender]) return m.reply('⏳ *Espera...* Ya hay una solicitud en proceso. Por favor, espera a que termine antes de hacer otra.')
+userRequests[m.sender] = true;
 try {   
 let [_, user, repo] = args[0].match(regex) || []
 repo = repo.replace(/.git$/, '')
@@ -14,6 +18,8 @@ conn.sendFile(m.chat, url, filename, null, m, null, fake)
 m.reply(`\`\`\`⚠️ OCURRIO UN ERROR ⚠️\`\`\`\n\n> *Reporta el siguiente error a mi creador con el comando:*#report\n\n>>> ${e} <<<< `)       
 console.log(e) 
 handler.limit = 0 //❌No gastada diamante si el comando falla
+} finally {
+delete userRequests[m.sender];
 }}
 handler.help = ['gitclone <url>']
 handler.tags = ['downloader']

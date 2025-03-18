@@ -2,10 +2,13 @@ import fetch from 'node-fetch';
 import axios from 'axios';
 import {instagramdl} from '@bochilteam/scraper';
 import {fileTypeFromBuffer} from 'file-type';
+const userRequests = {};
  
 const handler = async (m, {conn, args, command, usedPrefix}) => {
 const datas = global
 if (!args[0]) throw `⚠️ Ingresa el enlace del vídeo de Instagram junto al comando.\n\nEjemplo: *${usedPrefix + command}* https://www.instagram.com/p/C60xXk3J-sb/?igsh=YzljYTk1ODg3Zg==`
+if (userRequests[m.sender]) return m.reply('⏳ *Espera...* Ya hay una solicitud en proceso. Por favor, espera a que termine antes de hacer otra.')
+userRequests[m.sender] = true;
 await m.react('⌛')
 try {
 const res = await fetch(`https://api.siputzx.my.id/api/d/igdl?url=${args}`);
@@ -66,6 +69,8 @@ await m.react('✅')
 await m.react('❌')
 console.log(e)
 handler.limit = 0
+} finally {
+delete userRequests[m.sender];
 }}}}}
 handler.help = ['instagram *<link ig>*']
 handler.tags = ['downloader']

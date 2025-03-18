@@ -1,7 +1,10 @@
 import axios from 'axios';
+const userRequests = {};
 
 let handler = async (m, { conn, usedPrefix, command, text }) => {
 if (!text) throw `*⚠️ Ingresa el nombre del video que buscas.*\nEj: ${usedPrefix + command} emilia_mernes`
+if (userRequests[m.sender]) return m.reply('⏳ *Espera...* Ya hay una solicitud en proceso. Por favor, espera a que termine antes de hacer otra.')
+userRequests[m.sender] = true;
 m.react("⏳")
 try {
 let { data: response } = await axios.get(`${apis}/search/tiktoksearch?query=${text}`);
@@ -24,6 +27,8 @@ m.react("✅️");
 } catch (error) {
 m.react("❌️")
 console.error(error);    
+} finally {
+delete userRequests[m.sender];
 }};
 handler.help = ['tiktoksearch <texto>'];
 handler.tags = ['downloader'];
