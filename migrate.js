@@ -1,7 +1,6 @@
 import path from 'path';
 import fs from 'fs';
 import Datastore from '@seald-io/nedb';
-import PQueue from 'p-queue';
 import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -25,8 +24,6 @@ Object.values(collections).forEach(db => {
   db.persistence.setAutocompactionInterval(0);
 });
 
-const queue = new PQueue({ concurrency: 25 });
-
 // Lista para registrar archivos fallidos
 const failedFiles = { users: [], chats: [], settings: [] };
 
@@ -44,7 +41,7 @@ function sanitizeObject(obj) {
   return sanitized;
 }
 
-// Función para intentar reparar JSON (menos estricta)
+// Función para intentar reparar JSON (aún menos estricta)
 function tryFixJSON(rawData, category, id) {
   let fixedData = rawData.trim();
 
@@ -87,15 +84,30 @@ function tryFixJSON(rawData, category, id) {
   // 6. Intentar parsear el JSON reparado
   try {
     const parsedData = JSON.parse(fixedData);
-    // Aceptar cualquier dato, incluso si no es un objeto (lo convertimos a objeto)
+    // Aceptar cualquier dato, incluso si es primitivo (lo convertimos a objeto)
     if (parsedData === null || parsedData === undefined) {
       failedFiles[category].push({ id, error: 'Datos no válidos después de reparación: null o undefined' });
       return null;
     }
     return typeof parsedData === 'object' ? parsedData : { value: parsedData };
   } catch (err) {
-    failedFiles[category].push({ id, error: `No se pudo reparar: ${err.message}` });
-    return null;
+    // Si no se puede parsear, intentar extraer un objeto parcial
+    console.warn(`No se pudo parsear ${category}/${id}: ${err.message}, intentando reparación parcial...`);
+    try {
+      // Buscar el primer objeto válido dentro del JSON
+      const match = fixedData.match(/\{.*\}/);
+      if (match) {
+        const partialData = JSON.parse(match[0]);
+        if (typeof partialData === 'object' && partialData !== null) {
+          return partialData;
+        }
+      }
+      failedFiles[category].push({ id, error: `No se pudo reparar: ${err.message}` });
+      return null;
+    } catch (partialErr) {
+      failedFiles[category].push({ id, error: `No se pudo reparar (parcial): ${partialErr.message}` });
+      return null;
+    }
   }
 }
 
@@ -155,7 +167,7 @@ async function convertToSingleJSON() {
   }
 }
 
-// Paso 2: Cargar JSON único en NeDB con upsert y reintentos
+// Paso 2: Cargar JSON único en NeDB de forma secuencial
 async function loadJSONToNeDB() {
   console.log('Paso 2: Cargando JSON único a NeDB...');
   for (const category of Object.keys(collections)) {
@@ -178,7 +190,7 @@ async function loadJSONToNeDB() {
     const entries = Object.entries(data);
     console.log(`Insertando ${entries.length} registros en ${category}...`);
 
-    const batchSize = 5000; // Insertar en lotes de 5000 para no saturar NeDB
+    const batchSize = 1000; // Insertar en lotes de 1000 para no saturar NeDB
     for (let i = 0; i < entries.length; i += batchSize) {
       const batch = entries.slice(i, i + batchSize);
       const docs = batch.map(([id, value]) => ({
@@ -186,10 +198,19 @@ async function loadJSONToNeDB() {
         data: sanitizeObject(value),
       }));
 
-      // Usar update con upsert y reintentos
-      const updatePromises = docs.map(doc => queue.add(async () => {
-        for (let attempt = 1; attempt <= 3; attempt++) {
+      // Procesar de forma secuencial con reintentos
+      for (const doc of docs) {
+        let success = false;
+        for (let attempt = 1; attempt <= 5; attempt++) {
           try {
+            // Asegurarse de que el archivo .db exista
+            const dbFile = collections[category].filename;
+            if (!fs.existsSync(dbFile)) {
+              console.log(`Creando archivo ${dbFile}...`);
+              fs.writeFileSync(dbFile, '');
+              fs.chmodSync(dbFile, '666');
+            }
+
             await new Promise((resolve, reject) => {
               collections[category].update(
                 { _id: doc._id },
@@ -201,26 +222,43 @@ async function loadJSONToNeDB() {
                 }
               );
             });
-            return; // Éxito, salimos
+            success = true;
+            break;
           } catch (err) {
             console.error(`Intento ${attempt} fallido para ${category}/${doc._id}:`, err.message);
-            if (attempt === 3) throw err;
+            if (err.code === 'ENOENT') {
+              // Si el error es ENOENT, intentar recrear el archivo
+              const dbFile = collections[category].filename;
+              console.log(`Archivo ${dbFile} no encontrado, recreando...`);
+              fs.writeFileSync(dbFile, '');
+              fs.chmodSync(dbFile, '666');
+            }
+            if (attempt === 5) {
+              console.error(`No se pudo insertar ${category}/${doc._id} después de 5 intentos, saltando...`);
+              failedFiles[category].push({ id: doc._id, error: err.message });
+            }
             await new Promise(resolve => setTimeout(resolve, 1000));
           }
         }
-      }));
+        if (success && (i + batch.length) % 1000 === 0) {
+          console.log(`Progreso: ${Math.min(i + batch.length, entries.length)}/${entries.length} registros insertados en ${category}`);
+        }
+      }
 
-      await Promise.all(updatePromises);
-
-      console.log(`Progreso: ${Math.min(i + batchSize, entries.length)}/${entries.length} registros insertados en ${category}`);
+      // Compactar después de cada lote
+      await new Promise((resolve) => {
+        collections[category].persistence.compactDatafile();
+        collections[category].on('compaction.done', resolve);
+      });
+      console.log(`Compactación de ${category} completada después del lote`);
     }
 
-    // Compactar después de cargar
+    // Compactar al final
     await new Promise((resolve) => {
       collections[category].persistence.compactDatafile();
       collections[category].on('compaction.done', resolve);
     });
-    console.log(`Compactación de ${category} completada`);
+    console.log(`Compactación final de ${category} completada`);
   }
 }
 
