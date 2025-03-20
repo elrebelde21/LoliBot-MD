@@ -22,7 +22,7 @@ Object.values(collections).forEach(db => {
   db.persistence.setAutocompactionInterval(0);
 });
 
-const queue = new PQueue({ concurrency: 100 }); // 100 para velocidad
+const queue = new PQueue({ concurrency: 50 }); // Bajamos a 50 para evitar colisiones
 
 // Inicializar global.db.data solo con lo importante
 global.db = {
@@ -71,21 +71,30 @@ async function readFromNeDB(category, id) {
   });
 }
 
-// Escribir datos a NeDB
-async function writeToNeDB(category, id, data) {
+// Escribir datos a NeDB con reintentos
+async function writeToNeDB(category, id, data, retries = 3) {
   const sanitizedId = sanitizeId(id);
   const sanitizedData = sanitizeObject(data);
-  return new Promise((resolve, reject) => {
-    collections[category].update(
-      { _id: sanitizedId },
-      { $set: { data: sanitizedData } },
-      { upsert: true, multi: false },
-      (err) => {
-        if (err) return reject(err);
-        resolve();
-      }
-    );
-  });
+  for (let attempt = 1; attempt <= retries; attempt++) {
+    try {
+      await new Promise((resolve, reject) => {
+        collections[category].update(
+          { _id: sanitizedId },
+          { $set: { data: sanitizedData } },
+          { upsert: true, multi: false },
+          (err) => {
+            if (err) return reject(err);
+            resolve();
+          }
+        );
+      });
+      return; // Éxito, salimos
+    } catch (err) {
+      console.error(`Intento ${attempt} fallido para ${category}/${id}:`, err.message);
+      if (attempt === retries) throw err; // Si es el último intento, lanzamos el error
+      await new Promise(resolve => setTimeout(resolve, 1000)); // Espera 1 segundo antes de reintentar
+    }
+  }
 }
 
 // Funciones públicas
@@ -124,7 +133,7 @@ global.db.loadDatabase = async function () {
         });
       } else {
         seenIds.add(originalId);
-        if (category === 'users' && (originalId.includes('@newsletter') || originalId.includes('lid'))) continue;
+        if (category === 'users' && (originalId.includes('@newsletter') || id.includes('lid'))) continue;
         if (category === 'chats' && originalId.includes('@newsletter')) continue;
         global.db.data[category][originalId] = unsanitizeObject(doc.data);
       }
