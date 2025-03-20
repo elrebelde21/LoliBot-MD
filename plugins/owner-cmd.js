@@ -32,5 +32,5 @@ ${Object.entries(global.db.data.sticker).map(([key, value], index) => `*${index 
 handler.help = ['addcmd', 'delcmd', 'listcmd']
 handler.tags = ['owner']
 handler.command = ['setcmd', 'addcmd', 'cmdadd', 'cmdset', 'delcmd', 'listcmd', 'cmdlist'];
-handler.rowner = true;
+handler.owner = true;
 export default handler;

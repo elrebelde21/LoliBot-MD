@@ -11,7 +11,7 @@ m.reply(`*✅ ᴍᴇɴsᴀɴᴇ ᴇɴᴠɪᴀᴅᴏ ᴀ ${chats.length} ᴄʜᴀ
 handler.help = ['broadcastchats', 'bcchats'].map((v) => v + ' <teks>');
 handler.tags = ['owner'];
 handler.command = /^(broadcastchats?|bcc(hats?)?)$/i;
-handler.rowner = true;
+handler.owner = true;
 export default handler;
 
 const delay = (time) => new Promise((res) => setTimeout(res, time));

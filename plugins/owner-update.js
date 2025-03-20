@@ -35,5 +35,5 @@ await m.reply(`${fg}`)
 handler.help = ['update']
 handler.tags = ['owner']
 handler.command = /^(update|actualizar|gitpull)$/i;
-handler.rowner = true;
+handler.owner = true;
 export default handler;

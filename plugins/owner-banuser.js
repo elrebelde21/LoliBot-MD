@@ -12,6 +12,6 @@ conn.sendMessage(m.chat, { audio: { url: ban }, contextInfo: { "externalAdReply"
 handler.help = ['banuser']
 handler.tags = ['owner']
 handler.command = /^banuser$/i
-handler.rowner = true
+handler.owner = true
 
 export default handler

@@ -8,5 +8,5 @@ await _m.copyNForward(m.chat, true)
 }
 handler.tags = ['owner'];
 handler.command = /^ver(vn|msg|video|audio|img|sticker)$/
-handler.rowner = true
+handler.owner = true
 export default handler 

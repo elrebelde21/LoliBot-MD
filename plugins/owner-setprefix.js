@@ -9,6 +9,6 @@ await m.reply(`✅ *𝙀𝙇 𝙋𝙍𝙀𝙁𝙄𝙅𝙊 𝘼𝘾𝙏𝙐𝘼�
 handler.help = ['setprefix'].map(v => v + ' [prefix]');
 handler.tags = ['owner'];
 handler.command = /^(setprefix)$/i;
-handler.rowner = true;
+handler.owner = true;
 
 export default handler;

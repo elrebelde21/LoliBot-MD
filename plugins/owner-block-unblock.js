@@ -19,5 +19,5 @@ if (res[0]) conn.reply(m.chat, `*ᴇʟ ᴜsᴜᴀʀɪᴏs  ${res ? `${res.map((v
 handler.help = ["block", "unblock"]
 handler.tags = ["owner"]
 handler.command = /^(block|unblock)$/i;
-handler.rowner = true;
+handler.owner = true;
 export default handler;
