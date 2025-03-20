@@ -22,16 +22,7 @@ Object.values(collections).forEach(db => {
   db.persistence.setAutocompactionInterval(0);
 });
 
-const queue = new PQueue({ concurrency: 25 }); // Bajamos a 25 para evitar colisiones
-
-// Inicializar global.db.data solo con lo importante
-global.db = {
-  data: {
-    users: {},
-    chats: {},
-    settings: {},
-  },
-};
+const queue = new PQueue({ concurrency: 50 }); // Subimos a 50 para más velocidad
 
 // Lista para registrar archivos fallidos
 const failedFiles = { users: [], chats: [], settings: [] };
@@ -41,10 +32,6 @@ function sanitizeId(id) {
   return id.replace(/\./g, '_');
 }
 
-function unsanitizeId(id) {
-  return id.replace(/_/g, '.');
-}
-
 function sanitizeObject(obj) {
   const sanitized = {};
   for (const [key, value] of Object.entries(obj)) {
@@ -52,26 +39,6 @@ function sanitizeObject(obj) {
     sanitized[sanitizedKey] = (typeof value === 'object' && value !== null) ? sanitizeObject(value) : value;
   }
   return sanitized;
-}
-
-function unsanitizeObject(obj) {
-  const unsanitized = {};
-  for (const [key, value] of Object.entries(obj)) {
-    const unsanitizedKey = key.replace(/_/g, '.');
-    unsanitized[unsanitizedKey] = (typeof value === 'object' && value !== null) ? unsanitizeObject(value) : value;
-  }
-  return unsanitized;
-}
-
-// Leer datos desde NeDB
-async function readFromNeDB(category, id) {
-  const sanitizedId = sanitizeId(id);
-  return new Promise((resolve, reject) => {
-    collections[category].findOne({ _id: sanitizedId }, (err, doc) => {
-      if (err) return reject(err);
-      resolve(doc ? unsanitizeObject(doc.data) : {});
-    });
-  });
 }
 
 // Escribir datos a NeDB con reintentos
@@ -99,71 +66,6 @@ async function writeToNeDB(category, id, data, retries = 3) {
     }
   }
 }
-
-// Funciones públicas
-global.db.readData = async function (category, id) {
-  const originalId = id;
-  if (!global.db.data[category][originalId]) {
-    const data = await queue.add(() => readFromNeDB(category, originalId));
-    global.db.data[category][originalId] = data;
-  }
-  return global.db.data[category][originalId];
-};
-
-global.db.writeData = async function (category, id, data) {
-  const originalId = id;
-  global.db.data[category][originalId] = { ...global.db.data[category][originalId], ...data };
-  await queue.add(() => writeToNeDB(category, originalId, global.db.data[category][originalId]));
-};
-
-global.db.loadDatabase = async function () {
-  const loadPromises = Object.keys(collections).map(async (category) => {
-    const docs = await new Promise((resolve, reject) => {
-      collections[category].find({}, (err, docs) => {
-        if (err) return reject(err);
-        resolve(docs);
-      });
-    });
-    const seenIds = new Set();
-    for (const doc of docs) {
-      const originalId = unsanitizeId(doc._id);
-      if (seenIds.has(originalId)) {
-        await new Promise((res, rej) => {
-          collections[category].remove({ _id: doc._id }, {}, (err) => {
-            if (err) rej(err);
-            else res();
-          });
-        });
-      } else {
-        seenIds.add(originalId);
-        if (category === 'users' && (originalId.includes('@newsletter') || originalId.includes('lid'))) continue;
-        if (category === 'chats' && originalId.includes('@newsletter')) continue;
-        global.db.data[category][originalId] = unsanitizeObject(doc.data);
-      }
-    }
-  });
-  await Promise.all(loadPromises);
-  console.log('Base de datos NeDB cargada en memoria');
-};
-
-global.db.save = async function () {
-  const savePromises = [];
-  for (const category of Object.keys(global.db.data)) {
-    for (const [id, data] of Object.entries(global.db.data[category])) {
-      if (Object.keys(data).length > 0) {
-        if (category === 'users' && (id.includes('@newsletter') || id.includes('lid'))) continue;
-        if (category === 'chats' && id.includes('@newsletter')) continue;
-        savePromises.push(queue.add(() => writeToNeDB(category, id, data)));
-      }
-    }
-  }
-  await Promise.all(savePromises);
-  // Limpiar memoria después de guardar
-  for (const category of Object.keys(global.db.data)) {
-    global.db.data[category] = {};
-  }
-  console.log('Datos guardados en NeDB y memoria liberada.');
-};
 
 // Migración solo para users, chats y settings
 const oldDbPath = path.join(__dirname, 'databaseAnter');
@@ -201,12 +103,18 @@ async function migrateLowDBToNeDB() {
             let data;
             try {
               data = JSON.parse(rawData);
+              // Ignorar si data es undefined, null o no es un objeto
+              if (!data || typeof data !== 'object') {
+                console.error(`Datos no válidos en ${category}/${id}: no es un objeto`);
+                failedFiles[category].push({ id, error: 'Datos no válidos: no es un objeto' });
+                return resolve();
+              }
             } catch (parseErr) {
               console.error(`Error parseando JSON en ${category}/${id}:`, parseErr.message);
               failedFiles[category].push({ id, error: parseErr.message });
               return resolve();
             }
-            global.db.writeData(category, id, data).then(() => {
+            queue.add(() => writeToNeDB(category, id, data)).then(() => {
               totalProcessed++;
               if (totalProcessed % 10000 === 0) console.log(`Progreso: ${totalProcessed}/${files.length} archivos migrados`);
               resolve();
@@ -226,8 +134,12 @@ async function migrateLowDBToNeDB() {
       await Promise.all(migrationPromises);
       console.log(`Lote de ${batch.length} archivos procesado en ${category}`);
       
-      // Guardar y liberar memoria después de cada lote
-      await global.db.save();
+      // Compactar después de cada lote para reducir el tamaño del archivo .db
+      await new Promise((resolve) => {
+        collections[category].persistence.compactDatafile();
+        collections[category].on('compaction.done', resolve);
+      });
+      console.log(`Compactación de ${category} completada después del lote`);
     }
   }
 
@@ -237,7 +149,7 @@ async function migrateLowDBToNeDB() {
     db.persistence.compactDatafile();
     db.on('compaction.done', resolve);
   })));
-  console.log('Compactación completada');
+  console.log('Compactación final completada');
 
   // Mostrar archivos fallidos
   console.log('Archivos que fallaron durante la migración:');
@@ -256,7 +168,6 @@ async function initializeAndMigrate() {
         fs.chmodSync(dbFile, '666'); // Permisos de lectura/escritura
       }
     }
-    await global.db.loadDatabase();
     console.log('Base de datos lista');
     await migrateLowDBToNeDB();
     console.log('Proceso terminado');
@@ -266,17 +177,3 @@ async function initializeAndMigrate() {
 }
 
 initializeAndMigrate();
-
-// Guardado periódico
-setInterval(() => {
-  global.db.save().catch(err => console.error('Error en guardado periódico:', err));
-}, 30000);
-
-async function gracefulShutdown() {
-  await global.db.save();
-  console.log('Base de datos guardada antes de cerrar');
-  process.exit(0);
-}
-
-process.on('SIGINT', gracefulShutdown);
-process.on('SIGTERM', gracefulShutdown);
