@@ -20,12 +20,12 @@ const collections = {
   stats: new Datastore({ filename: path.join(dbPath, 'stats.db'), autoload: true }),
 };
 
-// Configurar compactación automática (desactivada durante migración)
+// Desactivar compactación automática durante migración
 Object.values(collections).forEach(db => {
-  db.persistence.setAutocompactionInterval(0); // Desactivar durante migración
+  db.persistence.setAutocompactionInterval(0);
 });
 
-const queue = new PQueue({ concurrency: 50 }); // Ajusta este valor según pruebas
+const queue = new PQueue({ concurrency: 50 }); // Mantengo 50, funcionó bien hasta 1.000
 
 // Inicializar global.db.data
 global.db = {
@@ -131,7 +131,7 @@ global.db.loadDatabase = async function () {
       } else {
         seenIds.add(originalId);
         if (category === 'users' && (originalId.includes('@newsletter') || originalId.includes('lid'))) continue;
-        if (category === 'chats' && id.includes('@newsletter')) continue;
+        if (category === 'chats' && originalId.includes('@newsletter')) continue;
         global.db.data[category][originalId] = unsanitizeObject(doc.data);
       }
     }
@@ -176,25 +176,37 @@ async function migrateLowDBToNeDB() {
     const files = fs.readdirSync(dir).filter(f => f.endsWith('.json'));
     console.log(`Encontrados ${files.length} archivos en ${category}`);
 
-    const batchSize = 1000; // Procesar en lotes de 1000
+    const batchSize = 10000; // Subimos a 10.000 para procesar más rápido
+    let totalProcessed = 0;
+
     for (let i = 0; i < files.length; i += batchSize) {
       const batch = files.slice(i, i + batchSize);
+      console.log(`Procesando lote ${i / batchSize + 1}: ${i} a ${Math.min(i + batchSize, files.length)}`);
+      
       const migrationPromises = batch.map(file => {
         const id = path.basename(file, '.json');
         if (category === 'users' && (id.includes('@newsletter') || id.includes('lid'))) return Promise.resolve();
         if (category === 'chats' && id.includes('@newsletter')) return Promise.resolve();
         const filePath = path.join(dir, file);
-        try {
-          const rawData = fs.readFileSync(filePath, 'utf8');
-          const data = JSON.parse(rawData);
-          return global.db.writeData(category, id, data).then(() => {
-            console.log(`Migrado ${category}/${id}`);
-          });
-        } catch (err) {
-          console.error(`Error migrando ${category}/${id}:`, err);
-          return Promise.resolve(); // Continuar con el siguiente
-        }
+        return new Promise((resolve) => {
+          try {
+            const rawData = fs.readFileSync(filePath, 'utf8');
+            const data = JSON.parse(rawData);
+            global.db.writeData(category, id, data).then(() => {
+              totalProcessed++;
+              if (totalProcessed % 1000 === 0) console.log(`Progreso: ${totalProcessed}/${files.length} archivos migrados`);
+              resolve();
+            }).catch(err => {
+              console.error(`Error migrando ${category}/${id}:`, err);
+              resolve(); // Continuar aunque falle
+            });
+          } catch (err) {
+            console.error(`Error leyendo ${category}/${id}:`, err);
+            resolve();
+          }
+        });
       });
+
       await Promise.all(migrationPromises);
       console.log(`Lote de ${batch.length} archivos procesado en ${category}`);
     }
