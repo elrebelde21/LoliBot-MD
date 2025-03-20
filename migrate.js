@@ -22,7 +22,7 @@ Object.values(collections).forEach(db => {
   db.persistence.setAutocompactionInterval(0);
 });
 
-const queue = new PQueue({ concurrency: 50 }); // Bajamos a 50 para evitar colisiones
+const queue = new PQueue({ concurrency: 50 }); // Mantenemos 50
 
 // Inicializar global.db.data solo con lo importante
 global.db = {
@@ -32,6 +32,9 @@ global.db = {
     settings: {},
   },
 };
+
+// Lista para registrar archivos fallidos
+const failedFiles = { users: [], chats: [], settings: [] };
 
 // Funciones de sanitización
 function sanitizeId(id) {
@@ -91,8 +94,8 @@ async function writeToNeDB(category, id, data, retries = 3) {
       return; // Éxito, salimos
     } catch (err) {
       console.error(`Intento ${attempt} fallido para ${category}/${id}:`, err.message);
-      if (attempt === retries) throw err; // Si es el último intento, lanzamos el error
-      await new Promise(resolve => setTimeout(resolve, 1000)); // Espera 1 segundo antes de reintentar
+      if (attempt === retries) throw err;
+      await new Promise(resolve => setTimeout(resolve, 1000));
     }
   }
 }
@@ -133,7 +136,7 @@ global.db.loadDatabase = async function () {
         });
       } else {
         seenIds.add(originalId);
-        if (category === 'users' && (originalId.includes('@newsletter') || id.includes('lid'))) continue;
+        if (category === 'users' && (originalId.includes('@newsletter') || originalId.includes('lid'))) continue;
         if (category === 'chats' && originalId.includes('@newsletter')) continue;
         global.db.data[category][originalId] = unsanitizeObject(doc.data);
       }
@@ -191,17 +194,26 @@ async function migrateLowDBToNeDB() {
         return new Promise((resolve) => {
           try {
             const rawData = fs.readFileSync(filePath, 'utf8');
-            const data = JSON.parse(rawData);
+            let data;
+            try {
+              data = JSON.parse(rawData);
+            } catch (parseErr) {
+              console.error(`Error parseando JSON en ${category}/${id}:`, parseErr.message);
+              failedFiles[category].push({ id, error: parseErr.message });
+              return resolve(); // Ignorar y continuar
+            }
             global.db.writeData(category, id, data).then(() => {
               totalProcessed++;
               if (totalProcessed % 10000 === 0) console.log(`Progreso: ${totalProcessed}/${files.length} archivos migrados`);
               resolve();
             }).catch(err => {
-              console.error(`Error migrando ${category}/${id}:`, err);
+              console.error(`Error migrando ${category}/${id}:`, err.message);
+              failedFiles[category].push({ id, error: err.message });
               resolve();
             });
           } catch (err) {
-            console.error(`Error leyendo ${category}/${id}:`, err);
+            console.error(`Error leyendo ${category}/${id}:`, err.message);
+            failedFiles[category].push({ id, error: err.message });
             resolve();
           }
         });
@@ -219,6 +231,11 @@ async function migrateLowDBToNeDB() {
     db.on('compaction.done', resolve);
   })));
   console.log('Compactación completada');
+
+  // Mostrar archivos fallidos
+  console.log('Archivos que fallaron durante la migración:');
+  console.log(JSON.stringify(failedFiles, null, 2));
+
   console.log('Migración completada');
 }
 
