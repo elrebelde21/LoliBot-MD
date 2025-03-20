@@ -98,7 +98,7 @@ function tryFixJSON(rawData, category, id) {
   }
 }
 
-// Paso 1: Convertir a JSON único con reparación
+// Paso 1: Convertir a JSON único con reparación y manejo de duplicados
 const oldDbPath = path.join(__dirname, 'databaseAnter');
 const oldPaths = {
   users: path.join(oldDbPath, 'users'),
@@ -118,12 +118,21 @@ async function convertToSingleJSON() {
 
     const data = {};
     let totalProcessed = 0;
+    const seenIds = new Set();
 
     for (const file of files) {
       const id = path.basename(file, '.json');
       if (category === 'users' && (id.includes('@newsletter') || id.includes('lid'))) continue;
       if (category === 'chats' && id.includes('@newsletter')) continue;
       const filePath = path.join(dir, file);
+
+      // Verificar duplicados
+      if (seenIds.has(id)) {
+        console.warn(`ID duplicado encontrado: ${category}/${id}, se usará el último dato`);
+        failedFiles[category].push({ id, error: 'ID duplicado, se usó el último dato' });
+      }
+      seenIds.add(id);
+
       try {
         const rawData = fs.readFileSync(filePath, 'utf8');
         const parsedData = tryFixJSON(rawData, category, id);
@@ -145,7 +154,7 @@ async function convertToSingleJSON() {
   }
 }
 
-// Paso 2: Cargar JSON único en NeDB
+// Paso 2: Cargar JSON único en NeDB con upsert para manejar duplicados
 async function loadJSONToNeDB() {
   console.log('Paso 2: Cargando JSON único a NeDB...');
   for (const category of Object.keys(collections)) {
@@ -176,12 +185,20 @@ async function loadJSONToNeDB() {
         data: sanitizeObject(value),
       }));
 
-      await new Promise((resolve, reject) => {
-        collections[category].insert(docs, (err) => {
-          if (err) return reject(err);
-          resolve();
-        });
-      });
+      // Usar update con upsert en lugar de insert para manejar duplicados
+      const updatePromises = docs.map(doc => new Promise((resolve, reject) => {
+        collections[category].update(
+          { _id: doc._id },
+          { $set: { data: doc.data } },
+          { upsert: true, multi: false },
+          (err) => {
+            if (err) return reject(err);
+            resolve();
+          }
+        );
+      }));
+
+      await Promise.all(updatePromises);
 
       console.log(`Progreso: ${Math.min(i + batchSize, entries.length)}/${entries.length} registros insertados en ${category}`);
     }
