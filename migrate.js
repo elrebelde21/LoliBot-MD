@@ -7,7 +7,7 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const dbPath = path.join(__dirname, 'database'); // NeDB guardará aquí
+const dbPath = path.join(__dirname, 'database');
 if (!fs.existsSync(dbPath)) fs.mkdirSync(dbPath);
 
 // Crear las colecciones de NeDB
@@ -20,12 +20,12 @@ const collections = {
   stats: new Datastore({ filename: path.join(dbPath, 'stats.db'), autoload: true }),
 };
 
-// Configurar compactación automática para estabilidad
+// Configurar compactación automática (desactivada durante migración)
 Object.values(collections).forEach(db => {
-  db.persistence.setAutocompactionInterval(60000);
+  db.persistence.setAutocompactionInterval(0); // Desactivar durante migración
 });
 
-const queue = new PQueue({ concurrency: 5 });
+const queue = new PQueue({ concurrency: 50 }); // Ajusta este valor según pruebas
 
 // Inicializar global.db.data
 global.db = {
@@ -77,7 +77,7 @@ async function readFromNeDB(category, id) {
   });
 }
 
-// Escribir datos a NeDB
+// Escribir datos a NeDB (sin compactación por escritura)
 async function writeToNeDB(category, id, data) {
   const sanitizedId = sanitizeId(id);
   const sanitizedData = sanitizeObject(data);
@@ -88,7 +88,6 @@ async function writeToNeDB(category, id, data) {
       { upsert: true, multi: false },
       (err) => {
         if (err) return reject(err);
-        collections[category].persistence.compactDatafile();
         resolve();
       }
     );
@@ -126,16 +125,13 @@ global.db.loadDatabase = async function () {
         await new Promise((res, rej) => {
           collections[category].remove({ _id: doc._id }, {}, (err) => {
             if (err) rej(err);
-            else {
-              collections[category].persistence.compactDatafile();
-              res();
-            }
+            else res();
           });
         });
       } else {
         seenIds.add(originalId);
         if (category === 'users' && (originalId.includes('@newsletter') || originalId.includes('lid'))) continue;
-        if (category === 'chats' && originalId.includes('@newsletter')) continue;
+        if (category === 'chats' && id.includes('@newsletter')) continue;
         global.db.data[category][originalId] = unsanitizeObject(doc.data);
       }
     }
@@ -159,8 +155,8 @@ global.db.save = async function () {
   console.log('Datos guardados en NeDB exitosamente.');
 };
 
-// Migración deWHEREAS LowDB a NeDB (carpeta renombrada a databaseAnter)
-const oldDbPath = path.join(__dirname, 'databaseAnter'); // Datos antiguos aquí
+// Migración optimizada para muchos datos
+const oldDbPath = path.join(__dirname, 'databaseAnter');
 const oldPaths = {
   users: path.join(oldDbPath, 'users'),
   chats: path.join(oldDbPath, 'chats'),
@@ -179,26 +175,36 @@ async function migrateLowDBToNeDB() {
     }
     const files = fs.readdirSync(dir).filter(f => f.endsWith('.json'));
     console.log(`Encontrados ${files.length} archivos en ${category}`);
-    for (const file of files) {
-      const id = path.basename(file, '.json');
-      if (category === 'users' && (id.includes('@newsletter') || id.includes('lid'))) {
-        console.log(`Ignorando ${category}/${id}`);
-        continue;
-      }
-      if (category === 'chats' && id.includes('@newsletter')) {
-        console.log(`Ignorando ${category}/${id}`);
-        continue;
-      }
-      try {
+
+    const batchSize = 1000; // Procesar en lotes de 1000
+    for (let i = 0; i < files.length; i += batchSize) {
+      const batch = files.slice(i, i + batchSize);
+      const migrationPromises = batch.map(file => {
+        const id = path.basename(file, '.json');
+        if (category === 'users' && (id.includes('@newsletter') || id.includes('lid'))) return Promise.resolve();
+        if (category === 'chats' && id.includes('@newsletter')) return Promise.resolve();
         const filePath = path.join(dir, file);
-        const rawData = fs.readFileSync(filePath, 'utf8');
-        const data = JSON.parse(rawData);
-        await global.db.writeData(category, id, data);
-        console.log(`Migrado ${category}/${id} exitosamente`);
-      } catch (err) {
-        console.error(`Error migrando ${category}/${id}:`, err);
-      }
+        try {
+          const rawData = fs.readFileSync(filePath, 'utf8');
+          const data = JSON.parse(rawData);
+          return global.db.writeData(category, id, data).then(() => {
+            console.log(`Migrado ${category}/${id}`);
+          });
+        } catch (err) {
+          console.error(`Error migrando ${category}/${id}:`, err);
+          return Promise.resolve(); // Continuar con el siguiente
+        }
+      });
+      await Promise.all(migrationPromises);
+      console.log(`Lote de ${batch.length} archivos procesado en ${category}`);
     }
+
+    // Compactar al final de cada categoría
+    await new Promise((resolve) => {
+      collections[category].persistence.compactDatafile();
+      collections[category].on('compaction.done', resolve);
+    });
+    console.log(`Compactación completada para ${category}`);
   }
   console.log('Migración completada');
 }
@@ -206,9 +212,9 @@ async function migrateLowDBToNeDB() {
 // Ejecutar todo en orden
 async function initializeAndMigrate() {
   try {
-    await global.db.loadDatabase(); // Primero carga la base de datos
+    await global.db.loadDatabase();
     console.log('Base de datos lista');
-    await migrateLowDBToNeDB(); // Luego migra los datos
+    await migrateLowDBToNeDB();
     console.log('Proceso terminado');
   } catch (err) {
     console.error('Error inicial:', err);
@@ -217,7 +223,7 @@ async function initializeAndMigrate() {
 
 initializeAndMigrate();
 
-// Guardado periódico
+// Guardado periódico (activar después de migración)
 setInterval(() => {
   global.db.save().catch(err => console.error('Error en guardado periódico:', err));
 }, 30000);
