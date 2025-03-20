@@ -22,7 +22,7 @@ Object.values(collections).forEach(db => {
   db.persistence.setAutocompactionInterval(0);
 });
 
-const queue = new PQueue({ concurrency: 50 }); // Mantenemos 50
+const queue = new PQueue({ concurrency: 25 }); // Bajamos a 25 para evitar colisiones
 
 // Inicializar global.db.data solo con lo importante
 global.db = {
@@ -158,7 +158,11 @@ global.db.save = async function () {
     }
   }
   await Promise.all(savePromises);
-  console.log('Datos guardados en NeDB exitosamente.');
+  // Limpiar memoria después de guardar
+  for (const category of Object.keys(global.db.data)) {
+    global.db.data[category] = {};
+  }
+  console.log('Datos guardados en NeDB y memoria liberada.');
 };
 
 // Migración solo para users, chats y settings
@@ -200,7 +204,7 @@ async function migrateLowDBToNeDB() {
             } catch (parseErr) {
               console.error(`Error parseando JSON en ${category}/${id}:`, parseErr.message);
               failedFiles[category].push({ id, error: parseErr.message });
-              return resolve(); // Ignorar y continuar
+              return resolve();
             }
             global.db.writeData(category, id, data).then(() => {
               totalProcessed++;
@@ -221,6 +225,9 @@ async function migrateLowDBToNeDB() {
 
       await Promise.all(migrationPromises);
       console.log(`Lote de ${batch.length} archivos procesado en ${category}`);
+      
+      // Guardar y liberar memoria después de cada lote
+      await global.db.save();
     }
   }
 
@@ -242,6 +249,13 @@ async function migrateLowDBToNeDB() {
 // Ejecutar todo en orden
 async function initializeAndMigrate() {
   try {
+    // Asegurarse de que los archivos .db tengan permisos
+    for (const category of Object.keys(collections)) {
+      const dbFile = path.join(dbPath, `${category}.db`);
+      if (fs.existsSync(dbFile)) {
+        fs.chmodSync(dbFile, '666'); // Permisos de lectura/escritura
+      }
+    }
     await global.db.loadDatabase();
     console.log('Base de datos lista');
     await migrateLowDBToNeDB();
