@@ -9,9 +9,6 @@ const __dirname = path.dirname(__filename);
 const dbPath = path.join(__dirname, 'database');
 if (!fs.existsSync(dbPath)) fs.mkdirSync(dbPath);
 
-const tempPath = path.join(__dirname, 'temp');
-if (!fs.existsSync(tempPath)) fs.mkdirSync(tempPath);
-
 // Crear solo las colecciones importantes
 const collections = {
   users: new Datastore({ filename: path.join(dbPath, 'users.db'), autoload: true }),
@@ -41,19 +38,19 @@ function sanitizeObject(obj) {
   return sanitized;
 }
 
-// Función para intentar reparar JSON (aún menos estricta)
+// Función para intentar reparar JSON (más robusta)
 function tryFixJSON(rawData, category, id) {
   let fixedData = rawData.trim();
 
   // 1. Si está vacío o es solo "{}" o "[]", ignorar
   if (!fixedData || fixedData === '{}' || fixedData === '[]') {
-    failedFiles[category].push({ id, error: 'Archivo vacío o sin datos útiles' });
+    failedFiles[category].push({ id, error: 'Archivo vacío o sin datos útiles', rawData });
     return null;
   }
 
   // 2. Si es "null" o "undefined", ignorar
   if (fixedData === 'null' || fixedData === 'undefined') {
-    failedFiles[category].push({ id, error: 'Datos no válidos: null o undefined' });
+    failedFiles[category].push({ id, error: 'Datos no válidos: null o undefined', rawData });
     return null;
   }
 
@@ -86,32 +83,46 @@ function tryFixJSON(rawData, category, id) {
     const parsedData = JSON.parse(fixedData);
     // Aceptar cualquier dato, incluso si es primitivo (lo convertimos a objeto)
     if (parsedData === null || parsedData === undefined) {
-      failedFiles[category].push({ id, error: 'Datos no válidos después de reparación: null o undefined' });
+      failedFiles[category].push({ id, error: 'Datos no válidos después de reparación: null o undefined', rawData });
       return null;
     }
     return typeof parsedData === 'object' ? parsedData : { value: parsedData };
   } catch (err) {
-    // Si no se puede parsear, intentar extraer un objeto parcial
-    console.warn(`No se pudo parsear ${category}/${id}: ${err.message}, intentando reparación parcial...`);
+    // Si no se puede parsear, intentar reparaciones más agresivas
+    console.warn(`No se pudo parsear ${category}/${id}: ${err.message}, intentando reparación agresiva...`);
     try {
-      // Buscar el primer objeto válido dentro del JSON
-      const match = fixedData.match(/\{.*\}/);
-      if (match) {
-        const partialData = JSON.parse(match[0]);
-        if (typeof partialData === 'object' && partialData !== null) {
-          return partialData;
-        }
+      // Reemplazar comillas simples por comillas dobles
+      fixedData = fixedData.replace(/'/g, '"');
+      // Eliminar comas sobrantes antes de llaves o corchetes de cierre
+      fixedData = fixedData.replace(/,\s*}/g, '}').replace(/,\s*]/g, ']');
+      // Intentar parsear de nuevo
+      const parsedData = JSON.parse(fixedData);
+      if (parsedData === null || parsedData === undefined) {
+        failedFiles[category].push({ id, error: 'Datos no válidos después de reparación agresiva: null o undefined', rawData });
+        return null;
       }
-      failedFiles[category].push({ id, error: `No se pudo reparar: ${err.message}` });
-      return null;
-    } catch (partialErr) {
-      failedFiles[category].push({ id, error: `No se pudo reparar (parcial): ${partialErr.message}` });
-      return null;
+      return typeof parsedData === 'object' ? parsedData : { value: parsedData };
+    } catch (aggressiveErr) {
+      // Si aún falla, intentar extraer un objeto parcial
+      try {
+        const match = fixedData.match(/\{.*\}/);
+        if (match) {
+          const partialData = JSON.parse(match[0]);
+          if (typeof partialData === 'object' && partialData !== null) {
+            return partialData;
+          }
+        }
+        failedFiles[category].push({ id, error: `No se pudo reparar (parcial): ${aggressiveErr.message}`, rawData });
+        return null;
+      } catch (partialErr) {
+        failedFiles[category].push({ id, error: `No se pudo reparar (parcial): ${partialErr.message}`, rawData });
+        return null;
+      }
     }
   }
 }
 
-// Paso 1: Convertir a JSON único con reparación y manejo de duplicados
+// Migrar directamente de JSON a NeDB
 const oldDbPath = path.join(__dirname, 'databaseAnter');
 const oldPaths = {
   users: path.join(oldDbPath, 'users'),
@@ -119,8 +130,8 @@ const oldPaths = {
   settings: path.join(oldDbPath, 'settings'),
 };
 
-async function convertToSingleJSON() {
-  console.log('Paso 1: Convirtiendo archivos a JSON único con reparación...');
+async function migrateToNeDB() {
+  console.log('Migrando directamente de JSON a NeDB...');
   for (const [category, dir] of Object.entries(oldPaths)) {
     if (!fs.existsSync(dir)) {
       console.log(`No se encontró el directorio ${dir}, saltando categoría ${category}`);
@@ -129,7 +140,6 @@ async function convertToSingleJSON() {
     const files = fs.readdirSync(dir).filter(f => f.endsWith('.json'));
     console.log(`Encontrados ${files.length} archivos en ${category}`);
 
-    const data = {};
     let totalProcessed = 0;
     const seenIds = new Set();
 
@@ -150,107 +160,70 @@ async function convertToSingleJSON() {
         const rawData = fs.readFileSync(filePath, 'utf8');
         const parsedData = tryFixJSON(rawData, category, id);
         if (parsedData) {
-          data[id] = parsedData;
-          totalProcessed++;
-          if (totalProcessed % 10000 === 0) console.log(`Progreso: ${totalProcessed}/${files.length} archivos procesados`);
+          const doc = {
+            _id: sanitizeId(id),
+            data: sanitizeObject(parsedData),
+          };
+
+          // Insertar en NeDB con reintentos
+          let success = false;
+          for (let attempt = 1; attempt <= 5; attempt++) {
+            try {
+              // Asegurarse de que el archivo .db exista
+              const dbFile = collections[category].filename;
+              if (!fs.existsSync(dbFile)) {
+                console.log(`Creando archivo ${dbFile}...`);
+                fs.writeFileSync(dbFile, '');
+                fs.chmodSync(dbFile, '666');
+              }
+
+              await new Promise((resolve, reject) => {
+                collections[category].update(
+                  { _id: doc._id },
+                  { $set: { data: doc.data } },
+                  { upsert: true, multi: false },
+                  (err) => {
+                    if (err) return reject(err);
+                    resolve();
+                  }
+                );
+              });
+              success = true;
+              break;
+            } catch (err) {
+              console.error(`Intento ${attempt} fallido para ${category}/${doc._id}:`, err.message);
+              if (err.code === 'ENOENT') {
+                const dbFile = collections[category].filename;
+                console.log(`Archivo ${dbFile} no encontrado, recreando...`);
+                fs.writeFileSync(dbFile, '');
+                fs.chmodSync(dbFile, '666');
+              }
+              if (attempt === 5) {
+                console.error(`No se pudo insertar ${category}/${doc._id} después de 5 intentos, saltando...`);
+                failedFiles[category].push({ id: doc._id, error: err.message, rawData });
+              }
+              await new Promise(resolve => setTimeout(resolve, 1000));
+            }
+          }
+
+          if (success) {
+            totalProcessed++;
+            if (totalProcessed % 10000 === 0) console.log(`Progreso: ${totalProcessed}/${files.length} registros insertados en ${category}`);
+          }
         }
       } catch (err) {
         console.error(`Error leyendo ${category}/${id}:`, err.message);
-        failedFiles[category].push({ id, error: err.message });
-      }
-    }
-
-    // Guardar en un solo archivo JSON
-    const outputFile = path.join(tempPath, `temp_${category}.json`);
-    fs.writeFileSync(outputFile, JSON.stringify(data, null, 2));
-    console.log(`Datos de ${category} guardados en ${outputFile} (${totalProcessed} registros válidos)`);
-  }
-}
-
-// Paso 2: Cargar JSON único en NeDB de forma secuencial
-async function loadJSONToNeDB() {
-  console.log('Paso 2: Cargando JSON único a NeDB...');
-  for (const category of Object.keys(collections)) {
-    const jsonFile = path.join(tempPath, `temp_${category}.json`);
-    if (!fs.existsSync(jsonFile)) {
-      console.log(`No se encontró el archivo ${jsonFile}, saltando categoría ${category}`);
-      continue;
-    }
-
-    console.log(`Cargando datos de ${category} desde ${jsonFile}...`);
-    const rawData = fs.readFileSync(jsonFile, 'utf8');
-    let data;
-    try {
-      data = JSON.parse(rawData);
-    } catch (err) {
-      console.error(`Error parseando ${jsonFile}:`, err.message);
-      continue;
-    }
-
-    const entries = Object.entries(data);
-    console.log(`Insertando ${entries.length} registros en ${category}...`);
-
-    const batchSize = 1000; // Insertar en lotes de 1000 para no saturar NeDB
-    for (let i = 0; i < entries.length; i += batchSize) {
-      const batch = entries.slice(i, i + batchSize);
-      const docs = batch.map(([id, value]) => ({
-        _id: sanitizeId(id),
-        data: sanitizeObject(value),
-      }));
-
-      // Procesar de forma secuencial con reintentos
-      for (const doc of docs) {
-        let success = false;
-        for (let attempt = 1; attempt <= 5; attempt++) {
-          try {
-            // Asegurarse de que el archivo .db exista
-            const dbFile = collections[category].filename;
-            if (!fs.existsSync(dbFile)) {
-              console.log(`Creando archivo ${dbFile}...`);
-              fs.writeFileSync(dbFile, '');
-              fs.chmodSync(dbFile, '666');
-            }
-
-            await new Promise((resolve, reject) => {
-              collections[category].update(
-                { _id: doc._id },
-                { $set: { data: doc.data } },
-                { upsert: true, multi: false },
-                (err) => {
-                  if (err) return reject(err);
-                  resolve();
-                }
-              );
-            });
-            success = true;
-            break;
-          } catch (err) {
-            console.error(`Intento ${attempt} fallido para ${category}/${doc._id}:`, err.message);
-            if (err.code === 'ENOENT') {
-              // Si el error es ENOENT, intentar recrear el archivo
-              const dbFile = collections[category].filename;
-              console.log(`Archivo ${dbFile} no encontrado, recreando...`);
-              fs.writeFileSync(dbFile, '');
-              fs.chmodSync(dbFile, '666');
-            }
-            if (attempt === 5) {
-              console.error(`No se pudo insertar ${category}/${doc._id} después de 5 intentos, saltando...`);
-              failedFiles[category].push({ id: doc._id, error: err.message });
-            }
-            await new Promise(resolve => setTimeout(resolve, 1000));
-          }
-        }
-        if (success && (i + batch.length) % 1000 === 0) {
-          console.log(`Progreso: ${Math.min(i + batch.length, entries.length)}/${entries.length} registros insertados en ${category}`);
-        }
+        failedFiles[category].push({ id, error: err.message, rawData });
       }
 
-      // Compactar después de cada lote
-      await new Promise((resolve) => {
-        collections[category].persistence.compactDatafile();
-        collections[category].on('compaction.done', resolve);
-      });
-      console.log(`Compactación de ${category} completada después del lote`);
+      // Compactar cada 1000 registros
+      if (totalProcessed % 1000 === 0) {
+        await new Promise((resolve) => {
+          collections[category].persistence.compactDatafile();
+          collections[category].on('compaction.done', resolve);
+        });
+        console.log(`Compactación de ${category} completada después de ${totalProcessed} registros`);
+      }
     }
 
     // Compactar al final
@@ -258,11 +231,11 @@ async function loadJSONToNeDB() {
       collections[category].persistence.compactDatafile();
       collections[category].on('compaction.done', resolve);
     });
-    console.log(`Compactación final de ${category} completada`);
+    console.log(`Compactación final de ${category} completada (${totalProcessed} registros válidos)`);
   }
 }
 
-// Ejecutar todo en orden
+// Ejecutar la migración
 async function migrate() {
   try {
     // Asegurarse de que los archivos .db existan y tengan permisos
@@ -275,19 +248,12 @@ async function migrate() {
       fs.chmodSync(dbFile, '666'); // Permisos de lectura/escritura
     }
 
-    // Paso 1: Convertir a JSON único con reparación
-    await convertToSingleJSON();
-
-    // Paso 2: Cargar JSON único en NeDB
-    await loadJSONToNeDB();
+    // Migrar directamente de JSON a NeDB
+    await migrateToNeDB();
 
     // Mostrar archivos fallidos
     console.log('Archivos que fallaron durante la migración:');
     console.log(JSON.stringify(failedFiles, null, 2));
-
-    // Limpiar archivos temporales
-    console.log('Limpiando archivos temporales...');
-    fs.rmSync(tempPath, { recursive: true, force: true });
 
     console.log('Migración completada');
   } catch (err) {
