@@ -25,7 +25,7 @@ Object.values(collections).forEach(db => {
   db.persistence.setAutocompactionInterval(0);
 });
 
-const queue = new PQueue({ concurrency: 50 });
+const queue = new PQueue({ concurrency: 25 });
 
 // Lista para registrar archivos fallidos
 const failedFiles = { users: [], chats: [], settings: [] };
@@ -44,7 +44,7 @@ function sanitizeObject(obj) {
   return sanitized;
 }
 
-// Función para intentar reparar JSON
+// Función para intentar reparar JSON (menos estricta)
 function tryFixJSON(rawData, category, id) {
   let fixedData = rawData.trim();
 
@@ -87,11 +87,12 @@ function tryFixJSON(rawData, category, id) {
   // 6. Intentar parsear el JSON reparado
   try {
     const parsedData = JSON.parse(fixedData);
-    if (!parsedData || typeof parsedData !== 'object') {
-      failedFiles[category].push({ id, error: 'Datos no válidos después de reparación: no es un objeto' });
+    // Aceptar cualquier dato, incluso si no es un objeto (lo convertimos a objeto)
+    if (parsedData === null || parsedData === undefined) {
+      failedFiles[category].push({ id, error: 'Datos no válidos después de reparación: null o undefined' });
       return null;
     }
-    return parsedData;
+    return typeof parsedData === 'object' ? parsedData : { value: parsedData };
   } catch (err) {
     failedFiles[category].push({ id, error: `No se pudo reparar: ${err.message}` });
     return null;
@@ -154,7 +155,7 @@ async function convertToSingleJSON() {
   }
 }
 
-// Paso 2: Cargar JSON único en NeDB con upsert para manejar duplicados
+// Paso 2: Cargar JSON único en NeDB con upsert y reintentos
 async function loadJSONToNeDB() {
   console.log('Paso 2: Cargando JSON único a NeDB...');
   for (const category of Object.keys(collections)) {
@@ -185,17 +186,28 @@ async function loadJSONToNeDB() {
         data: sanitizeObject(value),
       }));
 
-      // Usar update con upsert en lugar de insert para manejar duplicados
-      const updatePromises = docs.map(doc => new Promise((resolve, reject) => {
-        collections[category].update(
-          { _id: doc._id },
-          { $set: { data: doc.data } },
-          { upsert: true, multi: false },
-          (err) => {
-            if (err) return reject(err);
-            resolve();
+      // Usar update con upsert y reintentos
+      const updatePromises = docs.map(doc => queue.add(async () => {
+        for (let attempt = 1; attempt <= 3; attempt++) {
+          try {
+            await new Promise((resolve, reject) => {
+              collections[category].update(
+                { _id: doc._id },
+                { $set: { data: doc.data } },
+                { upsert: true, multi: false },
+                (err) => {
+                  if (err) return reject(err);
+                  resolve();
+                }
+              );
+            });
+            return; // Éxito, salimos
+          } catch (err) {
+            console.error(`Intento ${attempt} fallido para ${category}/${doc._id}:`, err.message);
+            if (attempt === 3) throw err;
+            await new Promise(resolve => setTimeout(resolve, 1000));
           }
-        );
+        }
       }));
 
       await Promise.all(updatePromises);
@@ -215,12 +227,14 @@ async function loadJSONToNeDB() {
 // Ejecutar todo en orden
 async function migrate() {
   try {
-    // Asegurarse de que los archivos .db tengan permisos
+    // Asegurarse de que los archivos .db existan y tengan permisos
     for (const category of Object.keys(collections)) {
       const dbFile = path.join(dbPath, `${category}.db`);
-      if (fs.existsSync(dbFile)) {
-        fs.chmodSync(dbFile, '666'); // Permisos de lectura/escritura
+      if (!fs.existsSync(dbFile)) {
+        console.log(`Creando archivo ${dbFile}...`);
+        fs.writeFileSync(dbFile, '');
       }
+      fs.chmodSync(dbFile, '666'); // Permisos de lectura/escritura
     }
 
     // Paso 1: Convertir a JSON único con reparación
