@@ -22,7 +22,7 @@ Object.values(collections).forEach(db => {
   db.persistence.setAutocompactionInterval(0);
 });
 
-const queue = new PQueue({ concurrency: 50 }); // Subimos a 50 para más velocidad
+const queue = new PQueue({ concurrency: 200 }); // Mantenemos 25
 
 // Lista para registrar archivos fallidos
 const failedFiles = { users: [], chats: [], settings: [] };
@@ -32,6 +32,10 @@ function sanitizeId(id) {
   return id.replace(/\./g, '_');
 }
 
+function unsanitizeId(id) {
+  return id.replace(/_/g, '.');
+}
+
 function sanitizeObject(obj) {
   const sanitized = {};
   for (const [key, value] of Object.entries(obj)) {
@@ -39,6 +43,15 @@ function sanitizeObject(obj) {
     sanitized[sanitizedKey] = (typeof value === 'object' && value !== null) ? sanitizeObject(value) : value;
   }
   return sanitized;
+}
+
+function unsanitizeObject(obj) {
+  const unsanitized = {};
+  for (const [key, value] of Object.entries(obj)) {
+    const unsanitizedKey = key.replace(/_/g, '.');
+    unsanitized[unsanitizedKey] = (typeof value === 'object' && value !== null) ? unsanitizeObject(value) : value;
+  }
+  return unsanitized;
 }
 
 // Escribir datos a NeDB con reintentos
@@ -133,13 +146,6 @@ async function migrateLowDBToNeDB() {
 
       await Promise.all(migrationPromises);
       console.log(`Lote de ${batch.length} archivos procesado en ${category}`);
-      
-      // Compactar después de cada lote para reducir el tamaño del archivo .db
-      await new Promise((resolve) => {
-        collections[category].persistence.compactDatafile();
-        collections[category].on('compaction.done', resolve);
-      });
-      console.log(`Compactación de ${category} completada después del lote`);
     }
   }
 
@@ -149,7 +155,7 @@ async function migrateLowDBToNeDB() {
     db.persistence.compactDatafile();
     db.on('compaction.done', resolve);
   })));
-  console.log('Compactación final completada');
+  console.log('Compactación completada');
 
   // Mostrar archivos fallidos
   console.log('Archivos que fallaron durante la migración:');
