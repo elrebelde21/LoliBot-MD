@@ -10,14 +10,11 @@ const __dirname = path.dirname(__filename);
 const dbPath = path.join(__dirname, 'database');
 if (!fs.existsSync(dbPath)) fs.mkdirSync(dbPath);
 
-// Crear las colecciones de NeDB
+// Crear solo las colecciones importantes
 const collections = {
   users: new Datastore({ filename: path.join(dbPath, 'users.db'), autoload: true }),
   chats: new Datastore({ filename: path.join(dbPath, 'chats.db'), autoload: true }),
   settings: new Datastore({ filename: path.join(dbPath, 'settings.db'), autoload: true }),
-  msgs: new Datastore({ filename: path.join(dbPath, 'msgs.db'), autoload: true }),
-  sticker: new Datastore({ filename: path.join(dbPath, 'sticker.db'), autoload: true }),
-  stats: new Datastore({ filename: path.join(dbPath, 'stats.db'), autoload: true }),
 };
 
 // Desactivar compactación automática durante migración
@@ -25,17 +22,14 @@ Object.values(collections).forEach(db => {
   db.persistence.setAutocompactionInterval(0);
 });
 
-const queue = new PQueue({ concurrency: 50 }); // Mantengo 50, funcionó bien hasta 1.000
+const queue = new PQueue({ concurrency: 100 }); // 100 para velocidad
 
-// Inicializar global.db.data
+// Inicializar global.db.data solo con lo importante
 global.db = {
   data: {
     users: {},
     chats: {},
     settings: {},
-    msgs: {},
-    sticker: {},
-    stats: {},
   },
 };
 
@@ -77,7 +71,7 @@ async function readFromNeDB(category, id) {
   });
 }
 
-// Escribir datos a NeDB (sin compactación por escritura)
+// Escribir datos a NeDB
 async function writeToNeDB(category, id, data) {
   const sanitizedId = sanitizeId(id);
   const sanitizedData = sanitizeObject(data);
@@ -155,19 +149,16 @@ global.db.save = async function () {
   console.log('Datos guardados en NeDB exitosamente.');
 };
 
-// Migración optimizada para muchos datos
+// Migración solo para users, chats y settings
 const oldDbPath = path.join(__dirname, 'databaseAnter');
 const oldPaths = {
   users: path.join(oldDbPath, 'users'),
   chats: path.join(oldDbPath, 'chats'),
   settings: path.join(oldDbPath, 'settings'),
-  msgs: path.join(oldDbPath, 'msgs'),
-  sticker: path.join(oldDbPath, 'sticker'),
-  stats: path.join(oldDbPath, 'stats'),
 };
 
 async function migrateLowDBToNeDB() {
-  console.log('Iniciando migración de LowDB a NeDB...');
+  console.log('Iniciando migración de LowDB a NeDB (solo users, chats, settings)...');
   for (const [category, dir] of Object.entries(oldPaths)) {
     if (!fs.existsSync(dir)) {
       console.log(`No se encontró el directorio ${dir}, saltando categoría ${category}`);
@@ -176,7 +167,7 @@ async function migrateLowDBToNeDB() {
     const files = fs.readdirSync(dir).filter(f => f.endsWith('.json'));
     console.log(`Encontrados ${files.length} archivos en ${category}`);
 
-    const batchSize = 10000; // Subimos a 10.000 para procesar más rápido
+    const batchSize = 10000; // 10.000 para velocidad
     let totalProcessed = 0;
 
     for (let i = 0; i < files.length; i += batchSize) {
@@ -194,11 +185,11 @@ async function migrateLowDBToNeDB() {
             const data = JSON.parse(rawData);
             global.db.writeData(category, id, data).then(() => {
               totalProcessed++;
-              if (totalProcessed % 1000 === 0) console.log(`Progreso: ${totalProcessed}/${files.length} archivos migrados`);
+              if (totalProcessed % 10000 === 0) console.log(`Progreso: ${totalProcessed}/${files.length} archivos migrados`);
               resolve();
             }).catch(err => {
               console.error(`Error migrando ${category}/${id}:`, err);
-              resolve(); // Continuar aunque falle
+              resolve();
             });
           } catch (err) {
             console.error(`Error leyendo ${category}/${id}:`, err);
@@ -210,14 +201,15 @@ async function migrateLowDBToNeDB() {
       await Promise.all(migrationPromises);
       console.log(`Lote de ${batch.length} archivos procesado en ${category}`);
     }
-
-    // Compactar al final de cada categoría
-    await new Promise((resolve) => {
-      collections[category].persistence.compactDatafile();
-      collections[category].on('compaction.done', resolve);
-    });
-    console.log(`Compactación completada para ${category}`);
   }
+
+  // Compactar todo al final
+  console.log('Compactando todas las categorías...');
+  await Promise.all(Object.values(collections).map(db => new Promise((resolve) => {
+    db.persistence.compactDatafile();
+    db.on('compaction.done', resolve);
+  })));
+  console.log('Compactación completada');
   console.log('Migración completada');
 }
 
@@ -235,7 +227,7 @@ async function initializeAndMigrate() {
 
 initializeAndMigrate();
 
-// Guardado periódico (activar después de migración)
+// Guardado periódico
 setInterval(() => {
   global.db.save().catch(err => console.error('Error en guardado periódico:', err));
 }, 30000);
