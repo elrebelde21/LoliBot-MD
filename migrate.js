@@ -37,7 +37,7 @@ const collections = {
 // );
 
 // AUMENTAMOS LA CONCURRENCIA PARA MIGRAR MÁS RÁPIDO
-const queue = new PQueue({ concurrency: 200 });
+const queue = new PQueue({ concurrency: 500 });
 
 // Funciones para sanitizar IDs (NeDB no permite puntos en _id)
 const sanitizeId = id => id.replace(/\./g, '_');
