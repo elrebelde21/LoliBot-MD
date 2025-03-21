@@ -1,85 +1,168 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import Datastore from '@seald-io/nedb';
 import {Low, JSONFile} from 'lowdb'
+import Datastore from '@seald-io/nedb';
+import PQueue from 'p-queue';
 
 // Obtener __dirname en ES Modules
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Definir rutas de las bases de datos
-const lowdbPath = path.join(__dirname, 'databaseAnter'); // Carpeta donde está LowDB
-const nedbPath = path.join(__dirname, 'database'); // Carpeta donde guardaremos NeDB
+// CONFIGURACIÓN LOWDB
+// Carpeta de LowDB (datos antiguos)
+const lowdbBase = path.join(__dirname, 'databaseAnter');
 
-// Asegurar que la carpeta de NeDB exista
-if (!fs.existsSync(nedbPath)) fs.mkdirSync(nedbPath);
-
-// Archivos de LowDB
-const lowdbFiles = {
-  users: path.join(lowdbPath, 'users.json'),
-  chats: path.join(lowdbPath, 'chats.json'),
-  settings: path.join(lowdbPath, 'settings.json'),
-  msgs: path.join(lowdbPath, 'msgs.json'),
-  sticker: path.join(lowdbPath, 'sticker.json'),
-  stats: path.join(lowdbPath, 'stats.json'),
+// Definir las carpetas por categoría en LowDB
+const lowdbCategories = {
+  users: path.join(lowdbBase, 'users'),
+  chats: path.join(lowdbBase, 'chats'),
+  settings: path.join(lowdbBase, 'settings'),
+  msgs: path.join(lowdbBase, 'msgs'),
+  sticker: path.join(lowdbBase, 'sticker'),
+  stats: path.join(lowdbBase, 'stats'),
 };
 
-// Crear instancias de NeDB
+// Verificar que existan las carpetas de LowDB (opcional)
+Object.values(lowdbCategories).forEach(dir => {
+  if (!fs.existsSync(dir)) {
+    console.warn(`La carpeta ${dir} no existe.`);
+  }
+});
+
+// CONFIGURACIÓN NeDB
+// Carpeta de destino para NeDB (datos nuevos)
+const nedbBase = path.join(__dirname, 'database');
+if (!fs.existsSync(nedbBase)) fs.mkdirSync(nedbBase);
+
 const collections = {
-  users: new Datastore({ filename: path.join(nedbPath, 'users.db'), autoload: true }),
-  chats: new Datastore({ filename: path.join(nedbPath, 'chats.db'), autoload: true }),
-  settings: new Datastore({ filename: path.join(nedbPath, 'settings.db'), autoload: true }),
-  msgs: new Datastore({ filename: path.join(nedbPath, 'msgs.db'), autoload: true }),
-  sticker: new Datastore({ filename: path.join(nedbPath, 'sticker.db'), autoload: true }),
-  stats: new Datastore({ filename: path.join(nedbPath, 'stats.db'), autoload: true }),
+  users: new Datastore({ filename: path.join(nedbBase, 'users.db'), autoload: true }),
+  chats: new Datastore({ filename: path.join(nedbBase, 'chats.db'), autoload: true }),
+  settings: new Datastore({ filename: path.join(nedbBase, 'settings.db'), autoload: true }),
+  msgs: new Datastore({ filename: path.join(nedbBase, 'msgs.db'), autoload: true }),
+  sticker: new Datastore({ filename: path.join(nedbBase, 'sticker.db'), autoload: true }),
+  stats: new Datastore({ filename: path.join(nedbBase, 'stats.db'), autoload: true }),
 };
 
-// Función para migrar datos de LowDB a NeDB
-const migrateData = async () => {
-  for (const [key, filePath] of Object.entries(lowdbFiles)) {
-    if (!fs.existsSync(filePath)) {
-      console.warn(`⚠️  Archivo no encontrado: ${filePath}, saltando...`);
+Object.values(collections).forEach(db =>
+  db.persistence.setAutocompactionInterval(60000)
+);
+
+// Cola para controlar concurrencia
+const queue = new PQueue({ concurrency: 5 });
+
+// Funciones para sanitizar IDs (NeDB no permite puntos en _id)
+const sanitizeId = id => id.replace(/\./g, '_');
+const unsanitizeId = id => id.replace(/_/g, '.');
+
+// Sanitizar objetos (para claves anidadas)
+const sanitizeObject = obj => {
+  if (typeof obj !== 'object' || obj === null) return obj;
+  const sanitized = {};
+  for (const [key, value] of Object.entries(obj)) {
+    sanitized[sanitizeId(key)] =
+      typeof value === 'object' && value !== null ? sanitizeObject(value) : value;
+  }
+  return sanitized;
+};
+
+const unsanitizeObject = obj => {
+  if (typeof obj !== 'object' || obj === null) return obj;
+  const unsanitized = {};
+  for (const [key, value] of Object.entries(obj)) {
+    unsanitized[unsanitizeId(key)] =
+      typeof value === 'object' && value !== null ? unsanitizeObject(value) : value;
+  }
+  return unsanitized;
+};
+
+// -------------------------
+// Funciones para LowDB
+// -------------------------
+
+// Devuelve la ruta del archivo JSON de LowDB para una categoría e id
+function getLowDBFilePath(category, id) {
+  return path.join(lowdbCategories[category], `${id}.json`);
+}
+
+// Lee el archivo de LowDB y devuelve sus datos
+async function readLowDBFile(category, id) {
+  const filePath = getLowDBFilePath(category, id);
+  const adapter = new JSONFile(filePath);
+  const db = new Low(adapter);
+  await db.read();
+  db.data = db.data || {};
+  return db.data;
+}
+
+// -------------------------
+// Funciones para NeDB
+// -------------------------
+
+// Inserta o actualiza en NeDB los datos de una categoría e id
+async function writeToNeDB(category, id, data) {
+  const sanitizedId = sanitizeId(id);
+  const sanitizedData = sanitizeObject(data);
+  return new Promise((resolve, reject) => {
+    collections[category].update(
+      { _id: sanitizedId },
+      { $set: { data: sanitizedData } },
+      { upsert: true, multi: false },
+      err => {
+        if (err) {
+          console.error(`Error escribiendo ${category}/${id}:`, err);
+          return reject(err);
+        }
+        collections[category].persistence.compactDatafile();
+        resolve();
+      }
+    );
+  });
+}
+
+// -------------------------
+// Script de Migración
+// -------------------------
+
+async function migrate() {
+  const categories = Object.keys(lowdbCategories); // ['users', 'chats', ...]
+  let totalMigrated = 0;
+
+  for (const category of categories) {
+    // Obtener todos los archivos JSON en la carpeta de la categoría
+    if (!fs.existsSync(lowdbCategories[category])) {
+      console.warn(`La carpeta ${lowdbCategories[category]} no existe. Se omite ${category}.`);
       continue;
     }
+    const files = fs.readdirSync(lowdbCategories[category]);
 
-    console.log(`🔄 Migrando ${key}...`);
+    for (const file of files) {
+      // Asumimos que el archivo es del tipo id.json
+      const id = path.basename(file, '.json');
 
-    // Cargar LowDB
-    const adapter = new JSONFile(filePath);
-    const db = new Low(adapter);
-    await db.read();
+      // Filtros según tus reglas: saltar ciertos registros
+      if (category === 'users' && (id.includes('@newsletter') || id.includes('lid'))) continue;
+      if (category === 'chats' && id.includes('@newsletter')) continue;
 
-    // Transformar datos
-    const records = Object.entries(db.data).map(([id, data]) => ({
-      _id: id.replace(/\./g, '_'), // Reemplaza puntos para evitar conflictos en NeDB
-      data,
-    }));
-
-    // Insertar en NeDB
-    if (records.length > 0) {
-      await new Promise((resolve, reject) => {
-        collections[key].insert(records, err => {
-          if (err) {
-            console.error(`❌ Error migrando ${key}:`, err);
-            reject(err);
-          } else {
-            console.log(`✅ ${key} migrado correctamente (${records.length} registros)`);
-            resolve();
-          }
-        });
-      });
-    } else {
-      console.log(`⚠️ No hay datos para migrar en ${key}`);
+      try {
+        // Leer datos desde LowDB
+        const data = await queue.add(() => readLowDBFile(category, id));
+        // Escribir datos en NeDB
+        await queue.add(() => writeToNeDB(category, id, data));
+        console.log(`Migrado: ${category}/${id}`);
+        totalMigrated++;
+      } catch (err) {
+        console.error(`Error migrando ${category}/${id}:`, err);
+      }
     }
   }
 
-  console.log('🎉 Migración completada con éxito.');
+  console.log(`Migración completada. Total migrados: ${totalMigrated}`);
   process.exit(0);
-};
+}
 
-// Ejecutar migración
-migrateData().catch(err => {
-  console.error('❌ Error en la migración:', err);
+// Ejecutar la migración
+migrate().catch(err => {
+  console.error('Error durante la migración:', err);
   process.exit(1);
 });
