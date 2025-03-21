@@ -1,82 +1,128 @@
-import { join, dirname } from 'path';
-import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from 'fs';
-import { fileURLToPath } from 'url';
+import fs from 'fs';
+import path from 'path';
+import { Low, JSONFile } from 'lowdb';
 import initSqlJs from 'sql.js';
+import PQueue from 'p-queue';
 
-// Obtener __dirname en ES Modules
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+// Configuración de rutas
+const databaseAnterPath = path.join(process.cwd(), 'databaseAnter'); // Carpeta de la base de datos anterior
+const databasePath = path.join(process.cwd(), 'database'); // Carpeta de la nueva base de datos
 
-// Cargar sql.js
-const wasmPath = join(__dirname, 'node_modules', 'sql.js', 'dist', 'sql-wasm.wasm');
-if (!existsSync(wasmPath)) {
-    console.error('Error: sql-wasm.wasm no encontrado en:', wasmPath);
-    process.exit(1);
-}
-
-const SQL = await initSqlJs({
-    locateFile: () => wasmPath
-});
-
-const databasePath = join(__dirname, 'database');
-const oldDatabasePath = join(__dirname, 'databaseAnter');
-if (!existsSync(databasePath)) mkdirSync(databasePath);
-
-// Categorías a migrar
-const categories = ['users', 'chats', 'settings'];
-const oldPaths = {
-    users: join(oldDatabasePath, 'users'),
-    chats: join(oldDatabasePath, 'chats'),
-    settings: join(oldDatabasePath, 'settings'),
+// Rutas de las categorías en la base de datos anterior
+const paths = {
+    users: path.join(databaseAnterPath, 'users'),
+    chats: path.join(databaseAnterPath, 'chats'),
+    settings: path.join(databaseAnterPath, 'settings'),
+    msgs: path.join(databaseAnterPath, 'msgs'),
+    sticker: path.join(databaseAnterPath, 'sticker'),
+    stats: path.join(databaseAnterPath, 'stats'),
 };
 
-async function migrateToSqlJs() {
+// Configuración de SQL.js
+const wasmPath = path.join(process.cwd(), 'node_modules', 'sql.js', 'dist', 'sql-wasm.wasm');
+const SQL = await initSqlJs({
+    locateFile: () => wasmPath,
+});
+
+const categories = ['users', 'chats', 'settings', 'msgs', 'sticker', 'stats'];
+const databases = {};
+
+// Inicializar bases de datos SQL.js
+async function initializeDatabases() {
+    console.log('Inicializando bases de datos SQL.js...');
+    if (!fs.existsSync(databasePath)) {
+        fs.mkdirSync(databasePath); // Crear la carpeta "database" si no existe
+    }
+
     for (const category of categories) {
-        const oldDir = oldPaths[category];
-        const dbFile = join(databasePath, `${category}.db`);
+        const dbFile = path.join(databasePath, `${category}.db`);
         let db;
+        try {
+            const fileBuffer = fs.readFileSync(dbFile);
+            db = new SQL.Database(fileBuffer);
+            console.log(`Base de datos "${category}" cargada desde ${dbFile}`);
+        } catch (e) {
+            db = new SQL.Database();
+            console.log(`Nueva base de datos "${category}" creada.`);
+        }
+        databases[category] = db;
 
-        // Crear nueva base de datos para la categoría
-        db = new SQL.Database();
-
-        // Crear la tabla
         db.run(`
             CREATE TABLE IF NOT EXISTS data (
                 id TEXT PRIMARY KEY,
                 data TEXT
             )
         `);
-
-        // Leer y migrar los archivos JSON de databaseAnter
-        if (existsSync(oldDir)) {
-            const files = readdirSync(oldDir).filter(file => file.endsWith('.json'));
-            for (const file of files) {
-                const id = file.replace('.json', '');
-                
-                // Filtros como en tu código original
-                if (category === 'users' && (id.includes('@newsletter') || id.includes('lid'))) continue;
-                if (category === 'chats' && id.includes('@newsletter')) continue;
-
-                const filePath = join(oldDir, file);
-                const jsonData = JSON.parse(readFileSync(filePath, 'utf8'));
-
-                // Insertar en la base de datos
-                const stmt = db.prepare(`
-                    INSERT OR REPLACE INTO data (id, data) 
-                    VALUES (?, ?)
-                `);
-                stmt.run([id, JSON.stringify(jsonData)]);
-                stmt.free();
-            }
-        }
-
-        // Guardar la base de datos
-        const data = db.export();
-        writeFileSync(dbFile, Buffer.from(data));
-        console.log(`Migración completada para ${category}: ${dbFile}`);
+        saveDatabase(category);
     }
-    console.log('Migración total completada');
+    console.log('Bases de datos SQL.js inicializadas.');
+}
+
+// Guardar una base de datos SQL.js en disco
+function saveDatabase(category) {
+    const data = databases[category].export();
+    fs.writeFileSync(path.join(databasePath, `${category}.db`), Buffer.from(data));
+    console.log(`Base de datos "${category}" guardada.`);
+}
+
+// Leer datos de LowDB
+async function readLowDBData(category, id) {
+    const filePath = path.join(paths[category], `${id}.json`);
+    const db = new Low(new JSONFile(filePath));
+    await db.read();
+    return db.data || {};
+}
+
+// Escribir datos en SQL.js
+async function writeSQLData(category, id, data) {
+    const db = databases[category];
+    const stmt = db.prepare(`
+        INSERT INTO data (id, data) 
+        VALUES (?, ?) 
+        ON CONFLICT(id) DO UPDATE SET data = ?
+    `);
+    stmt.run([id, JSON.stringify(data), JSON.stringify(data)]);
+    stmt.free();
+    saveDatabase(category);
+}
+
+// Migrar datos de LowDB a SQL.js
+async function migrateData() {
+    console.log('Iniciando migración de datos...');
+    await initializeDatabases();
+    const queue = new PQueue({ concurrency: 5 });
+
+    for (const category of categories) {
+        console.log(`Procesando categoría: ${category}...`);
+        const files = fs.readdirSync(paths[category]);
+        console.log(`Encontrados ${files.length} archivos en ${category}.`);
+
+        for (const file of files) {
+            const id = path.basename(file, '.json');
+            if (category === 'users' && (id.includes('@newsletter') || id.includes('lid'))) continue;
+            if (category === 'chats' && id.includes('@newsletter')) continue;
+
+            await queue.add(async () => {
+                try {
+                    console.log(`Migrando: ${category}/${id}...`);
+                    const data = await readLowDBData(category, id);
+                    await writeSQLData(category, id, data);
+                    console.log(`Migrado con éxito: ${category}/${id}`);
+                } catch (error) {
+                    console.error(`Error migrando ${category}/${id}:`, error);
+                }
+            });
+        }
+    }
+
+    console.log('Migración completada.');
 }
 
 // Ejecutar la migración
-migrateToSqlJs().catch(err => console.error('Error durante la migración:', err));
+migrateData()
+    .then(() => {
+        console.log('¡Migración finalizada con éxito!');
+    })
+    .catch((error) => {
+        console.error('Error durante la migración:', error);
+    });
