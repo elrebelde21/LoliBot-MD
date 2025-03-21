@@ -8,14 +8,11 @@ import PQueue from 'p-queue';
 const databaseAnterPath = path.join(process.cwd(), 'databaseAnter'); // Carpeta de la base de datos anterior
 const databasePath = path.join(process.cwd(), 'database'); // Carpeta de la nueva base de datos
 
-// Rutas de las categorías en la base de datos anterior
+// Rutas de las categorías importantes en la base de datos anterior
 const paths = {
     users: path.join(databaseAnterPath, 'users'),
     chats: path.join(databaseAnterPath, 'chats'),
     settings: path.join(databaseAnterPath, 'settings'),
-    msgs: path.join(databaseAnterPath, 'msgs'),
-    sticker: path.join(databaseAnterPath, 'sticker'),
-    stats: path.join(databaseAnterPath, 'stats'),
 };
 
 // Configuración de SQL.js
@@ -24,7 +21,7 @@ const SQL = await initSqlJs({
     locateFile: () => wasmPath,
 });
 
-const categories = ['users', 'chats', 'settings', 'msgs', 'sticker', 'stats'];
+const categories = ['users', 'chats', 'settings']; // Solo estas categorías se migrarán
 const databases = {};
 
 // Inicializar bases de datos SQL.js
@@ -94,6 +91,11 @@ async function migrateData() {
 
     for (const category of categories) {
         console.log(`Procesando categoría: ${category}...`);
+        if (!fs.existsSync(paths[category])) {
+            console.log(`La carpeta ${paths[category]} no existe. Saltando...`);
+            continue;
+        }
+
         const files = fs.readdirSync(paths[category]);
         console.log(`Encontrados ${files.length} archivos en ${category}.`);
 
