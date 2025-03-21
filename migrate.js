@@ -2,8 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import Datastore from '@seald-io/nedb';
-import { Low } from 'lowdb';
-import { JSONFile } from 'lowdb/node';
+import {Low, JSONFile} from 'lowdb'
 
 // Obtener __dirname en ES Modules
 const __filename = fileURLToPath(import.meta.url);
