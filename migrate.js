@@ -10,17 +10,14 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // CONFIGURACIÓN LOWDB
-// Carpeta de LowDB (datos antiguos)
+// Carpeta de LowDB (datos antiguos) -> "databaseAnter"
 const lowdbBase = path.join(__dirname, 'databaseAnter');
 
-// Definir las carpetas por categoría en LowDB
+// Definir las carpetas por categoría que queremos migrar (users, chats, settings)
 const lowdbCategories = {
   users: path.join(lowdbBase, 'users'),
   chats: path.join(lowdbBase, 'chats'),
-  settings: path.join(lowdbBase, 'settings'),
-  msgs: path.join(lowdbBase, 'msgs'),
-  sticker: path.join(lowdbBase, 'sticker'),
-  stats: path.join(lowdbBase, 'stats'),
+  settings: path.join(lowdbBase, 'settings')
 };
 
 // Verificar que existan las carpetas de LowDB (opcional)
@@ -31,17 +28,14 @@ Object.values(lowdbCategories).forEach(dir => {
 });
 
 // CONFIGURACIÓN NeDB
-// Carpeta de destino para NeDB (datos nuevos)
+// Carpeta de destino para NeDB (datos nuevos) -> "database"
 const nedbBase = path.join(__dirname, 'database');
 if (!fs.existsSync(nedbBase)) fs.mkdirSync(nedbBase);
 
 const collections = {
   users: new Datastore({ filename: path.join(nedbBase, 'users.db'), autoload: true }),
   chats: new Datastore({ filename: path.join(nedbBase, 'chats.db'), autoload: true }),
-  settings: new Datastore({ filename: path.join(nedbBase, 'settings.db'), autoload: true }),
-  msgs: new Datastore({ filename: path.join(nedbBase, 'msgs.db'), autoload: true }),
-  sticker: new Datastore({ filename: path.join(nedbBase, 'sticker.db'), autoload: true }),
-  stats: new Datastore({ filename: path.join(nedbBase, 'stats.db'), autoload: true }),
+  settings: new Datastore({ filename: path.join(nedbBase, 'settings.db'), autoload: true })
 };
 
 Object.values(collections).forEach(db =>
@@ -49,7 +43,7 @@ Object.values(collections).forEach(db =>
 );
 
 // Cola para controlar concurrencia
-const queue = new PQueue({ concurrency: 5 });
+const queue = new PQueue({ concurrency: 100 });
 
 // Funciones para sanitizar IDs (NeDB no permite puntos en _id)
 const sanitizeId = id => id.replace(/\./g, '_');
@@ -80,7 +74,7 @@ const unsanitizeObject = obj => {
 // Funciones para LowDB
 // -------------------------
 
-// Devuelve la ruta del archivo JSON de LowDB para una categoría e id
+// Devuelve la ruta del archivo JSON para una categoría e id
 function getLowDBFilePath(category, id) {
   return path.join(lowdbCategories[category], `${id}.json`);
 }
@@ -125,11 +119,10 @@ async function writeToNeDB(category, id, data) {
 // -------------------------
 
 async function migrate() {
-  const categories = Object.keys(lowdbCategories); // ['users', 'chats', ...]
+  const categories = Object.keys(lowdbCategories); // ['users', 'chats', 'settings']
   let totalMigrated = 0;
 
   for (const category of categories) {
-    // Obtener todos los archivos JSON en la carpeta de la categoría
     if (!fs.existsSync(lowdbCategories[category])) {
       console.warn(`La carpeta ${lowdbCategories[category]} no existe. Se omite ${category}.`);
       continue;
@@ -140,7 +133,7 @@ async function migrate() {
       // Asumimos que el archivo es del tipo id.json
       const id = path.basename(file, '.json');
 
-      // Filtros según tus reglas: saltar ciertos registros
+      // Ejemplo de filtro: en users y chats se pueden omitir ciertos registros
       if (category === 'users' && (id.includes('@newsletter') || id.includes('lid'))) continue;
       if (category === 'chats' && id.includes('@newsletter')) continue;
 
