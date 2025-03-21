@@ -61,10 +61,10 @@ const collections = {
 };
 
 Object.values(collections).forEach(db => {
-db.persistence.setAutocompactionInterval(60000); 
+db.setAutocompactionInterval(60000);
 });
 
-const queue = new PQueue({ concurrency: 5 });
+const queue = new PQueue({ concurrency: 50 });
 
 global.db = {
   data: {
@@ -129,7 +129,7 @@ async function writeToNeDB(category, id, data) {
           console.error(`Error escribiendo ${category}/${id}:`, err);
           return reject(err);
         }        
-        collections[category].persistence.compactDatafile();
+        collections[category].compactDatafile(); // Aquí se corrige la línea
         resolve();
       }
     );
