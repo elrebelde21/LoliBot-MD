@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import Datastore from 'nedb';
+import Datastore from '@seald-io/nedb';
 import { Low, JSONFile } from 'lowdb';
 import PQueue from 'p-queue';
 
