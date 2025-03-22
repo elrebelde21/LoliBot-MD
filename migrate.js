@@ -24,22 +24,22 @@ const SQL = await initSqlJs({ locateFile: () => wasmPath });
 if (!fs.existsSync(databasePath)) fs.mkdirSync(databasePath);
 
 async function initializeDatabases() {
-    console.log('Inicializando bases de datos SQL.js...');
+    console.log('📌 Inicializando bases de datos SQL.js...');
     for (const category of categories) {
         const dbFile = path.join(databasePath, `${category}.db`);
         let db;
         try {
             const fileBuffer = fs.existsSync(dbFile) ? fs.readFileSync(dbFile) : null;
             db = fileBuffer ? new SQL.Database(fileBuffer) : new SQL.Database();
-            console.log(`Base de datos "${category}" cargada.`);
+            console.log(`✅ Base de datos "${category}" cargada.`);
         } catch {
             db = new SQL.Database();
-            console.log(`Nueva base de datos "${category}" creada.`);
+            console.log(`🔄 Nueva base de datos "${category}" creada.`);
         }
         databases[category] = db;
         db.run(`CREATE TABLE IF NOT EXISTS data (id TEXT PRIMARY KEY, data TEXT)`);
     }
-    console.log('Bases de datos listas.');
+    console.log('🚀 Bases de datos listas.');
 }
 
 // Guardar todas las bases de datos al finalizar
@@ -47,7 +47,7 @@ function saveAllDatabases() {
     for (const category of categories) {
         const data = databases[category].export();
         fs.writeFileSync(path.join(databasePath, `${category}.db`), Buffer.from(data));
-        console.log(`Base de datos "${category}" guardada.`);
+        console.log(`💾 Base de datos "${category}" guardada.`);
     }
 }
 
@@ -59,35 +59,41 @@ async function readLowDBData(category, id) {
     try {
         const db = new Low(new JSONFile(filePath));
         await db.read();
-        return db.data || null;
-    } catch {
-        console.warn(`Archivo corrupto o inválido ignorado: ${filePath}`);
+        return db.data && typeof db.data === 'object' ? db.data : null;
+    } catch (error) {
+        console.warn(`⚠️ Archivo corrupto o inválido ignorado: ${filePath}`);
         return null;
     }
 }
 
-// Insertar datos en SQL.js usando transacciones para rapidez
+// Insertar datos en SQL.js con validación
 function writeSQLData(category, batch) {
     const db = databases[category];
     db.run('BEGIN TRANSACTION');
     const stmt = db.prepare(`INSERT INTO data (id, data) VALUES (?, ?) ON CONFLICT(id) DO UPDATE SET data = ?`);
+    
     for (const { id, data } of batch) {
-        stmt.run([id, JSON.stringify(data), JSON.stringify(data)]);
+        try {
+            const jsonData = JSON.stringify(data);
+            stmt.run([id, jsonData, jsonData]);
+        } catch (error) {
+            console.error(`❌ Error al escribir en SQL.js: ID ${id} - ${error.message}`);
+        }
     }
     stmt.free();
     db.run('COMMIT');
 }
 
-// Migrar datos de LowDB a SQL.js en lotes de 5000
+// Migrar datos de LowDB a SQL.js con verificación
 async function migrateData() {
-    console.log('Iniciando migración...');
+    console.log('🚀 Iniciando migración...');
     await initializeDatabases();
 
     for (const category of categories) {
         if (!fs.existsSync(paths[category])) continue;
         const files = fs.readdirSync(paths[category]).filter(f => f.endsWith('.json'));
 
-        console.log(`Migrando ${files.length} archivos de "${category}"...`);
+        console.log(`📂 Migrando ${files.length} archivos de "${category}"...`);
         const batchSize = 5000;
 
         for (let i = 0; i < files.length; i += batchSize) {
@@ -108,8 +114,26 @@ async function migrateData() {
     }
 
     saveAllDatabases();
-    console.log('Migración completada.');
+    console.log('✅ Migración completada.');
+
+    // Verificación de datos migrados
+    verifyMigration();
+}
+
+// Verificar si los datos fueron migrados correctamente
+function verifyMigration() {
+    console.log('🔍 Verificando datos migrados...');
+    for (const category of categories) {
+        const db = databases[category];
+        const result = db.exec(`SELECT * FROM data LIMIT 5`);
+
+        if (result.length > 0) {
+            console.log(`✅ Ejemplo de datos en "${category}":`, JSON.parse(result[0].values[0][1]));
+        } else {
+            console.warn(`⚠️ No se encontraron datos en la base de datos "${category}".`);
+        }
+    }
 }
 
 // Ejecutar la migración
-migrateData().catch(err => console.error('Error en la migración:', err));
+migrateData().catch(err => console.error('❌ Error en la migración:', err));
