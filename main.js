@@ -53,9 +53,7 @@ if (!existsSync(wasmPath)) {
 console.error('Error: sql-wasm.wasm no encontrado en:', wasmPath);
 }
 
-const SQL = await initSqlJs({
-    locateFile: () => wasmPath
-});
+const SQL = await initSqlJs({locateFile: () => wasmPath });
 
 const databasePath = join(__dirname, 'database');
 if (!existsSync(databasePath)) mkdirSync(databasePath);
@@ -64,122 +62,108 @@ const categories = ['users', 'chats', 'settings', 'msgs', 'sticker', 'stats'];
 const databases = {};
 
 async function initializeDatabases() {
-    for (const category of categories) {
-        const dbFile = join(databasePath, `${category}.db`);
-        let db;
-        try {
-            const fileBuffer = readFileSync(dbFile);
-            db = new SQL.Database(fileBuffer);
-        } catch (e) {
-            db = new SQL.Database();
-        }
-        databases[category] = db;
+for (const category of categories) {
+const dbFile = join(databasePath, `${category}.db`);
+let db;
+try {
+const fileBuffer = readFileSync(dbFile);
+db = new SQL.Database(fileBuffer);
+} catch (e) {
+db = new SQL.Database();
+}
+databases[category] = db;
 
-        db.run(`
-            CREATE TABLE IF NOT EXISTS data (
+db.run(`CREATE TABLE IF NOT EXISTS data (
                 id TEXT PRIMARY KEY,
                 data TEXT
             )
         `);
-        saveDatabase(category);
-    }
+saveDatabase(category);
+}
 }
 
 function saveDatabase(category) {
-    const data = databases[category].export();
-    writeFileSync(join(databasePath, `${category}.db`), Buffer.from(data));
+const data = databases[category].export();
+writeFileSync(join(databasePath, `${category}.db`), Buffer.from(data));
 }
 
-const queue = new PQueue({ concurrency: 5 });
-
-global.db = {
-    data: {
-        users: {},
-        chats: {},
-        settings: {},
-        msgs: {},
-        sticker: {},
-        stats: {},
-    },
+global.db = { data: {
+users: {},
+chats: {},
+settings: {},
+msgs: {},
+sticker: {},
+stats: {},
+},
 };
 
 async function readData(category, id) {
-    const db = databases[category];
-    const stmt = db.prepare(`SELECT data FROM data WHERE id = ?`);
-    stmt.bind([id]);
-    const row = stmt.step() ? stmt.getAsObject() : null;
-    stmt.free();
-    return row ? JSON.parse(row.data) : {};
+const db = databases[category];
+const stmt = db.prepare(`SELECT data FROM data WHERE id = ?`);
+stmt.bind([id]);
+const row = stmt.step() ? stmt.getAsObject() : null;
+stmt.free();
+return row ? JSON.parse(row.data) : {};
 }
 
 async function writeData(category, id, data) {
-    const db = databases[category];
-    const stmt = db.prepare(`
+const db = databases[category];
+const stmt = db.prepare(`
         INSERT INTO data (id, data) 
         VALUES (?, ?) 
         ON CONFLICT(id) DO UPDATE SET data = ?
     `);
-    stmt.run([id, JSON.stringify(data), JSON.stringify(data)]);
-    stmt.free();
-    saveDatabase(category);
+stmt.run([id, JSON.stringify(data), JSON.stringify(data)]);
+stmt.free();
+saveDatabase(category);
 }
 
 global.db.readData = async function(category, id) {
-    if (!global.db.data[category][id]) {
-        const data = await queue.add(() => readData(category, id));
-        global.db.data[category][id] = data;
-    }
-    return global.db.data[category][id];
+if (!global.db.data[category][id]) {
+global.db.data[category][id] = await readData(category, id);
+}
+return global.db.data[category][id];
 };
 
 global.db.writeData = async function(category, id, data) {
-    global.db.data[category][id] = { ...global.db.data[category][id], ...data };
-    await queue.add(() => writeData(category, id, global.db.data[category][id]));
+global.db.data[category][id] = { ...global.db.data[category][id], ...data };
+await writeData(category, id, global.db.data[category][id]);
 };
 
 global.db.loadDatabase = async function() {
-    await initializeDatabases();
-    const loadPromises = [];
+await initializeDatabases();
     
-    for (const category of categories) {
-        const db = databases[category];
-        const stmt = db.prepare(`SELECT id, data FROM data`);
-        while (stmt.step()) {
-            const row = stmt.getAsObject();
-            const id = row.id;
-            if (category === 'users' && (id.includes('@newsletter') || id.includes('lid'))) continue;
-            if (category === 'chats' && id.includes('@newsletter')) continue;
+for (const category of categories) {
+const db = databases[category];
+const stmt = db.prepare(`SELECT id, data FROM data`);
+while (stmt.step()) {
+const row = stmt.getAsObject();
+const id = row.id;
+if (category === 'users' && (id.includes('@newsletter') || id.includes('lid'))) continue;
+if (category === 'chats' && id.includes('@newsletter')) continue;
             
-            loadPromises.push(
-                queue.add(() => Promise.resolve(JSON.parse(row.data)))
-                    .then(data => {
-                        global.db.data[category][id] = data;
-                    })
-                    .catch(err => console.error(`Error cargando ${category}/${id}:`, err))
-            );
-        }
-        stmt.free();
-    }
-    
-    await Promise.all(loadPromises);
-    console.log('Bases de datos cargadas');
+try {
+const data = JSON.parse(row.data);
+global.db.data[category][id] = data;
+} catch (err) {
+console.error(`Error cargando ${category}/${id}:`, err);
+}}
+stmt.free();
+}
 };
 
 global.db.save = async function() {
-    for (const category of categories) {
-        for (const [id, data] of Object.entries(global.db.data[category])) {
-            if (Object.keys(data).length > 0) {
-                if (category === 'users' && (id.includes('@newsletter') || id.includes('lid'))) continue;
-                if (category === 'chats' && id.includes('@newsletter')) continue;
-                
-                await queue.add(() => writeData(category, id, data));
-            }
-        }
-    }
+for (const category of categories) {
+for (const [id, data] of Object.entries(global.db.data[category])) {
+if (Object.keys(data).length > 0) {
+if (category === 'users' && (id.includes('@newsletter') || id.includes('lid'))) continue;
+if (category === 'chats' && id.includes('@newsletter')) continue;
+await writeData(category, id, data);
+}}}
 };
 
 global.db.loadDatabase().then(() => {
-    console.log('Databases initialized');
+console.log('Databases initialized');
 }).catch(err => console.error('Error initializing databases:', err));
 
 async function gracefulShutdown() {
