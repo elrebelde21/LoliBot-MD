@@ -78,7 +78,6 @@ async function initializeDatabases() {
             id TEXT PRIMARY KEY,
             data TEXT
         )`);
-        saveDatabase(category);
     }
 }
 
@@ -100,6 +99,7 @@ global.db = {
         sticker: {},
         stats: {},
     },
+    READ: false, 
 };
 
 async function readData(category, id) {
@@ -123,6 +123,70 @@ async function writeData(category, id, data) {
     saveDatabase(category);
 }
 
+global.loadDatabase = async function () {
+    if (global.db.READ) {
+        return new Promise((resolve) => {
+            const interval = setInterval(async () => {
+                if (!global.db.READ) {
+                    clearInterval(interval);
+                    resolve(global.db.data);
+                }
+            }, 1000);
+        });
+    }
+
+    global.db.READ = true;
+    await initializeDatabases();
+
+    for (const category of categories) {
+        const db = databases[category];
+        const stmt = db.prepare(`SELECT id, data FROM data`);
+        while (stmt.step()) {
+            const row = stmt.getAsObject();
+            const id = row.id;
+            try {
+                const data = JSON.parse(row.data);
+                global.db.data[category][id] = data;
+            } catch (err) {
+                console.error(`Error cargando ${category}/${id}:`, err);
+            }
+        }
+        stmt.free();
+    }
+
+    global.db.READ = false;
+};
+
+global.saveDatabase = async function () {
+    for (const category of categories) {
+        for (const [id, data] of Object.entries(global.db.data[category])) {
+            if (Object.keys(data).length > 0) {
+                await writeData(category, id, data);
+            }
+        }
+    }
+};
+
+global.loadDatabase().then(() => {
+    console.log('Base de datos cargada correctamente');
+}).catch((err) => {
+    console.error('Error al cargar la base de datos:', err);
+});
+
+async function gracefulShutdown() {
+    try {
+        await global.saveDatabase();
+        console.log('Base de datos guardada antes de cerrar');
+    } catch (e) {
+        console.error('Error guardando la base de datos:', e);
+    } finally {
+        process.exit(0);
+    }
+}
+
+process.on('SIGINT', gracefulShutdown);
+process.on('SIGTERM', gracefulShutdown);
+
 global.db.readData = async function (category, id) {
     if (!global.db.data[category][id]) {
         global.db.data[category][id] = await readData(category, id);
@@ -134,59 +198,6 @@ global.db.writeData = async function (category, id, data) {
     global.db.data[category][id] = { ...global.db.data[category][id], ...data };
     await writeData(category, id, global.db.data[category][id]);
 };
-
-global.db.loadDatabase = async function () {
-    await initializeDatabases();
-
-    for (const category of categories) {
-        const db = databases[category];
-        const stmt = db.prepare(`SELECT id, data FROM data`);
-        while (stmt.step()) {
-            const row = stmt.getAsObject();
-            const id = row.id;
-            if (category === 'users' && (id.includes('@newsletter') || id.includes('lid'))) continue;
-            if (category === 'chats' && id.includes('@newsletter')) continue;
-
-            try {
-                const data = JSON.parse(row.data);
-                global.db.data[category][id] = data;
-            } catch (err) {
-                console.error(`Error cargando ${category}/${id}:`, err);
-            }
-        }
-        stmt.free();
-    }
-};
-
-global.db.save = async function () {
-    for (const category of categories) {
-        for (const [id, data] of Object.entries(global.db.data[category])) {
-            if (Object.keys(data).length > 0) {
-                if (category === 'users' && (id.includes('@newsletter') || id.includes('lid'))) continue;
-                if (category === 'chats' && id.includes('@newsletter')) continue;
-                await writeData(category, id, data);
-            }
-        }
-    }
-};
-
-global.db.loadDatabase().then(() => {
-    console.log('Databases initialized');
-}).catch(err => console.error('Error initializing databases:', err));
-
-async function gracefulShutdown() {
-    try {
-        await global.db.save();
-        console.log('Base de datos guardada antes de cerrar');
-    } catch (e) {
-        console.error('Error guardando la base de datos:', e);
-    } finally {
-        process.exit(0);
-    }
-}
-
-process.on('SIGINT', gracefulShutdown);
-process.on('SIGTERM', gracefulShutdown);
 
 /*global.db = new Low(/https?:\/\//.test(opts['db'] || '') ? new cloudDBAdapter(opts['db']) : new JSONFile('database.json'))
 global.DATABASE = global.db; 
