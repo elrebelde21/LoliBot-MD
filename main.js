@@ -66,11 +66,16 @@ async function initializeDatabases() {
         const dbFile = join(databasePath, `${category}.db`);
         let db;
         try {
-            const fileBuffer = readFileSync(dbFile);
-            db = new SQL.Database(fileBuffer);
+            if (existsSync(dbFile)) {
+                const fileBuffer = readFileSync(dbFile);
+                db = new SQL.Database(fileBuffer);
+            } else {
+                console.log(`Creando nueva base de datos para ${category}`);
+                db = new SQL.Database();
+            }
         } catch (e) {
-            console.log(`Creando nueva base de datos para ${category}`);
-            db = new SQL.Database();
+            console.error(`Error inicializando la base de datos ${category}:`, e);
+            db = new SQL.Database(); 
         }
         databases[category] = db;
 
@@ -136,39 +141,54 @@ global.loadDatabase = async function () {
     }
 
     global.db.READ = true;
-    await initializeDatabases();
+    console.log('Cargando base de datos...');
 
-    for (const category of categories) {
-        const db = databases[category];
-        const stmt = db.prepare(`SELECT id, data FROM data`);
-        while (stmt.step()) {
-            const row = stmt.getAsObject();
-            const id = row.id;
-            try {
-                const data = JSON.parse(row.data);
-                global.db.data[category][id] = data;
-            } catch (err) {
-                console.error(`Error cargando ${category}/${id}:`, err);
+    try {
+        await initializeDatabases();
+
+        for (const category of categories) {
+            const db = databases[category];
+            const stmt = db.prepare(`SELECT id, data FROM data`);
+            while (stmt.step()) {
+                const row = stmt.getAsObject();
+                const id = row.id;
+                try {
+                    const data = JSON.parse(row.data);
+                    global.db.data[category][id] = data;
+                    console.log(`Datos cargados para ${category}/${id}`);
+                } catch (err) {
+                    console.error(`Error parseando datos para ${category}/${id}:`, err);
+                }
             }
+            stmt.free();
         }
-        stmt.free();
+    } catch (e) {
+        console.error('Error cargando la base de datos:', e);
+    } finally {
+        global.db.READ = false;
+        console.log('Base de datos cargada correctamente');
     }
-
-    global.db.READ = false;
 };
 
 global.saveDatabase = async function () {
+    console.log('Guardando base de datos...');
     for (const category of categories) {
         for (const [id, data] of Object.entries(global.db.data[category])) {
             if (Object.keys(data).length > 0) {
-                await writeData(category, id, data);
+                try {
+                    await writeData(category, id, data);
+                    console.log(`Datos guardados para ${category}/${id}`);
+                } catch (e) {
+                    console.error(`Error guardando datos para ${category}/${id}:`, e);
+                }
             }
         }
     }
+    console.log('Base de datos guardada correctamente');
 };
 
 global.loadDatabase().then(() => {
-    console.log('Base de datos cargada correctamente');
+    console.log('Base de datos lista para usar');
 }).catch((err) => {
     console.error('Error al cargar la base de datos:', err);
 });
