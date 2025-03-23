@@ -47,7 +47,7 @@ let textWel = chat.sWelcome ? chat.sWelcome
                 
 await this.sendMessage(m.chat, { text: textWel, 
 contextInfo:{
-forwardedNewsletterMessageInfo: { newsletterJid: '120363355261011910@newsletter', serverMessageId: '', newsletterName: 'LoliBot ✨' },
+forwardedNewsletterMessageInfo: { newsletterJid: channelRD.id, serverMessageId: '', newsletterName: channelRD.name },
 forwardingScore: 9999999,
 isForwarded: true, 
 mentionedJid:[m.sender, m.messageStubParameters[0]],
@@ -70,7 +70,7 @@ let textBye = chat.sBye ? chat.sBye
 : defaultBye;
 await this.sendMessage(m.chat, { text: textBye, 
 contextInfo:{
-forwardedNewsletterMessageInfo: { newsletterJid: '120363355261011910@newsletter', serverMessageId: '', newsletterName: 'LoliBot ✨' },
+forwardedNewsletterMessageInfo: { newsletterJid: channelRD.id, serverMessageId: '', newsletterName: channelRD.name },
 forwardingScore: 9999999,
 isForwarded: true, 
 mentionedJid:[m.sender, m.messageStubParameters[0]],
@@ -91,7 +91,26 @@ let textAdm = chat.sPromote ? chat.sPromote
 .replace(/@autor/g, `${usuario}`)
 .replace(/@group/g, subject) 
 : defaultPromote;
-await this.sendMessage(m.chat, { text: textAdm, mentions: [m.sender, m.messageStubParameters[0], ...groupAdmins.map(v => v.id)] }, { quoted: fkontak, ephemeralExpiration: 24*60*100, disappearingMessagesInChat: 24*60*100})
+await this.sendMessage(m.chat, { text: textAdm,  
+contextInfo:{  
+forwardedNewsletterMessageInfo: { 
+newsletterJid: '120363355261011910@newsletter', 
+serverMessageId: '', 
+newsletterName: 'LoliBot ✨️' },
+forwardingScore: 9999999,  
+isForwarded: true,   
+mentionedJid: [m.sender, m.messageStubParameters[0], ...groupAdmins.map(v => v.id)],
+externalAdReply: {  
+showAdAttribution: true,  
+renderLargerThumbnail: false,  
+title: "NUEVO ADMINS 🥳",
+body: wm,
+containsAutoReply: true,  
+mediaType: 1,   
+thumbnailUrl: pp, 
+sourceUrl: [nna, nna2, nnaa].getRandom()
+}}}, { quoted: fkontak })
+//await this.sendMessage(m.chat, { text: textAdm, mentions: [m.sender, m.messageStubParameters[0], ...groupAdmins.map(v => v.id)] }, { quoted: fkontak, ephemeralExpiration: 24*60*100, disappearingMessagesInChat: 24*60*100})
 } else if (chat.detect && m.messageStubType == 30) {
 let subject = groupMetadata.subject;
 let defaultDemote = `@${m.messageStubParameters[0].split`@`[0]} 𝘿𝙀𝙅𝘼 𝘿𝙀 𝙎𝙀𝙍 𝘼𝘿𝙈𝙄𝙉 𝙀𝙉 𝙀𝙎𝙏𝙀 𝙂𝙍𝙐𝙋𝙊\n\n😼🫵𝘼𝘾𝘾𝙄𝙊𝙉 𝙍𝙀𝘼𝙇𝙄𝙕𝘼𝘿𝘼 𝙋𝙊𝙍: ${usuario}`
@@ -100,7 +119,26 @@ let textAdmin = chat.sDemote ? chat.sDemote
 .replace(/@autor/g, `${usuario}`)
 .replace(/@group/g, subject) 
 : defaultDemote;
-await this.sendMessage(m.chat, { text: textAdmin, mentions: [m.sender, m.messageStubParameters[0], ...groupAdmins.map(v => v.id)] }, { quoted: fkontak, ephemeralExpiration: 24*60*100, disappearingMessagesInChat: 24*60*100})
+await this.sendMessage(m.chat, { text: textAdmin,  
+contextInfo:{  
+forwardedNewsletterMessageInfo: { 
+newsletterJid: '120363355261011910@newsletter', 
+serverMessageId: '', 
+newsletterName: 'LoliBot ✨️' },
+forwardingScore: 9999999,  
+isForwarded: true,   
+mentionedJid: [m.sender, m.messageStubParameters[0], ...groupAdmins.map(v => v.id)],
+externalAdReply: {  
+showAdAttribution: true,  
+renderLargerThumbnail: false,  
+title: "📛 UN ADMINS MENOS",
+body: wm,
+containsAutoReply: true,  
+mediaType: 1,   
+thumbnailUrl: pp, 
+sourceUrl: [nna, nna2, nnaa].getRandom()
+}}}, { quoted: fkontak })
+//await this.sendMessage(m.chat, { text: textAdmin, mentions: [m.sender, m.messageStubParameters[0], ...groupAdmins.map(v => v.id)] }, { quoted: fkontak, ephemeralExpiration: 24*60*100, disappearingMessagesInChat: 24*60*100})
 } else if (chat.detect && m.messageStubType === 172 && m.messageStubParameters.length > 0) {
 const rawUser = m.messageStubParameters[0];
 const users = rawUser.split('@')[0];
