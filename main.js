@@ -196,17 +196,6 @@ console.log('Base de datos lista');
 console.error('Error cargando base de datos:', err);
 });
 
-// Guardar antes de cerrar
-async function gracefulShutdown() {
-console.log('Guardando base de datos antes de cerrar...');
-await global.db.save();
-console.log('Base de datos guardada. Cerrando el bot...');
-process.exit(0);
-}
-
-process.on('SIGINT', gracefulShutdown);
-process.on('SIGTERM', gracefulShutdown);
-
 /*global.db = new Low(/https?:\/\//.test(opts['db'] || '') ? new cloudDBAdapter(opts['db']) : new JSONFile('database.json'))
 global.DATABASE = global.db; 
 global.loadDatabase = async function loadDatabase() {
