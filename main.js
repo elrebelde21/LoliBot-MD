@@ -10,6 +10,7 @@ import { promises as fsPromises } from 'fs';
 import yargs from 'yargs'
 import { spawn } from 'child_process'
 import lodash from 'lodash'
+import { EventEmitter } from 'events'
 import chalk from 'chalk'
 import syntaxerror from 'syntax-error'
 import { format } from 'util'
@@ -45,6 +46,7 @@ const __dirname = global.__dirname(import.meta.url);
 //const __dirname = join(fileURLToPath(import.meta.url), '..');
 global.opts = new Object(yargs(process.argv.slice(2)).exitProcess(false).parse());
 //global.prefix = new RegExp('^[' + (opts['prefix'] || '*/i!#$%+£¢€¥^°=¶∆×÷π√✓©®&.\\-.@').replace(/[|\\{}()[\]^$+*.\-\^]/g, '\\$&') + ']')
+EventEmitter.defaultMaxListeners = 30;
 
 //news
 const wasmPath = join(__dirname, 'node_modules', 'sql.js', 'dist', 'sql-wasm.wasm');
@@ -52,7 +54,7 @@ if (!existsSync(wasmPath)) {
   console.error('Error: sql-wasm.wasm no encontrado en:', wasmPath);
 }
 
-let SQL; 
+let SQL;
 let db;
 
 const databasePath = join(__dirname, 'database');
@@ -64,14 +66,31 @@ const categories = ['users', 'chats', 'settings', 'msgs', 'sticker', 'stats'];
 async function initializeDatabase() {
   SQL = await initSqlJs({ locateFile: () => wasmPath });
 
-if (existsSync(dbFile)) {
+  const backupFile = join(databasePath, 'database.db.bak');
+
+  if (existsSync(dbFile)) {
     try {
       const fileBuffer = readFileSync(dbFile);
       db = new SQL.Database(fileBuffer);
       console.log('Base de datos cargada desde:', dbFile);
+      writeFileSync(backupFile, fileBuffer);
     } catch (e) {
       console.error('Error al cargar database.db:', e);
-      db = new SQL.Database();
+      if (existsSync(backupFile)) {
+        try {
+          const backupBuffer = readFileSync(backupFile);
+          db = new SQL.Database(backupBuffer);
+          console.log('Base de datos restaurada desde respaldo:', backupFile);
+          writeFileSync(dbFile, backupBuffer);
+        } catch (backupError) {
+          console.error('Error al cargar respaldo:', backupError);
+          db = new SQL.Database();
+          console.log('Creada nueva base de datos (no se pudo recuperar respaldo)');
+        }
+      } else {
+        db = new SQL.Database();
+        console.log('Creada nueva base de datos (sin respaldo disponible)');
+      }
     }
   } else {
     db = new SQL.Database();
@@ -87,8 +106,15 @@ if (existsSync(dbFile)) {
 }
 
 function saveDatabase() {
+  const tempFile = join(databasePath, 'database.db.temp');
+  const backupFile = join(databasePath, 'database.db.bak');
+
   const data = db.export();
-  writeFileSync(dbFile, Buffer.from(data));
+  writeFileSync(tempFile, Buffer.from(data));
+  if (existsSync(dbFile)) {
+    copyFileSync(dbFile, backupFile);
+  }
+  renameSync(tempFile, dbFile);
 }
 
 global.db = {
@@ -118,7 +144,6 @@ async function writeData(category, id, data) {
   `);
   stmt.run([id, JSON.stringify(data), JSON.stringify(data)]);
   stmt.free();
-  saveDatabase(); 
 }
 
 global.db.readData = async function (category, id) {
@@ -165,11 +190,21 @@ global.db.save = async function () {
       }
     }
   }
+  saveDatabase();
 };
 
 global.db.loadDatabase().then(() => {
   console.log('Base de datos inicializada');
 }).catch(err => console.error('Error inicializando base de datos:', err));
+
+async function gracefulShutdown() {
+  await global.db.save();
+  console.log('Base de datos guardada antes de cerrar');
+  process.exit(0);
+}
+
+process.on('SIGINT', gracefulShutdown);
+process.on('SIGTERM', gracefulShutdown);
 
 /*global.db = new Low(/https?:\/\//.test(opts['db'] || '') ? new cloudDBAdapter(opts['db']) : new JSONFile('database.json'))
 global.DATABASE = global.db; 
