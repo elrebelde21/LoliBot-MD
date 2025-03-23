@@ -73,7 +73,26 @@ async function initializeDatabase() {
       const fileBuffer = readFileSync(dbFile);
       db = new SQL.Database(fileBuffer);
       console.log('Base de datos cargada desde:', dbFile);
-      writeFileSync(backupFile, fileBuffer);
+
+      // Contar registros totales para verificar si hay datos
+      let totalRecords = 0;
+      for (const category of categories) {
+        const stmt = db.prepare(`SELECT COUNT(*) as count FROM ${category}`);
+        stmt.step();
+        const { count } = stmt.getAsObject();
+        totalRecords += count;
+        stmt.free();
+      }
+
+      if (totalRecords === 0 && existsSync(backupFile)) {
+        console.warn('Base de datos vacía, intentando restaurar desde respaldo...');
+        const backupBuffer = readFileSync(backupFile);
+        db = new SQL.Database(backupBuffer);
+        console.log('Base de datos restaurada desde respaldo:', backupFile);
+        writeFileSync(dbFile, backupBuffer);
+      } else {
+        writeFileSync(backupFile, fileBuffer);
+      }
     } catch (e) {
       console.error('Error al cargar database.db:', e);
       if (existsSync(backupFile)) {
@@ -163,6 +182,7 @@ global.db.loadDatabase = async function () {
 
   for (const category of categories) {
     const stmt = db.prepare(`SELECT id, data FROM ${category}`);
+    let loadedRecords = 0;
     while (stmt.step()) {
       const row = stmt.getAsObject();
       const id = row.id;
@@ -171,12 +191,13 @@ global.db.loadDatabase = async function () {
       try {
         const data = JSON.parse(row.data);
         global.db.data[category][id] = data;
+        loadedRecords++;
       } catch (err) {
         console.error(`Error cargando ${category}/${id}:`, err);
       }
     }
     stmt.free();
-    console.log(`Cargados ${Object.keys(global.db.data[category]).length} registros de ${category}`);
+    console.log(`Cargados ${loadedRecords} registros de ${category}`);
   }
 };
 
@@ -196,6 +217,9 @@ global.db.save = async function () {
 global.db.loadDatabase().then(() => {
   console.log('Base de datos inicializada');
 }).catch(err => console.error('Error inicializando base de datos:', err));
+
+// Guardado periódico
+setInterval(() => global.db.save().catch(console.error), 5 * 60 * 1000);
 
 async function gracefulShutdown() {
   await global.db.save();
