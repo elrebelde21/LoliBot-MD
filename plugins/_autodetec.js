@@ -44,9 +44,10 @@ let textWel = chat.sWelcome ? chat.sWelcome
 .replace(/@group/g, subject) 
 .replace(/@desc/g, descs)
 : defaultWelcome;
-        
+                
 await this.sendMessage(m.chat, { text: textWel, 
 contextInfo:{
+forwardedNewsletterMessageInfo: { newsletterJid: '120363355261011910@newsletter', serverMessageId: '', newsletterName: 'LoliBot ✨' },
 forwardingScore: 9999999,
 isForwarded: true, 
 mentionedJid:[m.sender, m.messageStubParameters[0]],
@@ -69,6 +70,7 @@ let textBye = chat.sBye ? chat.sBye
 : defaultBye;
 await this.sendMessage(m.chat, { text: textBye, 
 contextInfo:{
+forwardedNewsletterMessageInfo: { newsletterJid: '120363355261011910@newsletter', serverMessageId: '', newsletterName: 'LoliBot ✨' },
 forwardingScore: 9999999,
 isForwarded: true, 
 mentionedJid:[m.sender, m.messageStubParameters[0]],
