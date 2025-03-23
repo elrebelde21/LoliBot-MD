@@ -49,10 +49,11 @@ global.opts = new Object(yargs(process.argv.slice(2)).exitProcess(false).parse()
 //news
 const wasmPath = join(__dirname, 'node_modules', 'sql.js', 'dist', 'sql-wasm.wasm');
 if (!existsSync(wasmPath)) {
-console.error('Error: sql-wasm.wasm no encontrado en:', wasmPath);
+    console.error('Error: sql-wasm.wasm no encontrado en:', wasmPath);
+    process.exit(1);
 }
 
-const SQL = await initSqlJs({locateFile: () => wasmPath });
+const SQL = await initSqlJs({ locateFile: () => wasmPath });
 
 const databasePath = join(__dirname, 'database');
 if (!existsSync(databasePath)) mkdirSync(databasePath);
@@ -61,114 +62,127 @@ const categories = ['users', 'chats', 'settings', 'msgs', 'sticker', 'stats'];
 const databases = {};
 
 async function initializeDatabases() {
-for (const category of categories) {
-const dbFile = join(databasePath, `${category}.db`);
-let db;
-try {
-const fileBuffer = readFileSync(dbFile);
-db = new SQL.Database(fileBuffer);
-} catch (e) {
-db = new SQL.Database();
-}
-databases[category] = db;
+    for (const category of categories) {
+        const dbFile = join(databasePath, `${category}.db`);
+        let db;
+        try {
+            const fileBuffer = readFileSync(dbFile);
+            db = new SQL.Database(fileBuffer);
+        } catch (e) {
+            console.log(`Creando nueva base de datos para ${category}`);
+            db = new SQL.Database();
+        }
+        databases[category] = db;
 
-db.run(`CREATE TABLE IF NOT EXISTS data (
-                id TEXT PRIMARY KEY,
-                data TEXT
-            )
-        `);
-saveDatabase(category);
-}
+        db.run(`CREATE TABLE IF NOT EXISTS data (
+            id TEXT PRIMARY KEY,
+            data TEXT
+        )`);
+        saveDatabase(category);
+    }
 }
 
 function saveDatabase(category) {
-const data = databases[category].export();
-writeFileSync(join(databasePath, `${category}.db`), Buffer.from(data));
+    try {
+        const data = databases[category].export();
+        writeFileSync(join(databasePath, `${category}.db`), Buffer.from(data));
+    } catch (e) {
+        console.error(`Error guardando la base de datos ${category}:`, e);
+    }
 }
 
-global.db = { data: {
-users: {},
-chats: {},
-settings: {},
-msgs: {},
-sticker: {},
-stats: {},
-},
+global.db = {
+    data: {
+        users: {},
+        chats: {},
+        settings: {},
+        msgs: {},
+        sticker: {},
+        stats: {},
+    },
 };
 
 async function readData(category, id) {
-const db = databases[category];
-const stmt = db.prepare(`SELECT data FROM data WHERE id = ?`);
-stmt.bind([id]);
-const row = stmt.step() ? stmt.getAsObject() : null;
-stmt.free();
-return row ? JSON.parse(row.data) : {};
+    const db = databases[category];
+    const stmt = db.prepare(`SELECT data FROM data WHERE id = ?`);
+    stmt.bind([id]);
+    const row = stmt.step() ? stmt.getAsObject() : null;
+    stmt.free();
+    return row ? JSON.parse(row.data) : {};
 }
 
 async function writeData(category, id, data) {
-const db = databases[category];
-const stmt = db.prepare(`
+    const db = databases[category];
+    const stmt = db.prepare(`
         INSERT INTO data (id, data) 
         VALUES (?, ?) 
         ON CONFLICT(id) DO UPDATE SET data = ?
     `);
-stmt.run([id, JSON.stringify(data), JSON.stringify(data)]);
-stmt.free();
-saveDatabase(category);
+    stmt.run([id, JSON.stringify(data), JSON.stringify(data)]);
+    stmt.free();
+    saveDatabase(category);
 }
 
-global.db.readData = async function(category, id) {
-if (!global.db.data[category][id]) {
-global.db.data[category][id] = await readData(category, id);
-}
-return global.db.data[category][id];
+global.db.readData = async function (category, id) {
+    if (!global.db.data[category][id]) {
+        global.db.data[category][id] = await readData(category, id);
+    }
+    return global.db.data[category][id];
 };
 
-global.db.writeData = async function(category, id, data) {
-global.db.data[category][id] = { ...global.db.data[category][id], ...data };
-await writeData(category, id, global.db.data[category][id]);
+global.db.writeData = async function (category, id, data) {
+    global.db.data[category][id] = { ...global.db.data[category][id], ...data };
+    await writeData(category, id, global.db.data[category][id]);
 };
 
-global.db.loadDatabase = async function() {
-await initializeDatabases();
-    
-for (const category of categories) {
-const db = databases[category];
-const stmt = db.prepare(`SELECT id, data FROM data`);
-while (stmt.step()) {
-const row = stmt.getAsObject();
-const id = row.id;
-if (category === 'users' && (id.includes('@newsletter') || id.includes('lid'))) continue;
-if (category === 'chats' && id.includes('@newsletter')) continue;
-            
-try {
-const data = JSON.parse(row.data);
-global.db.data[category][id] = data;
-} catch (err) {
-console.error(`Error cargando ${category}/${id}:`, err);
-}}
-stmt.free();
-}
+global.db.loadDatabase = async function () {
+    await initializeDatabases();
+
+    for (const category of categories) {
+        const db = databases[category];
+        const stmt = db.prepare(`SELECT id, data FROM data`);
+        while (stmt.step()) {
+            const row = stmt.getAsObject();
+            const id = row.id;
+            if (category === 'users' && (id.includes('@newsletter') || id.includes('lid'))) continue;
+            if (category === 'chats' && id.includes('@newsletter')) continue;
+
+            try {
+                const data = JSON.parse(row.data);
+                global.db.data[category][id] = data;
+            } catch (err) {
+                console.error(`Error cargando ${category}/${id}:`, err);
+            }
+        }
+        stmt.free();
+    }
 };
 
-global.db.save = async function() {
-for (const category of categories) {
-for (const [id, data] of Object.entries(global.db.data[category])) {
-if (Object.keys(data).length > 0) {
-if (category === 'users' && (id.includes('@newsletter') || id.includes('lid'))) continue;
-if (category === 'chats' && id.includes('@newsletter')) continue;
-await writeData(category, id, data);
-}}}
+global.db.save = async function () {
+    for (const category of categories) {
+        for (const [id, data] of Object.entries(global.db.data[category])) {
+            if (Object.keys(data).length > 0) {
+                if (category === 'users' && (id.includes('@newsletter') || id.includes('lid'))) continue;
+                if (category === 'chats' && id.includes('@newsletter')) continue;
+                await writeData(category, id, data);
+            }
+        }
+    }
 };
 
 global.db.loadDatabase().then(() => {
-console.log('Databases initialized');
+    console.log('Databases initialized');
 }).catch(err => console.error('Error initializing databases:', err));
 
 async function gracefulShutdown() {
-await global.db.save();
-console.log('Base de datos guardada antes de cerrar');
-process.exit(0);
+    try {
+        await global.db.save();
+        console.log('Base de datos guardada antes de cerrar');
+    } catch (e) {
+        console.error('Error guardando la base de datos:', e);
+    } finally {
+        process.exit(0);
+    }
 }
 
 process.on('SIGINT', gracefulShutdown);
