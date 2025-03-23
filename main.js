@@ -10,7 +10,6 @@ import { promises as fsPromises } from 'fs';
 import yargs from 'yargs'
 import { spawn } from 'child_process'
 import lodash from 'lodash'
-import { EventEmitter } from 'events'
 import chalk from 'chalk'
 import syntaxerror from 'syntax-error'
 import { format } from 'util'
@@ -19,7 +18,7 @@ import Pino from 'pino'
 import { Boom } from '@hapi/boom'
 import { makeWASocket, protoType, serialize } from './lib/simple.js'
 import {Low, JSONFile} from 'lowdb'
-import initSqlJs from 'sql.js';
+import Datastore from '@seald-io/nedb';
 import store from './lib/store.js'
 import readline from 'readline'
 import NodeCache from 'node-cache' 
@@ -46,185 +45,163 @@ const __dirname = global.__dirname(import.meta.url);
 //const __dirname = join(fileURLToPath(import.meta.url), '..');
 global.opts = new Object(yargs(process.argv.slice(2)).exitProcess(false).parse());
 //global.prefix = new RegExp('^[' + (opts['prefix'] || '*/i!#$%+£¢€¥^°=¶∆×÷π√✓©®&.\\-.@').replace(/[|\\{}()[\]^$+*.\-\^]/g, '\\$&') + ']')
-EventEmitter.defaultMaxListeners = 30;
 
 //news
-const wasmPath = join(__dirname, 'node_modules', 'sql.js', 'dist', 'sql-wasm.wasm');
-if (!existsSync(wasmPath)) {
-  console.error('Error: sql-wasm.wasm no encontrado en:', wasmPath);
-}
+const dbPath = path.join(__dirname, 'database');
+if (!fs.existsSync(dbPath)) fs.mkdirSync(dbPath);
 
-let SQL;
-let db;
-
-const databasePath = join(__dirname, 'database');
-if (!existsSync(databasePath)) mkdirSync(databasePath);
-
-const dbFile = join(databasePath, 'database.db');
-const categories = ['users', 'chats', 'settings', 'msgs', 'sticker', 'stats'];
-
-async function initializeDatabase() {
-  SQL = await initSqlJs({ locateFile: () => wasmPath });
-
-  const backupFile = join(databasePath, 'database.db.bak');
-
-  if (existsSync(dbFile)) {
-    try {
-      const fileBuffer = readFileSync(dbFile);
-      db = new SQL.Database(fileBuffer);
-      console.log('Base de datos cargada desde:', dbFile);
-
-      // Contar registros totales para verificar si hay datos
-      let totalRecords = 0;
-      for (const category of categories) {
-        const stmt = db.prepare(`SELECT COUNT(*) as count FROM ${category}`);
-        stmt.step();
-        const { count } = stmt.getAsObject();
-        totalRecords += count;
-        stmt.free();
-      }
-
-      if (totalRecords === 0 && existsSync(backupFile)) {
-        console.warn('Base de datos vacía, intentando restaurar desde respaldo...');
-        const backupBuffer = readFileSync(backupFile);
-        db = new SQL.Database(backupBuffer);
-        console.log('Base de datos restaurada desde respaldo:', backupFile);
-        writeFileSync(dbFile, backupBuffer);
-      } else {
-        writeFileSync(backupFile, fileBuffer);
-      }
-    } catch (e) {
-      console.error('Error al cargar database.db:', e);
-      if (existsSync(backupFile)) {
-        try {
-          const backupBuffer = readFileSync(backupFile);
-          db = new SQL.Database(backupBuffer);
-          console.log('Base de datos restaurada desde respaldo:', backupFile);
-          writeFileSync(dbFile, backupBuffer);
-        } catch (backupError) {
-          console.error('Error al cargar respaldo:', backupError);
-          db = new SQL.Database();
-          console.log('Creada nueva base de datos (no se pudo recuperar respaldo)');
-        }
-      } else {
-        db = new SQL.Database();
-        console.log('Creada nueva base de datos (sin respaldo disponible)');
-      }
-    }
-  } else {
-    db = new SQL.Database();
-    console.log('Creada nueva base de datos en:', dbFile);
-  }
-
-  for (const category of categories) {
-    db.run(`CREATE TABLE IF NOT EXISTS ${category} (
-      id TEXT PRIMARY KEY,
-      data TEXT
-    )`);
-  }
-}
-
-function saveDatabase() {
-  const tempFile = join(databasePath, 'database.db.temp');
-  const backupFile = join(databasePath, 'database.db.bak');
-
-  const data = db.export();
-  writeFileSync(tempFile, Buffer.from(data));
-  if (existsSync(dbFile)) {
-    copyFileSync(dbFile, backupFile);
-  }
-  renameSync(tempFile, dbFile);
-}
-
-global.db = {
-  data: {
-    users: {},
-    chats: {},
-    settings: {},
-    msgs: {},
-    sticker: {},
-    stats: {},
-  },
+const collections = {
+users: new Datastore({ filename: path.join(dbPath, 'users.db'), autoload: true }),
+chats: new Datastore({ filename: path.join(dbPath, 'chats.db'), autoload: true }),
+settings: new Datastore({ filename: path.join(dbPath, 'settings.db'), autoload: true }),
+msgs: new Datastore({ filename: path.join(dbPath, 'msgs.db'), autoload: true }),
+sticker: new Datastore({ filename: path.join(dbPath, 'sticker.db'), autoload: true }),
+stats: new Datastore({ filename: path.join(dbPath, 'stats.db'), autoload: true }),
 };
 
-async function readData(category, id) {
-  const stmt = db.prepare(`SELECT data FROM ${category} WHERE id = ?`);
-  stmt.bind([id]);
-  const row = stmt.step() ? stmt.getAsObject() : null;
-  stmt.free();
-  return row ? JSON.parse(row.data) : {};
+Object.values(collections).forEach(db => {
+  db.setAutocompactionInterval(300000);
+});
+
+global.db = { data: {
+users: {},
+chats: {},
+settings: {},
+msgs: {},
+sticker: {},
+stats: {},
+},
+};
+
+function sanitizeId(id) {
+  return id.replace(/\./g, '_');
 }
 
-async function writeData(category, id, data) {
-  const stmt = db.prepare(`
-    INSERT INTO ${category} (id, data) 
-    VALUES (?, ?) 
-    ON CONFLICT(id) DO UPDATE SET data = ?
-  `);
-  stmt.run([id, JSON.stringify(data), JSON.stringify(data)]);
-  stmt.free();
+function unsanitizeId(id) {
+  return id.replace(/_/g, '.');
+}
+
+function sanitizeObject(obj) {
+const sanitized = {};
+for (const [key, value] of Object.entries(obj)) {
+const sanitizedKey = key.replace(/\./g, '_');
+sanitized[sanitizedKey] = (typeof value === 'object' && value !== null) ? sanitizeObject(value) : value;
+}
+return sanitized;
+}
+
+function unsanitizeObject(obj) {
+const unsanitized = {};
+for (const [key, value] of Object.entries(obj)) {
+const unsanitizedKey = key.replace(/_/g, '.');
+unsanitized[unsanitizedKey] = (typeof value === 'object' && value !== null) ? unsanitizeObject(value) : value;
+}
+return unsanitized;
+}
+
+async function readFromNeDB(category, id) {
+const sanitizedId = sanitizeId(id);
+return new Promise((resolve, reject) => {
+collections[category].findOne({ _id: sanitizedId }, (err, doc) => {
+if (err) {
+console.error(`Error leyendo ${category}/${id}:`, err);
+return reject(err);
+}
+resolve(doc ? unsanitizeObject(doc.data) : {});
+});
+});
+}
+
+async function writeToNeDB(category, id, data) {
+const sanitizedId = sanitizeId(id);
+const sanitizedData = sanitizeObject(data);
+return new Promise((resolve, reject) => {
+collections[category].update(
+{ _id: sanitizedId },
+{ $set: { data: sanitizedData } },
+{ upsert: true, multi: false },
+(err) => {
+if (err) {
+console.error(`Error escribiendo ${category}/${id}:`, err);
+return reject(err);
+}
+collections[category].compactDatafile();
+resolve();
+});
+});
 }
 
 global.db.readData = async function (category, id) {
-  if (!global.db.data[category][id]) {
-    global.db.data[category][id] = await readData(category, id);
-  }
-  return global.db.data[category][id];
+const originalId = id;
+if (!global.db.data[category][originalId]) {
+const data = await readFromNeDB(category, originalId);
+global.db.data[category][originalId] = data;
+}
+return global.db.data[category][originalId];
 };
 
 global.db.writeData = async function (category, id, data) {
-  global.db.data[category][id] = { ...global.db.data[category][id], ...data };
-  await writeData(category, id, global.db.data[category][id]);
+const originalId = id;
+global.db.data[category][originalId] = { ...global.db.data[category][originalId], ...data };
+await writeToNeDB(category, originalId, global.db.data[category][originalId]);
 };
 
 global.db.loadDatabase = async function () {
-  await initializeDatabase();
+const loadPromises = Object.keys(collections).map(async (category) => {
+const docs = await new Promise((resolve, reject) => {
+collections[category].find({}, (err, docs) => {
+if (err) return reject(err);
+resolve(docs);
+});
+});
+const seenIds = new Set();
+for (const doc of docs) {
+const originalId = unsanitizeId(doc._id);
+if (seenIds.has(originalId)) {
+await new Promise((res, rej) => {
+collections[category].remove({ _id: doc._id }, {}, (err) => {
+if (err) {
+console.error(`Error eliminando duplicado ${originalId}:`, err);
+rej(err);
+} else {
+collections[category].persistence.compactDatafile();
+res();
+}});
+});
+} else {
+seenIds.add(originalId);
+if (category === 'users' && (originalId.includes('@newsletter') || originalId.includes('lid'))) continue;
+if (category === 'chats' && originalId.includes('@newsletter')) continue;
+global.db.data[category][originalId] = unsanitizeObject(doc.data);
+}}});
 
-  for (const category of categories) {
-    const stmt = db.prepare(`SELECT id, data FROM ${category}`);
-    let loadedRecords = 0;
-    while (stmt.step()) {
-      const row = stmt.getAsObject();
-      const id = row.id;
-      if (category === 'users' && (id.includes('@newsletter') || id.includes('lid'))) continue;
-      if (category === 'chats' && id.includes('@newsletter')) continue;
-      try {
-        const data = JSON.parse(row.data);
-        global.db.data[category][id] = data;
-        loadedRecords++;
-      } catch (err) {
-        console.error(`Error cargando ${category}/${id}:`, err);
-      }
-    }
-    stmt.free();
-    console.log(`Cargados ${loadedRecords} registros de ${category}`);
-  }
+await Promise.all(loadPromises);
 };
 
 global.db.save = async function () {
-  for (const category of categories) {
-    for (const [id, data] of Object.entries(global.db.data[category])) {
-      if (Object.keys(data).length > 0) {
-        if (category === 'users' && (id.includes('@newsletter') || id.includes('lid'))) continue;
-        if (category === 'chats' && id.includes('@newsletter')) continue;
-        await writeData(category, id, data);
-      }
-    }
-  }
-  saveDatabase();
+const savePromises = [];
+for (const category of Object.keys(global.db.data)) {
+for (const [id, data] of Object.entries(global.db.data[category])) {
+if (Object.keys(data).length > 0) {
+if (category === 'users' && (id.includes('@newsletter') || id.includes('lid'))) continue;
+if (category === 'chats' && id.includes('@newsletter')) continue;
+savePromises.push(writeToNeDB(category, id, data));
+}}}
+await Promise.all(savePromises);
 };
 
 global.db.loadDatabase().then(() => {
-  console.log('Base de datos inicializada');
-}).catch(err => console.error('Error inicializando base de datos:', err));
+console.log('Base de datos lista');
+}).catch(err => {
+console.error('Error cargando base de datos:', err);
+});
 
-// Guardado periódico
-setInterval(() => global.db.save().catch(console.error), 5 * 60 * 1000);
-
+// Guardar antes de cerrar
 async function gracefulShutdown() {
-  await global.db.save();
-  console.log('Base de datos guardada antes de cerrar');
-  process.exit(0);
+console.log('Guardando base de datos antes de cerrar...');
+await global.db.save();
+console.log('Base de datos guardada. Cerrando el bot...');
+process.exit(0);
 }
 
 process.on('SIGINT', gracefulShutdown);
