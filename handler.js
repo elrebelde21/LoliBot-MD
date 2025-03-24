@@ -34,27 +34,21 @@ await global.loadDatabase()
 try {
 m = smsg(this, m) || m
 if (!m) return
-
 const messageTimestamp = m.messageTimestamp * 1000;
 const currentTime = Date.now();
 const oneHourInMs = 60 * 60 * 1000;
 if (currentTime - messageTimestamp > oneHourInMs) {
-console.log(`Mensaje ignorado: demasiado antiguo (${new Date(messageTimestamp)})`);
-return;
+throw !0; 
 }
 
 const messageId = m.id;
 if (processedMessages.has(messageId)) {
-console.log(`Mensaje ignorado: ya procesado (${messageId})`);
-return;
+throw !0;  
 }
     
 m.exp = 0
 m.limit = false
 m.money = false        
-
-processedMessages.add(messageId);
-setTimeout(() => processedMessages.delete(messageId), 2 * 60 * 60 * 1000);
 try {
 let user = global.db.data.users[m.sender]
 if (typeof user !== 'object')
@@ -308,6 +302,9 @@ const __filename = join(___dirname, name)
 if (typeof plugin.all === 'function') {
 try {
 await plugin.all.call(this, m, { chatUpdate, __dirname: ___dirname, __filename })
+
+processedMessages.add(messageId);
+setTimeout(() => processedMessages.delete(messageId), 2 * 60 * 60 * 1000); // Limpiar después de 2 horas
 } catch (e) {
 // if (typeof e === 'string') continue
 console.error(e)
