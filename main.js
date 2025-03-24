@@ -374,19 +374,29 @@ cp.spawn('find', [dir, '-amin', '2', '-type', 'f', '-delete']);
 if (opts['server']) (await import('./server.js')).default(global.conn, PORT)
 
 //respaldo de la sesión
-function manageCredentials(action) {
-const credsFile = join(global.rutaBot, global.creds);
-const backupFile = join(respaldoDir, global.creds);
-if (action === 'backup' && existsSync(credsFile)) {
-copyFileSync(credsFile, backupFile);
+const backupCreds = () => {
+if (fs.existsSync(credsFile)) {
+fs.copyFileSync(credsFile, backupFile);
 console.log(`[✅] Respaldo creado en ${backupFile}`);
-} else if (action === 'restore' && existsSync(backupFile)) {
-copyFileSync(backupFile, credsFile);
-console.log(`[✅] creds.json restaurado desde el respaldo`);
-}
-}
+} else {
+console.log('[⚠] No se encontró el archivo creds.json para respaldar.');
+}};
 
-setInterval(() => manageCredentials('backup'), 5 * 60 * 1000);
+const restoreCreds = () => {
+if (fs.existsSync(credsFile)) {
+fs.copyFileSync(backupFile, credsFile);
+console.log(`[✅] creds.json reemplazado desde el respaldo.`);
+} else if (fs.existsSync(backupFile)) {
+fs.copyFileSync(backupFile, credsFile);
+console.log(`[✅] creds.json restaurado desde el respaldo.`);
+} else {
+console.log('[⚠] No se encontró ni el archivo creds.json ni el respaldo.');
+}};
+
+setInterval(async () => {
+await backupCreds();
+console.log('[♻️] Respaldo periódico realizado.');
+}, 5 * 60 * 1000);
 
 async function connectionUpdate(update) {  
 const {connection, lastDisconnect, isNewLogin} = update
@@ -413,11 +423,11 @@ if (reason === DisconnectReason.badSession) {
 conn.logger.error(`[ ⚠ ] Sesión incorrecta, por favor elimina la carpeta ${global.authFile} y escanea nuevamente.`);
 } else if (reason === DisconnectReason.connectionClosed) {
 conn.logger.warn(`[ ⚠ ] Conexión cerrada, reconectando...`);
-manageCredentials('restore');
+restoreCreds();
 await global.reloadHandler(true).catch(console.error)
 } else if (reason === DisconnectReason.connectionLost) {
 conn.logger.warn(`[ ⚠ ] Conexión perdida con el servidor, reconectando...`);
-manageCredentials('restore');
+restoreCreds();
 await global.reloadHandler(true).catch(console.error)
 } else if (reason === DisconnectReason.connectionReplaced) {
 conn.logger.error(`[ ⚠ ] Conexión reemplazada, se ha abierto otra nueva sesión. Por favor, cierra la sesión actual primero.`);
