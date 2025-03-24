@@ -21,6 +21,7 @@ resolve()
  * Handle messages upsert
  * @param {import('@whiskeysockets/baileys').BaileysEventMap<unknown>['messages.upsert']} groupsUpdate 
  */
+const processedMessages = new Set();
 export async function handler(chatUpdate) {
 this.msgqueque = this.msgqueque || [];
 this.uptime = this.uptime || Date.now();
@@ -33,9 +34,27 @@ await global.loadDatabase()
 try {
 m = smsg(this, m) || m
 if (!m) return
+
+const messageTimestamp = m.messageTimestamp * 1000;
+const currentTime = Date.now();
+const oneHourInMs = 60 * 60 * 1000;
+if (currentTime - messageTimestamp > oneHourInMs) {
+console.log(`Mensaje ignorado: demasiado antiguo (${new Date(messageTimestamp)})`);
+return;
+}
+
+const messageId = m.id;
+if (processedMessages.has(messageId)) {
+console.log(`Mensaje ignorado: ya procesado (${messageId})`);
+return;
+}
+    
 m.exp = 0
 m.limit = false
 m.money = false        
+
+processedMessages.add(messageId);
+setTimeout(() => processedMessages.delete(messageId), 2 * 60 * 60 * 1000);
 try {
 let user = global.db.data.users[m.sender]
 if (typeof user !== 'object')
@@ -554,9 +573,11 @@ if (chat.welcome) {
 let groupMetadata = await this.groupMetadata(id) || (conn.chats[id] || {}).metadata;
 for (let user of participants) {
 let userJoinTime = Date.now(); 
-if (userJoinTime < botStartTime) {
-continue; 
+if (userJoinTime < global.botStartTime) {
+console.log(`Bienvenida ignorada para ${user}: unión anterior al inicio del bot (${new Date(userJoinTime)} < ${new Date(global.botStartTime)})`);
+continue;
 }
+
 let pp = './src/sinfoto.jpg';
 try {
 pp = await this.profilePictureUrl(user, 'image');
@@ -569,7 +590,7 @@ text = (action === 'add' ? (chat.sWelcome || this.welcome || conn.welcome || 'We
 (chat.sBye || this.bye || conn.bye || 'Bye, @user!')).replace('@user', '@' + user.split('@')[0]);
 
 if (chat.antifake && isBotAdminNn && action === 'add') {
-const numerosPermitidos = ["212", "265", "92", "91", "90", "210", "60", "61", "62", "40", "48", "49", "93", "94", "98", "258"]; //PUEDES EDITAR LOS USUARIOS QUE SE ELIMINARÁN SI EMPIEZA POR CUALQUIER DE ESOS NÚMEROS	
+const numerosPermitidos = ["212", "265", "92", "91", "90", "210", "60", "61", "62", "40", "48", "49", "93", "94", "98", "258"];
 if (numerosPermitidos.some(num => user.startsWith(num))) {
 this.sendMessage(id, { text: `@${user.split("@")[0]} Nos numero fake no esta permitido el este grupo hasta la próxima...`, mentions: [user] }, { quoted: null });
 let responseb = await this.groupParticipantsUpdate(id, [user], 'remove');
@@ -582,11 +603,11 @@ let vn = 'https://qu.ax/cUYg.mp3';
 let or = ['texto', 'audio'];
 let media = or[Math.floor(Math.random() * 2)];
 if (media === 'texto') {
-this.sendMessage(id, {text: text, contextInfo: { forwardedNewsletterMessageInfo: { newsletterJid: '120363355261011910@newsletter', serverMessageId: '', newsletterName: 'LoliBot ✨' },forwardingScore: 9999999, isForwarded: true, mentionedJid: [user], externalAdReply: { showAdAttribution: true, renderLargerThumbnail: true, thumbnail: apii.data, title: [wm, ' ' + wm + '😊', '🌟'].getRandom(), containsAutoReply: true, mediaType: 1, sourceUrl: [nna, nna2, nnntt, yt].getRandom()}}}, { quoted: fkontak2 });
+this.sendMessage(id, { text: text, contextInfo: { forwardedNewsletterMessageInfo: { newsletterJid: '120363355261011910@newsletter', serverMessageId: '', newsletterName: 'LoliBot ✨' }, forwardingScore: 9999999, isForwarded: true, mentionedJid: [user], externalAdReply: { showAdAttribution: true, renderLargerThumbnail: true, thumbnail: apii.data, title: [wm, ' ' + wm + '😊', '🌟'].getRandom(), containsAutoReply: true, mediaType: 1, sourceUrl: [nna, nna2, nnntt, yt].getRandom() } } }, { quoted: fkontak2 });
 }
 if (media === 'audio') {
-this.sendMessage(id, { audio: { url: vn }, contextInfo: { forwardedNewsletterMessageInfo: { newsletterJid: '120363355261011910@newsletter', serverMessageId: '', newsletterName: 'LoliBot ✨' }, forwardingScore: 9999999, isForwarded: true, mentionedJid: [user], externalAdReply: { mediaType: 1, previewType: "PHOTO", thumbnail: apii.data, title: `乂 ＷＥＬＣＯＭＥ 乂`, body: [wm, ' ' + wm + '😊', '🌟'].getRandom(), showAdAttribution: true, renderLargerThumbnail: true, sourceUrl: [nna, nna2, nnntt, yt].getRandom()}}, ptt: true, mimetype: 'audio/mpeg', fileName: `error.mp3` }, { quoted: fkontak2 });
-}}}}            
+this.sendMessage(id, { audio: { url: vn }, contextInfo: { forwardedNewsletterMessageInfo: { newsletterJid: '120363355261011910@newsletter', serverMessageId: '', newsletterName: 'LoliBot ✨' }, forwardingScore: 9999999, isForwarded: true, mentionedJid: [user], externalAdReply: { mediaType: 1, previewType: "PHOTO", thumbnail: apii.data, title: `乂 ＷＥＬＣＯＭＥ 乂`, body: [wm, ' ' + wm + '😊', '🌟'].getRandom(), showAdAttribution: true, renderLargerThumbnail: true, sourceUrl: [nna, nna2, nnntt, yt].getRandom() } }, ptt: true, mimetype: 'audio/mpeg', fileName: `error.mp3` }, { quoted: fkontak2 });
+}}}}
 			    
 break
 case 'promote':
