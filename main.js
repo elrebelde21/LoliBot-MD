@@ -388,32 +388,6 @@ console.log(`[✅] creds.json restaurado desde el respaldo`);
 
 setInterval(() => manageCredentials('backup'), 5 * 60 * 1000);
 
-//tmp
-async function cleanUp(type) {
-const targets = {
-tmp: join(__dirname, 'tmp'),
-session: './BotSession',
-subbots: './jadibts/'
-};
-if (type === 'tmp') {
-const files = readdirSync(targets.tmp);
-files.forEach(file => unlinkSync(join(targets.tmp, file)));
-console.log(chalk.cyan(`┏━━━━━━⪻♻️ AUTO-CLEAR 🗑️⪼━━━━━━•\n┃→ ARCHIVOS DE LA CARPETA TMP ELIMINADOS\n┗━━━━━━━━━━━━━━━━━━━━━━━━━━━•`));
-} else if (type === 'session' || type === 'subbots') {
-const dir = targets[type];
-const files = readdirSync(dir).filter(f => f.startsWith('pre-key-'));
-const threshold = Date.now() - (24 * 60 * 60 * 1000);
-for (const file of files) {
-const filePath = join(dir, file);
-const { mtimeMs } = statSync(filePath);
-if (mtimeMs < threshold) await unlinkSync(filePath);
-}
-console.log(chalk.bold.cyanBright(`\n╭» 🔵 ${type} 🔵\n│→ SESIONES NO ESENCIALES ELIMINADAS\n╰― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― 🗑️♻️`));
-}}
-
-setInterval(() => cleanUp('tmp'), 1000 * 60 * 3);
-setInterval(() => { cleanUp('session'); cleanUp('subbots'); }, 1000 * 60 * 10);
-
 async function connectionUpdate(update) {  
 const {connection, lastDisconnect, isNewLogin} = update
 global.stopped = connection
@@ -602,6 +576,100 @@ const s = global.support = {ffmpeg, ffprobe, ffmpegWebp, convert, magick, gm, fi
 Object.freeze(global.support);
 }
 
+function clearTmp() {
+const tmpDir = join(__dirname, 'tmp')
+const filenames = readdirSync(tmpDir)
+filenames.forEach(file => {
+const filePath = join(tmpDir, file)
+unlinkSync(filePath)})
+}
+
+async function purgeSession() {
+const sessionDir = './BotSession';
+try {
+if (!existsSync(sessionDir)) return;
+const files = await readdir(sessionDir);
+const preKeys = files.filter(file => file.startsWith('pre-key-'));
+const now = Date.now();
+const oneHourAgo = now - (24 * 60 * 60 * 1000); //24 horas
+    
+for (const file of preKeys) {
+const filePath = join(sessionDir, file);
+const fileStats = await stat(filePath);
+if (fileStats.mtimeMs < oneHourAgo) { 
+try {
+await unlink(filePath);
+console.log(chalk.green(`[🗑️] Pre-key antigua eliminada: ${file}`));
+} catch (err) {
+//console.error(chalk.red(`[⚠] Error al eliminar pre-key antigua ${file}: ${err.message}`));
+}} else {
+//console.log(chalk.yellow(`[ℹ️] Manteniendo pre-key activa: ${file}`));
+}}
+console.log(chalk.cyanBright(`[🔵] Sesiones no esenciales eliminadas de ${global.authFile}`));
+} catch (err) {
+//console.error(chalk.red(`[⚠] Error al limpiar BotSession: ${err.message}`));
+}}
+
+async function purgeSessionSB() {
+const jadibtsDir = './jadibts/';
+try {
+if (!existsSync(jadibtsDir)) return;
+const directories = await readdir(jadibtsDir);
+let SBprekey = [];
+const now = Date.now();
+const oneHourAgo = now - (24 * 60 * 60 * 1000); //24 horas
+    
+for (const dir of directories) {
+const dirPath = join(jadibtsDir, dir);
+const stats = await stat(dirPath);
+if (stats.isDirectory()) {
+const files = await readdir(dirPath);
+const preKeys = files.filter(file => file.startsWith('pre-key-') && file !== 'creds.json');
+SBprekey = [...SBprekey, ...preKeys];
+for (const file of preKeys) {
+const filePath = join(dirPath, file);
+const fileStats = await stat(filePath);
+if (fileStats.mtimeMs < oneHourAgo) { 
+try {
+await unlink(filePath);
+console.log(chalk.green(`[🗑️] Pre-key antigua eliminada de sub-bot ${dir}: ${file}`));
+} catch (err) {
+//console.error(chalk.red(`[⚠] Error al eliminar pre-key antigua ${file} en ${dir}: ${err.message}`));
+}} else {
+//console.log(chalk.yellow(`[ℹ️] Manteniendo pre-key activa en sub-bot ${dir}: ${file}`));
+}}}}
+if (SBprekey.length === 0) {
+//console.log(chalk.green(`[ℹ️] No se encontraron pre-keys en sub-bots.`));
+} else {
+console.log(chalk.cyanBright(`[🔵] Pre-keys antiguas eliminadas de sub-bots: ${SBprekey.length}`));
+}} catch (err) {
+//console.error(chalk.red(`[⚠] Error al limpiar sub-bots: ${err.message}`));
+}}
+
+async function purgeOldFiles() {
+const directories = ['./BotSession/', './jadibts/'];
+for (const dir of directories) {
+try {
+if (!fs.existsSync(dir)) { 
+console.log(chalk.yellow(`[⚠] Carpeta no existe: ${dir}`));
+continue;
+}
+const files = await fsPromises.readdir(dir); 
+for (const file of files) {
+if (file !== 'creds.json') {
+const filePath = join(dir, file);
+try {
+await fsPromises.unlink(filePath);
+//console.log(chalk.green(`[🗑️] Archivo residual eliminado: ${file} en ${dir}`));
+} catch (err) {
+//console.error(chalk.red(`[⚠] Error al eliminar ${file} en ${dir}: ${err.message}`));
+}}}
+} catch (err) {
+//console.error(chalk.red(`[⚠] Error al limpiar ${dir}: ${err.message}`));
+}}
+//console.log(chalk.cyanBright(`[🟠] Archivos residuales eliminados de ${directories.join(', ')}`));
+}
+
 function redefineConsoleMethod(methodName, filterStrings) {
 const originalConsoleMethod = console[methodName]
 console[methodName] = function() {
@@ -611,6 +679,21 @@ arguments[0] = ""
 }
 originalConsoleMethod.apply(console, arguments)
 }}
+
+setInterval(async () => {
+if (stopped === 'close' || !conn || !conn.user) return;
+  await clearTmp();
+  console.log(chalk.cyan(`┏━━━━━━⪻♻️ AUTO-CLEAR 🗑️⪼━━━━━━•\n┃→ ARCHIVOS DE LA CARPETA TMP ELIMINADOS\n┗━━━━━━━━━━━━━━━━━━━━━━━━━━━•`));
+}, 1000 * 60 * 3); //3 min
+
+setInterval(async () => {
+  if (stopped === 'close' || !conn || !conn.user) return;
+  await purgeSessionSB();
+  await purgeSession();
+  console.log(chalk.bold.cyanBright(`\n╭» 🔵 ${global.authFile} 🔵\n│→ SESIONES NO ESENCIALES ELIMINADAS\n╰― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― 🗑️♻️`));
+  await purgeOldFiles();
+  console.log(chalk.bold.cyanBright(`\n╭» 🟠 ARCHIVOS 🟠\n│→ ARCHIVOS RESIDUALES ELIMINADAS\n╰― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― 🗑️♻️`));
+}, 1000 * 60 * 10); //10 min
 
 _quickTest().then(() => conn.logger.info('Ƈᴀʀɢᴀɴᴅᴏ．．．.\n'))
 .catch(console.error)
