@@ -335,7 +335,7 @@ markOnlineOnConnect: false,
 syncFullHistory: false, 
 msgRetryCounterCache: msgRetryCounterCache, 
 userDevicesCache: userDevicesCache, 
-defaultQueryTimeoutMs: 60000, 
+defaultQueryTimeoutMs: undefined, 
 cachedGroupMetadata: async (jid) => { 
 return global.db.data.chats[jid] || {};
 },

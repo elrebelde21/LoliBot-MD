@@ -34,18 +34,24 @@ await global.loadDatabase()
 try {
 m = smsg(this, m) || m
 if (!m) return
-const messageTimestamp = m.messageTimestamp * 1000;
+const messageTimestamp = m.messageTimestamp ? m.messageTimestamp * 1000 : Date.now(); // Convertir a milisegundos
 const currentTime = Date.now();
-const oneHourInMs = 60 * 60 * 1000;
-if (currentTime - messageTimestamp > oneHourInMs) {
-throw !0; 
+const oneHourInMs = 60 * 60 * 1000; // 1 hora en milisegundos
+
+if (messageTimestamp < global.botStartTime || (currentTime - messageTimestamp > oneHourInMs)) {
+console.log(`Mensaje ignorado: demasiado antiguo (${new Date(messageTimestamp)}) - ID: ${m.id}`);
+return;
 }
 
 const messageId = m.id;
 if (processedMessages.has(messageId)) {
-throw !0;  
+console.log(`Mensaje ignorado: ya procesado (${messageId})`);
+return;
 }
-    
+
+processedMessages.add(messageId);
+setTimeout(() => processedMessages.delete(messageId), 2 * 60 * 60 * 1000); // Limpiar después de 2 horas
+
 m.exp = 0
 m.limit = false
 m.money = false        
@@ -302,9 +308,6 @@ const __filename = join(___dirname, name)
 if (typeof plugin.all === 'function') {
 try {
 await plugin.all.call(this, m, { chatUpdate, __dirname: ___dirname, __filename })
-
-processedMessages.add(messageId);
-setTimeout(() => processedMessages.delete(messageId), 2 * 60 * 60 * 1000); // Limpiar después de 2 horas
 } catch (e) {
 // if (typeof e === 'string') continue
 console.error(e)
@@ -557,7 +560,6 @@ function pickRandom(list) { return list[Math.floor(Math.random() * list.length)]
  * Handle groups participants update
  * @param {import('@adiwajshing/baileys').BaileysEventMap<unknown>['group-participants.update']} groupsUpdate 
  */
-let botStartTime = Date.now(); 
 export async function participantsUpdate({ id, participants, action }) {
 if (opts['self']) return;
 if (this.isInit) return;
