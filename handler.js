@@ -21,7 +21,6 @@ resolve()
  * Handle messages upsert
  * @param {import('@whiskeysockets/baileys').BaileysEventMap<unknown>['messages.upsert']} groupsUpdate 
  */
-const processedMessages = new Set();
 export async function handler(chatUpdate) {
 this.msgqueque = this.msgqueque || [];
 this.uptime = this.uptime || Date.now();
@@ -34,24 +33,6 @@ await global.loadDatabase()
 try {
 m = smsg(this, m) || m
 if (!m) return
-const messageTimestamp = m.messageTimestamp ? m.messageTimestamp * 1000 : Date.now();
-const currentTime = Date.now();
-const oneHourInMs = 60 * 60 * 1000; // 1 hora en milisegundos
-
-if (currentTime - messageTimestamp > oneHourInMs) {
-console.log(`Mensaje ignorado: demasiado antiguo (${new Date(messageTimestamp)}) - ID: ${m.id}`);
-return;
-}
-
-const messageId = m.id;
-if (processedMessages.has(messageId)) {
-console.log(`Mensaje ignorado: ya procesado (${messageId})`);
-return;
-}
-
-processedMessages.add(messageId);
-setTimeout(() => processedMessages.delete(messageId), 2 * 60 * 60 * 1000); // Limpiar después de 2 horas
-
 m.exp = 0
 m.limit = false
 m.money = false        

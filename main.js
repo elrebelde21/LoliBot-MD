@@ -292,7 +292,7 @@ console.log(chalk.bold.redBright(`NO SE PERMITE NÚMEROS QUE NO SEAN ${chalk.bol
 }
 
 console.info = () => {} 
-/*const connectionOptions = {
+const connectionOptions = {
 logger: pino({ level: 'silent' }),
 printQRInTerminal: opcion == '1' ? true : methodCodeQR ? true : false,
 mobile: MethodMobile, 
@@ -317,10 +317,12 @@ userDevicesCache: userDevicesCache || new Map(),
 //msgRetryCounterMap,
 defaultQueryTimeoutMs: undefined,
 cachedGroupMetadata: (jid) => global.conn.chats[jid] ?? {},
-version: [2, 3000, 1015901307],
-};*/
+version: version, 
+keepAliveIntervalMs: 55000, 
+maxIdleTimeMs: 60000, 
+};
 
-const connectionOptions = {
+/*const connectionOptions = {
 logger: pino({ level: 'silent' }), 
 printQRInTerminal: opcion == '1' ? true : methodCodeQR ? true : false,
 mobile: MethodMobile,
@@ -335,7 +337,7 @@ markOnlineOnConnect: false,
 syncFullHistory: false, 
 msgRetryCounterCache: msgRetryCounterCache, 
 userDevicesCache: userDevicesCache, 
-defaultQueryTimeoutMs: undefined, 
+defaultQueryTimeoutMs: 60000, 
 cachedGroupMetadata: async (jid) => { 
 return global.db.data.chats[jid] || {};
 },
@@ -350,7 +352,7 @@ return "";
 },
 keepAliveIntervalMs: 55000, 
 maxIdleTimeMs: 60000, 
-};
+};*/
     
 global.conn = makeWASocket(connectionOptions)
 
@@ -435,7 +437,7 @@ console.log(chalk.cyan('✅ ESCANEA EL CÓDIGO QR EXPIRA EN 45 SEGUNDOS ✅.'))
 if (connection == 'open') {
 console.log(chalk.bold.greenBright('\n▣─────────────────────────────···\n│\n│❧ 𝙲𝙾𝙽𝙴𝙲𝚃𝙰𝙳𝙾 𝙲𝙾𝚁𝚁𝙴𝙲𝚃𝙰𝙼𝙴𝙽𝚃𝙴 𝙰𝙻 𝚆𝙷𝙰𝚃𝚂𝙰𝙿𝙿 ✅\n│\n▣─────────────────────────────···'))
 global.botStartTime = Date.now();
-await joinChannels(conn);
+await joinChannels(conn)
 }
 let reason = new Boom(lastDisconnect?.error)?.output?.statusCode
 if (connection === 'close') {
