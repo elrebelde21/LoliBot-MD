@@ -34,11 +34,11 @@ await global.loadDatabase()
 try {
 m = smsg(this, m) || m
 if (!m) return
-const messageTimestamp = m.messageTimestamp ? m.messageTimestamp * 1000 : Date.now(); // Convertir a milisegundos
+const messageTimestamp = m.messageTimestamp ? m.messageTimestamp * 1000 : Date.now();
 const currentTime = Date.now();
 const oneHourInMs = 60 * 60 * 1000; // 1 hora en milisegundos
 
-if (messageTimestamp < global.botStartTime || (currentTime - messageTimestamp > oneHourInMs)) {
+if (currentTime - messageTimestamp > oneHourInMs) {
 console.log(`Mensaje ignorado: demasiado antiguo (${new Date(messageTimestamp)}) - ID: ${m.id}`);
 return;
 }
