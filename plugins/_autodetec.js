@@ -47,7 +47,7 @@ let textWel = chat.sWelcome ? chat.sWelcome
                 
 await this.sendMessage(m.chat, { text: textWel, 
 contextInfo:{
-forwardedNewsletterMessageInfo: { newsletterJid: channelRD.id, serverMessageId: '', newsletterName: channelRD.name },
+forwardedNewsletterMessageInfo: { newsletterJid: channelRD.id || "120363355261011910@newsletter", serverMessageId: '', newsletterName: channelRD.name || wm },
 forwardingScore: 9999999,
 isForwarded: true, 
 mentionedJid:[m.sender, m.messageStubParameters[0]],
@@ -70,7 +70,7 @@ let textBye = chat.sBye ? chat.sBye
 : defaultBye;
 await this.sendMessage(m.chat, { text: textBye, 
 contextInfo:{
-forwardedNewsletterMessageInfo: { newsletterJid: channelRD.id, serverMessageId: '', newsletterName: channelRD.name },
+forwardedNewsletterMessageInfo: { newsletterJid: channelRD.id || "120363355261011910@newsletter", serverMessageId: '', newsletterName: channelRD.name || wm },
 forwardingScore: 9999999,
 isForwarded: true, 
 mentionedJid:[m.sender, m.messageStubParameters[0]],
