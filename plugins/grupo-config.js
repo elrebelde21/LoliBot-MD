@@ -1,28 +1,107 @@
-let handler = async (m, { conn, args, usedPrefix, command }) => {
-const pp = await conn.profilePictureUrl(m.chat, 'image').catch(_ => null) || './src/grupos.jpg'  
-let isClose = { // Switch Case Like :v
-'open': 'not_announcement',
-'close': 'announcement',
-'abierto': 'not_announcement',
-'cerrado': 'announcement',
-'abrir': 'not_announcement',
-'cerrar': 'announcement',
-}[(args[0] || '')]
-if (isClose === undefined)
-throw `*⚠️ ACCION MAL USADA*\n\n*• Usar ejemplo:*\n${usedPrefix + command} abrir\n${usedPrefix + command} cerrar`.trim()
-await conn.groupSettingUpdate(m.chat, isClose)
-  
-if (isClose === 'not_announcement'){
-m.reply(`🟢 𝙔𝘼 𝙋𝙐𝙀𝘿𝙀𝙉 𝙀𝙎𝘾𝙍𝙄𝘽𝙄𝙍 𝙏𝙊𝘿𝙊𝙎 𝙀𝙉 𝙋𝙐𝙏𝙊 𝙂𝙍𝙐𝙋𝙊, 𝘼𝙃𝙊𝙍𝘼 𝙎𝙄 𝙃𝘼𝘽𝙇𝙀𝙉 𝙕𝙊𝙍𝙍𝘼 𝙓𝘿!!`)
+let handler = async (m, { conn, args, usedPrefix, command, isOwner, text }) => {
+let groupId = m.isGroup ? m.chat : null;
+
+if (!m.isGroup && !isOwner) return m.reply('Solo el owner puede usar este comando en privado.');
+let identifier, action, target;
+if (!m.isGroup && isOwner) {
+if (args.length < 2) throw '⚠️ Formato incorrecto. Usa: !grupo [id/enlace] [ID/URL] - [acción] [+número si aplica]';
+
+if (args[0].startsWith('id')) {
+identifier = args[1];
+action = args[2]?.replace('-', '').trim().toLowerCase();
+target = args[3]?.replace('+', '') + '@s.whatsapp.net';
+groupId = identifier;
+} else if (args[0].match(/chat\.whatsapp\.com/)) {
+identifier = args[0];
+if (args[1] === '-') {
+action = args[2]?.trim().toLowerCase();
+target = args[3]?.replace('+', '') + '@s.whatsapp.net';
+} else {
+action = args[1]?.replace('-', '').trim().toLowerCase();
+target = args[2]?.replace('+', '') + '@s.whatsapp.net';
 }
-  
-if (isClose === 'announcement'){
-m.reply(`⚠️ 𝙂𝙍𝙐𝙋𝙊 𝘾𝙀𝙍𝙍𝘼𝘿𝙊 𝙎𝙊𝙇𝙊 𝙇𝙊𝙎 𝘼𝘿𝙈𝙄𝙉𝙎 𝙋𝙐𝙀𝘿𝙀𝙉 𝙀𝙎𝘾𝙍𝙄𝘽𝙄𝙍, 𝙈𝙊𝘿𝙊 𝙋𝙍𝙄𝙑𝙄𝙇𝙀𝙂𝙄𝙊 𝙎𝙊𝙍𝙍𝙔😘`)
-}}
-handler.help = ['group open / close', 'grupo abrir / cerrar']
-handler.tags = ['group']
-handler.command = /^(group|grupo)$/i
-handler.admin = true
-handler.botAdmin = true
-handler.exp = 200
-export default handler
+const inviteCode = identifier.match(/(?:https:\/\/)?(?:www\.)?(?:chat\.|wa\.)?whatsapp\.com\/(?:invite\/|joinchat\/)?([0-9A-Za-z]{22,24})/i)?.[1];
+if (!inviteCode) throw '⚠️ Enlace inválido. Usa un enlace de WhatsApp válido.';
+try {
+const inviteInfo = await conn.groupGetInviteInfo(inviteCode);
+groupId = inviteInfo.id;
+} catch (e) {
+throw '⚠️ No se pudo obtener información del grupo. Verifica el enlace o que el bot tenga acceso.';
+}} else if (args[0] === 'enlace') {
+identifier = args[1];
+if (args[2] === '-') {
+action = args[3]?.trim().toLowerCase();
+target = args[4]?.replace('+', '') + '@s.whatsapp.net';
+} else {
+action = args[2]?.replace('-', '').trim().toLowerCase();
+target = args[3]?.replace('+', '') + '@s.whatsapp.net';
+}
+if (!identifier.match(/chat\.whatsapp\.com/)) {
+throw '⚠️ Debes proporcionar un enlace válido.';
+}
+const inviteCode = identifier.match(/(?:https:\/\/)?(?:www\.)?(?:chat\.|wa\.)?whatsapp\.com\/(?:invite\/|joinchat\/)?([0-9A-Za-z]{22,24})/i)?.[1];
+if (!inviteCode) throw '⚠️ Enlace inválido. Usa un enlace de WhatsApp válido.';
+try {
+const inviteInfo = await conn.groupGetInviteInfo(inviteCode);
+groupId = inviteInfo.id;
+} catch (e) {
+throw '⚠️ No se pudo obtener información del grupo. Verifica el enlace o que el bot tenga acceso.';
+}} else {
+throw '⚠️ Usa "id" o "enlace" como primer argumento, o pasa directamente un enlace válido.';
+}} else if (m.isGroup) {
+action = args[0]?.toLowerCase();
+target = args[1]?.replace(/@/, '') + '@s.whatsapp.net';
+}
+
+if (!groupId) return m.reply('⚠️ Debes estar en un grupo o especificar un ID/enlace en privado.');
+const botId = conn.user.jid;
+const groupMetadata = await conn.groupMetadata(groupId);
+const isBotAdmin = groupMetadata.participants.some(p => p.id === botId && (p.admin === 'admin' || p.admin === 'superadmin'));
+if (!isBotAdmin) return m.reply('⚠️ El bot debe ser admin para ejecutar este comando.');
+if (!action) throw '⚠️ Debes especificar una acción (abrir, cerrar, daradmin, etc.).';
+
+switch (action) {
+case 'abrir': case 'open': case 'abierto':
+await conn.groupSettingUpdate(groupId, 'not_announcement');
+m.reply(`🟢 ¡GRUPO ABIERTO! Todos pueden escribir ahora.`);
+break;
+
+case 'cerrar': case 'close': case 'cerrado':
+await conn.groupSettingUpdate(groupId, 'announcement');
+m.reply(`⚠️ ¡GRUPO CERRADO! Solo admins pueden escribir.`);
+break;
+
+case 'addadmin': case 'promote': case 'daradmin':
+if (!target) throw '⚠️ Especifica un número (ejemplo: - daradmin +51987654321) o menciona en grupo.';
+await conn.groupParticipantsUpdate(groupId, [target], 'promote');
+m.reply(`✅ @${target.split('@')[0]} ahora es admin.`);
+break;
+
+case 'removeadmin': case 'demote': case 'quitaradmin':
+if (!target) throw '⚠️ Especifica un número (ejemplo: - quitaradmin +51987654321) o menciona en grupo.';
+await conn.groupParticipantsUpdate(groupId, [target], 'demote');
+m.reply(`✅ @${target.split('@')[0]} ya no es admin.`);
+break;
+
+case 'kick': case 'eliminar':
+if (!target) throw '⚠️ Especifica un número (ejemplo: - eliminar +51987654321) o menciona en grupo.';
+await conn.groupParticipantsUpdate(groupId, [target], 'remove');
+m.reply(`🗑️ @${target.split('@')[0]} ha sido eliminado del grupo.`);
+break;
+
+case "aprobar":
+if (!target) throw '⚠️ Especifica un número (ejemplo: - aprobar +51987654321).';
+await conn.groupRequestParticipantsUpdate(groupId, [target], 'approve');
+m.reply(`@${target.split('@')[0]} usuario has sido aprobado el grupo.`);
+break
+
+default:
+throw `*⚠️ COMANDO INVÁLIDO*\n\n*En grupo:*\n${usedPrefix + command} abrir\n${usedPrefix + command} cerrar\n${usedPrefix + command} daradmin @usuario\n${usedPrefix + command} quitaradmin @usuario\n${usedPrefix + command} eliminar @usuario\n\n*En privado (owner):*\n${usedPrefix + command} id [ID] - abrir\n${usedPrefix + command} enlace [URL] - cerrar\n${usedPrefix + command} [URL] - cerrar\n${usedPrefix + command} id [ID] - daradmin +número`;
+}
+};
+handler.help = ['group open/close', 'grupo abrir/cerrar', 'grupo aprobar +number'];
+handler.tags = ['group'];
+handler.command = /^(group|grupo)$/i;
+handler.exp = 200;
+
+export default handler;

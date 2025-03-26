@@ -1,19 +1,33 @@
-import fetch from 'node-fetch'
-import fs from 'fs'
+import fetch from 'node-fetch';
+import fs from 'fs';
+const cooldowns = new Map();
+const COOLDOWN_DURATION = 180000; //3 min
+
 let handler = async (m, { conn, args, participants, usedPrefix }) => {
-let users = Object.entries(global.db.data.users).map(([key, value]) => { 
-return {...value, jid: key}
-  })
-let sortedExp = users.map(toNumber('exp')).sort(sort('exp'))
-let sortedLim = users.map(toNumber('limit')).sort(sort('limit'))
-let sortedMoney = users.map(toNumber('money')).sort(sort('money'))
-let sortedBanc = users.map(toNumber('banco')).sort(sort('banco'))
-let usersExp = sortedExp.map(enumGetKey)
-let usersLim = sortedLim.map(enumGetKey)
-let usersMoney = sortedMoney.map(enumGetKey)
-let usersBanc = sortedBanc.map(enumGetKey)
+const chatId = m.chat;
+const now = Date.now();
+const chatData = cooldowns.get(chatId) || { lastUsed: 0, rankingMessage: null };
+const timeLeft = COOLDOWN_DURATION - (now - chatData.lastUsed);
+if (timeLeft > 0) {
+const secondsLeft = Math.ceil(timeLeft / 1000)
+const minutes = Math.floor(secondsLeft / 60)
+const remainingSeconds = secondsLeft % 60
+const timeMessage = minutes > 0 ? `${minutes} min${minutes !== 1 ? 's' : ''}${remainingSeconds > 0 ? ` y ${remainingSeconds} seg${remainingSeconds !== 1 ? 's' : ''}` : ''}`: `${remainingSeconds} seg${remainingSeconds !== 1 ? 's' : ''}`
+await conn.reply(m.chat, `⚠️ Hey @${m.sender.split('@')[0]} pendejo, el ranking ya se mostró 🙄\nSolo se muestra cada 3 minutos para evitar spam. (Vuelve en: ${timeMessage} para verlo de nuevo)... Desplázate hacia arriba para verlo completo. 👆`, chatData.rankingMessage || m)
+return;
+}
+
+let users = Object.entries(global.db.data.users).map(([key, value]) => { return {...value, jid: key}});
+let sortedExp = users.map(toNumber('exp')).sort(sort('exp'));
+let sortedLim = users.map(toNumber('limit')).sort(sort('limit'));
+let sortedMoney = users.map(toNumber('money')).sort(sort('money'));
+let sortedBanc = users.map(toNumber('banco')).sort(sort('banco'));
+let usersExp = sortedExp.map(enumGetKey);
+let usersLim = sortedLim.map(enumGetKey);
+let usersMoney = sortedMoney.map(enumGetKey);
+let usersBanc = sortedBanc.map(enumGetKey);
            
-let len = args[0] && args[0].length > 0 ? Math.min(100, Math.max(parseInt(args[0]), 10)) : Math.min(10, sortedExp.length)
+let len = args[0] && args[0].length > 0 ? Math.min(100, Math.max(parseInt(args[0]), 10)) : Math.min(10, sortedExp.length);
 let text = `\`🏆 𝚃𝙰𝙱𝙻𝙰 𝙳𝙴 𝙲𝙻𝙰𝚂𝙸𝙲𝙰𝙲𝙸𝙾𝙽\`
     
 💠 *𝐓𝐎𝐏 ${len} 𝐗𝐏 🎯* 
@@ -41,37 +55,40 @@ ${sortedMoney.slice(0, len).map(({ jid, money }, i) => `${i + 1}. ${participants
 𝐓𝐮 : *${usersBanc.indexOf(m.sender) + 1}* 𝐝𝐞 *${usersBanc.length} 𝐮𝐬𝐮𝐚𝐫𝐢𝐨𝐬*
 
 ${sortedBanc.slice(0, len).map(({ jid, banco }, i) => `${i + 1}. ${participants.some(p => jid === p.jid) ? `(${conn.getName(jid)}) wa.me/` : '@'}${jid.split`@`[0]} *${formatNumber(banco)}* (${banco}) 💵`).join`\n`}
-`.trim()
-await m.reply(text, null, { mentions: conn.parseMention(text) })
-}
-handler.help = ['top']
-handler.tags = ['econ']
-handler.command = ['leaderboard', 'lb', 'top'] 
-handler.register = true
-handler.fail = null
-handler.exp = 3500
-export default handler
+`.trim();
+
+const rankingMessage = await m.reply(text, null, { mentions: conn.parseMention(text) });
+cooldowns.set(chatId, {lastUsed: now, rankingMessage: rankingMessage});
+};
+handler.help = ['top'];
+handler.tags = ['econ'];
+handler.command = ['leaderboard', 'lb', 'top'];
+handler.register = true;
+handler.fail = null;
+handler.exp = 3500;
+
+export default handler;
 
 function sort(property, ascending = true) {
-if (property) return (...args) => args[ascending & 1][property] - args[!ascending & 1][property]
-else return (...args) => args[ascending & 1] - args[!ascending & 1]
+  if (property) return (...args) => args[ascending & 1][property] - args[!ascending & 1][property];
+  else return (...args) => args[ascending & 1] - args[!ascending & 1];
 }
 
 function toNumber(property, _default = 0) {
-if (property) return (a, i, b) => {
-return {...b[i], [property]: a[property] === undefined ? _default : a[property]}
-}
-else return a => a === undefined ? _default : a
+  if (property) return (a, i, b) => {
+    return {...b[i], [property]: a[property] === undefined ? _default : a[property]};
+  };
+  else return a => a === undefined ? _default : a;
 }
 
 function enumGetKey(a) {
-return a.jid
+  return a.jid;
 }
 
 function formatNumber(num) {
-    return num >= 1e6 ? (num / 1e6).toFixed(1) + 'M' :
-           num >= 1e3 ? (num / 1e3).toFixed(1) + 'k' :
-           num.toString();
+  return num >= 1e6 ? (num / 1e6).toFixed(1) + 'M' :
+         num >= 1e3 ? (num / 1e3).toFixed(1) + 'k' :
+         num.toString();
 }
 
 /*import fetch from 'node-fetch';

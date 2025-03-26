@@ -12,13 +12,13 @@ const { ytmp3, ytmp4 } = require("@hiudyy/ytdl");
 const LimitAud = 725 * 1024 * 1024; // 725MB
 const LimitVid = 425 * 1024 * 1024; // 425MB
 const youtubeRegexID = /(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/))([a-zA-Z0-9_-]{11})/;
+const userCaptions = new Map();
 const userRequests = {};
 
 const handler = async (m, { conn, command, args, text, usedPrefix }) => {
 if (!text) return m.reply(`*🤔Que está buscando? 🤔*\n*Ingrese el nombre de la canción*\n\n*Ejemplo:*\n${usedPrefix + command} emilia 420`);
 const tipoDescarga = command === 'play' || command === 'musica' ? 'audio' : command === 'play2' ? 'video' : command === 'play3' ? 'audio (documento)' : command === 'play4' ? 'video (documento)' : '';
-
-if (userRequests[m.sender]) return m.reply('⏳ *Espera...* Ya hay una solicitud en proceso. Por favor, espera a que termine antes de hacer otra.')
+if (userRequests[m.sender]) return await conn.reply(m.chat, `⏳ Hey @${m.sender.split('@')[0]} espera pendejo, ya estás descargando algo 🙄\nEspera a que termine tu solicitud actual antes de hacer otra...`, userCaptions.get(m.sender) || m);
 userRequests[m.sender] = true;
 try {
 let videoIdToFind = text.match(youtubeRegexID) || null;
@@ -28,7 +28,7 @@ if (videoIdToFind) {
 const videoId = videoIdToFind[1];
 ytplay2 = ytplay2.all.find(item => item.videoId === videoId) || ytplay2.videos.find(item => item.videoId === videoId)}
 ytplay2 = ytplay2.all?.[0] || ytplay2.videos?.[0] || ytplay2;
-await conn.sendMessage(m.chat, { text: `${yt_play[0].title}
+const PlayText = await conn.sendMessage(m.chat, { text: `${yt_play[0].title}
 *⇄ㅤ     ◁   ㅤ  ❚❚ㅤ     ▷ㅤ     ↻*
 
 *⏰ Duración:* ${secondString(yt_play[0].duration.seconds)}
@@ -51,6 +51,7 @@ mediaType: 1,
 thumbnailUrl: yt_play[0].thumbnail, 
 sourceUrl: [nna, nna2, nnaa].getRandom()
 }}}, { quoted: m })
+userCaptions.set(m.sender, PlayText);
 /*conn.sendFile(m.chat, yt_play[0].thumbnail, 'error.jpg', `${yt_play[0].title}
 *⇄ㅤ     ◁   ㅤ  ❚❚ㅤ     ▷ㅤ     ↻*
 

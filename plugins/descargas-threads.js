@@ -2,10 +2,11 @@ import fetch from 'node-fetch'
 const userRequests = {};
 
 const handler = async (m, { conn, args, usedPrefix, command }) => {
-if (!args[0]) throw `*⚠️ ¿Que esta buscando? ingresar en link de algun vifeo de Threads!!*\n*• Ejemplo:*\n${usedPrefix + command} https://www.threads.net/@adri_leclerc_/post/C_dSNIOOlpy?xmt=AQGzxbmyveDB91QgFo_KQWzqL6PT2yCy2eg8BkhPTO-6Kw`
-if (userRequests[m.sender]) return m.reply('⏳ *Espera...* Ya hay una solicitud en proceso. Por favor, espera a que termine antes de hacer otra.')
-userRequests[m.sender] = true;
-const { key } = await conn.sendMessage(m.chat, {text: `⌛ 𝙀𝙨𝙥𝙚𝙧𝙚 ✋\n▰▰▰▱▱▱▱▱▱`}, {quoted: m});
+if (!args[0]) throw `*⚠️ ¿Qué estás buscando? Ingresa el link de algún video de Threads!!*\n*• Ejemplo:*\n${usedPrefix + command} https://www.threads.net/@adri_leclerc_/post/C_dSNIOOlpy?xmt=AQGzxbmyveDB91QgFo_KQWzqL6PT2yCy2eg8BkhPTO-6Kw`
+
+if (userRequests[m.sender]) return await conn.reply(m.chat, `⏳ Hey @${m.sender.split('@')[0]} pendejo, ya hay una solicitud en proceso. Por favor, espera a que termine antes de hacer otra`, userRequests[m.sender].message || m)   
+const { key } = await conn.sendMessage(m.chat, {text: `⌛ 𝙀𝙨𝙥𝙚𝙧𝙚 ✋\n▰▰▰▱▱▱▱▱▱`}, {quoted: m}); 
+userRequests[m.sender] = { active: true, message: { key, chat: m.chat, fromMe: true } };
 await delay(1000);
 await conn.sendMessage(m.chat, {text: `⌛ 𝙀𝙨𝙥𝙚𝙧𝙚 ✋ \n▰▰▰▰▰▱▱▱▱`, edit: key});
 await delay(1000);
@@ -26,7 +27,7 @@ m.react('✅');
 await conn.sendMessage(m.chat, {text: `✅ 𝘾𝙤𝙢𝙥𝙡𝙚𝙩𝙖𝙙𝙤\n▰▰▰▰▰▰▰▰▰`, edit: key})   
 } catch {   
 try {
-const res2 = await fetch(`https://delirius-apiofc.vercel.app/download/threads?url=${args[0]}`);
+const res2 = await fetch(`${apis}/download/threads?url=${args[0]}`);
 const data2 = await res2.json();
 if (data2.status === true && data2.data.length > 0) {
 const downloadUrl = data2.data[0].url; 
@@ -42,17 +43,16 @@ await conn.sendMessage(m.chat, {text: `✅ 𝘾𝙤𝙢𝙥𝙡𝙚𝙩𝙖𝙙�
 } catch (e) {
 m.react(`❌`) 
 await conn.sendMessage(m.chat, {text: `\`\`\`⚠️ OCURRIO UN ERROR ⚠️\`\`\`\n\n> *Reporta el siguiente error a mi creador con el comando:* #report\n\n>>> ${e} <<<<`, edit: key})   
-//m.reply(`\`\`\`⚠️ OCURRIO UN ERROR ⚠️\`\`\`\n\n> *Reporta el siguiente error a mi creador con el comando:* #report\n\n>>> ${e} <<<< `)       
 console.log(e) 
-} finally {
+}} finally {
 delete userRequests[m.sender];
 }}
-}
 handler.help = ['thread']
 handler.tags = ['downloader']
 handler.command = /^(thread|threads|threaddl)$/i;
 handler.register = true;
 handler.limit = 1
+
 export default handler
 
 const delay = time => new Promise(res => setTimeout(res, time))

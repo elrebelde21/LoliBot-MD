@@ -1,7 +1,5 @@
 let handler = async (m, { conn, text, usedPrefix, command, isOwner, isAdmin, isROwner }) => {
-if (!(isOwner || isAdmin || isROwner)) {
-conn.reply(m.chat, "❌ *No tienes permitido personalizar la autorespuesta del bot en este chat.*\n\n💡 *Pídele a un administrador en caso que este chat sea un grupo o al creador del bot que lo haga por ti en este chat.*", m)
-}
+if (!(isOwner || isAdmin || isROwner)) return conn.reply(m.chat, "❌ *No tienes permitido personalizar la autorespuesta del bot en este chat.*\n\n💡 *Pídele a un administrador en caso que este chat sea un grupo o al creador del bot que lo haga por ti en este chat.*", m)
 const chatData = global.db.data.chats[m.chat]
 if (text) {
 if (chatData.sAutorespond) return conn.reply(m.chat, `⚠️ *Actualmente hay el siguiente prompt en uso:*\n\n${chatData.sAutorespond}\n\n💡 *Si quieres cambiarlo, usa el comando sin texto para borrar el prompt actual y luego establece el nuevo prompt.*`, m)

@@ -1,89 +1,80 @@
 import axios from 'axios';
 import cheerio from 'cheerio';
-//import {search, download} from 'aptoide-scraper';
+//import { search, download } from 'aptoide-scraper';
+const userMessages = new Map();
 const userRequests = {};
 
-const handler = async (m, {conn, usedPrefix, command, text}) => {
+const handler = async (m, { conn, usedPrefix, command, text }) => {
 const apkpureApi = 'https://apkpure.com/api/v2/search?q=';
 const apkpureDownloadApi = 'https://apkpure.com/api/v2/download?id=';
-if (!text) throw `⚠️ *𝙀𝙨𝙘𝙧𝙞𝙗𝙖 𝙚𝙡 𝙣𝙤𝙢𝙗𝙧𝙚 𝙙𝙚𝙡 𝘼𝙋𝙆*`
-if (userRequests[m.sender]) return m.reply('⏳ *Espera...* Ya hay una solicitud en proceso. Por favor, espera a que termine antes de hacer otra.')
+if (!text) throw `⚠️ *𝙀𝙨𝙘𝙧𝙞𝙗𝙖 𝙚𝙡 𝙣𝙤𝙢𝙗𝙧𝙚 𝙙𝙚𝙡 𝘼𝙋𝙆*`;
+if (userRequests[m.sender]) return await conn.reply(m.chat, `⚠️ Hey @${m.sender.split('@')[0]} pendejo, ya estás descargando un APK 🙄\nEspera a que termine tu descarga actual antes de pedir otra. 👆`, userMessages.get(m.sender) || m)
 userRequests[m.sender] = true;
-m.react("⌛") 
-try {   
+m.react("⌛");
+try {
+const downloadAttempts = [async () => {
 const res = await fetch(`https://api.dorratz.com/v2/apk-dl?text=${text}`);
 const data = await res.json();
-const response = `≪ＤＥＳＣＡＲＧＡＤＯ ＡＰＫＳ🚀≫
-
-┏━━━━━━━━━━━━━━━━━━━━━━• 
-┃💫 𝙉𝙊𝙈𝘽𝙍𝙀: ${data.name}
-┃📦 𝙋𝘼𝘾𝙆𝘼𝙂𝙀: ${data.package}
-┃🕒 𝙐𝙇𝙏𝙄𝙈𝘼 𝘼𝘾𝙏𝙐𝙇𝙄𝙕𝘼𝘾𝙄𝙊𝙉: ${data.lastUpdate}
-┃💪 𝙋𝙀𝙎𝙊: ${data.size}
-┗━━━━━━━━━━━━━━━━━━━━━━━•
-
-> *⏳ ᴱˢᵖᵉʳᵉ ᵘⁿ ᵐᵒᵐᵉⁿᵗᵒ ˢᵘˢ ᵃᵖᵏ ˢᵉ ᵉˢᵗᵃ ᵉⁿᵛᶦᵃⁿᵈᵒ...*`;
-await conn.sendFile(m.chat, data.icon, 'error.jpg', response, m, null, fake);
-const apkSize = data.size.toLowerCase();
-if (apkSize.includes('gb') || (apkSize.includes('mb') && parseFloat(apkSize) > 999)) {
-return await m.reply('*𝙀𝙡 𝙖𝙥𝙠 𝙚𝙨 𝙢𝙪𝙮 𝙥𝙚𝙨𝙖𝙙𝙤.*');
-}
-await conn.sendMessage(m.chat, {document: { url: data.dllink }, mimetype: 'application/vnd.android.package-archive', fileName: `${data.name}.apk`, caption: null }, { quoted: m });
-await m.react("✅");
-} catch {
-try {
+if (!data.name) throw new Error('No data from dorratz API');
+return { name: data.name, package: data.package, lastUpdate: data.lastUpdate, size: data.size, icon: data.icon, dllink: data.dllink };
+},
+async () => {
 const res = await fetch(`${apis}/download/apk?query=${text}`);
 const data = await res.json();
 const apkData = data.data;
+return { name: apkData.name, developer: apkData.developer, publish: apkData.publish, size: apkData.size, icon: apkData.image, dllink: apkData.download };
+},
+async () => {
+const searchA = await search(text);
+const data5 = await download(searchA[0].id);
+return { name: data5.name, package: data5.package, lastUpdate: data5.lastup, size: data5.size, icon: data5.icon, dllink: data5.dllink };
+}];
+
+let apkData = null;
+for (const attempt of downloadAttempts) {
+try {
+apkData = await attempt();
+if (apkData) break; 
+} catch (err) {
+console.error(`Error in attempt: ${err.message}`);
+continue; // Si falla, intentar con la siguiente API
+}}
+
+if (!apkData) throw new Error('No se pudo descargar el APK desde ninguna API');
 const response = `≪ＤＥＳＣＡＲＧＡＤＯ ＡＰＫＳ🚀≫
 
 ┏━━━━━━━━━━━━━━━━━━━━━━• 
 ┃💫 𝙉𝙊𝙈𝘽𝙍𝙀: ${apkData.name}
-┃👤 𝘿𝙀𝙎𝘼𝙍𝙍𝙊𝙇𝙇𝙊: ${apkData.developer}
-┃🕒 𝙐𝙇𝙏𝙄𝙈𝘼 𝘼𝘾𝙏𝙐𝙇𝙄𝙕𝘼𝘾𝙄𝙊𝙉: ${apkData.publish}
+${apkData.developer ? `┃👤 𝘿𝙀𝙎𝘼𝙍𝙍𝙊𝙇𝙇𝙊: ${apkData.developer}` : `┃📦 𝙋𝘼𝘾𝙆𝘼𝙂𝙀: ${apkData.package}`}
+┃🕒 𝙐𝙇𝙏𝙄𝙈𝘼 𝘼𝘾𝙏𝙐𝙇𝙄𝙕𝘼𝘾𝙄𝙊𝙉: ${apkData.developer ? apkData.publish : apkData.lastUpdate}
 ┃💪 𝙋𝙀𝙎𝙊: ${apkData.size}
 ┗━━━━━━━━━━━━━━━━━━━━━━━•
 
-> *⏳ ᴱˢᵖᵉʳᵉ ᵘⁿ ᵐᵒᵐᵉⁿᵗᵒ ˢᵘˢ ᵃᵖᵏ ˢᵉ ᵉˢᵗᵃ ᵉⁿᵛᶦᵃⁿᵈᵒ...*`
-await conn.sendFile(m.chat, apkData.image, 'error,jpg', response, m, null, fake);
-if (apkData.size.includes('GB') || parseFloat(apkData.size.replace(' MB', '')) > 999) {
-return await m.reply('*𝙀𝙡 𝙖𝙥𝙠 𝙚𝙨 𝙢𝙪𝙮 𝙥𝙚𝙨𝙖𝙙𝙤.*') 
+> *⏳ ᴱˢᵖᵉʳᵉ ᵘⁿ ᵐᵒᵐᵉⁿᵗᵒ ˢᵘˢ ᵃᵖᵏ ˢᵉ ᵉˢᵗᵃ ᵉⁿᵛᶦᵃⁿᵈᵒ...*`;
+const responseMessage = await conn.sendFile(m.chat, apkData.icon, 'apk.jpg', response, m, null, fake);
+userMessages.set(m.sender, responseMessage);
+
+const apkSize = apkData.size.toLowerCase();
+if (apkSize.includes('gb') || (apkSize.includes('mb') && parseFloat(apkSize) > 999)) {
+await m.reply('*⚠️ 𝙀𝙡 𝙖𝙥𝙠 𝙚𝙨 𝙢𝙪𝙮 𝙥𝙚𝙨𝙖𝙙𝙤.*');
+return;
 }
 
-await conn.sendMessage(m.chat, {document: { url: apkData.download }, mimetype: 'application/vnd.android.package-archive', fileName: `${apkData.name}.apk`, caption: null }, { quoted: m });
-await m.react("✅") 
-} catch {
-try {
-const searchA = await search(text);
-const data5 = await download(searchA[0].id);
-let response = `≪ＤＥＳＣＡＲＧＡＤＯ ＡＰＫＳ🚀≫
-
-┏━━━━━━━━━━━━━━━━━━━━━━• 
-┃💫 𝙉𝙊𝙈𝘽𝙍𝙀: ${data5.name}
-┃📦 𝙋𝘼𝘾𝙆𝘼𝙂𝙀: ${data5.package}
-┃🕒 𝙐𝙇𝙏𝙄𝙈𝘼 𝘼𝘾𝙏𝙐𝙇𝙄𝙕𝘼𝘾𝙄𝙊𝙉: ${data5.lastup}
-┃💪 𝙋𝙀𝙎𝙊: ${data5.size}
-┗━━━━━━━━━━━━━━━━━━━━━━━•
-
-> *⏳ ᴱˢᵖᵉʳᵉ ᵘⁿ ᵐᵒᵐᵉⁿᵗᵒ ˢᵘˢ ᵃᵖᵏ ˢᵉ ᵉˢᵗᵃ ᵉⁿᵛᶦᵃⁿᵈᵒ...*`
-await conn.sendFile(m.chat, data5.icon, 'akp.jpg', response, m, false, fake)   
-//conn.sendMessage(m.chat, {image: {url: data5.icon}, caption: response}, {quoted: m});
-if (data5.size.includes('GB') || data5.size.replace(' MB', '') > 999) {
-return await m.reply('*𝙀𝙡 𝙖𝙥𝙠 𝙚𝙨 𝙢𝙪𝙮 𝙥𝙚𝙨𝙖𝙙𝙤.*')}
-await conn.sendMessage(m.chat, {document: {url: data5.dllink}, mimetype: 'application/vnd.android.package-archive', fileName: data5.name + '.apk', caption: null}, {quoted: m}); 
-m.react("✅") 
+await conn.sendMessage(m.chat, { document: { url: apkData.dllink }, mimetype: 'application/vnd.android.package-archive', fileName: `${apkData.name}.apk`, caption: null }, { quoted: m });
+m.react("✅");
 } catch (e) {
-m.react(`❌`) 
-console.log(e)
-handler.limit = false
+m.react('❌');
+console.log(e);
+handler.limit = false;
 } finally {
 delete userRequests[m.sender];
-}}}}
+}};
 handler.help = ['apk', 'apkmod'];
 handler.tags = ['downloader'];
 handler.command = /^(apkmod|apk|modapk|dapk2|aptoide|aptoidedl)$/i;
-handler.register = true
-handler.limit = 2
+handler.register = true;
+handler.limit = 2;
+
 export default handler;
 
 async function searchApk(text) {
