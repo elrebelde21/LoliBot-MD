@@ -273,20 +273,20 @@ do {
 let lineM = '⋯ ⋯ ⋯ ⋯ ⋯ ⋯ ⋯ ⋯ ⋯ ⋯ ⋯ 》'
 opcion = await question(`╭${lineM}  
 ┊ ${chalk.blueBright('╭┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅')}
-┊ ${chalk.blueBright('┊')} ${chalk.blue.bgBlue.bold.cyan(await tr('MÉTODO DE VINCULACIÓN'))}
+┊ ${chalk.blueBright('┊')} ${chalk.blue.bgBlue.bold.cyan('MÉTODO DE VINCULACIÓN')}
 ┊ ${chalk.blueBright('╰┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅')}   
 ┊ ${chalk.blueBright('╭┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅')}     
-┊ ${chalk.blueBright('┊')} ${chalk.green.bgMagenta.bold.yellow(await tr('¿CÓMO DESEA CONECTARSE?'))}
-┊ ${chalk.blueBright('┊')} ${chalk.bold.redBright(await tr('⇢  Opción 1:'))} ${chalk.greenBright(await tr('Código QR.'))}
-┊ ${chalk.blueBright('┊')} ${chalk.bold.redBright(await tr('⇢  Opción 2:'))} ${chalk.greenBright(await tr('Código de 8 digitos.'))}
+┊ ${chalk.blueBright('┊')} ${chalk.green.bgMagenta.bold.yellow('¿CÓMO DESEA CONECTARSE?')}
+┊ ${chalk.blueBright('┊')} ${chalk.bold.redBright('⇢  Opción 1:')} ${chalk.greenBright('Código QR.')}
+┊ ${chalk.blueBright('┊')} ${chalk.bold.redBright('⇢  Opción 2:')} ${chalk.greenBright('Código de 8 digitos.')}
 ┊ ${chalk.blueBright('╰┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅')}
 ┊ ${chalk.blueBright('╭┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅')}     
-┊ ${chalk.blueBright('┊')} ${chalk.italic.magenta(await tr('Escriba sólo el número de'))}
-┊ ${chalk.blueBright('┊')} ${chalk.italic.magenta(await tr('la opción para conectarse.'))}
+┊ ${chalk.blueBright('┊')} ${chalk.italic.magenta('Escriba sólo el número de')}
+┊ ${chalk.blueBright('┊')} ${chalk.italic.magenta('la opción para conectarse.')}
 ┊ ${chalk.blueBright('╰┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅')} 
 ╰${lineM}\n${chalk.bold.magentaBright('---> ')}`)
 if (!/^[1-2]$/.test(opcion)) {
-console.log(chalk.bold.redBright(await tr(`NO SE PERMITE NÚMEROS QUE NO SEAN ${chalk.bold.greenBright("1")} O ${chalk.bold.greenBright("2")}, TAMPOCO LETRAS O SÍMBOLOS ESPECIALES. ${chalk.bold.yellowBright("CONSEJO: COPIE EL NÚMERO DE LA OPCIÓN Y PÉGUELO EN LA CONSOLA.")}`)))
+console.log(chalk.bold.redBright(`NO SE PERMITE NÚMEROS QUE NO SEAN ${chalk.bold.greenBright("1")} O ${chalk.bold.greenBright("2")}, TAMPOCO LETRAS O SÍMBOLOS ESPECIALES. ${chalk.bold.yellowBright("CONSEJO: COPIE EL NÚMERO DE LA OPCIÓN Y PÉGUELO EN LA CONSOLA.")}`))
 }} while (opcion !== '1' && opcion !== '2' || fs.existsSync(`./${authFile}/creds.json`))
 }
 
@@ -364,7 +364,7 @@ if (!!phoneNumber) {
 addNumber = phoneNumber.replace(/[^0-9]/g, '')
 } else {
 do {
-phoneNumber = await question(chalk.bgBlack(chalk.bold.greenBright(`\n\n✳️ ${await tr("Escriba su número")}\n\n${await tr("Ejemplo")}: 5491168xxxx\n\n\n\n`)))
+phoneNumber = await question(chalk.bgBlack(chalk.bold.greenBright("\n\n✳️ Escriba su número\n\nEjemplo: 5491168xxxx\n\n\n\n")))
 phoneNumber = phoneNumber.replace(/\D/g,'')
 if (!phoneNumber.startsWith('+')) {
 phoneNumber = `+${phoneNumber}`
@@ -375,7 +375,7 @@ addNumber = phoneNumber.replace(/\D/g, '')
 setTimeout(async () => {
 let codeBot = await conn.requestPairingCode(addNumber)
 codeBot = codeBot?.match(/.{1,4}/g)?.join("-") || codeBot
-console.log(chalk.bold.white(chalk.bgMagenta(await tr(`CÓDIGO DE VINCULACIÓN:`))), chalk.bold.white(chalk.white(codeBot)))
+console.log(chalk.bold.white(chalk.bgMagenta(`CÓDIGO DE VINCULACIÓN:`)), chalk.bold.white(chalk.white(codeBot)))
 }, 2000)
 }}}
 }
@@ -394,28 +394,28 @@ cp.spawn('find', [dir, '-amin', '2', '-type', 'f', '-delete']);
 if (opts['server']) (await import('./server.js')).default(global.conn, PORT)
 
 //respaldo de la sesión
-const backupCreds = async () => {
+const backupCreds = () => {
 if (fs.existsSync(credsFile)) {
 fs.copyFileSync(credsFile, backupFile);
-console.log(`[✅] ${await tr("Respaldo creado en")} ${backupFile}`);
+console.log(`[✅] Respaldo creado en ${backupFile}`);
 } else {
-console.log(await tr('[⚠] No se encontró el archivo creds.json para respaldar.'));
+console.log('[⚠] No se encontró el archivo creds.json para respaldar.');
 }};
 
-const restoreCreds = async () => {
+const restoreCreds = () => {
 if (fs.existsSync(credsFile)) {
 fs.copyFileSync(backupFile, credsFile);
-console.log(`[✅] creds.json ${await tr("reemplazado desde el respaldo")}.`);
+console.log(`[✅] creds.json reemplazado desde el respaldo.`);
 } else if (fs.existsSync(backupFile)) {
 fs.copyFileSync(backupFile, credsFile);
-console.log(`[✅] creds.json ${await tr("restaurado desde el respaldo")}.`);
+console.log(`[✅] creds.json restaurado desde el respaldo.`);
 } else {
-console.log(await tr('[⚠] No se encontró ni el archivo creds.json ni el respaldo.'))
+console.log('[⚠] No se encontró ni el archivo creds.json ni el respaldo.');
 }};
 
 setInterval(async () => {
 await backupCreds();
-console.log(await tr('[♻️] Respaldo periódico realizado.'))
+console.log('[♻️] Respaldo periódico realizado.');
 }, 5 * 60 * 1000);
 
 async function connectionUpdate(update) {  
@@ -431,38 +431,38 @@ global.timestamp.connect = new Date
 if (global.db.data == null) loadDatabase()
 if (update.qr != 0 && update.qr != undefined || methodCodeQR) {
 if (opcion == '1' || methodCodeQR) {
-console.log(chalk.cyan(await tr('✅ ESCANEA EL CÓDIGO QR EXPIRA EN 45 SEGUNDOS ✅.')))
+console.log(chalk.cyan('✅ ESCANEA EL CÓDIGO QR EXPIRA EN 45 SEGUNDOS ✅.'))
 }}
 if (connection == 'open') {
-console.log(chalk.bold.greenBright(`\n▣─────────────────────────────···\n│\n│❧ ${await tr("CONECTADO CORRECTAMENTE AL WHATSAPP")} ✅\n│\n▣─────────────────────────────···`))
+console.log(chalk.bold.greenBright('\n▣─────────────────────────────···\n│\n│❧ 𝙲𝙾𝙽𝙴𝙲𝚃𝙰𝙳𝙾 𝙲𝙾𝚁𝚁𝙴𝙲𝚃𝙰𝙼𝙴𝙽𝚃𝙴 𝙰𝙻 𝚆𝙷𝙰𝚃𝚂𝙰𝙿𝙿 ✅\n│\n▣─────────────────────────────···'))
 global.botStartTime = Date.now();
 await joinChannels(conn)
 }
 let reason = new Boom(lastDisconnect?.error)?.output?.statusCode
 if (connection === 'close') {
 if (reason === DisconnectReason.badSession) {
-conn.logger.error(`[ ⚠ ] ${await tr("Sesión incorrecta, por favor elimina la carpeta")} ${global.authFile} ${await tr("y escanea nuevamente")}.`);
+conn.logger.error(`[ ⚠ ] Sesión incorrecta, por favor elimina la carpeta ${global.authFile} y escanea nuevamente.`);
 } else if (reason === DisconnectReason.connectionClosed) {
-conn.logger.warn(`[ ⚠ ] ${await tr("Conexión cerrada, reconectando...")}`);
+conn.logger.warn(`[ ⚠ ] Conexión cerrada, reconectando...`);
 restoreCreds();
 await global.reloadHandler(true).catch(console.error)
 } else if (reason === DisconnectReason.connectionLost) {
-conn.logger.warn(`[ ⚠ ] ${await tr("Conexión perdida con el servidor, reconectando...")}`);
+conn.logger.warn(`[ ⚠ ] Conexión perdida con el servidor, reconectando...`);
 restoreCreds();
 await global.reloadHandler(true).catch(console.error)
 } else if (reason === DisconnectReason.connectionReplaced) {
-conn.logger.error(`[ ⚠ ] ${await tr("Conexión reemplazada, se ha abierto otra nueva sesión. Por favor, cierra la sesión actual primero.")}`);
+conn.logger.error(`[ ⚠ ] Conexión reemplazada, se ha abierto otra nueva sesión. Por favor, cierra la sesión actual primero.`);
 } else if (reason === DisconnectReason.loggedOut) {
-conn.logger.error(`[ ⚠ ] ${await tr("Conexion cerrada, por favor elimina la carpeta")} ${global.authFile} ${await tr("y escanea nuevamente")}.`);
+conn.logger.error(`[ ⚠ ] Conexion cerrada, por favor elimina la carpeta ${global.authFile} y escanea nuevamente.`);
 await global.reloadHandler(true).catch(console.error)
 } else if (reason === DisconnectReason.restartRequired) {
-conn.logger.info(`[ ⚠ ] ${await tr("Reinicio necesario, reinicie el servidor si presenta algún problema.")}`);
+conn.logger.info(`[ ⚠ ] Reinicio necesario, reinicie el servidor si presenta algún problema.`);
 await global.reloadHandler(true).catch(console.error)
 } else if (reason === DisconnectReason.timedOut) {
-conn.logger.warn(`[ ⚠ ] ${await tr("Tiempo de conexión agotado, reconectando...")}`);
+conn.logger.warn(`[ ⚠ ] Tiempo de conexión agotado, reconectando...`);
 await global.reloadHandler(true).catch(console.error) //process.send('reset')
 } else {
-conn.logger.warn(`[ ⚠ ] ${await tr("Razón de desconexión desconocida.")} ${reason || ''}: ${connection || ''}`);
+conn.logger.warn(`[ ⚠ ] Razón de desconexión desconocida. ${reason || ''}: ${connection || ''}`);
 }}}
 
 process.on('uncaughtException', console.error);
@@ -495,18 +495,14 @@ conn.ev.off('connection.update', conn.connectionUpdate);
 conn.ev.off('creds.update', conn.credsUpdate);
 }
 
-async function setWelcomeMessage() {
-conn.welcome = `${await tr("Hola!!")} @user ${await tr("¿COMO ESTAS?")}😃\n\n『${await tr("Bienvenido A")} *@subject*』\n\n${await tr("Un gusto conocerte amig@")} 🤗\n\n_${await tr("Recuerda leer las reglas del grupo para no tener ningun problema")} 🧐_\n\n*${await tr("Solo disfrutar de este grupo y divertite")} 🥳*`
-conn.bye = `${await tr("Bueno, se fue")} @user 👋\n\n${await tr("Que dios lo bendiga")} 😎`
+conn.welcome = 'HOLAA!! @user ¿COMO ESTAS?😃\n\n『Bienvenido A *@subject*』\n\nUn gusto conocerte amig@ 🤗\n\n_Recuerda leer las reglas del grupo para no tener ningun problema 🧐_\n\n*Solo disfrutar de este grupo y divertite 🥳*`'
+conn.bye = 'Bueno, se fue @user 👋\n\nQue dios lo bendiga 😎`'
 conn.spromote = 'Hey @user ya forma parte de staff 👑'
 conn.sdemote = 'jajaja @user ya no eres admins'
 conn.sDesc = 'La descripción ha sido cambiada a \n@desc'
 conn.sSubject = 'El nombre del grupo ha sido cambiado a \n@group'
 conn.sIcon = 'El icono del grupo ha sido cambiado'
 conn.sRevoke = 'El enlace del grupo ha sido cambiado a \n@revoke'
-}
-
-setWelcomeMessage().catch(console.error);
 conn.handler = handler.handler.bind(global.conn);
 conn.participantsUpdate = handler.participantsUpdate.bind(global.conn);
 conn.groupsUpdate = handler.groupsUpdate.bind(global.conn);
@@ -634,13 +630,13 @@ const fileStats = await stat(filePath);
 if (fileStats.mtimeMs < oneHourAgo) { 
 try {
 await unlink(filePath);
-console.log(chalk.green(`[🗑️] Pre-key ${await tr("antigua eliminada")}: ${file}`));
+console.log(chalk.green(`[🗑️] Pre-key antigua eliminada: ${file}`));
 } catch (err) {
 //console.error(chalk.red(`[⚠] Error al eliminar pre-key antigua ${file}: ${err.message}`));
 }} else {
 //console.log(chalk.yellow(`[ℹ️] Manteniendo pre-key activa: ${file}`));
 }}
-console.log(chalk.cyanBright(`[🔵] ${await tr("Sesiones no esenciales eliminadas de")} ${global.authFile}`));
+console.log(chalk.cyanBright(`[🔵] Sesiones no esenciales eliminadas de ${global.authFile}`));
 } catch (err) {
 //console.error(chalk.red(`[⚠] Error al limpiar BotSession: ${err.message}`));
 }}
@@ -718,16 +714,16 @@ originalConsoleMethod.apply(console, arguments)
 setInterval(async () => {
 if (stopped === 'close' || !conn || !conn.user) return;
   await clearTmp();
-  console.log(chalk.cyan(`┏━━━━━━⪻♻️ AUTO-CLEAR 🗑️⪼━━━━━━•\n┃→ ${await tr("ARCHIVOS DE LA CARPETA TMP ELIMINADOS")}\n┗━━━━━━━━━━━━━━━━━━━━━━━━━━━•`));
+  console.log(chalk.cyan(`┏━━━━━━⪻♻️ AUTO-CLEAR 🗑️⪼━━━━━━•\n┃→ ARCHIVOS DE LA CARPETA TMP ELIMINADOS\n┗━━━━━━━━━━━━━━━━━━━━━━━━━━━•`));
 }, 1000 * 60 * 3); //3 min
 
 setInterval(async () => {
   if (stopped === 'close' || !conn || !conn.user) return;
   await purgeSessionSB();
   await purgeSession();
-  console.log(chalk.bold.cyanBright(`\n╭» 🔵 ${global.authFile} 🔵\n│→ ${await tr("SESIONES NO ESENCIALES ELIMINADAS")}\n╰― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― 🗑️♻️`));
+  console.log(chalk.bold.cyanBright(`\n╭» 🔵 ${global.authFile} 🔵\n│→ SESIONES NO ESENCIALES ELIMINADAS\n╰― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― 🗑️♻️`));
   await purgeOldFiles();
-  console.log(chalk.bold.cyanBright(`\n╭» 🟠 ARCHIVOS 🟠\n│→ ${await tr("ARCHIVOS RESIDUALES ELIMINADAS")}\n╰― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― 🗑️♻️`));
+  console.log(chalk.bold.cyanBright(`\n╭» 🟠 ARCHIVOS 🟠\n│→ ARCHIVOS RESIDUALES ELIMINADAS\n╰― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― 🗑️♻️`));
 }, 1000 * 60 * 10); //10 min
 
 _quickTest().then(() => conn.logger.info('Ƈᴀʀɢᴀɴᴅᴏ．．．.\n'))
