@@ -32,18 +32,19 @@ user.regPhase = 'language';
 user.registered = false; 
         
 let supportedLanguages = [
-{code: 'es', name: 'Español'},
-{code: 'en', name: 'English'},
-{code: 'pt', name: 'Português'},
-{code: 'id', name: 'Bahasa Indonesia'},
-{code: 'fr', name: 'Francés'},
-{code: 'de', name: 'Alemán'},
-{code: 'it', name: 'Italiano'},
-{code: 'ar', name: 'Arab (عرب)'}];
+{code: 'es', name: 'Español', aliases: ['español', 'spanish']},
+{code: 'en', name: 'English', aliases: ['inglés', 'ingles']},
+{code: 'pt', name: 'Português', aliases: ['portugues']},
+{code: 'id', name: 'Bahasa Indonesia', aliases: ['indonesio']},
+{code: 'fr', name: 'Francés', aliases: ['frances', 'french']},
+{code: 'de', name: 'Alemán', aliases: ['aleman', 'german']},
+{code: 'it', name: 'Italiano', aliases: ['italian']},
+{code: 'ar', name: 'Arab (عرب)', aliases: ['arabe', 'arabic']}
+];
         
 let languageOptions = supportedLanguages.map((lang, i) => `${i + 1}. ${lang.name} (${lang.code})`).join('\n');
         
-await conn.sendMessage(m.chat, {text: `📝 ${await tr("*Registro Paso 2: Selecciona tu idioma*")}\n\n${languageOptions}\n\n> *${await tr("Responde con el número correspondiente:")}*`, mentions: [m.sender]}, { quoted: m });
+await conn.sendMessage(m.chat, {text: `📝 ${await tr("*Registro Paso 2: Selecciona tu idioma*")}\n\n${languageOptions}\n\n> *${await tr("Responde con número o nombre del idioma")}*`, mentions: [m.sender]}, { quoted: m });
         
 user.regData = { name: name, age: age, supportedLanguages: supportedLanguages, who: who, usedPrefix: usedPrefix, rtotalreg: rtotalreg };
 }
@@ -91,33 +92,33 @@ userNationality = null;
 
 if (user.regPhase === 'language') {
 let supportedLanguages = user.regData.supportedLanguages;
-        
-let selectedLang = null;
-if (/^[1-7]$/.test(text)) {
-selectedLang = supportedLanguages[parseInt(text) - 1];
-} else {
-selectedLang = supportedLanguages.find(lang => lang.code === text);
-}
-        
+let selectedLang = supportedLanguages.find((lang, i) => 
+text === (i + 1).toString() || 
+lang.code === text || 
+lang.name.toLowerCase() === text || 
+lang.aliases.includes(text));
+
 if (!selectedLang) {
 let languageOptions = supportedLanguages.map((lang, i) => `${i + 1}. ${lang.name} (${lang.code})`).join('\n');
-return m.reply(`❌ ${await tr("*Selección inválida*\n\nPor favor, selecciona tu idioma:")}\n\n${languageOptions}\n\n> *${await tr("Responde con el número o código del idioma:")}*`);
+return m.reply(`📝 ${await tr("*Selecciona tu idioma:*\n\n")}${languageOptions}\n\n> *${await tr("Usa número o nombre del idioma")}*`);
 }
         
 user.language = selectedLang.code;
 user.languageName = selectedLang.name;
 user.regPhase = 'gender';
-return m.reply(await tr(`📝 *Registro Paso 3: Selecciona tu género*\n\n1. Hombre 👨\n2. Mujer 👩\n3. Otro/No especificar\n\n> *Responde con el número correspondiente:*`));
+return m.reply(await tr(`📝 *Registro Paso 3: Selecciona tu género*\n\n1. Hombre 👨\n2. Mujer 👩\n3. Otro/No especificar\n\n> *Responde con número o palabra*`));
 }
     
 if (user.regPhase === 'gender') {
-let gender = null;
-if (text === '1') gender = 'Hombre';
-else if (text === '2') gender = 'Mujer';
-else if (text === '3') gender = 'Otro';
+let genderMap = {
+'1': 'Hombre', 'hombre': 'Hombre', 'man': 'Hombre',
+'2': 'Mujer', 'mujer': 'Mujer', 'woman': 'Mujer',
+'3': 'Otro', 'otro': 'Otro', 'other': 'Otro'
+};
+let gender = genderMap[text];
         
 if (!gender) {
-return m.reply(await tr(`❌ *Selección inválida*\n\nPor favor, selecciona tu género:\n\n1. Hombre 👨\n2. Mujer 👩\n3. Otro/No especificar\n\n> *Responde con el número correspondiente:*`));
+return m.reply(await tr(`📝 *Selecciona tu género:*\n\n1. Hombre 👨\n2. Mujer 👩\n3. Otro/No especificar\n\n> *Usa número o palabra*`));
 }
         
 user.gender = gender;
@@ -144,7 +145,7 @@ let formattedMonth = month.toString().padStart(2, '0');
 if (year) {
 let currentYear = new Date().getFullYear();
 if (year > currentYear || year < 1900) {
-return m.reply(await tr(`❌ *Año inválido*\n\nEl año debe estar entre 1900 y ${currentYear}\n\nPor favor, envía tu fecha de cumpleaños en formato DD/MM/YYYY (ejemplo: 30/10/2005)\n\n> O escribe "saltar" para omitir este paso.`))
+return m.reply(await tr(`📝 *Año inválido*\n\nEl año debe estar entre 1900 y ${currentYear}\n\nIngresa en formato DD/MM/YYYY (ejemplo: 30/10/2005)\n\n> O escribe "saltar"`))
 }
 birthday = `${formattedDay}/${formattedMonth}/${year}`;
 } else {
@@ -152,7 +153,7 @@ birthday = `${formattedDay}/${formattedMonth}`;
 }}}
             
 if (!birthday && text !== 'saltar') {
-return m.reply(await tr(`❌ *Formato inválido*\n\nPor favor, envía tu fecha de cumpleaños en formato DD/MM/YYYY (ejemplo: 30/10/2005 para 30 de octubre de 2005)\n\n> O escribe "saltar" para omitir este paso.`))
+return m.reply(await tr(`📝 *Formato inválido*\n\nIngresa en formato DD/MM/YYYY (ejemplo: 30/10/2005)\n\n> O escribe "saltar"`))
 }}
         
 if (birthday) user.birthday = birthday;
