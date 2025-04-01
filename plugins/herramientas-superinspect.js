@@ -7,15 +7,16 @@ import axios from 'axios';
 
 let handler = async (m, { conn, command, usedPrefix, args, text, groupMetadata, isOwner, isROwner }) => {
  const channelUrl = text?.match(/(?:https:\/\/)?(?:www\.)?(?:chat\.|wa\.)?whatsapp\.com\/(?:channel\/|joinchat\/)?([0-9A-Za-z]{22,24})/i)?.[1];
-let txtBotAdminCh = '\n\n> *Verifique que el Bot sea admin en el canal, de lo contrario no funcionará el comando*';
+let txtBotAdminCh = await tr('\n\n> *Verifique que el Bot sea admin en el canal, de lo contrario no funcionará el comando*')
 let thumb = img.getRandom();
 let pp, ch, q, mime, buffer, media, inviteUrlch, imageBuffer;
 
 let inviteCode
-if (!text) return await m.reply(`*⚠️ Ingrese un enlace de un grupo/comunidad/canal de WhatsApp para obtener información.*`)
+if (!text) return await m.reply(await tr(`*⚠️ Ingrese un enlace de un grupo/comunidad/canal de WhatsApp para obtener información.*`))
 const MetadataGroupInfo = async (res, isInviteInfo = false) => {
-let nameCommunity = "no pertenece a ninguna Comunidad"
-let groupPicture = "No se pudo obtener"
+let nameCommunity = await tr("no pertenece a ninguna Comunidad")
+let groupPicture = await tr("No se pudo obtener")
+let msgTxt1 = await tr("No encontrado")  
 
 if (res.linkedParent) {
 let linkedGroupMeta = await conn.groupMetadata(res.linkedParent).catch(e => { return null })
@@ -27,33 +28,33 @@ const formatParticipants = (participants) =>
 participants && participants.length > 0
 ? participants.map((user, i) => `${i + 1}. @${user.id?.split("@")[0]}${user.admin === "superadmin" ? " (superadmin)" : user.admin === "admin" ? " (admin)" : ""}`).join("\n")
 : "No encontrado"
-let caption = `🆔 *Identificador del grupo:*\n${res.id || "No encontrado"}\n\n` +
-`👑 *Creado por:*\n${res.owner ? `@${res.owner?.split("@")[0]}` : "No encontrado"} ${res.creation ? `el ${formatDate(res.creation)}` : "(Fecha no encontrada)"}\n\n` +
-`🏷️ *Nombre:*\n${res.subject || "No encontrado"}\n\n` +
-`✏️ *Nombre cambiado por:*\n${res.subjectOwner ? `@${res.subjectOwner?.split("@")[0]}` : "No encontrado"} ${res.subjectTime ? `el ${formatDate(res.subjectTime)}` : "(Fecha no encontrada)"}\n\n` +
-`📄 *Descripción:*\n${res.desc || "No encontrado"}\n\n` +
-`📝 *Descripción cambiado por:*\n${res.descOwner ? `@${res.descOwner?.split("@")[0]}` : "No encontrado"}\n\n` +
-`🗃️ *Id de la descripción:*\n${res.descId || "No encontrado"}\n\n` +
-`🖼️ *Imagen del grupo:*\n${pp ? pp : groupPicture}\n\n` +
-`💫 *Autor:*\n${res.author || "No encontrado"}\n\n` +
-`🎫 *Código de invitación:*\n${res.inviteCode || inviteCode || "No disponible"}\n\n` +
-`⌛ *Duración:*\n${res.ephemeralDuration !== undefined ? `${res.ephemeralDuration} segundos` : "Desconocido"}\n\n` +
-`🛃 *Admins:*\n` + (res.participants && res.participants.length > 0 ? res.participants.filter(user => user.admin === "admin" || user.admin === "superadmin").map((user, i) => `${i + 1}. @${user.id?.split("@")[0]}${user.admin === "superadmin" ? " (superadmin)" : " (admin)"}`).join("\n") : "No encontrado") + `\n\n` +
-`🔰 *Usuarios en total:*\n${res.size || "Cantidad no encontrada"}\n\n` +
-`✨ *Información avanzada* ✨\n\n🔎 *Comunidad vinculada al grupo:*\n${res.isCommunity ? "Este grupo es un chat de avisos" : `${res.linkedParent ? "`Id:` " + res.linkedParent : "Este grupo"} ${nameCommunity}`}\n\n` +
-`⚠️ *Restricciones:* ${res.restrict ? "✅" : "❌"}\n` +
-`📢 *Anuncios:* ${res.announce ? "✅" : "❌"}\n` +
-`🏘️ *¿Es comunidad?:* ${res.isCommunity ? "✅" : "❌"}\n` +
-`📯 *¿Es anuncio de comunidad?:* ${res.isCommunityAnnounce ? "✅" : "❌"}\n` +
-`🤝 *Tiene aprobación de miembros:* ${res.joinApprovalMode ? "✅" : "❌"}\n` +
-`🆕 *Puede Agregar futuros miembros:* ${res.memberAddMode ? "✅" : "❌"}\n\n` 
+let caption = `🆔 *${await tr("Identificador del grupo")}:*\n${res.id || msgTxt1}\n\n` +
+`👑 *${await tr("Creado por")}:*\n${res.owner ? `@${res.owner?.split("@")[0]}` : msgTxt1} ${res.creation ? `el ${formatDate(res.creation)}` : msgTxt1}\n\n` +
+`🏷️ *${await tr("Nombre")}:*\n${res.subject || msgTxt1}\n\n` +
+`✏️ *${await tr("Nombre cambiado por")}:*\n${res.subjectOwner ? `@${res.subjectOwner?.split("@")[0]}` : msgTxt1} ${res.subjectTime ? `el ${formatDate(res.subjectTime)}` : msgTxt1}\n\n` +
+`📄 *${await tr("Descripción")}:*\n${res.desc || msgTxt1}\n\n` +
+`📝 *${await tr("Descripción cambiado por")}:*\n${res.descOwner ? `@${res.descOwner?.split("@")[0]}` : msgTxt1}\n\n` +
+`🗃️ *${await tr("Id de la descripción")}:*\n${res.descId || msgTxt1}\n\n` +
+`🖼️ *${await tr("Imagen del grupo")}:*\n${pp ? pp : groupPicture}\n\n` +
+`💫 *${await tr("Autor")}:*\n${res.author || msgTxt1}\n\n` +
+`🎫 *${await tr("Código de invitación")}:*\n${res.inviteCode || inviteCode || msgTxt1}\n\n` +
+`⌛ *${await tr("Duración")}:*\n${res.ephemeralDuration !== undefined ? `${res.ephemeralDuration} segundos` : "Desconocido"}\n\n` +
+`🛃 *${await tr("Admins")}:*\n` + (res.participants && res.participants.length > 0 ? res.participants.filter(user => user.admin === "admin" || user.admin === "superadmin").map((user, i) => `${i + 1}. @${user.id?.split("@")[0]}${user.admin === "superadmin" ? " (superadmin)" : " (admin)"}`).join("\n") : msgTxt1) + `\n\n` +
+`🔰 *${await tr("Usuarios en total")}:*\n${res.size || "Cantidad no encontrada"}\n\n` +
+`✨ *${await tr("Información avanzada")}* ✨\n\n🔎 ${await tr("*Comunidad vinculada al grupo:*")}\n${res.isCommunity ? "Este grupo es un chat de avisos" : `${res.linkedParent ? "`Id:` " + res.linkedParent : "Este grupo"} ${nameCommunity}`}\n\n` +
+`⚠️ *${await tr("Restricciones")}:* ${res.restrict ? "✅" : "❌"}\n` +
+`📢 *${await tr("Anuncios")}:* ${res.announce ? "✅" : "❌"}\n` +
+`🏘️ *${await tr("¿Es comunidad?")}:* ${res.isCommunity ? "✅" : "❌"}\n` +
+`📯 *${await tr("¿Es anuncio de comunidad?")}:* ${res.isCommunityAnnounce ? "✅" : "❌"}\n` +
+`🤝 *${await tr("Tiene aprobación de miembros")}:* ${res.joinApprovalMode ? "✅" : "❌"}\n` +
+`🆕 *${await tr("Puede Agregar futuros miembros")}:* ${res.memberAddMode ? "✅" : "❌"}\n\n` 
 return caption.trim()
 }
         
 const inviteGroupInfo = async (groupData) => {
 const { id, subject, subjectOwner, subjectTime, size, creation, owner, desc, descId, linkedParent, restrict, announce, isCommunity, isCommunityAnnounce, joinApprovalMode, memberAddMode, ephemeralDuration } = groupData
-let nameCommunity = "no pertenece a ninguna Comunidad"
-let groupPicture = "No se pudo obtener"
+let nameCommunity = await tr("no pertenece a ninguna Comunidad")
+let groupPicture = await tr("No se pudo obtener")
 if (linkedParent) {
 let linkedGroupMeta = await conn.groupMetadata(linkedParent).catch(e => { return null })
 nameCommunity = linkedGroupMeta ? "\n" + ("`Nombre:` " + linkedGroupMeta.subject || "") : nameCommunity
@@ -62,22 +63,22 @@ pp = await conn.profilePictureUrl(id, 'image').catch(e => { return null })
 const formatParticipants = (participants) =>
 participants && participants.length > 0
 ? participants.map((user, i) => `${i + 1}. @${user.id?.split("@")[0]}${user.admin === "superadmin" ? " (superadmin)" : user.admin === "admin" ? " (admin)" : ""}`).join("\n")
-: "No encontrado"
+: msgTxt1
 
-let caption = `🆔 *Identificador del grupo:*\n${id || "No encontrado"}\n\n` +
-`👑 *Creado por:*\n${owner ? `@${owner?.split("@")[0]}` : "No encontrado"} ${creation ? `el ${formatDate(creation)}` : "(Fecha no encontrada)"}\n\n` +
-`🏷️ *Nombre:*\n${subject || "No encontrado"}\n\n` +
-`✏️ *Nombre cambiado por:*\n${subjectOwner ? `@${subjectOwner?.split("@")[0]}` : "No encontrado"} ${subjectTime ? `el ${formatDate(subjectTime)}` : "(Fecha no encontrada)"}\n\n` +
-`📄 *Descripción:*\n${desc || "No encontrada"}\n\n` +
-`💠 *ID de la descripción:*\n${descId || "No encontrado"}\n\n` +
-`🖼️ *Imagen del grupo:*\n${pp ? pp : groupPicture}\n\n` +
-`🏆 *Miembros destacados:*\n${formatParticipants(groupData.participants)}\n\n` +
-`👥 *Destacados total:*\n${size || "Cantidad no encontrada"}\n\n` +
-`✨ *Información avanzada* ✨\n\n🔎 *Comunidad vinculada al grupo:*\n${isCommunity ? "Este grupo es un chat de avisos" : `${linkedParent ? "`Id:` " + linkedParent : "Este grupo"} ${nameCommunity}`}\n\n` +
-`📢 *Anuncios:* ${announce ? "✅ Si" : "❌ No"}\n` +
-`🏘️ *¿Es comunidad?:* ${isCommunity ? "✅ Si" : "❌ No"}\n` +
-`📯 *¿Es anuncio de comunidad?:* ${isCommunityAnnounce ? "✅" : "❌"}\n` +
-`🤝 *Tiene aprobación de miembros:* ${joinApprovalMode ? "✅" : "❌"}\n`
+let caption = `🆔 *${await tr("Identificador del grupo")}:*\n${id || msgTxt1}\n\n` +
+`👑 *${await tr("Creado por")}:*\n${owner ? `@${owner?.split("@")[0]}` : msgTxt1} ${creation ? `el ${formatDate(creation)}` : msgTxt1}\n\n` +
+`🏷️ *${await tr("Nombre")}:*\n${subject || msgTxt1}\n\n` +
+`✏️ *${await tr("Nombre cambiado por")}:*\n${subjectOwner ? `@${subjectOwner?.split("@")[0]}` : msgTxt1} ${subjectTime ? `el ${formatDate(subjectTime)}` : msgTxt1}\n\n` +
+`📄 *${await tr("Descripción")}:*\n${desc || msgTxt1}\n\n` +
+`💠 *${await tr("ID de la descripción")}:*\n${descId || msgTxt1}\n\n` +
+`🖼️ *${await tr("Imagen del grupo")}:*\n${pp ? pp : groupPicture}\n\n` +
+`🏆 *${await tr("Miembros destacados")}:*\n${formatParticipants(groupData.participants)}\n\n` +
+`👥 *${await tr("Destacados total")}:*\n${size || msgTxt1}\n\n` +
+`✨ *${await tr("Información avanzada")}* ✨\n\n🔎 *${await tr("Comunidad vinculada al grupo")}:*\n${isCommunity ? await tr("Este grupo es un chat de avisos") : `${linkedParent ? "`Id:` " + linkedParent : await tr("Este grupo")} ${nameCommunity}`}\n\n` +
+`📢 *${await tr("Anuncios")}:* ${announce ? "✅ Yes" : "❌ No"}\n` +
+`🏘️ *${await tr("¿Es comunidad?")}:* ${isCommunity ? "✅ Yes" : "❌ No"}\n` +
+`📯 *${await tr("¿Es anuncio de comunidad?")}:* ${isCommunityAnnounce ? "✅" : "❌"}\n` +
+`🤝 *${await tr("Tiene aprobación de miembros")}:* ${joinApprovalMode ? "✅" : "❌"}\n`
 return caption.trim()
 }
 
@@ -119,8 +120,8 @@ if (!channelUrl) return await conn.reply(m.chat, "*Verifique que sea un enlace d
 if (channelUrl) {
 try {
 newsletterInfo = await conn.newsletterMetadata("invite", channelUrl).catch(e => { return null })
-if (!newsletterInfo) return await conn.reply(m.chat, "*No se encontró información del canal.* Verifique que el enlace sea correcto.", m)       
-let caption = "*Inspector de enlaces de Canales*\n\n" + processObject(newsletterInfo, "", newsletterInfo?.preview)
+if (!newsletterInfo) return await conn.reply(m.chat, await tr("*No se encontró información del canal.* Verifique que el enlace sea correcto."), m)       
+let caption = await tr("*Inspector de enlaces de Canales*\n\n") + processObject(newsletterInfo, "", newsletterInfo?.preview)
 if (newsletterInfo?.preview) {
 pp = getUrlFromDirectPath(newsletterInfo.preview)
 } else {

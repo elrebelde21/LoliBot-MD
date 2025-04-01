@@ -23,10 +23,10 @@ Pesan: eror};
 return notFond;
 }}
 const handler = async (m, {conn, text, usedPrefix, command}) => {
-if (!text) throw `*⚠️ ᴇsᴛᴀs ᴜsᴀɴᴅᴏ ᴍᴀʟ ᴇʟ ᴄᴏᴍᴀɴᴅᴏ!!*\n*ᴜsᴏ ᴄᴏʀʀᴇᴄᴛᴏ:*\n*${usedPrefix + command} 𝙿𝚊𝚕𝚊𝚋𝚛𝚊 𝚌𝚕𝚊𝚟𝚎 𝚊 𝚋𝚞𝚜𝚌𝚊𝚛*\n\n*• ᴇᴊᴇᴍᴘʟᴏ:*\n*${usedPrefix + command} Estrellas*`;
+if (!text) throw `*⚠️ ${await tr("Estas usando mal el comando!!")}*\n\n*• ${await tr("Ejemplo")}:*\n*${usedPrefix + command} Estrellas*`;
 wikipedia(`${text}`).then((res) => {
-m.reply(`*ᴀǫᴜɪ ᴛɪᴇɴᴇs ʟᴀ ɪɴғᴏʀᴍᴀᴄɪᴏ́ɴ ᴇɴᴄᴏɴᴛʀᴀᴅᴀ:*\n\n` + res.result.isi)}).catch(() => {
-m.reply('*⚠️ ɴᴏ sᴇ ᴇɴᴄᴏɴᴛʀᴏ ɴɪɴɢᴜɴᴀ ɪɴғᴏʀᴍᴀᴄɪᴏ́ɴ, ᴘʀᴜᴇʙᴀ ǫᴜᴇ ʜᴀʏᴀs ᴇsᴄʀɪᴛᴏ ᴜɴᴀ sᴏʟᴀ ᴘᴀʟᴀʙʀᴀ ʏ ʟᴏ ʜᴀʏᴀs ᴇsᴄʀɪᴛᴏ ᴄᴏʀʀᴇᴄᴛᴀᴍᴇɴᴛᴇ*');
+m.reply(`*${tr("Aqui tienes la información encontrarás")}:*\n\n` + res.result.isi)}).catch(() => {
+m.reply(`*⚠️ ${tr("No se encontró ninguna información, prueba que hayas escrito una sola palabra y lo hayaw escrito correctamente")}*`);
 });
 };
 handler.help = ['wikipedia'].map((v) => v + ' <apa>');

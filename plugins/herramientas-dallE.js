@@ -3,20 +3,20 @@ import axios from 'axios';
 import * as cheerio from "cheerio"
 
 const handler = async (m, {conn, text, usedPrefix, command}) => {
-if (!text) throw `*⚠️ 𝐈𝐧𝐠𝐫𝐞𝐬𝐞 𝐮𝐧 𝐭𝐞𝐱𝐭𝐨 𝐩𝐚𝐫𝐚 𝐜𝐫𝐞𝐚𝐫 𝐮𝐧𝐚 𝐢𝐦𝐚𝐠𝐞𝐧 𝐲 𝐚𝐬𝐢 𝐮𝐬𝐚𝐫 𝐥𝐚 𝐟𝐮𝐧𝐜𝐢𝐨𝐧 𝐝𝐞 𝐝𝐚𝐥𝐥-𝐞*\n\n*• 𝐄𝐣𝐞𝐦𝐩𝐥𝐨:*\n*${usedPrefix + command} gatitos llorando*`;
+if (!text) throw await tr(`*⚠️ Ingrese un texto para crear una imagen y asi usar la función de dall-e*\n\n*• Ejemplo:*\n*${usedPrefix + command} gatitos llorando*`)
 m.react('⌛') 
 try {
 let response = await fetch(`https://api.dorratz.com/v3/ai-image?prompt=${text}`) 
 let res = await response.json()
 if (res.data.status === "success") {
 const imageUrl = res.data.image_link;
-await conn.sendFile(m.chat, imageUrl, 'error.jpg', `_💫 Resutados: ${text}_\n\n> *✨ Imagen generada por IA ✨*`, m, null, fake);
+await conn.sendFile(m.chat, imageUrl, 'error.jpg', await tr(`_💫 Resutados: ${text}_\n\n> *✨ Imagen generada por IA ✨*`), m, null, fake);
 m.react('✅');
 }
 } catch {
 try {       
 let answer = await flux(text)
-await conn.sendFile(m.chat, answer, 'error.jpg', `_💫 Resutados: ${text}_\n\n> *✨ Imagen generada por IA ✨*`, m, null, fake);
+await conn.sendFile(m.chat, answer, 'error.jpg', await tr(`_💫 Resutados: ${text}_\n\n> *✨ Imagen generada por IA ✨*`), m, null, fake);
 //conn.sendMessage(m.chat, { image: { url: answer }, caption: `_💫 Resutados: ${text}_\n\n> *✨ Imagen generada por IA ✨*`, mentions: [m.sender],}, { quoted: m })
 m.react('✅');
 } catch {
@@ -25,7 +25,7 @@ const url = `https://api.unsplash.com/search/photos?query=${encodeURIComponent(t
 const response = await axios.get(url);
 if (response.data.results.length === 0) return m.react("❌") 
 const imageUrl = response.data.results[0].urls.regular; 
-await conn.sendFile(m.chat, imageUrl, 'error.jpg', `_*Resultado de:* ${text}_`, m, null, fake);
+await conn.sendFile(m.chat, imageUrl, 'error.jpg', await tr(`_💫 Resutados: ${text}_\n\n> *✨ Imagen generada por IA ✨*`), m, null, fake);
 m.react('✅');
 } catch {  
 try {        
@@ -33,21 +33,21 @@ const url = `https://api.betabotz.eu.org/api/search/bing-img?text=${encodeURICom
 const response = await axios.get(url);
 if (!response.data.result || response.data.result.length === 0) return m.react("❌") 
 const imageUrl = response.data.result[0];
-await conn.sendFile(m.chat, imageUrl, 'error.jpg', `_*Resultado de:* ${text}_`, m, null, fake);
+await conn.sendFile(m.chat, imageUrl, 'error.jpg', await tr(`_💫 Resutados: ${text}_\n\n> *✨ Imagen generada por IA ✨*`), m, null, fake);
 m.react('✅');
 } catch {  
 try {
 const tiores1 = await fetch(`https://vihangayt.me/tools/imagine?q=${text}`);
 const json1 = await tiores1.json();
-await conn.sendFile(m.chat, json1.data, 'error.jpg', `_*Resultado de:* ${text}_`, m, null, fake);
+await conn.sendFile(m.chat, json1.data, 'error.jpg', await tr(`_💫 Resutados: ${text}_\n\n> *✨ Imagen generada por IA ✨*`), m, null, fake);
 } catch {
 try {
 const tiores4 = await conn.getFile(`https://api.lolhuman.xyz/api/dall-e?apikey=${lolkeysapi}&text=${text}`);
-await conn.sendFile(m.chat, tiores4.data, 'error.jpg', `_*Resultado de:* ${text}_`, m, null, fake);
+await conn.sendFile(m.chat, tiores4.data, 'error.jpg', await tr(`_💫 Resutados: ${text}_\n\n> *✨ Imagen generada por IA ✨*`), m, null, fake);
 m.react('✅') 
 } catch (error) {
+m.reply(`\`\`\`⚠️ ${await tr("OCURRIO UN ERROR")} ⚠️\`\`\`\n\n> *${await tr("Reporta el siguiente error a mi creador con el comando:")}* #report\n\n>>> ${e} <<<< `)    
 console.log('[❗] Error, ninguna api funcional.\n' + error);
-m.reply(`error ${error}`) 
 m.react('❌') 
 }}}}}}}
 handler.help = ["dalle"]

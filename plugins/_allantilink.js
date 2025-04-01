@@ -35,7 +35,7 @@ const isAntiLinkTch = isLinkTch.exec(m.text)
 if (chat.antiTiktok && isAntiLinkTik) {  
 //if (chat.delete) return //conn.sendMessage(m.chat, { text: mid.mAdvertencia + mid.mAntiDelete }, { quoted: m })  
 if (isBotAdmin) {
-await conn.reply(m.chat, `*「 ANTILINK DETECTADO 」*\n@${toUser} 🤨 Rompiste las reglas del Grupo sera eliminado....`, null, { mentions: [aa] })
+await conn.reply(m.chat, `*「 ${await tr("ANTILINK DETECTADO")} 」*\n@${toUser} 🤨 ${await tr("Rompiste las reglas del Grupo sera eliminado....")}`, null, { mentions: [aa] })
 await conn.sendMessage(m.chat, { delete: { remoteJid: m.chat, fromMe: false, id: bang, participant: delet }})
 let remove = await conn.groupParticipantsUpdate(m.chat, [m.sender], 'remove')
 if (remove[0].status === '404') return
@@ -44,7 +44,7 @@ if (remove[0].status === '404') return
 if (chat.antiYoutube && isAntiLinkYt) {
 //if (chat.delete) return //conn.sendMessage(m.chat, { text: mid.mAdvertencia + mid.mAntiDelete }, { quoted: m })  
 if (isBotAdmin) {
-await conn.reply(m.chat, `*「 ANTILINK DETECTADO 」*\n@${toUser} 🤨 Rompiste las reglas del Grupo sera eliminado....`, null, { mentions: [aa] })
+await conn.reply(m.chat, `*「 ${await tr("ANTILINK DETECTADO")} 」*\n@${toUser} 🤨 ${await tr("Rompiste las reglas del Grupo sera eliminado....")}`, null, { mentions: [aa] })
 await conn.sendMessage(m.chat, { delete: { remoteJid: m.chat, fromMe: false, id: bang, participant: delet }})
 let remove = await conn.groupParticipantsUpdate(m.chat, [m.sender], 'remove')
 if (remove[0].status === '404') return
@@ -53,7 +53,7 @@ if (remove[0].status === '404') return
 if (chat.antiTelegram && isAntiLinkTel) {
 //if (chat.delete) return //conn.sendMessage(m.chat, { text: mid.mAdvertencia + mid.mAntiDelete }, { quoted: m })   
 if (isBotAdmin) {
-await conn.reply(m.chat, `*「 ANTILINK DETECTADO 」*\n@${toUser} 🤨 Rompiste las reglas del Grupo sera eliminado....`, null, { mentions: [aa] })
+await conn.reply(m.chat, `*「 ${await tr("ANTILINK DETECTADO")} 」*\n@${toUser} 🤨 ${await tr("Rompiste las reglas del Grupo sera eliminado....")}`, null, { mentions: [aa] })
 await conn.sendMessage(m.chat, { delete: { remoteJid: m.chat, fromMe: false, id: bang, participant: delet }})
 let remove = await conn.groupParticipantsUpdate(m.chat, [m.sender], 'remove')
 if (remove[0].status === '404') return
@@ -62,7 +62,7 @@ if (remove[0].status === '404') return
 if (chat.antiFacebook && isAntiLinkFb) {
 //if (chat.delete) return //conn.sendMessage(m.chat, { text: mid.mAdvertencia + mid.mAntiDelete }, { quoted: m })  
 if (isBotAdmin) {
-await conn.reply(m.chat, `*「 ANTILINK DETECTADO 」*\n@${toUser} 🤨 Rompiste las reglas del Grupo sera eliminado....`, null, { mentions: [aa] })
+await conn.reply(m.chat, `*「 ${await tr("ANTILINK DETECTADO")} 」*\n@${toUser} 🤨 ${await tr("Rompiste las reglas del Grupo sera eliminado....")}`, null, { mentions: [aa] })
 await conn.sendMessage(m.chat, { delete: { remoteJid: m.chat, fromMe: false, id: bang, participant: delet }})
 let remove = await conn.groupParticipantsUpdate(m.chat, [m.sender], 'remove')
 if (remove[0].status === '404') return 
@@ -71,7 +71,7 @@ if (remove[0].status === '404') return
 if (chat.antiInstagram && isAntiLinkIg) {
 //if (chat.delete) return //conn.sendMessage(m.chat, { text: mid.mAdvertencia + mid.mAntiDelete }, { quoted: m })  
 if (isBotAdmin) {
-await conn.reply(m.chat, `*「 ANTILINK DETECTADO 」*\n@${toUser} 🤨 Rompiste las reglas del Grupo sera eliminado....`, null, { mentions: [aa] })
+await conn.reply(m.chat, `*「 ${await tr("ANTILINK DETECTADO")} 」*\n@${toUser} 🤨 ${await tr("Rompiste las reglas del Grupo sera eliminado....")}`, null, { mentions: [aa] })
 await conn.sendMessage(m.chat, { delete: { remoteJid: m.chat, fromMe: false, id: bang, participant: delet }})
 let remove = await conn.groupParticipantsUpdate(m.chat, [m.sender], 'remove')
 if (remove[0].status === '404') return 
@@ -80,7 +80,7 @@ if (remove[0].status === '404') return
 if (chat.antiTwitter && isAntiLinkTw) {
 //if (chat.delete) return //conn.sendMessage(m.chat, { text: mid.mAdvertencia + mid.mAntiDelete }, { quoted: m })  
 if (isBotAdmin) {
-await conn.reply(m.chat, `*「 ANTILINK DETECTADO 」*\n@${toUser} 🤨 Rompiste las reglas del Grupo sera eliminado....`, null, { mentions: [aa] })
+await conn.reply(m.chat, `*「 ${await tr("ANTILINK DETECTADO")} 」*\n@${toUser} 🤨 ${await tr("Rompiste las reglas del Grupo sera eliminado....")}`, null, { mentions: [aa] })
 await conn.sendMessage(m.chat, { delete: { remoteJid: m.chat, fromMe: false, id: bang, participant: delet }})
 let remove = await conn.groupParticipantsUpdate(m.chat, [m.sender], 'remove')
 if (remove[0].status === '404') return
@@ -89,7 +89,7 @@ if (remove[0].status === '404') return
 if (chat.antiDiscord && isAntiLinkDc) {
 //if (chat.delete) return //conn.sendMessage(m.chat, { text: mid.mAdvertencia + mid.mAntiDelete }, { quoted: m })  
 if (isBotAdmin) {
-await conn.reply(m.chat, `*「 ANTILINK DETECTADO 」*\n@${toUser} 🤨 Rompiste las reglas del Grupo sera eliminado....`, null, { mentions: [aa] })
+await conn.reply(m.chat, `*「 ${await tr("ANTILINK DETECTADO")} 」*\n@${toUser} 🤨 ${await tr("Rompiste las reglas del Grupo sera eliminado....")}`, null, { mentions: [aa] })
 await conn.sendMessage(m.chat, { delete: { remoteJid: m.chat, fromMe: false, id: bang, participant: delet }})
 let remove = await conn.groupParticipantsUpdate(m.chat, [m.sender], 'remove')
 if (remove[0].status === '404') return
@@ -98,7 +98,7 @@ if (remove[0].status === '404') return
 if (chat.antiThreads && isAntiLinkTh) {
 //if (chat.delete) return conn.sendMessage(m.chat, { text: mid.mAdvertencia + mid.mAntiDelete }, { quoted: m })  
 if (isBotAdmin) {
-await conn.reply(m.chat, `*「 ANTILINK DETECTADO 」*\n@${toUser} 🤨 Rompiste las reglas del Grupo sera eliminado....`, null, { mentions: [aa] })
+await conn.reply(m.chat, `*「 ${await tr("ANTILINK DETECTADO")} 」*\n@${toUser} 🤨 ${await tr("Rompiste las reglas del Grupo sera eliminado....")}`, null, { mentions: [aa] })
 await conn.sendMessage(m.chat, { delete: { remoteJid: m.chat, fromMe: false, id: bang, participant: delet }})
 let remove = await conn.groupParticipantsUpdate(m.chat, [m.sender], 'remove')
 if (remove[0].status === '404') return
@@ -107,7 +107,7 @@ if (remove[0].status === '404') return
 if (chat.antiTwitch && isAntiLinkTch) {
 //if (chat.delete) return conn.sendMessage(m.chat, { text: mid.mAdvertencia + mid.mAntiDelete }, { quoted: m })  
 if (isBotAdmin) {
-await conn.reply(m.chat, `*「 ANTILINK DETECTADO 」*\n@${toUser} 🤨 Rompiste las reglas del Grupo sera eliminado....`, null, { mentions: [aa] })
+await conn.reply(m.chat, `*「 ${await tr("ANTILINK DETECTADO")} 」*\n@${toUser} 🤨 ${await tr("Rompiste las reglas del Grupo sera eliminado....")}`, null, { mentions: [aa] })
 await conn.sendMessage(m.chat, { delete: { remoteJid: m.chat, fromMe: false, id: bang, participant: delet }})
 let remove = await conn.groupParticipantsUpdate(m.chat, [m.sender], 'remove')
 if (remove[0].status === '404') return

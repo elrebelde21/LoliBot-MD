@@ -32,7 +32,7 @@ conn.sendFile(m.chat, [porn, porn2].getRandom(), 'sticker.webp', '', m, true, { 
 return
 }}
 
-if (!text) throw `*⚠️ Que esta buscando Pajín? usar el comando de esta forma*\n*• Ejemplo:* ${usedPrefix + command} Con mi prima*`;
+if (!text) throw `*⚠️ ${await tr("Que esta buscando Pajín? usar el comando de esta forma")}*\n*• ${await tr("Ejemplo")}:* ${usedPrefix + command} Con mi prima*`;
 try {
 const vids_ = {
 from: m.sender,
@@ -46,19 +46,19 @@ global.videoListXXX.splice(0, global.videoListXXX.length);
 }
 const res = await xnxxsearch(text);
 const json = res.result;
-let cap = `*🔍 RESULTADOS DE LA BUSQUEDA:* ${text.toUpperCase()}\n\n`;
+let cap = `*🔍 ${await tr("RESULTADOS DE LA BUSQUEDA:")}* ${text.toUpperCase()}\n\n`;
 let count = 1;
 for (const v of json) {
 const linkXXX = v.link;
 vids_.urls.push(linkXXX);
-cap += `*[${count}]*\n• *🎬 Titulo:* ${v.title}\n• *🔗 Link:* ${v.link}\n• *❗ Info:* ${v.info}`;
+cap += `*[${count}]*\n• *🎬 ${await tr("Titulo")}:* ${v.title}\n• *🔗 Link:* ${v.link}\n• *❗ Info:* ${v.info}`;
 cap += '\n\n' + '••••••••••••••••••••••••••••••••' + '\n\n';
 count++;
 }
 m.reply(cap);
 global.videoListXXX.push(vids_);
 } catch (e) {
-m.reply(`\`\`\`⚠️ OCURRIO UN ERROR ⚠️\`\`\`\n\n> *Reporta el siguiente error a mi creador con el comando:*#report\n\n>>> ${e} <<<< `)       
+m.reply(`\`\`\`⚠️ ${await tr("OCURRIO UN ERROR")} ⚠️\`\`\`\n\n> *${await tr("Reporta el siguiente error a mi creador con el comando:")}* #report\n\n>>> ${e} <<<< `)       
 console.log(e) 
 handler.limit = false
 }};

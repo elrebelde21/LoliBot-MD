@@ -6,14 +6,14 @@ const owner = groupMetadata.owner || groupAdmins.find(p => p.admin === 'superadm
 
 let text = `•══✪〘 *ＳＴＡＦＦ* 〙✪══•
 
-> *𝐒𝐞 𝐧𝐞𝐜𝐞𝐬𝐢𝐭𝐚 𝐥𝐚 𝐩𝐫𝐞𝐬𝐞𝐧𝐜𝐢𝐚 𝐝𝐞 𝐮𝐧 𝐚𝐝𝐦𝐢𝐧𝐬* 
+> *${await tr("Se necesita la presencia de un admins")}* 
 
-*• 𝐆𝐫𝐮𝐩𝐨𝐬:* _${groupMetadata.subject}_
+*• ${await tr("Grupos")}:* _${groupMetadata.subject}_
 
-*• 𝐀𝐝𝐦𝐢𝐧𝐬:
+*• ${await tr("Admins")}:
 ${listAdmin}
 
-> [ ⚠ ️] *ᵁˢᵃʳ ᵉˢᵗᵉ ᶜᵒᵐᵃⁿᵈᵒ ˢᵒˡᵒ ᶜᵘᵃⁿᵈᵒ ˢᵉ ᵗʳᵃᵗᵉ ᵈᵉ ᵘⁿᵃ ᵉᵐᵉʳᵍᵉⁿᶜᶦᵃ*
+> [ ⚠ ️] *${await tr("Usar este comando solo cuando se trate de una emergencia")}*
 `.trim()
 conn.sendFile(m.chat, pp, 'staff.png', text, m, false, { mentions: [...groupAdmins.map(v => v.id), owner] })
 }

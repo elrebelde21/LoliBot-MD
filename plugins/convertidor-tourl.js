@@ -4,7 +4,7 @@ import fetch from 'node-fetch'
 const handler = async (m) => {
 const q = m.quoted ? m.quoted : m;
 const mime = (q.msg || q).mimetype || '';
-if (!mime) throw '*⚠️ ¿𝐘 𝐋𝐀 𝐈𝐌𝐀𝐆𝐄𝐍? 𝐑𝐞𝐬𝐩𝐨𝐧𝐝𝐞 𝐚 𝐮𝐧𝐚 𝐢𝐦𝐚𝐠𝐞𝐧 𝐨 𝐯𝐢𝐝𝐞𝐨 𝐞𝐥 𝐜𝐮𝐚𝐥 𝐬𝐞𝐫𝐚 𝐜𝐨𝐧𝐯𝐞𝐫𝐭𝐢𝐝𝐨 𝐚 𝐞𝐧𝐥𝐚𝐜𝐞*';
+if (!mime) throw `*⚠️ ¿${await tr("Y la imagen? responde a una imagen o video el cual sera convertido a enlace")}*`
 const media = await q.download();
 try {
 const isTele = /image\/(png|jpe?g|gif)|video\/mp4/.test(mime);

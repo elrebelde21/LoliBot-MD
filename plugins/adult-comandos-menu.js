@@ -66,21 +66,21 @@ let username = conn.getName(who);
 //let user = global.db.data.users[m.sender]
 //user.registered = false
 
-let menu = `Hola ${username} pajin 🤓
+let menu = `${await tr("Hola")} ${username} ${await tr("pajin")} 🤓
 
 ┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈
 😏😏😏😏😏😏😏😏😏
-◉ *EXPERIENCIA | EXP ➺ ${exp}*
-◉ *NIVEL | LEVEL ➺ ${level}*
+◉ *${await tr("EXPERIENCIA | EXP")} ➺ ${exp}*
+◉ *${await tr("NIVEL")} ➺ ${level}*
 ┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈
-◉ *FECHA ➺ ${week}, ${date}*
-◉ *USUARIOS | USERS ➺ ${Object.keys(global.db.data.users).length}* 
+◉ *${await tr("FECHA")} ➺ ${week}, ${date}*
+◉ *${await tr("USUARIOS")} ➺ ${Object.keys(global.db.data.users).length}* 
 😏😏😏😏😏😏😏😏😏
 ┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈
 
-*Comandos para ver pornito 🔞*
-*Usar bajo tu responsabilidad*
-*NOTA: No sea pajero*
+*${await tr("Comandos para ver pornito")} 🔞*
+*${await tr("Usar bajo tu responsabilidad")}*
+*${await tr("NOTA: No sea pajero")}*
 *NSFW ✅*
 
 ◉ ${usedPrefix}pack
@@ -121,7 +121,7 @@ let menu = `Hola ${username} pajin 🤓
 ◉ ${usedPrefix}pornochupada
 ◉ ${usedPrefix}pornomuslos
   
-> El yaoi es pa las chicas no solo los hombre se divierten 🤓`.trim();
+> ${await tr("El yaoi es pa las chicas no solo los hombre se divierten")} 🤓`.trim();
 
 if (/^hornymenu|menu18|menucaliente$/i.test(m.text)) {   
 conn.sendMessage(m.chat, { image: { url: "https://telegra.ph/file/c0b57f22c3fce1c2b5e72.jpg", }, caption: menu, 
@@ -137,9 +137,9 @@ thumbnailUrl: "https://telegra.ph/file/361c821b05575733b1bb5.jpg",
 
 if (/^sethorario|nwfshorario|hornyHorario$/i.test(m.text)) {   
 //handler.group = true
-if (!isAdmin) return await m.reply(`⚠️ *Solo los admins pueden usar este comando.*`)
+if (!isAdmin) return await m.reply(`⚠️ *${await tr("Solo los admins pueden usar este comando")}.*`)
 const args = m.text.split(' ').slice(1); 
-if (args.length < 2) return conn.reply(m.chat, '⚠️ Por favor ingresa la hora de inicio y fin en formato HH:MM, por ejemplo: 23:00 - 06:00.', m);
+if (args.length < 2) return conn.reply(m.chat, `⚠️ ${await tr("Por favor ingresa la hora de inicio y fin en formato HH:MM, por ejemplo")}: 23:00 - 06:00.`, m);
 let inicio, fin;
 const regex1 = /^(\d{2}:\d{2})\s*-\s*(\d{2}:\d{2})$/; 
 const regex2 = /^(\d{2}:\d{2})\s*a\s*(\d{2}:\d{2})$/; 
@@ -155,10 +155,10 @@ fin = match[2];
 inicio = match[1];
 fin = match[2];
 } else {
-return conn.reply(m.chat, '⚠️ Formato de horario incorrecto. Por favor usa uno de los siguientes formatos: HH:MM - HH:MM o HH:MM, HH:MM.', m);
+return conn.reply(m.chat, `⚠️ ${await tr("Formato de horario incorrecto. Por favor usa uno de los siguientes formatos:")} HH:MM - HH:MM o HH:MM, HH:MM.`, m);
 }
 db.data.chats[m.chat].horarioNsfw = { inicio, fin };
-return conn.reply(m.chat, `Horario establecido: ${inicio} a ${fin}`, m);
+return conn.reply(m.chat, `${await tr("Horario establecido:")} ${inicio} a ${fin}`, m);
 }
 }
 handler.help = ["menu18", "hornymenu", "nwfshorario"]

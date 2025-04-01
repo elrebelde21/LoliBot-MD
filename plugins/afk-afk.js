@@ -5,10 +5,10 @@ user.afkReason = text || 'paja';
 user.afkStart = true; 
 return conn.fakeReply(m.chat, `『 ＡＦＫ 』
 
-> ᴇʟ ᴜsᴜᴀʀɪᴏ ${conn.getName(m.sender)} ᴇsᴛᴀ ɪɴᴀᴄᴛɪᴠᴏ. 
+> ${await tr("El usuario")} ${conn.getName(m.sender)} ${await tr("esta inactivo")} 
 
-\`💤 ＮＯ ＬＯＳ ＥＴＩＱＵＥＴＥ 💤\`
-*☣️ ᴍᴏᴛɪᴠᴏs :* ${user.afkReason}`, m.sender, `💤 NO MOLESTAR 💤`, 'status@broadcast', null, fake)
+\`💤 ${await tr("NO LOS ETIQUETE")} 💤\`
+*☣️ ${await tr("Motivos")} :* ${user.afkReason}`, m.sender, `💤 ${await tr("NO MOLESTAR")} 💤`, 'status@broadcast', null, fake)
 /*conn.reply(m.chat, `『 ＡＦＫ 』
 
 > ᴇʟ ᴜsᴜᴀʀɪᴏ ${conn.getName(m.sender)} ᴇsᴛá ɪɴᴀᴄᴛɪＶＯ.
@@ -22,10 +22,10 @@ const user = global.db.data.users[m.sender];
 
 if (user?.afk > -1 && !user.afkStart) {
 const tiempoAFK = new Date() - user.afk;
-conn.reply(m.chat, `『 ＤＥＪＡＳＴＥ ＤＥ ＥＳＴＡＲ ＡＦＫ 』
+conn.reply(m.chat, `『 ${await tr("DEJASTE DE ESTA AFK")} 』
 
-${user.afkReason ? '*🔸 ʀᴀᴢᴏɴ:* ' + user.afkReason : ''}
-*🔸 ᴇsᴛᴜᴠɪsᴛᴇ ɪɴᴀᴄᴛɪᴠᴏ ᴅᴜʀᴀɴᴛᴇ:* ${msToTime(tiempoAFK)}`.trim(), m);
+${user.afkReason ? `*🔸 ${await tr("Razon")}:* ` + user.afkReason : ''}
+*🔸 ${await tr("Estuviste inactivo durante")}:* ${msToTime(tiempoAFK)}`.trim(), m);
 user.afk = -1;
 user.afkReason = '';
 }
@@ -38,12 +38,12 @@ if (!mencionado || mencionado.afk < 0) continue;
 
 const afkTime = new Date() - mencionado.afk;
 const reason = mencionado.afkReason || 'Sin motivo';
-conn.fakeReply(m.chat, `『 💤 ＮＯ ＬＯＳ ＥＴＩＱＵＥＴＥ 💤 』
+conn.fakeReply(m.chat, `『 💤 ${await tr("NO LOS ETIQUETE")}  💤 』
 
-> *ᴇʟ ᴜsᴜᴀʀɪᴏ ǫᴜᴇ ᴍᴇɴᴄɪᴏɴᴀs ᴇsᴛᴀ ᴀғᴋ*
+> *${await tr("El usuario que mencionas esta afk")}*
 
-*🔸 Motivo:* ${reason}
-*🔸 ᴛɪᴇᴍᴘᴏ ᴛʀᴀɴsᴄᴜʀʀɪᴅᴏ ᴅᴇ ɪɴᴀᴄᴛɪᴠɪᴅᴀᴅ (ᴀғᴋ): ${msToTime(afkTime)}*`, "0@s.whatsapp.net", `💤 NO MOLESTAR 💤`, 'status@broadcast', null, fake)
+*🔸 ${await tr("Motivo")}:* ${reason}
+*🔸 ${await tr("Tiempo transcurrido de inactividad (afk)")}: ${msToTime(afkTime)}*`, "0@s.whatsapp.net", `💤 ${await tr("NO MOLESTAR")}  💤`, 'status@broadcast', null, fake)
 }
 }
 handler.help = ['afk [razón]'];

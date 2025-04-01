@@ -7,8 +7,8 @@ const userRequests = {};
 const handler = async (m, { conn, usedPrefix, command, text }) => {
 const apkpureApi = 'https://apkpure.com/api/v2/search?q=';
 const apkpureDownloadApi = 'https://apkpure.com/api/v2/download?id=';
-if (!text) throw `⚠️ *𝙀𝙨𝙘𝙧𝙞𝙗𝙖 𝙚𝙡 𝙣𝙤𝙢𝙗𝙧𝙚 𝙙𝙚𝙡 𝘼𝙋𝙆*`;
-if (userRequests[m.sender]) return await conn.reply(m.chat, `⚠️ Hey @${m.sender.split('@')[0]} pendejo, ya estás descargando un APK 🙄\nEspera a que termine tu descarga actual antes de pedir otra. 👆`, userMessages.get(m.sender) || m)
+if (!text) throw `⚠️ *${await tr("Escriba el nombre del apk")}*`;
+if (userRequests[m.sender]) return await conn.reply(m.chat, `⚠️ ${await tr("Hey")} @${m.sender.split('@')[0]} ${await tr("pendejo, ya estás descargando un APK")} 🙄\n> ${await tr("Espera a que termine tu descarga actual antes de pedir otra. ")} 👆`, userMessages.get(m.sender) || m)
 userRequests[m.sender] = true;
 m.react("⌛");
 try {
@@ -40,23 +40,23 @@ console.error(`Error in attempt: ${err.message}`);
 continue; // Si falla, intentar con la siguiente API
 }}
 
-if (!apkData) throw new Error('No se pudo descargar el APK desde ninguna API');
-const response = `≪ＤＥＳＣＡＲＧＡＤＯ ＡＰＫＳ🚀≫
+if (!apkData) throw new Error(await tr('No se pudo descargar el APK desde ninguna API'));
+const response = `≪ ${await tr("DESCARGANDO APKS")} 🚀≫
 
 ┏━━━━━━━━━━━━━━━━━━━━━━• 
-┃💫 𝙉𝙊𝙈𝘽𝙍𝙀: ${apkData.name}
-${apkData.developer ? `┃👤 𝘿𝙀𝙎𝘼𝙍𝙍𝙊𝙇𝙇𝙊: ${apkData.developer}` : `┃📦 𝙋𝘼𝘾𝙆𝘼𝙂𝙀: ${apkData.package}`}
-┃🕒 𝙐𝙇𝙏𝙄𝙈𝘼 𝘼𝘾𝙏𝙐𝙇𝙄𝙕𝘼𝘾𝙄𝙊𝙉: ${apkData.developer ? apkData.publish : apkData.lastUpdate}
-┃💪 𝙋𝙀𝙎𝙊: ${apkData.size}
+┃💫 ${await tr("Nombre")}: ${apkData.name}
+${apkData.developer ? `┃👤 ${await tr("Desarrollo")}: ${apkData.developer}` : `┃📦 ${await tr("Package")}: ${apkData.package}`}
+┃🕒 ${await tr("Ultima actualización")}: ${apkData.developer ? apkData.publish : apkData.lastUpdate}
+┃💪 ${await tr("Peso")}: ${apkData.size}
 ┗━━━━━━━━━━━━━━━━━━━━━━━•
 
-> *⏳ ᴱˢᵖᵉʳᵉ ᵘⁿ ᵐᵒᵐᵉⁿᵗᵒ ˢᵘˢ ᵃᵖᵏ ˢᵉ ᵉˢᵗᵃ ᵉⁿᵛᶦᵃⁿᵈᵒ...*`;
+> *⏳ ${await tr("Espere un momento sus apk se esta enviando...")}*`;
 const responseMessage = await conn.sendFile(m.chat, apkData.icon, 'apk.jpg', response, m, null, fake);
 userMessages.set(m.sender, responseMessage);
 
 const apkSize = apkData.size.toLowerCase();
 if (apkSize.includes('gb') || (apkSize.includes('mb') && parseFloat(apkSize) > 999)) {
-await m.reply('*⚠️ 𝙀𝙡 𝙖𝙥𝙠 𝙚𝙨 𝙢𝙪𝙮 𝙥𝙚𝙨𝙖𝙙𝙤.*');
+await m.reply(`*⚠️ ${await tr("El apk es muy pesado.")}*`);
 return;
 }
 

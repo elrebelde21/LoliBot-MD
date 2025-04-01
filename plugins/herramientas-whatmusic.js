@@ -9,7 +9,7 @@ const handler = async (m) => {
 const q = m.quoted ? m.quoted : m;
 const mime = (q.msg || q).mimetype || '';
 if (/audio|video/.test(mime)) {
-if ((q.msg || q).seconds > 20) return m.reply('⚠️ ᴇʟ ᴀʀᴄʜɪᴠᴏ ǫᴜᴇ ᴄᴀʀɢᴀ ᴇs ᴅᴇᴍᴀsɪᴀᴅᴏ ɢʀᴀɴᴅᴇ, ʟᴇ sᴜɢᴇʀɪᴍᴏs ǫᴜᴇ ᴄᴏʀᴛᴇ ᴇʟ ᴀʀᴄʜɪᴠᴏ ɢʀᴀɴᴅᴇ ᴀ ᴜɴ ᴀʀᴄʜɪᴠᴏ ᴍᴀ́s ᴘᴇǫᴜᴇɴ̃ᴏ, 10-20 sᴇɢᴜɴᴅᴏs ʟᴏs ᴅᴀᴛᴏs ᴅᴇ ᴀᴜᴅɪᴏ sᴏɴ sᴜғɪᴄɪᴇɴᴛᴇs ᴘᴀʀᴀ ɪᴅᴇɴᴛɪғɪᴄᴀʀ');
+if ((q.msg || q).seconds > 20) return m.reply(await tr('⚠️ El archivo que carga es demasiado grande, le sugerimos que corte el archivo grande a un archivo mas pequeño, 10-20 segundos los datos de audio son suficientes para identificar'))
 const media = await q.download();
 const ext = mime.split('/')[1];
 fs.writeFileSync(`./tmp/${m.sender}.${ext}`, media);
@@ -17,18 +17,17 @@ const res = await acr.identify(fs.readFileSync(`./tmp/${m.sender}.${ext}`));
 const {code, msg} = res.status;
 if (code !== 0) throw msg;
 const {title, artists, album, genres, release_date} = res.metadata.music[0];
-const txt = `
-𝐑𝐄𝐒𝐄𝐋𝐓𝐀𝐃𝐎𝐒 𝐃𝐄 𝐋𝐀 𝐁𝐔𝐒𝐐𝐔𝐄𝐃𝐀
+const txt = `*\`${await tr("RESULTADOS DE LA BÚSQUEDA")}\`*
 
-• 📌 𝐓𝐢𝐭𝐮𝐥𝐨: ${title}
-• 👨‍🎤 𝐀𝐫𝐭𝐢𝐬𝐭𝐚: ${artists !== undefined ? artists.map((v) => v.name).join(', ') : 'No encontrado'}
-• 💾 𝐀𝐥𝐛𝐮𝐦: ${album.name || 'No encontrado'}
-• 🌐 𝐆𝐞𝐧𝐞𝐫𝐨: ${genres !== undefined ? genres.map((v) => v.name).join(', ') : 'No encontrado'}
-• 📆 𝐅𝐞𝐜𝐡𝐚 𝐝𝐞 𝐥𝐚𝐧𝐳𝐚𝐦𝐢𝐞𝐧𝐭𝐨: ${release_date || 'No encontrado'}
+• 📌 ${await tr("Titulo")}: ${title}
+• 👨‍🎤 ${await tr("Artista")}: ${artists !== undefined ? artists.map((v) => v.name).join(', ') : await tr('No encontrado')}
+• 💾 ${await tr("Album")}: ${album.name || await tr('No encontrado')}
+• 🌐 ${await tr("Genero")}: ${genres !== undefined ? genres.map((v) => v.name).join(', ') : await tr('No encontrado')}
+• 📆 ${await tr("Fecha de lanzamiento")}: ${release_date || await tr('No encontrado')}
 `.trim();
 fs.unlinkSync(`./tmp/${m.sender}.${ext}`);
 m.reply(txt);
-} else throw '*⚠️ 𝐑𝐞𝐬𝐩𝐨𝐧𝐝𝐞 𝐚 𝐮𝐧 𝐚𝐮𝐝𝐢𝐨*';
+} else throw await tr('*⚠️ Responde a un audio*')
 };
 handler.help = ['quemusica']
 handler.tags = ['tools']

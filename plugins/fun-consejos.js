@@ -12,7 +12,7 @@ let result = await translate(`${contenido}`, { to: "es", autoCorrect: true })
 let texto = `
 *╭━━・☘️・━━━━・☘️・━━⬣*
 
-*ღ _${result.text}_*
+*ღ _${await tr(result.text)}_*
 
 *╰━━・☘️・━━━━・☘️・━━⬣*`
 //conn.sendButton(m.chat, texto.trim(), botname, img, [['✨ 𝐒𝐈𝐆𝐔𝐈𝐄𝐍𝐓𝐄 ✨', `/${command}`]], null, null, m)}
@@ -28,14 +28,14 @@ let frase2 = await translate(`${frase}`, { to: "es", autoCorrect: true })
 let texto = `
 *╭━━・☘️・━━━━・☘️・━━⬣*
 
-*ღ ${frase2.text}*
+*ღ ${await tr(frase2.text)}*
 
 *╰━━・☘️・━━━━・☘️・━━⬣*`
 conn.sendFile(m.chat, img,  'error.jpg', texto.trim(), fkontak, false, fake)} 
 //await conn.sendButton(m.chat, texto.trim(), wm, img, [[lenguajeGB.smsFras(), `${usedPrefix + command}`], [lenguajeGB.smsConMenu(), `${usedPrefix}menu`]], m, frep)} 
 } catch (e) {
 await m.react(`❌`) 
-m.reply(`\`\`\`⚠️ OCURRIO UN ERROR ⚠️\`\`\`\n\n> *Reporta el siguiente error a mi creador con el comando:*#report\n\n>>> ${e} <<<< `)       
+m.reply(`\`\`\`⚠️ ${await tr("OCURRIO UN ERROR")} ⚠️\`\`\`\n\n> *${await tr("Reporta el siguiente error a mi creador con el comando:")}* #report\n\n>>> ${e} <<<< `)     
 console.log(e)
 handler.money = false
 }}

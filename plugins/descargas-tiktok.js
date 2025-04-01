@@ -6,15 +6,20 @@ import cheerio from 'cheerio';
 const userRequests = {};
 
 const handler = async (m, { conn, text, args, usedPrefix, command }) => {
-if (!text) throw `⚠️ *Que tiktok buscar? 🤔*\n\n⚡ *Ingrese un enlace de tiktok para descarga el video*\n*Ej:* ${usedPrefix + command} https://vm.tiktok.com/ZM6T4X1RY/`;
+if (!text) throw `⚠️ *${await tr("Que tiktok buscar?")} 🤔*\n\n*⚡${await tr("Ingrese un enlace de tiktok para descarga el video")}*\n*${await tr("Ejemplo")}:* ${usedPrefix + command} https://vm.tiktok.com/ZM6T4X1RY/`;
 if (!/(?:https:?\/{2})?(?:w{3}|vm|vt|t)?\.?tiktok.com\/([^\s&]+)/gi.test(text)) throw `❌ Error`;
-if (userRequests[m.sender]) return await conn.reply(m.chat, `Oye @${m.sender.split('@')[0]}, calma bro, ya estás descargando algo 😒\n> Espera a que termine tu solicitud actual antes de hacer otra...`, m)
+if (userRequests[m.sender]) return await conn.reply(m.chat, `Oye @${m.sender.split('@')[0]}, ${await tr("calma bro, ya estás descargando algo")} 😒\n> ${await tr("Espera a que termine tu solicitud actual antes de hacer otra...")}`, m)
 userRequests[m.sender] = true;
-const { key } = await conn.sendMessage(m.chat, { text: `⌛ 𝙀𝙨𝙥𝙚𝙧𝙚 ✋\n▰▰▰▱▱▱▱▱▱\n𝙔𝙖 𝙚𝙨𝙩𝙤𝙮 𝙙𝙚𝙨𝙘𝙖𝙧𝙜𝙖𝙙𝙤... 𝙨𝙪𝙨 𝙫𝙞𝙙𝙚𝙤 𝙙𝙚𝙡 𝙏𝙞𝙠𝙏𝙤𝙠 🔰` }, { quoted: m });
+let msgEspere = await tr("Espere")
+let msgEspere2 = await tr("Ya estoy descargado... sus video de tiktok")
+let msgEspere3 = await tr("Ya casi")
+let msgEsper4 = await tr("Completado")
+let vidtt = await tr("Aqui esta tu video de tiktok")
+const { key } = await conn.sendMessage(m.chat, { text: `⌛ ${msgEspere} ✋\n▰▰▰▱▱▱▱▱▱\n${msgEspere2} 🔰` }, { quoted: m });
 await delay(1000);
-await conn.sendMessage(m.chat, { text: `⌛ 𝙀𝙨𝙥𝙚𝙧𝙚 ✋ \n▰▰▰▰▰▱▱▱▱\n𝙔𝙖 𝙚𝙨𝙩𝙤𝙮 𝙙𝙚𝙨𝙘𝙖𝙧𝙜𝙖𝙙𝙤... 𝙨𝙪𝙨 𝙫𝙞𝙙𝙚𝙤 𝙙𝙚𝙡 𝙏𝙞𝙠𝙏𝙤𝙠 🔰`, edit: key });
+await conn.sendMessage(m.chat, { text: `⌛ ${msgEspere} ✋ \n▰▰▰▰▰▱▱▱▱\n${msgEspere2} 🔰`, edit: key });
 await delay(1000);
-await conn.sendMessage(m.chat, { text: `⌛ 𝙔𝙖 𝙘𝙖𝙨𝙞 🏃‍♂️💨\n▰▰▰▰▰▰▰▱▱`, edit: key });
+await conn.sendMessage(m.chat, { text: `⌛ ${msgEspere3} 🏃‍♂️💨\n▰▰▰▰▰▰▰▱▱`, edit: key });
 try {
 const downloadAttempts = [async () => {
 const data = await Tiktok(args);
@@ -43,10 +48,10 @@ console.error(`Error in attempt: ${err.message}`);
 continue; // Si falla, intentar con la siguiente API
 }}
 
-if (!videoUrl) throw new Error('No se pudo descargar el video desde ninguna API');
-await conn.sendFile(m.chat, videoUrl, 'tt.mp4', '*🔰 Aqui esta tu video de tiktok*', m, null, fake);
+if (!videoUrl) throw new Error(await tr('No se pudo descargar el video desde ninguna API'));
+await conn.sendFile(m.chat, videoUrl, 'tt.mp4', `*🔰 ${vidtt}*`, m, null, fake);
 //conn.sendMessage(m.chat, {video: { url: videoUrl }, caption: `*🔰 Aqui esta tu video de tiktok*` }, { quoted: m });
-await conn.sendMessage(m.chat, { text: `✅ 𝘾𝙤𝙢𝙥𝙡𝙚𝙩𝙖𝙙𝙤\n▰▰▰▰▰▰▰▰▰\n𝘼𝙦𝙪𝙞 𝙚𝙨𝙩𝙖 𝙩𝙪 𝙫𝙞𝙙𝙚𝙤 💫`, edit: key });
+await conn.sendMessage(m.chat, { text: `✅ ${msgEsper4}\n▰▰▰▰▰▰▰▰▰\n`, edit: key });
 } catch (e) {
 console.log(e);
 m.react(`❌`);

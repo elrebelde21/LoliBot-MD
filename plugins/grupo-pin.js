@@ -1,5 +1,5 @@
 let handler = async (m, { conn, command }) => {
-if (!m.quoted) return m.reply(`⚠️ Responde a un mensaje para ${command === 'pin' ? 'fijarlo' : 'desfijarlo'}.`);
+if (!m.quoted) return m.reply(`⚠️ ${await tr("Responde a un mensaje para")} ${command === 'pin' ? await tr('fijarlo') : await tr('desfijarlo')}.`);
 try {
 let messageKey = {remoteJid: m.chat,
 fromMe: m.quoted.fromMe,

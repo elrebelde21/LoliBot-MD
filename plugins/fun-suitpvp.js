@@ -10,26 +10,27 @@ let win = ''
 let tie = false
 if (m.sender == room.p2 && /^(acc(ept)?|Aceptar|acerta|aceptar|gas|aceptare?|nao|Rechazar|rechazar|ga(k.)?bisa)/i.test(m.text) && m.isGroup && room.status == 'wait') {
 if (/^(tolak|gamau|rechazar|ga(k.)?bisa)/i.test(m.text)) {
-let textno = `⚠️@${room.p2.split`@`[0]} 𝙍𝙀𝘾𝙃𝘼𝙕𝙊 𝙀𝙇 𝙋𝙑𝙋, 𝙀𝙇 𝙅𝙐𝙀𝙂𝙊 𝙎𝙀 𝘾𝘼𝙉𝘾𝙀𝙇𝘼`
+let textno = `⚠️@${room.p2.split`@`[0]} ${await tr("Rechazo el pvp, el juego se cancela")}`
 m.reply(textno, null, {mentions: this.parseMention(textno)})
 delete this.suit[room.id]
 return !0 }
 room.status = 'play' 
 room.asal = m.chat
 clearTimeout(room.waktu)
-let textplay = `🎮 𝙀𝙇 𝙅𝙐𝙀𝙂𝙊𝙎 𝘾𝙊𝙈𝙄𝙀𝙉𝙕𝘼, 𝙇𝘼𝙎 𝙊𝙋𝘾𝙄𝙊𝙉𝙀𝙎 𝙃𝘼𝙉 𝙎𝙄𝘿𝙊 𝙀𝙉𝙑𝙄𝘼𝘿𝙊𝙎 𝘼 𝙇𝙊𝙎 𝘾𝙃𝘼𝙏 𝙋𝙍𝙄𝙑𝘼𝘿𝙊 𝘿𝙀 @${room.p.split`@`[0]} 𝙔 @${room.p2.split`@`[0]}\n\n𝙎𝙀𝙇𝙀𝘾𝘾𝙄𝙊𝙉𝙀𝙉 𝙐𝙉𝘼 𝙊𝙋𝘾𝙄𝙊𝙉 𝙀𝙉 𝙎𝙐𝙎 𝘾𝙃𝘼𝙏𝙎 𝙋𝙍𝙄𝙑𝘼𝘿𝙊 𝙍𝙀𝙎𝙋𝙀𝘾𝙏𝙄𝙑𝘼𝙈𝙀𝙉𝙏𝙀\n\n> *Elegir opción en wa.me/${conn.user.jid.split`@`[0]}*`
+let textplay = `🎮 ${await tr("El juegos comienza, las opciones han sido enviados a los chat privado de ")} @${room.p.split`@`[0]} 𝙔 @${room.p2.split`@`[0]}\n\n${await tr("Seleccionen una opción en sus chats privado respectivamente")}\n\n> *${await tr("Elegir opción en")} wa.me/${conn.user.jid.split`@`[0]}*`
 m.reply(textplay, m.chat, {mentions: this.parseMention(textplay)})
-let comienzop = `⚠️ 𝙋𝙊𝙍 𝙁𝘼𝙑𝙊𝙍 𝙎𝙀𝙇𝙀𝘾𝘾𝙄𝙊𝙉𝙀 𝙐𝙉𝘼 𝘿𝙀 𝙇𝘼𝙎 𝙎𝙄𝙂𝙐𝙄𝙀𝙉𝙏𝙀𝙎 𝙊𝙋𝘾𝙄𝙊𝙉𝙀𝙎\n\n> ღ Piedra\n> დ Papel\n> ღ Tijera\n\n> *Responda al mensaje con la opción*`
-let comienzop2 = `⚠️ 𝙋𝙊𝙍 𝙁𝘼𝙑𝙊𝙍 𝙎𝙀𝙇𝙀𝘾𝘾𝙄𝙊𝙉𝙀 𝙐𝙉𝘼 𝘿𝙀 𝙇𝘼𝙎 𝙎𝙄𝙂𝙐𝙄𝙀𝙉𝙏𝙀𝙎 𝙊𝙋𝘾𝙄𝙊𝙉𝙀𝙎\n\n> ღ Piedra\n> ღ Papel\n> ღ Tijera\n\n> *Responda al mensaje con la opción*`
+let comienzop = await tr(`⚠️ Por favor seleccione una de las siguientes opciones\n\n> ღ Piedra\n> დ Papel\n> ღ Tijera\n\n> *Responda al mensaje con la opción*`)
+let comienzop2 = comienzop
+let iniciativa = await tr(`⚠️ Ningun jugador tomo la iniciativa de empezar el juegos, el pvp se ah cancelado`)       
+let gamtxt1 = await tr("No elegiste ninguna opción,  fin del pvp")
    
 if (!room.pilih) this.sendMessage(room.p, { text: comienzop }, { quoted: fkontak })  
 if (!room.pilih2) this.sendMessage(room.p2, { text: comienzop2 }, { quoted: fkontak })
-room.waktu_milih = setTimeout(() => {
-let iniciativa = `⚠️ 𝙉𝙄𝙉𝙂𝙐𝙉 𝙅𝙐𝙂𝘼𝘿𝙊𝙍 𝙏𝙊𝙈𝙊 𝙇𝘼 𝙄𝙉𝙄𝘾𝙄𝘼𝙏𝙄𝙑𝘼 𝘿𝙀 𝙀𝙈𝙋𝙀𝙕𝘼𝙍 𝙀𝙇 𝙅𝙐𝙀𝙂𝙊𝙎, 𝙀𝙇 𝙋𝙑𝙋 𝙎𝙀 𝘼𝙃 𝘾𝘼𝙉𝘾𝙀𝙇𝘼𝘿𝙊`                              
+room.waktu_milih = setTimeout(() => {              
 if (!room.pilih && !room.pilih2) this.sendMessage(m.chat, { text: iniciativa }, { quoted: fkontak })
 else if (!room.pilih || !room.pilih2) {
 win = !room.pilih ? room.p2 : room.p 
-let textnull = `⚠️ @${(room.pilih ? room.p2 : room.p).split`@`[0]} 𝙉𝙊 𝙀𝙇𝙀𝙂𝙄𝙎𝙏𝙀 𝙉𝙄𝙉𝙂𝙐𝙉𝘼 𝙊𝙋𝘾𝙄𝙊𝙉, 𝙁𝙄𝙉 𝘿𝙀𝙇 𝙋𝙑𝙋`
+let textnull = `⚠️ @${(room.pilih ? room.p2 : room.p).split`@`[0]} ${gamtxt1}`
 this.sendMessage(m.chat, { text: textnull }, { quoted: fkontak }, { mentions: this.parseMention(textnull) })
 db.data.users[win == room.p ? room.p : room.p2].exp += room.poin
 db.data.users[win == room.p ? room.p : room.p2].exp += room.poin_bot
@@ -47,13 +48,13 @@ let reg = /^(tijera|piedra|papel)/i
 if (jwb && reg.test(m.text) && !room.pilih && !m.isGroup) {
 room.pilih = reg.exec(m.text.toLowerCase())[0]
 room.text = m.text
-m.reply(`✅ 𝙃𝘼𝙎 𝙀𝙇𝙀𝙂𝙄𝘿𝙊 ${m.text}, 𝙍𝙀𝙂𝙍𝙀𝙎𝘼 𝘼𝙇 𝙂𝙍𝙐𝙋𝙊 𝙔 ${room.pilih2 ? `*𝙍𝙀𝙑𝙄𝙎𝘼 𝙇𝙊𝙎 𝙍𝙀𝙎𝙐𝙇𝙏𝘼𝘿𝙊𝙎*` : '*𝙀𝙎𝙋𝙀𝙍𝘼 𝙇𝙊𝙎 𝙍𝙀𝙎𝙐𝙇𝙏𝘼𝘿𝙊𝙎*'}`) 
-if (!room.pilih2) this.reply(room.p2, `${lenguajeGB['smsAvisoIIG']()}𝙀𝙇 𝙊𝙋𝙊𝙉𝙀𝙉𝙏𝙀 𝘼𝙃 𝙀𝙇𝙀𝙂𝙄𝘿𝙊, 𝙀𝙎 𝙏𝙐 𝙏𝙐𝙍𝙉𝙊 𝘿𝙀 𝙀𝙇𝙀𝙂𝙄𝙍`, fkontak, 0)}
+m.reply(`✅ ${await tr(`Has elegido ${m.text}, regresa al grupo y `)} ${room.pilih2 ? await tr(`*Revisa los resultados*`) : await tr('*Espera los resultados*')}`) 
+if (!room.pilih2) this.reply(room.p2, await tr(`⚠️ El oponente ah elegido, es tu turno de elegir.`), fkontak, 0)}
 if (jwb2 && reg.test(m.text) && !room.pilih2 && !m.isGroup) {
 room.pilih2 = reg.exec(m.text.toLowerCase())[0]
 room.text2 = m.text
-m.reply(`✅ 𝙃𝘼𝙎 𝙀𝙇𝙀𝙂𝙄𝘿𝙊 ${m.text}, 𝙍𝙀𝙂𝙍𝙀𝙎𝘼 𝘼𝙇 𝙂𝙍𝙐𝙋𝙊 𝙔 ${room.pilih ? `*𝙍𝙀𝙑𝙄𝙎𝘼 𝙇𝙊𝙎 𝙍𝙀𝙎𝙐𝙇𝙏𝘼𝘿𝙊𝙎*` : '*𝙀𝙎𝙋𝙀𝙍𝘼 𝙇𝙊𝙎 𝙍𝙀𝙎𝙐𝙇𝙏𝘼𝘿𝙊𝙎*'}`)
-if (!room.pilih) this.reply(room.p, `${lenguajeGB['smsAvisoIIG']()}𝙀𝙇 𝙊𝙋𝙊𝙉𝙀𝙉𝙏𝙀 𝘼𝙃 𝙀𝙇𝙀𝙂𝙄𝘿𝙊, 𝙀𝙎 𝙏𝙐 𝙏𝙐𝙍𝙉𝙊 𝘿𝙀 𝙀𝙇𝙀𝙂𝙄𝙍`, fkontak, 0)}
+m.reply(`✅ ${await tr(`Has elegido ${m.text}, regresa al grupo y `)} ${room.pilih2 ? await tr(`*Revisa los resultados*`) : await tr('*Espera los resultados*')}`) 
+if (!room.pilih) this.reply(room.p, tr(`⚠️ El oponente ah elegido, es tu turno de elegir.`), fkontak, 0)}
 let stage = room.pilih
 let stage2 = room.pilih2
 if (room.pilih && room.pilih2) {
@@ -66,8 +67,8 @@ else if (k.test(stage) && b.test(stage2)) win = room.p
 else if (k.test(stage) && g.test(stage2)) win = room.p2
 else if (stage == stage2) tie = true 
 
-this.reply(room.asal, `🥳 𝙍𝙀𝙎𝙐𝙇𝙏𝘼𝘿𝙊𝙎 𝘿𝙀𝙇 𝙋𝙑𝙋\n\n${tie ? '🥴 𝙀𝙈𝙋𝘼𝙏𝙀!!' : ''} *@${room.p.split`@`[0]} (${room.text})* ${tie ? '' : room.p == win ? ` *𝙂𝘼𝙉𝘼𝙍𝙏𝙀 🥳 ${room.poin} XP*` : ` *𝙋𝙀𝙍𝘿𝙄𝙊́ 🤡 ${room.poin_lose} XP*`}
-*@${room.p2.split`@`[0]} (${room.text2})* ${tie ? '' : room.p2 == win ? `*𝙂𝘼𝙉𝘼𝙍𝙏𝙀 🥳 ${room.poin} XP*` : ` *𝙋𝙀𝙍𝘿𝙄𝙊́ 🤡 ${room.poin_lose} XP*`}
+this.reply(room.asal, `🥳 ${await tr("RESULTADOS DEL PVP")}\n\n${tie ? await tr('🥴 Empate!!') : ''} *@${room.p.split`@`[0]} (${room.text})* ${tie ? '' : room.p == win ? await tr(` *Ganarte 🥳 ${room.poin} XP*`) : await tr(` *Perdio 🤡 ${room.poin_lose} XP*`)}
+*@${room.p2.split`@`[0]} (${room.text2})* ${tie ? '' : room.p2 == win ? await tr(`*Ganarte 🥳 ${room.poin} XP*`) : await tr(` *Perdio 🤡 ${room.poin_lose} XP*`)}
 `.trim(), m, { mentions: [room.p, room.p2] } )
 if (!tie) {
 db.data.users[win == room.p ? room.p : room.p2].exp += room.poin

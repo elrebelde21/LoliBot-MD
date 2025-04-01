@@ -15,7 +15,7 @@ const img = await q.download?.();
 if (!img) return;
 stiker = await sticker(img, false, packname, author);
 } else if (/video/g.test(mime)) {
-if (/video/g.test(mime)) if ((q.msg || q).seconds > 8) return await m.reply(`*⚠️ El video solo puede durar 8 seg*`);
+if (/video/g.test(mime)) if ((q.msg || q).seconds > 8) return await m.reply(`*⚠️ ${await tr("El video solo puede durar 8 seg")}*`);
 const img = await q.download();
 if (!img) return;
 stiker = await sticker(img, false, packname, author);

@@ -32,30 +32,30 @@ primaryBotMention = `@${chat.primaryBot.split('@')[0]}`;
 primaryBotMention = `@${chat.primaryBot.split('@')[0]}`;
 }}
     
-let text = `『 ＩＮＦＯ ＤＥ ＧＲＵＰＯ 』
+let text = `『 ${await tr("INFO DEL GRUPO")} 』
 
 *• ID :* 
 ${groupMetadata.id}
 
-*• Nombre :* 
+*• ${await tr("Nombre")} :* 
 ${groupMetadata.subject}
 
-*• Miembros :*
+*• ${await tr("Miembros")} :*
 ${participants.length}
 
-*• Creador del grupo :*
+*• ${await tr("Creador del grupo")} :*
 @${owner.split('@')[0]}
 
-*• Admins :*
+*• ${await tr("Admins")} :*
 ${listAdmin} 
 
-*• 𝙲𝙾𝙽𝙵𝙸𝙶𝚄𝚁𝙰𝙽𝙲𝙸𝙾𝙽 𝙳𝙴𝙻 𝙶𝚁𝚄𝙿𝙾 :*
+*• ${await tr("Configuracion del grupo")} :*
 • Bot : ${modoadmin ? 'Apagado 📴' : `${primaryBotMention ? `Online (${primaryBotMention})` : 'Online'} ✅`} 
-• Bienvenida: ${welcome ? '✅' : '❌'}
-• AntiLink: ${antiLink ? '✅' : '❌'}
-• AntiFake: ${antifake ? '✅' : '❌'}
-• Event: ${detect ? '✅' : '❌'}
-• Anti eliminar: ${del ? '✅' : '❌'} ${socialMediaConfig ? '\n' + socialMediaConfig : ''}`.trim()
+• ${await tr("Bienvenida")}: ${welcome ? '✅' : '❌'}
+• ${await tr("Anti enlace")}: ${antiLink ? '✅' : '❌'}
+• ${await tr("Anti internacional / arabe")}: ${antifake ? '✅' : '❌'}
+• ${await tr("Detect Eventos")}: ${detect ? '✅' : '❌'}
+• ${await tr("Anti eliminar")}: ${del ? '✅' : '❌'} ${socialMediaConfig ? '\n' + socialMediaConfig : ''}`.trim()
 conn.sendFile(m.chat, pp, 'pp.jpg', text, m, false, { mentions: [...groupAdmins.map(v => v.id), owner] })
 }
 handler.help = ['infogp']

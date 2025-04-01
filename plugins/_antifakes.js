@@ -13,7 +13,7 @@ const prefijosProhibidos = ['91', '92', '222', '93', '265', '61', '249', '62', '
 const senderNumber = m.sender.split('@')[0]; 
 if (prefijosProhibidos.some(prefijo => senderNumber.startsWith(prefijo))) {
 if (chat.detect) return;
-let texto = `*@${senderNumber}* En este grupo no está permitido el uso de números con prefijos prohibidos, será expulsado...`;
+let texto = `*@${senderNumber}* ${await tr("En este grupo no está permitido el uso de números con prefijos prohibidos, será expulsado...")}`;
 
 try {
 await conn.reply(m.chat, texto, fkontak, m);

@@ -8,22 +8,22 @@ let bot = global.db.data.settings[conn.user.jid] || {}
 let toUser = `${m.sender.split("@")[0]}`
 let aa = toUser + '@s.whatsapp.net'
 let listSections = []    
-listSections.push({ title: '『 FUNCIÓN PARA ADMINS 』',
+listSections.push({ title: `『 ${await tr("FUNCIÓN PARA ADMINS")} 』`,
 rows: [{ header: `🎉 BIENVENIDA ${m.isGroup ? chat.welcome ? '✅' : '❌' : `⚠️`}`, title: "", id: `${usedPrefix + command} welcome`, description: `Mensaje de Bienvenida para nuevos Miembros en Grupos\n` }, 
 { header: `🔗 ANTI ENLACES ${m.isGroup ? chat.antilink ? '✅' : '❌' : `⚠️`}`, title: "", id: `${usedPrefix + command} antilink`, description: `Eliminar Personas que envíen enlaces de Grupos de WhatsApp\n` },
 { header: `🔗 ANTI ENLACES 2 ${m.isGroup ? chat.antilink ? '✅' : '❌' : `⚠️`}`, title: "", id: `${usedPrefix + command} antilink2`, description: `Eliminar Personas que envíen enlaces que contengan https\n` }, 
 { header: `🔗 ANTI TRABA ${m.isGroup ? chat.antilink ? '✅' : '❌' : `⚠️`}`, title: "", id: `${usedPrefix + command} antitraba`, description: `El Bot detecta textos largos que podrian ser virus y causar lag en el chat y elimina al usuario.\n` }, 
-{ header: `🔗 ANTI TIKTOK ${m.isGroup ? chat.antilink ? '✅' : '❌' : `⚠️`}`, title: "", id: `${usedPrefix + command} antitiktok`, description: `Eliminar Personas que envíen enlaces de TikTok\n` }, 
-{ header: `🔗 ANTI YOUTUBE ${m.isGroup ? chat.antilink ? '✅' : '❌' : `⚠️`}`, title: "", id: `${usedPrefix + command} antiyoutube`, description: `Eliminar Personas que envíen enlaces de YouTube\n` }, 
-{ header: `🔗 ANTI TELEGRAM ${m.isGroup ? chat.antilink ? '✅' : '❌' : `⚠️`}`, title: "", id: `${usedPrefix + command} antitelegram`, description: `Eliminar Personas que envíen enlaces de Telegram\n` }, 
-{ header: `🔗 ANTI FACEBOOK ${m.isGroup ? chat.antilink ? '✅' : '❌' : `⚠️`}`, title: "", id: `${usedPrefix + command} antifacebook`, description: `Eliminar Personas que envíen enlaces de Facebbok\n` }, 
-{ header: `🔗 ANTI INSTAGRAM ${m.isGroup ? chat.antilink ? '✅' : '❌' : `⚠️`}`, title: "", id: `${usedPrefix + command} antiinstagram`, description: `Eliminar Personas que envíen enlaces de Instagram\n` }, 
-{ header: `🔗 ANTI TWITTER ${m.isGroup ? chat.antilink ? '✅' : '❌' : `⚠️`}`, title: "", id: `${usedPrefix + command} antitwitter`, description: `Eliminar Personas que envíen enlaces de Twitter\n` }, 
-{ header: `🔗 ANTI DISCORD ${m.isGroup ? chat.antilink ? '✅' : '❌' : `⚠️`}`, title: "", id: `${usedPrefix + command} antidiscord`, description: `Eliminar Personas que envíen enlaces de Discord\n` }, 
-{ header: `🔗 ANTI TREADS ${m.isGroup ? chat.antilink ? '✅' : '❌' : `⚠️`}`, title: "", id: `${usedPrefix + command} antithreads`, description: `Eliminar Personas que envíen enlaces de Threas\n` },
-{ header: `🟢 ANTIFAKE ${m.isGroup ? chat.antilink ? '✅' : '❌' : `⚠️`}`, title: "", id: `${usedPrefix + command} antifake`, description: `ᶦⁿᵍʳᵉˢᵒ ᵈᵉ ⁿᵘᵐᵉʳᵒ ᶠᵃᵏᵉ (ᵛᶦʳᵗᵘᵃˡᵉˢ), ˢᵉʳᵃⁿ ᵉˣᵖˡᵘˢᵃᵈᵒ ᵃᵘᵗᵒᵐᵃ́ᵗᶦᶜᵃᵐᵉⁿᵗᵉ ᵈᵉˡ ᴳʳᵘᵖᵒ...\n` }, 
-{ header: `🔔 AVISOS ${m.isGroup ? chat.antilink ? '✅' : '❌' : `⚠️`}`, title: "", id: `${usedPrefix + command} detect`, description: `Avisos de acciones dentro del Grupo\n` }, 
-{ header: `🪄 STICKERS AUTOMÁTICOS ${m.isGroup ? chat.antilink ? '✅' : '❌' : `⚠️`}`, title: "", id: `${usedPrefix + command} autosticker`, description: `Los vídeos, Gif, imágenes, enlaces jpg o jpeg; Se convertirán en Stickers Automáticamente\n` }, 
+{ header: `🔗 ANTI TIKTOK ${m.isGroup ? chat.antiTiktok ? '✅' : '❌' : `⚠️`}`, title: "", id: `${usedPrefix + command} antitiktok`, description: `Eliminar Personas que envíen enlaces de TikTok\n` }, 
+{ header: `🔗 ANTI YOUTUBE ${m.isGroup ? chat.antiYoutube ? '✅' : '❌' : `⚠️`}`, title: "", id: `${usedPrefix + command} antiyoutube`, description: `Eliminar Personas que envíen enlaces de YouTube\n` }, 
+{ header: `🔗 ANTI TELEGRAM ${m.isGroup ? chat.antiTelegram ? '✅' : '❌' : `⚠️`}`, title: "", id: `${usedPrefix + command} antitelegram`, description: `Eliminar Personas que envíen enlaces de Telegram\n` }, 
+{ header: `🔗 ANTI FACEBOOK ${m.isGroup ? chat.antiFacebook ? '✅' : '❌' : `⚠️`}`, title: "", id: `${usedPrefix + command} antifacebook`, description: `Eliminar Personas que envíen enlaces de Facebbok\n` }, 
+{ header: `🔗 ANTI INSTAGRAM ${m.isGroup ? chat.antiInstagram ? '✅' : '❌' : `⚠️`}`, title: "", id: `${usedPrefix + command} antiinstagram`, description: `Eliminar Personas que envíen enlaces de Instagram\n` }, 
+{ header: `🔗 ANTI TWITTER ${m.isGroup ? chat.antiTwitter ? '✅' : '❌' : `⚠️`}`, title: "", id: `${usedPrefix + command} antitwitter`, description: `Eliminar Personas que envíen enlaces de Twitter\n` }, 
+{ header: `🔗 ANTI DISCORD ${m.isGroup ? chat.antiDiscord ? '✅' : '❌' : `⚠️`}`, title: "", id: `${usedPrefix + command} antidiscord`, description: `Eliminar Personas que envíen enlaces de Discord\n` }, 
+{ header: `🔗 ANTI TREADS ${m.isGroup ? chat.antiThreads ? '✅' : '❌' : `⚠️`}`, title: "", id: `${usedPrefix + command} antithreads`, description: `Eliminar Personas que envíen enlaces de Threas\n` },
+{ header: `🟢 ANTIFAKE ${m.isGroup ? chat.antifake ? '✅' : '❌' : `⚠️`}`, title: "", id: `${usedPrefix + command} antifake`, description: `ᶦⁿᵍʳᵉˢᵒ ᵈᵉ ⁿᵘᵐᵉʳᵒ ᶠᵃᵏᵉ (ᵛᶦʳᵗᵘᵃˡᵉˢ), ˢᵉʳᵃⁿ ᵉˣᵖˡᵘˢᵃᵈᵒ ᵃᵘᵗᵒᵐᵃ́ᵗᶦᶜᵃᵐᵉⁿᵗᵉ ᵈᵉˡ ᴳʳᵘᵖᵒ...\n` }, 
+{ header: `🔔 AVISOS ${m.isGroup ? chat.detect ? '✅' : '❌' : `⚠️`}`, title: "", id: `${usedPrefix + command} detect`, description: `Avisos de acciones dentro del Grupo\n` }, 
+{ header: `🪄 STICKERS AUTOMÁTICOS ${m.isGroup ? chat.autosticker ? '✅' : '❌' : `⚠️`}`, title: "", id: `${usedPrefix + command} autosticker`, description: `Los vídeos, Gif, imágenes, enlaces jpg o jpeg; Se convertirán en Stickers Automáticamente\n` }, 
 { header: `🗑️ ANTI ELIMINAR ${m.isGroup ? chat.antilink ? '✅' : '❌' : `⚠️`}`, title: "", id: `${usedPrefix + command} antidelete`, description: `Todo mensaje eliminado será reenviado al Chat o Grupo\n` }, 
 { header: `🔞 MODO CALIENTE ${m.isGroup ? chat.antilink ? '✅' : '❌' : `⚠️`}`, title: "", id: `${usedPrefix + command} modohorny`, description: `Mostrar contenido para Adulto en los Chats\n` }, 
 { header: `🔊 AUDIOS ${m.isGroup ? chat.antilink ? '✅' : '❌' : `⚠️`}`, title: "", id: `${usedPrefix + command} audios`, description: `Habilitar el envio automático de Audios a todos\n` }, 
@@ -38,131 +38,130 @@ rows: [{ header: `🎉 BIENVENIDA ${m.isGroup ? chat.welcome ? '✅' : '❌' : `
 { header: `✅ LECTURA AUTOMÁTICA ${m.isGroup ? chat.antilink ? '✅' : '❌' : `⚠️`}`, title: "", id: `${usedPrefix + command} autoread`, description: `Dejar los mensajes o chats como Leídos.\n` }, 
 { header: `🌐 MODO PÚBLICO ${m.isGroup ? chat.antilink ? '✅' : '❌' : `⚠️`}`, title: "", id: `${usedPrefix + command} public`, description: `Habilitar función para que todos puedan usar LoliBot.\n` }]
 });
-let textoo = `*\`⧼⧼⧼ ＣＯＮＦＩＧＵＲＡＣＩＯ́Ｎ ⧽⧽⧽\`*
+let textoo = `*\`⧼⧼⧼ ${await tr("CONFIGURACIÓN")} ⧽⧽⧽\`*
 
-> *Seleccione una opción de la lista*
-> *Para empezar a Configurar*
+> *${await tr("Seleccione una opción de la lista")}*
+> *${await tr("Para empezar a Configurar")}*
 
-● *Avisos de la Configuracion:*
-✅ ⇢ *Función Activada*
-❌ ⇢ *Función Desactivada*
-⚠️ ⇢ *Este Chat no es un Grupo*
+● *${await tr("Avisos de la Configuracion:")}*
+✅ ⇢ *${await tr("Función Activada")}*
+❌ ⇢ *${await tr("Función Desactivada")}*
+⚠️ ⇢ *${await tr("Este Chat no es un Grupo")}*
 
-*\`『 FUNCIÓN PARA ADMINS 』\`*
+*\`『 ${await tr("FUNCIÓN PARA ADMINS")} 』\`*
 
-🎉 BIENVENIDA ${m.isGroup ? chat.welcome ? '✅' : '❌' : `⚠️`}
-• Mensaje de Bienvenida para nuevos Miembros en Grupos
+🎉 ${await tr("BIENVENIDA")} ${m.isGroup ? chat.welcome ? '✅' : '❌' : `⚠️`}
+• ${await tr("Mensaje de Bienvenida para nuevos Miembros en Grupos")}
 • ${usedPrefix + command} welcome 
 
-🔗 ANTI ENLACES ${m.isGroup ? chat.antilink ? '✅' : '❌' : `⚠️`}
-• Eliminar Personas que envíen enlaces de Grupos de WhatsApp
+🔗 ${await tr("ANTI ENLACES")} ${m.isGroup ? chat.antilink ? '✅' : '❌' : `⚠️`}
+• ${await tr("Eliminar Personas que envíen enlaces de Grupos de WhatsApp")}
 • ${usedPrefix + command} antilink
 
-🔗 ANTI ENLACES 2 ${m.isGroup ? chat.antilink ? '✅' : '❌' : `⚠️`}
-• Eliminar Personas que envíen enlaces que contengan https
+🔗 ${await tr("ANTI ENLACES 2")} ${m.isGroup ? chat.antilink2 ? '✅' : '❌' : `⚠️`}
+• ${await tr("Eliminar Personas que envíen enlaces que contengan https")}
 • ${usedPrefix + command} antilink2
 
-🔗 ANTI TRABA ${m.isGroup ? chat.antilink ? '✅' : '❌' : `⚠️`}
-• El Bot detecta textos largos que podrían ser virus y causar lag en el chat y elimina al usuario.
+🔗 ${await tr("ANTI TRABA")} ${m.isGroup ? chat.antitraba ? '✅' : '❌' : `⚠️`}
+• ${await tr("El Bot detecta textos largos que podrían ser virus y causar lag en el chat y elimina al usuario.")}
 • ${usedPrefix + command} antitraba
 
-🔗 ANTI TIKTOK ${m.isGroup ? chat.antilink ? '✅' : '❌' : `⚠️`}
-• Eliminar Personas que envíen enlaces de TikTok
+🔗 ${await tr("ANTI TIKTOK")} ${m.isGroup ? chat.antiTiktok ? '✅' : '❌' : `⚠️`}
+• ${await tr("Eliminar Personas que envíen enlaces de TikTok")}
 • ${usedPrefix + command} antitiktok
 
-🔗 ANTI YOUTUBE ${m.isGroup ? chat.antilink ? '✅' : '❌' : `⚠️`}
-• Eliminar Personas que envíen enlaces de YouTube
+🔗 ${await tr("ANTI YOUTUBE")} ${m.isGroup ? chat.antiYoutube ? '✅' : '❌' : `⚠️`}
+• ${await tr("Eliminar Personas que envíen enlaces de YouTube")}
 • ${usedPrefix + command} antiyoutube
 
-🔗 ANTI TELEGRAM ${m.isGroup ? chat.antilink ? '✅' : '❌' : `⚠️`}
-• Eliminar Personas que envíen enlaces de Telegram
+🔗 ${await tr("ANTI TELEGRAM")} ${m.isGroup ? chat.antiTelegram ? '✅' : '❌' : `⚠️`}
+• ${await tr("Eliminar Personas que envíen enlaces de Telegram")}
 • ${usedPrefix + command} antitelegram
 
-🔗 ANTI FACEBOOK ${m.isGroup ? chat.antilink ? '✅' : '❌' : `⚠️`}
-• Eliminar Personas que envíen enlaces de Facebook
+🔗 ${await tr("ANTI FACEBOOK")} ${m.isGroup ? chat.antiFacebook ? '✅' : '❌' : `⚠️`}
+• ${await tr("Eliminar Personas que envíen enlaces de Facebook")}
 • ${usedPrefix + command} antifacebook
 
-🔗 ANTI INSTAGRAM ${m.isGroup ? chat.antilink ? '✅' : '❌' : `⚠️`}
-• Eliminar Personas que envíen enlaces de Instagram
+🔗 ${await tr("ANTI INSTAGRAM")} ${m.isGroup ? chat.antiInstagram ? '✅' : '❌' : `⚠️`}
+• ${await tr("Eliminar Personas que envíen enlaces de Instagram")}
 • ${usedPrefix + command} antiinstagram
 
-🔗 ANTI TWITTER ${m.isGroup ? chat.antilink ? '✅' : '❌' : `⚠️`}
-• Eliminar Personas que envíen enlaces de Twitter
+🔗 ${await tr("ANTI TWITTER")} ${m.isGroup ? chat.antiTwitter ? '✅' : '❌' : `⚠️`}
+• ${await tr("Eliminar Personas que envíen enlaces de Twitter (x)")}
 • ${usedPrefix + command} antitwitter
 
-🔗 ANTI DISCORD ${m.isGroup ? chat.antilink ? '✅' : '❌' : `⚠️`}
-• Eliminar Personas que envíen enlaces de Discord
+🔗 ${await tr("ANTI DISCORD")} ${m.isGroup ? chat.antiDiscord ? '✅' : '❌' : `⚠️`}
+• ${await tr("Eliminar Personas que envíen enlaces de Discord")}
 • ${usedPrefix + command} antidiscord
 
-🔗 ANTI THREADS ${m.isGroup ? chat.antilink ? '✅' : '❌' : `⚠️`}
-• Eliminar Personas que envíen enlaces de Threads
+🔗 ${await tr("ANTI THREADS")} ${m.isGroup ? chat.antiThreads ? '✅' : '❌' : `⚠️`}
+• ${await tr("Eliminar Personas que envíen enlaces de Threads")}
 • ${usedPrefix + command} antithreads
 
-🟢 ANTIFAKE ${m.isGroup ? chat.antilink ? '✅' : '❌' : `⚠️`}
-• Ingreso de número fake (virtuales), serán expulsados automáticamente del Grupo.
+🟢 ${await tr("ANTIFAKE")} ${m.isGroup ? chat.antifake ? '✅' : '❌' : `⚠️`}
+• ${await tr("Ingreso de número fake (virtuales), serán expulsados automáticamente del Grupo.")}
 • ${usedPrefix + command} antifake
 
-🔔 AVISOS ${m.isGroup ? chat.antilink ? '✅' : '❌' : `⚠️`}
-• Avisos de acciones dentro del Grupo
+🔔 ${await tr("AVISOS")} ${m.isGroup ? chat.detect ? '✅' : '❌' : `⚠️`}
+• ${await tr("Avisos de acciones dentro del Grupo")}
 • ${usedPrefix + command} detect
 
-🪄 STICKERS AUTOMÁTICOS ${m.isGroup ? chat.antilink ? '✅' : '❌' : `⚠️`}
-• Los vídeos, GIF, imágenes, enlaces jpg o jpeg; se convertirán en Stickers automáticamente.
+🪄 ${await tr("STICKERS AUTOMÁTICOS")} ${m.isGroup ? chat.autosticker ? '✅' : '❌' : `⚠️`}
+• ${await tr("Los vídeos, GIF, imágenes, enlaces jpg o jpeg; se convertirán en Stickers automáticamente.")}
 • ${usedPrefix + command} autosticker
 
-🗑️ ANTI ELIMINAR ${m.isGroup ? chat.antilink ? '✅' : '❌' : `⚠️`}
-• Todo mensaje eliminado será reenviado al Chat o Grupo.
+🗑️ ${await tr("ANTI ELIMINAR")} ${m.isGroup ? chat.delete ? '✅' : '❌' : `⚠️`}
+• ${await tr("Todo mensaje eliminado será reenviado al Chat o Grupo.")}
 • ${usedPrefix + command} antidelete
 
-🔞 MODO CALIENTE ${m.isGroup ? chat.antilink ? '✅' : '❌' : `⚠️`}
-• Mostrar contenido para Adultos en los Chats.
+🔞 ${await tr("MODO CALIENTE")} ${m.isGroup ? chat.modohorny ? '✅' : '❌' : `⚠️`}
+• ${await tr("Mostrar contenido para Adultos en los Chats.")}
 • ${usedPrefix + command} modohorny
 
-🔊 AUDIOS ${m.isGroup ? chat.antilink ? '✅' : '❌' : `⚠️`}
-• Habilitar el envío automático de Audios a todos.
+🔊 ${await tr("AUDIOS")} ${m.isGroup ? chat.audios ? '✅' : '❌' : `⚠️`}
+• ${await tr("Habilitar el envío automático de Audios a todos.")}
 • ${usedPrefix + command} audios
 
-🆙 NIVEL AUTOMÁTICO ${m.isGroup ? chat.antilink ? '✅' : '❌' : `⚠️`}
-• Sube de nivel a todos de manera automática; (Aplica recompensas por subir de nivel).
+🆙 ${await tr("NIVEL AUTOMÁTICO")} ${m.isGroup ? chat.autolevelup ? '✅' : '❌' : `⚠️`}
+• ${await tr("Sube de nivel a todos de manera automática; (Aplica recompensas por subir de nivel).")}
 • ${usedPrefix + command} autolevelup
 
-🙃 CHATBOT ${m.isGroup ? chat.antilink ? '✅' : '❌' : `⚠️`}
-• El bot comenzará a hablar con todos en el grupo.
+🙃 ${await tr("CHATBOT")} ${m.isGroup ? chat.simi ? '✅' : '❌' : `⚠️`}
+• ${await tr("El bot comenzará a hablar con todos en el grupo.")}
 • ${usedPrefix + command} chatbot
 
-🛂 MODO ADMIN ${m.isGroup ? chat.antilink ? '✅' : '❌' : `⚠️`}
-• Solo los Admins podrán usar el Bot en Grupos.
+🛂 ${await tr("MODO ADMIN")} ${m.isGroup ? chat.modoadmin ? '✅' : '❌' : `⚠️`}
+• ${await tr("Solo los Admins podrán usar el Bot en Grupos.")}
 • ${usedPrefix + command} modoadmin
 
+*\`『 ${await tr("FUNCIÓN SOLO PARA OWNER")} 』\`"
 
-*\`『 FUNCIÓN SOLO PARA OWNER 』\`"
-
-🔰 ANTI PRIVADO ${m.isGroup ? chat.antilink ? '✅' : '❌' : `⚠️`}
-• Bloquea a las personas que usen el bot en privado.
+🔰 ${await tr("ANTI PRIVADO")} ${m.isGroup ? chat.antiPrivate ? '✅' : '❌' : `⚠️`}
+• ${await tr("Bloquea a las personas que usen el bot en privado.")}
 • ${usedPrefix + command} antiprivado
 
-🚫 ANTI LLAMADAS ${m.isGroup ? chat.antilink ? '✅' : '❌' : `⚠️`}
-• Bloquea a personas que hagan llamadas.
+🚫 ${await tr("ANTI LLAMADAS")} ${m.isGroup ? chat.antiCall ? '✅' : '❌' : `⚠️`}
+• ${await tr("Bloquea a personas que hagan llamadas.")}
 • ${usedPrefix + command} anticall
 
-⛔ RESTRINGIR ${m.isGroup ? chat.antilink ? '✅' : '❌' : `⚠️`}
-• Habilitar función para agregar o eliminar personas en Grupos.
+⛔ ${await tr("RESTRINGIR")} ${m.isGroup ? chat.restrict ? '✅' : '❌' : `⚠️`}
+• ${await tr("Habilitar función para agregar o eliminar personas en Grupos.")}
 • ${usedPrefix + command} restrict
 
-⚜️ SOLO PRIVADOS ${m.isGroup ? chat.antilink ? '✅' : '❌' : `⚠️`}
-• Permitir que solo se use en Chats Privados.
+⚜️ ${await tr("SOLO PRIVADOS")} ${m.isGroup ? chat.pconly ? '✅' : '❌' : `⚠️`}
+• ${await tr("Permitir que solo se use en Chats Privados.")}
 • ${usedPrefix + command} pconly
 
-⚜️ SOLO GRUPOS ${m.isGroup ? chat.antilink ? '✅' : '❌' : `⚠️`}
-• Permitir que solo se use en Chats Grupales.
+⚜️ ${await tr("SOLO GRUPOS ")} ${m.isGroup ? chat.gconly ? '✅' : '❌' : `⚠️`}
+• ${await tr("Permitir que solo se use en Chats Grupales.")}
 • ${usedPrefix + command} gconly
 
-✅ LECTURA AUTOMÁTICA ${m.isGroup ? chat.antilink ? '✅' : '❌' : `⚠️`}
-• Dejar los mensajes o chats como Leídos.
+✅ ${await tr("LECTURA AUTOMÁTICA")} ${m.isGroup ? chat.autoread ? '✅' : '❌' : `⚠️`}
+• ${await tr("Dejar los mensajes o chats como Leídos.")}
 • ${usedPrefix + command} autoread
 
-🌐 MODO PÚBLICO ${m.isGroup ? chat.antilink ? '✅' : '❌' : `⚠️`}
-• Habilitar función para que todos puedan usar el bot.
+🌐 ${await tr("MODO PÚBLICO")} ${m.isGroup ? chat.self ? '✅' : '❌' : `⚠️`}
+• ${await tr("Habilitar función para que todos puedan usar el bot.")}
 • ${usedPrefix + command} public
 
 > ${wm}`        
@@ -586,7 +585,7 @@ if (!/[01]/.test(command)) return await m.reply(textoo)
 //conn.sendList(m.chat, texto, wm, `AJUSTES`, null, listSections, m)
 throw false
 }
-await m.reply(`🗂️ ʟᴀ ᴏᴘᴄɪᴏɴ ${type} ᴘᴀʀᴀ ${isAll ? 'ᴇsᴛᴇ ʙᴏᴛ' : isUser ? '' : 'ᴇsᴛᴇ ᴄʜᴀᴛ'} ғᴜᴇ ${isEnable ? 'ᴀᴄᴛɪᴠᴀᴅᴏ' : 'ᴅᴇsᴀᴄᴛɪᴠᴀᴅᴏ'} `) 
+await m.reply(`${isEnable ? '✅️' : '❌️'} ${await tr("Comando")} ${type} ${await tr("Para")} ${isAll ? await tr('Este bot') : isUser ? '' : await tr('Este chat')} ${await tr("fue")} ${isEnable ? await tr('activados con exitos') : await tr('desactivado con exitos')} `) 
 /*conn.sendButton(m.chat, `╭┄〔 *${wm}* 〕┄⊱
 ┆🗂️ ᴏᴘᴄɪᴏɴ: ${type} 
 ┆——————«•»——————

@@ -7,7 +7,7 @@ const userRequests = {};
 let handler = async (m, { conn, text, usedPrefix, command }) => {
 if (!text) throw `Ejemplo de uso: ${usedPrefix + command} https://music.apple.com/us/album/glimpse-of-us/1625328890?i=1625328892`;
 if (userRequests[m.sender]) {
-conn.reply(m.chat, `⚠️ Hey @${m.sender.split('@')[0]} pendejo, ya estás descargando una canción 🙄\nEspera a que termine tu descarga actual antes de pedir otra. 👆`, userMessages.get(m.sender) || m)
+conn.reply(m.chat, `⚠️ ${await tr("Hey")} @${m.sender.split('@')[0]}, ${await tr("ya estás descargando una canción")} 🙄\n${await tr("Espera a que termine tu descarga actual antes de pedir otra.")} 👆`, userMessages.get(m.sender) || m)
 return;
 }
 userRequests[m.sender] = true;
@@ -68,15 +68,15 @@ console.error(`Error in attempt: ${err.message}`);
 continue; // Si falla, intentar con la siguiente API
 }}
 
-if (!songData)  throw new Error('No se pudo descargar la canción desde ninguna API');
-const texto = `*• Titulo:* ${songData.name}\n*• Artistas:* ${songData.artists}\n*• Duración:* ${songData.duration}${songData.url ? `\n*• URL:* ${songData.url}` : ''}`;
+if (!songData) throw new Error(await tr('No se pudo descargar la canción desde ninguna API'));
+const texto = `*• ${await tr("Titulo")}:* ${songData.name}\n*• ${await tr("Artistas")}:* ${songData.artists}\n*• ${await tr("Duración")}:* ${songData.duration}${songData.url ? `\n*• URL:* ${songData.url}` : ''}`;
 const coverMessage = await conn.sendFile(m.chat, songData.image, 'cover.jpg', texto, m, null, fake);
 userMessages.set(m.sender, coverMessage);
 await conn.sendMessage(m.chat, { document: { url: songData.download }, fileName: `${songData.name}.mp3`, mimetype: 'audio/mp3' }, { quoted: m });
 m.react("✅");
 } catch (e) {
 console.error("Error final:", e);
-m.reply("Ocurrió un error al intentar obtener el enlace de descarga.");
+m.reply(await tr("Ocurrió un error al intentar obtener el enlace de descarga."));
 m.react("❌");
 } finally {
 delete userRequests[m.sender];

@@ -12,7 +12,7 @@ const { ytmp3, ytmp4 } = require("@hiudyy/ytdl");
 
 const userRequests = {};
 let handler = async (m, { conn, text, args, usedPrefix, command }) => {
-if (!args[0]) throw '*𝙌𝙪𝙚 𝙚𝙨𝙩𝙖 𝙗𝙪𝙨𝙘𝙖𝙙𝙤🤔 𝙄𝙣𝙜𝙧𝙚𝙨𝙚 𝙚𝙡 𝙚𝙣𝙡𝙖𝙘𝙚 𝙙𝙚 𝙔𝙤𝙪𝙏𝙪𝙗𝙚 𝙥𝙖𝙧𝙖 𝙙𝙚𝙨𝙘𝙖𝙧𝙜𝙖𝙧 𝙚𝙡 𝙖𝙪𝙙𝙞𝙤*'
+if (!args[0]) throw `*${await tr("Que esta buscando?")}🤔 ${await tr("Ingrese el enlace de YouTube para descargar el audio")}*`
 const sendType = command.includes('doc') ? 'document' : command.includes('mp3') ? 'audio' : 'video';
 const yt_play = await search(args.join(' '));
 let youtubeLink = '';
@@ -27,17 +27,17 @@ if (matchingItem) {
 if (index < matchingItem.urls.length) {
 youtubeLink = matchingItem.urls[index];
 } else {
-throw `⚠️ 𝙉𝙤 𝙨𝙚 𝙚𝙣𝙘𝙤𝙣𝙩𝙧𝙤 𝙪𝙣 𝙚𝙣𝙡𝙖𝙘𝙚𝙨 𝙥𝙖𝙧𝙖 𝙚𝙨𝙚 𝙣𝙪𝙢𝙚𝙧𝙤, 𝙥𝙤𝙧 𝙛𝙖𝙫𝙤𝙧 𝙞𝙣𝙜𝙧𝙚𝙨𝙚 𝙚𝙡 𝙣𝙪𝙢𝙚𝙧𝙤 𝙚𝙣𝙩𝙧𝙚 1 𝙮 𝙚𝙡 ${matchingItem.urls.length}*`
+throw `⚠️ ${await tr("No se encontró un enlaces para ese numero, por favor ingrese el numero entre 1 y el")} ${matchingItem.urls.length}*`
 }} else {
 }}}}
     
 if (userRequests[m.sender]) {
-return m.reply('⏳ *Espera...* Ya hay una solicitud en proceso. Por favor, espera a que termine antes de hacer otra.')}
+return m.reply(`⏳ *${await tr("Espera...")}* ${await tr("Ya hay una solicitud en proceso. Por favor, espera a que termine antes de hacer otra.")}`)}
 userRequests[m.sender] = true;
 try {
       
 if (command == 'ytmp3' || command == 'fgmp3' || command == 'ytmp3doc') {
-m.reply([`*⌛ 𝙀𝙨𝙥𝙚𝙧𝙚 ✋ 𝙪𝙣 𝙢𝙤𝙢𝙚𝙣𝙩𝙤... 𝙔𝙖 𝙚𝙨𝙩𝙤𝙮 𝙙𝙚𝙨𝙘𝙖𝙧𝙜𝙖𝙙𝙤 𝙩𝙪 𝙖𝙪𝙙𝙞𝙤🍹*`, `⌛ 𝙋𝙍𝙊𝘾𝙀𝙎𝘼𝙉𝘿𝙊...\n*𝘌𝘴𝘵𝘰𝘺 𝘪𝘯𝘵𝘦𝘯𝘵𝘢𝘯𝘥𝘰 𝘥𝘦𝘴𝘤𝘢𝘳𝘨𝘢 𝘴𝘶𝘴 𝘈𝘶𝘥𝘪𝘰 𝘦𝘴𝘱𝘦𝘳𝘦 🏃‍♂️💨*`, `Calmao pa estoy bucando tu canción 😎\n\n*Recuerda colocar bien el nombre de la cancion o el link del video de youtube*\n\n> *Si el comando *play no funciona utiliza el comando *ytmp3*`].getRandom())  
+m.reply([`*⌛ ${await tr("Espera...")} ✋ ${await tr("Un momento... Ya estoy descargando sus audio")}🍹*`, `⌛ ${await tr("PROCESANDO...")}\n*${await tr("Estoy intentando descarga sus audio espere")} 🏃‍♂️💨*`, `${await tr("Calmao pa estoy bucando tu canción")} 😎\n\n*${await tr("Recuerda colocar bien el nombre de la cancion o el link del video de youtube")}*\n\n> *${await tr("Si el comando *ytmp3 no funciona utiliza el comando")} *#ytmp3doc*`].getRandom())  
 try {
 const isAudio = command.toLowerCase().includes('mp3') || command.toLowerCase().includes('audio')
 const format = isAudio ? 'mp3' : '720' 
@@ -117,29 +117,29 @@ conn.sendMessage(m.chat, { [sendType]: { url: ress.url }, fileName: __res[0].tit
 }}}}}}}}}}}}
 
 if (command == 'ytmp4' || command == 'fgmp4' || command == 'ytmp4doc') {
-m.reply([`*⌛ 𝙀𝙨𝙥𝙚𝙧𝙚 ✋ 𝙪𝙣 𝙢𝙤𝙢𝙚𝙣𝙩𝙤... 𝙔𝙖 𝙚𝙨𝙩𝙤𝙮 𝙙𝙚𝙨𝙘𝙖𝙧𝙜𝙖𝙙𝙤 𝙩𝙪 𝙑𝙞𝙙𝙚𝙤 🍹*`, `⌛ 𝙋𝙍𝙊𝘾𝙀𝙎𝘼𝙉𝘿𝙊...\n*𝘌𝘴𝘵𝘰𝘺 𝘪𝘯𝘵𝘦𝘯𝘵𝘢𝘯𝘥𝘰 𝘥𝘦𝘴𝘤𝘢𝘳𝘨𝘢 𝘴𝘶𝘴 𝘝𝘪𝘥𝘦𝘰 𝘦𝘴𝘱𝘦𝘳𝘦 🏃‍♂️💨*`, `Calma ✋🥸🤚\n\n*Estoy descargando tu video 🔄*\n\n> *Aguarde un momento, por favor*`].getRandom())   
+m.reply([`*⌛ ${await tr("Espera...")} ✋ ${await tr("Un momento... Ya estoy descargando sus video")} 🍹*`, `⌛ ${await tr("PROCESANDO...")}\n*${await tr("Estoy intentando descarga sus video espere")} 🏃‍♂️💨*`, `${await tr("Calma")} ✋🥸🤚\n\n*${await tr("Estoy descargando tu video ")} 🔄*\n\n> *${await tr("Aguarde un momento, por favor")}*`].getRandom())   
 try {
 const result = await savetube.download(args[0], "720")
 const data = result.result
-await conn.sendMessage(m.chat, { [sendType]: { url: data.download }, mimetype: 'video/mp4', fileName: `${data.title}.mp4`, caption: `🔰 Aquí está tu video\n🔥 Título: ${data.title}` }, { quoted: m })
+await conn.sendMessage(m.chat, { [sendType]: { url: data.download }, mimetype: 'video/mp4', fileName: `${data.title}.mp4`, caption: `🔰 ${await tr("Aquí está tu video")}\n🔥 ${await tr("Título")}: ${data.title}` }, { quoted: m })
 } catch {   
 try {              
 const video = await ytmp4(args);
-await conn.sendMessage(m.chat, { [sendType]: { url: video }, fileName: `video.mp4`, mimetype: 'video/mp4', caption: `🔰 Aquí está tu video \n🔥 Título: ${yt_play[0].title}`}, { quoted: m })
+await conn.sendMessage(m.chat, { [sendType]: { url: video }, fileName: `video.mp4`, mimetype: 'video/mp4', caption: `🔰 ${await tr("Aquí está tu video")}\n🔥 ${await tr("Título")}: ${yt_play[0].title}`}, { quoted: m })
 } catch {
 try {   
 const [input, quality = '720'] = text.split(' ');
 const validQualities = ['240', '360', '480', '720', '1080'];
 const selectedQuality = validQualities.includes(quality) ? quality : '720';
 const res = await ogmp3.download(yt_play[0].url, selectedQuality, 'video');
-await conn.sendMessage(m.chat, { [sendType]: { url: res.result.download }, mimetype: 'video/mp4', caption: `🔰 Aquí está tu video \n🔥 Título: ${yt_play[0].title} (${selectedQuality}p)` }, { quoted: m });
+await conn.sendMessage(m.chat, { [sendType]: { url: res.result.download }, mimetype: 'video/mp4', caption: `🔰 ${await tr("Aquí está tu video")}\n🔥 ${await tr("Título")}: ${yt_play[0].title} (${selectedQuality}p)` }, { quoted: m });
 } catch {
 try { 
 const format = args[1] || '720p';
 const response = await amdl.download(args[0], format);
 const { title, type, download, thumbnail } = response.result;
 if (type === 'video') {
-await conn.sendMessage(m.chat, { [sendType]: { url: download }, caption: `🔰 Aquí está tu video \n🔥 Título: ${yt_play[0].title}`, thumbnail: thumbnail }, { quoted: m });
+await conn.sendMessage(m.chat, { [sendType]: { url: download }, caption: `🔰 ${await tr("Aquí está tu video")}\n🔥 ${await tr("Título")}: ${yt_play[0].title}`, thumbnail: thumbnail }, { quoted: m });
 }
 } catch {
 try {    
@@ -147,23 +147,23 @@ const format = args[1] || 'mp4';
 const response = await ytdown.download(args[0], format);
 const { title, type, download, thumbnail } = response;
 if (type === 'video') {
-await conn.sendMessage(m.chat, { [sendType]: { url: download }, caption: `🔰 Aquí está tu video \n🔥 Título: ${yt_play[0].title}`, thumbnail: thumbnail }, { quoted: m })
+await conn.sendMessage(m.chat, { [sendType]: { url: download }, caption: `🔰 ${await tr("Aquí está tu video")}\n🔥 ${await tr("Título")}: ${yt_play[0].title}`, thumbnail: thumbnail }, { quoted: m })
 }
 } catch {
 try {        
 const res = await fetch(`https://api.siputzx.my.id/api/d/ytmp4?url=${args}`);
 let { data } = await res.json();
-await conn.sendMessage(m.chat, { [sendType]: { url: data.dl }, fileName: `video.mp4`, mimetype: 'video/mp4', caption: `🔰 Aquí está tu video \n🔥 Título: ${yt_play[0].title}`}, { quoted: m })
+await conn.sendMessage(m.chat, { [sendType]: { url: data.dl }, fileName: `video.mp4`, mimetype: 'video/mp4', caption: `🔰 ${await tr("Aquí está tu video")}\n🔥 ${await tr("Título")}: ${yt_play[0].title}`}, { quoted: m })
 } catch {
 try {  
 const res = await fetch(`https://api.agatz.xyz/api/ytmp4?url=${args}`)
 let data = await res.json();
-await conn.sendMessage(m.chat, { [sendType]: { url: data.data.downloadUrl }, fileName: `video.mp4`, caption: `🔰 Aquí está tu video \n🔥 Título: ${yt_play[0].title}` }, { quoted: m }) 
+await conn.sendMessage(m.chat, { [sendType]: { url: data.data.downloadUrl }, fileName: `video.mp4`, caption: `🔰 ${await tr("Aquí está tu video")}\n🔥 ${await tr("Título")}: ${yt_play[0].title}` }, { quoted: m }) 
 } catch {
 try {
 const res = await fetch(`https://api.zenkey.my.id/api/download/ytmp4?apikey=zenkey&url=${args}`)
 let { result } = await res.json()
-await conn.sendMessage(m.chat, { [sendType]: { url: result.download.url }, fileName: `video.mp4`, caption: `🔰 Aquí está tu video \n🔥 Título: ${yt_play[0].title}` }, { quoted: m }) 
+await conn.sendMessage(m.chat, { [sendType]: { url: result.download.url }, fileName: `video.mp4`, caption: `🔰 ${await tr("Aquí está tu video")}\n🔥 ${await tr("Título")}:${yt_play[0].title}` }, { quoted: m }) 
 } catch {
 try {
 const axeelApi = `https://axeel.my.id/api/download/video?url=${args}`;
@@ -171,7 +171,7 @@ const axeelRes = await fetch(axeelApi);
 const axeelJson = await axeelRes.json();
 if (axeelJson && axeelJson.downloads?.url) {
 const videoUrl = axeelJson.downloads.url;
-await conn.sendMessage(m.chat, { [sendType]: { url: videoUrl }, fileName: `${yt_play[0].title}.mp4`, caption: `🔰 Aquí está tu video \n🔥 Título: ${yt_play[0].title}` }, { quoted: m }) 
+await conn.sendMessage(m.chat, { [sendType]: { url: videoUrl }, fileName: `${yt_play[0].title}.mp4`, caption: `🔰 ${await tr("Aquí está tu video")}\n🔥 ${await tr("Título")}: ${yt_play[0].title}` }, { quoted: m }) 
 }} catch {
 try {              
 let qu = args[1] || '360'
@@ -181,7 +181,7 @@ const yt = await youtubedl(v).catch(async _ => await youtubedlv2(v))
 const dl_url = await yt.video[q].download()
 const ttl = await yt.title
 const size = await yt.video[q].fileSizeH
-await await conn.sendMessage(m.chat, { [sendType]: { url: dl_url }, fileName: `${ttl}.mp4`, mimetype: 'video/mp4', caption: `🔰 𝘼𝙦𝙪𝙞 𝙚𝙨𝙩𝙖 𝙩𝙪 𝙫𝙞𝙙𝙚𝙤 \n🔥 𝙏𝙞𝙩𝙪𝙡𝙤: ${ttl}`, thumbnail: await fetch(yt.thumbnail) }, { quoted: m })
+await await conn.sendMessage(m.chat, { [sendType]: { url: dl_url }, fileName: `${ttl}.mp4`, mimetype: 'video/mp4', caption: `🔰 ${await tr("Aquí está tu video")}\n🔥 ${await tr("Título")}: ${ttl}`, thumbnail: await fetch(yt.thumbnail) }, { quoted: m })
 } catch {
 try {  
 let mediaa = await ytMp4(youtubeLink)

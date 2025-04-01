@@ -1,8 +1,8 @@
 import {webp2png} from '../lib/webp2mp4.js';
 const handler = async (m, {conn, usedPrefix, command}) => {
-const notStickerMessage = `*⚠️ 𝐑𝐞𝐬𝐩𝐨𝐧𝐝𝐞 𝐚 𝐮𝐧 𝐬𝐭𝐢𝐜𝐤𝐞𝐫 𝐪𝐮𝐞 𝐝𝐞𝐬𝐞𝐞 𝐜𝐨𝐧𝐯𝐞𝐫𝐭𝐢𝐫 𝐞𝐧 𝐢𝐦𝐚𝐠𝐞𝐧 𝐜𝐨𝐧 𝐞𝐥 𝐬𝐢𝐠𝐮𝐢𝐞𝐧𝐭𝐞 𝐜𝐨𝐦𝐚𝐧𝐝𝐨:* ${usedPrefix + command}`;
+const notStickerMessage = `*⚠️ ${await tr("Responder a un sticker que desee convertir en imagen con el siguiente comando:")}* ${usedPrefix + command}`;
 if (!m.quoted) throw notStickerMessage;
-m.reply(`Euu flaco 🥴\n\n> *Convirtiendo tu Sticker a Imagen 🔄*`) 
+m.reply(`${await tr("Euu flaco")} 🥴\n\n> *${await tr("Convirtiendo tu Sticker a Imagen")} 🔄*`) 
 const q = m.quoted || m;
 const mime = q.mediaType || '';
 if (!/sticker/.test(mime)) throw notStickerMessage;

@@ -87,7 +87,7 @@ for (let i = 0; i < maxIntentos; i++) {
 
 let handler = async (m, { conn, command }) => {
   let id = m.chat;
-  if (juegos[id]) return conn.reply(m.chat, '⚠️ Todavía hay un juego sin responder en este chat', m);
+  if (juegos[id]) return conn.reply(m.chat, await tr('⚠️ Todavía hay un juego sin responder en este chat'), m);
   try {
     let tipo = "";
     if (/^(acertijo|acert|adivinanza|tekateki)$/i.test(command)) tipo = "acertijo";
@@ -101,7 +101,7 @@ let handler = async (m, { conn, command }) => {
     let caption = "";
     if (tipo === "acertijo") {      
       caption = await conn.sendMessage(m.chat, { 
-        text: `${pregunta.question}\n\n*• Tiempo:* ${(timeout / 1000)}s\n*• Bono:* +${poin} XP`, 
+        text: `${pregunta.question}\n\n*• ${await tr("Tiempo")}:* ${(timeout / 1000)}s\n*• ${await tr("Bono")}:* +${poin} XP`, 
         contextInfo: {
           forwardingScore: 9999999, 
           isForwarded: true, 
@@ -126,7 +126,7 @@ let handler = async (m, { conn, command }) => {
             showAdAttribution: true, 
             containsAutoReply: true, 
             title: "🎬 ADIVINAN", 
-            body: `LA PELÍCULA CON EMOJIS •`, 
+            body: await tr(`LA PELÍCULA CON EMOJIS •`), 
             previewType: "PHOTO", 
             thumbnail: imagen1, 
             sourceUrl: md
@@ -135,7 +135,7 @@ let handler = async (m, { conn, command }) => {
       }, { quoted: m, ephemeralExpiration: 24 * 60 * 100, disappearingMessagesInChat: 24 * 60 * 100 });
     } else if (tipo === "trivia") {
       caption = await conn.sendMessage(m.chat, { 
-        text: `${pregunta.question}\n\n*• Tiempo:* ${(timeout2 / 1000)}s\n*• Bono:* +${poin} XP`, 
+        text: `${pregunta.question}\n\n*• ${await tr("Tiempo")}:* ${(timeout2 / 1000)}s\n*• ${await tr("Bono")}:* +${poin} XP`, 
         contextInfo: {
           forwardingScore: 9999999, 
           isForwarded: true, 
@@ -151,6 +151,7 @@ let handler = async (m, { conn, command }) => {
       }, { quoted: m, ephemeralExpiration: 24 * 60 * 100, disappearingMessagesInChat: 24 * 60 * 100 });
     }
     
+let msgTime = await tr("Se acabó el tiempo!\n*Respuesta:*")
     let enviado = caption;
     juegos[id] = {
       tipo,
@@ -159,7 +160,7 @@ let handler = async (m, { conn, command }) => {
       puntos: poin,
       timeout: setTimeout(() => {
         if (juegos[id]) {
-          conn.reply(m.chat, `⏳ Se acabó el tiempo!\n*Respuesta:* ${pregunta.response}`, enviado);
+          conn.reply(m.chat, `⏳ ${msgTime} ${pregunta.response}`, enviado);
           delete juegos[id];
         }
       }, tipo === "trivia" ? timeout2 : timeout)
@@ -180,14 +181,14 @@ handler.before = async (m) => {
   if (respuestaUsuario === respuestaCorrecta) {
     global.db.data.users[m.sender].exp += juego.puntos;
     m.react("✅");
-    m.reply(`✅ *¡Correcto!*\nGanaste +${juego.puntos} XP`);
+    m.reply(`✅ ${await tr("*¡Correcto!*\nGanaste")} +${juego.puntos} XP`);
     clearTimeout(juego.timeout);
     delete juegos[id];
   } else if (similarity(respuestaUsuario, respuestaCorrecta) >= threshold) {
-    m.reply(`🔥 *Casi!* La respuesta es muy parecida.`);
+    m.reply(await tr(`🔥 *Casi!* La respuesta es muy parecida.`));
   } else {
     m.react("❌");
-    m.reply(`❌ *Incorrecto!* Intenta de nuevo.`);
+    m.reply(await tr(`❌ *Incorrecto!* Intenta de nuevo.`));
   }
 };
 

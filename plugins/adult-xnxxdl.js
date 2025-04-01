@@ -33,7 +33,7 @@ conn.sendFile(m.chat, [porn, porn2].getRandom(), 'sticker.webp', '', m, true, { 
 return
 }}
   
-if (!args[0]) throw `*⚠️ ¿Que esta buscando pajin? ingresa un enlace valido de xnxx*\n\n*Aqui te recomiendo uno ejemplo:* ${usedPrefix + command} https://www.xnxx.com/video-14lcwbe8/rubia_novia_follada_en_cuarto_de_bano*`;
+if (!args[0]) throw `*⚠️ ${await tr("¿Que esta buscando pajin? ingresa un enlace valido de xnxx")}*\n\n*${await tr("Aqui te recomiendo uno ejemplo:")}* ${usedPrefix + command} https://www.xnxx.com/video-14lcwbe8/rubia_novia_follada_en_cuarto_de_bano*`;
 try {
 m.react(`⌛`) 
 let xnxxLink = '';
@@ -48,18 +48,18 @@ if (matchingItem) {
 if (index < matchingItem.urls.length) {
 xnxxLink = matchingItem.urls[index];
 } else {
-throw `*⚠️ ɴᴏ sᴇ ᴇɴᴄᴏɴᴛʀᴏ́ ᴜɴ ᴇɴʟᴀᴄᴇ ᴘᴀʀᴀ ᴇsᴇ ɴᴜ́ᴍᴇʀᴏ, ᴘᴏʀ ғᴀᴠᴏʀ ɪɴɢʀᴇsᴇ ᴜɴ ɴᴜ́ᴍᴇʀᴏ ᴇɴᴛʀᴇ ᴇʟ  1 ʏ ᴇʟ ${matchingItem.urls.length}*`;
+throw `*⚠️ ${await tr("No se encontró un enlace para ese numero, por favor ingrese un numero entre el 1 y el ")} ${matchingItem.urls.length}*`;
 }} else {
-throw `*⚠️ ᴘᴀʀᴀ ᴘᴏᴅᴇʀ ᴜsᴀʀ ᴇsᴛᴇ ᴄᴏᴍᴀɴᴅᴏ ᴅᴇ ᴇsᴛᴀ ғᴏʀᴍᴀ (${usedPrefix + command} <numero>), ᴘᴏʀ ғᴀᴠᴏʀ ʀᴇᴀʟɪᴢᴀʀ ʟᴀ ʙᴜ́sǫᴜᴇᴅᴀ ᴅᴇ ᴠɪᴅᴇᴏs ᴄᴏɴ ᴇʟ ᴄᴏᴍᴀɴᴅᴏ: ${usedPrefix}xnxxsearch <texto>*`;
+throw `*⚠️ ${await tr("Para poder usar este comando de esta forma")} (${usedPrefix + command} <numero>), ${await tr("Por favor realizar la búsqueda de videos con el comando")}: ${usedPrefix}xnxxsearch <texto>*`;
 }} else {
-throw `*⚠️ ᴘᴀʀᴀ ᴘᴏᴅᴇʀ ᴜsᴀʀ ᴇsᴛᴇ ᴄᴏᴍᴀɴᴅᴏ ᴅᴇ ᴇsᴛᴀ ғᴏʀᴍᴀ (${usedPrefix + command} <numero>), ᴘᴏʀ ғᴀᴠᴏʀ ʀᴇᴀʟɪᴢᴀʀ ʟᴀ ʙᴜ́sǫᴜᴇᴅᴀ ᴅᴇ ᴠɪᴅᴇᴏs ᴄᴏɴ ᴇʟ ᴄᴏᴍᴀɴᴅᴏ: ${usedPrefix}xnxxsearch <texto>*`;
+throw `*⚠️ ${await tr("Para poder usar este comando de esta forma")} (${usedPrefix + command} <numero>), ${await tr("Por favor realizar la búsqueda de videos con el comando")}: ${usedPrefix}xnxxsearch <texto>*`;
 }}}
 const res = await xnxxdl(xnxxLink);
 const json = await res.result.files;
 conn.sendMessage(m.chat, {document: {url: json.high}, mimetype: 'video/mp4', fileName: res.result.title}, {quoted: m});
 m.react(`🔥`) 
 } catch {
-throw `*⚠️ ¿Que esta buscando pajin? ingresa un enlace valido de xnxx*\n\n*Aqui te recomiendo uno algo similar a estos:* ${usedPrefix + command} https://www.xnxx.com/video-14lcwbe8/rubia_novia_follada_en_cuarto_de_bano`;
+throw `*⚠️ ${await tr("¿Que esta buscando pajin? ingresa un enlace valido de xnxx")}*\n\n*${await tr("Aqui te recomiendo uno ejemplo:")}* ${usedPrefix + command} https://www.xnxx.com/video-14lcwbe8/rubia_novia_follada_en_cuarto_de_bano*`;
 handler.limit = false
 }};
 handler.help = ['xnxxdl']

@@ -25,20 +25,20 @@ filesDeleted++;
 console.log(`⚠️ Eliminacion session (PreKey) que provocan el undefined el chat`)}}
 
 } else*/ if (chat.detect && m.messageStubType == 21) {
-await this.sendMessage(m.chat, { text: `${usuario} \`𝙃𝘼𝙎 𝘾𝘼𝙈𝘽𝙄𝘼𝘿𝙊 𝙀𝙇 𝙉𝙊𝙈𝘽𝙍𝙀́ 𝘿𝙀𝙇 𝙂𝙍𝙐𝙋𝙊 𝘼:\`\n\n> *${m.messageStubParameters[0]}*`, mentions: [m.sender], mentions: [...groupAdmins.map(v => v.id)] }, { quoted: fkontak, ephemeralExpiration: 24*60*100, disappearingMessagesInChat: 24*60*100}) 
+await this.sendMessage(m.chat, { text: `${usuario} \`${await tr("HAS CAMBIADO EL NOMBRE DEL GRUPO A")}:\`\n\n> *${m.messageStubParameters[0]}*`, mentions: [m.sender], mentions: [...groupAdmins.map(v => v.id)] }, { quoted: fkontak, ephemeralExpiration: 24*60*100, disappearingMessagesInChat: 24*60*100}) 
 } else if (chat.detect && m.messageStubType == 22) {
-await this.sendMessage(m.chat, { text: `${usuario} \`𝙃𝘼𝙎 𝘾𝘼𝙈𝘽𝙄𝘼𝘿𝙊 𝙇𝘼𝙎 𝙁𝙊𝙏𝙊 𝘿𝙀𝙇 𝙂𝙍𝙐𝙋𝙊\``, mentions: [m.sender] }, { quoted: fkontak, ephemeralExpiration: 24*60*100, disappearingMessagesInChat: 24*60*100}) 
+await this.sendMessage(m.chat, { text: `${usuario} \`${await tr("HAS CAMBIADO LAS FOTO DEL GRUPO")}\``, mentions: [m.sender] }, { quoted: fkontak, ephemeralExpiration: 24*60*100, disappearingMessagesInChat: 24*60*100}) 
 } else if (chat.detect && m.messageStubType == 24) {
-await this.sendMessage(m.chat, { text: `${usuario} 𝙉𝙐𝙀𝙑𝘼 𝘿𝙀𝙎𝘾𝙍𝙄𝙋𝘾𝙄𝙊𝙉 𝘿𝙀𝙇 𝙂𝙍𝙐𝙋𝙊 𝙀𝙎:\n\n${m.messageStubParameters[0]}`, mentions: [m.sender] }, { quoted: fkontak, ephemeralExpiration: 24*60*100, disappearingMessagesInChat: 24*60*100})
+await this.sendMessage(m.chat, { text: `${usuario} ${await tr("NUEVA DESCRIPCIÓN DEL GRUPO ES ")}:\n\n${m.messageStubParameters[0]}`, mentions: [m.sender] }, { quoted: fkontak, ephemeralExpiration: 24*60*100, disappearingMessagesInChat: 24*60*100})
 } else if (chat.detect && m.messageStubType == 25) {
-await this.sendMessage(m.chat, { text: `🔒 𝘼𝙃𝙊𝙍𝘼 *${m.messageStubParameters[0] == 'on' ? '𝙎𝙊𝙇𝙊 𝘼𝘿𝙈𝙄𝙉𝙎' : '𝙏𝙊𝘿𝙊𝙎'}* 𝙋𝙐𝙀𝘿𝙀 𝙀𝘿𝙄𝙏𝘼𝙍 𝙇𝘼 𝙄𝙉𝙁𝙊𝙍𝙈𝘼𝘾𝙄𝙊𝙉 𝘿𝙀𝙇 𝙂𝙍𝙐𝙋𝙊`, mentions: [m.sender] }, { quoted: fkontak, ephemeralExpiration: 24*60*100, disappearingMessagesInChat: 24*60*100})
+await this.sendMessage(m.chat, { text: `🔒 ${await tr("AHORA")} *${m.messageStubParameters[0] == 'on' ? await tr('SOLO ADMINS') : await tr('TODOS')}* ${await tr("PUEDE EDITAR LA INFORMACIÓN DEL GRUPO")}`, mentions: [m.sender] }, { quoted: fkontak, ephemeralExpiration: 24*60*100, disappearingMessagesInChat: 24*60*100})
 } else if (chat.detect && m.messageStubType == 26) {
-await this.sendMessage(m.chat, { text: `𝙀𝙇 𝙂𝙍𝙐𝙋𝙊 *${m.messageStubParameters[0] == 'on' ? '𝙀𝙎𝙏𝘼 𝘾𝙀𝙍𝙍𝘼𝘿𝙊 🔒' : '𝙀𝙎𝙏𝘼 𝘼𝘽𝙄𝙀𝙍𝙏𝙊 🔓'}*\n ${m.messageStubParameters[0] == 'on' ? '𝙎𝙊𝙇𝙊 𝙇𝙊𝙎 𝘼𝘿𝙈𝙄𝙉𝙎 𝙋𝙐𝙀𝘿𝙀𝙉 𝙀𝙎𝘾𝙍𝙄𝘽𝙄𝙍' : '𝙔𝘼 𝙋𝙐𝙀𝘿𝙀𝙉 𝙀𝙎𝘾𝙍𝙄𝘽𝙄𝙍 𝙏𝙊𝘿𝙊𝙎'} 𝙀𝙉 𝙀𝙎𝙏𝙀 𝙂𝙍𝙐𝙋𝙊`, mentions: [m.sender] }, { quoted: fkontak, ephemeralExpiration: 24*60*100, disappearingMessagesInChat: 24*60*100})
+await this.sendMessage(m.chat, { text: `${await tr("EL GRUPO")} *${m.messageStubParameters[0] == 'on' ? 'ESTA CERRADO 🔒' : 'ESTA ABIERTO 🔓'}*\n ${m.messageStubParameters[0] == 'on' ? await tr('SOLO LOS ADMINS PUEDEN ESCRIBIR') : await tr('YA PUEDEN ESCRIBIR TODOS')} ${await tr("EN ESTE GRUPO")}`, mentions: [m.sender] }, { quoted: fkontak, ephemeralExpiration: 24*60*100, disappearingMessagesInChat: 24*60*100})
 } else if (chat.welcome && m.messageStubType == 27 && this.user.jid != global.conn.user.jid) { 
 let subject = groupMetadata.subject
 let descs = groupMetadata.desc || "*ᴜɴ ɢʀᴜᴘᴏ ɢᴇɴɪᴀ😸*\n *sɪɴ ʀᴇɢʟᴀ 😉*";
 let userName = `${m.messageStubParameters[0].split`@`[0]}`;
-let defaultWelcome = `┏━━━━━━━━━━━━\n┃──〘 *WELCOME* 〙──\n┃━━━━━━━━━━━━\n┃ *Hola @${userName} 👋 Bienvenido a*\n┃ *_${subject} ✨_*\n┃\n┃=> *_En este grupo podrás_*\n┃ *_encontrar:_*\n┠⊷ *Amistades 🫂* \n┠⊷ *Desmadre 💃🕺*\n┠⊷ *Relajo 💅*\n┠⊷ *Enemig@s 🥵*\n┠⊷ *Un Bot Sexy*\n┃\n┃=> *_Puedes solicitar mi lista de_*\n┃ *_comandos con:_*\n┠⊷ *#menu*\n┃\n┃=> *_Aquí tienes la descripción_*\n┃ *_del grupo, léela!!_*\n┃\n\n${descs}\n\n┃\n┃ *_🥳 Disfruta de tu_*\n┃ *_estadía en el grupo 🥳_*\n┃\n┗━━━━━━━━━━━`;
+let defaultWelcome = `┏━━━━━━━━━━━━\n┃──〘 *WELCOME* 〙──\n┃━━━━━━━━━━━━\n┃ *${await tr("Hola")} @${userName} 👋 ${await tr("Bienvenido a")}*\n┃ *_${subject} ✨_*\n┃\n┃=> *_${await tr("En este grupo podrás")}_*\n┃ *_${await tr("encontrar")}:_*\n┠⊷ *${await tr("Amistades")} 🫂* \n┠⊷ *${await tr("Desmadre")} 💃🕺*\n┠⊷ *${await tr("Relajo")} 💅*\n┠⊷ *${await tr("Enemig@s")} 🥵*\n┠⊷ *${await tr("Un Bot Sexy")}*\n┃\n┃=> *_${await tr("Puedes solicitar mi lista de")}_*\n┃ *_${await tr("comandos con:")}_*\n┠⊷ *#menu*\n┃\n┃=> *_${await tr("Aquí tienes la descripción")}_*\n┃ *_${await tr("del grupo, léela!!")}_*\n┃\n\n${descs}\n\n┃\n┃ *_🥳 ${await tr("Disfruta de tu")}_*\n┃ *_${await tr("estadía en el grupo 🥳")}_*\n┃\n┗━━━━━━━━━━━`;
 let textWel = chat.sWelcome ? chat.sWelcome
 .replace(/@user/g, `@${userName}`)
 .replace(/@group/g, subject) 
@@ -63,7 +63,7 @@ sourceUrl: [nna, nna2, yt].getRandom()}}}, { quoted: fkontak })
 } else if (chat.welcome && (m.messageStubType == 28 || m.messageStubType == 32) && this.user.jid != global.conn.user.jid ) {
 let subject = groupMetadata.subject;
 let userName = `${m.messageStubParameters[0].split`@`[0]}`;
-let defaultBye = `┏━━━━━━━━━━━━\n┃──〘 *ADIOS* 〙───\n┃━━━━━━━━━━━━\n┃ *_☠ Se fue @${userName}_* \n┃ *_Que dios lo bendiga️_* \n┃ *_Y lo atropelle un tren 😇_*\n┗━━━━━━━━━━`;
+let defaultBye = `┏━━━━━━━━━━━━\n┃──〘 *ADIOS* 〙───\n┃━━━━━━━━━━━━\n┃ *_☠ ${await tr("Se fue ")} @${userName}_* \n┃ *_${await tr("Que dios lo bendiga")}️_* \n┃ *_${await tr("Y lo atropelle un tren")} 😇_*\n┗━━━━━━━━━━`;
 let textBye = chat.sBye ? chat.sBye
 .replace(/@user/g, `@${userName}`)
 .replace(/@group/g, subject)
@@ -85,7 +85,8 @@ mediaType: 1,
 sourceUrl: [nna, nna2, nnaa, yt, md].getRandom()}}}, { quoted: fkontak }) 
 } else if (chat.detect && m.messageStubType == 29) {
 let subject = groupMetadata.subject;
-let defaultPromote = `@${m.messageStubParameters[0].split`@`[0]} 𝘼𝙃𝙊𝙍𝘼 𝙀𝙎 𝘼𝘿𝙈𝙄𝙉 𝙀𝙉 𝙀𝙎𝙏𝙀 𝙂𝙍𝙐𝙋𝙊\n\n😼🫵𝘼𝘾𝘾𝙄𝙊𝙉 𝙍𝙀𝘼𝙇𝙄𝙕𝘼𝘿𝘼 𝙋𝙊𝙍: ${usuario}`
+let defaultPromote = `@${m.messageStubParameters[0].split`@`[0]} ${await tr("AHORA ES ADMIN EN ESTE GRUPO")}\n\n😼🫵
+${await tr("ACCIÓN REALIZADA POR:")} ${usuario}`
 let textAdm = chat.sPromote ? chat.sPromote
 .replace(/@user/g, `@${m.messageStubParameters[0].split`@`[0]}`)
 .replace(/@autor/g, `${usuario}`)
@@ -113,7 +114,7 @@ sourceUrl: [nna, nna2, nnaa].getRandom()
 //await this.sendMessage(m.chat, { text: textAdm, mentions: [m.sender, m.messageStubParameters[0], ...groupAdmins.map(v => v.id)] }, { quoted: fkontak, ephemeralExpiration: 24*60*100, disappearingMessagesInChat: 24*60*100})
 } else if (chat.detect && m.messageStubType == 30) {
 let subject = groupMetadata.subject;
-let defaultDemote = `@${m.messageStubParameters[0].split`@`[0]} 𝘿𝙀𝙅𝘼 𝘿𝙀 𝙎𝙀𝙍 𝘼𝘿𝙈𝙄𝙉 𝙀𝙉 𝙀𝙎𝙏𝙀 𝙂𝙍𝙐𝙋𝙊\n\n😼🫵𝘼𝘾𝘾𝙄𝙊𝙉 𝙍𝙀𝘼𝙇𝙄𝙕𝘼𝘿𝘼 𝙋𝙊𝙍: ${usuario}`
+let defaultDemote = `@${m.messageStubParameters[0].split`@`[0]} ${await tr("DEJA DE SER ADMIN EN ESTE GRUPO")}\n\n😼🫵${await tr("ACCIÓN REALIZADA POR:")} ${usuario}`
 let textAdmin = chat.sDemote ? chat.sDemote
 .replace(/@user/g, `@${m.messageStubParameters[0].split`@`[0]}`)
 .replace(/@autor/g, `${usuario}`)

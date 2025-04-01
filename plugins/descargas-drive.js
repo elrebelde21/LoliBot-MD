@@ -3,16 +3,16 @@ const userCaptions = new Map();
 const userRequests = {};
 
 let handler = async (m, { conn, args, usedPrefix, command }) => {
-if (!args[0]) throw `⚠️ Ingrese una Url de Drive\n• Ejemplo: ${usedPrefix + command} https://drive.google.com/file/d/1-8BSwPSAycKYMqveGm_JTu2c_wIDkJIt/view?usp=drivesdk`;
+if (!args[0]) throw `⚠️ ${await tr("Ingrese una Url de Drive")}\n• ${await tr("Ejemplo")}: ${usedPrefix + command} https://drive.google.com/file/d/1-8BSwPSAycKYMqveGm_JTu2c_wIDkJIt/view?usp=drivesdk`;
 
 if (userRequests[m.sender]) {
-conn.reply(m.chat, `⏳ *Hey @${m.sender.split('@')[0]} Espera...* Ya hay una solicitud en proceso. Por favor, espera a que termine antes de hacer otra...`, userCaptions.get(m.sender) || m)
+conn.reply(m.chat, `⏳ *${await tr("Hey")} @${m.sender.split('@')[0]}* ${await tr("*Espera...* Ya hay una solicitud en proceso. Por favor, espera a que termine antes de hacer otra...")}`, userCaptions.get(m.sender) || m)
 return;
 }
 userRequests[m.sender] = true;
 m.react("📥");
 try {
-const waitMessageSent = conn.reply(m.chat, `*⌛ 𝐂𝐚𝐥𝐦𝐚 ✋ 𝐂𝐥𝐚𝐜𝐤, 𝐘𝐚 𝐞𝐬𝐭𝐨𝐲 𝐄𝐧𝐯𝐢𝐚𝐝𝐨 𝐞𝐥 𝐚𝐫𝐜𝐡𝐢𝐯𝐨 🚀*\n*𝐒𝐢 𝐧𝐨 𝐥𝐞 𝐥𝐥𝐞𝐠𝐚 𝐞𝐥 𝐚𝐫𝐜𝐡𝐢𝐯𝐨 𝐞𝐬 𝐝𝐞𝐛𝐢𝐝𝐨 𝐚 𝐪𝐮𝐞 𝐞𝐬 𝐦𝐮𝐲 𝐩𝐞𝐬𝐚𝐝𝐨*`, m)
+const waitMessageSent = conn.reply(m.chat, `*⌛ ${await tr("Calma")} ✋ ${await tr("clack, Ya estoy enviado el archivo")} 🚀*\n*${await tr("Si no le llega el archivo es debido a que es muy pesado")}*`, m)
 userCaptions.set(m.sender, waitMessageSent);
 const downloadAttempts = [
 async () => {
@@ -42,7 +42,7 @@ continue; // Si falla, intentar con la siguiente API
 }}
 
 if (!fileData) {
-throw new Error('No se pudo descargar el archivo desde ninguna API');
+throw new Error(await tr('No se pudo descargar el archivo desde ninguna API'));
 }
 
 const { url, filename } = fileData;
@@ -51,7 +51,7 @@ await conn.sendMessage(m.chat, { document: { url: url }, mimetype: mimetype, fil
 await m.react("✅");
 } catch (e) {
 m.react(`❌`);
-m.reply(`\`\`\`⚠️ OCURRIO UN ERROR ⚠️\`\`\`\n\n> *Reporta el siguiente error a mi creador con el comando:* #report\n\n>>> ${e} <<<<`);
+m.reply(`\`\`\`⚠️ ${await tr("OCURRIO UN ERROR")} ⚠️\`\`\`\n\n> *${await tr("Reporta el siguiente error a mi creador con el comando:")}* #report\n\n>>> ${e} <<<< `)    
 console.log(e);
 } finally {
 delete userRequests[m.sender];

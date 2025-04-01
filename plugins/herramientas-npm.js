@@ -3,10 +3,10 @@ let { generateWAMessageFromContent } = (await import(global.baileys))
 import fetch from 'node-fetch'
 
 let handler = async (m, { text }) => {
-if (!text) throw '⚠️ *𝐈𝐧𝐠𝐫𝐞𝐬𝐞 𝐞𝐥 𝐧𝐨𝐦𝐛𝐫𝐞 𝐝𝐞𝐥 𝐦𝐨́𝐝𝐮𝐥𝐨 𝐪𝐮𝐞 𝐝𝐞𝐬𝐞𝐚 𝐛𝐮𝐬𝐜𝐚𝐫?*'
+if (!text) throw await tr('⚠️ *Ingrese el nombre del modulo que desea buscar?*')
 let res = await fetch(`http://registry.npmjs.com/-/v1/search?text=${text}`)
 let { objects } = await res.json()
-if (!objects.length) throw `⚠️ *𝐍𝐨 𝐬𝐞 𝐞𝐧𝐜𝐨𝐧𝐭𝐫𝐚𝐫𝐨𝐧 𝐫𝐞𝐬𝐮𝐥𝐭𝐚𝐝𝐨𝐬 𝐝𝐞 _"${text}"_*`
+if (!objects.length) throw await tr(`⚠️ *No se encontró resultados de _"${text}"_*`)
 let txt = objects.map(({ package: pkg }) => {
 return `*${pkg.name}* (v${pkg.version})\n_${pkg.links.npm}_\n_${pkg.description}_`
 }).join`\n\n`

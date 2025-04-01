@@ -40,7 +40,7 @@ throw !0;
 }
 
 if (!user.warnPv) {
-m.reply(`Hola, está prohibido usar los comandos en privado...\n\n*\`🔰 SI QUIERES HACERTE UN SUB BOT, USA LOS SIGUIENTES COMANDOS:\`*\n/serbot\n/code\n\n> _*Para usar mis funciones, únete al grupo oficial 👇*_\n${[nn, nnn, nnnt, nnntt, nnnttt].getRandom()}`); 
+m.reply(`${await tr("Hola, está prohibido usar los comandos en privado...")}\n\n*\`🔰 ${await tr("SI QUIERES HACERTE UN SUB BOT, USA LOS SIGUIENTES COMANDOS:")}\`*\n/serbot\n/code\n\n> _*${await tr("Para usar mis funciones, únete al grupo oficial")} 👇*_\n${[nn, nnn, nnnt, nnntt, nnnttt].getRandom()}`); 
 user.warnPv = true;
 throw !0; 
 }}

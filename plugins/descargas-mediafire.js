@@ -10,9 +10,9 @@ const userRequests = {};
 
 const handler = async (m, { conn, args, usedPrefix, command }) => {
 const sticker = 'https://qu.ax/Wdsb.webp';
-if (!args[0]) throw `⚠️ 𝙄𝙣𝙜𝙧𝙚𝙨𝙚 𝙪𝙣 𝙀𝙣𝙡𝙖𝙘𝙚 𝙫𝙖𝙡𝙞𝙙𝙤 𝙙𝙚𝙡 𝙢𝙚𝙙𝙞𝙖𝙛𝙞𝙧𝙚 𝙀𝙟:*\n${usedPrefix + command} https://www.mediafire.com/file/sd9hl31vhhzf76v/EvolutionV1.1-beta_%2528Recomendado%2529.apk/file`;
+if (!args[0]) throw `⚠️ ${await tr("Ingrese un enlace válido del mediafire, Ejemplo")}:*\n${usedPrefix + command} https://www.mediafire.com/file/sd9hl31vhhzf76v/EvolutionV1.1-beta_%2528Recomendado%2529.apk/file`;
 
-if (userRequests[m.sender]) return await conn.reply(m.chat, `⚠️ Hey @${m.sender.split('@')[0]} pendejo, ya estás descargando algo 🙄\nEspera a que termine tu solicitud actual antes de hacer otra...`, userCaptions.get(m.sender) || m);
+if (userRequests[m.sender]) return await conn.reply(m.chat, `⚠️ ${await tr("Hey")} @${m.sender.split('@')[0]} ${await tr("pendejo, ya estás descargando algo")} 🙄\n> ${await tr("Espera a que termine tu solicitud actual antes de hacer otra...")}`, userCaptions.get(m.sender) || m);
 userRequests[m.sender] = true;
 m.react(`🚀`);
 try {
@@ -56,14 +56,14 @@ console.error(`Error in attempt: ${err.message}`);
 continue; // Si falla, intentar con la siguiente API
 }}
 
-if (!fileData) throw new Error('No se pudo descargar el archivo desde ninguna API');
+if (!fileData) throw new Error(await tr('No se pudo descargar el archivo desde ninguna API'));
 const file = Array.isArray(fileData) ? fileData[0] : fileData;
-const caption = `┏━━『 𝐌𝐄𝐃𝐈𝐀𝐅𝐈𝐑𝐄 』━━•
-┃❥ 𝐍𝐨𝐦𝐛𝐫𝐞 : ${file.filename}
-┃❥ 𝐏𝐞𝐬𝐨 : ${file.filesize}
-┃❥ 𝐓𝐢𝐩𝐨 : ${file.mimetype}
+const caption = `┏━━『 ${await tr("MEDIAFIRE")} 』━━•
+┃❥ ${await tr("Nombre")} : ${file.filename}
+┃❥ ${await tr("Peso")} : ${file.filesize}
+┃❥ ${await tr("Tipo")} : ${file.mimetype}
 ╰━━━⊰ 𓃠 ${vs} ⊱━━━━•
-> ⏳ ᴱˢᵖᵉʳᵉ ᵘⁿ ᵐᵒᵐᵉⁿᵗᵒ ᵉⁿ ˡᵒˢ ᵠᵘᵉ ᵉⁿᵛᶦᵒˢ ˢᵘˢ ᵃʳᶜʰᶦᵛᵒˢ`.trim();
+> ⏳ ${await tr("Espere un momento en los que envios sus archivos")}`.trim();
 const captionMessage = await conn.reply(m.chat, caption, m)
 userCaptions.set(m.sender, captionMessage);
 await conn.sendFile(m.chat, file.url, file.filename, '', m, null, { mimetype: file.mimetype, asDocument: true });

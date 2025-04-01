@@ -16,9 +16,9 @@ const userCaptions = new Map();
 const userRequests = {};
 
 const handler = async (m, { conn, command, args, text, usedPrefix }) => {
-if (!text) return m.reply(`*🤔Que está buscando? 🤔*\n*Ingrese el nombre de la canción*\n\n*Ejemplo:*\n${usedPrefix + command} emilia 420`);
+if (!text) return m.reply(`*🤔 ${await tr("Que está buscando?")} 🤔*\n*${await tr("Ingrese el nombre de la canción")}*\n\n*${await tr("Ejemplo:")}*\n${usedPrefix + command} emilia 420`);
 const tipoDescarga = command === 'play' || command === 'musica' ? 'audio' : command === 'play2' ? 'video' : command === 'play3' ? 'audio (documento)' : command === 'play4' ? 'video (documento)' : '';
-if (userRequests[m.sender]) return await conn.reply(m.chat, `⏳ Hey @${m.sender.split('@')[0]} espera pendejo, ya estás descargando algo 🙄\nEspera a que termine tu solicitud actual antes de hacer otra...`, userCaptions.get(m.sender) || m);
+if (userRequests[m.sender]) return await conn.reply(m.chat, `⏳ ${await tr("Hey")} @${m.sender.split('@')[0]} ${await tr("espera pendejo, ya estás descargando algo")} 🙄\n${await tr("Espera a que termine tu solicitud actual antes de hacer otra...")}`, userCaptions.get(m.sender) || m);
 userRequests[m.sender] = true;
 try {
 let videoIdToFind = text.match(youtubeRegexID) || null;
@@ -31,8 +31,8 @@ ytplay2 = ytplay2.all?.[0] || ytplay2.videos?.[0] || ytplay2;
 const PlayText = await conn.sendMessage(m.chat, { text: `${yt_play[0].title}
 *⇄ㅤ     ◁   ㅤ  ❚❚ㅤ     ▷ㅤ     ↻*
 
-*⏰ Duración:* ${secondString(yt_play[0].duration.seconds)}
-*👉🏻Aguarde un momento en lo que envío su ${tipoDescarga}*`,  
+*⏰ ${await tr("Duración")}:* ${secondString(yt_play[0].duration.seconds)}
+*👉🏻 ${await tr("Aguarde un momento en lo que envío su")} ${tipoDescarga}*`,  
 contextInfo:{  
 forwardedNewsletterMessageInfo: { 
 newsletterJid: '120363355261011910@newsletter', 
@@ -130,7 +130,7 @@ if (command === 'play2' || command === 'video') {
 const { mediaData, isDirect } = await download(videoApis);
 if (mediaData) {
 const fileSize = await getFileSize(mediaData);
-const messageOptions = { fileName: `${yt_play[0].title}.mp4`, caption: `🔰 Aquí está tu video \n🔥 Título: ${yt_play[0].title}`, mimetype: 'video/mp4' };
+const messageOptions = { fileName: `${yt_play[0].title}.mp4`, caption: `🔰 ${await tr("Aquí está tu video")}\n🔥 ${await tr("Título")}: ${yt_play[0].title}`, mimetype: 'video/mp4' };
 if (fileSize > LimitVid) {
 await conn.sendMessage(m.chat, { document: isDirect ? mediaData : { url: mediaData }, ...messageOptions }, { quoted: m });
 } else {
@@ -150,7 +150,7 @@ await m.react('❌');
 if (command === 'play4' || command === 'playdoc2') {
 const { mediaData, isDirect } = await download(videoApis);
 if (mediaData) {
-await conn.sendMessage(m.chat, { document: isDirect ? mediaData : { url: mediaData }, fileName: `${yt_play[0].title}.mp4`, caption: `🔰Título: ${yt_play[0].title}`, thumbnail: yt_play[0].thumbnail, mimetype: 'video/mp4'}, { quoted: m })
+await conn.sendMessage(m.chat, { document: isDirect ? mediaData : { url: mediaData }, fileName: `${yt_play[0].title}.mp4`, caption: `🔰${await tr("Título")}: ${yt_play[0].title}`, thumbnail: yt_play[0].thumbnail, mimetype: 'video/mp4'}, { quoted: m })
 } else {
 //await m.react('❌');
 }}

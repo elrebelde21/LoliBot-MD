@@ -16,17 +16,17 @@ const isClose = {'open': 'not_announcement',
 }[(args[0] || '')];
 
 if (isClose === undefined) {
-const caption = `*• Ejemplo:*\n${usedPrefix + command} open 1\n${usedPrefix + command} close 1\n\n*• Ejemplo de uso:* ${usedPrefix + command} close 1\n\n> *_🌿 Para que el grupo este cerrado una hora._*`;
+const caption = `*• ${await tr("Ejemplo")}:*\n${usedPrefix + command} open 1\n${usedPrefix + command} close 1\n\n*• ${await tr("Ejemplo de uso")}:* ${usedPrefix + command} close 1\n\n> *_🌿 ${await tr("Para que el grupo este cerrado una hora.")}_*`;
 m.reply(caption);
 throw false;
 }
 const timeoutset = 86400000 * args[1] / 24;
 await conn.groupSettingUpdate(m.chat, isClose).then(async (_)=> {
-m.reply(`⚠️ *_Grupo ${isClose == 'announcement' ? 'cerrado' : 'abierto'} ${args[1] ? `durante *${clockString(timeoutset)}_*` : ''}`)});
+m.reply(`⚠️ *_${await tr("Grupo")} ${isClose == 'announcement' ? await tr('cerrado') : await tr('abierto')} ${args[1] ? `${await tr("durante")} *${clockString(timeoutset)}_*` : ''}`)});
 if (args[1]) {
 setTimeout(async () => {
 await conn.groupSettingUpdate(m.chat, `${isClose == 'announcement' ? 'not_announcement' : 'announcement'}`).then(async (_)=>{
-conn.reply(m.chat, `${isClose == 'not_announcement' ? '*El grupo ha sido cerrado, ¡ahora solo los administradores pueden enviar mensajes!*' : '*El grupo se ha abierto, ¡ahora todos los miembros pueden enviar mensajes!*'}!`);
+conn.reply(m.chat, `${isClose == 'not_announcement' ? await tr('*El grupo ha sido cerrado, ¡ahora solo los administradores pueden enviar mensajes!*') : await tr('*El grupo se ha abierto, ¡ahora todos los miembros pueden enviar mensajes!*')}!`);
 })}, timeoutset)}};
 handler.help = ['grouptime *<open/close>* *<número>*'];
 handler.tags = ['group'];

@@ -1,7 +1,7 @@
 import fetch from 'node-fetch';
 import moment from 'moment-timezone';
 const handler = async (m, {conn, command, usedPrefix}) => {
-const fakee2 = { contextInfo: { mentionedJid: null, forwardingScore: 1, isForwarded: true, forwardedNewsletterMessageInfo: { newsletterJid: channelRD.id, serverMessageId: '', newsletterName: channelRD.name }, externalAdReply: { title: "🥵 CONTENIDO +18🥵", body: "No alto para menores..", mediaType: 1, renderLargerThumbnail: false, previewType: `PHOTO`, thumbnail: imagen3, sourceUrl: redes.getRandom() }}}
+const fakee2 = { contextInfo: { mentionedJid: null, forwardingScore: 1, isForwarded: true, forwardedNewsletterMessageInfo: { newsletterJid: channelRD.id, serverMessageId: '', newsletterName: channelRD.name }, externalAdReply: { title: `🥵 ${await tr("CONTENIDO +18")} 🥵`, body: `${await tr("No alto para menores..")}`, mediaType: 1, renderLargerThumbnail: false, previewType: `PHOTO`, thumbnail: imagen3, sourceUrl: redes.getRandom() }}}
 let porn = 'https://qu.ax/bXMB.webp'
 let porn2 = 'https://qu.ax/TxtQ.webp'
 if (!db.data.chats[m.chat].modohorny && m.isGroup) {
@@ -38,17 +38,17 @@ return
 switch (command) {
 case 'pack':
 const url = await pack[Math.floor(Math.random() * pack.length)];
-conn.sendFile(m.chat, url, 'error.jpg', "_🥵 aqui tiene mi Pack 😏_", m, null, fakee2);
+conn.sendFile(m.chat, url, 'error.jpg', `_🥵 ${await tr("aqui tiene mi Pack")} 😏_`, m, null, fakee2);
 //conn.sendButton(m.chat, '_🥵 aqui tiene mi Pack 😏_', botname, url, [['🥵 𝐒𝐈𝐆𝐔𝐈𝐄𝐍𝐓𝐄 🥵', `/${command}`]], null, null, m)
 break;
 case 'pack2':
 const url2 = await packgirl[Math.floor(Math.random() * packgirl.length)];
-conn.sendFile(m.chat, url2, 'error.jpg', "_🥵 aqui tiene mi Pack 😏_", m, null, fakee2);
+conn.sendFile(m.chat, url2, 'error.jpg', `_🥵 ${await tr("aqui tiene mi Pack")} 😏_`, m, null, fakee2);
 //conn.sendButton(m.chat, '_🥵 aqui tiene mi Pack 😏_', botname, url2, [['🥵 𝐒𝐈𝐆𝐔𝐈𝐄𝐍𝐓𝐄 🥵', `/${command}`]], null, null, m)
 break;
 case 'pack3':
 const url3 = await packmen[Math.floor(Math.random() * packmen.length)];
-conn.sendFile(m.chat, url3, 'error.jpg', "_🥵 aqui tiene mi Pack 😏_", m, null, fakee2);
+conn.sendFile(m.chat, url3, 'error.jpg', `_🥵 ${await tr("aqui tiene mi Pack")} 😏_`, m, null, fakee2);
 //conn.sendButton(m.chat, '_🥵 aqui tiene mi Pack 😏_', botname, url3, [['🥵 𝐒𝐈𝐆𝐔𝐈𝐄𝐍𝐓𝐄 🥵', `/${command}`]], null, null, m) 
 break;
 case 'girls': case 'pack4':
@@ -57,12 +57,12 @@ conn.sendFile(m.chat, `${apis}/api/girls`, 'error.jpg', "🥵", m, null, fakee2)
 break
 case 'videoxxx': case 'vídeoxxx':
 const url4 = await videosxxxc[Math.floor(Math.random() * videosxxxc.length)];
-await conn.sendFile(m.chat, url4, 'error.jpg', "_*ᴅɪsғʀᴜᴛᴀ ᴅᴇʟ ᴠɪᴅᴇᴏ 🥵_", m, null, fakee2);
+await conn.sendFile(m.chat, url4, 'error.jpg', `_*${await tr("Disfruta del video")} 🥵_`, m, null, fakee2);
 //conn.sendButton(m.chat, '_*ᴅɪsғʀᴜᴛᴀ ᴅᴇʟ ᴠɪᴅᴇᴏ 🥵*_', botname, url4, [['🥵 𝐒𝐈𝐆𝐔𝐈𝐄𝐍𝐓𝐄 🥵', `/${command}`]], null, null, m)       
 break;
 case 'videoxxxlesbi': case 'videolesbixxx': case 'pornolesbivid': case 'pornolesbianavid': case 'pornolesbiv': case 'pornolesbianav': case 'pornolesv':
 const url5 = await videosxxxc2[Math.floor(Math.random() * videosxxxc2.length)];
-await conn.sendFile(m.chat, url5, 'error.jpg', "_*ᴅɪsғʀᴜᴛᴀ ᴅᴇʟ ᴠɪᴅᴇᴏ 🥵_", m, null, fakee2);
+await conn.sendFile(m.chat, url5, 'error.jpg', `_*${await tr("Disfruta del video")} 🥵_`, m, null, fakee2);
 //conn.sendButton(m.chat, '_*ᴅɪsғʀᴜᴛᴀ ᴅᴇʟ ᴠɪᴅᴇᴏ 🥵*_', botname, url5, [['🥵 𝐒𝐈𝐆𝐔𝐈𝐄𝐍𝐓𝐄 🥵', `/${command}`]], null, null, m)   
 break;
 }};

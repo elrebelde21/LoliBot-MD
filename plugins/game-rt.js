@@ -13,16 +13,16 @@ function formatExp(amount) {
 async function handler(m, { conn, args, command, usedPrefix }) {
 let user = global.db.data.users[m.sender];
 const time = global.db.data.users[m.sender].wait + 30000;
-if (new Date - global.db.data.users[m.sender].wait < 30000) return conn.fakeReply(m.chat,  `*🕓 Calma crack 🤚, Espera ${msToTime(time - new Date())} antes de volver usar en comando*`, m.sender, `ᴺᵒ ʰᵃᵍᵃⁿ ˢᵖᵃᵐ`, 'status@broadcast', null, fake);
+if (new Date - global.db.data.users[m.sender].wait < 30000) return conn.fakeReply(m.chat, await tr(`*🕓 Calma crack 🤚, Espera ${msToTime(time - new Date())} antes de volver usar en comando*`), m.sender, `ᴺᵒ ʰᵃᵍᵃⁿ ˢᵖᵃᵐ`, 'status@broadcast', null, fake);
 
-if (args.length < 2) return conn.reply(m.chat, `⚠️ Formato incorrecto. Usa: ${usedPrefix + command} <color> <cantidad>\n\nEjemplo: ${usedPrefix + command} black 100`, m);
+if (args.length < 2) return conn.reply(m.chat, `⚠️ ${await tr("Formato incorrecto. Usa: ${usedPrefix + command} <color> <cantidad>\n\nEjemplo:")} ${usedPrefix + command} black 100`, m);
 
 const color = args[0].toLowerCase();
 const betAmount = parseInt(args[1]);
 
 if (!['red', 'black', 'green'].includes(color)) return conn.reply(m.chat, 'Color no válido. Usa "red", "black" o "green".', m);
-if (isNaN(betAmount) || betAmount <= 0) return conn.reply(m.chat, 'Cantidad no válida. Debe ser un número positivo.', m);
-if (!user || user.exp < betAmount) return conn.reply(m.chat, 'No tienes suficiente exp para apostar.', m);
+if (isNaN(betAmount) || betAmount <= 0) return conn.reply(m.chat, await tr('Cantidad no válida. Debe ser un número positivo.'), m);
+if (!user || user.exp < betAmount) return conn.reply(m.chat, await tr('No tienes suficiente exp para apostar.'), m);
 const resultColor = getRandomColor();
 const isWin = resultColor === color;
 
@@ -35,7 +35,7 @@ winAmount = betAmount;
 }}
 user.exp = (user.exp || 0) - betAmount + winAmount;
 global.db.data.users[m.sender].wait = new Date * 1;
-conn.reply(m.chat, `😱 La ruleta cayó en *${resultColor}* y ${isWin ? 'ganaste' : 'perdiste'} *${formatExp(isWin ? winAmount : betAmount)}* exp.`, m);
+conn.reply(m.chat, await tr(`😱 La ruleta cayó en *${resultColor}* y ${isWin ? 'ganaste' : 'perdiste'} *${formatExp(isWin ? winAmount : betAmount)}* exp.`), m);
 }
 handler.help = ['rt <color> <cantidad>'];
 handler.tags = ['game'];

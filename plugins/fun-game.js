@@ -10,12 +10,17 @@ let handler = async (m, { conn, text, command, usedPrefix, args }) => {
 let pp = 'https://telegra.ph/file/c7924bf0e0d839290cc51.jpg'
 let fkontak = { "key": { "participants":"0@s.whatsapp.net", "remoteJid": "status@broadcast", "fromMe": false, "id": "Halo" }, "message": { "contactMessage": { "vcard": `BEGIN:VCARD\nVERSION:3.0\nN:Sy;Bot;;;\nFN:y\nitem1.TEL;waid=${m.sender.split('@')[0]}:${m.sender.split('@')[0]}\nitem1.X-ABLabel:Ponsel\nEND:VCARD` }}, "participant": "0@s.whatsapp.net" }  
 try {
+let msgGamPvp1 = await tr("EMPATE 🤝")
+let msgGamPvp2 = await tr("🎁 Premios")
+let msgGamPvp3 = await tr("HA GANADO! 🎉")
+let msgGamPvp4 = await tr("HA PEDIDO! 🤡")
+let msgGamPvp5 = await tr("❌ Pérdida")
 
 if (command == 'ppt' || command == 'pvp' || command == 'suit' || command == 'suitpvp') {
 const time = global.db.data.users[m.sender].wait + 30000;
-if (new Date() - global.db.data.users[m.sender].wait < 30000) return conn.fakeReply(m.chat, `*🕓 𝙃𝙚𝙮, 𝙀𝙨𝙥𝙚𝙧𝙖 ${msToTime(time - new Date())} 𝙖𝙣𝙩𝙚𝙨 𝙙𝙚 𝙪𝙨𝙖𝙧 𝙤𝙩𝙧𝙤𝙨 𝙘𝙤𝙢𝙖𝙣𝙙𝙤*`, m.sender, `ᴺᵒ ʰᵃᵍᵃⁿ ˢᵖᵃᵐ`, 'status@broadcast', null, fake);
+if (new Date() - global.db.data.users[m.sender].wait < 30000) return conn.fakeReply(m.chat, `*🕓 ${await tr("Hey, espera")} ${msToTime(time - new Date())} ${await tr("Antes de usar otros comando")}*`, m.sender, `ᴺᵒ ʰᵃᵍᵃⁿ ˢᵖᵃᵐ`, 'status@broadcast', null, fake);
 
-const guideText = `𝐏𝐢𝐞𝐝𝐫𝐚 🗿, 𝐏𝐚𝐩𝐞𝐥 📄 𝐨 𝐓𝐢𝐣𝐞𝐫𝐚 ✂️\n\n👾 𝙅𝙪𝙜𝙖𝙧 𝙘𝙤𝙣 𝙚𝙡 𝙗𝙤𝙩:\n• ${usedPrefix + command} piedra\n• ${usedPrefix + command} papel\n• ${usedPrefix + command} tijera\n\n🕹 𝙅𝙪𝙜𝙖𝙧 𝙘𝙤𝙣 𝙪𝙣 𝙪𝙨𝙪𝙖𝙧𝙞𝙤:\n${usedPrefix + command} @usuario`;
+const guideText = `${await tr("Piedra 🗿, Papel 📄 o Tijera ✂️\n\n👾 Jugar con el bot")}:\n• ${usedPrefix + command} piedra\n• ${usedPrefix + command} papel\n• ${usedPrefix + command} tijera\n\n${await tr("🕹 Jugar con un usuario")}:\n${usedPrefix + command} @usuario`;
 if (!m.mentionedJid[0] && !args[0]) return conn.sendButton(m.chat, guideText, wm, pp, [['Piedra 🗿', `${usedPrefix + command} piedra`], ['Papel 📄', `${usedPrefix + command} papel`], ['Tijera ✂️', `${usedPrefix + command} tijera`]], m);
 const user = global.db.data.users[m.sender];
 const playerChoice = args[0]?.toLowerCase();
@@ -32,26 +37,27 @@ tijera: { beats: 'papel', win: 1000, lose: 300, winType: 'coins', loseType: 'coi
 let result, message;
 if (playerChoice === botChoice) {
 user.exp += 500;
-result = '𝙀𝙈𝙋𝘼𝙏𝙀 🤝';
-message = '🎁 Premios : 500 XP';
+result = msgGamPvp1
+message = `${msgGamPvp2} : 500 XP`
 } else if (rules[playerChoice].beats === botChoice) {
 user[rules[playerChoice].winType] += rules[playerChoice].win;
-result = '𝙃𝘼 𝙂𝘼𝙉𝘼𝘿𝙊! 🎉';
-message = `🎁 Premios :  ${rules[playerChoice].win} ${rules[playerChoice].winType}`;
+result = msgGamPvp3
+message = `${msgGamPvp2} :  ${rules[playerChoice].win} ${rules[playerChoice].winType}`;
 } else {
 user[rules[playerChoice].loseType] -= rules[playerChoice].lose;
-result = '𝙃𝘼 𝙋𝙀𝙍𝘿𝙄𝘿𝙊! 🤡';
-message = `❌ Pérdida: -${rules[playerChoice].lose} ${rules[playerChoice].loseType}`;
+result = msgGamPvp4
+message = `${msgGamPvp5}: -${rules[playerChoice].lose} ${rules[playerChoice].loseType}`;
 }
-conn.reply(m.chat, `\`「 ${result} 」\`\n\n👉 Tu: ${playerChoice}\n👉 El Bot: ${botChoice}\n${message}`, m, { contextInfo: {externalAdReply: { title: name, body: wm, thumbnail: img.getRandom(), sourceUrl: redes.getRandom()}}});
+conn.reply(m.chat, `\`「 ${result} 」\`\n\n${await tr("👉 Tu")}: ${playerChoice}\n${await tr("👉 El Bot")}: ${botChoice}\n${message}`, m, { contextInfo: {externalAdReply: { title: name, body: wm, thumbnail: img.getRandom(), sourceUrl: redes.getRandom()}}});
 }
 
 if (m.mentionedJid[0]) {
-if (Object.values(conn.suit).find(room => room.id.startsWith('suit') && [room.p, room.p2].includes(m.sender))) return m.reply(`⚠️ 𝙏𝙚𝙧𝙢𝙞𝙣𝙖 𝙩𝙪 𝙥𝙖𝙧𝙩𝙞𝙙𝙖 𝙖𝙣𝙩𝙚𝙨 𝙙𝙚 𝙞𝙣𝙞𝙘𝙞𝙖 𝙤𝙩𝙧𝙖`);
-if (Object.values(conn.suit).find(room => room.id.startsWith('suit') && [room.p, room.p2].includes(m.mentionedJid[0]))) return m.reply(`⚠️ 𝙀𝙡 𝙪𝙨𝙪𝙖𝙧𝙞𝙤 𝙮𝙖 𝙚𝙨𝙩𝙖́ 𝙟𝙪𝙜𝙖𝙣𝙙𝙤, 𝙚𝙨𝙥𝙚𝙧𝙖 𝙖 𝙦𝙪𝙚 𝙩𝙚𝙧𝙢𝙞𝙣𝙚`);
+if (Object.values(conn.suit).find(room => room.id.startsWith('suit') && [room.p, room.p2].includes(m.sender))) return m.reply(await tr(`⚠️ Termina tu partida  antes de inicia otra`));
+if (Object.values(conn.suit).find(room => room.id.startsWith('suit') && [room.p, room.p2].includes(m.mentionedJid[0]))) return m.reply(await tr(`⚠️ El usuario ya esta jugando, espera a que termine.`));
 
 const id = 'suit_' + new Date() * 1;
-const caption = `🎮👾 𝙋𝙑𝙋 - 𝙋𝙄𝙀𝘿𝙍𝘼, 𝙋𝘼𝙋𝙀𝙇 𝙊 𝙏𝙄𝙅𝙀𝙍𝘼 👾🎮\n\n@${m.sender.split`@`[0]} 𝘿𝙀𝙎𝘼𝙁𝙄𝘼 𝘼 @${m.mentionedJid[0].split`@`[0]}\n\n> _*Escribe (aceptar) para aceptar*_\n> _*Escribe (rechazar) para rechazar*_`;
+const caption = `🎮👾 ${await tr("PVP - PIEDRA, PAPEL O TIJERA")} 👾🎮\n\n@${m.sender.split`@`[0]} ${await tr("DESAFIA A")} @${m.mentionedJid[0].split`@`[0]}\n\n${await tr("> _*Escribe (aceptar) para aceptar*_\n> _*Escribe (rechazar) para rechazar*_")}`;
+const msgTimPvp = await tr(`⏳ TIEMPO AGOTADO, EL PVP SE CANCELA`)
 conn.suit[id] = {
 chat: await conn.sendMessage(m.chat, { text: caption, mentions: [m.sender, m.mentionedJid[0]] }),
 id: id,
@@ -59,7 +65,7 @@ p: m.sender,
 p2: m.mentionedJid[0],
 status: 'wait',
 waktu: setTimeout(() => {
-if (conn.suit[id]) conn.reply(m.chat, `⏳ 𝙏𝙄𝙀𝙈𝙋𝙊 𝘼𝙂𝙊𝙏𝘼𝘿𝙊, 𝙀𝙇 𝙋𝙑𝙋 𝙎𝙀 𝘾𝘼𝙉𝘾𝙀𝙇𝘼`, m);
+if (conn.suit[id]) conn.reply(m.chat, msgTimPvp, m);
 delete conn.suit[id];
 }, timeout),
 poin: 1000,
@@ -97,17 +103,20 @@ consolation: 2,
 symbol: '💎'
 }}
 
-const fa = `${mg}𝙐𝙨𝙖𝙧 𝙙𝙚 𝙡𝙖 𝙨𝙞𝙜𝙪𝙞𝙚𝙣𝙩𝙚 𝙢𝙖𝙣𝙚𝙧𝙖:\n\n𝙀𝙟𝙚𝙢𝙥𝙡𝙤:\n*• ${usedPrefix}slot1 50* (aportas exp)\n*• ${usedPrefix}slot2 50* (aportas LoliCoins)\n*• ${usedPrefix}slot3 50* (aportas Diamantes)`.trim()
+const fa = `${mg} ${await tr("Usar de la siguiente manera")}:\n*• ${usedPrefix}slot1 50* (${await tr("aportas exp")})\n*• ${usedPrefix}slot2 50* (${await tr("aportas LoliCoins")})\n*• ${usedPrefix}slot3 50* (${await tr("aportas Diamantes")})`.trim()
+
+let msgText1 = await tr(`⚠️ Debes apostar  un minimo de *10 ${name}*`)
+let msgText2 = await tr(`⚠️ No tienes  suficientes *${name}* Para apostar. interactuar con el bot para obtener mas recursos.`)
 
 const validateBet = (users, apuesta, currency, name) => {
-if (apuesta < 10) throw `⚠️ 𝐃𝐞𝐛𝐞𝐬 𝐚𝐩𝐨𝐬𝐭𝐚𝐫 𝐮𝐧 𝐦𝐢𝐧𝐢𝐦𝐨 𝐝𝐞 *10 ${name}*`
-if (users[currency] < apuesta) throw `⚠️ 𝐍𝐨 𝐭𝐢𝐞𝐧𝐞𝐬 𝐬𝐮𝐟𝐢𝐜𝐢𝐞𝐧𝐭𝐞𝐬 *${name}* 𝐩𝐚𝐫𝐚 𝐚𝐩𝐨𝐬𝐭𝐚r. 𝐈𝐧𝐭𝐞𝐫𝐚𝐜𝐭𝐮𝐚 𝐜𝐨𝐧 𝐞𝐥 𝐛𝐨𝐭 𝐩𝐚𝐫𝐚 𝐨𝐛𝐭𝐞𝐧𝐞𝐫 𝐦𝐚́𝐬 𝐫𝐞𝐜𝐮𝐫𝐬𝐨𝐬.`
+if (apuesta < 10) throw msgText1
+if (users[currency] < apuesta) throw msgText2
 }
 
 const playSlot = async (m, conn, apuesta, config, users) => {
 const { currency, name, emojis, cooldown, bonusWin, consolation } = config
 const time = users.lastslot + cooldown
-if (new Date() - users.lastslot < cooldown) throw `*𝐕𝐮𝐞𝐥𝐯𝐚 𝐞𝐧: ${msToTime(time - new Date())} 𝐩𝐚𝐫𝐚 𝐜𝐨𝐧𝐭𝐢𝐧𝐮𝐚𝐫 𝐚𝐩𝐨𝐬𝐭𝐚𝐧𝐝𝐨 ${name}* 🎰`
+if (new Date() - users.lastslot < cooldown) throw await tr(`*Vuelva en: ${msToTime(time - new Date())} para continuar apostando ${name}* 🎰`)
 users.lastslot = Date.now()
 
 const a = Math.floor(Math.random() * emojis.length)
@@ -120,15 +129,21 @@ y[i] = emojis[(b + i) % emojis.length]
 z[i] = emojis[(c + i) % emojis.length]
 }
 
+const msgApost1 = await tr("🥳 *¡QUÉ PRO! HAS GANADO")
+const msgApost2 = await tr("😯 *¡CASI! VUELVE A INTENTAR*\n*BONO DE")
+const msgApost3 = await tr("😿 *¡HAS PERDIDO!")
+const msgApost4 = await tr("RANURAS")
+const msgApost5 = await tr("SLOTS")
+
 let end
 if (a === b && b === c) {
-end = `🥳 *¡QUÉ PRO! HAS GANADO +${bonusWin(apuesta)} ${name}*`
+end = `${msgApost1} +${bonusWin(apuesta)} ${name}*`
 users[currency] += apuesta
 } else if (a === b || a === c || b === c) {
-end = `😯 *¡CASI! VUELVE A INTENTAR*\n*BONO DE +${consolation} ${name}*`
+end = `${msgApost2} +${consolation} ${name}*`
 users[currency] += consolation
 } else {
-end = `😿 *¡HAS PERDIDO! ❌ -${apuesta} ${name}*`
+end = `${msgApost3} ❌ -${apuesta} ${name}*`
 users[currency] -= apuesta
 }
 
@@ -144,11 +159,11 @@ const array = [...arrayCasuale]
 const { key } = await conn.sendMessage(m.chat, { text: `🕹` }, { quoted: m })
 
 for (let i = 0; i < maxIterations; i++) {
-await conn.sendMessage(m.chat, {text: `🎰 | *RANURAS* | 🎰\n────────\n${array[i]}\n────────\n🎰 | *SLOTS* | 🎰`, edit: key }, { quoted: m })
+await conn.sendMessage(m.chat, {text: `🎰 | *${msgApost4}* | 🎰\n────────\n${array[i]}\n────────\n🎰 | *${msgApost5}* | 🎰`, edit: key }, { quoted: m })
 await new Promise(resolve => setTimeout(resolve, 50))
 }
 
-await conn.sendMessage(m.chat, { text: `🎰 | *RANURAS* | 🎰\n────────\n${x[0]} : ${y[0]} : ${z[0]}\n${x[1]} : ${y[1]} : ${z[1]}\n${x[2]} : ${y[2]} : ${z[2]}\n────────\n🎰 | *SLOTS* | 🎰\n\n${end}`, edit: key }, { quoted: m })
+await conn.sendMessage(m.chat, { text: `🎰 | *${msgApost4}* | 🎰\n────────\n${x[0]} : ${y[0]} : ${z[0]}\n${x[1]} : ${y[1]} : ${z[1]}\n${x[2]} : ${y[2]} : ${z[2]}\n────────\n🎰 | *${msgApost5}* | 🎰\n\n${end}`, edit: key }, { quoted: m })
 }
 
 if (command === 'apostar' || command === 'slot') {
@@ -156,7 +171,7 @@ if (!args[0]) return m.reply(fa)
 if (isNaN(args[0])) return m.reply(fa)
 const apuesta = parseInt(args[0])
         
-await conn.sendButton(m.chat, `*Elige en qué apostar tus ${apuesta}*`, botname, null, [['⚡ Exp', `.slot1 ${apuesta}`], ['🪙 LoliCoins', `.slot2 ${apuesta}`], ['💎 Diamantes', `.slot3 ${apuesta}`]], null, null, m)
+await conn.sendButton(m.chat, `*${await tr("Elige en qué apostar tus")} ${apuesta}*`, botname, null, [['⚡ Exp', `.slot1 ${apuesta}`], ['🪙 LoliCoins', `.slot2 ${apuesta}`], ['💎 Diamantes', `.slot3 ${apuesta}`]], null, null, m)
 return
 }
 
@@ -175,12 +190,12 @@ m.reply(e)
 
 if (command == 'tictactoe' || command == 'ttc' || command == 'ttt' || command == 'xo') {
 conn.game = conn.game ? conn.game : {}
-if (Object.values(conn.game).find(room => room.id.startsWith('tictactoe') && [room.game.playerX, room.game.playerO].includes(m.sender))) return m.reply(`⚠️ 𝙏𝙤𝙙𝙖𝙫𝙞𝙖 𝙖𝙡𝙜𝙪𝙞𝙚𝙣 𝙚𝙨𝙩𝙖 𝙟𝙪𝙜𝙖𝙣𝙙𝙤 𝙚𝙣 𝙡𝙖 𝙨𝙖𝙡𝙖 𝙨𝙞 𝙦𝙪𝙞𝙚𝙧𝙚 𝙖𝙗𝙖𝙣𝙙𝙤𝙣𝙖𝙧 𝙚𝙨𝙘𝙧𝙞𝙗𝙖 *salir*\n𝙏𝙖𝙢𝙗𝙞𝙚𝙣 𝙥𝙪𝙚𝙙𝙚𝙨 𝙚𝙡𝙞𝙢𝙞𝙣𝙖𝙧 𝙡𝙖 𝙨𝙖𝙡𝙖 𝙪𝙨𝙖𝙣𝙙𝙤 𝙚𝙡 𝙘𝙤𝙢𝙖𝙣𝙙𝙤 *${usedPrefix}delttt*`) 
-if (!text) return m.reply(`*⚠️ 𝘿𝙚𝙗𝙚 𝙙𝙚 𝙖𝙜𝙧𝙚𝙜𝙖 𝙪𝙣 𝙣𝙤𝙢𝙗𝙧𝙚 𝙖 𝙡𝙖 𝙨𝙖𝙡𝙖\n𝙀𝙟𝙚𝙢𝙥𝙡𝙤\n${usedPrefix + command} Sala bot*`) 
+if (Object.values(conn.game).find(room => room.id.startsWith('tictactoe') && [room.game.playerX, room.game.playerO].includes(m.sender))) return m.reply(await tr(`⚠️ Todavia alguien esta jugando en la sala si quiere abandonar escriba *salir*\nTambien puedes eliminar la sala usando el comando *${usedPrefix}delttt*`)) 
+if (!text) return m.reply(await tr(`*⚠️ Debes de agregar un nombre a la sala\nEjemplo:\n${usedPrefix + command} Sala bot*`)) 
 let room = Object.values(conn.game).find(room => room.state === 'WAITING' && (text ? room.name === text : true)) 
 if (room) {
-await conn.reply(m.chat, `⚠️ 𝘼𝙡𝙜𝙪𝙞𝙚𝙣 𝙨𝙚 𝙝𝙖 𝙪𝙣𝙞𝙙𝙤 𝙖 𝙡𝙖 𝙨𝙖𝙡𝙖 *${text}*\n𝙔𝙖 𝙥𝙪𝙚𝙙𝙚𝙣 𝙟𝙪𝙜𝙖𝙧!! 😼`, fkontak, m)
-await conn.reply(m.chat, `⭕️ *Clásico Juego del Gato, 3 en raya o tateti* ❌\n\n*¿Cómo jugar?*\n_Responde al Juego con un Número, el mensaje debe contener la posiscion en la que quieras estar (1,2,3,4,5,6,7,8,9)_`, fkontak, m)
+await conn.reply(m.chat, await tr(`⚠️ Alguien se han unido a la sala *${text}*\nYa pueden jugar!! 😼`), fkontak, m)
+await conn.reply(m.chat, await tr(`⭕️ *Clásico Juego del Gato, 3 en raya o tateti* ❌\n\n*¿Cómo jugar?*\n_Responde al Juego con un Número, el mensaje debe contener la posiscion en la que quieras estar (1,2,3,4,5,6,7,8,9)_`), fkontak, m)
 
 room.o = m.chat
 room.game.playerO = m.sender
@@ -199,8 +214,8 @@ O: '⭕',
 8: '8️⃣',
 9: '9️⃣',
 }[v]})
-let str = `💖 𝙅𝙪𝙚𝙜𝙤 𝙩𝙖𝙩𝙚𝙩𝙞
-🫂 𝙅𝙪𝙜𝙖𝙙𝙤𝙧𝙚𝙨:
+let str = `💖 ${await tr("Juegos tateti")}
+🫂 ${await tr("Jugadores")}:
 *┈┈┈┈┈┈┈┈┈*
 ❎ = @${room.game.playerX.split('@')[0]}
 ⭕ = @${room.game.playerO.split('@')[0]}
@@ -209,7 +224,7 @@ let str = `💖 𝙅𝙪𝙚𝙜𝙤 𝙩𝙖𝙩𝙚𝙩𝙞
      ${arr.slice(3, 6).join('')}
      ${arr.slice(6).join('')}
 *┈┈┈┈┈┈┈┈┈*
-𝙏𝙪𝙧𝙣𝙤 𝙙𝙚:
+${await tr("Turno de")}:
 @${room.game.currentTurn.split('@')[0]}
 `.trim()
 
@@ -226,53 +241,55 @@ state: 'WAITING' }
         
 if (text) room.name = text     
 let imgplay = `https://img.freepik.com/vector-premium/juego-tres-raya-icono-contorno-lineal-neon_7280-2422.jpg`
-conn.sendMessage(m.chat, { image: { url: imgplay }, caption: `😼 𝙅𝙪𝙚𝙜𝙤𝙨 𝙏𝙖𝙩𝙚𝙩𝙞
+conn.sendMessage(m.chat, { image: { url: imgplay }, caption: await tr(`😼 Juegos tateti
 
-🐈 𝙀𝙨𝙥𝙚𝙧𝙖𝙣𝙙𝙤 𝙖𝙡 𝙨𝙚𝙜𝙪𝙣𝙙𝙤 𝙟𝙪𝙜𝙖𝙙𝙤𝙧 𝙥𝙪𝙚𝙙𝙚 𝙞𝙣𝙜𝙧𝙚𝙨𝙖 𝙪𝙨𝙖𝙣𝙙𝙤 𝙚𝙡 𝙘𝙤𝙢𝙖𝙣𝙙𝙤
+🐈 Esperando al segundo jugador puede ingresa  usando el comando:
 *${usedPrefix + command} ${text}*
 
-𝙎𝙞 𝙦𝙪𝙞𝙚𝙧𝙚𝙨 𝙖𝙗𝙖𝙣𝙙𝙤𝙣𝙖𝙧 𝙡𝙖 𝙨𝙖𝙡𝙖 𝙪𝙨𝙖 𝙚𝙡 𝙘𝙤𝙢𝙖𝙣𝙙𝙤 
-*${usedPrefix}delttt*` }, { mentions: conn.parseMention(text), quoted: fkontak })
+Si quieres abandonar la sala usar el comando:
+*${usedPrefix}delttt*`) }, { mentions: conn.parseMention(text), quoted: fkontak })
 conn.game[room.id] = room
 }}
 
 if (command == 'math' || command == 'mates' || command == 'matemáticas') {
 // 60000 = 1 minuto // 30000 = 30 segundos // 15000 = 15 segundos // 10000 = 10 segundos
 let time = global.db.data.users[m.sender].wait + 60000
-if (new Date - global.db.data.users[m.sender].wait < 60000) return await conn.reply(m.chat, `*🕓 𝙀𝙎𝙋𝙀𝙍𝘼 ${Math.floor((time - new Date()) / 1000)} 𝙎𝙀𝙂𝙐𝙉𝘿𝙊𝙎 𝘼𝙉𝙏𝙀𝙎 𝘿𝙀 𝙑𝙊𝙇𝙑𝙀𝙍  𝘼 𝙅𝙐𝙂𝘼𝙍*`, fkontak, m)
-let mat = `${lenguajeGB['smsAvisoIIG']()}✨ 𝙋𝙪𝙚𝙙𝙚 𝙚𝙨𝙘𝙧𝙞𝙗𝙞 𝙡𝙖 𝙙𝙞𝙛𝙞𝙘𝙪𝙡𝙩𝙖𝙙
+if (new Date - global.db.data.users[m.sender].wait < 60000) return await conn.reply(m.chat, await tr(`*🕓 Espera ${Math.floor((time - new Date()) / 1000)} Segundos antes de volver a jugar*`), fkontak, m)
+let mat = `✨ ${await tr("Puede escribi la dificultad")}
 
-*Nivel del dificultad*
+${await tr("*Nivel del dificultad*")}
 ${Object.keys(modes).join('  |  ')}
 
-*Ejemplo:*
+${await tr("*Ejemplo:*")}
 ${usedPrefix + command} noob
 ${usedPrefix + command} impossible2
 
-😼 *Mientras mas dificultad mayor recompensa*`.trim()
+${await tr("😼 *Mientras mas dificultad mayor recompensa*")}`.trim()
 if (args.length < 1) return await conn.reply(m.chat, mat, fkontak, m)
 
 let mode = args[0].toLowerCase()
 if (!(mode in modes)) return await conn.reply(m.chat, mat, fkontak, m) 
 
 let id = m.chat
-if (id in global.math) return conn.reply(m.chat, `⚠️ *ᴛᴏᴅᴀᴠɪᴀ ʜᴀʏ ᴘʀᴇɢᴜɴᴛᴀ sɪɴ ʀᴇsᴘᴏɴᴅᴇʀ ᴇʟ ᴇsᴛᴇ ᴄʜᴀᴛ!!*`, global.math[id][0])
+if (id in global.math) return conn.reply(m.chat, await tr(`⚠️ *Todavia hay pregunta sin responder el este chat!!*`), global.math[id][0])
 //let ii = global.db.data.users[m.sender].limit += 10 math.dia
+let msgGametxt = await tr("⌛ Se acabo el tiempo la respuesta es") 
+
 let math = genMath(mode)
 global.math[id] = [
 await conn.reply(m.chat, `╭┄〔 *${wm}* 〕┄⊱
-┆𝘾𝙪𝙖𝙡 𝙚𝙨 𝙧𝙚𝙨𝙪𝙡𝙩𝙖𝙙𝙤 𝙙𝙚: *${math.str} = ?*
+┆${await tr("Cual es resultado de")}: *${math.str} = ?*
 ┆┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈
-┆🧭 𝙏𝙞𝙚𝙢𝙥𝙤: *${(math.time / 1000).toFixed(0)} segundos*
+┆🧭 ${await tr("Tiempo")}: *${(math.time / 1000).toFixed(0)} ${await tr("segundos")}*
 ┆┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈
-┆𝙍𝙚𝙨𝙥𝙤𝙣𝙙𝙚 𝙖 𝙚𝙨𝙩𝙚 𝙢𝙚𝙣𝙨𝙖𝙟𝙚 𝙮 𝙂𝙖𝙣𝙖 
+┆${await tr("Responde a este mensaje y gana")}
 ┆🏆 *${math.bonus}: XP*
 ╰━━━⊰ 𓃠 ${vs} ⊱━━━━დ`, m),
 math, 4,
   
 //await conn.reply(m.chat, `⬆️⬆️⬆️⬆️⬆️⬆️⬆️⬆️⬆️⬆️⬆️𝙍𝙀𝙎𝙋𝙊𝙉𝘿𝘼 𝘼𝙇 𝙈𝙀𝙉𝙎𝘼𝙅𝙀 𝘿𝙀 𝘼𝙍𝙍𝙄𝘽𝘼 𝘾𝙊𝙉 𝙇𝘼 𝙍𝙀𝙎𝙋𝙐𝙀𝙎𝙏𝘼\n\n𝘼𝙉𝙎𝙒𝙀𝙍 𝙏𝙃𝙀 𝙈𝙀𝙎𝙎𝘼𝙂𝙀 𝘼𝘽𝙊𝙑𝙀 𝙏𝙊 𝙆𝙉𝙊𝙒 𝙔𝙊𝙐𝙍 𝘼𝙉𝙎𝙒𝙀𝙍\n\n${wm}`, fkontak, m), math, 4,
 setTimeout(() => { 
-if (global.math[id]) conn.reply(m.chat, `⌛ sᴇ ᴀᴄᴀʙᴏ ᴇʟ ᴛɪᴇᴍᴘᴏ ʟᴀ ʀᴇsᴘᴜᴇsᴛᴀ ᴇs *${math.result}*`, global.math[id][0])
+if (global.math[id]) conn.reply(m.chat, `${msgGametxt}: *${math.result}*`, global.math[id][0])
 delete global.math[id]
 }, math.time)
 ]
@@ -281,10 +298,10 @@ global.db.data.users[m.sender].wait = new Date * 1
 
 if (command == 'delttt' || command == 'deltt' || command == 'delxo' || command == 'deltictactoe') {
 let room = Object.values(conn.game).find(room => room.id.startsWith('tictactoe') && [room.game.playerX, room.game.playerO].includes(m.sender))
-if (room == undefined) return await conn.reply(m.chat, `⚠️ 𝙉𝙊 𝙀𝙎𝙏𝘼𝙎 𝙀𝙉 𝙉𝙄𝙉𝙂𝙐𝙉𝘼 𝙋𝘼𝙍𝙏𝙄𝘿𝘼 𝙀𝙉 𝙀𝙇 𝙅𝙐𝙀𝙂𝙊 𝙏𝙍𝙀𝙎 𝙀𝙉 𝙍𝘼𝙔𝘼\n\n💫 𝙄𝙉𝙄𝘾𝙄𝘼𝙍 𝙋𝘼𝙍𝙏𝙄𝘿𝘼 (${usedPrefix}ttt sala nueva)`, fkontak, m)
+if (room == undefined) return await conn.reply(m.chat, await tr(`⚠️ No estas en ninguna partidas en el juego tres en raya\n\n💫 Iniciar partidas (${usedPrefix}ttt sala nueva)`), fkontak, m)
 delete conn.game[room.id]
 
-await conn.reply(m.chat, `⚠️ 𝙇𝘼 𝙎𝘼𝙇𝘼 𝙏𝙍𝙀𝙎 𝙀𝙉 𝙍𝘼𝙔𝘼 𝙁𝙐𝙀 𝙀𝙇𝙄𝙈𝙄𝙉𝘼𝘿𝘼`, fkontak, m)
+await conn.reply(m.chat, await tr(`⚠️ La sala tres en raya fue eliminada`), fkontak, m)
 }} catch (e) {
 //await conn.reply(m.chat, `${lenguajeGB['smsMalError3']()}#report ${lenguajeGB['smsMensError2']()} ${usedPrefix + command}\n\n${wm}`, fkontak, m)
 console.log(e)}}

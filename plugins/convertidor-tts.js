@@ -17,7 +17,7 @@ res = await tts(text, lang);
 } catch (e) {
 m.reply(e + '');
 text = args.join(' ');
-if (!text) throw `*⚠️ 𝐄𝐬𝐜𝐫𝐢𝐛𝐞 𝐮𝐧 𝐭𝐞𝐱𝐭𝐨 𝐪𝐮𝐞 𝐪𝐮𝐢𝐞𝐫𝐚 𝐜𝐨𝐧𝐯𝐞𝐫𝐭𝐢𝐫 𝐚 𝐧𝐨𝐭𝐚 𝐝𝐞 𝐯𝐨𝐳, 𝐄𝐣𝐞𝐦𝐩𝐥𝐨:* ${usedPrefix + command} es Hola negros`;
+if (!text) throw `*⚠️ ${await tr("Escribe un texto que quiera convertir a nota de voz, ejemplo")}:* ${usedPrefix + command} es Hola negros`;
 res = await tts(text, defaultLang);
 } finally {
 if (res) conn.sendFile(m.chat, res, 'tts.opus', null, m, null, fake, true);

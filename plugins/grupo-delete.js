@@ -1,6 +1,6 @@
 let handler = async (m, { conn, args, usedPrefix, command }) => {
 
-if (!m.quoted && !m.mentionedJid?.length && !args[0]) return m.reply(`⚠️ Responde al mensaje que quiere eliminar pelotudito.`) 
+if (!m.quoted && !m.mentionedJid?.length && !args[0]) return m.reply(`⚠️ ${await tr("Responde al mensaje que quiere eliminar pelotudito.")}`) 
 try {
 if (m.quoted) {
 let delet = m.quoted.sender;
@@ -14,7 +14,7 @@ target = m.mentionedJid[0];
 } else if (args[0] && args[0].startsWith('+')) {
 target = args[0].replace(/[^0-9]/g, '') + '@s.whatsapp.net';
 } else {
-return m.reply(`⚠️ Mencionar a alguien o responder a un mensaje.`);
+return m.reply(`⚠️ ${await tr("Mencionar a alguien o responder a un mensaje.")}`);
 }
 
 let chats = await conn.chats[m.chat]?.messages || [];
@@ -34,7 +34,7 @@ await delay(100);
 } catch (err) {
 console.log(err);
 }}
-m.reply(`✅ Se eliminaron ${deletedCount} mensajes de ${target.includes('@s.whatsapp.net')}.`);
+m.reply(`✅ ${await tr("Se eliminaron ")} ${deletedCount} ${await tr("mensajes de")} ${target.includes('@s.whatsapp.net')}.`);
 } catch (err) {
 console.error(err);
 }};

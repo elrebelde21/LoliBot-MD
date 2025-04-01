@@ -10,11 +10,19 @@ if (userRequests[m.sender]) return await conn.reply(m.chat, `⚠️ Hey @${m.sen
 userRequests[m.sender] = true;
 m.react(`⌛`);
 try {
+const msgError = await tr("No se encontraron resultados para esa búsqueda");
+const titlte = await tr("Título");
+const artist = await tr("Artista");
+const albunn = await tr("Álbum");
+const durationn = await tr("Duración");
+const Public = await tr("Publicado");
+const msgEspere = await tr("Enviando canción Aguarde un momento...");
+
 const spotify = await fetch(`${apis}/search/spotify?q=${text}`);
 const song = await spotify.json();
-if (!song.data || song.data.length === 0) throw '⚠️ No se encontraron resultados para esa búsqueda.';
+if (!song.data || song.data.length === 0) throw '⚠️ ' + msgError;
 const track = song.data[0];
-const spotifyMessage = `*• Título:* ${track.title}\n*• Artista:* ${track.artist}\n*• Álbum:* ${track.album}\n*• Duración:* ${track.duration}\n*• Publicado:* ${track.publish}\n\n> 🚀 *ᴱⁿᵛᶦᵃⁿᵈᵒ ᶜᵃⁿᶜᶦᵒ́ⁿ ᵃᵍᵘᵃʳᵈᵉ ᵘⁿ ᵐᵒᵐᵉⁿᵗᵒ....*`;
+const spotifyMessage = `*• ${titlte}:* ${track.title}\n*• ${artist}:* ${track.artist}\n*• ${albunn}:* ${track.album}\n*• ${durationn}:* ${track.duration}\n*• ${Public}:* ${track.publish}\n\n> 🚀 *${msgEspere}*`;
 const message = await conn.sendMessage(m.chat, { text: spotifyMessage, 
 contextInfo: {
 forwardingScore: 1,
@@ -24,7 +32,7 @@ showAdAttribution: true,
 containsAutoReply: true,
 renderLargerThumbnail: true,
 title: track.title,
-body: "ᴱⁿᵛᶦᵃⁿᵈᵒ ᶜᵃⁿᶜᶦᵒ́ⁿ ᵃᵍᵘᵃʳᵈᵉ ᵘⁿ ᵐᵒᵐᵉⁿᵗᵒ 🚀",
+body: msgEspere,
 mediaType: 1,
 thumbnailUrl: track.image,
 mediaUrl: track.url,
@@ -53,11 +61,11 @@ console.error(`Error in attempt: ${err.message}`);
 continue; 
 }}
 
-if (!downloadUrl) throw new Error('No se pudo descargar la canción desde ninguna API');
+if (!downloadUrl) throw new Error(await tr('No se pudo descargar la canción desde ninguna API'));
 await conn.sendMessage(m.chat, { audio: { url: downloadUrl }, fileName: `${track.title}.mp3`, mimetype: 'audio/mpeg'}, { quoted: m });
 m.react('✅️');
 } catch (error) {
-m.reply(`\`\`\`⚠️ OCURRIO UN ERROR ⚠️\`\`\`\n\n> *Reporta el siguiente error a mi creador con el comando:* #report\n\n>>> ${error} <<<< `);
+m.reply(`\`\`\`⚠️ ${await tr("OCURRIO UN ERROR")} ⚠️\`\`\`\n\n> *${await tr("Reporta el siguiente error a mi creador con el comando:")}* #report\n\n>>> ${e} <<<< `)    
 console.log(error);
 m.react('❌');
 handler.limit = false;

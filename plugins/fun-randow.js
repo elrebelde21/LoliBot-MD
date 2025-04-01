@@ -11,7 +11,7 @@ if (!result || result.trim() === "") throw new Error("Respuesta vacía");
 } catch (error) {
 result = pickRandom(global.piropo); 
 }
-await conn.reply(m.chat,  `*╭╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼*\n➢ ${result}\n*╰╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼*`, m, {contextInfo: { externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: '💞 PIROPO', body: '𝐒𝐮𝐩𝐞𝐫 𝐁𝐨𝐭 𝐃𝐞 𝐖𝐡𝐚𝐭𝐬𝐀𝐩𝐩', previewType: 0, thumbnail: imagen4, sourceUrl: [md, yt, tiktok].getRandom()}}})
+await conn.reply(m.chat,  `*╭╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼*\n➢ ${await tr(result)}\n*╰╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼*`, m, {contextInfo: { externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: '💞 PIROPO', body: '𝐒𝐮𝐩𝐞𝐫 𝐁𝐨𝐭 𝐃𝐞 𝐖𝐡𝐚𝐭𝐬𝐀𝐩𝐩', previewType: 0, thumbnail: imagen4, sourceUrl: [md, yt, tiktok].getRandom()}}})
 }
 
 if (command == 'chiste') {
@@ -25,7 +25,7 @@ if (!result || result.trim() === "") throw new Error("Respuesta vacía");
 } catch (error) {
 result = pickRandom(global.chiste);
 }
-await conn.reply(m.chat,  `*┏━━━━━━━━━━━━┓*\n😹 ${result} 😹\n*┗━━━━━━━━━━━━┛*`, m, {contextInfo: { externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: '😹 CHISTE', body: '𝐒𝐮𝐩𝐞𝐫 𝐁𝐨𝐭 𝐃𝐞 𝐖𝐡𝐚𝐭𝐬𝐀𝐩𝐩', previewType: 0, thumbnail: imagen4, sourceUrl: [md, yt, tiktok].getRandom()}}})
+await conn.reply(m.chat,  `*┏━━━━━━━━━━━━┓*\n😹 ${await tr(result)} 😹\n*┗━━━━━━━━━━━━┛*`, m, {contextInfo: { externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: '😹 CHISTE', body: '𝐒𝐮𝐩𝐞𝐫 𝐁𝐨𝐭 𝐃𝐞 𝐖𝐡𝐚𝐭𝐬𝐀𝐩𝐩', previewType: 0, thumbnail: imagen4, sourceUrl: [md, yt, tiktok].getRandom()}}})
 }
 
 if (command == 'reto') {
@@ -39,7 +39,7 @@ if (!result || result.trim() === "") throw new Error("Respuesta vacía");
 } catch (error) {
 result = pickRandom(global.bucin);
 }
-await conn.reply(m.chat,  `╭━━━━━[ 𝙍𝙀𝙏𝙊 😏 ]━━━━⬣\n*“${result}”*\n╰━━━━━━[ ${vs} ]━━━━━⬣*`, m, {contextInfo: { externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: '😏 HE COJISTE RETO', body: '𝐒𝐮𝐩𝐞𝐫 𝐁𝐨𝐭 𝐃𝐞 𝐖𝐡𝐚𝐭𝐬𝐀𝐩𝐩', previewType: 0, thumbnail: imagen4, sourceUrl: [md, yt, tiktok].getRandom()}}})
+await conn.reply(m.chat,  `╭━━━━━[ 𝙍𝙀𝙏𝙊 😏 ]━━━━⬣\n*“${await tr(result)}”*\n╰━━━━━━[ ${vs} ]━━━━━⬣*`, m, {contextInfo: { externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: '😏 HE COJISTE RETO', body: '𝐒𝐮𝐩𝐞𝐫 𝐁𝐨𝐭 𝐃𝐞 𝐖𝐡𝐚𝐭𝐬𝐀𝐩𝐩', previewType: 0, thumbnail: imagen4, sourceUrl: [md, yt, tiktok].getRandom()}}})
 }
 
 if (command == 'verdad') {
@@ -53,7 +53,7 @@ if (!result || result.trim() === "") throw new Error("Respuesta vacía");
 } catch (error) {
 result = pickRandom(global.bucin);
 }
-await conn.reply(m.chat,  `╭━━━━[ 𝙑𝙀𝙍𝘿𝘼𝘿 🤔 ]━━━━⬣\n*“${result}”*\n╰━━━━━━[ ${vs} ]━━━━━⬣*`, m, {contextInfo: { externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: '🤔 ELIGIRTE VERDAD', body: '𝐒𝐮𝐩𝐞𝐫 𝐁𝐨𝐭 𝐃𝐞 𝐖𝐡𝐚𝐭𝐬𝐀𝐩𝐩', previewType: 0, thumbnail: imagen4, sourceUrl: [md, yt, tiktok].getRandom()}}})
+await conn.reply(m.chat,  `╭━━━━[ 𝙑𝙀𝙍𝘿𝘼𝘿 🤔 ]━━━━⬣\n*“${await tr(result)}”*\n╰━━━━━━[ ${vs} ]━━━━━⬣*`, m, {contextInfo: { externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: '🤔 ELIGIRTE VERDAD', body: '𝐒𝐮𝐩𝐞𝐫 𝐁𝐨𝐭 𝐃𝐞 𝐖𝐡𝐚𝐭𝐬𝐀𝐩𝐩', previewType: 0, thumbnail: imagen4, sourceUrl: [md, yt, tiktok].getRandom()}}})
 }
 
 if (command == 'frases') { 
@@ -66,14 +66,14 @@ if (isNaN(args[0])) throw `Ejemplo:\n${usedPrefix + command} 1`
 if (args[0]) {
 if (args[0] < 1 || args[0] > 99) throw `mínimo 1 y máximo 99!`
 let { index, latin, arabic, translation_id, translation_en } = json.find(v => v.index == args[0].replace(/[^0-9]/g, ''))
-return m.reply(`🔢 *Número:* ${index}
-${arabic}
+return m.reply(`🔢 *${await tr("Número")}:* ${index}
+${await tr(arabic)}
  
-${latin}
+${await tr(latin)}
 
-${translation_id}
+${await tr(translation_id)}
 
-${translation_en}
+${await tr(translation_en)}
 `.trim())}
 m.reply(ejemplo + data + organizar)
 }}

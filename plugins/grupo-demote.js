@@ -6,8 +6,8 @@ var number = text.split`@`[1];
 var number = text;
 }
 
-if (!text && !m.quoted) return conn.reply(m.chat, `*⚠️ ¿A quien le quitó admins?* etiquetas a una persona no soy adivinó :)`, m);
-if (number.length > 13 || (number.length < 11 && number.length > 0)) return conn.reply(m.chat, `*Esta drogado o que ese número ingresado es incorrecto 🤓*, ingresa el número correctamente o mejor etiquetas al usuario.`, m);
+if (!text && !m.quoted) return conn.reply(m.chat, `*⚠️ ${await tr("¿A quien le quitó admins?* etiquetas a una persona no soy adivinó")} :)`, m);
+if (number.length > 13 || (number.length < 11 && number.length > 0)) return conn.reply(m.chat, `*${await tr("Esta drogado o que ese número ingresado es incorrecto")} 🤓*, ${await tr("ingresa el número correctamente o mejor etiquetas al usuario")}.`, m);
 try {
 if (text) {
 var user = number + '@s.whatsapp.net';
@@ -18,7 +18,7 @@ var user = number + '@s.whatsapp.net';
 }} catch (e) {
 } finally {
 conn.groupParticipantsUpdate(m.chat, [user], 'demote');
-conn.reply(m.chat, `*[ ✅ ] ÓRDENES RECIBIDAS*`, m);
+conn.reply(m.chat, `*[ ✅ ] ${await tr("ÓRDENES RECIBIDAS")}*`, m);
 }};
 handler.help = ['*593xxx*', '*@usuario*', '*responder chat*'].map((v) => 'demote ' + v);
 handler.tags = ['group'];

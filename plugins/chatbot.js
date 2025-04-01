@@ -20,31 +20,31 @@ if (m.chat === "120363355261011910@newsletter") return;
 let vn = 'https://qu.ax/eGdW.mp3'
 let bot = `${pickRandom([`*Hola ${user} soy un bot el que puedo ayudar? 👉👈*`, `Aqui estoy`, `bot tu abuela`, `que quiere?`, `No dispoble 🫣`, `Hola aqui estoy soy tu botsito sexy el que puedo ayudar uwu`])}
 `.trim()//`
-let txt = `*¿Muy lento tu nokia y necesitas tener activo tu bot 24/7?*
+let txt = `*${await tr("¿Muy lento tu nokia y necesitas tener activo tu bot 24/7?")}*
 
-> *Te tenemos la mejor opción para mantener activo tu bot 24/7, a precios muy accesibles. Es muy barato y todos pueden comprar.*
+> *${await tr("Te tenemos la mejor opción para mantener activo tu bot 24/7, a precios muy accesibles. Es muy barato y todos pueden comprar.")}*
 
-🟢 \`\`\`Información del Host\`\`\`
+🟢 \`\`\`${await tr("Información del Host")}\`\`\`
 
-💻 *Página:*
+💻 *${await tr("Página")}:*
 https://dash.skyultraplus.com
 
-*🟢 Dashboard:*
+*🟢 ${await tr("Dashboard")}:*
 https://dash.skyultraplus.com
 
-⚙️ *Panel*
+⚙️ *${await tr("Panel")}:*
 https://panel.skyultraplus.com
 
-💥 *Comunidad de WhatsApp:*
+💥 *${await tr("Comunidad de WhatsApp")}:*
 https://chat.whatsapp.com/E6iWpvGuJ8zJNPbN3zOr0D
 
-*🟣 Discord:*
+*🟣 ${await tr("Discord")}:*
 https://discord.skyultraplus.com
 
-🧡 *Canal de WhatsApp:*
+🧡 *${await tr("Canal de WhatsApp")}:*
 https://WhatsApp.skyultraplus.com
 
-🗣📲 *Contacto:*
+🗣📲 *${await tr("Contacto")}:*
 • wa.me/15167096032
 • ${fb}
 • https://instagram.com/gata_dios` 
@@ -57,47 +57,47 @@ const currentTime = Date.now();
 if (currentTime - lastMessageTime < 9000) throw !0; 
     
 if (/^¿que es un bot?|Que es un bot?|que es un bot?|que es un bot$/i.test(m.text) ) {
-return conn.reply(m.chat, `\`☆::¿𝙌𝙐𝙀 𝙀𝙎 𝙐𝙉 𝘽𝙊𝙏 𝘿𝙀 𝙒𝙃𝘼𝙏𝙎𝘼𝙋𝙋?::☆\`
+return conn.reply(m.chat, `\`☆::¿${await tr("QUE ES UN BOT DE WHATSAPP?")}::☆\`
 
-> 𝐔𝐧 𝐁𝐨𝐭 𝐞𝐬 𝐮𝐧𝐚 𝐢𝐧𝐭𝐞𝐥𝐢𝐠𝐞𝐧𝐜𝐢𝐚 𝐚𝐫𝐭𝐢𝐟𝐢𝐜𝐢𝐚𝐥 𝐪𝐮𝐞 𝐫𝐞𝐚𝐥𝐢𝐳𝐚 𝐭𝐚𝐫𝐞𝐚𝐬 𝐪𝐮𝐞 𝐥𝐞 𝐢𝐧𝐝𝐢𝐪𝐮𝐞 𝐜𝐨𝐧 𝐜𝐨𝐦𝐚𝐧𝐝𝐨𝐬, 𝐞𝐧 𝐞𝐥 𝐜𝐚𝐬𝐨 𝐝𝐞 𝐖𝐡𝐚𝐭𝐬𝐀𝐩𝐩 𝐩𝐮𝐞𝐝𝐞𝐬 𝐜𝐫𝐞𝐚𝐫 𝐬𝐭𝐢𝐜𝐤𝐞𝐫𝐬, 𝐝𝐞𝐬𝐜𝐚𝐫𝐠𝐚𝐫 𝐦𝐮́𝐬𝐢𝐜𝐚, 𝐯𝐢𝐝𝐞𝐨𝐬, 𝐜𝐫𝐞𝐚𝐫 𝐥𝐨𝐠𝐨𝐬 𝐩𝐞𝐫𝐬𝐨𝐧𝐚𝐥𝐢𝐳𝐚𝐝𝐨𝐬 𝐲 𝐦𝐮𝐜𝐡𝐨 𝐦𝐚𝐬, 𝐞𝐬𝐭𝐨 𝐝𝐞 𝐟𝐨𝐫𝐦𝐚 𝐚𝐮𝐭𝐨𝐦𝐚𝐭𝐢𝐳𝐚𝐝𝐚, 𝐨 𝐬𝐞𝐚 𝐪𝐮𝐞 𝐮𝐧 𝐡𝐮𝐦𝐚𝐧𝐨 𝐧𝐨 𝐢𝐧𝐭𝐞𝐫𝐟𝐢𝐞𝐫𝐞 𝐞𝐧 𝐞𝐥 𝐩𝐫𝐨𝐜𝐞𝐬𝐨. 𝐏𝐚𝐫𝐚 𝐯𝐞𝐫 𝐞𝐥 𝐦𝐞𝐧𝐮́ 𝐝𝐞 𝐜𝐨𝐦𝐚𝐧𝐝𝐨𝐬 𝐩𝐮𝐞𝐝𝐞𝐬 𝐮𝐬𝐚𝐫: #menu
+> ${await tr("Un bot es una inteligencia artificial que realiza tareas que le indique con comandos, en el caso de WhatsApp puedes crear stickers,  descargas música, vídeos, crear logos personalizados y muchos mas, esto de forma automátizada, o sea que un humano no interfiere en el proceso. Para ver el menu de comando puedes usar:")} #menu
 
 > 「 🅛🅞🅛🅘🅑🅞🅣-🅜🅓 」`, m)
 }  
 if (/^Quiero un bot|como obtengo un bot?|Quiero un bot?|quiero un bot|solicitó bot|solicito bot|Necesito un bot|necesito un bot$/i.test(m.text)) {
-return conn.reply(m.chat,  `\`⚡ ¿Quieres un bot para tu grupo?\`
+return conn.reply(m.chat,  `\`⚡ ¿${await tr("Quieres un bot para tu grupo?")}\`
 
-*🔰 Tiene varias opciones. Puedes instalarlo tú mismo siguiendo los pasos de instalación:*
+*🔰 ${await tr("Tiene varias opciones. Puedes instalarlo tú mismo siguiendo los pasos de instalación:")}*
 * #instalarbot
 
-*🧡 Puede hacerte un sub bot mandando el siguiente comando:*
-* /serbot (escanea el QR) 
-* /code (Código de 8 dígitos)
+*🧡 ${await tr("Puede hacerte un sub bot mandando el siguiente comando:")}*
+* /serbot (${await tr("escanea el QR")}) 
+* /code (${await tr("Código de 8 dígitos")})
 
-*💖 Puedes solicitarlo haciendo una donación voluntaria a través de PayPal o Mercado Pago arg.*
+*💖 ${await tr("Puedes solicitarlo haciendo una donación voluntaria a través de PayPal o Mercado Pago arg")}.*
 
-> 🚀 El bot estará activo 24/7 para tu grupo.
+> 🚀 ${await tr("El bot estará activo 24/7 para tu grupo.")}
 
-\`⚡ ¿Por dónde puedo donar?\`
-> A través de nuestro Paypal, Mercado Pago o Naranja X.
+\`⚡ ¿${await tr("Por dónde puedo donar?")}\`
+> ${await tr("A través de nuestro Paypal, Mercado Pago o Naranja X.")}
 
-*❇️ PayPal:* 
+*❇️ ${await tr("PayPal:")}* 
 https://www.paypal.com/paypalme/OficialGD
 
-*❇️ Mercado pago:*
+*❇️ ${await tr("Mercado pago:")}*
 > *• Alias :* OficialGB
 > *• CVU :* 0000003100059201491917
 
-*❇️ Naranja X:*
+*❇️ ${await tr("Naranja X:")}*
 > *• CVU :* 4530000800017922067114
 
-\`⏩ Siguiente paso ⏩\`
+\`⏩ ${await tr("Siguiente paso")} ⏩\`
 
-Una vez realizado el pago, puedes enviar un comprobante de envío del dinero (captura de pantalla) para que pueda agregar el bot a tu grupo.
+${await tr("Una vez realizado el pago, puedes enviar un comprobante de envío del dinero (captura de pantalla) para que pueda agregar el bot a tu grupo.")}
 https://chat.whatsapp.com/FDRfhecUGrCEQswkg8FUYz
 ${fb}
 
-\`⚡ ¿El bot estará activo 24/7?\`
-> _*Sí, nuestro bot está alojado en un servidor de pago para mantenerlo activo 24/7 (por eso también solicitamos donaciones para mantenerlo en funcionamiento) 💞.*_
+\`⚡ ¿${await tr("El bot estará activo 24/7?")}\`
+> _*${await tr("Sí, nuestro bot está alojado en un servidor de pago para mantenerlo activo 24/7 (por eso también solicitamos donaciones para mantenerlo en funcionamiento)")} 💞.*_
 
 > 「 🅛🅞🅛🅘🅑🅞🅣-🅜🅓 」`, m, {contextInfo: {externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: `Hola ${name} 👋`, body: wm, previewType: 0, thumbnail: img.getRandom(), sourceUrl: redes.getRandom()}}})
 }
@@ -233,12 +233,12 @@ conn.reply(m.chat, teks, m, { mentions: { mentionedJid: [m.sender] }})
 */
 
 if (/^reglas$/i.test(m.text) ) {
-m.reply([`\`🌐 REGLAS DEL BOT 🌐\`\n\n* *No hacer spam de comandos*\n\nUsar los comando cada 5 segundos, de lo contrario el bot se puede satura, o numero del bot puede irse a support por spam.\n\n* *No estar enviando link del grupos al bot para que se una*\n\nHablar con mi creador y el lo une a tu grupo, si apoyar nuestras redes sociales:\n${yt}\n${md}\n\n* *No llamar al bot, ni al creador*\n\nSi lo haces, seras baneado del bot y bloqueado`, `\`⚠️ 𝙍𝙀𝙂𝙇𝘼𝙎 ⚠️\`
+m.reply([`\`🌐 ${await tr("REGLAS DEL BOT ")} 🌐\`\n\n* *${await tr("No hacer spam de comandos")}*\n\n${await tr("Usar los comando cada 5 segundos, de lo contrario el bot se puede satura, o numero del bot puede irse a support por spam.")}\n\n* *${await tr("No estar enviando link del grupos al bot para que se una")}*\n\n${await tr("Hablar con mi creador y el lo une a tu grupo, si apoyar nuestras redes sociales:")}\n${yt}\n${md}\n\n* *${await tr("No llamar al bot, ni al creador")}*\n\n${await tr("Si lo haces, seras baneado del bot y bloqueado")}`, `\`⚠️ ${await tr("REGLAS")} ⚠️\`
 
-* 𝐏𝐫𝐨𝐡𝐢𝐛𝐢𝐝𝐨 𝐥𝐥𝐚𝐦𝐚𝐫 𝐚𝐥 𝐁𝐨𝐭
-* 𝐏𝐫𝐨𝐡𝐢𝐛𝐢𝐝𝐨 𝐒𝐩𝐚𝐦 𝐚𝐥 𝐁𝐨𝐭
-* 𝐍𝐨 𝐚𝐠𝐫𝐞𝐠𝐚𝐫 𝐚𝐥 𝐁𝐨𝐭
-* 𝐑𝐞𝐬𝐩𝐞𝐭𝐚 𝐥𝐨𝐬 𝐭𝐞𝐫𝐦𝐢𝐧𝐨𝐬 𝐲 𝐜𝐨𝐧𝐝𝐢𝐜𝐢𝐨𝐧𝐞𝐬`].getRandom() +  `\n\n> 「 🅛🅞🅛🅘🅑🅞🅣-🅜🅓 」`);
+* ${await tr("Prohibido llamar al bot")}
+* ${await tr("Prohibido spam al bot")}
+* ${await tr("No agregar al bot")}
+* ${await tr("Respeta los términos y condiciones")}`].getRandom() +  `\n\n> 「 🅛🅞🅛🅘🅑🅞🅣-🅜🅓 」`);
 }
 return !0 
 }

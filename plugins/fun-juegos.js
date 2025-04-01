@@ -4,7 +4,7 @@ let toM = a => '@' + a.split('@')[0]
 let handler = async (m, { conn, groupMetadata, command, text, participants, usedPrefix, sender}) => {
 let fkontak = { "key": { "participants":"0@s.whatsapp.net", "remoteJid": "status@broadcast", "fromMe": false, "id": "Halo" }, "message": { "contactMessage": { "vcard": `BEGIN:VCARD\nVERSION:3.0\nN:Sy;Bot;;;\nFN:y\nitem1.TEL;waid=${m.sender.split('@')[0]}:${m.sender.split('@')[0]}\nitem1.X-ABLabel:Ponsel\nEND:VCARD` }}, "participant": "0@s.whatsapp.net" }  
 try {
-
+let GamTxt = await tr("🤔 Pendejo etiquetas al la persona con el @Tag")
 let user = a => '@' + a.split('@')[0] //'@' + a.split('@')[0]
 let ps = groupMetadata.participants.map(v => v.id)
 let a = ps.getRandom()
@@ -22,14 +22,14 @@ let j = ps.getRandom()
 //------------------------------------------------------------------------------------
 
 if (command == 'amistad' || command == 'amigorandom') {   
-m.reply(`*🔰 Vamos a hacer algunas amistades 🔰*\n\n*Oye ${toM(a)} hablale al privado a ${toM(b)} para que jueguen y se haga una amistad 🙆*\n\n*Las mejores amistades empiezan con un juego 😉*`, null, {
+m.reply(`*🔰 ${await tr("Vamos a hacer algunas amistades")} 🔰*\n\n*${await tr("Oye")} ${toM(a)} ${await tr("hablale al privado a")} ${toM(b)}* ${await tr("*para que jueguen y se haga una amistad 🙆*\n\n*Las mejores amistades empiezan con un juego 😉*")}`, null, {
 mentions: [a, b]})}
 
 
 //------------------------------------------------------------------------------------
   
 if (command == 'follar' || command == 'violar') {   
-if (!text) return m.reply(`*Ingrese el @ o el nombre de la persona que quieras saber si te puedes ${command.replace('how', '')}*`) 
+if (!text) return m.reply(`*${await tr("Ingrese el @ o el nombre de la persona que quieras saber si te puedes")} ${command.replace('how', '')}*`) 
 let user = m.mentionedJid[0] ? m.mentionedJid[0] : m.quoted.sender
 conn.reply(m.chat, `🤤👅🥵 *𝐀𝐂𝐀𝐁𝐀𝐒 𝐃𝐄 𝐅𝐎𝐋𝐋𝐀𝐑𝐓𝐄𝐋@!*🥵👅🤤\n\n*𝙏𝙚 𝙖𝙘𝙖𝙗𝙖𝙨 𝙙𝙚 𝙛𝙤𝙡𝙡𝙖𝙧 𝙖 𝙡𝙖 𝙥𝙚𝙧𝙧𝙖 𝙙𝙚* *${text}* ⁩ *𝙖 𝟰 𝙥𝙖𝙩𝙖𝙨 𝙢𝙞𝙚𝙣𝙩𝙧𝙖𝙨 𝙩𝙚 𝙜𝙚𝙢𝙞𝙖 𝙘𝙤𝙢𝙤 𝙪𝙣𝙖 𝙢𝙖𝙡𝙙𝙞𝙩𝙖 𝙥𝙚𝙧𝙧𝙖 "𝐀𝐚𝐚𝐡.., 𝐀𝐚𝐚𝐡𝐡, 𝐬𝐢𝐠𝐮𝐞, 𝐧𝐨 𝐩𝐚𝐫𝐞𝐬, 𝐧𝐨 𝐩𝐚𝐫𝐞𝐬.." 𝙮 𝙡𝙖 𝙝𝙖𝙨 𝙙𝙚𝙟𝙖𝙙𝙤 𝙩𝙖𝙣 𝙧𝙚𝙫𝙚𝙣𝙩𝙖𝙙𝙖 𝙦𝙪𝙚 𝙣𝙤 𝙥𝙪𝙚𝙙𝙚 𝙨𝙤𝙨𝙩𝙚𝙣𝙚𝙧 𝙣𝙞 𝙨𝙪 𝙥𝙧𝙤𝙥𝙞𝙤 𝙘𝙪𝙚𝙧𝙥𝙤 𝙡𝙖 𝙢𝙖𝙡𝙙𝙞𝙩𝙖 𝙯𝙤𝙧𝙧𝙖!*\n\n*${text}*\n🤤🥵 *¡𝐘𝐀 𝐓𝐄 𝐇𝐀𝐍 𝐅𝐎𝐋𝐋𝐀𝐃𝐎!* 🥵🤤`, { mentions: [user] })}
 
@@ -42,8 +42,8 @@ mentions: [a, b]})}
 //------------------------------------------------------------------------------------
     
 if (command == 'personalidad') {
-if (!text) return conn.reply(m.chat, 'Ingrese un nombre?', m)
-let personalidad = `┏━━°❀❬ *PERSONALIDAD}* ❭❀°━━┓
+if (!text) return conn.reply(m.chat, await tr('Ingrese un nombre?'), m)
+let personalidad = `┏━━°❀❬ *${await tr("PERSONALIDAD")}}* ❭❀°━━┓
 *┃*
 *┃• Nombre* : ${text}
 *┃• Buena Moral* : ${pickRandom(['6%','12%','20%','27%','35%','41%','49%','54%','60%','66%','73%','78%','84%','92%','93%','94%','96%','98,3%','99,7%','99,9%','1%','2,9%','0%','0,4%'])}
@@ -63,11 +63,11 @@ conn.reply(m.chat, personalidad, m, { mentions: conn.parseMention(personalidad) 
 //------------------------------------------------------------------------------------
 
 if (command == 'ship' || command == 'shippear') {
-if (!text) throw `⚠️ 𝐄𝐬𝐜𝐫𝐢𝐛𝐚 𝐞𝐥 𝐧𝐨𝐦𝐛𝐫𝐞 𝐝𝐞 𝐝𝐨𝐬 𝐩𝐞𝐫𝐬𝐨𝐧𝐚𝐬 𝐩𝐚𝐫𝐚 𝐜𝐚𝐥𝐜𝐮𝐥𝐚𝐫 𝐬𝐮𝐬 𝐚𝐦𝐨𝐫`
+if (!text) throw await tr(`⚠️ Escriba el nombre de dos personas para calcular sus amor`)
 let [text1, ...text2] = text.split(' ')
 text2 = (text2 || []).join(' ')
-if (!text2) throw `⚠️ 𝐅𝐚𝐥𝐭𝐚 𝐞𝐥 𝐧𝐨𝐦𝐛𝐫𝐞 𝐝𝐞 𝐥𝐚 𝐬𝐞𝐠𝐮𝐧𝐝𝐚 𝐩𝐞𝐫𝐬𝐨𝐧𝐚`
-let love = `_❤️ *${text1}* tu oportunidad de enamorarte de *${text2}* es de *${Math.floor(Math.random() * 100)}%* 👩🏻‍❤️‍👨🏻_ `.trim()
+if (!text2) throw await tr(`⚠️ Falta el nombre de la segunda persona`)
+let love = await tr(`_❤️ *${text1}* ${await tr("a")}tu oportunidad de enamorarte de *${text2}* es de *${Math.floor(Math.random() * 100)}%* 👩🏻‍❤️‍👨🏻_ `).trim()
 m.reply(love, null, { mentions: conn.parseMention(love) })
 }
 
@@ -76,11 +76,11 @@ m.reply(love, null, { mentions: conn.parseMention(love) })
 if (command == 'Doxxeo' || command == 'doxxeo' || command == 'doxxear' || command == 'Doxxear' || command == 'doxeo' || command == 'doxear' || command == 'doxxeame' || command == 'doxeame') {
 let user = global.db.data.users[m.sender]
 let time = user.prue + 90000 //1 min
-if (new Date - user.prue < 90000) return await conn.reply(m.chat, `🙌 HEY ALTO ESPERA UNOS MINUTOS PARA USAR OTRO COMANDO NO HAGA SPAM`, fkontak, m)
+if (new Date - user.prue < 90000) return await conn.reply(m.chat, await tr(`🙌 HEY ALTO ESPERA UNOS MINUTOS PARA USAR OTRO COMANDO NO HAGA SPAM`), fkontak, m)
 let who
 if (m.isGroup) who = m.mentionedJid[0]
 else who = m.chat
-let start = `*😱 ¡¡𝙀𝙢𝙥𝙚𝙯𝙖𝙣𝙙𝙤 𝙙𝙤𝙭𝙭𝙚𝙤!! 😱*`
+let start = await tr(`*😱 ¡¡Empezando boxxeo!! 😱*`)
 let ala = `😨`
 let boost = `*${pickRandom(['0','1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20'])}%*`
 let boost2 = `*${pickRandom(['21','22','23','24','25','26','27','28','29','30','31','32','33','34','35','36','37','38','39','40'])}%*`
@@ -101,9 +101,9 @@ await conn.sendMessage(m.chat, {text: `${boost5}`, edit: key})
 let old = performance.now()
 let neww = performance.now()
 let speed = `${neww - old}`
-let doxeo = `*✅ 𝐏𝐞𝐫𝐬𝐨𝐧𝐚 𝐡𝐚𝐜𝐤𝐞𝐚𝐝𝐚 𝐜𝐨𝐧 𝐞𝐱𝐢𝐭𝐨𝐬 🤣*\n\n*𝐓𝐢𝐞𝐦𝐩𝐨: ${speed} 𝐒𝐞𝐠𝐮𝐧𝐝𝐨𝐬!*
+let doxeo = `✅ ${await tr(`*Personas hackeada con éxitos 🤣*\n\n*Tiempo: ${speed} segundos!*
 
-*𝐑𝐞𝐬𝐮𝐥𝐭𝐚𝐝𝐨𝐬:*
+*Resultados:*
 *Nombre:* ${text}
 *Ip:* 192.28.213.234
 *N:* 43 7462
@@ -139,7 +139,7 @@ Sof02s32inf14.1e100.net
 *Tcp:* 192.168.725-->92.28.211:67wu2
 *Tcp:* 192.168.629-->92.28.211.167:8615
 *EXTERNAL MAC:* 6U:77:89:ER:O4
-*MODEM JUMPS:* 58`
+*MODEM JUMPS:* 58`)}`
 await conn.sendMessage(m.chat, {text: doxeo, edit: key})
 user.prue = new Date * 1  
 }
@@ -168,92 +168,92 @@ await conn.sendFile(m.chat, vn, 'error.mp3', null, m, true, { type: 'audioMessag
 //------------------------------------------------------------------------------------
     
 if (command == 'gay2') {
-if (!text) return m.reply(`🤔 𝙋𝙚𝙣𝙙𝙚𝙟𝙤 𝙚𝙩𝙞𝙦𝙪𝙚𝙩𝙖𝙨 𝙖𝙡 𝙡𝙖 𝙥𝙚𝙧𝙨𝙤𝙣𝙖 𝙘𝙤𝙣 𝙚𝙡 @Tag` ) 
+if (!text) return m.reply(GamTxt) 
 let juego = `_*${text.toUpperCase()}* *ES* *${(500).getRandom()}%* *GAY*_ 🏳️‍🌈`.trim()
 await conn.reply(m.chat, juego, m, m.mentionedJid ? { mentions: m.mentionedJid } : {})}
 
 //------------------------------------------------------------------------------------
   
 if (command == 'lesbiana') { 
-if (!text) return m.reply(`🤔 𝙋𝙚𝙣𝙙𝙚𝙟𝙤 𝙚𝙩𝙞𝙦𝙪𝙚𝙩𝙖𝙨 𝙖𝙡 𝙡𝙖 𝙥𝙚𝙧𝙨𝙤𝙣𝙖 𝙘𝙤𝙣 𝙚𝙡 @Tag` ) 
+if (!text) return m.reply(GamTxt) 
 let juego = `_*${text.toUpperCase()}* *ES* *${(500).getRandom()}%* *${command.replace('how', '').toUpperCase()}*_ 🏳️‍🌈`.trim()
 await conn.reply(m.chat, juego, m, m.mentionedJid ? { mentions: m.mentionedJid } : {})}
   
 //------------------------------------------------------------------------------------
   
 if (command == 'pajero') {
-if (!text) return m.reply(`🤔 𝙋𝙚𝙣𝙙𝙚𝙟𝙤 𝙚𝙩𝙞𝙦𝙪𝙚𝙩𝙖𝙨 𝙖𝙡 𝙡𝙖 𝙥𝙚𝙧𝙨𝙤𝙣𝙖 𝙘𝙤𝙣 𝙚𝙡 @Tag` ) 
+if (!text) return m.reply(GamTxt) 
 let juego = `_*${text.toUpperCase()}* *ES* *${(500).getRandom()}%* *${command.replace('how', '').toUpperCase()}*_ 😏💦`.trim()
 await conn.reply(m.chat, juego, m, m.mentionedJid ? { mentions: m.mentionedJid } : {})}
   
 //------------------------------------------------------------------------------------
   
 if (command == 'pajera') {
-if (!text) return m.reply(`🤔 𝙋𝙚𝙣𝙙𝙚𝙟𝙤 𝙚𝙩𝙞𝙦𝙪𝙚𝙩𝙖𝙨 𝙖𝙡 𝙡𝙖 𝙥𝙚𝙧𝙨𝙤𝙣𝙖 𝙘𝙤𝙣 𝙚𝙡 @Tag` ) 
+if (!text) return m.reply(GamTxt) 
 let juego = `_*${text.toUpperCase()}* *ES* *${(500).getRandom()}%* *${command.replace('how', '').toUpperCase()}*_ 😏💦`.trim()
 await conn.reply(m.chat, juego, m, m.mentionedJid ? { mentions: m.mentionedJid } : {})}
   
 //------------------------------------------------------------------------------------
   
 if (command == 'puto') {
-if (!text) return m.reply(`🤔 𝙋𝙚𝙣𝙙𝙚𝙟𝙤 𝙚𝙩𝙞𝙦𝙪𝙚𝙩𝙖𝙨 𝙖𝙡 𝙡𝙖 𝙥𝙚𝙧𝙨𝙤𝙣𝙖 𝙘𝙤𝙣 𝙚𝙡 @Tag` ) 
+if (!text) return m.reply(GamTxt) 
 let juego = `_*${text.toUpperCase()}* *ES* *${(500).getRandom()}%* *${command.replace('how', '').toUpperCase()},* *MÁS INFORMACIÓN A SU PRIVADO 🔥🥵 XD*_`.trim()
 await conn.reply(m.chat, juego, m, m.mentionedJid ? { mentions: m.mentionedJid } : {})}
   
 //------------------------------------------------------------------------------------
   
 if (command == 'puta') {
-if (!text) return m.reply(`🤔 𝙋𝙚𝙣𝙙𝙚𝙟𝙤 𝙚𝙩𝙞𝙦𝙪𝙚𝙩𝙖𝙨 𝙖𝙡 𝙡𝙖 𝙥𝙚𝙧𝙨𝙤𝙣𝙖 𝙘𝙤𝙣 𝙚𝙡 @Tag` ) 
+if (!text) return m.reply(GamTxt) 
 let juego = `_*${text.toUpperCase()}* *ES* *${(500).getRandom()}%* *${command.replace('how', '').toUpperCase()},* *MÁS INFORMACIÓN A SU PRIVADO 🔥🥵 XD*_`.trim()
 await conn.reply(m.chat, juego, m, m.mentionedJid ? { mentions: m.mentionedJid } : {})}
 
 //------------------------------------------------------------------------------------
   
 if (command == 'manco') {
-if (!text) return m.reply(`🤔 𝙋𝙚𝙣𝙙𝙚𝙟𝙤 𝙚𝙩𝙞𝙦𝙪𝙚𝙩𝙖𝙨 𝙖𝙡 𝙡𝙖 𝙥𝙚𝙧𝙨𝙤𝙣𝙖 𝙘𝙤𝙣 𝙚𝙡 @Tag` ) 
+if (!text) return m.reply(GamTxt) 
 let juego = `_*${text.toUpperCase()}* *ES* *${(500).getRandom()}%* *${command.replace('how', '').toUpperCase()} 💩*_`.trim()
 await conn.reply(m.chat, juego, m, m.mentionedJid ? { mentions: m.mentionedJid } : {})}
   
 //------------------------------------------------------------------------------------ 
   
 if (command == 'manca') {
-if (!text) return m.reply(`🤔 𝙋𝙚𝙣𝙙𝙚𝙟𝙤 𝙚𝙩𝙞𝙦𝙪𝙚𝙩𝙖𝙨 𝙖𝙡 𝙡𝙖 𝙥𝙚𝙧𝙨𝙤𝙣𝙖 𝙘𝙤𝙣 𝙚𝙡 @Tag` ) 
+if (!text) return m.reply(GamTxt) 
 let juego = `_*${text.toUpperCase()}* *ES* *${(500).getRandom()}%* *${command.replace('how', '').toUpperCase()} 💩*_`.trim()
 await conn.reply(m.chat, juego, m, m.mentionedJid ? { mentions: m.mentionedJid } : {})}
   
 //------------------------------------------------------------------------------------
   
 if (command == 'rata') {
-if (!text) return m.reply(`🤔 𝙋𝙚𝙣𝙙𝙚𝙟𝙤 𝙚𝙩𝙞𝙦𝙪𝙚𝙩𝙖𝙨 𝙖𝙡 𝙡𝙖 𝙥𝙚𝙧𝙨𝙤𝙣𝙖 𝙘𝙤𝙣 𝙚𝙡 @Tag` ) 
+if (!text) return m.reply(GamTxt) 
 let juego = `_*${text.toUpperCase()}* *ES* *${(500).getRandom()}%* *${command.replace('how', '').toUpperCase()} 🐁 COME QUESO 🧀*_`.trim()
 await conn.reply(m.chat, juego, m, m.mentionedJid ? { mentions: m.mentionedJid } : {})}
   
 //------------------------------------------------------------------------------------ 
   
 if (command == 'prostituto') {
-if (!text) return m.reply(`🤔 𝙋𝙚𝙣𝙙𝙚𝙟𝙤 𝙚𝙩𝙞𝙦𝙪𝙚𝙩𝙖𝙨 𝙖𝙡 𝙡𝙖 𝙥𝙚𝙧𝙨𝙤𝙣𝙖 𝙘𝙤𝙣 𝙚𝙡 @Tag` ) 
+if (!text) return m.reply(GamTxt) 
 let juego = `_*${text.toUpperCase()}* *ES* *${(500).getRandom()}%* *${command.replace('how', '').toUpperCase()} 🫦👅, QUIEN QUIERE DE SUS SERVICIOS? XD*_`.trim()
 await conn.reply(m.chat, juego, m, m.mentionedJid ? { mentions: m.mentionedJid } : {})}
   
 //------------------------------------------------------------------------------------  
   
 if (command == 'prostituta') {
-if (!text) return m.reply(`🤔 𝙋𝙚𝙣𝙙𝙚𝙟𝙤 𝙚𝙩𝙞𝙦𝙪𝙚𝙩𝙖𝙨 𝙖𝙡 𝙡𝙖 𝙥𝙚𝙧𝙨𝙤𝙣𝙖 𝙘𝙤𝙣 𝙚𝙡 @Tag` ) 
+if (!text) return m.reply(GamTxt) 
 let juego = `_*${text.toUpperCase()}* *ES* *${(500).getRandom()}%* *${command.replace('how', '').toUpperCase()} 🫦👅, QUIEN QUIERE DE SUS SERVICIOS? XD*_`.trim()
 await conn.reply(m.chat, juego, m, m.mentionedJid ? { mentions: m.mentionedJid } : {})}
   
 //------------------------------------------------------------------------------------
 if (command == 'love') {
-if (!text) return m.reply(`🤔 𝙋𝙚𝙣𝙙𝙚𝙟𝙤 𝙚𝙩𝙞𝙦𝙪𝙚𝙩𝙖𝙨 𝙖𝙡 𝙡𝙖 𝙥𝙚𝙧𝙨𝙤𝙣𝙖 𝙘𝙤𝙣 𝙚𝙡 @Tag` ) 
-conn.reply(m.chat, ` *❤️❤️ MEDIDOR DE AMOR ❤️❤️* 
-*El amor de ${text} por ti es de* *${Math.floor(Math.random() * 100)}%* *de un 100%*
-*Deberias pedirle que sea tu  novia/o ?*`.trim(), m, m.mentionedJid ? {
+if (!text) return m.reply(GamTxt) 
+conn.reply(m.chat, `${await tr(`*❤️❤️ MEDIDOR DE AMOR ❤️❤️* 
+*El amor de ${text} por ti es de*`)} *${Math.floor(Math.random() * 100)}%* ${await tr(`*de un 100%*
+*Deberias pedirle que sea tu  novia/o ?*`)}`.trim(), m, m.mentionedJid ? {
  mentions: m.mentionedJid
  } : {})} 
 
 //------------------------------------------------------------------------------------    
 if (command == 'top') {
-if (!text) throw `𝙔 𝙚𝙡 𝙩𝙚𝙭𝙩𝙤? 🤔\n📍 Ejemplo: ${usedPrefix}top nedro`
+if (!text) throw await tr(`Y el texto? 🤔\nEjemplo: ${usedPrefix}top nedro`)
 let ps = groupMetadata.participants.map(v => v.id)
 let a = ps.getRandom()
 let b = ps.getRandom()

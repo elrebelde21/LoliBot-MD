@@ -2,7 +2,7 @@
 let Presence = (await import(global.baileys)).default
 let handler  = async (m, { conn, args, text }) => {
 const pp = await conn.profilePictureUrl(m.chat, 'image').catch(_ => null) || './src/grupos.jpg' 
-if (!text) throw "⚠️ Ingresar el texto para el grupo"
+if (!text) throw `⚠️ ${await tr("Ingresar el texto para el grupo")}`
 try {
 let text = args.join` `
 if(!args || !args[0]) {

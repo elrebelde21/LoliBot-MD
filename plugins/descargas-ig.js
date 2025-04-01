@@ -7,30 +7,32 @@ const userRequests = {};
 
 const handler = async (m, { conn, args, command, usedPrefix }) => {
 const datas = global;
-if (!args[0]) throw `⚠️ Ingresa el enlace del vídeo de Instagram junto al comando.\n\nEjemplo: *${usedPrefix + command}* https://www.instagram.com/p/C60xXk3J-sb/?igsh=YzljYTk1ODg3Zg==`;
-if (userRequests[m.sender]) return await conn.reply(m.chat, `Oye @${m.sender.split('@')[0]}, calma, ya estás descargando algo 😒\nEspera a que termine tu solicitud actual antes de hacer otra...`, m)
+if (!args[0]) throw `⚠️ ${await tr("Ingresa el enlace del vídeo de Instagram junto al comando.")}\n\n${await tr("Ejemplo")}: *${usedPrefix + command}* https://www.instagram.com/p/C60xXk3J-sb/?igsh=YzljYTk1ODg3Zg==`;
+if (userRequests[m.sender]) return await conn.reply(m.chat, `Oye @${m.sender.split('@')[0]}, ${await tr("calma, ya estás descargando algo ")} 😒\n> ${await tr("Espera a que termine tu solicitud actual antes de hacer otra...")}`, m)
 userRequests[m.sender] = true;
 await m.react('⌛');
 try {
+let igImagen = await tr("_*Aqui tiene tu imagen de Instagram*_")
+let igVideo = await tr("*Aqui esta el video de Instagram*")
 const downloadAttempts = [
 async () => {
 const res = await fetch(`https://api.siputzx.my.id/api/d/igdl?url=${args[0]}`);
 const data = await res.json();
 const fileType = data.data[0].url.includes('.webp') ? 'image' : 'video';
-return { url: data.data[0].url, type: fileType, caption: fileType === 'image' ? '_*Aqui tiene tu imagen de Instagram*_' : '*Aqui esta el video de Instagram*',
+return { url: data.data[0].url, type: fileType, caption: fileType === 'image' ? igImagen : igVideo,
 }},
 async () => {
 const res = await fetch(`${APIs.fgmods.url}/downloader/igdl?url=${args[0]}&apikey=${APIs.fgmods.key}`);
 const data = await res.json();
 const result = data.result[0];
 const fileType = result.url.endsWith('.jpg') || result.url.endsWith('.png') ? 'image' : 'video';
-return { url: result.url, type: fileType, caption: fileType === 'image' ? '_*Aqui tiene tu imagen de Instagram*_' : '*Aqui esta el video de Instagram*',
+return { url: result.url, type: fileType, caption: fileType === 'image' ? igImagen : igVideo,
 }},
 async () => {
 const apiUrl = `${apis}/download/instagram?url=${encodeURIComponent(args[0])}`;
 const apiResponse = await fetch(apiUrl);
 const delius = await apiResponse.json();
-return { url: delius.data[0].url, type: delius.data[0].type, caption: delius.data[0].type === 'image' ? '_*Aqui tiene tu imagen de Instagram*_' : '*Aqui esta el video de Instagram*',
+return { url: delius.data[0].url, type: delius.data[0].type, caption: delius.data[0].type === 'image' ? igImagen : igVideo,
 }},
 async () => {
 const resultssss = await instagramdl(args[0]);
@@ -50,7 +52,7 @@ console.error(`Error in attempt: ${err.message}`);
 continue; 
 }}
 
-if (!fileData) throw new Error('No se pudo descargar el archivo desde ninguna API');
+if (!fileData) throw new Error(await tr('No se pudo descargar el archivo desde ninguna API'));
 const fileName = fileData.type === 'image' ? 'ig.jpg' : 'ig.mp4';
 await conn.sendFile(m.chat, fileData.url, fileName, fileData.caption, m, null, fake);
 await m.react('✅');

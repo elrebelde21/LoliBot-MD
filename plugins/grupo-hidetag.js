@@ -2,7 +2,7 @@ let generateWAMessageFromContent = (await import(global.baileys)).default
 import * as fs from 'fs'
 
 var handler = async (m, { conn, text, participants, isOwner, isAdmin }) => {
-if (!m.quoted && !text) return m.reply(`𝙔 𝙀𝙇 𝙏𝙀𝙓𝙏𝙊?`) 
+if (!m.quoted && !text) return m.reply(await tr(`Y el texto?`)) 
 try { 
 let users = participants.map(u => conn.decodeJid(u.id))
 let q = m.quoted ? m.quoted : m || m.text || m.sender
