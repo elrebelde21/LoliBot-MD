@@ -23,7 +23,7 @@ export async function translateText2(text) {
   const m = global.currentMessageContext;
   const targetLang = m ? global.db?.data?.users[m.sender]?.language || global.lang : global.lang;
   
-  console.log("Debug translateText:", { text, targetLang2 });
+  console.log("Debug translateText:", { text, targetLang });
   
   try {
     const textRegex = /\b(?![\w.]*\.[\w.]*)([\p{L}0-9][\p{L}0-9\s]*)\b/gu;
