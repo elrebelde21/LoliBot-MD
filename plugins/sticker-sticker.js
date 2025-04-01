@@ -13,9 +13,9 @@ try {
 let q = m.quoted ? m.quoted : m
 let mime = (q.msg || q).mimetype || q.mediaType || ''
 if (/webp|image|video/g.test(mime)) {
-if (/video/g.test(mime)) if ((q.msg || q).seconds > 18) return m.reply('⚠️ ¿Dónde has visto un sticker de 15 segundos, pendejo? Haz el video más corto, con un máximo de 12 segundos.')
+if (/video/g.test(mime)) if ((q.msg || q).seconds > 18) return m.reply(await tr('⚠️ ¿Dónde has visto un sticker de 15 segundos, pendejo? Haz el video más corto, con un máximo de 12 segundos.'))
 let img = await q.download?.()
-if (!img) return m.reply(`*Y la imagen? 🤔 Responde a una imagen para hacer el sticker. Usa:* ${usedPrefix + command}`) 
+if (!img) return m.reply(`*${await tr("Y la imagen?")} 🤔 ${await tr("Responde a una imagen para hacer el sticker. Usa:")}* ${usedPrefix + command}`) 
 let out
 try {
 stiker = await sticker(img, false, f, g)
@@ -37,7 +37,7 @@ console.error(e)
 if (!stiker) stiker = e
 } finally {
 if (stiker) conn.sendFile(m.chat, stiker, 'sticker.webp', '',m, true, { contextInfo: { 'forwardingScore': 200, 'isForwarded': false, externalAdReply:{ showAdAttribution: false, title: wm, body: ``, mediaType: 2, sourceUrl: [nna, nn, md, yt].getRandom(), thumbnail: imagen4}}}, { quoted: m })
-else return m.reply(`*Y la imagen? 🤔 Responde a una imagen para hacer el sticker. Usa:* ${usedPrefix + command}`) 
+else return m.reply(`*${await tr("Y la imagen?")} 🤔 ${await tr("Responde a una imagen para hacer el sticker. Usa:")}* ${usedPrefix + command}`) 
 }}
 handler.help = ['sticker']
 handler.tags = ['sticker']

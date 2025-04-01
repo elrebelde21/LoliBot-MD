@@ -26,8 +26,8 @@ targetUser = m.mentionedJid[0];
 }
 const userCharacters = characters.filter(c => c.claimedBy === targetUser);
 if (userCharacters.length === 0) {
-const targetUsername = targetUser === m.sender ? 'tú' : `@${targetUser.split('@')[0]}`;
-return conn.reply(m.chat, `*${targetUsername}* no tienes ningún personaje en tu harem.`, m, { mentions: [targetUser]});
+const targetUsername = targetUser === m.sender ? await tr('tú') : `@${targetUser.split('@')[0]}`;
+return conn.reply(m.chat, `*${targetUsername}* ${await tr("no tienes ningún personaje en tu harem")}.`, m, { mentions: [targetUser]});
 }
 
 const itemsPerPage = 6; 
@@ -39,14 +39,14 @@ page = 1;
 const startIndex = (page - 1) * itemsPerPage;
 const endIndex = startIndex + itemsPerPage;
 const currentPageCharacters = userCharacters.slice(startIndex, endIndex);
-let message = `*\`🛍 Inventario de Compras\`*\n\n`;
-message += `*• Usuario:* @${targetUser.split('@')[0]}\n`;
-message += `*• Personajes comprados:* ${userCharacters.length}\n\n`;
-message += `*\`○ Lista de Personajes:\`*\n`;
+let message = `*\`🛍 ${await tr("Inventario de Compras")}\`*\n\n`;
+message += `*• ${await tr("Usuario")}:* @${targetUser.split('@')[0]}\n`;
+message += `*• ${await tr("Personajes comprados")}:* ${userCharacters.length}\n\n`;
+message += `*\`○ ${await tr("Lista de Personajes")}:\`*\n`;
 currentPageCharacters.forEach((character, index) => {
 message += `${index + 1}. *${character.name}* (${character.price.toLocaleString()})\n`;
 });
-message += `\n> *• Página:* ${page} de ${totalPages}`;
+message += `\n> *• ${await tr("Página")}:* ${page} ${await tr("de")} ${totalPages}`;
 conn.reply(m.chat, message, m, {mentions: [targetUser] });
 }
 handler.help = ['harem @tag'];

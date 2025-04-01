@@ -6,8 +6,8 @@ let handler = async (m, { conn, text, args, usedPrefix, command }) => {
 let user = global.db.data.users[m.sender]
 let f = user.packname || global.packname
 let g = (user.packname && user.author ? user.author : (user.packname && !user.author ? '' : global.author))
-if (!args[0]) return m.reply(`⚠️ 𝘿𝙚𝙗𝙚𝙨 𝙙𝙚 𝙪𝙨𝙖𝙧 2 𝙚𝙢𝙤𝙟𝙞𝙨 𝙮 𝙚𝙣 𝙢𝙚𝙙𝙞𝙤 𝙪𝙨𝙖𝙧 𝙚𝙡 *+*\n• 𝙀𝙟𝙚𝙢𝙥𝙡𝙤 :\n*${usedPrefix + command}* 😺+😆`) 
-conn.fakeReply(m.chat, `Calma crack estoy procesando 👏\n\n> *Esto puede demorar unos minutos*`, '0@s.whatsapp.net', `No haga spam gil`, 'status@broadcast', null, fake)
+if (!args[0]) return m.reply(`⚠️ ${await tr("Debes de usar 2 emojis y en medio usar el *+*")}\n• ${await tr("Ejemplo")} :\n*${usedPrefix + command}* 😺+😆`) 
+conn.fakeReply(m.chat, `${await tr("Calma crack estoy procesando")} 👏\n\n> *${await tr("Esto puede demorar unos minutos")}*`, '0@s.whatsapp.net', await tr(`No haga spam gil`), 'status@broadcast', null, fake)
 try {
 let [emoji1, emoji2] = text.split`+`
 let anu = await fetchJson(`https://tenor.googleapis.com/v2/featured?key=AIzaSyAyimkuYQYF_FXVALexPuGQctUWRURdCYQ&contentfilter=high&media_filter=png_transparent&component=proactive&collection=emoji_kitchen_v5&q=${encodeURIComponent(emoji1)}_${encodeURIComponent(emoji2)}`)

@@ -5,14 +5,14 @@ if (confirmation[m.sender]) return m.reply('𝙀𝙨𝙩𝙖𝙨 𝙝𝙖𝙘�
 let user = global.db.data.users[m.sender]
 const item = items.filter(v => v in user && typeof user[v] == 'number')
     
-let lol = `\`⧼⧼⧼ 💱 𝙏𝙍𝘼𝙉𝙎𝙁𝙀𝙍𝙀𝙉𝘾𝙄𝘼 💱 ⧽⧽⧽\`
+let lol = `\`⧼⧼⧼ 💱 ${await tr("TRANSFERENCIAS")} 💱 ⧽⧽⧽\`
     
-> *${usedPrefix + command}  tipo cantidad @tag*
+> *${usedPrefix + command}  ${await tr("Tipo cantidad")} @tag*
 
-\`❏ 𝙀𝙅𝙀𝙈𝙋𝙇𝙊 :\`
+\`❏ ${await tr("EJEMPLO")} :\`
 * *${usedPrefix + command} exp 30 @0*
 
-┏•「 *✅ 𝙍𝙀𝘾𝙐𝙍𝙎𝙊𝙎 𝘿𝙄𝙎𝙋𝙊𝙉𝙄𝘽𝙇𝙀𝙎* 」
+┏•「 *✅ ${await tr("RECURSOS DISPONIBLE")}* 」
 ┃
 ┃ 💎 𝘿𝙞𝙖𝙢𝙖𝙣𝙩𝙚𝙨 = limit
 ┃ 🪙 𝙇𝙤𝙡𝙞𝘾𝙤𝙞𝙣𝙨 = money 
@@ -23,26 +23,26 @@ const type = (args[0] || '').toLowerCase()
 if (!item.includes(type)) return m.reply(lol,  m.chat, {mentions: conn.parseMention(lol)}, {quoted: m })
 const count = Math.min(Number.MAX_SAFE_INTEGER, Math.max(1, (isNumber(args[1]) ? parseInt(args[1]) : 1))) * 1
 let who = m.mentionedJid && m.mentionedJid[0] ? m.mentionedJid[0] : args[2] ? (args[2].replace(/[@ .+-]/g, '') + '@s.whatsapp.net') : ''
-if (!who) return m.reply(`${ag} *𝙀𝙏𝙄𝙌𝙐𝙀𝙏𝙀 𝘼𝙇 𝙐𝙎𝙐𝘼𝙍𝙄𝙊*`)
-if (!(who in global.db.data.users)) return m.reply(`${fg}*𝙀𝙇 𝙐𝙎𝙐𝘼𝙍𝙄𝙊 ${who} 𝙉𝙊 𝙎𝙀 𝙀𝙉𝘾𝙐𝙀𝙉𝙏𝙍𝘼 𝙀𝙉 𝙈𝙄 𝘽𝘼𝙎𝙀 𝘿𝙀 𝘿𝘼𝙏𝙊𝙎*`)
-if (user[type] * 1 < count) return m.reply(`${fg}*𝙉𝙊 𝙏𝙄𝙀𝙉𝙀 𝙎𝙐𝙁𝙐𝘾𝙄𝙀𝙉𝙏𝙀 𝙋𝘼𝙍𝘼 𝙍𝙀𝘼𝙇𝙄𝙕𝘼𝙍 𝙇𝘼 𝙏𝙍𝘼𝙉𝙎𝙁𝙀𝙍𝙀𝙉𝘾𝙄𝘼 𝘿𝙀 ${type}*`)
+if (!who) return m.reply(ag + `*${await tr("ETIQUETE AL USUARIO")}*`)
+if (!(who in global.db.data.users)) return m.reply(`${fg}*${await tr("EL USUARIO")} ${who} ${await tr("NO SE ENCUENTRA EN MI BASE DE DATOS")}*`)
+if (user[type] * 1 < count) return m.reply(`${fg}*${await tr("NO TIENE SUFICIENTE PARA REALIZAR LA TRANFERENCIA DE ")} ${type}*`)
 let mentionedJid = [who]
 let username = conn.getName(who)
     
-let confirm = `\`ESTAS A PUNTO DE HACER ESTA ACCIÓN DE TRANFERENCIA\`
+let confirm = `\`${await tr("ESTAS A PUNTO DE HACER ESTA ACCIÓN DE TRANFERENCIA")}\`
 
-> 💹 *${count} ${type} para* *@${(who || '').replace(/@s\.whatsapp\.net/g, '')}* ? 
+> 💹 *${count} ${type} ${await tr("para")}* *@${(who || '').replace(/@s\.whatsapp\.net/g, '')}* ? 
 
-\`DESEAS CONTINUAR?\`
-> Tienes 60 segundos!!
+\`${await tr("DESEAS CONTINUAR?")}\`
+> ${await tr("Tienes 60 segundos!!")}
 
-> Escriba: (si) para acertar
-> escriba: (no) para cancelar\n\n> ${wm}`.trim()
+> ${await tr("Escriba: (si) para acertar")}
+> ${await tr("Escriba: (no) para cancelar")}\n\n> ${wm}`.trim()
     
-let c = `${wm}\nTienes 60 segundos!!`
+let c = `${wm}\n${await tr("Tienes 60 segundos!!")}`
 await conn.reply(m.chat, confirm, m, { mentions: [who] })
 //conn.sendButton(m.chat, confirm, c, null, [['𝙎𝙄'], ['𝙉𝙊']], m, { mentions: [who] })
-confirmation[m.sender] = {sender: m.sender, to: who, message: m, type, count, timeout: setTimeout(() => (m.reply('*SU TIEMPO SE HA TERMINADO*'), delete confirmation[m.sender]), 60 * 1000)}}
+confirmation[m.sender] = {sender: m.sender, to: who, message: m, type, count, timeout: setTimeout(() => (m.reply(`*${tr("SU TIEMPO SE HA TERMINADO")}*`), delete confirmation[m.sender]), 60 * 1000)}}
 
 handler.before = async m => {
 if (m.isBaileys) return
@@ -56,7 +56,7 @@ if (/^No|no$/i.test(m.text) ) {
 //if (/No?/m.text(m.text.toLowerCase())) {
 clearTimeout(timeout)
 delete confirmation[sender]
-return m.reply('*CANCELADO*')
+return m.reply(await tr('*CANCELADO*'))
 }
 if (/^Si|si$/i.test(m.text) ) { 
 //if (/Si?/m.text(m.text.toLowerCase())) {
@@ -64,11 +64,11 @@ let previous = user[type] * 1
 let _previous = _user[type] * 1
 user[type] -= count * 1
 _user[type] += count * 1
-if (previous > user[type] * 1 && _previous < _user[type] * 1) m.reply(`✅ *TRANSFERENCIA HECHA CON ÉXITO:*\n\n*${count} ${type} para* @${(to || '').replace(/@s\.whatsapp\.net/g, '')}`, null, { mentions: [to] })
+if (previous > user[type] * 1 && _previous < _user[type] * 1) m.reply(`✅ *${await tr("TRANSFERENCIA HECHA CON ÉXITO:")}*\n\n*${count} ${type} ${await tr("para")}* @${(to || '').replace(/@s\.whatsapp\.net/g, '')}`, null, { mentions: [to] })
 else {
 user[type] = previous
 _user[type] = _previous
-m.reply(`*Error al transferir ${count} ${type} para* *@${(to || '').replace(/@s\.whatsapp\.net/g, '')}*`, null, { mentions: [to] })
+m.reply(`*${await tr("Error al transferir")} ${count} ${type} ${await tr("para")}* *@${(to || '').replace(/@s\.whatsapp\.net/g, '')}*`, null, { mentions: [to] })
 }
 clearTimeout(timeout)
 delete confirmation[sender]

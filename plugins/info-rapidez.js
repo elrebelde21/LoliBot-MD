@@ -55,44 +55,45 @@ idle: 0,
 irq: 0
 }})
 
+let msgTxt = await tr("Comenzado prueba del velocidad", "𝘾𝙤𝙢𝙚𝙣𝙯𝙖𝙣𝙙𝙤 𝙥𝙧𝙪𝙚𝙗𝙖 𝙙𝙚𝙡 𝙫𝙚𝙡𝙤𝙘𝙞𝙙𝙖𝙙")
 let old = performance.now()
-const { key } = await conn.sendMessage(m.chat, {text: `𝘾𝙤𝙢𝙚𝙣𝙯𝙖𝙣𝙙𝙤 𝙥𝙧𝙪𝙚𝙗𝙖 𝙙𝙚𝙡 𝙫𝙚𝙡𝙤𝙘𝙞𝙙𝙖𝙙 🚀...`}, {quoted: fkontak});
+const { key } = await conn.sendMessage(m.chat, {text: `${msgTxt} 🚀...`}, {quoted: fkontak});
 
 let neww = performance.now()
 let speed = neww - old
-let caption = `*🚀 Velocidad 🚀*
+let caption = `*🚀 ${await tr("Velocidad")} 🚀*
 
 🚄 *${Math.round(neww - old)}* ms
 🚄 *${speed}* ms
 
-*🕕 TIEMPO ACTIVOS*
+*🕕 ${await tr("TIEMPO ACTIVOS")}*
 ${muptime}
 ${readMore}
-*🟢 C H A T S*
-▢ *${groupsIn.length}* _Chats de grupo_
-▢ *${groupsIn.length}* _Grupos unidos_
-▢ *${groupsIn.length - groupsIn.length}* _Grupos abandonados_
-▢ *${chats.length - groupsIn.length}* _Chats Privados_
-▢ *${chats.length}* _Total Chats_
+*🟢 ${await tr("CHATS", "C H A T S")}*
+▢ *${groupsIn.length}* _${await tr("Chats de grupo")}_
+▢ *${groupsIn.length}* _${await tr("Grupos unidos")}_
+▢ *${groupsIn.length - groupsIn.length}* _${await tr("Grupos abandonados")}_
+▢ *${chats.length - groupsIn.length}* _${await tr("Chats Privados")}_
+▢ *${chats.length}* _${await tr("Total Chats")}_
 
-*🔰 S E R V I D O R : S E R V E R*
-*🟢 RAM:* ${format(totalmem() - freemem())} / ${format(totalmem())}
-*🔵 RAM Libre:* ${format(freemem())}
-*💻 Plataforma :* \`\`\`${os.platform()}\`\`\`
-*📡 Servidor :* _${os.hostname()}_
-*⏳ Uptime :* ${toTime(os.uptime() * 1000)}
+*🔰 ${await tr("SERVIDOR", "S E R V I D O R : S E R V E R")}*
+*🟢 ${await tr("RAM")}:* ${format(totalmem() - freemem())} / ${format(totalmem())}
+*🔵 ${await tr("RAM Libre")}:* ${format(freemem())}
+*💻 ${await tr("Plataforma")} :* \`\`\`${os.platform()}\`\`\`
+*📡 ${await tr("Servidor")} :* _${os.hostname()}_
+*⏳ ${await tr("Uptime")} :* ${toTime(os.uptime() * 1000)}
 ${readMore}
-*NodeJS Uso de memoria : Memory Usage*
+*${await tr("NodeJS Uso de memoria")}*
 ${'```' + Object.keys(used).map((key, _, arr) => `${key.padEnd(Math.max(...arr.map(v => v.length)), ' ')}: ${format(used[key])}`).join('\n') + '```'}
 
-${cpus[0] ? `*Uso total de la CPU*
+${cpus[0] ? `*${await tr("Uso total de la CPU")}*
 ${cpus[0].model.trim()} (${cpu.speed} MHZ)\n${Object.keys(cpu.times).map(type => `- *${(type + '*').padEnd(6)}: ${(100 * cpu.times[type] / cpu.total).toFixed(2)}%`).join('\n')}
 
-*CPU Core(s) Uso (${cpus.length} Core CPU)*
+*${await tr("CPU Core(s) Uso")} (${cpus.length} Core CPU)*
 ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Object.keys(cpu.times).map(type => `- *${(type + '*').padEnd(6)}: ${(100 * cpu.times[type] / cpu.total).toFixed(2)}%`).join('\n')}`).join('\n\n')}` : ''}`
 await conn.sendMessage(m.chat, {text: caption, edit: key});
 } catch (e) {
-await conn.reply(m.chat, `${fg}*ALGO SALIÓ MAL.*\n\n\`\`\`REPORTE ESTE COMANDO ${usedPrefix + command} CON EL COMANDO ${usedPrefix}reporte\`\`\``, m)
+m.reply(`\`\`\`⚠️ ${await tr("OCURRIO UN ERROR")} ⚠️\`\`\`\n\n> *${await tr("Reporta el siguiente error a mi creador con el comando:")}* #report\n\n>>> ${e} <<<< `)    
 console.log(e) 
 }}
 handler.help = ['ping', 'speed']

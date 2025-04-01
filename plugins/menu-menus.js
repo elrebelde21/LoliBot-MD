@@ -31,22 +31,22 @@ let tags = {
 const defaultMenu = {
 before: `「 %wm 」
  
-Hola 👋🏻 *%name*
+%msgHello 👋🏻 *%name*
  
-*• Fecha:* %fecha
-*• Hora:* %hora (🇦🇷) 
-*• Usuario:* %totalreg
-*• Tiempo activos:* %muptime
+*• %msgFecha:* %fecha
+*• %msgHora:* %hora (🇦🇷) 
+*• %msgUsers:* %totalreg
+*• %msgUptim:* %muptime
 %botOfc
 
-*• Tu limite:* %limit
-*• Nivel:* %level
-*• Rango:* %role
-*• Exp:* %totalexp XP 
+*• %msgLimit:* %limit
+*• %msgNivel:* %level
+*• %msgRang:* %role
+*• %msgExp:* %totalexp XP 
 
-*• Usuario registrados:* %toUserReg de %toUsers
+*• %msgRegUser:* %toUserReg de %toUsers
 
-${[`*\`✅ Activar tu bot 24/7 activo en SkyPlus\`*\nhttps://youtu.be/z2kHwbu8e8s?si=M9iHLdVv7yXe_dvJ`, `Unirte a nuestro canal de WhatsApp y informarte de todas la novedades/Actualizaciones del bot y mas\nhttps://whatsapp.com/channel/0029Vau57ykEwEk5CgosvU3v`, `❤ Seguirme el tiktok\nhttps://www.tiktok.com/@elrebelde.21`].getRandom()}
+${[`*\`✅ %msg2\`*\nhttps://youtu.be/z2kHwbu8e8s?si=M9iHLdVv7yXe_dvJ`, `%msg3\nhttps://whatsapp.com/channel/0029Vau57ykEwEk5CgosvU3v`, `❤ %msg4\nhttps://www.tiktok.com/@elrebelde.21`].getRandom()}
 
 `.trimStart(),
   header: ' `<[ %category ]>` ',
@@ -57,6 +57,21 @@ ${[`*\`✅ Activar tu bot 24/7 activo en SkyPlus\`*\nhttps://youtu.be/z2kHwbu8e8
 }
 
 let handler = async (m, { conn, usedPrefix: _p, __dirname }) => {
+const msgHello = await tr("Hola")
+const msgFecha = await tr("Fecha")
+const msgHora = await tr("Hora")
+const msgUsers = await tr("Usuario")
+const msgUptim = await tr("Tiempo activos")
+const msgLimit = await tr("Tu limite")
+const msgNivel  = await tr("Nivel")
+const msgRang = await tr("Rango")
+const msgExp = await tr("Exp")
+const msgRegUser = await tr("Usuario registrados")
+const msg2 = await tr("Activar tu bot 24/7 activo en SkyPlus")
+const msg3 = await tr("Unirte a nuestro canal de WhatsApp y informarte de todas la novedades/Actualizaciones del bot y mas")
+const msg4 = await tr("Seguirme el tiktok")
+const msg5 = await tr("Bot Ofc")
+const msg6 = await tr("Soy un sub bot del")
 try {
 const chatId = m.chat
 const now = Date.now()
@@ -68,7 +83,7 @@ const minutes = Math.floor(secondsLeft / 60)
 const remainingSeconds = secondsLeft % 60
 const timeMessage = minutes > 0 ? `${minutes} minuto${minutes !== 1 ? 's' : ''}${remainingSeconds > 0 ? ` y ${remainingSeconds} segundo${remainingSeconds !== 1 ? 's' : ''}` : ''}`: `${remainingSeconds} segundo${remainingSeconds !== 1 ? 's' : ''}`
 
-await conn.reply(m.chat, `⚠️ Hey @${m.sender.split('@')[0]} pendejo, ahí está el menú 🙄\n> Solo se enviará cada 3 minutos para evitar spam,Desplázate hacia arriba para verlo completo. 👆`, chatData.menuMessage || m)
+await conn.reply(m.chat, `⚠️ ${await tr("Hey")} @${m.sender.split('@')[0]} ${await tr("pendejo, ahí está el menú")} 🙄\n> ${await tr("Solo se enviará cada 3 minutos para evitar spam, Desplázate hacia arriba para verlo completo.")} 👆`, chatData.menuMessage || m)
 return
 }
 
@@ -113,7 +128,7 @@ let totalreg = Object.keys(global.db.data.users).length
 let rtotalreg = Object.values(global.db.data.users).filter(user => user.registered == true).length
 let toUsers = `${toNum(totalreg)}`
 let toUserReg = `${toNum(rtotalreg)}`
-let botOfc = (conn.user.jid == global.conn.user.jid) ? `*• Bot Ofc:* wa.me/${global.conn.user.jid.split`@`[0]}` : `*• Soy un sub bot del:* wa.me/${global.conn.user.jid.split`@`[0]}`
+let botOfc = (conn.user.jid == global.conn.user.jid) ? `*• ${msg5}:* wa.me/${global.conn.user.jid.split`@`[0]}` : `*• ${msg6}:* wa.me/${global.conn.user.jid.split`@`[0]}`
 let help = Object.values(global.plugins).filter(plugin => !plugin.disabled).map(plugin => {
 return { help: Array.isArray(plugin.tags) ? plugin.help : [plugin.help],
 tags: Array.isArray(plugin.tags) ? plugin.tags : [plugin.tags],
@@ -177,6 +192,21 @@ readmore: readMore,
 fecha,
 hora,
 botOfc,
+msgHello, 
+msgFecha, 
+msgHora, 
+msgUsers, 
+msgUptim, 
+msgLimit, 
+msgNivel, 
+msgRang, 
+msgRegUser,
+msgExp,
+msg2,
+msg3,
+msg4,
+msg5,
+msg6,
 wm
 }
 text = text.replace(new RegExp(`%(${Object.keys(replace).sort((a, b) => b.length - a.length).join`|`})`, 'g'), (_, name) => '' + replace[name])

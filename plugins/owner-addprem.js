@@ -5,7 +5,7 @@ if (m.isGroup) who = m.mentionedJid[0] ? m.mentionedJid[0] : m.quoted ? m.quoted
 else who = m.chat
 
 let user = global.db.data.users[who]
-if (!who) throw `*⚠️ 𝐌𝐄𝐍𝐂𝐈𝐎𝐍𝐀/𝐑𝐄𝐏𝐎𝐍𝐃𝐀 𝐀𝐋 𝐌𝐄𝐍𝐒𝐀𝐉𝐄 𝐃𝐄 𝐋𝐀 𝐏𝐄𝐑𝐒𝐎𝐍𝐀 𝐐𝐔𝐄 𝐒𝐄𝐑𝐀́ 𝐏𝐑𝐄𝐌𝐈𝐔𝐌*\n\n*${usedPrefix + command} @${m.sender.split`@`[0]} 1*\n*${usedPrefix + command} 1*`
+if (!who) throw `*⚠️ ${await tr("Menciona o responder al mensaje de la persona que sera premium")}*\n\n*${usedPrefix + command} @${m.sender.split`@`[0]} 1*\n*${usedPrefix + command} 1*`
 let txt = text.replace('@' + who.split`@`[0], '').trim()
 let name = await '@' + who.split`@`[0]
 
@@ -15,9 +15,9 @@ var semana1 = 604800000 * txt //1s
 var mes1 = 2629800000 * txt //1m
 var now = new Date() * 1
 
-if (!txt && !m.quoted) throw `*FALTA EL TIEMPO PREMIUM*`
-if (txt == 0 || txt == null) throw `*DEBE INGRESAR EL TIEMPO PREMIUM*\n\n*${usedPrefix + command} @${m.sender.split`@`[0]} 1*\n*${usedPrefix + command} 1*`
-if (isNaN(txt)) return m.reply(`*SOLO NÚMERO*\n\n*${usedPrefix + command} @${m.sender.split`@`[0]} 1*`)
+if (!txt && !m.quoted) throw await tr(`*FALTA EL TIEMPO PREMIUM*`)
+if (txt == 0 || txt == null) throw `*${await tr("DEBE INGRESAR EL TIEMPO PREMIUM")}*\n\n*${usedPrefix + command} @${m.sender.split`@`[0]} 1*\n*${usedPrefix + command} 1*`
+if (isNaN(txt)) return m.reply(`*${await tr("SOLO NÚMERO")}*\n\n*${usedPrefix + command} @${m.sender.split`@`[0]} 1*`)
 
 /*let titulo = [ 'PREMIUM 1', 'PREMIUM 2', 'PREMIUM 3', 'PREMIUM 4', 'PREMIUM 5', 'PREMIUM 6']
 let nombre = [ 'PREMIUM BÁSICO', 'PREMIUM NORMAL', 'PREMIUM ESPECIAL', 'PREMIUM PRO', 'PREMIUM PLUS', 'PREMIUM MAGISTRAL']
@@ -45,42 +45,42 @@ if (command == 'addprem' || command == 'userpremium') {
 if (now < user.premiumTime) user.premiumTime += hora1
 else user.premiumTime = now + hora1
 user.premium = true
-conn.reply(m.chat,  `*🎟️ 𝙐𝙎𝙏𝙀𝘿 𝘼𝙃𝙊𝙍𝘼 𝙀𝙎 𝙋𝙍𝙀𝙈𝙄𝙐𝙈!!!*
+conn.reply(m.chat,  `*🎟️ ${await tr("USTED AHORA ES PREMIUM!!")}*
 
-*✨ 𝙉𝙊𝙈𝘽𝙍𝙀 » ${name}*
-*🕐 𝙏𝙄𝙀𝙈𝙋𝙊 : 𝙏𝙄𝙈𝙀 »* ${msToTime(hora1 - new Date())}
-*📉 𝙏𝙄𝙈𝙀𝙍 » ${user.premiumTime - now} seg*`, m, {contextInfo: {mentionedJid: conn.parseMention(name)}})}
+*✨ ${await tr("Nombre")} » ${name}*
+*🕐 ${await tr("Tiempo")} »* ${msToTime(hora1 - new Date())}
+*📉 ${await tr("Timer")} » ${user.premiumTime - now} seg*`, m, {contextInfo: {mentionedJid: conn.parseMention(name)}})}
     
 if (command == 'addprem2' || command == 'userpremium2') {
 if (now < user.premiumTime) user.premiumTime += dia1
 else user.premiumTime = now + dia1
 user.premium = true
-conn.reply(m.chat,  `*🎟️ 𝙐𝙎𝙏𝙀𝘿 𝘼𝙃𝙊𝙍𝘼 𝙀𝙎 𝙋𝙍𝙀𝙈𝙄𝙐𝙈!!!*
+conn.reply(m.chat,  `*🎟️ ${await tr("USTED AHORA ES PREMIUM!!")}*
 
-*✨ 𝙉𝙊𝙈𝘽𝙍𝙀 » ${name}*
-*🕐 𝙏𝙄𝙀𝙈𝙋𝙊 : 𝙏𝙄𝙈𝙀 » ${msToTime(dias1 - new Date())}*
-*📉 𝙏𝙄𝙈𝙀𝙍 » ${user.premiumTime - now} seg*`, m, {contextInfo: {mentionedJid: conn.parseMention(name)}})}
+*✨ ${await tr("Nombre")} » ${name}*
+*🕐 ${await tr("Tiempo")} » ${msToTime(dias1 - new Date())}*
+*📉 ${await tr("Timer")}  » ${user.premiumTime - now} seg*`, m, {contextInfo: {mentionedJid: conn.parseMention(name)}})}
 
 if (command == 'addprem3' || command == 'userpremium3') {
 if (now < user.premiumTime) user.premiumTime += semana1
 else user.premiumTime = now + semana1
 user.premium = true
-conn.reply(m.chat,  `*🎟️ 𝙐𝙎𝙏𝙀𝘿 𝘼𝙃𝙊𝙍𝘼 𝙀𝙎 𝙋𝙍𝙀𝙈𝙄𝙐𝙈!!!*
+conn.reply(m.chat,  `*🎟️ ${await tr("USTED AHORA ES PREMIUM!!")}*
 
-*✨ 𝙉𝙊𝙈𝘽𝙍𝙀 » ${name}*
-*🕐 𝙏𝙄𝙀𝙈𝙋𝙊 : 𝙏𝙄𝙈𝙀 » ${msToTime(semana1 - new Date())}*
-*📉 𝙏𝙄𝙈𝙀𝙍 » ${user.premiumTime - now} seg*`, m, {contextInfo: {mentionedJid: conn.parseMention(name)}})}
+*✨ ${await tr("Nombre")} » ${name}*
+*🕐 ${await tr("Tiempo")} » ${msToTime(semana1 - new Date())}*
+*📉 ${await tr("Timer")}  » ${user.premiumTime - now} seg*`, m, {contextInfo: {mentionedJid: conn.parseMention(name)}})}
 
   
 if (command == 'addprem4' || command == 'userpremium4') {
 if (now < user.premiumTime) user.premiumTime += mes1
 else user.premiumTime = now + mes1
 user.premium = true
-conn.reply(m.chat,  `*🎟️ 𝙐𝙎𝙏𝙀𝘿 𝘼𝙃𝙊𝙍𝘼 𝙀𝙎 𝙋𝙍𝙀𝙈𝙄𝙐𝙈!!!*
+conn.reply(m.chat,  `*🎟️ ${await tr("USTED AHORA ES PREMIUM!!")}*
 
-*✨ 𝙉𝙊𝙈𝘽𝙍𝙀 » ${name}*
-*🕐 𝙏𝙄𝙀𝙈𝙋𝙊 : 𝙏𝙄𝙈𝙀 » ${msToTime(mes1 - new Date())}*
-*📉 𝙏𝙄𝙈𝙀𝙍 » ${user.premiumTime - now} seg*`, m, {contextInfo: {mentionedJid: conn.parseMention(name)}})}
+*✨ ${await tr("Nombre")} » ${name}*
+*🕐 ${await tr("Tiempo")} » ${msToTime(mes1 - new Date())}*
+*📉 ${await tr("Timer")}  » ${user.premiumTime - now} seg*`, m, {contextInfo: {mentionedJid: conn.parseMention(name)}})}
 }
 handler.help = ['addprem [@user] <days>']
 handler.tags = ['owner']

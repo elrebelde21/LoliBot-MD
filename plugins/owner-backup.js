@@ -6,7 +6,7 @@ const databaseFolder = './database';
 const tarPath = './database_backup.tar.gz'; 
 let option = parseInt(text);
 
-if (![1, 2].includes(option)) return await m.reply(`*⚠️ ¿Qué debo respaldar, la sesión o la base de datos?*\nEjemplo de uso:\n${usedPrefix + command} 1 _(Envía la sesión "creds.json")_\n${usedPrefix + command} 2 _(Envía la base de datos)_`);
+if (![1, 2].includes(option)) return await m.reply(await tr(`*⚠️ ¿Qué debo respaldar, la sesión o la base de datos?*\nEjemplo de uso:\n${usedPrefix + command} 1 _(Envía la sesión "creds.json")_\n${usedPrefix + command} 2 _(Envía la base de datos)_`));
 try {
 let d = new Date();
 let date = d.toLocaleDateString('es', { day: 'numeric', month: 'long', year: 'numeric' });
@@ -15,16 +15,16 @@ if (option === 1) {
 const path = conn.user.jid !== global.conn.user.jid
 ? `./jadibts/${conn.user.jid.split`@`[0]}/creds.json`
 : `./BotSession/creds.json`;
-if (!fs.existsSync(path)) return await m.reply('⚠️ El archivo *creds.json* no existe.');            
+if (!fs.existsSync(path)) return await m.reply(await tr('⚠️ El archivo *creds.json* no existe.'));            
 
 let creds = fs.readFileSync(path);
 await conn.reply(m.sender, `📁 *Sesión* (${date})`, fkontak);
 await conn.sendMessage(m.sender, { document: creds, mimetype: 'application/json', fileName: `creds.json` }, { quoted: m });
 
 } else if (option === 2) { 
-if (!fs.existsSync(databaseFolder)) return await m.reply('⚠️ La carpeta *database* no existe.');
+if (!fs.existsSync(databaseFolder)) return await m.reply(await tr('⚠️ La carpeta *database* no existe.'));
 
-await m.reply(`_*📂 Preparando la base de datos...*_`);
+await m.reply(await tr(`_*📂 Preparando la base de datos...*_`));
 const output = fs.createWriteStream(tarPath);
 const archive = archiver('tar', { 
   gzip: true,
@@ -32,7 +32,7 @@ const archive = archiver('tar', {
 });
 output.on('close', async () => {
 console.log(`Archivo .tar.gz creado: ${archive.pointer()} bytes`);
-await conn.reply(m.sender, `📂 *Base de datos* (${date})`, fkontak);
+await conn.reply(m.sender, `📂 *${await tr("Base de datos")}* (${date})`, fkontak);
 await conn.sendMessage(m.sender, { 
   document: fs.readFileSync(tarPath), 
   mimetype: 'application/gzip',

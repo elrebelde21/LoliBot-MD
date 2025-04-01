@@ -6,35 +6,35 @@ let name = conn.getName(m.sender)
 let user = global.db.data.users[m.sender]
 if (!canLevelUp(user.level, user.role, user.exp, global.multiplier)) {
 let { min, xp, max } = xpRange(user.level, global.multiplier)
-throw `『 *TUS ESTADISTICAS 🆙* 』
+throw `『 *${await tr("TUS ESTADISTICAS")} 🆙* 』
 
-Tus estadisticas en tiempo real 🕐
+${await tr("Tus estadisticas en tiempo real")} 🕐
 
-├─ ❏ *NOMBRE:*  ${name}
-├─ ❏ *XP 🆙:* ${user.exp - min}/${xp}
-├─ ❏ *NIVEL:* ${user.level}
-└─ ❏ *RANGO:* ${user.role}
+├─ ❏ *${await tr("NOMBRE")}:*  ${name}
+├─ ❏ *${await tr("XP")} 🆙:* ${user.exp - min}/${xp}
+├─ ❏ *${await tr("NIVEL")}:* ${user.level}
+└─ ❏ *${await tr("RANGO")}:* ${user.role}
 
-> Te falta *${max - user.exp}* De *XP* para subir de nivel
+> ${await tr(`Te falta *${max - user.exp}* De *XP* para subir de nivel`)}
 `.trim()
 }
 let before = user.level * 1
 while (canLevelUp(user.level, user.exp, global.multiplier)) user.level++
 if (before !== user.level) {
-let teks = `🎊 Felicidades ${conn.getName(m.sender)}  llegaste a un nuevo nivel:`
-let str = `*[ 𝐋𝐄𝐕𝐄𝐋 𝐔𝐏 ]*
+let teks = `🎊 ${await tr("Felicidades")} ${conn.getName(m.sender)} ${await tr("llegaste a un nuevo nivel")}:`
+let str = `*[ ${await tr("LEVEL UP", "𝐋𝐄𝐕𝐄𝐋 𝐔𝐏")} ]*
         
-*• 𝐍𝐢𝐯𝐞𝐥 𝐚𝐧𝐭𝐞𝐫𝐢𝐨𝐫:* ${before}
-*• 𝐍𝐢𝐯𝐞𝐥 𝐚𝐜𝐭𝐮𝐚𝐥:* ${user.level}
-*• 𝐑𝐚𝐧𝐠𝐨:* ${user.role}
+*• ${await tr("Nivel anterior")}:* ${before}
+*• ${await tr("Nivel actual")}:* ${user.level}
+*• ${await tr("Rango")}:* ${user.role}
 
-> _*Cuanto mas interactues con los bots, mayor sera tu nivel_*
+> _*${await tr("Cuanto mas interactues con los bots, mayor sera tu nivel")}_*
 `.trim()
 try {
 const img = await levelup(teks, user.level)
 conn.sendFile(m.chat, img, 'levelup.jpg', str, m, null, fake)
 } catch (e) {
-conn.fakeReply(m.chat, str, '13135550002@s.whatsapp.net', `*TUS ESTADISTICAS 🆙*`, 'status@broadcast', null, fake)
+conn.fakeReply(m.chat, str, '13135550002@s.whatsapp.net', await tr(`*TUS ESTADISTICAS 🆙*`), 'status@broadcast', null, fake)
 //m.reply(str)
 }}}
 handler.help = ['levelup']

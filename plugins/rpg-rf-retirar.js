@@ -26,15 +26,15 @@ const characters = loadCharacters();
 const characterName = text.trim().toLowerCase();
 const characterToRemove = characters.find(c => c.name.toLowerCase() === characterName);
 
-if (!characterToRemove) return m.reply(`❌ No se encontró ningún personaje con el nombre: *${characterName}*.`);
-if (characterToRemove.seller !== m.sender) return m.reply(`❌ No puedes retirar este personaje porque no eres el vendedor.`);
-if (!characterToRemove.forSale) return m.reply(`❌ El personaje *${characterToRemove.name}* no está actualmente a la venta.`);
+if (!characterToRemove) return m.reply(await tr(`❌ No se encontró ningún personaje con el nombre: *${characterName}*.`))
+if (characterToRemove.seller !== m.sender) return m.reply(await tr(`❌ No puedes retirar este personaje porque no eres el vendedor.`))
+if (!characterToRemove.forSale) return m.reply(await tr(`❌ El personaje *${characterToRemove.name}* no está actualmente a la venta.`))
 
 characterToRemove.lastRemovedTime = Date.now();
 characterToRemove.forSale = false;
 characterToRemove.seller = null;
 saveCharacters(characters);
-m.reply(`✅ Has retirado el personaje *${characterToRemove.name}* del mercado.`);
+m.reply(await tr(`✅ Has retirado el personaje *${characterToRemove.name}* del mercado.`));
 };
 handler.help = ['rf-retirar'];
 handler.tags = ['gacha'];

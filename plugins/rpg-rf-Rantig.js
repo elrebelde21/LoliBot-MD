@@ -58,10 +58,10 @@ return acc;
 const topUsers = Object.entries(userClaims)
 .sort(([, countA], [, countB]) => countB - countA) 
 .slice(0, 10); 
-let textt = `📊 *\`Ranking de Personajes\`* 📊\n- Total de personajes: ${totalCharacters}\n- Personajes reclamados: ${claimedCharacters.length}\n- Personajes libres: ${freeCharacters.length}\n\n`;
-textt += '*🏆 Top de usuarios con más personajes reclamados:*\n';
+let textt = `📊 *\`${await tr("Ranking de Personajes")}\`* 📊\n- ${await tr("Total de personajes")}: ${totalCharacters}\n- ${await tr("Personajes reclamados")}: ${claimedCharacters.length}\n- ${await tr("Personajes libres")}: ${freeCharacters.length}\n\n`;
+textt += `*🏆 ${await tr("Top de usuarios con más personajes reclamados")}:*\n`
 topUsers.forEach(([user, count], index) => { textt += `\n${index + 1}- @${user.split('@')[0]} ${count} personajes` });
-await conn.sendMessage(m.chat, {text: textt + `\n\n> _*¡Sigue usando el bot para reclamar más personajes!*_`, contextInfo: { mentionedJid: topUsers.map(([user]) => user) }}, { quoted: m });
+await conn.sendMessage(m.chat, {text: textt + `\n\n> _*${await tr("¡Sigue usando el bot para reclamar más personajes!")}*_`, contextInfo: { mentionedJid: topUsers.map(([user]) => user) }}, { quoted: m });
 }
 handler.help = ['rf-personajes'];
 handler.tags = ['gacha'];

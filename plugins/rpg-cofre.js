@@ -1,6 +1,6 @@
 const handler = async (m, {isPrems, conn}) => {
 const time = global.db.data.users[m.sender].lastcofre + 122400000; //3 dias
-if (new Date - global.db.data.users[m.sender].lastcofre < 122400000) throw `🕛 𝐘𝐚 𝐫𝐞𝐜𝐥𝐚𝐦𝐚𝐬𝐭𝐞 𝐭𝐮 𝐜𝐨𝐟𝐫𝐞 𝐯𝐮𝐞𝐥𝐯𝐞 𝐞𝐧: *${msToTime(time - new Date())}* 𝐏𝐚𝐫𝐚 𝐯𝐨𝐥𝐯𝐞𝐫 𝐚 𝐫𝐞𝐬𝐜𝐥𝐚𝐦𝐚𝐫`;
+if (new Date - global.db.data.users[m.sender].lastcofre < 122400000) throw await tr(`🕛 Ya reclamaste tu cofre vuelve en: *${msToTime(time - new Date())}* Para volver a reclamar`)
 
 const img = 'https://img.freepik.com/vector-gratis/cofre-monedas-oro-piedras-preciosas-cristales-trofeo_107791-7769.jpg?w=2000';
 const dia = Math.floor(Math.random() * 30);
@@ -11,13 +11,13 @@ global.db.data.users[m.sender].limit += dia;
 global.db.data.users[m.sender].money += coins;
 global.db.data.users[m.sender].exp += expp;
 
-const texto = `[ 🛒 𝐎𝐁𝐓𝐈𝐄𝐍𝐄𝐒 𝐔𝐍 𝐂𝐎𝐅𝐑𝐄 🎉 ]
+const texto = `[ 🛒 ${await tr("OBTIENES UN COFRE", "𝐎𝐁𝐓𝐈𝐄𝐍𝐄𝐒 𝐔𝐍 𝐂𝐎𝐅𝐑𝐄")} 🎉 ]
  
-* ${dia} 𝐃𝐢𝐚𝐦𝐚𝐧𝐭𝐞𝐬 💎
-* ${coins} 𝐂𝐨𝐢𝐧𝐬 🪙
-* ${expp} 𝐄𝐱𝐩 ⚡`;
+* ${dia} ${await tr("Diamantes")} 💎
+* ${coins} ${await tr("Coins")} 🪙
+* ${expp} ${await tr("Exp")} ⚡`;
 
-await conn.sendMessage(m.chat, { image: { url: img }, caption: texto }, { quoted: { key: { fromMe: false, participant: '0@s.whatsapp.net', remoteJid: 'status@broadcast' }, message: { conversation: '🎉 Obtiene un regalo 🎁' }}});
+await conn.sendMessage(m.chat, { image: { url: img }, caption: texto }, { quoted: { key: { fromMe: false, participant: '0@s.whatsapp.net', remoteJid: 'status@broadcast' }, message: { conversation: await tr('🎉 Obtiene un regalo 🎁') }}});
 global.db.data.users[m.sender].lastcofre = new Date * 1;
 };
 handler.help = ['daily'];

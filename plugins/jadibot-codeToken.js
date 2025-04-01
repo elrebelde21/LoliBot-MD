@@ -11,7 +11,7 @@ try {
 if(global.conns.push(conn))
 await conn.sendMessage(m.chat, {text : usedPrefix + 'serbot' + " " + Buffer.from(fs.readFileSync("./jadibts/" + uniqid + "/creds.json"), "utf-8").toString("base64")}, { quoted: m })
 } catch(e) {
-await conn.reply(m.chat, `*No eres Sub-Bot de este Bot.*
+await conn.reply(m.chat, await tr(`*No eres Sub-Bot de este Bot.*
 
 > 👉 Para convertirte en Sub-Bot, utiliza el comando:
 \`${usedPrefix + 'serbot'}\`
@@ -19,7 +19,7 @@ await conn.reply(m.chat, `*No eres Sub-Bot de este Bot.*
 > ⚠️ ¿Problemas para iniciar sesión?
 *Si no puedes acceder a tu sesión, elimina la sesión creada desde los dispositivos vinculados y utiliza el comando:*
 \`${usedPrefix + 'eliminarjb'}\`
-De esta manera, podrás solicitar una nueva sesión.`, m)
+De esta manera, podrás solicitar una nueva sesión.`), m)
 if (m.fromMe) return
 }}
 handler.command = /^(codetoken)$/i

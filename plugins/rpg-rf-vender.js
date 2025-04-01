@@ -42,10 +42,11 @@ const characters = loadCharacters();
 if (args.length < 2) {
 const userCharacters = characters.filter(c => c.claimedBy === m.sender);
 
-if (userCharacters.length === 0) return m.reply('⚠️ No tienes personajes registrados. reclama uno primero.');
-let characterList = 'Lista de tus personajes:\n';
+if (userCharacters.length === 0) return m.reply(await tr('⚠️ No tienes personajes registrados. reclama uno primero.'))
+let characterList = await tr('Lista de tus personajes:\n')
+
 userCharacters.forEach((character, index) => { characterList += `${index + 1}. ${character.name} - ${character.price} exp\n` });
-return m.reply(`*⚠️ Pendejo no sabes como usar estos? Usa de la siguiente manera:*\n\n• Puedes vender un personaje a un usuario con:\n${usedPrefix + command} <nombre del personaje> <precio> @tag\n\n• O puedes poner tu personaje en el mercado:\nEj: ${usedPrefix + command} goku 9500\n\n` + characterList);
+return m.reply(await tr(`*⚠️ Pendejo no sabes como usar estos? Usa de la siguiente manera:*\n\n• Puedes vender un personaje a un usuario con:\n${usedPrefix + command} <nombre del personaje> <precio> @tag\n\n• O puedes poner tu personaje en el mercado:\nEj: ${usedPrefix + command} goku 9500\n\n`) + characterList);
 }
 
 const mentioned = m.mentionedJid[0] || null;
@@ -56,34 +57,36 @@ price = args[args.length - 2];
 }
 
 price = parseInt(price);
-if (isNaN(price) || price <= 0) return m.reply('⚠️ Por favor, especifica un precio válido para tu personaje.');
+if (isNaN(price) || price <= 0) return m.reply(await tr('⚠️ Por favor, especifica un precio válido para tu personaje.'))
 
 const nameParts = args.slice(0, mentioned ? -2 : -1);
 const characterName = nameParts.join(' ').trim();
-if (!characterName) return m.reply('⚠️ No se encontró el nombre del personaje. Verifica e intenta nuevamente.');
+if (!characterName) return m.reply(await tr('⚠️ No se encontró el nombre del personaje. Verifica e intenta nuevamente.'))
 
 const characterToSell = characters.find(c =>
 c.name.toLowerCase() === characterName.toLowerCase() &&
 c.claimedBy === m.sender
 );
 
-if (!characterToSell) return m.reply('⚠️ No se encontró el personaje que intentas vender.');
-if (characterToSell.forSale) return m.reply('⚠️ Este personaje ya está en venta. Usa el comando `.rf-retirar` para retirarlo antes de volver a publicarlo.');
+if (!characterToSell) return m.reply(await tr('⚠️ No se encontró el personaje que intentas vender.'))
+if (characterToSell.forSale) return m.reply(await tr('⚠️ Este personaje ya está en venta. Usa el comando `.rf-retirar` para retirarlo antes de volver a publicarlo.'))
 
 if (characterToSell.lastRemovedTime) {
 const timeSinceRemoval = Date.now() - characterToSell.lastRemovedTime;
 if (timeSinceRemoval < cooldownTime) {
 const remainingTime = Math.ceil((cooldownTime - timeSinceRemoval) / 60000); 
-return m.reply(`⚠️ Debes esperar ${remainingTime} minutos antes de volver a publicar a *${characterToSell.name}*.`);
+return m.reply(await tr(`⚠️ Debes esperar ${remainingTime} minutos antes de volver a publicar a *${characterToSell.name}*.`))
 }}
 
 const minPrice = calculateMinPrice(characterToSell.price);
 const maxPrice = calculateMaxPrice(characterToSell.price, characterToSell.votes || 0);
-if (price < minPrice) return m.reply(`⚠️ El precio mínimo permitido para ${characterToSell.name} es ${minPrice} exp.`);
-if (price > maxPrice) return m.reply(`⚠️ El precio máximo permitido para ${characterToSell.name} es ${maxPrice} exp.`);
+if (price < minPrice) return m.reply(await tr(`⚠️ El precio mínimo permitido para ${characterToSell.name} es ${minPrice} exp.`))
+if (price > maxPrice) return m.reply(await tr(`⚠️ El precio máximo permitido para ${characterToSell.name} es ${maxPrice} exp.`))
 
 if (mentioned) {
-if (pendingSales.has(mentioned)) return m.reply('⚠️ El comprador ya tiene una solicitud pendiente. Por favor, espera.');
+if (pendingSales.has(mentioned)) return m.reply(await tr('⚠️ El comprador ya tiene una solicitud pendiente. Por favor, espera.'))
+let msgTxt = await tr("no respondió a la oferta de")
+let msgTxt2 = await tr("La solicitud fue cancelada")
 
 pendingSales.set(mentioned, {seller: m.sender,
 buyer: mentioned,
@@ -91,12 +94,12 @@ character: characterToSell,
 price,
 timer: setTimeout(() => {
 pendingSales.delete(mentioned);
-m.reply(`⏰ @${mentioned.split('@')[0]} no respondió a la oferta de *${characterToSell.name}*. La solicitud fue cancelada.`, null, {
+m.reply(`⏰ @${mentioned.split('@')[0]} ${msgTxt} *${characterToSell.name}* ${msgTxt2}.`, null, {
 mentions: [mentioned]});
 }, 60000), // 1 minuto 
 });
 
-m.reply(`📜 Hey @${mentioned.split('@')[0]}, el usuario @${m.sender.split('@')[0]} quiere venderte *${characterToSell.name}* por ${price} exp.\n\nResponde con:\n- *Aceptar* para comprar.\n- *Rechazar* para cancelar.`, null, { mentions: [mentioned, m.sender] });
+m.reply(`📜 @${mentioned.split('@')[0]}, ${await tr("el usuario")} @${m.sender.split('@')[0]} ${await tr(`quiere venderte *${characterToSell.name}* por ${price} exp`)}.\n\n${await tr("Responde con")}:\n- *Aceptar* ${await tr("para comprar")}.\n- *Rechazar* ${await tr("para cancelar")}.`, null, { mentions: [mentioned, m.sender] });
 } else {
 const previousPrice = characterToSell.price;
 characterToSell.price = price;
@@ -107,7 +110,7 @@ if (characterToSell.forSale) {
 characterToSell.previousPrice = previousPrice;
 }
 saveCharacters(characters);
-m.reply(`✅ Has puesto a la venta *${characterToSell.name}* en el mercado por ${price} exp.`);
+m.reply(await tr(`✅ Has puesto a la venta *${characterToSell.name}* en el mercado por ${price} exp.`))
 }};
 
 handler.before = async (m) => {
@@ -121,7 +124,7 @@ const { seller, buyer, character, price } = sale;
 
 if (global.db.data.users[buyer].exp < price) {
 pendingSales.delete(buyerId);
-return m.reply('⚠️ No tienes suficiente exp para comprar este personaje.');
+return m.reply(await tr('⚠️ No tienes suficiente exp para comprar este personaje.'))
 }
 
 const sellerExp = price * 0.75; 
@@ -136,11 +139,11 @@ saveCharacters(updatedCharacters);
 clearTimeout(sale.timer);
 pendingSales.delete(buyerId);
 //conn.sendMessage(seller, { text: `✅ @${buyer.split('@')[0]} compró tu personaje *${character.name}* por ${price} exp.\n> _💸 Tu dinero ya fue depositado a tu cuentas recibirte: ${sellerExp} por la comisión que es de %25_`, mentions: [seller, buyer] }, { quoted: m });
-m.reply(`✅ @${buyer.split('@')[0]} ha comprado *${character.name}* de @${seller.split('@')[0]} por ${price} exp.`, null, { mentions: [buyer, seller] });
+m.reply(`✅ @${buyer.split('@')[0]} ${await tr("ha comprado")} *${character.name}* ${await tr("de")} @${seller.split('@')[0]} ${await tr("por")} ${price} exp.`, null, { mentions: [buyer, seller] });
 } else if (response === 'rechazar') {
 clearTimeout(sale.timer);
 pendingSales.delete(buyerId);
-m.reply(`⚠️ Has rechazado la oferta de compra para *${sale.character.name}*.`);
+m.reply(await tr(`⚠️ Has rechazado la oferta de compra para *${sale.character.name}*.`))
 }};
 handler.help = ['rf-vender'];
 handler.tags = ['gacha'];

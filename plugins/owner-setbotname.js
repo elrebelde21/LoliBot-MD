@@ -1,8 +1,8 @@
 let handler = async (m, { conn, text, usedPrefix, command }) => {
-if (!text) throw `Y EL TEXTO?`
+if (!text) throw await tr(`Y EL TEXTO?`)
 try {
 await conn.updateProfileName(text)
-m.reply('LISTO!')
+m.reply(await tr('LISTO!'))
 } catch (e) {
 console.log(e)
 throw `Error`

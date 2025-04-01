@@ -1,7 +1,7 @@
 import { randomBytes } from 'crypto'
 let handler = async (m, { conn, command, participants, usedPrefix, text }) => {    
 let fkontak = { "key": { "participants":"0@s.whatsapp.net", "remoteJid": "status@broadcast", "fromMe": false, "id": "Halo" }, "message": { "contactMessage": { "vcard": `BEGIN:VCARD\nVERSION:3.0\nN:Sy;Bot;;;\nFN:y\nitem1.TEL;waid=${conn.user.jid.split('@')[0]}:${conn.user.jid.split('@')[0]}\nitem1.X-ABLabel:Ponsel\nEND:VCARD` }}, "participant": "0@s.whatsapp.net" } 
-if (!text && !m.quoted) return m.reply('*⚠️ 𝐈𝐧𝐠𝐫𝐞𝐬𝐞 𝐞𝐥 𝐦𝐞𝐧𝐬𝐚𝐣𝐞 𝐪𝐮𝐞 𝐪𝐮𝐢𝐞𝐫𝐞 𝐭𝐫𝐚𝐦𝐢𝐭𝐞*')   
+if (!text && !m.quoted) return m.reply(await tr('*⚠️ Ingrese el mensaje que quiere tramite*'))   
 
 let users = participants.map(u => conn.decodeJid(u.id))
 let cc2 = text ? m : m.quoted ? await m.getQuotedObj() : false || m
@@ -16,17 +16,17 @@ let teks2 = text ? text : cc2.text
 let groups = Object.keys(await conn.groupFetchAllParticipating())
 let usersTag = participants.map(u => conn.decodeJid(u.id))
 let readMS = String.fromCharCode(8206).repeat(850)
-await m.reply(`*Enviando mensaje oficial, espere un momento...*`) 
+await m.reply(await tr(`*Enviando mensaje oficial, espere un momento...*`)) 
 for (let i = 0; i < groups.length; i++) {
 const id = groups[i];
 //const infoGP = lenguajeGB.smsChatGP2(readMS, dia, mes, año, fecha, tiempo)
 const delay = i * 4000 //4 seg
 setTimeout(async () => { 
-await conn.sendMessage(id, { text: `✅ *COMUNICADO OFICIAL* ✅\n\n` + teks2, mentions: [m.sender], mentions: (await conn.groupMetadata(id)).participants.map(v => v.id) }, { quoted: fkontak }) 
+await conn.sendMessage(id, { text: await tr(`✅ *COMUNICADO OFICIAL* ✅\n\n`) + teks2, mentions: [m.sender], mentions: (await conn.groupMetadata(id)).participants.map(v => v.id) }, { quoted: fkontak }) 
 //await conn.reply(id, infoGP + teks2, { mentions: (await conn.groupMetadata(id)).participants.map(v => v.id) }, { quoted: fkontak });
 }, delay)}         
 let totalGP = groups.length
-await m.reply(`✅ 𝐌𝐞𝐧𝐬𝐚𝐣𝐞 𝐞𝐧𝐯𝐢𝐚𝐝𝐨 𝐚 ${groups.length} 𝐆𝐫𝐮𝐩𝐨/𝐬*\n\n*𝐍𝐎𝐓𝐀: 𝐄𝐬 𝐩𝐨𝐬𝐢𝐛𝐥𝐞 𝐪𝐮𝐞 𝐭𝐞𝐧𝐠𝐚 𝐟𝐚𝐥𝐥𝐨𝐬 𝐞𝐬𝐭𝐞 𝐜𝐨𝐦𝐚𝐧𝐝𝐨 𝐲 𝐧𝐨 𝐬𝐞 𝐞𝐧𝐯𝐢𝐞 𝐚 𝐭𝐨𝐝𝐨𝐬 𝐥𝐨𝐬 𝐜𝐡𝐚𝐭𝐬, 𝐝𝐢𝐬𝐜𝐮𝐥𝐩𝐞 𝐩𝐨𝐫 𝐞𝐥 𝐦𝐨𝐦𝐞𝐧𝐭𝐨*`)
+await m.reply(await tr(`✅ Mensaje enviado a ${groups.length} Grupos*\n\n*NOTA:* Es posible que tenga fallos este comando y no se envie a todos los chats, disculpe por el momento*`))
 }     
 handler.help = ['broadcastgroup', 'bcgc'].map(v => v + ' <teks>')
 handler.tags = ['owner']

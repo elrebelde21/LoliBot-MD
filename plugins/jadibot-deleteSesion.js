@@ -13,17 +13,17 @@ let uniqid = `${who.split`@`[0]}`
 let userS = `${conn.getName(who)}`
     
 if (global.conn.user.jid !== conn.user.jid) {
-return conn.sendMessage(m.chat, {text: `*⚠️ USE ESTE COMANDO AL BOT PRINCIPAL*\n\nwa.me/${global.conn.user.jid.split`@`[0]}&text=${usedPrefix + command}`}, { quoted: m }) 
+return conn.sendMessage(m.chat, {text: `*⚠️ ${await tr("USE ESTE COMANDO AL BOT PRINCIPAL")}*\n\nwa.me/${global.conn.user.jid.split`@`[0]}&text=${usedPrefix + command}`}, { quoted: m }) 
 } else {
 try {
 await fs.rmdir("./jadibts/" + uniqid, { recursive: true, force: true })
-await conn.sendMessage(m.chat, { text: `*TE VOY A EXTRAÑAR ${wm} CHAOO!! 🥹*` }, { quoted: m })
-await conn.sendMessage(m.chat, { text : `*⚠️ HA CERRADO SESIÓN Y BORRADO TODO RASTRO*` } , { quoted: m })
+await conn.sendMessage(m.chat, { text: `*${await tr("TE VOY A EXTRAÑAR")} ${wm} ${await tr("CHAOO!!")} 🥹*` }, { quoted: m })
+await conn.sendMessage(m.chat, { text : await tr(`*⚠️ HA CERRADO SESIÓN Y BORRADO TODO RASTRO*`) } , { quoted: m })
 } catch(err) {
 if (err.code === 'ENOENT' && err.path === `./jadibts/${uniqid}`) {
-await conn.sendMessage(m.chat, { text: "⚠️ Usted no es un Sub-Bot" }, { quoted: m })
+await conn.sendMessage(m.chat, { text: await tr("⚠️ Usted no es un Sub-Bot") }, { quoted: m })
 } else {
-console.error(userS + ' ' + `⚠️ HA CERRADO SESIÓN COMO SUB BOT`, err)
+console.error(userS + ' ' + await tr(`⚠️ HA CERRADO SESIÓN COMO SUB BOT`), err)
 }}}
 }
 handler.help = ['deletesession', 'eliminarsesion'];

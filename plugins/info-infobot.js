@@ -81,28 +81,28 @@ const { autoread } = global.opts
 getSystemInfo().then(async (data) => {
 let teks = `*≡ INFOBOT*
 
-*INFORMACIÓN*
-*▣ Grupos total:* ${groupsIn.length}
-*▣ Grupos unidos:* ${groupsIn.length}
-*▣ Grupo salidos:* ${groupsIn.length - groupsIn.length}
-*▣ Chats privado:* ${chats.length - groupsIn.length}
-*▣ Chats totales:* ${chats.length}
-*▣ Sub-Bots conectado:* ${totalUsers}
-*▣ Total plugins:* ${totalf}
-*▣ Velocidad:* ${latensi.toFixed(4)} ms
-*▣ Actividad:* ${uptime}
+*${await tr("INFORMACIÓN")}*
+*▣ ${await tr("Grupos total")}:* ${groupsIn.length}
+*▣ ${await tr("Grupos unidos")}:* ${groupsIn.length}
+*▣ ${await tr("Grupo salidos")}:* ${groupsIn.length - groupsIn.length}
+*▣ ${await tr("Chats privado")}:* ${chats.length - groupsIn.length}
+*▣ ${await tr("Chats totales")}:* ${chats.length}
+*▣ ${await tr("Sub-Bots conectado")}:* ${totalUsers}
+*▣ ${await tr("Total plugins")}:* ${totalf}
+*▣ ${await tr("Velocidad")}:* ${latensi.toFixed(4)} ms
+*▣ ${await tr("Actividad")}:* ${uptime}
 
-*▣ Comando Ejecutando:* ${formattedTotalStats}/${totalStats}
-*▣ Grupos registrado:* ${toNum(totalchats)}/${totalchats}
-*▣ Usuarios registrado:* ${toNum(rtotalreg)} de ${toNum(totalreg)} users totales 
+*▣ ${await tr("Comando Ejecutando")}:* ${formattedTotalStats}/${totalStats}
+*▣ ${await tr("Grupos registrado")}:* ${toNum(totalchats)}/${totalchats}
+*▣ ${await tr("Usuarios registrado")}:* ${toNum(rtotalreg)} de ${toNum(totalreg)} users totales 
 
 *≡ S E R V E R*
-▣ *Servidor:* ${hostname()}
-▣ *Plataforma:* ${platform()}
-▣ *Ram usada:* ${data.usoRam}
-▣ *Espacio usado en disco:* ${data.espacioUsado}
-▣ *Uso de CPU:* ${data.usoCpu}  
-▣ *Uptime:* ${toTime(os.uptime() * 1000)}`;
+▣ *${await tr("Servidor")}:* ${hostname()}
+▣ *${await tr("Plataforma")}:* ${platform()}
+▣ *${await tr("Ram usada")}:* ${data.usoRam}
+▣ *${await tr("Espacio usado en disco")}:* ${data.espacioUsado}
+▣ *${await tr("Uso de CPU")}:* ${data.usoCpu}  
+▣ *${await tr("Uptime")}:* ${toTime(os.uptime() * 1000)}`;
 
 await conn.sendMessage(m.chat, {text: teks, contextInfo: { mentionedJid: null, forwardingScore: 1, isForwarded: true, forwardedNewsletterMessageInfo: { newsletterJid: '120363355261011910@newsletter', serverMessageId: '', newsletterName: 'LoliBot ✨' }, externalAdReply : {mediaUrl: null, mediaType: 1, description: null, title: `INFO - BOT`, previewType: 0, thumbnailUrl: "https://telegra.ph/file/39fb047cdf23c790e0146.jpg", sourceUrl: redes.getRandom()}}}, { quoted: m })
 //conn.sendMessage(m.chat, {image: { url: "https://telegra.ph/file/39fb047cdf23c790e0146.jpg" }, caption: teks, contextInfo: {externalAdReply: { title: `INFO - BOT`, sourceUrl: redes.getRandom(), mediaType: 1, renderLargerThumbnail: true, showAdAttribution: true, thumbnailUrl: img1}}}, { quoted: m })

@@ -16,16 +16,16 @@ conn.sendFile(m.chat, haha, 'error.jpg', `_${command}_`, m, null, fake);
 
 if (command == 'blackpink') {  
 fetch('https://raw.githubusercontent.com/ArugaZ/grabbed-results/main/random/kpop/blackpink.txt').then((res) => res.text()).then((body) => {
-    const randomkpop = body.split('\n');
-    const randomkpopx = randomkpop[Math.floor(Math.random() * randomkpop.length)];
+const randomkpop = body.split('\n');
+const randomkpopx = randomkpop[Math.floor(Math.random() * randomkpop.length)];
 conn.sendFile(m.chat, randomkpopx, 'error.jpg', `_${command}_`, m, null, fake);    
-//  conn.sendButton(m.chat, `_${command}_`, botname, randomkpopx, [['🔄 𝐒𝐈𝐆𝐔𝐈𝐄𝐍𝐓𝐄 🔄', `/${command}`]], null, null, m)   
-  });
+//conn.sendButton(m.chat, `_${command}_`, botname, randomkpopx, [['🔄 𝐒𝐈𝐆𝐔𝐈𝐄𝐍𝐓𝐄 🔄', `/${command}`]], null, null, m)   
+});
 }
 
 if (command == 'cristianoronaldo' || command == 'cr7') {  
 const cristiano = (await axios.get(`https://raw.githubusercontent.com/BrunoSobrino/TheMystic-Bot-MD/master/src/JSON/CristianoRonaldo.json`)).data;
-  const ronaldo = await cristiano[Math.floor(cristiano.length * Math.random())];
+const ronaldo = await cristiano[Math.floor(cristiano.length * Math.random())];
 conn.sendFile(m.chat, ronaldo, 'error.jpg', `_*Siiiuuuuuu*_`, m, null, fake);    
 //conn.sendButton(m.chat, '*Siiiuuuuuu*', botname, ronaldo, [['🔄 𝐒𝐈𝐆𝐔𝐈𝐄𝐍𝐓𝐄 🔄', `/${command}`]], null, null, m)  
 }
@@ -45,36 +45,36 @@ conn.sendFile(m.chat, loli, 'error.jpg', `_${command}_`, m, null, fake);
 }
 
 if (command == 'kpop') {  
-if (args.length == 0) return conn.reply(m.chat, `Usar ${usedPrefix}kpop\nPor favor escribe: ${usedPrefix}kpop [buscar]\nEjemplo:: ${usedPrefix}kpop bts\n\nBusquedas disponibles:\nblackpink, exo, bts`, m);
-  if (args[0] == 'blackpink' || args[0] == 'exo' || args[0] == 'bts') {
-    fetch('https://raw.githubusercontent.com/ArugaZ/grabbed-results/main/random/kpop/' + args[0] + '.txt')
-        .then((res) => res.text())
-        .then((body) => {
-          const randomkpop = body.split('\n');
-          const randomkpopx = randomkpop[Math.floor(Math.random() * randomkpop.length)];
-          conn.sendFile(m.chat, randomkpopx, '', 'Dasar Kpopers', m, null, fake);
-        })
-        .catch(() => {
-          conn.reply(m.chat, 'Ocurrio un error, vuelve a intentar, si el fallo continua avisar a mi creador', m);
-        });
-  } else {
-    conn.reply(m.chat, `Lo sentimos, la busqueda no está disponible. Por favor escribe ${usedPrefix}kpop para ver la lista de busquedas disponibles`, m);
-  }}
+let msgTxt = await tr('Ocurrio un error, vuelve a intentar, si el fallo continua avisar a mi creador')
+let msgTxt2 = await tr('Dasar Kpopers')
+if (args.length == 0) return conn.reply(m.chat, await tr(`Usar ${usedPrefix}kpop\nPor favor escribe: ${usedPrefix}kpop [buscar]\nEjemplo:: ${usedPrefix}kpop bts\n\nBusquedas disponibles:\nblackpink, exo, bts`), m);
+if (args[0] == 'blackpink' || args[0] == 'exo' || args[0] == 'bts') {
+fetch('https://raw.githubusercontent.com/ArugaZ/grabbed-results/main/random/kpop/' + args[0] + '.txt').then((res) => res.text()).then((body) => {
+const randomkpop = body.split('\n');
+const randomkpopx = randomkpop[Math.floor(Math.random() * randomkpop.length)];
+conn.sendFile(m.chat, randomkpopx, '', msgTxt2, m, null, fake);
+})
+.catch(() => {
+conn.reply(m.chat, msgTxt, m);
+});
+} else {
+conn.reply(m.chat, await tr(`Lo sentimos, la busqueda no está disponible. Por favor escribe ${usedPrefix}kpop para ver la lista de busquedas disponibles`), m);
+}}
   
 if (command == 'loli') {  
 const yh = global.loli;
-  const url = yh[Math.floor(Math.random() * yh.length)];
-conn.sendFile(m.chat, url, 'error.jpg', `*Yo soy tu loli uwu 😍*`, m, null, fake);   
-// conn.sendButton(m.chat, `*Yo soy tu loli uwu 😍*`, botname, url, [['🔄 𝐒𝐈𝐆𝐔𝐈𝐄𝐍𝐓𝐄 🔄', `/${command}`]], null, null, m) 
+const url = yh[Math.floor(Math.random() * yh.length)];
+conn.sendFile(m.chat, url, 'error.jpg', await tr(`*Yo soy tu loli uwu 😍*`), m, null, fake);   
+//conn.sendButton(m.chat, `*Yo soy tu loli uwu 😍*`, botname, url, [['🔄 𝐒𝐈𝐆𝐔𝐈𝐄𝐍𝐓𝐄 🔄', `/${command}`]], null, null, m) 
 }
 
 if (command == 'lolivid' || command == 'lolivideos' || command == 'lolívid') {  
 const res = await lolivid[Math.floor(Math.random() * lolivid.length)];
-conn.sendFile(m.chat, res, 'error.jpg', `*Yo soy tu loli uwu 😍*`, m, null, fake);   
+conn.sendFile(m.chat, res, 'error.jpg', await tr(`*Yo soy tu loli uwu 😍*`), m, null, fake);   
 //conn.sendButton(m.chat, `*Yo soy tu loli uwu 😍*`, botname, res, [['🔄 𝐒𝐈𝐆𝐔𝐈𝐄𝐍𝐓𝐄 🔄', `/${command}`]], null, null, m) 
 }
 
-if (command == 'meme' || command == 'memes') {  
+if (command == 'meme' || command == 'memes') { 
 const url = await hispamemes.meme();
 conn.sendFile(m.chat, url, 'error.jpg', `😂🤣🤣`, m, null, fake);   
 //conn.sendButton(m.chat, `_🤣 ${command} 🤣_`, botname, url, [['😂 𝐒𝐈𝐆𝐔𝐈𝐄𝐍𝐓𝐄 😂', `/${command}`]], null, null, m)  
@@ -96,7 +96,7 @@ conn.sendFile(m.chat, url, 'error.jpg', `*🇦🇷 Messi*`, m, null, fake);
 if (command == 'navidad') {  
  const res = (await axios.get(`https://raw.githubusercontent.com/BrunoSobrino/TheMystic-Bot-MD/master/src/JSON/navidad.json`)).data;
   const tee = await res[Math.floor(res.length * Math.random())];
-conn.sendFile(m.chat, tee, 'error.jpg', `*_Navidad 🧑‍🎄*`, m, null, fake);  
+conn.sendFile(m.chat, tee, 'error.jpg', await tr(`*_Navidad 🧑‍🎄*`), m, null, fake);  
 //conn.sendButton(m.chat, '_Navidad 🧑‍🎄_', botname, tee, [['🔄 𝐒𝐈𝐆𝐔𝐈𝐄𝐍𝐓𝐄 🔄', `/${command}`]], null, null, m)   
 }
 
@@ -114,9 +114,9 @@ const res = await fetch(`https://api.lolhuman.xyz/api/random/ppcouple?apikey=${l
   if (res.status != 200) throw await res.text();
   const json = await res.json();
   if (!json.status) throw json;
-conn.sendFile(m.chat, json.result.female, 'error.jpg', `*𝘾𝙃𝙄𝘾𝘼 ✨*`, m, null, fake);  
+conn.sendFile(m.chat, json.result.female, 'error.jpg', await tr(`*Chica ✨*`), m, null, fake);  
 //conn.sendButton(m.chat, '𝘾𝙃𝙄𝘾𝘼 ✨', wm, json.result.female, [['𝙎𝙄𝙂𝙐𝙄𝙀𝙉𝙏𝙀 | 𝙉𝙀𝙓𝙏 🆕', `/${command}`]], null, null, m)
-conn.sendFile(m.chat, json.result.male, 'error.jpg', `𝘾𝙃𝙄𝘾𝙊 ✨`, m, null, fake)
+conn.sendFile(m.chat, json.result.male, 'error.jpg', await tr(`Chico ✨`), m, null, fake)
 //conn.sendButton(m.chat, '𝘾𝙃𝙄𝘾𝙊 ✨', wm, json.result.male, [['𝙎𝙄𝙂𝙐𝙄𝙀𝙉𝙏𝙀 | 𝙉𝙀𝙓𝙏 🆕', `/${command}`]], null, null, m)
 }
 
@@ -125,7 +125,7 @@ if (command == 'waifu') {
   if (!res.ok) throw await res.text();
   const json = await res.json();
   if (!json.url) throw 'Error!';
-conn.sendFile(m.chat, json.url, 'error.jpg', `_*💖 A-ara ara sempai 💖*_`, m, null, fake);  
+conn.sendFile(m.chat, json.url, 'error.jpg', await tr(`_*💖 A-ara ara sempai 💖*_`), m, null, fake);  
 //conn.sendButton(m.chat, `*💖 A-ara ara sempai 💖*`, botname, json.url, [['🔄 𝐒𝐈𝐆𝐔𝐈𝐄𝐍𝐓𝐄 🔄', `/${command}`]], null, null, m)     
 }
 

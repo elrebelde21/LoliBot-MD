@@ -3,7 +3,7 @@ let who
 if (m.isGroup) who = m.mentionedJid[0] ? m.mentionedJid[0] : m.quoted ? m.quoted.sender : false
 else who = m.chat
 let user = global.db.data.users[who]
-if (!who) throw `🤓 Etiqueta al usuario boludito`
+if (!who) throw await tr(`🤓 Etiqueta al usuario boludito`)
 let users = global.db.data.users
 users[who].banned = true
 let ban = 'https://qu.ax/SJJt.mp3'

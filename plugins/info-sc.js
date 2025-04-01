@@ -4,6 +4,11 @@ import { promises } from 'fs'
 import { join } from 'path'
 let handler  = async (m, { conn, __dirname, usedPrefix: _p }) => {
 let _package = JSON.parse(await promises.readFile(join(__dirname, '../package.json')).catch(_ => ({}))) || {}
+let msgTxt = await tr("TIEMPO ACTIVO", "𝙏𝙄𝙀𝙈𝙋𝙊 𝘼𝘾𝙏𝙄𝙑𝙊")
+let msgTxt2 = await tr("Dias")
+let msgTxt3 = await tr("Horas")
+let msgTxt4 = await tr("Minutos")
+let msgTxt5 = await tr("Segudos")
 
 function kyun(seconds){
 function pad(s){
@@ -15,7 +20,7 @@ var minutes = Math.floor(seconds % (60*60) / 60);
 var seconds = Math.floor(seconds % 60);
 
 //return pad(hours) + ':' + pad(minutes) + ':' + pad(seconds)
-return `🫶 ${_package.homepage}\n\n*⏳ 𝙏𝙄𝙀𝙈𝙋𝙊 𝘼𝘾𝙏𝙄𝙑𝙊:*\n \t${pad(days)} Dias\t ${pad(hours)} Horas ${pad(minutes)} Minutos ${pad(seconds)} Segudos \t\n`
+return `🫶 ${_package.homepage}\n\n*⏳ ${msgTxt}:*\n \t${pad(days)} ${msgTxt2}\t ${pad(hours)} ${msgTxt3} ${pad(minutes)} ${msgTxt4} ${pad(seconds)} ${msgTxt5} \t\n`
 }
 const runtime = process.uptime()
 const teks = `${kyun(runtime)}`

@@ -2,7 +2,7 @@ let handler = async (m, { conn }) => {
 
 let hasil = Math.floor(Math.random() * 6000)
 let time = global.db.data.users[m.sender].lastmiming + 400000
-if (new Date - global.db.data.users[m.sender].lastmiming < 400000) throw `⏳ 𝐄𝐬𝐩𝐞𝐫𝐚 *${msToTime(time - new Date())}* 𝐏𝐚𝐫𝐚 𝐯𝐨𝐥𝐯𝐞𝐫 𝐚 𝐦𝐢𝐧𝐚𝐫`
+if (new Date - global.db.data.users[m.sender].lastmiming < 400000) throw await tr(`⏳ Espera *${msToTime(time - new Date())}* para poder volver a minar`)
 let minar = `${pickRandom(['Que pro 😎 has minado',
 '🌟✨ Genial!! Obtienes',
 'WOW!! eres un(a) gran Minero(a) ⛏️ Obtienes',
@@ -20,7 +20,7 @@ let minar = `${pickRandom(['Que pro 😎 has minado',
 'Felicidades!! Ahora tienes','⛏️⛏️⛏️ Obtienes'])}`
 
 global.db.data.users[m.sender].exp += hasil
-m.reply(`${minar} *${hasil} XP*`)
+m.reply(`${await tr(minar)} *${hasil} XP*`)
 global.db.data.users[m.sender].lastmiming = new Date * 1
 }
 handler.help = ['minar']

@@ -1,6 +1,6 @@
 let handler = async (m, { conn, text, args, usedPrefix, command }) => {
 let response = args.join(' ').split('|')
-if (!text) throw `⚠️ Ingresa un texto junto al comando.`
+if (!text) throw await tr(`⚠️ Ingresa un texto junto al comando.`)
 await m.react('🕓')
 try {
 let res = `https://api.lolhuman.xyz/api/textprome/blackpink?apikey=${lolkeysapi}&text=${text}`

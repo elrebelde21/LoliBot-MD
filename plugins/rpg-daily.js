@@ -5,7 +5,7 @@ let handler = async (m, { conn, isPrems }) => {
 let user = global.db.data.users[m.sender];
 let now = new Date().getTime();
 let time = user.lastclaim + 86400000;
-if (now - user.lastclaim < 86400000) throw `⚠️ 𝙔𝙖 𝙧𝙚𝙘𝙡𝙖𝙢𝙖𝙨𝙩𝙚 𝙩𝙪 𝙧𝙚𝙜𝙖𝙡𝙤 🎁\n𝙑𝙪𝙚𝙡𝙫𝙚 𝙚𝙣 *${msToTime(time - now)}* 𝙥𝙖𝙧𝙖 𝙫𝙤𝙡𝙫𝙚𝙧 𝙖 𝙧𝙚𝙘𝙡𝙖𝙢𝙖𝙧*`;
+if (now - user.lastclaim < 86400000) throw await tr(`⚠️ Ya reclamaste tu regalo 🎁, Vuelve en *${msToTime(time - now)}* para volver a reclamar (mantener la rachas)`)
 if (user.lastclaim && now - user.lastclaim < 172800000) {
 user.dailyStreak = (user.dailyStreak || 0) + 1;
 } else {
@@ -15,8 +15,8 @@ let currentExp = free + (user.dailyStreak - 1) * expIncrease;
 let nextExp = currentExp + expIncrease;
 user.exp += currentExp;
 user.lastclaim = now;
-let text = `*🔸 𝐇𝐀𝐒 𝐑𝐄𝐂𝐈𝐁𝐈𝐃𝐎:* Tu recompensa Diaria de: *${formatNumber(currentExp)} XP* (Día ${user.dailyStreak})\n\n_*Mañana no te olviden de seguir reclamado tu recompensa ganaras: ${formatK(nextExp)} (${formatNumber(nextExp)}) XP*_`;
-conn.fakeReply(m.chat, text, '13135550002@s.whatsapp.net', `🎁 Obtener un regalo 🎁`, 'status@broadcast', null, fake);
+let text = `*🔸 ${await tr("HAS RECIBIDO", "𝐇𝐀𝐒 𝐑𝐄𝐂𝐈𝐁𝐈𝐃𝐎")}:* ${await tr("Tu recompensa Diaria de")}: *${formatNumber(currentExp)} XP* (Día ${user.dailyStreak})\n\n_*${await tr("Mañana no te olviden de seguir reclamado tu recompensa ganaras")}: ${formatK(nextExp)} (${formatNumber(nextExp)}) XP*_`;
+conn.fakeReply(m.chat, text, '13135550002@s.whatsapp.net', await tr(`🎁 Obtener un regalo 🎁`), 'status@broadcast', null, fake);
 };
 handler.help = ['daily', 'claim'];
 handler.tags = ['econ'];

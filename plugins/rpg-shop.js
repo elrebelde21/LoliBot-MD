@@ -6,10 +6,10 @@ count = Math.max(1, count);
 if (global.db.data.users[m.sender].exp >= xpperlimit * count) {
 global.db.data.users[m.sender].exp -= xpperlimit * count;
 global.db.data.users[m.sender].limit += count;
-conn.reply(m.chat, `╔═❖ *ＮＯＴＡ ＤＥ ＰＡＧＯ*
-║‣ *Has comprando :* ${count} 💎 
-║‣ *Gastado :* ${xpperlimit * count} XP
-╚═══════════════`, m)} else conn.reply(m.chat, `⚠  Lo siento, no tienes suficientes *XP* para comprar *${count}* Diamantes💎`, m)
+conn.reply(m.chat, `╔═❖ *${await tr("NOTA DE PAGO")}*
+║‣ *${await tr("Has comprando")} :* ${count} 💎 
+║‣ *${await tr("Gastado")} :* ${xpperlimit * count} XP
+╚═══════════════`, m)} else conn.reply(m.chat, `⚠ ${await tr("Lo siento, no tienes suficientes XP para comprar ")} *${count}* ${await tr("Diamantes")} 💎`, m)
 }
 handler.help = ['Buy', 'Buyall'];
 handler.tags = ['econ'];

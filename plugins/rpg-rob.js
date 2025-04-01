@@ -1,18 +1,18 @@
 let ro = 3000
 let handler = async (m, { conn, usedPrefix, command}) => {
 let time = global.db.data.users[m.sender].lastrob + 7200000
-if (new Date - global.db.data.users[m.sender].lastrob < 7200000) throw `🚓 La policía que esta vigilando, vuelve en: ${msToTime(time - new Date())}\n\n‍`
+if (new Date - global.db.data.users[m.sender].lastrob < 7200000) throw `🚓 ${await tr("La policía que esta vigilando, vuelve en:")} ${msToTime(time - new Date())}\n\n‍`
 let who
 if (m.isGroup) who = m.mentionedJid[0] ? m.mentionedJid[0] : m.quoted ? m.quoted.sender : false
 else who = m.chat
-if (!who) return conn.reply(m.chat, `*⚠️ Etiqueta a un usuario boludo*`, m, {contextInfo: {externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: wm, body: '', previewType: 0, thumbnail: img.getRandom(), sourceUrl: redes.getRandom()}}}) 
-if (!(who in global.db.data.users)) throw `*⚠️ ¿Quien carajo es? No aparece el mi base de datos.*`
+if (!who) return conn.reply(m.chat, `*⚠️ ${await tr("Etiqueta a un usuario boludo")}*`, m, {contextInfo: {externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: wm, body: '', previewType: 0, thumbnail: img.getRandom(), sourceUrl: redes.getRandom()}}}) 
+if (!(who in global.db.data.users)) throw `*⚠️ ${await tr("¿Quien carajo es? No aparece el mi base de datos.")}*`
 let users = global.db.data.users[who]
 let rob = Math.floor(Math.random() * ro)
-if (users.exp < rob) return m.reply(`@${who.split`@`[0]} Este usuario tiene menos de ${ro} XP\n> No robes a un pobre v:`, null, { mentions: [who] })    
+if (users.exp < rob) return m.reply(`@${who.split`@`[0]} ${await tr("Ese usuario tiene menos de ")} ${ro} XP\n> ${await tr("No robes a un pobre v:")}`, null, { mentions: [who] })    
 global.db.data.users[m.sender].exp += rob
 global.db.data.users[who].exp -= rob 
-m.reply(`*Robaste ${rob} XP a @${who.split`@`[0]}*`, null, { mentions: [who] })
+m.reply(`*${await tr("Robaste")} ${rob} XP a @${who.split`@`[0]}*`, null, { mentions: [who] })
 //conn.sendMessage(m.chat, {text: `*Robaste ${rob} XP a @${who.split`@`[0]}*`, contextInfo:{ mentions: [who]}}, { quoted: m})
 global.db.data.users[m.sender].lastrob = new Date * 1
 }

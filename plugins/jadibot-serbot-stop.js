@@ -1,8 +1,8 @@
 let handler = async (m, { conn }) => {
 if (global.conn.user.jid === conn.user.jid) {
-await m.reply('*⚠️ Este comando sólo puede ser ejecutado por un usuario que sea Sub-Bot*');
+await m.reply(await tr('*⚠️ Este comando sólo puede ser ejecutado por un usuario que sea Sub-Bot*'));
 } else {
-await m.reply(`Adios bot :(`);
+await m.reply(await tr(`Adios bot :(`));
 conn.ws.close();
 }};
 handler.help = ['stop'];

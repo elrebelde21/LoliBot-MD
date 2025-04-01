@@ -1,5 +1,6 @@
 import { spawn } from 'child_process'
 let handler = async (m, { conn, isROwner, text }) => {
+let msgTxt = await tr("🚀 Reiniciando Bot...\nPor favor espere un momento")
 if (!process.send) throw 'Dont: node main.js\nDo: node index.js'
 if (conn.user.jid == conn.user.jid) {
 async function loading() {
@@ -8,7 +9,7 @@ let { key } = await conn.sendMessage(m.chat, {text: `*Reiniciando...*`}, {quoted
 for (let i = 0; i < hawemod.length; i++) {
 await new Promise(resolve => setTimeout(resolve, 1000)); 
 await conn.sendMessage(m.chat, {text: hawemod[i], edit: key}, {quoted: m})}
-await conn.sendMessage(m.chat, {text: `🚀 Reiniciando Bot...\nPor favor espere un momento`, edit: key}, {quoted: m});         
+await conn.sendMessage(m.chat, {text: msgTxt, edit: key}, {quoted: m});         
 //process.send("reset")
 process.exit(0); 
 }

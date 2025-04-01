@@ -1,20 +1,20 @@
 let handler  = async (m, { conn, usedPrefix: _p }) => {
-let info = `*✅ BIENVENIDO A LOS GRUPOS OFICIALES*
+let info = `*✅ ${await tr("BIENVENIDO A LOS GRUPOS OFICIALES")}*
 
   1) *${nn}*
   
   2) *${nnn}*
 
-➤ Grupo del Colaboracion LoliBot & GataBot-MD
+➤ ${await tr("Grupo del Colaboracion")} LoliBot & GataBot-MD
  *${nnnt}*
 
-➤ Grupo soporte para responder a tu dudas/sugerencia/etc
+➤ ${await tr("Grupo soporte para responder a tu dudas, sugerencia, etc")}
 ${nnnttt}
 
-➤ Infomarte sobre las nuevas actualizaciones/novedades/test sobre LoliBot aqui:
+➤ ${await tr("Infomarte sobre las nuevas actualizaciones, novedades, test sobre LoliBot aqui")}:
 *${nna2}*
  
-➤ Canal oficial donde encontrarán memes, video, novedades sobre cualquier bot, etc:
+➤ ${await tr("Canal oficial donde encontrarán memes, video, novedades sobre cualquier bot, etc")}:
 *${nna}*
 
  ┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈

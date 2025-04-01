@@ -1,7 +1,7 @@
 import ws from 'ws';
 
 let handler = async (m, { conn, usedPrefix, args }) => {
-if (!args[0]) return m.reply(`⚠️ Etiquetas en numero de algun bot\nEjemplo: ${usedPrefix}setprimary @tag`);
+if (!args[0]) return m.reply(await tr(`⚠️ Etiquetas en numero de algun bot\nEjemplo: ${usedPrefix}setprimary @tag`));
 
 const users = [...new Set([...global.conns.filter((conn) => conn.user && conn.ws.socket && conn.ws.socket.readyState !== ws.CLOSED).map((conn) => conn)])];
 let botJid;
@@ -22,10 +22,10 @@ selectedBot = conn;
 selectedBot = users.find(conn => conn.user.jid === botJid);
 }}
 
-if (!selectedBot) return m.reply("⚠️ No se encontró un bot conectado con esa mención o número. Usa /listjadibot para ver los bots disponibles.");
+if (!selectedBot) return m.reply(await tr("⚠️ No se encontró un bot conectado con esa mención o número. Usa /listjadibot para ver los bots disponibles."));
 let chat = global.db.data.chats[m.chat];
 chat.primaryBot = botJid;
-conn.sendMessage(m.chat, { text: `✅ El bot @${botJid.split('@')[0]} ha sido establecido como primario en este grupo. Los demás bots no responderán aquí.`, mentions: [botJid] }, { quoted: m });
+conn.sendMessage(m.chat, { text: `✅ El bot @${botJid.split('@')[0]} ${await tr("ha sido establecido como primario en este grupo. Los demás bots no responderán aquí.")}`, mentions: [botJid] }, { quoted: m });
 };
 handler.help = ['setprimary <@tag>'];
 handler.tags = ['jadibot'];

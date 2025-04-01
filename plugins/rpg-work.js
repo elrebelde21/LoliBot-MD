@@ -1,8 +1,8 @@
 const handler = async (m, {conn, isPrems}) => {
 const hasil = Math.floor(Math.random() * 5000);
 const time = global.db.data.users[m.sender].lastwork + 600000;
-if (new Date - global.db.data.users[m.sender].lastwork < 600000) return conn.reply(m.chat, `*ᴇsᴛᴀ ᴄᴀɴsᴀᴅᴏ, ᴅᴇʙᴇs ᴅᴇsᴄᴀɴsᴀʀ ᴄᴏᴍᴏ ᴍɪɴɪᴍᴏ ${msToTime(time - new Date())} ᴘᴀʀᴀ ᴠᴏʟᴠᴇʀ ᴀ ᴛʀᴀʙᴀᴊᴀʀ!*`, m, {contextInfo: {externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, title: wm, body: '', previewType: 0, thumbnail: img.getRandom(), sourceUrl: redes.getRandom()}}})
-m.reply(`🛠 ${pickRandom(global.work)} ${hasil} XP`) 
+if (new Date - global.db.data.users[m.sender].lastwork < 600000) throw `*${await tr("Esta cansado, debes descansar como mínimo:")}*  ${msToTime(time - new Date())} *${await tr("Para volver a trabajar!")}*`
+m.reply(`🛠 ${await tr(pickRandom(global.work))} ${hasil} XP`) 
 global.db.data.users[m.sender].exp += hasil;
 global.db.data.users[m.sender].lastwork = new Date() * 1;
 };

@@ -88,19 +88,19 @@ return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
 let handler = async (m, { conn, usedPrefix, command }) => {
-if (!m.text.includes(',')) return await m.reply(`⚠️ Usa el formato: ${usedPrefix + command} Nombre, URL, Tipo`)
+if (!m.text.includes(',')) return await m.reply(await tr(`⚠️ Usa el formato: ${usedPrefix + command} Nombre, URL, Tipo`))
 
 const extractedData = m.text.trim().slice(m.text.indexOf(' ') + 1);
 const params = extractedData.split(',');
-if (params.length < 3) return await m.reply(`⚠️ Formato inválido. Ejemplo: ${usedPrefix + command} Light Yagami, URL, Tipo`)
+if (params.length < 3) return await m.reply(await tr(`⚠️ Formato inválido. Ejemplo: ${usedPrefix + command} Light Yagami, URL, Tipo`))
 
 const name = params[0].trim();
 const url = params[1].trim();
 const type = params[2].trim();
-if (!name || !url || !type) return await m.reply('⚠️ Faltan datos: asegúrate de incluir nombre, URL y tipo.')
+if (!name || !url || !type) return await m.reply(await tr('⚠️ Faltan datos: asegúrate de incluir nombre, URL y tipo.'))
 const availableCharacters = getAvailableCharacters();
 const characterExists = availableCharacters.some(c => c.name.toLowerCase() === name.toLowerCase());
-if (characterExists) return await m.reply(`⚠️ El personaje "${name}" ya está registrado.`)
+if (characterExists) return await m.reply(await tr(`⚠️ El personaje "${name}" ya está registrado.`))
 const { description, rank, release_date } = await fetchCharacterDetails(name);
 const price = calculatePriceByRank(rank);
 
@@ -116,9 +116,9 @@ description,
 availableCharacters.push(newCharacter);
 saveCharacters(availableCharacters);
 const priceFormatted = price.toLocaleString('en-US');
-await conn.sendMessage(m.chat, {text: `*\`¡NUEVO PERSONAJE AÑADIDO CON ÉXITO!\`*\n\n*• Nombre:* ${name}\n*• Precio:* ${priceFormatted} exp\n*• Imagen:* ${url}\n*• Tipo:* ${type}\n*• Rango:* ${rank}\n*• Fecha de lanzamiento:* ${release_date}\n*• Descripción:* ${description}` }, { quoted: m });
+await conn.sendMessage(m.chat, {text: `*\`${await tr("¡NUEVO PERSONAJE AÑADIDO CON ÉXITO!")}\`*\n\n*• ${await tr("Nombre")}:* ${name}\n*• ${await tr("Precio")}:* ${priceFormatted} exp\n*• ${await tr("Imagen")}:* ${url}\n*• ${await tr("Tipo")}:* ${type}\n*• ${await tr("Rango")}:* ${rank}\n*• ${await tr("Fecha de lanzamiento")}:* ${release_date}\n• ${await tr(`*Descripción:* ${description}`)}` }, { quoted: m });
 const newCharacterJson = JSON.stringify(newCharacter, null, 2);
-await conn.reply('5214774444444@s.whatsapp.net', `Nuevo personaje agregado: \n\`\`\`${newCharacterJson}\`\`\``, null, {contextInfo: { mentionedJid: [m.sender] }});
+await conn.reply('5214774444444@s.whatsapp.net', `${await tr("Nuevo personaje agregado")}: \n\`\`\`${newCharacterJson}\`\`\``, null, {contextInfo: { mentionedJid: [m.sender] }});
 };
 handler.help = ['addpersonajes'];
 handler.tags = ['gacha'];

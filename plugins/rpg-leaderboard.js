@@ -13,7 +13,7 @@ const secondsLeft = Math.ceil(timeLeft / 1000)
 const minutes = Math.floor(secondsLeft / 60)
 const remainingSeconds = secondsLeft % 60
 const timeMessage = minutes > 0 ? `${minutes} min${minutes !== 1 ? 's' : ''}${remainingSeconds > 0 ? ` y ${remainingSeconds} seg${remainingSeconds !== 1 ? 's' : ''}` : ''}`: `${remainingSeconds} seg${remainingSeconds !== 1 ? 's' : ''}`
-await conn.reply(m.chat, `⚠️ Hey @${m.sender.split('@')[0]} pendejo, el ranking ya se mostró 🙄\nSolo se muestra cada 3 minutos para evitar spam. (Vuelve en: ${timeMessage} para verlo de nuevo)... Desplázate hacia arriba para verlo completo. 👆`, chatData.rankingMessage || m)
+await conn.reply(m.chat, `⚠️ @${m.sender.split('@')[0]} ${await tr("Hay ya se mostró el ranking pendejo 🙄, Solo se muestra cada 3 minutos para evitar spam, Desplázate hacia arriba para verlo completo.")} 👆`, chatData.rankingMessage || m)
 return;
 }
 
@@ -28,31 +28,31 @@ let usersMoney = sortedMoney.map(enumGetKey);
 let usersBanc = sortedBanc.map(enumGetKey);
            
 let len = args[0] && args[0].length > 0 ? Math.min(100, Math.max(parseInt(args[0]), 10)) : Math.min(10, sortedExp.length);
-let text = `\`🏆 𝚃𝙰𝙱𝙻𝙰 𝙳𝙴 𝙲𝙻𝙰𝚂𝙸𝙲𝙰𝙲𝙸𝙾𝙽\`
+let text = `\`🏆 ${await tr("TABLA DE CLASIFICACIÓN", "𝚃𝙰𝙱𝙻𝙰 𝙳𝙴 𝙲𝙻𝙰𝚂𝙸𝙲𝙰𝙲𝙸𝙾𝙽")}\`
     
-💠 *𝐓𝐎𝐏 ${len} 𝐗𝐏 🎯* 
-𝐓𝐮: *${usersExp.indexOf(m.sender) + 1}* 𝐝𝐞 *${usersExp.length} 𝐮𝐬𝐮𝐚𝐫𝐢𝐨𝐬*
+💠 *${await tr("Top")} ${len} XP 🎯* 
+${await tr("tu")}: *${usersExp.indexOf(m.sender) + 1}* ${await tr("de")} *${usersExp.length} ${await tr("usuarios")}*
 
 ${sortedExp.slice(0, len).map(({ jid, exp }, i) => `${i + 1}. ${participants.some(p => jid === p.jid) ? `(${conn.getName(jid)}) wa.me/` : '@'}${jid.split`@`[0]} *${formatNumber(exp)}* (${exp})⚡`).join`\n`}
 
 ┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈
 
-💠 *𝐓𝐎𝐏 ${len} 𝐃𝐈𝐀𝐌𝐀𝐍𝐓𝐄 💎* 
-𝐓𝐮 : *${usersLim.indexOf(m.sender) + 1}* 𝐝𝐞́ *${usersLim.length} 𝐮𝐬𝐮𝐚𝐫𝐢𝐨𝐬*
+💠 *${await tr("Top")} ${len} ${await tr("Diamante")} 💎* 
+${await tr("tu")}: : *${usersLim.indexOf(m.sender) + 1}* ${await tr("de")} *${usersLim.length} ${await tr("usuarios")}*
 
 ${sortedLim.slice(0, len).map(({ jid, limit }, i) => `${i + 1}. ${participants.some(p => jid === p.jid) ? `(${conn.getName(jid)}) wa.me/` : '@'}${jid.split`@`[0]} *${formatNumber(limit)}* (${limit}) 💎`).join`\n`}
 
 ┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈
 
-💠 *𝐓𝐎𝐏 ${len} 𝐋𝐎𝐋𝐈𝐂𝐎𝐈𝐍𝐒 🪙*
-𝐓𝐮 : *${usersMoney.indexOf(m.sender) + 1}* 𝐝𝐞 *${usersMoney.length} 𝐮𝐬𝐮𝐚𝐫𝐢𝐨𝐬*
+💠 *${await tr("Top")} ${len} LoliCoins 🪙*
+${await tr("tu")}: : *${usersMoney.indexOf(m.sender) + 1}* ${await tr("de")} *${usersMoney.length} ${await tr("usuarios")}**
 
 ${sortedMoney.slice(0, len).map(({ jid, money }, i) => `${i + 1}. ${participants.some(p => jid === p.jid) ? `(${conn.getName(jid)}) wa.me/` : '@'}${jid.split`@`[0]} *${formatNumber(money)}* (${money}) 🪙`).join`\n`}
 
 ┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈
 
-💠 *𝐓𝐎𝐏 ${len} 𝐌𝐈𝐋𝐋𝐎𝐍𝐀𝐑𝐈𝐎𝐒 💵* _(Usuarios con mas dinero en el banco)_
-𝐓𝐮 : *${usersBanc.indexOf(m.sender) + 1}* 𝐝𝐞 *${usersBanc.length} 𝐮𝐬𝐮𝐚𝐫𝐢𝐨𝐬*
+💠 *${await tr("Top")}* ${len} ${await tr("*Millonarios 💵* _(Usuarios con mas dinero en el banco)_")}
+${await tr("tu")}: : *${usersBanc.indexOf(m.sender) + 1}* ${await tr("de")} *${usersBanc.length} ${await tr("usuarios")}**
 
 ${sortedBanc.slice(0, len).map(({ jid, banco }, i) => `${i + 1}. ${participants.some(p => jid === p.jid) ? `(${conn.getName(jid)}) wa.me/` : '@'}${jid.split`@`[0]} *${formatNumber(banco)}* (${banco}) 💵`).join`\n`}
 `.trim();

@@ -10,15 +10,15 @@ const participants = groupMetadata.participants || [];
 const bot = participants.find((u) => conn.decodeJid(u.id) === conn.user.jid) || {};
 const isBotAdmin = bot?.admin || false;
 const isParticipant = participants.some((u) => conn.decodeJid(u.id) === conn.user.jid);
-const participantStatus = isParticipant ? '✅ *𝘌𝘴𝘵𝘰𝘺 𝘢𝘲𝘶𝘪*' : '❌ *𝘕𝘰 𝘦𝘴𝘵𝘰𝘺 𝘢𝘲𝘶𝘪*';
+const participantStatus = isParticipant ? await tr('✅ *Estoy aqui*') : await tr('❌ *No estoy aqui*')
 const totalParticipants = participants.length;
 txt += `> • ${i + 1} ${await conn.getName(jid)} | ${participantStatus}
    > *• ID:* ${jid}
-   > *• Admin:* ${isBotAdmin ? 'Sii' : 'Noo'}
-   > *• Participantes:* ${totalParticipants}
-   > *• Link:* ${isBotAdmin ? `https://chat.whatsapp.com/${await conn.groupInviteCode(jid) || '𝘌𝘙𝘙𝘖𝘙'}` : '𝘕𝘖 𝘚𝘖𝘠 𝘈𝘋𝘔𝘐𝘕'}\n\n> ━━━━━━━━━━━━━━━━━━━\n\n`;
+   > *• ${await tr("Admin")}:* ${isBotAdmin ? 'Yes' : 'Noo'}
+   > *• ${await tr("Participantes")}:* ${totalParticipants}
+   > *• ${await tr("Enlace")}:* ${isBotAdmin ? `https://chat.whatsapp.com/${await conn.groupInviteCode(jid) || await tr('Error')}` : await tr('No soy admin')}\n\n> ━━━━━━━━━━━━━━━━━━━\n\n`;
 }
-m.reply(`_*ESTÁ EN ESTOS GRUPOS:*_\n*• Total grupo:* ${totalGroups}\n\n${txt}`.trim());
+m.reply(`_*${await tr("ESTÁ EN ESTOS GRUPOS")}:*_\n*• ${await tr("Total grupo")}:* ${totalGroups}\n\n${txt}`.trim());
 } catch {
 const groups = Object.entries(conn.chats).filter(([jid, chat]) => jid.endsWith('@g.us') && chat.isChats);
 const totalGroups = groups.length;
@@ -29,15 +29,15 @@ const participants = groupMetadata.participants || [];
 const bot = participants.find((u) => conn.decodeJid(u.id) === conn.user.jid) || {};
 const isBotAdmin = bot?.admin || false;
 const isParticipant = participants.some((u) => conn.decodeJid(u.id) === conn.user.jid);
-const participantStatus = isParticipant ? '✅ *𝘌𝘴𝘵𝘰𝘺 𝘢𝘲𝘶𝘪*' : '❌ *𝘕𝘰 𝘦𝘴𝘵𝘰𝘺 𝘢𝘲𝘶𝘪*';
+const participantStatus = isParticipant ? await tr('✅ *Estoy aqui*') : await tr('❌ *No estoy aqui*')
 const totalParticipants = participants.length;    
 txt += `> ${i + 1} ${await conn.getName(jid)} | ${participantStatus}
    > *• ID:* ${jid}
-   > *• Admin:* ${isBotAdmin ? 'Sii' : 'Noo'}
-   > *• Participantes:* ${totalParticipants}
-   > *• Link:* ${isBotAdmin ? '𝘌𝘙𝘙𝘖𝘙' : '𝘕𝘖 𝘚𝘖𝘠 𝘈𝘋𝘔𝘐𝘕'}\n\n> ━━━━━━━━━━━━━━━━━━━\n\n`;
+   > *• ${await tr("Admin")}:* ${isBotAdmin ? 'yes' : 'Noo'}
+   > *• ${await tr("Participantes")}:* ${totalParticipants}
+   > *• ${await tr("Enlace")}:* ${isBotAdmin ? await tr('Error') : await tr('No soy admin')}\n\n> ━━━━━━━━━━━━━━━━━━━\n\n`;
 }
-m.reply(`${wm} _*ESTÁ EN ESTOS GRUPOS:*_\n*• Total grupo:* ${totalGroups}\n\n${txt}`.trim());
+m.reply(`${wm} _*${await tr("ESTÁ EN ESTOS GRUPOS")}:*_\n*• ${await tr("Total grupo")}:* ${totalGroups}\n\n${txt}`.trim());
 }};
 handler.help = ['groups', 'grouplist']
 handler.tags = ['main']

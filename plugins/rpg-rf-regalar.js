@@ -28,18 +28,18 @@ function saveCharacters(filePath, characters) {
 
 async function handler(m, { conn, args }) {
 const characters = loadCharacters(mainFilePath);
-if (!m.mentionedJid || m.mentionedJid.length === 0 || args.length < 1) return conn.reply(m.chat, '⚠️Formato incorrecto. Usa: /give @tag nombre_del_personaje', m);
+if (!m.mentionedJid || m.mentionedJid.length === 0 || args.length < 1) return conn.reply(m.chat, await tr('⚠️Formato incorrecto. Usa: /give @tag nombre_del_personaje'), m);
 
 const recipient = m.mentionedJid[0];
 const characterName = args.slice(1).join(' ').trim();
 const character = characters.find(c => c.name.toLowerCase() === characterName.toLowerCase());
-if (!character) return conn.reply(m.chat, `No se encontró el personaje "${characterName}".`, m);
-if (character.claimedBy !== m.sender) return conn.reply(m.chat, `No eres el propietario de *${character.name}*. Solo el propietario puede regalarlo.`, m);
-if (recipient === m.sender) return conn.reply(m.chat, 'No puedes regalarte un personaje a ti mismo 😆.', m);
+if (!character) return conn.reply(m.chat, await tr(`No se encontró el personaje "${characterName}".`), m);
+if (character.claimedBy !== m.sender) return conn.reply(m.chat, await tr(`No eres el propietario de *${character.name}*. Solo el propietario puede regalarlo.`), m);
+if (recipient === m.sender) return conn.reply(m.chat, await tr('No puedes regalarte un personaje a ti mismo 😆.'), m);
 
 character.claimedBy = recipient;
 saveCharacters(mainFilePath, characters);
-conn.reply(m.chat,  `🎉 ¡Has regalado a *${character.name}* a @${recipient.split('@')[0]}!`, m, {mentions: [recipient] });
+conn.reply(m.chat,  `🎉 ¡${await tr("Has regalado a")} *${character.name}* ${await tr("a")} @${recipient.split('@')[0]}!`, m, {mentions: [recipient] });
 } 
 handler.help = ['give @tag nombre_del_personaje'];
 handler.tags = ['gacha'];
