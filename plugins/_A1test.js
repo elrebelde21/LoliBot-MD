@@ -1,6 +1,5 @@
 const handler = async (m, { conn, usedPrefix, command }) => {
-// En otro handler
-const otroTexto = await tr("HOLA COMO ESTA?");
+const otroTexto = await tr2("HOLA COMO ESTA?");
 await conn.reply(m.chat, otroTexto, m);
 m.reply("Hola usuario texto 2 test")
 };
@@ -12,7 +11,7 @@ export async function tr2(baseText) {
   const m = global.currentMessageContext;
   const targetLang = m ? global.db?.data?.users[m.sender]?.language || global.lang : global.lang;
   
-  //console.log("Debug tr:", { baseText, targetLang, sender: m?.sender, globalLang: global.lang });
+  console.log("Debug tr:", { baseText, targetLang, sender: m?.sender, globalLang: global.lang });
   
   if (targetLang === 'es') return baseText;
   return await translateText(baseText);
