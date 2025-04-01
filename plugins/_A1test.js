@@ -66,7 +66,7 @@ export async function translateText2(text) {
       return current ? current : match;
     });
 
-    return translatedText2;
+    return translatedText; // Corrección aquí
   } catch (err) {
     console.error("Error en traducción:", err);
     return text;
