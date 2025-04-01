@@ -14,7 +14,7 @@ export async function tr2(baseText) {
   console.log("Debug tr:", { baseText, targetLang, sender: m?.sender, globalLang: global.lang });
   
   if (targetLang === 'es') return baseText;
-  return await translateText(baseText);
+  return await translateText2(baseText);
 }
 
 export async function translateText2(text) {
@@ -23,7 +23,7 @@ export async function translateText2(text) {
   const m = global.currentMessageContext;
   const targetLang = m ? global.db?.data?.users[m.sender]?.language || global.lang : global.lang;
   
-  console.log("Debug translateText:", { text, targetLang });
+  console.log("Debug translateText:", { text, targetLang2 });
   
   try {
     const textRegex = /\b(?![\w.]*\.[\w.]*)([\p{L}0-9][\p{L}0-9\s]*)\b/gu;
@@ -66,7 +66,7 @@ export async function translateText2(text) {
       return current ? current : match;
     });
 
-    return translatedText;
+    return translatedText2;
   } catch (err) {
     console.error("Error en traducción:", err);
     return text;
