@@ -64,9 +64,9 @@ continue;
 if (!downloadUrl) throw new Error(await tr('No se pudo descargar la canción desde ninguna API'));
 await conn.sendMessage(m.chat, { audio: { url: downloadUrl }, fileName: `${track.title}.mp3`, mimetype: 'audio/mpeg'}, { quoted: m });
 m.react('✅️');
-} catch (error) {
+} catch (e) {
 m.reply(`\`\`\`⚠️ ${await tr("OCURRIO UN ERROR")} ⚠️\`\`\`\n\n> *${await tr("Reporta el siguiente error a mi creador con el comando:")}* #report\n\n>>> ${e} <<<< `)    
-console.log(error);
+console.log(e);
 m.react('❌');
 handler.limit = false;
 } finally {
