@@ -20,7 +20,7 @@ global.confirmCode = ""
 global.gataJadibts = true //cambia a false Desactivar en "auto-reconexion" de sub-bots
 
 //Cambiar a tu idioma "es = español" - "en = inglés"
-global.lang = "en"
+global.lang = "es"
 global.tr = tr
 
 //---------[ APIS GLOBAL ]---------
