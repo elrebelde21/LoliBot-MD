@@ -6,6 +6,7 @@ import { unwatchFile, watchFile } from 'fs'
 import chalk from 'chalk'
 import fetch from 'node-fetch'
 import ws from 'ws';
+import { tr, translateText } from './lib/_checkLang.js';
 
 /**
  * @type {import('@whiskeysockets/baileys')}
@@ -32,6 +33,7 @@ if (global.db.data == null)
 await global.loadDatabase()
 try {
 m = smsg(this, m) || m
+global.currentMessageContext = m;
 if (!m) return
 m.exp = 0
 m.limit = false
@@ -59,6 +61,9 @@ if (!isNumber(user.afk)) user.afk = -1;
 if (!('autolevelup' in user)) user.autolevelup = true;
 if (!('role' in user)) user.role = 'Novato';        
 if (!isNumber(user.level)) user.level = 0;
+if (!('language' in user)) user.language = lang
+if (!user.gender) user.gender = null
+if (!user.birthday) user.birthday = null
 if (!isNumber(user.antispam)) user.antispam = 0;
 if (!isNumber(user.banco)) user.banco = 0        
 if (!user.premium) user.premium = false;
@@ -91,6 +96,9 @@ premiumTime: 0,
 role: 'Novato',     
 autolevelup: true,       
 banned: false,
+language: lang,
+gender: null,
+birthday: null,
 afk: -1,
 afkReason: '',
 lastwork: 0,
@@ -361,7 +369,7 @@ if (!['owner-unbanchat.js'].includes(name) && chat && chat.isBanned && !isROwner
 if (name != 'owner-unbanchat.js' && name != 'owner-exec.js' && name != 'owner-exec2.js' && name != 'tool-delete.js' && chat?.isBanned && !isROwner) return 
 if (m.text && user.banned && !isROwner) {
 if (user.antispam > 2) return
-m.reply(`⚠️ ESTAS BANEADO ⚠️\n*• Motivo:* ${user.messageSpam === 0 ? 'Spam' : user.messageSpam}\n*👉🏻 Puedes contactar al propietario del Bot si crees que se trata de un error o para charlar sobre tu desbaneo*\n\n👉 ${fb}`)
+m.reply(`⚠️ ${await tr("ESTAS BANEADO")} ⚠️\n*• ${await tr("Motivo")}:* ${user.messageSpam === 0 ? 'Spam' : user.messageSpam}\n*👉🏻 ${await tr("Puedes contactar al propietario del Bot si crees que se trata de un error o para charlar sobre tu desbaneo")}*\n\n👉 ${fb}`)
 user.antispam++	
 return
 }
@@ -436,12 +444,12 @@ if (xp > 9000) m.reply('chirrido -_-') //
 else
 m.exp += xp*/
 if (!isPrems && plugin.limit && global.db.data.users[m.sender].limit < plugin.limit * 1) {
-m.reply(`*⚠ 𝐒𝐮𝐬 𝐝𝐢𝐚𝐦𝐚𝐧𝐭𝐞 💎 𝐬𝐞 𝐡𝐚𝐧 𝐚𝐠𝐨𝐭𝐚𝐝𝐨 𝐩𝐮𝐞𝐝𝐞 𝐜𝐨𝐦𝐩𝐫𝐚𝐫 𝐦𝐚𝐬 𝐮𝐬𝐚𝐧𝐝𝐨 𝐞𝐥 𝐜𝐨𝐦𝐚𝐧𝐝𝐨:* #buy`)
+m.reply(`*⚠ ${await tr("Sus diamante")} 💎 ${await tr("Se han agotado puede comprar mas usando el comando:")}:* #buy`)
 //conn.sendMessage(m.chat, {text: `*⚠ 𝐒𝐮𝐬 𝐝𝐢𝐚𝐦𝐚𝐧𝐭𝐞 💎 𝐬𝐞 𝐡𝐚𝐧 𝐚𝐠𝐨𝐭𝐚𝐝𝐨 𝐩𝐮𝐞𝐝𝐞 𝐜𝐨𝐦𝐩𝐫𝐚𝐫 𝐦𝐚𝐬 𝐮𝐬𝐚𝐧𝐝𝐨 𝐞𝐥 𝐜𝐨𝐦𝐚𝐧𝐝𝐨:* #buy`, contextInfo: {externalAdReply : {mediaUrl: null, mediaType: 1, description: null, "title": wm, body: '', previewType: 0, "thumbnail": img.getRandom(), sourceUrl: [nna, nna2, md, yt, nnn, nnnt, nnnttt, tiktok].getRandom()}}}, { quoted: m })         
 continue
 }
 if (plugin.level > _user.level) {
-m.reply(`*⚠️𝐍𝐞𝐜𝐞𝐬𝐢𝐭𝐚 𝐞𝐥 𝐧𝐢𝐯𝐞𝐥 ${plugin.level} 𝐩𝐚𝐫𝐚 𝐩𝐨𝐝𝐞𝐫 𝐮𝐬𝐚𝐫 𝐞𝐬𝐭𝐞 𝐜𝐨𝐦𝐚𝐧𝐝𝐨, 𝐓𝐮 𝐧𝐢𝐯𝐞𝐥 𝐚𝐜𝐭𝐮𝐚𝐥 𝐞𝐬:* ${_user.level}`)
+m.reply(`*⚠️ ${await tr("Necesita el nivel")} ${plugin.level} ${await tr("para poder usar este comando, Tu nivel actual es:")}* ${_user.level}`)
 //conn.sendMessage(m.chat, {text: `*⚠️𝐍𝐞𝐜𝐞𝐬𝐢𝐭𝐚 𝐞𝐥 𝐧𝐢𝐯𝐞𝐥 ${plugin.level} 𝐩𝐚𝐫𝐚 𝐩𝐨𝐝𝐞𝐫 𝐮𝐬𝐚𝐫 𝐞𝐬𝐭𝐞 𝐜𝐨𝐦𝐚𝐧𝐝𝐨, 𝐓𝐮 𝐧𝐢𝐯𝐞𝐥 𝐚𝐜𝐭𝐮𝐚𝐥 𝐞𝐬:* ${_user.level}`, contextInfo: {externalAdReply : {mediaUrl: null, mediaType: 1, description: null, "title": wm, body: '', previewType: 0, "thumbnail": img.getRandom(), sourceUrl: [nna, nna2, md, yt, nnn, nnnt, nnnttt, tiktok].getRandom()}}}, { quoted: m })         
 continue // Si no se ha alcanzado el nivel
 }
@@ -476,8 +484,8 @@ await plugin.after.call(this, m, extra)
 } catch (e) {
 console.error(e)
 }}
-if (m.limit) m.reply(`*${+m.limit}* diamante 💎usados`)
-if (m.money) m.reply(+m.money + ' LoliCoins usados 🪙') 
+if (m.limit) m.reply(`*${+m.limit}* ${await tr("diamante")} 💎 ${await tr("usados")}`)
+if (m.money) m.reply(+m.money + ` LoliCoins ${await tr("usados")} 🪙`) 
 }
 break
 }}} catch (e) {
@@ -572,7 +580,7 @@ text = (action === 'add' ? (chat.sWelcome || this.welcome || conn.welcome || 'We
 if (chat.antifake && isBotAdminNn && action === 'add') {
 const numerosPermitidos = ["212", "265", "92", "91", "90", "210", "60", "61", "62", "40", "48", "49", "93", "94", "98", "258"];
 if (numerosPermitidos.some(num => user.startsWith(num))) {
-this.sendMessage(id, { text: `@${user.split("@")[0]} Nos numero fake no esta permitido el este grupo hasta la próxima...`, mentions: [user] }, { quoted: null });
+this.sendMessage(id, { text: `@${user.split("@")[0]} ${await tr("Nos numero fake no esta permitido el este grupo hasta la próxima...")}`, mentions: [user] }, { quoted: null });
 let responseb = await this.groupParticipantsUpdate(id, [user], 'remove');
 if (responseb[0].status === "404") return;
 return;
@@ -647,26 +655,26 @@ let chat = global.db.data.chats[msg?.chat] || {}
 if (!chat?.delete) return 
 if (!msg) return 
 if (!msg?.isGroup) return 
-const antideleteMessage = `*[ ANTI ELIMINAR ]*\n\n@${participant.split`@`[0]} Elimino un mensaje\nEnviando el mensaje...\n\n*Para desactivar esta función escriba:*\n#disable delete`.trim();
+const antideleteMessage = `*[ ${await tr("ANTI ELIMINAR")} ]*\n\n@${participant.split`@`[0]} ${await tr("Elimino un mensaje\nEnviando el mensaje...\n\n*Para desactivar esta función escriba:*")}\n#disable delete`.trim();
 await this.sendMessage(msg.chat, {text: antideleteMessage, mentions: [participant]}, {quoted: msg})
 this.copyNForward(msg.chat, msg).catch(e => console.log(e, msg))
 } catch (e) {
 console.error(e)
 }}
 
-global.dfail = (type, m, conn, usedPrefix) => {
+global.dfail = async (type, m, conn, usedPrefix) => { 
 let msg = {
-rowner: '⚠️ Tu que? este comando es solo para mi propietario',
-owner: '⚠️ Tu que? este comando es solo para mi propietario.',
-mods: '⚠️ Este comando solo lo puedo usar yo. ¡Privilegios de mod! 😘',
-premium: '⚠️ Este comando es solo para usuarios Premium (VIP). ¡Ser VIP tiene sus beneficios! 🌟',
-group: '⚠️ Pendejo este comando es solo para grupos.',
-private: '⚠️ Vamos al privado, este comando solo funciona en el privado del bot. ¡Hablemos en privado! 🤫',
-admin: '🤨 No eres admins. Solo los admins pueden usar este comando.',
-botAdmin: '⚠️ haz admin al Bot "YO" para poder usar este comando.',
-unreg: '「NO ESTAS REGISTRADO」\n\nPA NO APARECES EN MI BASE DE DATOS ✋🥸🤚\n\nPara poder usarme escribe el siguente comando\n\nComando: #reg nombre.edad\nEjemplo: #reg elrebelde.21',
-restrict: '[ 🔐 ] Este comando esta desactivado por mi jefe'
-}[type]
+rowner: await tr('⚠️ Tu que? este comando es solo para mi propietario'),
+owner: await tr('⚠️ Tu que? este comando es solo para mi propietario.'),
+mods: await tr('⚠️ Este comando solo lo puedo usar yo. ¡Privilegios de mod! 😘'),
+premium: await tr('⚠️ Este comando es solo para usuarios Premium (VIP). ¡Ser VIP tiene sus beneficios! 🌟'),
+group: await tr('⚠️ Pendejo este comando es solo para grupos.'),
+private: await tr('⚠️ Vamos al privado, este comando solo funciona en el privado del bot. ¡Hablemos en privado! 🤫'),
+admin: await tr('🤨 No eres admins. Solo los admins pueden usar este comando.'),
+botAdmin: await tr('⚠️ haz admin al Bot "YO" para poder usar este comando.'),
+unreg: await tr('「NO ESTAS REGISTRADO」\n\nPA NO APARECES EN MI BASE DE DATOS ✋🥸🤚\n\nPara poder usarme escribe el siguente comando\n\nComando: #reg nombre.edad\nEjemplo: #reg elrebelde.21'),
+restrict: await tr('[ 🔐 ] Este comando esta desactivado por mi jefe')
+}[type];
 if (msg) return conn.sendMessage(m.chat, {text: msg, contextInfo: { mentionedJid: null, forwardingScore: 1, isForwarded: true, forwardedNewsletterMessageInfo: { newsletterJid: '120363355261011910@newsletter', serverMessageId: '', newsletterName: 'LoliBot ✨' }, externalAdReply : {mediaUrl: null, mediaType: 1, description: null, "title": `ℹ️𝐈𝐍𝐅𝐎 ℹ️`, body: wm, previewType: 0, "thumbnail": img.getRandom(), sourceUrl: [nna, nna2, md, yt, nn, tiktok].getRandom()}}}, { quoted: m })
 }
 

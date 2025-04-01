@@ -5,7 +5,8 @@ import fs from 'fs'
 import cheerio from 'cheerio'
 import fetch from 'node-fetch'
 import axios from 'axios'
-import moment from 'moment-timezone' 
+import moment from 'moment-timezone' ; 
+import { tr, translateText } from './lib/_checkLang.js';
 
 //---------[ Añada los numeros a ser Propietario/a ]---------
 
@@ -17,6 +18,10 @@ global.prems = []
 global.botNumberCode = "" //Ejemplo: +59309090909
 global.confirmCode = "" 
 global.gataJadibts = true //cambia a false Desactivar en "auto-reconexion" de sub-bots
+
+//Cambiar a tu idioma "es = español" - "en = inglés"
+global.lang = "en"
+global.tr = tr
 
 //---------[ APIS GLOBAL ]---------
 
@@ -44,7 +49,7 @@ global.author = 'elrebelde21'
 //------------[ Versión | Nombre | cuentas ]------------
 
 global.wm = '𝙇𝙤𝙡𝙞𝘽𝙤𝙩-𝙈𝘿' 
-global.vs = '1.9.5'
+global.vs = '1.9.8'
 global.yt = 'https://www.youtube.com/@elrebelde.21'
 global.tiktok = 'https://www.tiktok.com/@elrebelde.21'
 global.md = 'https://github.com/elrebelde21/LoliBot-MD'

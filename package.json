@@ -1,6 +1,6 @@
 {
 "name": "LoliBot-MD",
-"version": "1.9.5", 
+"version": "1.9.8", 
 "description": "Super Bot WhatsApp",
 "main": "index.js",
 "type": "module",
