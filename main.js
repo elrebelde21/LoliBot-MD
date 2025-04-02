@@ -51,142 +51,132 @@ const dbPath = path.join(__dirname, 'database');
 if (!fs.existsSync(dbPath)) fs.mkdirSync(dbPath);
 
 const collections = {
-  users: new Datastore({ filename: path.join(dbPath, 'users.db'), autoload: true }),
-  chats: new Datastore({ filename: path.join(dbPath, 'chats.db'), autoload: true }),
-  settings: new Datastore({ filename: path.join(dbPath, 'settings.db'), autoload: true }),
-  msgs: new Datastore({ filename: path.join(dbPath, 'msgs.db'), autoload: true }),
-  sticker: new Datastore({ filename: path.join(dbPath, 'sticker.db'), autoload: true }),
-  stats: new Datastore({ filename: path.join(dbPath, 'stats.db'), autoload: true }),
+users: new Datastore({ filename: path.join(dbPath, 'users.db'), autoload: true }),
+chats: new Datastore({ filename: path.join(dbPath, 'chats.db'), autoload: true }),
+settings: new Datastore({ filename: path.join(dbPath, 'settings.db'), autoload: true }),
+msgs: new Datastore({ filename: path.join(dbPath, 'msgs.db'), autoload: true }),
+sticker: new Datastore({ filename: path.join(dbPath, 'sticker.db'), autoload: true }),
+stats: new Datastore({ filename: path.join(dbPath, 'stats.db'), autoload: true }),
 };
 
 Object.values(collections).forEach(db => {
-  db.setAutocompactionInterval(300000);
+db.setAutocompactionInterval(300000);
 });
 
 global.db = {
-  data: {
-    users: {},
-    chats: {},
-    settings: {},
-    msgs: {},
-    sticker: {},
-    stats: {},
-  },
+data: {
+users: {},
+chats: {},
+settings: {},
+msgs: {},
+sticker: {},
+stats: {},
+},
 };
 
 function sanitizeId(id) {
-  return id.replace(/\./g, '_');
+return id.replace(/\./g, '_');
 }
 
 function unsanitizeId(id) {
-  return id.replace(/_/g, '.');
+return id.replace(/_/g, '.');
 }
 
 function sanitizeObject(obj) {
-  const sanitized = {};
-  for (const [key, value] of Object.entries(obj)) {
-    const sanitizedKey = key.replace(/\./g, '_');
-    sanitized[sanitizedKey] = (typeof value === 'object' && value !== null) ? sanitizeObject(value) : value;
-  }
-  return sanitized;
+const sanitized = {};
+for (const [key, value] of Object.entries(obj)) {
+const sanitizedKey = key.replace(/\./g, '_');
+sanitized[sanitizedKey] = (typeof value === 'object' && value !== null) ? sanitizeObject(value) : value;
+}
+return sanitized;
 }
 
 function unsanitizeObject(obj) {
-  const unsanitized = {};
-  for (const [key, value] of Object.entries(obj)) {
-    const unsanitizedKey = key.replace(/_/g, '.');
-    unsanitized[unsanitizedKey] = (typeof value === 'object' && value !== null) ? unsanitizeObject(value) : value;
-  }
-  return unsanitized;
+const unsanitized = {};
+for (const [key, value] of Object.entries(obj)) {
+const unsanitizedKey = key.replace(/_/g, '.');
+unsanitized[unsanitizedKey] = (typeof value === 'object' && value !== null) ? unsanitizeObject(value) : value;
+}
+return unsanitized;
 }
 
 global.db.readData = async function (category, id) {
-  const sanitizedId = sanitizeId(id);
-  if (!global.db.data[category][sanitizedId]) {
-    const data = await new Promise((resolve, reject) => {
-      collections[category].findOne({ _id: sanitizedId }, (err, doc) => {
-        if (err) return reject(err);
-        resolve(doc ? unsanitizeObject(doc.data) : {});
-      });
-    });
-    global.db.data[category][sanitizedId] = data;
-  }
-  return global.db.data[category][sanitizedId];
+const sanitizedId = sanitizeId(id);
+if (!global.db.data[category][sanitizedId]) {
+const data = await new Promise((resolve, reject) => {
+collections[category].findOne({ _id: sanitizedId }, (err, doc) => {
+if (err) return reject(err);
+resolve(doc ? unsanitizeObject(doc.data) : {});
+});
+});
+global.db.data[category][sanitizedId] = data;
+}
+return global.db.data[category][sanitizedId];
 };
 
 global.db.writeData = async function (category, id, data) {
-  const sanitizedId = sanitizeId(id);
-  global.db.data[category][sanitizedId] = {
-    ...global.db.data[category][sanitizedId],
-    ...sanitizeObject(data),
-  };
-  await new Promise((resolve, reject) => {
-    collections[category].update(
-      { _id: sanitizedId },
-      { $set: { data: sanitizeObject(global.db.data[category][sanitizedId]) } },
-      { upsert: true },
-      (err) => {
-        if (err) return reject(err);
-        resolve();
-      }
-    );
-  });
+const sanitizedId = sanitizeId(id);
+global.db.data[category][sanitizedId] = {
+...global.db.data[category][sanitizedId],
+...sanitizeObject(data),
+};
+await new Promise((resolve, reject) => {
+collections[category].update({ _id: sanitizedId },
+{ $set: { data: sanitizeObject(global.db.data[category][sanitizedId]) } },
+{ upsert: true },
+(err) => {
+if (err) return reject(err);
+resolve();
+});
+});
 };
 
 global.db.loadDatabase = async function () {
-  const loadPromises = Object.keys(collections).map(async (category) => {
-    const docs = await new Promise((resolve, reject) => {
-      collections[category].find({}, (err, docs) => {
-        if (err) return reject(err);
-        resolve(docs);
-      });
-    });
-    const seenIds = new Set();
-    for (const doc of docs) {
-      const originalId = unsanitizeId(doc._id);
-      if (seenIds.has(originalId)) {
-        // Eliminar duplicados
-        await new Promise((resolve, reject) => {
-          collections[category].remove({ _id: doc._id }, {}, (err) => {
-            if (err) return reject(err);
-            resolve();
-          });
-        });
-      } else {
-        seenIds.add(originalId);
-        if (category === 'users' && (originalId.includes('@newsletter') || originalId.includes('lid'))) continue;
-        if (category === 'chats' && originalId.includes('@newsletter')) continue;
-        global.db.data[category][originalId] = unsanitizeObject(doc.data);
-      }
-    }
-  });
-  await Promise.all(loadPromises);
+const loadPromises = Object.keys(collections).map(async (category) => {
+const docs = await new Promise((resolve, reject) => {
+collections[category].find({}, (err, docs) => {
+if (err) return reject(err);
+resolve(docs);
+});
+});
+const seenIds = new Set();
+for (const doc of docs) {
+const originalId = unsanitizeId(doc._id);
+if (seenIds.has(originalId)) {
+await new Promise((resolve, reject) => {
+collections[category].remove({ _id: doc._id }, {}, (err) => {
+if (err) return reject(err);
+resolve();
+});
+});
+} else {
+seenIds.add(originalId);
+if (category === 'users' && (originalId.includes('@newsletter') || originalId.includes('lid'))) continue;
+if (category === 'chats' && originalId.includes('@newsletter')) continue;
+global.db.data[category][originalId] = unsanitizeObject(doc.data);
+}}});
+await Promise.all(loadPromises);
 };
 
 global.db.save = async function () {
-  const savePromises = [];
-  for (const category of Object.keys(global.db.data)) {
-    for (const [id, data] of Object.entries(global.db.data[category])) {
-      if (Object.keys(data).length > 0) {
-        if (category === 'users' && (id.includes('@newsletter') || id.includes('lid'))) continue;
-        if (category === 'chats' && id.includes('@newsletter')) continue;
-        savePromises.push(
-          new Promise((resolve, reject) => {
-            collections[category].update(
-              { _id: sanitizeId(id) },
-              { $set: { data: sanitizeObject(data) } },
-              { upsert: true },
-              (err) => {
-                if (err) return reject(err);
-                resolve();
-              }
-            );
-          })
-        );
-      }
-    }
-  }
-  await Promise.all(savePromises);
+const savePromises = [];
+for (const category of Object.keys(global.db.data)) {
+for (const [id, data] of Object.entries(global.db.data[category])) {
+if (Object.keys(data).length > 0) {
+if (category === 'users' && (id.includes('@newsletter') || id.includes('lid'))) continue;
+if (category === 'chats' && id.includes('@newsletter')) continue;
+savePromises.push(
+new Promise((resolve, reject) => {
+collections[category].update({ _id: sanitizeId(id) },
+{ $set: { data: sanitizeObject(data) } },
+{ upsert: true },
+(err) => {
+if (err) return reject(err);
+resolve();
+});
+}));
+}}}
+await Promise.all(savePromises);
 };
 
 global.db.loadDatabase().then(() => {
@@ -292,33 +282,31 @@ console.log(chalk.bold.redBright(await tr(`NO SE PERMITE NÚMEROS QUE NO SEAN ${
 
 console.info = () => {} 
 const connectionOptions = {
-logger: pino({ level: 'silent' }),
+logger: pino({ level: 'silent' }), 
 printQRInTerminal: opcion == '1' ? true : methodCodeQR ? true : false,
-mobile: MethodMobile, 
-browser: opcion == '1' ? ['LoliBot-MD', 'Edge', '20.0.04'] : methodCodeQR ? ['LoliBot-MD', 'Edge', '20.0.04'] : ["Ubuntu", "Chrome", "20.0.04"],
-auth: {
-creds: state.creds,
-keys: makeCacheableSignalKeyStore(state.keys, Pino({ level: "fatal" }).child({ level: "fatal" })),
+mobile: MethodMobile,
+browser: opcion == '1' ? ['LoliBot-MD', 'Edge', '20.0.04'] : methodCodeQR ? ['LoliBot-MD', 'Edge', '20.0.04'] : ["Ubuntu", "Chrome", "108.0.5359.125"],
+auth: { creds: state.creds,
+keys: makeCacheableSignalKeyStore(state.keys, Pino({ level: 'silent' })),
 },
-markOnlineOnConnect: false, 
-generateHighQualityLinkPreview: true, 
-syncFullHistory: false,
+markOnlineOnConnect: false,
+generateHighQualityLinkPreview: true,
+syncFullHistory: false, 
 getMessage: async (key) => {
 try {
-let jid = jidNormalizedUser(key.remoteJid);
-let msg = await store.loadMessage(jid, key.id);
-return msg?.message || "";
-} catch (error) {
-return "";
+const jid = jidNormalizedUser(key.remoteJid);
+const msg = await store.loadMessage(jid, key.id);
+return msg?.message || '';
+} catch {
+return '';
 }},
-msgRetryCounterCache: msgRetryCounterCache || new Map(),
-userDevicesCache: userDevicesCache || new Map(),
-//msgRetryCounterMap,
-defaultQueryTimeoutMs: undefined,
-cachedGroupMetadata: (jid) => global.conn.chats[jid] ?? {},
-version: version, 
-keepAliveIntervalMs: 55000, 
-maxIdleTimeMs: 60000, 
+msgRetryCounterCache,
+userDevicesCache,
+cachedGroupMetadata: (jid) => global.conn?.chats?.[jid] ?? {},
+version,
+keepAliveIntervalMs: 45_000, 
+maxIdleTimeMs: 60_000,
+defaultQueryTimeoutMs: 60_000, 
 };
 
 /*const connectionOptions = {
@@ -353,7 +341,17 @@ keepAliveIntervalMs: 55000,
 maxIdleTimeMs: 60000, 
 };*/
     
-global.conn = makeWASocket(connectionOptions)
+global.conn = makeWASocket(connectionOptions)    
+/*let conn;
+try {
+conn = makeWASocket(connectionOptions);
+} catch (e) {
+console.error(chalk.red('[❌] Error cargando sesión principal, intentando restaurar...'));
+await restoreCreds();
+conn = makeWASocket(connectionOptions);
+}
+global.conn = conn;
+*/
 
 if (!fs.existsSync(`./${authFile}/creds.json`)) {
 if (opcion === '2' || methodCode) {
@@ -395,23 +393,36 @@ if (opts['server']) (await import('./server.js')).default(global.conn, PORT)
 
 //respaldo de la sesión
 const backupCreds = async () => {
-if (fs.existsSync(credsFile)) {
-fs.copyFileSync(credsFile, backupFile);
-console.log(`[✅] ${await tr("Respaldo creado en")} ${backupFile}`);
-} else {
+if (!fs.existsSync(credsFile)) {
 console.log(await tr('[⚠] No se encontró el archivo creds.json para respaldar.'));
+return;
+}
+
+const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+const newBackup = join(respaldoDir, `creds-${timestamp}.json`);
+fs.copyFileSync(credsFile, newBackup);
+console.log(`[✅] ${await tr("Respaldo creado")}: ${newBackup}`);
+
+const backups = fs.readdirSync(respaldoDir).filter(file => file.startsWith('creds-') && file.endsWith('.json')).sort((a, b) => fs.statSync(join(respaldoDir, a)).mtimeMs - fs.statSync(join(respaldoDir, b)).mtimeMs);
+
+while (backups.length > 3) {
+const oldest = backups.shift();
+fs.unlinkSync(join(respaldoDir, oldest));
+console.log(`[🗑️] ${await tr("Respaldo antiguo eliminado")}: ${oldest}`);
 }};
 
 const restoreCreds = async () => {
-if (fs.existsSync(credsFile)) {
-fs.copyFileSync(backupFile, credsFile);
-console.log(`[✅] creds.json ${await tr("reemplazado desde el respaldo")}.`);
-} else if (fs.existsSync(backupFile)) {
-fs.copyFileSync(backupFile, credsFile);
-console.log(`[✅] creds.json ${await tr("restaurado desde el respaldo")}.`);
-} else {
-console.log(await tr('[⚠] No se encontró ni el archivo creds.json ni el respaldo.'))
-}};
+const backups = fs.readdirSync(respaldoDir).filter(file => file.startsWith('creds-') && file.endsWith('.json')).sort((a, b) => fs.statSync(join(respaldoDir, b)).mtimeMs - fs.statSync(join(respaldoDir, a)).mtimeMs);
+
+if (backups.length === 0) {
+console.log(await tr('[⚠] No hay respaldos disponibles para restaurar.'));
+return;
+}
+
+const latestBackup = join(respaldoDir, backups[0]);
+fs.copyFileSync(latestBackup, credsFile);
+console.log(`[✅] ${await tr("Restaurado desde respaldo")}: ${backups[0]}`);
+};
 
 setInterval(async () => {
 await backupCreds();
