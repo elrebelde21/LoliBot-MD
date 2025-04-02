@@ -72,7 +72,7 @@ conn.fakeReply(m.chat, await tr(`😢 Ya no estas registrado`), '0@s.whatsapp.ne
 handler.before = async function (m, { conn }) {
 let user = global.db.data.users[m.sender];
 if (!user.regPhase) return;
-    
+if (m.text && m.text.startsWith(global.prefix)) return;
 let text = m.text.toLowerCase().trim();
 let currentDate = moment().tz('America/Argentina/Buenos_Aires');
 let time = currentDate.format('LT');
@@ -80,92 +80,98 @@ let date = currentDate.format('DD/MM/YYYY');
 let who = user.regData?.who || m.sender;
 let usedPrefix2 = user.regData?.usedPrefix || '/';
 let rtotalreg = user.regData?.rtotalreg || Object.values(global.db.data.users).filter(user => user.registered == true).length;
-    
-let userNationality = null;
-try {
-let api = await axios.get(`${apis}/tools/country?text=${PhoneNumber('+' + who.replace('@s.whatsapp.net', '')).getNumber('international')}`);
-let userNationalityData = api.data.result;
-userNationality = userNationalityData ? `${userNationalityData.name} ${userNationalityData.emoji}` : null;
-} catch (err) {
-userNationality = null;
+
+if (text === 'cancelar' || text === 'cancel') {
+user.regPhase = null;
+delete user.regData;
+if (user._regTimeout) clearTimeout(user._regTimeout);
+delete user._regTimeout;
+return m.reply(await tr('❌ Registro cancelado. Puedes empezar de nuevo cuando quieras.'));
+}
+
+if (!user._regTimeout) {
+user._regTimeout = setTimeout(() => {
+user.regPhase = null;
+delete user.regData;
+delete user._regTimeout;
+}, 1 * 60 * 1000); // 1 minuto
 }
 
 if (user.regPhase === 'language') {
 let supportedLanguages = user.regData.supportedLanguages;
-let selectedLang = supportedLanguages.find((lang, i) => 
-text === (i + 1).toString() || 
-lang.code === text || 
-lang.name.toLowerCase() === text || 
+let selectedLang = supportedLanguages.find((lang, i) =>
+text === (i + 1).toString() ||
+lang.code === text ||
+lang.name.toLowerCase() === text ||
 lang.aliases.includes(text));
 
 if (!selectedLang) {
 let languageOptions = supportedLanguages.map((lang, i) => `${i + 1}. ${lang.name} (${lang.code})`).join('\n');
 return m.reply(`📝 ${await tr("*Selecciona tu idioma:*\n\n")}${languageOptions}\n\n> *${await tr("Usa número o nombre del idioma")}*`);
 }
-        
+
 user.language = selectedLang.code;
 user.languageName = selectedLang.name;
 user.regPhase = 'gender';
 return m.reply(await tr(`📝 *Registro Paso 3: Selecciona tu género*\n\n1. Hombre 👨\n2. Mujer 👩\n3. Otro/No especificar\n\n> *Responde con número o palabra*`));
 }
-    
+
 if (user.regPhase === 'gender') {
-let genderMap = {
-'1': 'Hombre', 'hombre': 'Hombre', 'man': 'Hombre',
+let genderMap = {'1': 'Hombre', 'hombre': 'Hombre', 'man': 'Hombre',
 '2': 'Mujer', 'mujer': 'Mujer', 'woman': 'Mujer',
 '3': 'Otro', 'otro': 'Otro', 'other': 'Otro'
 };
 let gender = genderMap[text];
-        
+
 if (!gender) {
 return m.reply(await tr(`📝 *Selecciona tu género:*\n\n1. Hombre 👨\n2. Mujer 👩\n3. Otro/No especificar\n\n> *Usa número o palabra*`));
 }
-        
+
 user.gender = gender;
 user.regPhase = 'birthday';
 return m.reply(await tr(`📝 *Registro Paso 4: Fecha de cumpleaños (Opcional)*\n\nPuedes enviar tu fecha de cumpleaños en formato DD/MM/YYYY (ejemplo: 30/10/2000)\n\n> O escribe "saltar" para omitir este paso.`));
 }
-    
+
 if (user.regPhase === 'birthday') {
 let birthday = null;
-        
+
 if (text !== 'saltar') {
 let birthdayRegex = /^(\d{1,2})\/(\d{1,2})(?:\/(\d{2,4}))?$/;
 let match = text.match(birthdayRegex);
-            
+
 if (match) {
 let day = parseInt(match[1]);
 let month = parseInt(match[2]);
 let year = match[3] ? parseInt(match[3]) : null;
-                
+
 if (day >= 1 && day <= 31 && month >= 1 && month <= 12) {
 let formattedDay = day.toString().padStart(2, '0');
 let formattedMonth = month.toString().padStart(2, '0');
-                    
+
 if (year) {
 let currentYear = new Date().getFullYear();
 if (year > currentYear || year < 1900) {
-return m.reply(await tr(`📝 *Año inválido*\n\nEl año debe estar entre 1900 y ${currentYear}\n\nIngresa en formato DD/MM/YYYY (ejemplo: 30/10/2005)\n\n> O escribe "saltar"`))
+return m.reply(await tr(`📝 *Año inválido*\n\nEl año debe estar entre 1900 y ${currentYear}\n\nIngresa en formato DD/MM/YYYY (ejemplo: 30/10/2005)\n\n> O escribe "saltar"`));
 }
 birthday = `${formattedDay}/${formattedMonth}/${year}`;
 } else {
 birthday = `${formattedDay}/${formattedMonth}`;
 }}}
-            
-if (!birthday && text !== 'saltar') {
-return m.reply(await tr(`📝 *Formato inválido*\n\nIngresa en formato DD/MM/YYYY (ejemplo: 30/10/2005)\n\n> O escribe "saltar"`))
+
+if (!birthday) {
+return m.reply(await tr(`📝 *Formato inválido*\n\nIngresa en formato DD/MM/YYYY (ejemplo: 30/10/2005)\n\n> O escribe "saltar"`));
 }}
-        
+
 if (birthday) user.birthday = birthday;
 user.regPhase = null;
 user.registered = true;
 global.db.data.users[m.sender].money += 400;
 global.db.data.users[m.sender].limit += 2;
 global.db.data.users[m.sender].exp += 150;
-        
+if (user._regTimeout) clearTimeout(user._regTimeout);
+delete user._regTimeout;
 let sn = createHash('md5').update(m.sender).digest('hex');
 let genderEmoji = user.gender === 'Hombre' ? '👨' : user.gender === 'Mujer' ? '👩' : '⚧';
-        
 await conn.sendMessage(m.chat, { text: `[ ✅ ${await tr("REGISTRO COMPLETADO")} ]
 
 ◉ *${await tr("Nombre")}:* ${user.name}
