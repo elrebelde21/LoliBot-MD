@@ -4,7 +4,7 @@ import moment from 'moment-timezone'
  
 let Reg = /\|?(.*)([.|] *?)([0-9]*)$/i
 let handler = async function (m, { conn, text, args, usedPrefix, command }) {
-let fkontak = { "key": { "participants":"0@s.whatsapp.net", "remoteJid": "status@broadcast", "fromMe": false, "id": "Halo" }, "message": { "contactMessage": { "vcard": `BEGIN:VCARD\nVERSION:3.0\nN:Sy;Bot;;;\nFN:y\nitem1.TEL;waid=${m.sender.split('@')[0]}:${m.sender.split('@')[0]}\nitem1.X-ABLabel:Ponsel\nEND:VCARD` }}, "participant": "0@s.whatsapp.net" }
+let fkontak = { "key": { "participants":"0@s.whatsapp.net", "remoteJid": "status@broadcast", "fromMe": false, "id": "Halo" }, "message": { "contactMessage": { "vcard": `BEGIN:VCARD\nVERSION:3.0\nN:Sy;Bot;;;\nFN:y\nitem1.TEL;waid=${m.sender.split('@')[0]}:${m.sender.split('@')[0]}\nitem1.X-ABLabel:Ponsel\nEND:VCARD` }}, "participant": "0@s.whatsapp.net" } 
 let who = m.mentionedJid && m.mentionedJid[0] ? m.mentionedJid[0] : m.fromMe ? conn.user.jid : m.sender
 let bio = await conn.fetchStatus(who).catch(_ => 'undefined')
 let biot = bio.status?.toString() || 'Sin Info'
@@ -80,6 +80,15 @@ let date = currentDate.format('DD/MM/YYYY');
 let who = user.regData?.who || m.sender;
 let usedPrefix2 = user.regData?.usedPrefix || '/';
 let rtotalreg = user.regData?.rtotalreg || Object.values(global.db.data.users).filter(user => user.registered == true).length;
+
+let userNationality = null;
+try {
+let api = await axios.get(`${apis}/tools/country?text=${PhoneNumber('+' + who.replace('@s.whatsapp.net', '')).getNumber('international')}`);
+let userNationalityData = api.data.result;
+userNationality = userNationalityData ? `${userNationalityData.name} ${userNationalityData.emoji}` : null;
+} catch (err) {
+userNationality = null;
+}
 
 if (text === 'cancelar' || text === 'cancel') {
 user.regPhase = null;
