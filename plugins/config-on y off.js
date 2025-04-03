@@ -165,7 +165,7 @@ let textoo = `*\`⧼⧼⧼ ${await tr("CONFIGURACIÓN")} ⧽⧽⧽\`*
 • ${usedPrefix + command} public
 
 > ${wm}`        
-let isEnable = /true|enable|(turn)?on|1/i.test(command)
+let isEnable = /true|enable|(turn)?on/i.test(command)
 let type = (args[0] || '').toLowerCase()
 let isAll = false, isUser = false
 switch (type) {
@@ -585,7 +585,7 @@ if (!/[01]/.test(command)) return await m.reply(textoo)
 //conn.sendList(m.chat, texto, wm, `AJUSTES`, null, listSections, m)
 throw false
 }
-await m.reply(`${isEnable ? '✅️' : '❌️'} ${await tr("Comando")} ${type} ${await tr("Para")} ${isAll ? await tr('Este bot') : isUser ? '' : await tr('Este chat')} ${await tr("fue")} ${isEnable ? await tr('activados con exitos') : await tr('desactivado con exitos')} `) 
+await m.reply(`*${isEnable ? '✅️' : '❌️'} ${await tr("La opción")} ${type} ${await tr("para")} ${isAll ? await tr('este bot') : isUser ? '' : await tr('este chat')} ${await tr("fue")} ${isEnable ? await tr('activado') : await tr('desactivado')} con exitos*`) 
 /*conn.sendButton(m.chat, `╭┄〔 *${wm}* 〕┄⊱
 ┆🗂️ ᴏᴘᴄɪᴏɴ: ${type} 
 ┆——————«•»——————
@@ -596,7 +596,7 @@ await m.reply(`${isEnable ? '✅️' : '❌️'} ${await tr("Comando")} ${type} 
 }; 
 handler.help = ['en', 'dis'].map(v => v + 'able <option>')
 handler.tags = ['nable']
-handler.command = /^((en|dis)able|(tru|fals)e|(turn)?o(n|ff)|[01])$/i
+handler.command = /^((en|dis)able|(tru|fals)e|(turn)?o(n|ff))$/i
 handler.register = true
 export default handler;
 
