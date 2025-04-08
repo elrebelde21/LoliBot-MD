@@ -284,29 +284,17 @@ console.info = () => {}
 const connectionOptions = {
 logger: pino({ level: 'silent' }), 
 printQRInTerminal: opcion == '1' ? true : methodCodeQR ? true : false,
-mobile: MethodMobile,
-browser: opcion == '1' ? ['LoliBot-MD', 'Edge', '20.0.04'] : methodCodeQR ? ['LoliBot-MD', 'Edge', '20.0.04'] : ["Ubuntu", "Chrome", "108.0.5359.125"],
-auth: { creds: state.creds,
-keys: makeCacheableSignalKeyStore(state.keys, Pino({ level: 'silent' })),
+mobile: MethodMobile, 
+auth: {
+creds: state.creds,
+keys: makeCacheableSignalKeyStore(state.keys, Pino({ level: "fatal" }).child({ level: "fatal" })),
 },
+browser: opcion == '1' ? ['LoliBot-MD', 'Edge', '20.0.04'] : methodCodeQR ? ['LoliBot-MD', 'Edge', '20.0.04'] : ["Ubuntu", "Chrome", "108.0.5359.125"],
+version: version,
+msgRetryCounterMap,
 markOnlineOnConnect: false,
 generateHighQualityLinkPreview: true,
 syncFullHistory: false, 
-getMessage: async (key) => {
-try {
-const jid = jidNormalizedUser(key.remoteJid);
-const msg = await store.loadMessage(jid, key.id);
-return msg?.message || '';
-} catch {
-return '';
-}},
-msgRetryCounterCache,
-userDevicesCache,
-cachedGroupMetadata: (jid) => global.conn?.chats?.[jid] ?? {},
-version,
-keepAliveIntervalMs: 45_000, 
-maxIdleTimeMs: 60_000,
-defaultQueryTimeoutMs: 60_000, 
 };
 
 /*const connectionOptions = {
