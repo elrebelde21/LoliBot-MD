@@ -364,6 +364,8 @@ await conn.newsletterFollow(channelId).catch(() => {})
 }}
 
 const activeConnections = new Set()
+const failedBots = new Map()
+
 async function checkSubBots() {
     const subBotDir = path.resolve("./jadibts")
     if (!fs.existsSync(subBotDir)) return
@@ -375,18 +377,23 @@ async function checkSubBots() {
     for (const folder of subBotFolders) {
         const pathGataJadiBot = path.join(subBotDir, folder)
         const credsPath = path.join(pathGataJadiBot, "creds.json")
-
         if (!fs.existsSync(credsPath)) continue
 
         const isAlreadyConnected = global.conns.find(conn =>
             conn.user?.jid?.includes(folder) || path.basename(pathGataJadiBot) === folder
         )
 
-        if (isAlreadyConnected || activeConnections.has(folder)) {
+        if (isAlreadyConnected || activeConnections.has(folder)) continue
+
+        const now = Date.now()
+        const pauseInfo = failedBots.get(folder)
+        if (pauseInfo && now < pauseInfo.resumeAt) {
+            const mins = Math.ceil((pauseInfo.resumeAt - now) / 60000)
+           // console.log(chalk.gray(`Sub-bot (+${folder}) está en pausa. Reintento en ${mins} min...`))
             continue
         }
 
-        console.log(chalk.bold.yellowBright(`Sub-bot (+${folder}) no conectado. Intentando activarlo...`))
+        console.log(chalk.yellow(`Sub-bot (+${folder}) no conectado. Intentando activarlo...`))
         activeConnections.add(folder)
 
         try {
@@ -399,10 +406,18 @@ async function checkSubBots() {
                 command: 'jadibot',
                 fromCommand: false
             })
+            failedBots.delete(folder) //connection 
         } catch (e) {
-            console.error(chalk.redBright(`Error al activar sub-bot (+${folder}):`), e)
+            console.error(chalk.red(`Error al activar sub-bot (+${folder}):`), e)
+            const retries = (failedBots.get(folder)?.retries || 0) + 1
+            if (retries >= 5) {
+                console.log(chalk.redBright(`Sub-bot (+${folder}) falló 5 veces. Se pausará 1 hora.`))
+                failedBots.set(folder, { retries, resumeAt: Date.now() + 3600000 }) // 1 hora
+            } else {
+                failedBots.set(folder, { retries, resumeAt: Date.now() + 10000 }) // espera 10s entre intentos
+            }
         } finally {
-            setTimeout(() => activeConnections.delete(folder), 30 * 1000) // Espera 30s antes de permitir otro intento
+            setTimeout(() => activeConnections.delete(folder), 30000)
         }
     }
 }
