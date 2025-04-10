@@ -330,16 +330,6 @@ maxIdleTimeMs: 60000,
 };*/
     
 global.conn = makeWASocket(connectionOptions)    
-/*let conn;
-try {
-conn = makeWASocket(connectionOptions);
-} catch (e) {
-console.error(chalk.red('[❌] Error cargando sesión principal, intentando restaurar...'));
-await restoreCreds();
-conn = makeWASocket(connectionOptions);
-}
-global.conn = conn;
-*/
 
 if (!fs.existsSync(`./${authFile}/creds.json`)) {
 if (opcion === '2' || methodCode) {
@@ -381,36 +371,23 @@ if (opts['server']) (await import('./server.js')).default(global.conn, PORT)
 
 //respaldo de la sesión
 const backupCreds = async () => {
-if (!fs.existsSync(credsFile)) {
-console.log(await tr('[⚠] No se encontró el archivo creds.json para respaldar.'));
-return;
-}
-
-const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
-const newBackup = join(respaldoDir, `creds-${timestamp}.json`);
-fs.copyFileSync(credsFile, newBackup);
-console.log(`[✅] ${await tr("Respaldo creado")}: ${newBackup}`);
-
-const backups = fs.readdirSync(respaldoDir).filter(file => file.startsWith('creds-') && file.endsWith('.json')).sort((a, b) => fs.statSync(join(respaldoDir, a)).mtimeMs - fs.statSync(join(respaldoDir, b)).mtimeMs);
-
-while (backups.length > 3) {
-const oldest = backups.shift();
-fs.unlinkSync(join(respaldoDir, oldest));
-console.log(`[🗑️] ${await tr("Respaldo antiguo eliminado")}: ${oldest}`);
+if (fs.existsSync(credsFile)) {
+fs.copyFileSync(credsFile, backupFile);
+console.log(await tr(`[✅] Respaldo creado en ${backupFile}`))
+} else {
+console.log(await tr('[⚠] No se encontró el archivo creds.json para respaldar.'))
 }};
 
 const restoreCreds = async () => {
-const backups = fs.readdirSync(respaldoDir).filter(file => file.startsWith('creds-') && file.endsWith('.json')).sort((a, b) => fs.statSync(join(respaldoDir, b)).mtimeMs - fs.statSync(join(respaldoDir, a)).mtimeMs);
-
-if (backups.length === 0) {
-console.log(await tr('[⚠] No hay respaldos disponibles para restaurar.'));
-return;
-}
-
-const latestBackup = join(respaldoDir, backups[0]);
-fs.copyFileSync(latestBackup, credsFile);
-console.log(`[✅] ${await tr("Restaurado desde respaldo")}: ${backups[0]}`);
-};
+if (fs.existsSync(credsFile)) {
+fs.copyFileSync(backupFile, credsFile);
+console.log(await tr(`[✅] creds.json reemplazado desde el respaldo.`))
+} else if (fs.existsSync(backupFile)) {
+fs.copyFileSync(backupFile, credsFile);
+console.log(await tr(`[✅] creds.json restaurado desde el respaldo.`))
+} else {
+console.log(await tr('[⚠] No se encontró ni el archivo creds.json ni el respaldo.'))
+}};
 
 setInterval(async () => {
 await backupCreds();
