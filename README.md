@@ -1,6 +1,6 @@
 > <b>🚀 Versión actual: 1.9.8</b>
 
->>> REPOSITORIO DE MOMENTO QUEDARA OBSOLETO PRONTO SALEN NUEVA VERSIÓN 
+[Se viene nueva mejorar bot echo desde 0 pronto puede probar sus versión beta en grupos oficials](https://chat.whatsapp.com/HNDVUxHphPzG3cJHIwCaX5)
 
 
 <p align="center"> 
