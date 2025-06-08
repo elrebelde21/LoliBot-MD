@@ -57,8 +57,8 @@ global.fb = 'https://www.facebook.com/elrebelde21'
 global.face = 'https://www.facebook.com/groups/872989990425789/'
 
 global.nna = 'https://whatsapp.com/channel/0029Va4QjH7DeON0ePwzjS1A' //Update
-global.nna2 = 'https://whatsapp.com/channel/0029Vau57ykEwEk5CgosvU3v' //LoliBot update
-global.nnaa = 'https://whatsapp.com/channel/0029Vae6j714Y9loutP3Au29' //LoliBot - Test
+global.nna2 = 'https://whatsapp.com/channel/0029Vas9jIPFsn0fgdNCKO0V' //LoliBot update
+global.nnaa = 'https://whatsapp.com/channel/0029Vas9jIPFsn0fgdNCKO0V' //LoliBot - Test
 global.nn = 'https://chat.whatsapp.com/HNDVUxHphPzG3cJHIwCaX5' //Grupo 1
 global.nnn = 'https://chat.whatsapp.com/KDBt6S54riRCIpSZspkxhg' //Grupo 2
 global.nnnt = 'https://chat.whatsapp.com/GXNXKWSEckU1j1c7sItTxK' //Grupo del Colaboracion
@@ -108,15 +108,9 @@ global.maxwarn = '4' // máxima advertencias
 //---------------[ IDs de canales ]----------------
 
 global.ch = {
-ch1: '120363297379773397@newsletter', 
-ch2: '120363355261011910@newsletter', 
-ch3: '120363160031023229@newsletter',
-ch4: '120363301598733462@newsletter',
-ch5: '120363374372683775@newsletter', 
-ch6: '120363388040813284@newsletter',
-ch7: '120363419483367014@newsletter',  
-ch8: '120363397276648807@newsletter',
-ch9: '120363343811229130@newsletter',
+ch1: '120363349916000764@newsletter', 
+ch2: '120363160031023229@newsletter',
+ch3: '120363301598733462@newsletter',
 }
 
 //----------------------------------------------------
