@@ -1,3 +1,3 @@
-> <b>🚀 Versión actual: 1.9.8</b>
+> <b>🚀 Pronto nueva versión</b>
 
-[Se viene nueva mejorar el bot, se esta haciendo bot con base echa desde 0 pronto, puede probar su versión beta en grupos oficial](https://chat.whatsapp.com/HNDVUxHphPzG3cJHIwCaX5)
+[Se está haciendo una base totalmente  desde 0, para mayor rendimiento, estabilidad y mejor funcionamiento. si quiere probar su versión beta hazlo en grupos oficial, aquí](https://chat.whatsapp.com/HNDVUxHphPzG3cJHIwCaX5)
