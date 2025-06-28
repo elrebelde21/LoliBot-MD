@@ -155,7 +155,7 @@ npm start
 ```
 ----
 
-### 🌟 EDITOR Y PROPIETARIO DEL BOT
+### 🌟 DESARROLLO Y PROPIETARIO DEL BOT
 <a href="https://github.com/elrebelde21"><img src="https://github.com/elrebelde21.png" width="300" height="300" alt="elrebelde21"/></a>
 
 ### 🌟 COLABORADORES
@@ -165,7 +165,4 @@ npm start
 [![Alba070503](https://github.com/Alba070503.png?size=100)](https://github.com/Alba070503)
 [![DanixlJs](https://github.com/DanixlJs.png?size=100)](https://github.com/DanixlJs)
 [![edar123](https://github.com/edar123.png?size=100)](https://github.com/edar123)
-
-### 🌟 AGRADECIMIENTOS
-[![TheShadowBrokers1](https://github.com/BrunoSobrino.png?size=60)](https://github.com/BrunoSobrino) 
 
