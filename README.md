@@ -123,6 +123,14 @@
   </a>
 </p>
 
+<p align="center">
+  <b>🔗 Dueña/Propietaria:</b><br>
+  <a href="https://www.instagram.com/itschinita_official">
+    <img src="https://www.instagram.com/itschinita_official/media/?size=l" width="100" height="100" alt="itschinita_official" style="border-radius: 50%;" /><br>
+    <b>@itschinita_official</b>
+  </a>
+</p>
+
 ---
 
 ## 👥 Colaboradores
