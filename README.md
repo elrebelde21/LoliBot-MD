@@ -140,12 +140,12 @@
 
 <p align="center">
   <sub>
-    🚧 <b>Esta es una versión <span style="color:#FF44CC">BETA</span> en desarrollo.</b><br>
-    📢 Puede contener errores que se corregirán constantemente.<br>
-    ✂️ <b>No elimines créditos</b> si vas a compartirlo o editarlo.<br>
-    🔒 <b>Usa el bot bajo tu propia responsabilidad.</b><br>
-    🎯 Está alojado en <a href="https://skyultraplus.com"><b>SkyUltraPlus</b></a> para 24/7 sin lag.<br>
-    ⭐ Si te gusta, <b>apóyalo con una estrella</b> 💖
+    🚧 <b>Este repositorio publica la versión actual y oficial de LoliBot-MD.</b><br>
+    📢 Es posible que el bot tenga algunas fallas; se irán corrigiendo conforme se detecten.<br>
+    ✂️ Si vas a editar o compartir el bot, <b>no elimines los créditos originales</b>.<br>
+    🎯 Atento a las nuevas actualizaciones que se realicen en este repositorio.<br>
+    🔒 <b>LoliBot-MD no se hace responsable</b> del uso, número, privacidad ni contenido enviado, usado o gestionado por los usuarios o el bot. Úsalo bajo tu responsabilidad.<br>
+    🚧 <b>Actualmente está en versión <span style="color:#FF44CC">BETA</span> en desarrollo.</b><br>
   </sub>
 </p>
 
