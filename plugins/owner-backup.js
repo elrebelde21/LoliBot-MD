@@ -10,7 +10,10 @@ year: 'numeric'
 
 const rawId = conn.user?.id?.split('@')[0] || ''
 const cleanId = rawId.split(':')[0] 
-const path = `./jadibot/${cleanId}/creds.json`
+//const path = `./jadibot/${cleanId}/creds.json`
+const path = conn.user.jid !== global.conn.user.jid
+? `./jadibot/${rawId}/creds.json`
+: `./BotSession/creds.json`;
 if (!fs.existsSync(path)) return await m.reply(`⚠️ El archivo *creds.json* no existe para: ${cleanId}`)
 let creds = fs.readFileSync(path)
 await m.reply(`_*📂 Preparando la sesión del subbot...*_`)
