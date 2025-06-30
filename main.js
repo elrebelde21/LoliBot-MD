@@ -224,10 +224,10 @@ console.error(chalk.red("❌ Error procesando call.update:"), err);
 //tmp    
 setInterval(() => {
 const tmp = './tmp';
-console.log(chalk.cyan(`┏━━━━━━⪻♻️ AUTO-CLEAR 🗑️⪼━━━━━━•\n┃→ ARCHIVOS DE LA CARPETA TMP ELIMINADOS\n┗━━━━━━━━━━━━━━━━━━━━━━━━━━━•`));
 try {
 if (!fs.existsSync(tmp)) return;
 const files = fs.readdirSync(tmp);
+console.log(chalk.cyan(`┏━━━━━━⪻♻️ AUTO-CLEAR 🗑️⪼━━━━━━•\n┃→ ARCHIVOS DE LA CARPETA TMP ELIMINADOS\n┗━━━━━━━━━━━━━━━━━━━━━━━━━━━•`));
 files.forEach(file => {
 if (file.endsWith('.file')) return;
 const filePath = path.join(tmp, file);
