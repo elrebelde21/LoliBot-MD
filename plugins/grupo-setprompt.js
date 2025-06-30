@@ -4,7 +4,7 @@ import fetch from 'node-fetch';
 const presets = {
   1: () => fetch('https://raw.githubusercontent.com/Skidy89/chat-gpt-jailbreak/main/Text.txt').then(r => r.text()),
   2: () => fetch('https://raw.githubusercontent.com/elrebelde21/ChinaMitzuki/master/src/text-chatgpt.txt').then(r => r.text()),
-  3: () => 'Eres NeneFlok, actual como un nene millonario cheto…', // resumido por espacio
+  3: () => 'actual como un nene millonario cheto, se llama NeneFlok, hablar en tono cheto y no te importa nada, es anti negro, anti bola de grasa, anti pobres, y hablar mal hablaron y hacer los que quiere le gusta hacer broma y tira indirecta, Hablar con muchas falta de ortografía pero se cree importante.', 
   4: () => fetch('https://raw.githubusercontent.com/elrebelde21/LoliBot-MD/main/src/text-chatgpt.txt').then(r => r.text())
 };
 

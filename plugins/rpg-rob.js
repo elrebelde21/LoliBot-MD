@@ -4,7 +4,7 @@ const handler = async (m, { conn, usedPrefix, command }) => {
 const now = Date.now();
 const resRobber = await m.db.query('SELECT exp, lastrob FROM usuarios WHERE id = $1', [m.sender]);
 const robber = resRobber.rows[0];
-const cooldown = 7200000;
+const cooldown = 3600000;
 const timeLeft = (robber.lastrob ?? 0) + cooldown - now;
 if (timeLeft > 0) return m.reply(`🚓 La policía está vigilando, vuelve en: *${msToTime(timeLeft)}*`);
 
