@@ -1,0 +1,822 @@
+[
+  {
+    "id": "monkey_d_luffy",
+    "name": "Monkey D. Luffy",
+    "url": "https://telegra.ph/file/84c78cc26889b8da9a8f0.jpg",
+    "type": "anime",
+    "price": 9500,
+    "rank": "Legendary",
+    "release_date": "July 22, 1997",
+    "description": "Monkey D. Luffy is the main protagonist of the One Piece series. He is the captain of the Straw Hat Pirates and dreams of becoming the King of the Pirates."
+  },
+   {
+  "id": "alya_san",
+  "name": "Alya San",
+  "url": "https://tinyurl.com/28k4w7g5",
+  "type": "anime",
+  "price": 45000,
+  "rank": "Epic",
+  "release_date": "July 3, 2023",
+  "description": "Alya San es una joven brillante y carismática conocida por su gran intelecto y habilidades sociales. Con una personalidad encantadora, es un personaje destacado que conquista corazones y se enfrenta a desafíos con valentía."
+  },
+   {
+    "id": "naruto_uzumaki",
+    "name": "Naruto Uzumaki",
+    "url": "https://qu.ax/mDzBA.jpg",
+    "type": "anime",
+    "price": 4500,
+    "rank": "Epic",
+    "release_date": "October 3, 1999",
+    "description": "Naruto Uzumaki is the protagonist of the Naruto series. He is a young ninja with dreams of becoming the Hokage, the leader of his village."
+  },
+  {
+    "id": "goku",
+    "name": "Goku",
+    "url": "https://qu.ax/TOuUu.jpg",
+    "type": "anime",
+    "price": 12000,
+    "rank": "Legendary",
+    "release_date": "February 26, 1986",
+    "description": "Goku is the main character of the Dragon Ball series. He is a Saiyan warrior with unmatched fighting abilities, known for his cheerful personality and strength."
+  },
+  {
+    "id": "lelouch_vi_britannia",
+    "name": "Lelouch vi Britannia",
+    "url": "https://qu.ax/HqVDn.jpg",
+    "type": "anime",
+    "price": 9650,
+    "rank": "Legendary",
+    "release_date": "October 5, 2006",
+    "description": "Lelouch vi Britannia is the protagonist of Code Geass. He is a brilliant strategist and former prince who seeks to overthrow the Holy Britannian Empire using the mysterious power of Geass."
+  },
+  {
+    "id": "light_yagami",
+    "name": "Light Yagami",
+    "url": "https://tinyurl.com/26y9acxm",
+    "type": "anime",
+    "price": 4500,
+    "rank": "Rare",
+    "release_date": "October 3, 2006",
+    "description": "Light Yagami is the protagonist of Death Note. He is a high school student who discovers a notebook that allows him to kill anyone whose name he writes in it."
+  },
+  {
+    "id": "shikamaru_nara",
+    "name": "Shikamaru Nara",
+    "url": "https://tinyurl.com/26y9acxm",
+    "type": "anime",
+    "price": 9599,
+    "rank": "Epic",
+    "release_date": "October 3, 1999",
+    "description": "Shikamaru Nara is a brilliant strategist and a loyal ninja from the Naruto series. He is known for his lazy demeanor and unmatched intellect."
+  },
+  {
+    "id": "spike_siegel",
+    "name": "Spike Spiegel",
+    "url": "https://tinyurl.com/2xh3qfla",
+    "type": "anime",
+    "price": 10000,
+    "rank": "Epic",
+    "release_date": "April 3, 1998",
+    "description": "Spike Spiegel is the main character of Cowboy Bebop. A former hitman, now a bounty hunter, known for his cool attitude and martial arts abilities."
+  },
+  {
+    "id": "saitama",
+    "name": "Saitama",
+    "url": "https://tinyurl.com/2665otac",
+    "type": "anime",
+    "price": 13689,
+    "rank": "Legendary",
+    "release_date": "October 5, 2015",
+    "description": "Saitama, also known as One Punch Man, is the strongest hero in the world. His overwhelming power allows him to defeat any opponent with a single punch."
+  },
+  {
+    "id": "asuna_yuuki",
+    "name": "Asuna Yuuki",
+    "url": "https://tinyurl.com/22f8lmxo",
+    "type": "anime",
+    "price": 10566,
+    "rank": "Epic",
+    "release_date": "July 8, 2012",
+    "description": "Asuna Yuuki is one of the main characters in Sword Art Online. Known for her sword skills, she is one of the top players in the game and a key ally to Kirito."
+  },
+  {
+    "id": "madara_uchiha",
+    "name": "Madara Uchiha",
+    "url": "https://tinyurl.com/2d46tzd9",
+    "type": "anime",
+    "price": 11456,
+    "rank": "Legendary",
+    "release_date": "October 5, 2014",
+    "description": "Madara Uchiha is one of the most powerful shinobi in the Naruto universe. Once the leader of the Uchiha clan, his ambition and battle prowess make him one of the most feared characters in the series."
+  },
+  {
+    "id": "darth_vader",
+    "name": "Darth Vader",
+    "url": "https://tinyurl.com/297sl3k4",
+    "type": "movie",
+    "price": 9500,
+    "rank": "Legendary",
+    "release_date": "May 25, 1977",
+    "description": "Darth Vader is a central antagonist in the Star Wars saga. A former Jedi Knight turned Sith Lord, he plays a major role in the galactic conflict and the fall of the Galactic Republic."
+  },
+{
+    "id": "kaito_kid",
+    "name": "Kaito KID",
+    "url": "https://tinyurl.com/2946nwqo",
+    "type": "anime",
+    "price": 8500,
+    "rank": "Rare",
+    "release_date": "August 24, 1994",
+    "description": "Kaito KID is a master thief and the main rival of Conan Edogawa in the Detective Conan series. He is known for his clever heists and disguises."
+  },
+  {
+    "id": "todoroki_shoto",
+    "name": "Shoto Todoroki",
+    "url": "https://tinyurl.com/22ga2q4w",
+    "type": "anime",
+    "price": 10999,
+    "rank": "Epic",
+    "release_date": "April 3, 2006",
+    "description": "Shoto Todoroki is one of the main characters of My Hero Academia. He is a powerful hero-in-training with the ability to control both fire and ice."
+  },
+  {
+    "id": "hanzo_hattori",
+    "name": "Hanzo Hattori",
+    "url": "https://tinyurl.com/2by6kbhq",
+    "type": "anime",
+    "price": 9000,
+    "rank": "Epic",
+    "release_date": "June 6, 1581",
+    "description": "Hanzo Hattori was a famous samurai and ninja during the Sengoku period of Japan. In anime, he appears as a skilled assassin known for his stealth and loyalty."
+  },
+  {
+    "id": "holo",
+    "name": "Holo",
+    "url": "https://tinyurl.com/28ko4qdt",
+    "type": "anime",
+    "price": 7650,
+    "rank": "Rare",
+    "release_date": "November 13, 2006",
+    "description": "Holo is a wise wolf deity from the anime *Spice and Wolf*. She is known for her sharp wit and her desire to return to her homeland."
+  },
+  {
+    "id": "frieza",
+    "name": "Frieza",
+    "url": "https://tinyurl.com/246lpmwe",
+    "type": "anime",
+    "price": 15000,
+    "rank": "Legendary",
+    "release_date": "February 15, 1990",
+    "description": "Frieza is one of the most powerful and infamous villains in the *Dragon Ball* series. His ruthless pursuit of power makes him a constant threat to the heroes."
+  },
+  {
+    "id": "rem",
+    "name": "Rem",
+    "url": "https://tinyurl.com/28y8eu7o",
+    "type": "anime",
+    "price": 8600,
+    "rank": "Rare",
+    "release_date": "April 14, 2012",
+    "description": "Rem is a character from *Re:Zero* known for her blue hair and her unshakable loyalty. She is a demon maid who plays a key role in the series."
+  },
+  {
+    "id": "jotaro_kujo",
+    "name": "Jotaro Kujo",
+    "url": "https://tinyurl.com/24jn8rya",
+    "type": "anime",
+    "price": 15600,
+    "rank": "Legendary",
+    "release_date": "April 5, 1989",
+    "description": "Jotaro Kujo is one of the main characters in *JoJo's Bizarre Adventure*, known for his indomitable spirit and his Stand, Star Platinum, which is capable of incredible feats of strength and time manipulation."
+  },
+  {
+    "id": "vegeta",
+    "name": "Vegeta",
+    "url": "https://tinyurl.com/27bbxwla",
+    "type": "anime",
+    "price": 19500,
+    "rank": "Legendary",
+    "release_date": "February 6, 1989",
+    "description": "Vegeta is the prince of the Saiyan race in *Dragon Ball*. Initially an antagonist, his rivalry with Goku evolves into a complex relationship that drives his growth as a fighter."
+  },
+  {
+    "id": "lelouch_mille_feuille",
+    "name": "Lelouch Mille Feuille",
+    "url": "https://tinyurl.com/28r4qaop",
+    "type": "anime",
+    "price": 10897,
+    "rank": "Epic",
+    "release_date": "September 6, 2006",
+    "description": "Lelouch Mille Feuille from *Code Geass* appears as a different persona, revealing even more of his intelligence and mastermind behind the scenes."
+  },
+{
+    "id": "esdeath",
+    "name": "Esdeath",
+    "url": "https://tinyurl.com/2bsu7eao",
+    "type": "anime",
+    "price": 16500,
+    "rank": "Legendary",
+    "release_date": "April 30, 2010",
+    "description": "Esdeath is the main antagonist of *Akame ga Kill*. She is a sadistic and powerful general with control over ice, known for her immense strength and ruthless nature."
+  },
+  {
+    "id": "asuna_yuuki",
+    "name": "Asuna Yuuki",
+    "url": "https://tinyurl.com/2yeem8cl",
+    "type": "anime",
+    "price": 10400,
+    "rank": "Epic",
+    "release_date": "July 8, 2009",
+    "description": "Asuna Yuuki is the female protagonist of *Sword Art Online*. She is a strong and skilled warrior, known for her leadership in the virtual world of Aincrad."
+  },
+  {
+    "id": "shanks",
+    "name": "Shanks",
+    "url": "https://tinyurl.com/229b3o56",
+    "type": "anime",
+    "price": 16500,
+    "rank": "Legendary",
+    "release_date": "October 20, 1999",
+    "description": "Shanks is one of the Four Emperors in *One Piece*. He is known for his leadership as a pirate captain and his friendship with Monkey D. Luffy."
+  },
+  {
+    "id": "izuku_midoriya",
+    "name": "Izuku Midoriya",
+    "url": "https://tinyurl.com/22zr55nc",
+    "type": "anime",
+    "price": 6500,
+    "rank": "Epic",
+    "release_date": "April 3, 2016",
+    "description": "Izuku Midoriya is the main protagonist of *My Hero Academia*. A kind-hearted boy born without powers, he inherits the power of the greatest hero, All Might."
+  },
+  {
+    "id": "kakashi_hatake",
+    "name": "Kakashi Hatake",
+    "url": "https://tinyurl.com/28oa3qlx",
+    "type": "anime",
+    "price": 1600,
+    "rank": "Legendary",
+    "release_date": "October 3, 1999",
+    "description": "Kakashi Hatake is a beloved character from *Naruto*. Known for his Sharingan and laid-back demeanor, he is a brilliant ninja and a former leader of Team 7."
+  },
+  {
+    "id": "aizen_sosuke",
+    "name": "Sosuke Aizen",
+    "url": "https://tinyurl.com/26n5ba32",
+    "type": "anime",
+    "price": 1800,
+    "rank": "Legendary",
+    "release_date": "August 7, 2001",
+    "description": "Sosuke Aizen is the main antagonist of *Bleach*. A former Soul Reaper captain, he is one of the most cunning and dangerous figures in the series, able to manipulate others with ease."
+  },
+  {
+    "id": "haruhi_suzumiya",
+    "name": "Haruhi Suzumiya",
+    "url": "https://tinyurl.com/288hasg5",
+    "type": "anime",
+    "price": 3987,
+    "rank": "Epic",
+    "release_date": "April 2, 2006",
+    "description": "Haruhi Suzumiya is the energetic and unpredictable protagonist of *The Melancholy of Haruhi Suzumiya*. She possesses the ability to change the world without even realizing it."
+  },
+  {
+    "id": "kiryuu_saber",
+    "name": "Saber (Kiryuu)",
+    "url": "https://tinyurl.com/23jwnlyp",
+    "type": "anime",
+    "price": 13966,
+    "rank": "Legendary",
+    "release_date": "March 6, 2014",
+    "description": "Saber is an alternative version from the Fate series, bearing similar attributes and background but differing in her portrayal of honor and faithfulness in battle."
+  },
+  {
+    "id": "gon_freecss",
+    "name": "Gon Freecss",
+    "url": "https://tinyurl.com/24bvb3gg",
+    "type": "anime",
+    "price": 4670,
+    "rank": "Epic",
+    "release_date": "March 3, 1999",
+    "description": "Gon Freecss is the protagonist of *Hunter x Hunter*. A brave and optimistic young boy, he sets out to become a Hunter and reunite with his father."
+  },
+  {
+    "id": "kenpachi_zyaraki",
+    "name": "Kenpachi Zaraki",
+    "url": "https://tinyurl.com/26nqpsuz",
+    "type": "anime",
+    "price": 14677,
+    "rank": "Legendary",
+    "release_date": "August 7, 2001",
+    "description": "Kenpachi Zaraki is one of the most powerful Soul Reapers from *Bleach*, known for his immense strength and love of combat. He is the 11th Division captain in the Gotei 13."
+  },
+  {
+    "id": "natsu_dragneel",
+    "name": "Natsu Dragneel",
+    "url": "https://tinyurl.com/2xkwqfhe",
+    "type": "anime",
+    "price": 6500,
+    "rank": "Epic",
+    "release_date": "October 12, 2009",
+    "description": "Natsu Dragneel is the main protagonist of *Fairy Tail*. He is a powerful fire mage and a member of the Fairy Tail Guild, known for his fiery temper and loyalty."
+  },
+  {
+    "id": "mob_kiyotaka",
+    "name": "Mob Kiyotaka",
+    "url": "https://tinyurl.com/2a5bdoaj",
+    "type": "anime",
+    "price": 6800,
+    "rank": "Rare",
+    "release_date": "July 12, 2016",
+    "description": "Kiyotaka Mob is the protagonist of *Mob Psycho 100*. A talented psychic trying to live a normal life, his powers can overwhelm him, leading to dangerous situations when he loses control."
+  },
+  {
+    "id": "shiro",
+    "name": "Shiro",
+    "url": "https://tinyurl.com/2xps5lrz",
+    "type": "anime",
+    "price": 4999,
+    "rank": "Rare",
+    "release_date": "April 1, 2010",
+    "description": "Shiro is the younger sister of Kirito in *Sword Art Online*. A skilled gamer, she also appears as one of the more influential secondary characters."
+  },
+  {
+    "id": "hinata_hyuga",
+    "name": "Hinata Hyuga",
+    "url": "https://tinyurl.com/244vxc36",
+    "type": "anime",
+    "price": 5600,
+    "rank": "Epic",
+    "release_date": "October 3, 1999",
+    "description": "Hinata Hyuga is a member of the Hyuga clan from *Naruto*. Known for her kindness and determination, she possesses the Byakugan, a powerful kekkei genkai that gives her incredible sight."
+  },
+  {
+    "id": "yamato_kurosawa",
+    "name": "Yamato Kurosawa",
+    "url": "https://tinyurl.com/26g6zko2",
+    "type": "anime",
+    "price": 6988,
+    "rank": "Epic",
+    "release_date": "April 22, 2003",
+    "description": "Yamato Kurosawa is a character from *Naruto*. He becomes a powerful shinobi with his wood release ability, especially after becoming the temporary leader of Team 7."
+  },
+  {
+    "id": "elizabeth_liones",
+    "name": "Elizabeth Liones",
+    "url": "https://tinyurl.com/23xgbsnb",
+    "type": "anime",
+    "price": 7500,
+    "rank": "Rare",
+    "release_date": "October 5, 2012",
+    "description": "Elizabeth Liones is the princess and main protagonist of *The Seven Deadly Sins*. She seeks to bring the Seven Deadly Sins together to fight against the corrupt Holy Knights."
+  },
+  {
+    "id": "kaguya_otsutsuki",
+    "name": "Kaguya Otsutsuki",
+    "url": "https://tinyurl.com/2xsjqex5",
+    "type": "anime",
+    "price": 13689,
+    "rank": "Legendary",
+    "release_date": "October 3, 1999",
+    "description": "Kaguya Otsutsuki is the progenitor of chakra and the final antagonist of *Naruto Shippuden*. She is incredibly powerful and was once known as the most feared being on the planet."
+  },
+  {
+  "id": "asuna",
+  "name": "Asuna",
+  "url": "https://tinyurl.com/23lg9egd",
+  "type": "Mujer",
+  "price": 13354,
+  "rank": "Épico",
+  "release_date": "01/07/2012",
+  "description": "Asuna es una experta espadachina y protagonista de \"Sword Art Online\", destacándose en habilidades de combate y liderazgo."
+  },
+  {
+  "id": "hu-tao",
+  "name": "Hu-tao",
+  "url": "https://tinyurl.com/25uq9mu2",
+  "type": "legendario",
+  "price": 35968,
+  "rank": "Mítico",
+  "release_date": "02/03/2021",
+  "description": "Hu Tao es la directora del funeral de Wangsheng y tiene habilidades de Pyro y control de espíritus."
+},
+{
+  "id": "miku_hatsune_",
+  "name": "Miku Hatsune",
+  "url": "https://tinyurl.com/2y4csmoy",
+  "type": "anime",
+  "price": 54750,
+  "rank": "Legendario",
+  "release_date": "31/08/2007",
+  "description": "Miku Hatsune es una cantante virtual que utiliza la tecnología Vocaloid para crear música y conectar culturas."
+},
+{
+  "id": "zenles_zone_zero",
+  "name": "Zenles zone zero",
+  "url": "https://tinyurl.com/24rka77h",
+  "type": "raro",
+  "price": 6579,
+  "rank": "Legendario",
+  "release_date": "01/12/2023",
+  "description": "Zenles es un guerrero adaptativo con habilidades que cambian según el entorno y sus oponentes, siempre buscando la victoria."
+},
+{
+  "id": "rias_gremory",
+  "name": "Rias Gremory",
+  "url": "https://tinyurl.com/25pzkoze",
+  "type": "anime",
+  "price": 36500,
+  "rank": "Legendario",
+  "release_date": "06/09/2012",
+  "description": "Rias Gremory es una demonio noble con habilidades sobresalientes en magia y líder del grupo de protagonistas."
+},
+{
+  "id": "kaname_arisugawa",
+  "name": "Kaname Arisugawa",
+  "url": "https://qu.ax/pOzug.jpg",
+  "type": "anime",
+  "price": 14500,
+  "rank": "Epic",
+  "release_date": "03-10-2020",
+  "description": "Kaname Arisugawa es una chica enérgica y astuta del anime Tonikaku Kawaii. Trabaja en el baño público de su familia y disfruta molestando a Nasa con consejos descarados sobre el matrimonio."
+},
+{
+  "id": "aya_arisugawa",
+  "name": "Aya Arisugawa",
+  "url": "https://qu.ax/wVuqA.jpg",
+  "type": "anime",
+  "price": 16700,
+  "rank": "Epic",
+  "release_date": "03-10-2020",
+  "description": "Aya Arisugawa es la hermana mayor de Kaname en Tonikaku Kawaii. Es despreocupada, algo torpe y le cuesta tomarse las cosas en serio"
+},
+{
+  "id": "tsukasa_tsukuyomi",
+  "name": "Tsukasa Tsukuyomi",
+  "url": "https://qu.ax/cneli.jpg",
+  "type": "anime",
+  "price": 25600,
+  "rank": "Legendary",
+  "release_date": "03-10-2020",
+  "description": "Tsukasa Tsukuyomi es la misteriosa y encantadora esposa de Nasa en Tonikaku Kawaii. Es tranquila, inteligente y tiene un aire enigmático"
+},
+{
+  "id": "chitose_kaginoji",
+  "name": "Chitose Kaginoji",
+  "url": "https://qu.ax/NYSqn.jpg",
+  "type": "anime",
+  "price": 23500,
+  "rank": "Legendary",
+  "release_date": "03-10-2020",
+  "description": "Chitose Kaginoji es una chica rica y obstinada en Tonikaku Kawaii. Admira profundamente a Tsukasa y ve a Nasa como su rival, tratando de separarlos"
+},
+{
+  "id": "aurora_tkk",
+  "name": "Aurora",
+  "url": "https://qu.ax/ozNkm.jpg",
+  "type": "anime",
+  "price": 9000,
+  "rank": "Rare",
+  "release_date": "03-10-2020",
+  "description": "Aurora es una de las sirvientas de Chitose Kaginoji en Tonikaku Kawaii. Es elegante, calmada y siempre mantiene la compostura"
+},
+{
+  "id": "charlotte_tkk",
+  "name": "Charlotte",
+  "url": "https://qu.ax/ovuYm.jpg",
+  "type": "anime",
+  "price": 11000,
+  "rank": "Rare",
+  "release_date": "03-10-2020",
+  "description": "Charlotte es una de las sirvientas de Chitose Kaginoji en Tonikaku Kawaii. Es enérgica, juguetona y suele actuar de manera más impulsiva que Aurora"
+},
+{
+  "id": "yuzaki_naza",
+  "name": "Nasa Yuzaki",
+  "url": "https://qu.ax/hHJwD.jpg",
+  "type": "anime",
+  "price": 23500,
+  "rank": "Legendary",
+  "release_date": "03-10-2020",
+  "description": "Nasa Yuzaki es el protagonista de Tonikaku Kawaii. Es un joven inteligente y determinado, con un gran talento para el estudio y la tecnología"
+},
+{
+  "id": "yumeko_jabami",
+  "name": "Yumeko Jabami",
+  "url": "https://qu.ax/UKGeg.jpg",
+  "type": "anime",
+  "price": 28300,
+  "rank": "Legendary",
+  "release_date": "01-07-2017",
+  "description": "Yumeko Jabami es la protagonista de Kakegurui. Es una estudiante nueva en la Academia Hyakkaou con una personalidad carismática y misteriosa"
+},
+{
+  "id": "kirari_momobomi",
+  "name": "Kikari Momobami",
+  "url": "https://qu.ax/RBemt.jpg",
+  "type": "anime",
+  "price": 27600,
+  "rank": "Legendary",
+  "release_date": "01-07-2017",
+  "description": "Kikari Momobami es una de las protagonistas del anime Kakegurui. Es la presidenta del consejo estudiantil y una miembro de la poderosa familia Momobami."
+},
+{
+  "id": "ririka_momobami",
+  "name": "Ririka Momobami",
+  "url": "https://qu.ax/RhuJj.jpg",
+  "type": "anime",
+  "price": 26740,
+  "rank": "Epic",
+  "release_date": "",
+  "description": "Ririka Momobami es un personaje del anime Kakegurui y es la hermana gemela de Kikari Momobami. Aunque parece ser más tranquila y reservada en comparación con su hermana"
+},
+{
+  "id": "midari_ikishima",
+  "name": "Midari Ikishima",
+  "url": "https://qu.ax/NZjEK.jpg",
+  "type": "anime",
+  "price": 18500,
+  "rank": "Epic",
+  "release_date": "01-07-2017",
+  "description": "Midari Ikishima es una de las estudiantes más excéntricas y peligrosas del anime Kakegurui. Miembro del consejo estudiantil"
+},
+{
+  "id": "mary_saotome",
+  "name": "Mary Saotome",
+  "url": "https://qu.ax/lblgL.jpg",
+  "type": "anime",
+  "price": 16300,
+  "rank": "Rare",
+  "release_date": "01-07-2017",
+  "description": "Mary Saotome es una de las protagonistas de Kakegurui. Inicialmente, es una estudiante popular y confiada, conocida por su habilidad en los juegos de azar y su actitud competitiva."
+},
+{
+  "id": "runa_yomozuki",
+  "name": "Runa Yomozuki",
+  "url": "https://qu.ax/ybhEx.jpg",
+  "type": "anime",
+  "price": 24300,
+  "rank": "Epic",
+  "release_date": "",
+  "description": "Runa Yomozuki es un miembro del consejo estudiantil en Kakegurui. Es una joven tranquila y despreocupada, pero con una gran habilidad para manipular y jugar con las emociones de los demás"
+},
+{
+  "id": "itsuki_suneragi",
+  "name": "Itsuki Sumeragi",
+  "url": "https://qu.ax/jNJJV.jpg",
+  "type": "anime",
+  "price": 17600,
+  "rank": "Rare",
+  "release_date": "01-07-2017",
+  "description": "Itsuki Sumeragi es un personaje de Kakegurui y uno de los miembros del consejo estudiantil. Es un joven calmado y sereno"
+},
+{
+  "id": "sachiko_juraku",
+  "name": "Sachiko Juraku",
+  "url": "https://qu.ax/rqDNg.jpg",
+  "type": "anime",
+  "price": 22300,
+  "rank": "Epic",
+  "release_date": "01-07-2017",
+  "description": "Sachiko Juraku es un personaje secundario en Kakegurui. Es miembro del consejo estudiantil y una de las figuras más misteriosas de la serie."
+},
+{
+  "id": "shirakawa_runa",
+  "name": "Runa Shirakawa",
+  "url": "https://qu.ax/Lbtlw.jpeg",
+  "type": "anime",
+  "price": 27800,
+  "rank": "Legendary",
+  "release_date": "06-10-2023",
+  "description": "Runa Shirakawa es una de las protagonistas del anime Keiken Zumi na Kimi to Keiken Zero na Ore ga Otsukiai Suru Hanashi. Es una chica inteligente, atractiva y algo tsundere"
+},
+{
+  "id": "yamana_nicole",
+  "name": "Nicole Yamana",
+  "url": "https://qu.ax/Kyjag.jpeg",
+  "type": "anime",
+  "price": 24200,
+  "rank": "Epic",
+  "release_date": "06-10-2023",
+  "description": "Nicole Yamana es una amiga extrovertida y competitiva"
+},
+{
+  "id": "ryuto_kashima",
+  "name": "Ryuto Kashima",
+  "url": "https://qu.ax/LQKvZ.jpeg",
+  "type": "anime",
+  "price": 26400,
+  "rank": "Legendary",
+  "release_date": "06-10-2023",
+  "description": "Ryuto Kashima es un joven algo torpe y sin experiencia en relaciones amorosas."
+},
+{
+  "id": "sekiya_shugo",
+  "name": "Shugo Sekiya",
+  "url": "https://qu.ax/jpoSf.jpeg",
+  "type": "anime",
+  "price": 18400,
+  "rank": "Epic",
+  "release_date": "06-10-2023",
+  "description": "Shugo Sekiya es un amigo cercano del protagonista, conocido por su actitud relajada y su naturaleza bromista. A menudo actúa como un apoyo cómico en la historia"
+},
+{
+  "id": "akari_tanikita",
+  "name": "Akari Tanikita",
+  "url": "https://qu.ax/HQbNq.jpeg",
+  "type": "anime",
+  "price": 17600,
+  "rank": "Epic",
+  "release_date": "06-10-2023",
+  "description": "Es una chica energética y amigable, con una personalidad optimista y un enfoque alegre hacia la vida"
+},
+{
+  "id": "kagaya_ubuyashiki",
+  "name": "Kagaya Ubuyashiki",
+  "url": "https://qu.ax/LjAOq.jpg",
+  "type": "anime",
+  "price": 24300,
+  "rank": "Legendary",
+  "release_date": "06-04-2019",
+  "description": "Es el líder de los Cazadores de Demonios, conocido por su voz calmada y su aura serena. A pesar de su frágil estado de salud"
+},
+{
+  "id": "amane_ubuyashiki",
+  "name": "Amane Ubuyashiki",
+  "url": "https://qu.ax/EeNVr.jpg",
+  "type": "anime",
+  "price": 22500,
+  "rank": "Epic",
+  "release_date": "06-04-2019",
+  "description": "Es la esposa de Kagaya Ubuyashiki, caracterizada por su lealtad y serenidad. Es una mujer fuerte y responsable"
+},
+{
+  "id": "hinaki_ubuyashiki",
+  "name": "Hinaki Ubuyashiki",
+  "url": "https://qu.ax/gFGqB.jpg",
+  "type": "anime",
+  "price": 18500,
+  "rank": "Rare",
+  "release_date": "06-04-2019",
+  "description": "Es una de las hijas de Kagaya Ubuyashiki. Es tranquila, disciplinada y muestra una gran madurez a pesar de su juventud"
+},
+{
+  "id": "kiriya_ubuyashiki",
+  "name": "Kiriya Ubuyashiki",
+  "url": "https://qu.ax/Tqjss.jpg",
+  "type": "anime",
+  "price": 18400,
+  "rank": "Rare",
+  "release_date": "06-04-2019",
+  "description": "Es el hijo de Kagaya Ubuyashiki y, tras la muerte de su padre, se convierte en el líder de los Cazadores de Demonios"
+},
+{
+  "id": "kuina_ubuyashiki",
+  "name": "Kuina Ubuyashiki",
+  "url": "https://qu.ax/unjDa.jpg",
+  "type": "anime",
+  "price": 18100,
+  "rank": "Rare",
+  "release_date": "06-04-2019",
+  "description": "Es una de las hijas de Kagaya Ubuyashiki. Es serena, obediente y apoya a su familia en la gestión de los Cazadores de Demonios"
+},
+{
+  "id": "Nichika_ubuyashiki",
+  "name": "Nichika Ubuyashiki",
+  "url": "https://qu.ax/ucOsm.jpg",
+  "type": "anime",
+  "price": 17900,
+  "rank": "Rare",
+  "release_date": "06-04-2019",
+  "description": "Es una de las hijas de Kagaya Ubuyashiki. Al igual que sus hermanas, es disciplinada y leal a su familia"
+},
+{
+  "id": "tomioka_giyu",
+  "name": "Giyu Tomioka",
+  "url": "https://qu.ax/ufrUD.jpg",
+  "type": "anime",
+  "price": 28800,
+  "rank": "Legendary",
+  "release_date": "06-04-2019",
+  "description": "Es el Pilar del Agua en los Cazadores de Demonios. Es un espadachín serio, reservado y de pocas palabras, pero con un fuerte sentido de justicia"
+},
+{
+  "id": "mitsuri_kanroji",
+  "name": "Mitsuri Kanroji",
+  "url": "https://qu.ax/ZkfWu.jpg",
+  "type": "anime",
+  "price": 26700,
+  "rank": "Legendary",
+  "release_date": "06-04-2019",
+  "description": "Es la Pilar del Amor en los Cazadores de Demonios. Es una joven alegre, amable y apasionada, con una fuerza sobrehumana que contrasta con su personalidad dulce"
+},
+{
+  "id": "iguro_obanai",
+  "name": "Obanai Iguro",
+  "url": "https://qu.ax/HEGZi.jpg",
+  "type": "anime",
+  "price": 28200,
+  "rank": "Legendary",
+  "release_date": "06-04-2019",
+  "description": "Es el Pilar de la Serpiente en los Cazadores de Demonios. Es serio, estricto y tiene una personalidad rígida, pero también es muy leal y protector con sus compañeros"
+},
+{
+  "id": "shinazugawa_sanemi",
+  "name": "Sanemi Shinazugawa",
+  "url": "https://qu.ax/CxiWG.jpg",
+  "type": "anime",
+  "price": 28500,
+  "rank": "Legendary",
+  "release_date": "06-04-2019",
+  "description": "Es el Pilar del Viento en los Cazadores de Demonios. Es un guerrero impulsivo, feroz y algo temperamental, conocido por su actitud agresiva y su lealtad inquebrantable"
+},
+{
+  "id": "himejima_gyomei",
+  "name": "Gyomei Himejima",
+  "url": "https://qu.ax/KQreF.jpg",
+  "type": "anime",
+  "price": 29600,
+  "rank": "Legendary",
+  "release_date": "06-04-2019",
+  "description": "Es el Pilar de la Roca en los Cazadores de Demonios. Es un hombre de gran tamaño, ciego de nacimiento, pero con una fuerza física y espiritual asombrosa"
+},
+{
+  "id": "tokito_muichiro",
+  "name": "Muichiro Tokito",
+  "url": "https://qu.ax/tVJjx.jpg",
+  "type": "anime",
+  "price": 27300,
+  "rank": "Legendary",
+  "release_date": "06-04-2019",
+  "description": "Es el Pilar de la Niebla en los Cazadores de Demonios. A pesar de su juventud, es un prodigio en el combate, mostrando una habilidad excepcional con la espada"
+},
+{
+  "id": "kocho_shinobu",
+  "name": "Shinobu Kocho",
+  "url": "https://qu.ax/DoKbP.jpg",
+  "type": "anime",
+  "price": 26200,
+  "rank": "Legendary",
+  "release_date": "06-04-2019",
+  "description": "Es la Pilar de la Insecto en los Cazadores de Demonios. Es una mujer tranquila, inteligente y con una gran habilidad en la medicina y el combate"
+},
+{
+  "id": "rengoku_kyojuro",
+  "name": "Kyojuro Rengoku",
+  "url": "https://qu.ax/ViBUo.jpg",
+  "type": "anime",
+  "price": 32000,
+  "rank": "Legendary",
+  "release_date": "06-04-2019",
+  "description": "Es el Pilar de la Llama en los Cazadores de Demonios. Es un hombre enérgico, carismático y de gran sentido del honor. Con una actitud positiva y una gran determinación"
+},
+{
+  "id": "kocho_kanae",
+  "name": "Kanae Kocho",
+  "url": "https://qu.ax/CABGV.jpg",
+  "type": "anime",
+  "price": 27540,
+  "rank": "Legendary",
+  "release_date": "06-04-2019",
+  "description": "Fue la Pilar de la Insecto antes de su hermana Shinobu Kocho. Era conocida por su personalidad amable, compasiva y protectora, con un profundo amor por la vida y un fuerte sentido de justicia"
+},
+{
+  "id": "sakonji_urokodaki",
+  "name": "Sakonji Urokodaki",
+  "url": "https://qu.ax/Zbbep.jpg",
+  "type": "anime",
+  "price": 33050,
+  "rank": "Legendary",
+  "release_date": "06-04-2019",
+  "description": "Es un antiguo Cazador de Demonios y el maestro de Tanjiro Kamado. Es un hombre sabio, serio y algo estricto, pero también es muy protector y compasivo con sus discípulos"
+},
+{
+  "id": "kuwajima_jigoro",
+  "name": "Jigoro Kuwajima",
+  "url": "https://qu.ax/OYSaQ.jpg",
+  "type": "anime",
+  "price": 31500,
+  "rank": "Legendary",
+  "release_date": "06-04-2019",
+  "description": "Es el Pilar del Trueno en los Cazadores de Demonios. Es un hombre fuerte, confiado y con una personalidad enérgica. Fue el maestro de Zenitsu Agatsuma"
+},
+{
+  "id": "rengoku:shinjuro",
+  "name": "Shinjuro Rengoku",
+  "url": "https://qu.ax/XThMB.jpg",
+  "type": "anime",
+  "price": 31800,
+  "rank": "Legendary",
+  "release_date": "06-04-2019",
+  "description": "Es el padre de Kyojuro Rengoku, el Pilar de la Llama. Es un hombre que, a pesar de haber sido un gran guerrero en su juventud, se encuentra marcado por la tristeza y el arrepentimiento"
+},
+{
+  "id": "uzui_tengen",
+  "name": "Tengen Uzui",
+  "url": "https://qu.ax/ERMCY.jpg",
+  "type": "anime",
+  "price": 33250,
+  "rank": "Legendary",
+  "release_date": "06-04-2019",
+  "description": "Fue el Pilar del Sonido en los Cazadores de Demonios. Es un hombre extravagante, carismático y muy orgulloso de su habilidad y estilo de vida"
+}
+]
