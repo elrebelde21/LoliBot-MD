@@ -71,7 +71,7 @@
   </tr>
   <tr>
     <td>🛡️ Gestión de Grupos</td>
-    <td>Anti-enlaces, bienvenida, despedida, modo admin y más</td>
+    <td>Anti-enlaces, bienvenida, antifake, modo admin y más</td>
   </tr>
   <tr>
     <td>⚔️ Sistema RPG</td>
