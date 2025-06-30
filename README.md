@@ -75,11 +75,15 @@
   </tr>
   <tr>
     <td>⚔️ Sistema RPG</td>
-    <td>Sube de nivel, gana recompensas, juega con otros</td>
+    <td>Sistema de gacha, Sube de nivel, gana recompensas, juega con otros</td>
   </tr>
   <tr>
     <td>🎮 Juegos</td>
     <td>Adivina, reto, piedra papel tijera, ruleta y más</td>
+   </tr>
+  <tr>
+    <td>💻 Base de datos</td>
+    <td>PostgreSQL para una mayor eficiencia y escalabilidad</td>
   </tr>
   <tr>
     <td>🚧 En constante mejora</td>
