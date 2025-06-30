@@ -62,7 +62,7 @@
     <th>✨ Descripción</th>
   </tr>
   <tr>
-    <td>🤖 Jadibot Auto</td>
+    <td>🤖 Jadibot</td>
     <td>Conexión y reconexión automática</td>
   </tr>
   <tr>
