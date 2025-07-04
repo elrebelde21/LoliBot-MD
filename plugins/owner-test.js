@@ -42,7 +42,7 @@ const handler = async (m, { conn, args }) => {
       mensaje += `🔒 Privacidad número: ${row.privacy ? 'Sí' : 'No'}\n`;
       mensaje += `🤝 Prestar bot: ${row.prestar ? 'Sí' : 'No'}\n`;
       mensaje += `🖼️ Logo: ${row.logo_url || 'Ninguno'}\n`;
-      mensaje += `──────────────────────\n`;
+      mensaje += `─────────────\n`;
     }
 
     m.reply(mensaje.trim());
