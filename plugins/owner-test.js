@@ -32,17 +32,17 @@ const handler = async (m, { conn, args }) => {
     
     for (const row of res.rows) {
     mensaje += `\`🤖 CONFIGURACIÓNES :\`\n`;
-      mensaje += `🆔 ID: ${row.id} (${row.tipo || 'Desconocido'})\n`;
-      mensaje += `🔧 Modo: ${row.mode || 'Public'}\n`;
-      mensaje += `📛 Nombre: ${row.name || 'por defecto'}\n`;
-      mensaje += `🅿️ Prefijos: ${row.prefix ? row.prefix.join(', ') : '[/,.,#]'}\n`;
-      mensaje += `👑 Owners: ${row.owners?.length ? row.owners.join(', ') : 'Por defecto'}\n`;
-      mensaje += `🚫 Anti-Private: ${row.anti_private ? 'Sí' : 'No'}\n`;
-      mensaje += `📵 Anti-Call: ${row.anti_call ? 'Sí' : 'No'}\n`;
-      mensaje += `🔒 Privacidad número: ${row.privacy ? 'Sí' : 'No'}\n`;
-      mensaje += `🤝 Prestar bot: ${row.prestar ? 'Sí' : 'No'}\n`;
-      mensaje += `🖼️ Logo: ${row.logo_url || 'Ninguno'}\n`;
-      mensaje += `─────────────\n`;
+      mensaje += `- ID: ${row.id} (${row.tipo || 'Desconocido'})\n`;
+      mensaje += `- Modo: ${row.mode || 'Public'}\n`;
+      mensaje += `- Nombre: ${row.name || 'por defecto'}\n`;
+      mensaje += `- Prefijos: ${row.prefix ? row.prefix.join(', ') : '[/,.,#]'}\n`;
+      mensaje += `- Owners: ${row.owners?.length ? row.owners.join(', ') : 'Por defecto'}\n`;
+      mensaje += `- Anti-Private: ${row.anti_private ? 'Sí' : 'No'}\n`;
+      mensaje += `' Anti-Call: ${row.anti_call ? 'Sí' : 'No'}\n`;
+      mensaje += `- Privacidad número: ${row.privacy ? 'Sí' : 'No'}\n`;
+      mensaje += `- Prestar bot: ${row.prestar ? 'Sí' : 'No'}\n`;
+      mensaje += `- Logo: ${row.logo_url || 'Ninguno'}\n`;
+      mensaje += `\n─────────────\n\n`;
     }
 
     m.reply(mensaje.trim());
