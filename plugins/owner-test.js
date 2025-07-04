@@ -28,10 +28,10 @@ const handler = async (m, { conn, args }) => {
       const { total, oficiales, subbots } = conteo.rows[0];
       mensaje += `*• Principales:* ${oficiales}\n`;
       mensaje += `*• Subbots:* ${subbots}\n\n`;
+     mensaje += `\`🤖 CONFIGURACIÓNES :\`\n`;
     }
     
     for (const row of res.rows) {
-    mensaje += `\`🤖 CONFIGURACIÓNES :\`\n`;
       mensaje += `- ID: ${row.id} (${row.tipo || 'Desconocido'})\n`;
       mensaje += `- Modo: ${row.mode || 'Public'}\n`;
       mensaje += `- Nombre: ${row.name || 'por defecto'}\n`;
