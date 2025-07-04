@@ -36,14 +36,13 @@ let handler = async (m, { conn }) => {
     const totalMessages = mensajes.rows[0].sum || 0;
     const totalDBSize = totalSize.rows[0].total;
 
-    let text = `📊 *ESTADÍSTICAS DE BASE DE DATOS* 📊\n`;
-    text += `👤 Usuarios totales: *${totalUsers}*\n`;
-    text += `✅ Registrados: *${totalRegistrados}*\n`;
-    text += `💬 Chats totales: *${totalChats}*\n`;
-    text += `📝 Mensajes recibidos: *${totalMessages}*\n`;
-    text += `💾 Tamaño total DB: *${totalDBSize}*\n\n`;
+    let text = `📊 *\`ESTADÍSTICAS DE BASE DE DATOS\`*\n`;
+    text += `> 👤 Usuarios: *${totalUsers}*\n`;
+    text += `> ✅ Registrados: *${totalRegistrados}*\n`;
+    text += `> 💬 Chats totales: *${totalChats}*\n`;
+    text += `> 💾 Tamaño total DB: *${totalDBSize}*\n\n`;
 
-    text += `📁 *TAMAÑO POR TABLA:*\n`;
+    text += `📁 *\`TAMAÑO POR TABLA:\`*\n`;
     for (const row of tablasRes.rows) {
       text += `• *${row.tabla}*: ${row.filas} filas — ${row.tamaño}\n`;
     }
