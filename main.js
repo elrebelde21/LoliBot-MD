@@ -33,12 +33,26 @@ fs.existsSync(path.join(subbotsFolder, folder, "creds.json"))
 );
 
 if (!hayCredencialesPrincipal && !haySubbotsActivos) {
-console.log(chalk.green("1.") + " Conectar con código QR");
-console.log(chalk.green("2.") + " Conectar con código de 8 dígitos");
-const opcion = readlineSync.question(chalk.yellow("Elige una opción (1 o 2): "));
+let lineM = '⋯ ⋯ ⋯ ⋯ ⋯ ⋯ ⋯ ⋯ ⋯ ⋯ ⋯ 》'
+const opcion = readlineSync.question(`╭${lineM}  
+┊ ${chalk.blueBright('╭┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅')}
+┊ ${chalk.blueBright('┊')} ${chalk.blue.bgBlue.bold.cyan('MÉTODO DE VINCULACIÓN')}
+┊ ${chalk.blueBright('╰┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅')}   
+┊ ${chalk.blueBright('╭┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅')}     
+┊ ${chalk.blueBright('┊')} ${chalk.green.bgMagenta.bold.yellow('¿CÓMO DESEA CONECTARSE?')}
+┊ ${chalk.blueBright('┊')} ${chalk.bold.redBright('⇢  Opción 1:')} ${chalk.greenBright('Código QR.')}
+┊ ${chalk.blueBright('┊')} ${chalk.bold.redBright('⇢  Opción 2:')} ${chalk.greenBright('Código de 8 digitos.')}
+┊ ${chalk.blueBright('╰┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅')}
+┊ ${chalk.blueBright('╭┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅')}     
+┊ ${chalk.blueBright('┊')} ${chalk.italic.magenta('Escriba sólo el número de')}
+┊ ${chalk.blueBright('┊')} ${chalk.italic.magenta('la opción para conectarse.')}
+┊ ${chalk.blueBright('╰┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅')} 
+╰${lineM}\n${chalk.bold.magentaBright('---> ')}`)
+//readlineSync.question(chalk.yellow("Elige una opción (1 o 2): "));
 usarCodigo = opcion === "2";
 if (usarCodigo) {
-numero = readlineSync.question(chalk.yellow("Ingresa tu número (ej: +521234567890): ")).replace(/[^0-9]/g, '');
+console.log(chalk.yellow("Ingresa tu número (ej: +521234567890): "));
+numero = readlineSync.question("").replace(/[^0-9]/g, '');
 if (numero.startsWith('52') && !numero.startsWith('521')) {
 numero = '521' + numero.slice(2);
 }}
@@ -227,7 +241,6 @@ const tmp = './tmp';
 try {
 if (!fs.existsSync(tmp)) return;
 const files = fs.readdirSync(tmp);
-console.log(chalk.cyan(`┏━━━━━━⪻♻️ AUTO-CLEAR 🗑️⪼━━━━━━•\n┃→ ARCHIVOS DE LA CARPETA TMP ELIMINADOS\n┗━━━━━━━━━━━━━━━━━━━━━━━━━━━•`));
 files.forEach(file => {
 if (file.endsWith('.file')) return;
 const filePath = path.join(tmp, file);
@@ -237,7 +250,9 @@ const modifiedTime = new Date(stats.mtime).getTime();
 const age = now - modifiedTime;
 if (age > 3 * 60 * 1000) {
 fs.unlinkSync(filePath);
-}});
+}
+console.log(chalk.gray(`┏━━━━━━⪻♻️ AUTO-CLEAR 🗑️⪼━━━━━━•\n┃→ ARCHIVOS DE LA CARPETA TMP ELIMINADOS\n┗━━━━━━━━━━━━━━━━━━━━━━━━━━━•`));
+});
 } catch (err) {
 console.error('Error cleaning temporary files:', err);
 }}, 30 * 1000);

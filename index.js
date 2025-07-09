@@ -16,7 +16,6 @@ cfonts.say('by: elrebelde21', {
   transition: false
 });
 
-console.clear();
-console.log(chalk.gray('Iniciando 🚀🚀🚀\n'));
+//console.clear();
 
-import './main.js';
+import('./main.js');
