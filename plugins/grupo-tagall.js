@@ -73,5 +73,5 @@ handler.tags = ['group']
 handler.command = /^(tagall|invocar|invocacion|todos|invocación|contador)$/i
 handler.admin = true
 handler.group = true
-handler.botAdmin = true
+//handler.botAdmin = true
 export default handler
