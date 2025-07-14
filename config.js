@@ -17,8 +17,8 @@ global.owner = [
 globalThis.info = {
 wm: "𝙇𝙤𝙡𝙞𝘽𝙤𝙩-𝙈𝘿",
 vs: "2.0.0 (beta)",
-packname: "𝗦𝗧𝗜𝗖𝗞𝗘𝗥𝗦❤️‍🔥\n\n\nIG:\nDueña:",
-author: "LoliBot\n\n\n@elrebelde21\n@itschinita_official",
+packname: "𝗦𝗧𝗜𝗖𝗞𝗘𝗥𝗦❤️‍🔥 - LoliBot\n\n\n\n\n\n",
+author: "Owner: @elrebelde21\nDueña: @itschinita_official",
 apis: "https://delirius-apiofc.vercel.app",
 apikey: "GataDios",
 fgmods: { url: 'https://api.fgmods.xyz/api', key: 'elrebelde21' },
