@@ -11,6 +11,7 @@ let teks = encodeURI(text)
 conn.fakeReply(m.chat, `Calma crack estoy haciendo tu texto a sticker 👏\n\n> *Esto puede demorar unos minutos*`, '0@s.whatsapp.net', `No haga spam gil`, 'status@broadcast')
 
 if (command == 'attp') {
+if (text.length > 30) return m.reply(`⚠️ El texto no puede tener más de 30 caracteres.\n\n✍️ Intenta con algo más corto.`)
 //let stiker = await sticker(null,`${info.fgmods.url}/maker/attp?text=${teks}&apikey=${info.fgmods.key}`, f, g)
 let res = await fetch(`https://api.neoxr.eu/api/attp?text=${teks}%21&color=%5B%22%23FF0000%22%2C+%22%2300FF00%22%2C+%22%230000FF%22%5D&apikey=GataDios`)
 let json = await res.json()
@@ -20,6 +21,7 @@ conn.sendFile(m.chat, stiker, 'sticker.webp', '',m, true, { contextInfo: { 'forw
 }
 
 if (command == 'ttp' || command == 'brat') {
+if (text.length > 30) return m.reply(`⚠️ El texto no puede tener más de 30 caracteres.\n\n✍️ Intenta con algo más corto.`)
 let res = await fetch(`https://api.neoxr.eu/api/brat?text=${teks}&apikey=GataDios`)
 let json = await res.json()
 if (!json.status) return m.reply('❌ No se pudo generar la imagen.')
@@ -28,6 +30,7 @@ conn.sendFile(m.chat, stiker, 'sticker.webp', '',m, true, { contextInfo: { 'forw
 }
 
 if (command == 'brat2' || command == 'bratvid') {
+if (text.length > 30) return m.reply(`⚠️ El texto no puede tener más de 30 caracteres.\n\n✍️ Intenta con algo más corto.`)
 let res = await fetch(`https://api.neoxr.eu/api/bratvid?text=${teks}&apikey=GataDios`)
 let json = await res.json()
 if (!json.status) return m.reply('❌ No se pudo generar la imagen.')
