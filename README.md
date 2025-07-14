@@ -114,28 +114,37 @@
 
 ----
 ## 🔰 Instalación por Termux
-[![blog](https://img.shields.io/badge/Instalacion-FF0000?style=for-the-badge&logo=youtube&logoColor=white)](https://youtu.be/O_j2q5xCg3A?si=rqKUJF-8w1OCeAxx?feature=share)
 
-[`💫 Instalar termux clic aqui`](https://f-droid.org/es/packages/com.termux/)
+[![Tutorial](https://img.shields.io/badge/Instalación-FF0000?style=for-the-badge&logo=youtube&logoColor=white)](https://youtu.be/O_j2q5xCg3A)  
+[![Termux](https://img.shields.io/badge/Instalar%20Termux-000000?style=for-the-badge&logo=Termux&logoColor=white)](https://f-droid.org/es/packages/com.termux/)
 
-> [!IMPORTANT]
-> **No garantizamos un funcionamiento perfecto en Termux. No espere que bot corrar rápidos en termux es normal si vas con lentitud o errores, te recomendamos considerar los servicios de alojamiento de bots de nuestros patrocinadores.**
+<div align="left" style="border: 2px solid #ff4dd2; padding: 15px; border-radius: 10px; background-color: #fff0f5;">
+  <strong>⚠️ IMPORTANTE:</strong><br>
+  No garantizamos un funcionamiento perfecto en <strong>Termux</strong>. Es normal que el bot funcione con lentitud o errores.<br>
+  te recomendamos considerar los servicios de alojamiento de bots de nuestros patrocinadores.
+</div>
+
+### 📦 Comandos de instalación
 
 ```bash
 termux-setup-storage
 ```
+
 ```bash
-apt update && apt upgrade && pkg install -y git nodejs ffmpeg imagemagick yarn
+apt update && apt upgrade -y && pkg install -y git nodejs ffmpeg imagemagick yarn
 ```
+
 ```bash
 git clone https://github.com/elrebelde21/LoliBot-MD && cd LoliBot-MD
 ```
+
 ```bash
 bash install.sh
 ```
+
 ```bash
 npm start
-``` 
+```
 
 ---
 
