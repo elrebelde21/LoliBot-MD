@@ -112,6 +112,26 @@
 
 - [x] **Configuración** <details><summary>**Ajustes del Servidor - LoliBot-MD**</summary><img src="https://telegra.ph/file/7ddd30dd7d77354fb01fe.jpg"></details>
 
+----
+## 🔰 Instalación por Termux
+> [!IMPORTANT]
+> **No garantizamos un funcionamiento perfecto en Termux. No espere que bot corrar rápidos en termux es normal si vas con lentitud o errores, te recomendamos considerar los servicios de alojamiento de bots de nuestros patrocinadores.**
+
+```bash
+termux-setup-storage
+```
+```bash
+apt update && apt upgrade && pkg install -y git nodejs ffmpeg imagemagick yarn
+```
+```bash
+git clone https://github.com/elrebelde21/LoliBot-MD && cd LoliBot-MD
+```
+```bash
+bash install.sh
+```
+```bash
+npm start
+``` 
 ---
 
 ## 👨‍💻 Desarrollador principal
