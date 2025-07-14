@@ -115,9 +115,7 @@
 ----
 ## 🔰 Instalación por Termux
 > [!IMPORTANT]
-> <p align="center">
-  <img src="http://readme-typing-svg.herokuapp.com?font=Fira+Code&size=18&duration=3500&pause=1000&color=FF69B4&center=true&vCenter=true&width=500&lines=No×garantizamos+un+funcionamiento+perfecto+en+Termux.+No+espere+que+bot+corrar+rápidos+en+termux+es+normal+si+vas+con+lentitud+o+errores,+te+recomendamos+considerar+los+servicios+de+alojamiento+de+bots+de+nuestros+patrocinadores." />
-</p>
+### **No garantizamos un funcionamiento perfecto en Termux. No espere que bot corrar rápidos en termux es normal si vas con lentitud o errores, te recomendamos considerar los servicios de alojamiento de bots de nuestros patrocinadores.**
 
 ```bash
 termux-setup-storage
