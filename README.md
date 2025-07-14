@@ -115,7 +115,7 @@
 ----
 ## 🔰 Instalación por Termux
 > [!IMPORTANT]
-### **No garantizamos un funcionamiento perfecto en Termux. No espere que bot corrar rápidos en termux es normal si vas con lentitud o errores, te recomendamos considerar los servicios de alojamiento de bots de nuestros patrocinadores.**
+# **No garantizamos un funcionamiento perfecto en Termux. No espere que bot corrar rápidos en termux es normal si vas con lentitud o errores, te recomendamos considerar los servicios de alojamiento de bots de nuestros patrocinadores.**
 
 ```bash
 termux-setup-storage
