@@ -11,16 +11,32 @@ let teks = encodeURI(text)
 conn.fakeReply(m.chat, `Calma crack estoy haciendo tu texto a sticker 👏\n\n> *Esto puede demorar unos minutos*`, '0@s.whatsapp.net', `No haga spam gil`, 'status@broadcast')
 
 if (command == 'attp') {
-let stiker = await sticker(null,`${info.fgmods.url}/maker/attp?text=${teks}&apikey=${info.fgmods.key}`, f, g)
-conn.sendFile(m.chat, stiker, 'sticker.webp', '',m, true, { contextInfo: { 'forwardingScore': 200, 'isForwarded': false, externalAdReply:{ showAdAttribution: false, title: info.wm, body: info.vs, mediaType: 2, sourceUrl: info.md, thumbnail: m.pp}}}, { quoted: m })}
-
-if (command == 'ttp' || command == 'brat') {
-let stiker = await sticker(null,`https://api.dorratz.com/v3/text-image?text=${teks}&fontSize=50`, f, g)
+//let stiker = await sticker(null,`${info.fgmods.url}/maker/attp?text=${teks}&apikey=${info.fgmods.key}`, f, g)
+let res = await fetch(`https://api.neoxr.eu/api/attp?text=${teks}%21&color=%5B%22%23FF0000%22%2C+%22%2300FF00%22%2C+%22%230000FF%22%5D&apikey=GataDios`)
+let json = await res.json()
+if (!json.status) return 
+let stiker = await sticker(null, json.data.url, f, g)
 conn.sendFile(m.chat, stiker, 'sticker.webp', '',m, true, { contextInfo: { 'forwardingScore': 200, 'isForwarded': false, externalAdReply:{ showAdAttribution: false, title: info.wm, body: info.vs, mediaType: 2, sourceUrl: info.md, thumbnail: m.pp}}}, { quoted: m })
 }
+
+if (command == 'ttp' || command == 'brat') {
+let res = await fetch(`https://api.neoxr.eu/api/brat?text=${teks}&apikey=GataDios`)
+let json = await res.json()
+if (!json.status) return m.reply('❌ No se pudo generar la imagen.')
+let stiker = await sticker(null, json.data.url, f, g)
+conn.sendFile(m.chat, stiker, 'sticker.webp', '',m, true, { contextInfo: { 'forwardingScore': 200, 'isForwarded': false, externalAdReply:{ showAdAttribution: false, title: info.wm, body: info.vs, mediaType: 2, sourceUrl: info.md, thumbnail: m.pp}}}, { quoted: m })
 }
-handler.help = ['attp'];
+
+if (command == 'brat2' || command == 'bratvid') {
+let res = await fetch(`https://api.neoxr.eu/api/bratvid?text=${teks}&apikey=GataDios`)
+let json = await res.json()
+if (!json.status) return m.reply('❌ No se pudo generar la imagen.')
+let stiker = await sticker(null, json.data.url, f, g)
+conn.sendFile(m.chat, stiker, 'sticker.webp', '', m, true, { contextInfo: { 'forwardingScore': 200, 'isForwarded': false, externalAdReply: { showAdAttribution: false, title: info.wm, body: info.vs, mediaType: 2, sourceUrl: info.md, thumbnail: m.pp }}}, { quoted: m })
+}
+}
+handler.help = ['attp', 'brat', 'bratvid'];
 handler.tags = ['sticker']
-handler.command = /^(attp|ttp|ttp2|ttp3|ttp4|attp2|brat)$/i
+handler.command = /^(attp|ttp|ttp2|ttp3|ttp4|attp2|brat|brat2|bratvid)$/i
 handler.register = true
 export default handler
