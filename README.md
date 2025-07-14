@@ -116,13 +116,10 @@
 ## 🔰 Instalación por Termux
 
 [![Tutorial](https://img.shields.io/badge/Instalación-FF0000?style=for-the-badge&logo=youtube&logoColor=white)](https://youtu.be/O_j2q5xCg3A)  
-[![Termux](https://img.shields.io/badge/Instalar%20Termux-000000?style=for-the-badge&logo=Termux&logoColor=white)](https://f-droid.org/es/packages/com.termux/)
+[![Termux](https://img.shields.io/badge/📲%20Instalar%20Termux-000000?style=for-the-badge&logoColor=white)](https://f-droid.org/es/packages/com.termux/)
 
-<div align="left" style="border: 2px solid #ff4dd2; padding: 15px; border-radius: 10px; background-color: #fff0f5;">
-  <strong>⚠️ IMPORTANTE:</strong><br>
-  No garantizamos un funcionamiento perfecto en <strong>Termux</strong>. Es normal que el bot funcione con lentitud o errores.<br>
-  te recomendamos considerar los servicios de alojamiento de bots de nuestros patrocinadores.
-</div>
+> [!IMPORTANT]
+> **No garantizamos un funcionamiento perfecto en Termux. Es normal que el bot funcione con lentitud o errores, te recomendamos considerar los servicios de alojamiento de bots de nuestros patrocinadores.**
 
 ### 📦 Comandos de instalación
 
