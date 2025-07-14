@@ -21,7 +21,7 @@ conn.sendFile(m.chat, stiker, 'sticker.webp', '',m, true, { contextInfo: { 'forw
 }
 
 if (command == 'ttp' || command == 'brat') {
-if (text.length > 30) return m.reply(`⚠️ El texto no puede tener más de 30 caracteres.\n\n✍️ Intenta con algo más corto.`)
+if (text.length > 90) return m.reply(`⚠️ El texto no puede tener más de 90 caracteres.\n\n✍️ Intenta con algo más corto.`)
 let res = await fetch(`https://api.neoxr.eu/api/brat?text=${teks}&apikey=GataDios`)
 let json = await res.json()
 if (!json.status) return m.reply('Ufff la puta api se cayo 😒 pura mamada vuelve intentarlo mas tarde')
@@ -30,7 +30,7 @@ conn.sendFile(m.chat, stiker, 'sticker.webp', '',m, true, { contextInfo: { 'forw
 }
 
 if (command == 'brat2' || command == 'bratvid') {
-if (text.length > 30) return m.reply(`⚠️ El texto no puede tener más de 30 caracteres.\n\n✍️ Intenta con algo más corto.`)
+if (text.length > 90) return m.reply(`⚠️ El texto no puede tener más de 90 caracteres.\n\n✍️ Intenta con algo más corto.`)
 let res = await fetch(`https://api.neoxr.eu/api/bratvid?text=${teks}&apikey=GataDios`)
 let json = await res.json()
 if (!json.status) return m.reply('Ufff la puta api se cayo 😒 pura mamada vuelve intentarlo mas tarde')
