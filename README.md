@@ -115,6 +115,7 @@
 ----
 ## 🔰 Instalación por Termux
 [![blog](https://img.shields.io/badge/Instalacion-FF0000?style=for-the-badge&logo=youtube&logoColor=white)](https://youtu.be/O_j2q5xCg3A?si=rqKUJF-8w1OCeAxx?feature=share)
+
 [`💫 Instalar termux clic aqui`](https://f-droid.org/es/packages/com.termux/)
 
 > [!IMPORTANT]
