@@ -1,66 +1,30 @@
-import FormData from "form-data"
-import Jimp from "jimp"
+import fetch from 'node-fetch'
+import uploadImage from '../lib/uploadImage.js'
 
-const handler = async (m, {conn, usedPrefix, command}) => {
-try {    
+const handler = async (m, { conn, usedPrefix, command }) => {
+try {
 let q = m.quoted ? m.quoted : m
 let mime = (q.msg || q).mimetype || q.mediaType || ""
-
-if (!mime.startsWith('image')) return m.reply(`⚠️ 𝐑𝐞𝐬𝐩𝐨𝐧𝐝𝐞 𝐚 𝐮𝐧𝐚 𝐢𝐦𝐚𝐠𝐞𝐧!`)
+if (!mime.startsWith('image')) return m.reply(`⚠️ *Responde a una imagen para mejorarla en HD.*`)
 await m.react('⌛')
-
-let img = await q.download?.()
-if (!img) return m.reply(`⚠️ No se pudo descargar la imagen. Por favor intenta nuevamente.`)
-let pr = await remini(img, "enhance")
     
-if (!pr) return m.reply(`⚠️ Hubo un problema al procesar la imagen. Intenta nuevamente más tarde.`)
-await conn.sendFile(m.chat, pr, 'thumbnail.jpg', "*Aqui tiene sus imagen en HD*", m)
+let img = await q.download?.()
+if (!img) return m.reply(`❌ No se pudo descargar la imagen.`)
+let url = await uploadImage(img)
+let res = await fetch(`https://api.neoxr.eu/api/remini?image=${encodeURIComponent(url)}&apikey=GataDios`)
+let json = await res.json()
+if (!json.status || !json.data?.url) return m.reply('❌ No se pudo mejorar la imagen.')
+await conn.sendFile(m.chat, json.data.url, 'hd.jpg', `✅ *Aquí está tu imagen en HD*`, m)
 await m.react('✅')
 } catch (e) {
-handler.limit = 0
-await m.react('❌')
 console.error(e)
-m.reply(`⚠️ Ocurrió un error: ${e.message}`)
+await m.react('❌')
+m.reply(`❌ Error: ${e.message || e}`)
 }}
-handler.help = ["hd"]
-handler.tags = ["tools"]
-handler.command = ["remini", "hd", "enhance"]
-handler.register = true 
+handler.help = ['hd', 'remini', 'enhance']
+handler.tags = ['tools']
+handler.command = ['hd', 'remini', 'enhance']
+handler.register = true
 handler.limit = 1
+
 export default handler
-
-async function remini(imageData, operation) {
-  return new Promise(async (resolve, reject) => {
-    const availableOperations = ["enhance", "recolor", "dehaze"]
-    if (!availableOperations.includes(operation)) {
-      operation = availableOperations[0]
-    }
-    
-    const baseUrl = "https://inferenceengine.vyro.ai/" + operation + ".vyro"
-    const formData = new FormData()
-    formData.append("image", Buffer.from(imageData), {filename: "enhance_image_body.jpg", contentType: "image/jpeg"})
-    formData.append("model_version", 1, {"Content-Transfer-Encoding": "binary", contentType: "multipart/form-data; charset=utf-8"})
-
-    formData.submit({
-      url: baseUrl,
-      host: "inferenceengine.vyro.ai",
-      path: "/" + operation,
-      protocol: "https:",
-      headers: {
-        "User-Agent": "okhttp/4.9.3",
-        "Connection": "Keep-Alive",
-        "Accept-Encoding": "gzip"
-      }
-    }, function (err, res) {
-      if (err) {
-        reject(new Error(`Error en la solicitud a la API: ${err.message}`))
-      }
-      const chunks = []
-      res.on("data", function (chunk) { chunks.push(chunk) })
-      res.on("end", function () { resolve(Buffer.concat(chunks)) })
-      res.on("error", function (err) {
-        reject(new Error(`Error al recibir la respuesta: ${err.message}`))
-      })
-    })
-  })
-}
