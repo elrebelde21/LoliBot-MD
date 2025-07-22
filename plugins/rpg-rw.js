@@ -79,7 +79,7 @@ contextInfo: {
 forwardingScore: 1, 
 isForwarded: true,
 forwardedNewsletterMessageInfo: {
-newsletterJid: '120363349916000764@newsletter',
+newsletterJid: '120363305025805187@newsletter',
 serverMessageId: '',
 newsletterName: 'LoliBot ✨️' },
 externalAdReply: {

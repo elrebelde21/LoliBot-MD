@@ -41,7 +41,8 @@ Hola 👋🏻 *%name*
 
 *• Usuario registrados:* %toUserReg de %toUsers
 
-Unirte a nuestro canal de WhatsApp y informarte de todas la novedades/Actualizaciones del bot y mas\nhttps://whatsapp.com/channel/0029Vas9jIPFsn0fgdNCKO0V 
+Unirte a nuestro canal de WhatsApp y informarte de todas la novedades/Actualizaciones del bot y mas
+%nna2
 
 *Puede hablar con bot de esta forma ej:*
 @%BoTag ¿Que es una api?
@@ -151,13 +152,14 @@ xp4levelup: max - (user.exp || 0),
 fecha, hora, muptime,
 wm: info.wm,
 botOfc: botOfc,
-BoTag: BoTag
+BoTag: BoTag,
+nna2: info.nna2
 };
 
 text = String(text).replace(new RegExp(`%(${Object.keys(replace).join('|')})`, 'g'), (_, key) => replace[key] ?? '');
 try {
 let pp = fs.readFileSync('./media/Menu2.jpg');
-const menuMessage = await conn.sendMessage(chatId, { text: text, contextInfo: { forwardedNewsletterMessageInfo: { newsletterJid: "120363349916000764@newsletter",newsletterName: "LoliBot ✨️" }, forwardingScore: 999, isForwarded: true, mentionedJid: await conn.parseMention(text), externalAdReply: { showAdAttribution: false, renderLargerThumbnail: false, title: "✨️ MENU ✨️", body: `${nombreBot} (${tipo})`, mediaType: 1, thumbnailUrl: info.img2, sourceUrl: "https://skyultraplus.com" }}}, { quoted: m });
+const menuMessage = await conn.sendMessage(chatId, { text: text, contextInfo: { forwardedNewsletterMessageInfo: { newsletterJid: "120363305025805187@newsletter",newsletterName: "LoliBot ✨️" }, forwardingScore: 999, isForwarded: true, mentionedJid: await conn.parseMention(text), externalAdReply: { showAdAttribution: false, renderLargerThumbnail: false, title: "✨️ MENU ✨️", body: `${nombreBot} (${tipo})`, mediaType: 1, thumbnailUrl: info.img2, sourceUrl: "https://skyultraplus.com" }}}, { quoted: m });
 cooldowns.set(chatId, { lastUsed: now, menuMessage: menuMessage })
 m.react('🙌');
 } catch (err) {    

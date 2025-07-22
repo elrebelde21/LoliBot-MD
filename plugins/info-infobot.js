@@ -109,7 +109,7 @@ const teks = `*≡ INFOBOT*
 ▣ *RAM usada:* ${sistema.usoRam}
 ▣ *Uso de CPU:* ${sistema.usoCpu}
 ▣ *Uptime:* ${sistema.tiempoActividad}`;
-await conn.sendMessage(m.chat, {text: teks, contextInfo: { mentionedJid: null, forwardingScore: 1, isForwarded: true, forwardedNewsletterMessageInfo: { newsletterJid: "120363349916000764@newsletter",newsletterName: "LoliBot ✨️" }, externalAdReply : {mediaUrl: null, mediaType: 1, description: null, title: `INFO - BOT`, previewType: 0, thumbnailUrl: "https://telegra.ph/file/39fb047cdf23c790e0146.jpg", sourceUrl: info.yt}}}, { quoted: m })
+await conn.sendMessage(m.chat, {text: teks, contextInfo: { mentionedJid: null, forwardingScore: 1, isForwarded: true, forwardedNewsletterMessageInfo: { newsletterJid: "120363305025805187@newsletter",newsletterName: "LoliBot ✨️" }, externalAdReply : {mediaUrl: null, mediaType: 1, description: null, title: `INFO - BOT`, previewType: 0, thumbnailUrl: "https://telegra.ph/file/39fb047cdf23c790e0146.jpg", sourceUrl: info.yt}}}, { quoted: m })
 };
 handler.help = ['infobot']
 handler.tags = ['main']
