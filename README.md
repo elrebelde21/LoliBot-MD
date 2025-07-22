@@ -17,7 +17,7 @@
 </p>
 
 <p align="center">
-  <a href="https://whatsapp.com/channel/0029Vas9jIPFsn0fgdNCKO0V"><img src="https://img.shields.io/badge/-25D366?style=for-the-badge&logo=whatsapp&logoColor=white"/></a>
+  <a href="https://whatsapp.com/channel/0029Vah0NnV6mYPDQI7bpt0z"><img src="https://img.shields.io/badge/-25D366?style=for-the-badge&logo=whatsapp&logoColor=white"/></a>
   <a href="https://www.youtube.com/@elrebelde.21"><img src="https://img.shields.io/badge/-FF0000?style=for-the-badge&logo=youtube"/></a>
   <a href="https://www.facebook.com/elrebelde21"><img src="https://img.shields.io/badge/-1877F2?style=for-the-badge&logo=facebook"/></a>
   <a href="https://www.instagram.com/itschinita_official"><img src="https://img.shields.io/badge/-E4405F?style=for-the-badge&logo=instagram"/></a>
