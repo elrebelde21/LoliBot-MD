@@ -59,7 +59,6 @@ numero = '521' + numero.slice(2);
 }
 
 await cargarSubbots();
-setInterval(monitorearSubbots, 5 * 60 * 1000);
 
 if (hayCredencialesPrincipal || !haySubbotsActivos) {
 try {
@@ -76,68 +75,30 @@ if (!fs.existsSync(folder)) return;
 
 const subbotIds = fs.readdirSync(folder);
 console.log(chalk.bold.yellowBright(`📦 Subbots cargados: ${subbotIds.length}`));
-const total = subbotIds.length;
-let cargados = 0;
-
-for (; _indiceActualSubbot < total && cargados < MAX_SUBBOTS; _indiceActualSubbot++) {
-const userId = subbotIds[_indiceActualSubbot];
-const sessionPath = path.join(folder, userId, "creds.json");
-try {
-if (!fs.existsSync(sessionPath)) continue;
-const raw = fs.readFileSync(sessionPath, "utf8");
-if (!raw.trim()) throw new Error("Vacío");
-JSON.parse(raw);
-} catch {
-console.log(chalk.bgRed.white.bold(`⚠️ SESIÓN INVÁLIDA PARA ${userId} → Eliminando...`));
-fs.rmSync(path.join(folder, userId), { recursive: true, force: true });
-continue;
-}
-
-const yaActivo = globalThis.conns?.some(conn => conn.userId === userId);
-if (yaActivo || reconectando.has(userId)) {
-console.log(`[DEBUG] ${userId} ya activo o reconectando`); 
-continue;
-}
-
-reconectando.add(userId);
-try {
-reconectandoAhora++;
-await new Promise(r => setTimeout(r, 3000));
-await startSubBot(null, null, "Auto conexión", false, userId, null);
-cargados++;
-} catch (err) {
-console.error(`[SubBot ${userId}] ❌ Falló la carga:`, err);
-} finally {
-reconectando.delete(userId);
-}}
-
-if (_indiceActualSubbot < subbotIds.length) {
-setTimeout(cargarSubbots, 1500);
-} else {
-_indiceActualSubbot = 0;
-}}
-
-async function monitorearSubbots() {
-const folder = "./jadibot";
-if (!fs.existsSync(folder)) return;
-const subbotIds = fs.readdirSync(folder).filter(id => !reconectando.has(id));
-let reconectados = 0;
 
 for (const userId of subbotIds) {
-if (reconectados >= MAX_SUBBOTS) break;
-const credsPath = path.join(folder, userId, "creds.json");
-if (!fs.existsSync(credsPath)) continue;
-const activo = globalThis.conns?.some(conn => conn.userId === userId);
-if (!activo && !reconectando.has(userId)) {
-reconectando.add(userId);
+const sessionPath = path.join(folder, userId, "creds.json");
+if (!fs.existsSync(sessionPath)) {
+continue;
+}
+if (globalThis.conns?.some(conn => conn.userId === userId)) {
+continue;
+}
+if (reconectando.has(userId)) {
+continue;
+}
+
 try {
+reconectando.add(userId);
 await startSubBot(null, null, "Auto reconexión", false, userId, null);
-reconectados++;
-} catch (err) {
-console.error(`[SubBot ${userId}] ❌ Falló la reconexión:`, err);
+} catch (e) {
+console.log(chalk.red(`❌ Falló la carga de ${userId}:`, e.message));
 } finally {
 reconectando.delete(userId);
-}}}
+}
+
+await new Promise(res => setTimeout(res, 2500))}
+setTimeout(cargarSubbots, 60 * 1000); 
 }
 
 async function startBot() {
@@ -266,13 +227,17 @@ process.exit(0);
 //tmp session basura
 setInterval(() => {
 const now = Date.now();
-const basePath = './jadibot';
-if (!fs.existsSync(basePath)) return;
+const carpetas = ['./jadibot', './BotSession'];
+console.log(chalk.bold.cyanBright(`\n╭» 🟠 ARCHIVOS 🟠\n│→ ARCHIVOS RESIDUALES ELIMINADAS\n╰― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― 🗑️♻️`));
+
+for (const basePath of carpetas) {
+if (!fs.existsSync(basePath)) continue;
 
 const subfolders = fs.readdirSync(basePath);
 for (const folder of subfolders) {
 const sessionPath = path.join(basePath, folder);
 if (!fs.statSync(sessionPath).isDirectory()) continue;
+
 const files = fs.readdirSync(sessionPath);
 for (const file of files) {
 const fullPath = path.join(sessionPath, file);
@@ -283,13 +248,13 @@ const stats = fs.statSync(fullPath);
 const ageMs = now - stats.mtimeMs;
 if (file.startsWith('pre-key') && ageMs > 24 * 60 * 60 * 1000) {
 fs.unlinkSync(fullPath);
-console.log(chalk.cyanBright(`[🔵] Pre-keys antiguas eliminadas de sub-bots: ${file}`))
+console.log(chalk.cyanBright(`[🔵] Pre-key eliminada (${folder}): ${file}`));
 } else if (ageMs > 30 * 60 * 1000) {
 fs.unlinkSync(fullPath);
-console.log(chalk.bold.cyanBright(`\n╭» 🟠 ARCHIVOS 🟠\n│→ ARCHIVOS RESIDUALES ELIMINADAS\n╰― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― 🗑️♻️`));
+console.log(chalk.gray(`[⚪] Archivo eliminado (${folder}): ${file}`));
 }} catch (err) {
 console.error(chalk.red(`[⚠] Error al limpiar ${file}:`), err);
-}}}
+}}}}
 }, 10 * 60 * 1000); // cada 10 minutos
     
 function setupGroupEvents(sock) {
