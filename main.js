@@ -113,7 +113,7 @@ console.info = () => {}
 const sock = baileys.makeWASocket({
 printQRInTerminal: !usarCodigo && !fs.existsSync(BOT_CREDS_PATH),
 logger: pino({ level: 'silent' }),   
-browser: ['Windows', 'Chrome'],
+browser: ["Ubuntu", "Chrome", "20.0.04"],
 auth: { creds: state.creds,
 keys: baileys.makeCacheableSignalKeyStore(state.keys, pino({ level: 'silent' }))
 },
