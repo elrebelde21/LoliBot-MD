@@ -190,27 +190,22 @@ export default handler
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
 
 */
-let handler = async (m, { conn, text, usedPrefix, command }) => {
-if (!text) return m.reply(`⚠️ 𝐄𝐬𝐜𝐫𝐢𝐛𝐚 𝐞𝐥 𝐞𝐫𝐫𝐨𝐫/𝐜𝐨𝐦𝐚𝐧𝐝𝐨 𝐜𝐨𝐧 𝐟𝐚𝐥𝐥𝐚\n\n*𝐄𝐣:* ${usedPrefix + command} los sticker no funka`)
+
+import { db } from "../lib/postgres.js";
+
+const handler = async (m, { conn, text, command }) => {
+if (!text) return m.reply(`⚠️ Escriba ${command === "sugge" ? "la sugerencias" : "el error/comando con falla"}\n\n*𝐄𝐣:* ${usedPrefix + command} ${command === "sugge" ? "Agregue un comando de ..." : "los sticker no funka"}`)
 if (text.length < 8) return m.reply(`✨ *𝑴𝒊́𝒏𝒊𝒎𝒐 10 𝒄𝒂𝒓𝒂𝒄𝒕𝒆𝒓𝒆𝒔 𝒑𝒂𝒓𝒂 𝒉𝒂𝒄𝒆𝒓 𝒆𝒍 𝒓𝒆𝒑𝒐𝒓𝒕𝒆...*`)
 if (text.length > 1000) return m.reply(`⚠️ *𝑴𝒂́𝒙𝒊𝒎𝒐 1000 𝑪𝒂𝒓𝒂𝒄𝒕𝒆𝒓𝒆𝒔 𝒑𝒂𝒓𝒂 𝒉𝒂𝒄𝒆𝒓 𝒆𝒍 𝒓𝒆𝒑𝒐𝒓𝒕𝒆.*`)
-let teks = `┏╼╾╼⧼⧼⧼ ＲＥＰＯＲＴＥ ⧽⧽⧽╼╼╼┓
-╏• *ɴᴜᴍᴇʀᴏ:* Wa.me/${m.sender.split`@`[0]}
-╏• *ᴍᴇɴsᴀᴊᴇ:* ${text}
-┗╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼`
-await delay(1 * 1000)
-conn.reply(m.chat,  `⚡ᴇʟ ʀᴇᴘᴏʀᴛᴇ ʜᴀ sɪᴅᴏ ᴇɴᴠɪᴀᴅᴏs ᴀ ᴍɪ ᴄʀᴇᴀᴅᴏʀ, ᴛᴇɴᴅʀᴀ ᴜɴᴀ ʀᴇsᴘᴜᴇsᴛᴀ ᴘʀᴏɴᴛᴏ, ᴅᴇ sᴇʀ ғᴀʟsᴏ sᴇʀᴀ ɪɢɴᴏʀᴀᴅᴏ ᴇʟ ʀᴇᴘᴏʀᴛᴇ`, m, {contextInfo: { externalAdReply :{ mediaUrl: null, mediaType: 1, description: null, body: '𝐄𝐗𝐈𝐓𝐎𝐒', previewType: 0, thumbnail: m.pp, sourceUrl: [info.md, info.yt, info.tiktok].getRandom()}}})
-//conn.reply('593968585383@s.whatsapp.net', m.quoted ? teks + m.quoted.text : teks, null, {
-//contextInfo: {
-//mentionedJid: [m.sender]
-//}})
-await delay(3 * 3000)
-conn.reply('573226873710@s.whatsapp.net', m.quoted ? teks + m.quoted.text : teks, null, {contextInfo: {mentionedJid: [m.sender]
-}})}
-handler.help = ['reporte', 'request'].map(v => v + ' <teks>')
-handler.tags = ['main']
-handler.command = /^(report|request|reporte|bugs|bug|report-owner|reportes|reportar)$/i 
-handler.register = true 
-export default handler
+const nombre = m.pushName || "sin nombre";
+const tipo = command === "sugge" ? "sugerencia" : "reporte";
 
-const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
+await db.query(`INSERT INTO reportes (sender_id, sender_name, mensaje, tipo) VALUES ($1, $2, $3, $4)`, [m.sender, nombre, text, tipo]);
+return m.reply(tipo === "sugerencia" ? "✅ ¡Gracias! Tu sugerencia ha sido enviada a nuestro equipo de moderación y será tomada en cuenta." : "✅ Tu reporte ha sido enviado a nuestro equipo de moderación y será revisado pronto.");
+};
+handler.help = ["report <texto>", "sugge <sugerencia>"];
+handler.tags = ["main"];
+handler.command = /^report|sugge$/i;
+handler.register = true;
+
+export default handler;
