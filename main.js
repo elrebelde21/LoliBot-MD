@@ -79,8 +79,12 @@ console.log(chalk.bold.yellowBright(`📦 Subbots cargados: ${subbotIds.length}`
 for (const userId of subbotIds) {
 const sessionPath = path.join(folder, userId, "creds.json");
 if (!fs.existsSync(sessionPath)) {
-continue;
+  const dirPath = path.join(folder, userId);
+  console.log(chalk.red(`🗑️ Subbot ${userId} sin creds.json → Eliminando carpeta completa.`));
+  try { fs.rmSync(dirPath, { recursive: true, force: true }); } catch {}
+  continue;
 }
+
 if (globalThis.conns?.some(conn => conn.userId === userId)) {
 continue;
 }
@@ -113,7 +117,7 @@ console.info = () => {}
 const sock = baileys.makeWASocket({
 printQRInTerminal: !usarCodigo && !fs.existsSync(BOT_CREDS_PATH),
 logger: pino({ level: 'silent' }),   
-browser: ['Windows', 'Chrome'],
+browser: ["Ubuntu", "Chrome", "20.0.04"],
 auth: { creds: state.creds,
 keys: baileys.makeCacheableSignalKeyStore(state.keys, pino({ level: 'silent' }))
 },
