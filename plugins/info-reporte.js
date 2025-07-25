@@ -198,14 +198,14 @@ if (!text) return m.reply(`⚠️ Escriba ${command === "suggestion" ? "sugerenc
 if (text.length < 8) return m.reply(`✨ *𝑴𝒊́𝒏𝒊𝒎𝒐 10 𝒄𝒂𝒓𝒂𝒄𝒕𝒆𝒓𝒆𝒔 𝒑𝒂𝒓𝒂 𝒉𝒂𝒄𝒆𝒓 𝒆𝒍 𝒓𝒆𝒑𝒐𝒓𝒕𝒆...*`)
 if (text.length > 1000) return m.reply(`⚠️ *𝑴𝒂́𝒙𝒊𝒎𝒐 1000 𝑪𝒂𝒓𝒂𝒄𝒕𝒆𝒓𝒆𝒔 𝒑𝒂𝒓𝒂 𝒉𝒂𝒄𝒆𝒓 𝒆𝒍 𝒓𝒆𝒑𝒐𝒓𝒕𝒆.*`)
 const nombre = m.pushName || "sin nombre";
-const tipo = command === "suggestion" ? "sugerencia" : "reporte";
+const tipo = /sugge|suggestion/i.test(command) ? "sugerencia" : "reporte";
 
 await db.query(`INSERT INTO reportes (sender_id, sender_name, mensaje, tipo) VALUES ($1, $2, $3, $4)`, [m.sender, nombre, text, tipo]);
 return m.reply(tipo === "sugerencia" ? "✅ ¡Gracias! Tu sugerencia ha sido enviada a nuestro equipo de moderación y será tomada en cuenta." : "✅ Tu reporte ha sido enviado a nuestro equipo de moderación y será revisado pronto.");
 };
 handler.help = ["report <texto>", "sugge <sugerencia>"];
 handler.tags = ["main"];
-handler.command = /^report|suggestion|sugge$/i;
+handler.command = /^(report|request|suggestion|sugge|reporte|bugs?|report-owner|reportes|reportar)$/i;
 handler.register = true;
 
 export default handler;
