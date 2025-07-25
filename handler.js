@@ -633,6 +633,25 @@ await conn.sendMessage(chatId, { text: modohorny ? `🔞 NSFW fuera del horario 
 continue
 }}
 
+//User banear
+try {
+const senderId = (m.sender || m.key?.participant || "").replace(/[^0-9]/g, "") + "@s.whatsapp.net";
+if (senderId !== (conn.user?.id?.replace(/:\d+/, "") + "@s.whatsapp.net")) {
+const resBan = await db.query("SELECT banned, razon_ban, avisos_ban FROM usuarios WHERE id = $1", [senderId]);
+if (resBan.rows[0]?.banned) {
+const avisos = resBan.rows[0]?.avisos_ban || 0;
+if (avisos < 3) {
+const nuevoAviso = avisos + 1;
+await db.query("UPDATE usuarios SET avisos_ban = $2 WHERE id = $1", [senderId, nuevoAviso]);
+const razon = resBan.rows[0]?.razon_ban?.trim() || "Spam";
+await conn.sendMessage(m.chat, {text: `⚠️ ESTAS BANEADO ⚠️\n*• Motivo:* ${razon} (avisos: ${nuevoAviso}/3)\n*👉🏻 Puedes contactar al propietario del Bot si crees que se trata de un error o para charlar sobre tu desbaneo*\n\n👉 ${info.fb}`, contextInfo: { mentionedJid: [senderId] }}, { quoted: m });
+}
+return; 
+}}
+} catch (e) {
+console.error("❌ Error al verificar baneo:", e);
+}
+
 if (plugin.admin || plugin.botAdmin) {
 try {
 //isAdmin = adminIds.includes(m.sender);
@@ -753,6 +772,32 @@ console.log(`[AUTO-LEAVE] Bot salió automáticamente del grupo: ${group_id}`);
 }}
 } catch (e) {
 }}, 60_000); //1 min
+
+//report
+setInterval(async () => {
+const MODGROUP_ID = "120363392819528942@g.us";
+try {
+let conn = global.conn || globalThis.conn;
+if (!conn || typeof conn.sendMessage !== "function") return;
+let modsMeta;
+try {
+modsMeta = await conn.groupMetadata(MODGROUP_ID);
+} catch (e) {
+return;
+}
+const res = await db.query("SELECT * FROM reportes WHERE enviado = false ORDER BY fecha ASC LIMIT 10");
+if (!res.rows.length) return;
+
+for (const row of res.rows) {
+let cabecera = row.tipo === "sugerencia" ? "🌟 *SUGERENCIA*" : "ＲＥＰＯＲＴＥ";
+const txt = `┏╼╾╼⧼⧼⧼ ${cabecera}  ⧽⧽⧽╼╼╼┓\n
+╏• *Usuario:* wa.me/${row.sender_id.split("@")[0]} 
+╏• ${row.tipo === "sugerencia" ? "*Sugerencia:*" : "*Mensaje:*"} ${row.mensaje}`;
+await conn.sendMessage(MODGROUP_ID, { text: txt });
+await db.query("DELETE FROM reportes WHERE id = $1", [row.id]);
+}} catch (err) {
+console.error("[REPORT/SUGGE SYSTEM ERROR]", err);
+}}, 60_000 * 2); // cada 2 minutos
 
 //cache message 
 setInterval(async () => {

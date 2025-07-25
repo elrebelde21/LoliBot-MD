@@ -79,12 +79,8 @@ console.log(chalk.bold.yellowBright(`📦 Subbots cargados: ${subbotIds.length}`
 for (const userId of subbotIds) {
 const sessionPath = path.join(folder, userId, "creds.json");
 if (!fs.existsSync(sessionPath)) {
-  const dirPath = path.join(folder, userId);
-  console.log(chalk.red(`🗑️ Subbot ${userId} sin creds.json → Eliminando carpeta completa.`));
-  try { fs.rmSync(dirPath, { recursive: true, force: true }); } catch {}
-  continue;
+continue;
 }
-
 if (globalThis.conns?.some(conn => conn.userId === userId)) {
 continue;
 }
@@ -230,35 +226,43 @@ process.exit(0);
 
 //tmp session basura
 setInterval(() => {
-const now = Date.now();
-const carpetas = ['./jadibot', './BotSession'];
+  const now = Date.now();
+  const carpetas = ['./jadibot', './BotSession'];
 console.log(chalk.bold.cyanBright(`\n╭» 🟠 ARCHIVOS 🟠\n│→ ARCHIVOS RESIDUALES ELIMINADAS\n╰― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― 🗑️♻️`));
 
-for (const basePath of carpetas) {
-if (!fs.existsSync(basePath)) continue;
+  for (const basePath of carpetas) {
+    if (!fs.existsSync(basePath)) continue;
 
-const subfolders = fs.readdirSync(basePath);
-for (const folder of subfolders) {
-const sessionPath = path.join(basePath, folder);
-if (!fs.statSync(sessionPath).isDirectory()) continue;
+    const subfolders = fs.readdirSync(basePath);
+    for (const folder of subfolders) {
+      const sessionPath = path.join(basePath, folder);
+      if (!fs.statSync(sessionPath).isDirectory()) continue;
 
-const files = fs.readdirSync(sessionPath);
-for (const file of files) {
-const fullPath = path.join(sessionPath, file);
-if (!fs.existsSync(fullPath)) continue;
-if (file === 'creds.json') continue;
-try {
-const stats = fs.statSync(fullPath);
-const ageMs = now - stats.mtimeMs;
-if (file.startsWith('pre-key') && ageMs > 24 * 60 * 60 * 1000) {
-fs.unlinkSync(fullPath);
-console.log(chalk.cyanBright(`[🔵] Pre-key eliminada (${folder}): ${file}`));
-} else if (ageMs > 30 * 60 * 1000) {
-fs.unlinkSync(fullPath);
-console.log(chalk.gray(`[⚪] Archivo eliminado (${folder}): ${file}`));
-}} catch (err) {
-console.error(chalk.red(`[⚠] Error al limpiar ${file}:`), err);
-}}}}
+      const isActive = globalThis.conns?.some(c => c.userId === folder || c.user?.id?.includes(folder));
+      const files = fs.readdirSync(sessionPath);
+
+      for (const file of files) {
+        const fullPath = path.join(sessionPath, file);
+        if (!fs.existsSync(fullPath)) continue;
+        if (file === 'creds.json') continue;
+
+        try {
+          const stats = fs.statSync(fullPath);
+          const ageMs = now - stats.mtimeMs;
+
+          if (file.startsWith('pre-key') && ageMs > 24 * 60 * 60 * 1000 && !isActive) {
+            fs.unlinkSync(fullPath);
+            console.log(chalk.cyanBright(`[🔵] Pre-key vieja eliminada (${folder}): ${file}`));
+          } else if (ageMs > 30 * 60 * 1000 && !isActive) {
+            fs.unlinkSync(fullPath);
+            console.log(chalk.gray(`[⚪] Archivo viejo eliminado (${folder}): ${file}`));
+          }
+        } catch (err) {
+          console.error(chalk.red(`[⚠] Error al limpiar archivo ${file}:`), err);
+        }
+      }
+    }
+  }
 }, 10 * 60 * 1000); // cada 10 minutos
     
 function setupGroupEvents(sock) {
