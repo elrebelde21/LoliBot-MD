@@ -12,18 +12,21 @@ const number = text.match(/\d{5,}/)?.[0];
 targetJid = number + "@s.whatsapp.net";
 }
 
-if (!targetJid) return m.reply("⚠️ Usa el comando con *@tag* o escribiendo el número. Ejemplo:\n/banuser @usuario\n/banuser +5491112345678");
+if (!targetJid) return m.reply("🤓 Etiqueta al usuario boludito");
 const cleanJid = targetJid.replace(/[^0-9]/g, "") + "@s.whatsapp.net";
 try {
 const res = await db.query("SELECT id FROM usuarios WHERE id = $1", [cleanJid]);
 if (!res.rowCount) return m.reply("❌ Ese usuario no está registrado en la base de datos.");
 
 if (command === "banuser") {
+let ban = 'https://qu.ax/SJJt.mp3'
 let razon = text?.replace(/^(@\d{5,}|[+]?[\d\s\-()]+)\s*/g, "").trim() || null;
 await db.query("UPDATE usuarios SET banned = true, razon_ban = $2 WHERE id = $1", [cleanJid, razon]);
-return m.reply(`🚫 El usuario @${cleanJid.split("@")[0]} ha sido *baneado* y no podrá usar el bot.${razon ? `\n\n📌 *Razón:* ${razon}` : ""}`, {
-  mentions: [cleanJid]
-});
+try { 
+await conn.sendMessage(m.chat, { audio: { url: ban }, contextInfo: { externalAdReply: { title: `⚠️ ᴱˡ ᵘˢᵘᵃʳᶦᵒ(ᵃ) ᶠᵘᵉ ᵇᵃⁿᵉᵃᵈᵒ(ᵃ) 🙀 ⁿᵒ ᵖᵒᵈʳᵃ ᵘˢᵃʳ ᵃ`, body: info.wm, previewType: "PHOTO", thumbnailUrl: null, thumbnail: m.pp, sourceUrl: info.md, showAdAttribution: true}}, ptt: true, mimetype: 'audio/mpeg', fileName: `error.mp3` }, { quoted: m })
+} catch (e) {
+m.reply(`🚫 El usuario @${cleanJid.split("@")[0]} ha sido *baneado* y no podrá usar el bot.${razon ? `\n\n📌 *Razón:* ${razon}` : ""}`, { mentions: [cleanJid]});
+}
 }
 
 if (command === "unbanuser") {
