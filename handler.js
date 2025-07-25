@@ -309,8 +309,8 @@ function cleanJid(jid = "") {
 const chatId = m.key?.remoteJid || "";
 const botId = conn.user?.id;
 const subbotConf = await getSubbotConfig(botId)
-info.wm = subbotConf.name || info.wm
-info.img2 = subbotConf.logo_url || info.img2
+info.wm = subbotConf.name ?? info.wm;
+info.img2 = subbotConf.logo_url ?? info.img2;
 
 try {
 await db.query(`INSERT INTO chats (id, is_group, timestamp, bot_id, joined)
