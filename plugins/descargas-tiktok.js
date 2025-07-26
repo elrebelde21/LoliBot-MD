@@ -20,8 +20,8 @@ const tTiktok = await tiktokdlF(args[0]);
 return tTiktok.video;
 },
 async () => {
-const response = await axios.get(`https://api.delirius.store/download/tiktok?url=${args[0]}`);
-return response.meta.media.hd
+  const { data } = await axios.get(`https://api.delirius.store/download/tiktok?url=${args[0]}`);
+  return data?.data?.meta?.media?.find(m => m.type === 'video')?.hd;
 },
 async () => {
 const response = await axios.get(`https://api.dorratz.com/v2/tiktok-dl?url=${args[0]}`);
