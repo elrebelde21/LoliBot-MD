@@ -20,6 +20,10 @@ const tTiktok = await tiktokdlF(args[0]);
 return tTiktok.video;
 },
 async () => {
+const response = await axios.get(`https://api.delirius.store/download/tiktok?url=${args[0]}`);
+return response.meta.media.hd
+},
+async () => {
 const response = await axios.get(`https://api.dorratz.com/v2/tiktok-dl?url=${args[0]}`);
 return response.data.data.media.org;
 },
