@@ -108,11 +108,13 @@ renderLargerThumbnail: false
 }
 
 if (command == 'nserie' || command == 'myns' || command == 'sn') {
+if (!user.registered) return m.reply(`⚠️ *No estás registrado(a)*\n\nPara registrarte usa:\n*#reg nombre.edad*`);
 const sn = user.serial_number || createHash('md5').update(m.sender).digest('hex');
-await m.reply(sn)
+await m.reply(sn);
 }
 
 if (command == 'unreg') {
+if (!user.registered) return m.reply(`⚠️ *No estás registrado(a)*\n\nPara registrarte usa:\n*#reg nombre.edad*`);
 if (!args[0]) return m.reply( `✳️ *Ingrese número de serie*\nVerifique su número de serie con el comando...\n\n*${usedPrefix}nserie*`)
 const user = userResult.rows[0] || {};
 const sn = user.serial_number || createHash('md5').update(m.sender).digest('hex');
