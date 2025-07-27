@@ -94,7 +94,7 @@ title: `𝐑𝐄𝐆𝐈𝐒𝐓𝐑𝐎 𝐂𝐎𝐌𝐏𝐋𝐄𝐓𝐀𝐃�
 body: 'LoliBot',
 previewType: 'PHOTO',
 thumbnailUrl: "https://telegra.ph/file/33bed21a0eaa789852c30.jpg",
-sourceUrl: "https://www.youtube.com/@elrebelde.21"
+sourceUrl: info.md
 }}}, { quoted: fkontak, ephemeralExpiration: 24 * 60 * 1000, disappearingMessagesInChat: 24 * 60 * 1000 });
 /*await conn.sendMessage("120363297379773397@newsletter", { text: `◉ *Usuarios:* ${m.pushName || 'Anónimo'} ${userNationality ? `\n◉ *País:* ${userNationality}` : ''}\n◉ *Verificación:* ${name}\n◉ *Edad:* ${age} años\n◉ *Fecha:* ${date}\n◉ *Bot:* LoliBot\n◉ *Número de serie:*\n⤷ ${sn}`,
 contextInfo: { 
@@ -112,7 +112,8 @@ renderLargerThumbnail: false
 if (command == 'nserie' || command == 'myns' || command == 'sn') {
 if (!user.registered) return m.reply(`⚠️ *No estás registrado(a)*\n\nPara registrarte usa:\n*#reg nombre.edad*`);
 const sn = user.serial_number || createHash('md5').update(m.sender).digest('hex');
-await m.reply(sn);
+await conn.fakeReply(m.chat, sn, '0@s.whatsapp.net', `⬇️ ᴇsᴛᴇ ᴇs sᴜs ɴᴜᴍᴇʀᴏ ᴅᴇʟ sᴇʀɪᴇ ⬇️`, 'status@broadcast')
+//m.reply(sn);
 }
 
 if (command == 'unreg') {
@@ -131,7 +132,7 @@ await db.query(`UPDATE usuarios
             reg_time = NULL,
             serial_number = NULL
         WHERE id = $1`, [m.sender]);
-await m.reply(`😢 Ya no estás registrado`)
+await conn.fakeReply(m.chat, `😢 Ya no estas registrado`, '0@s.whatsapp.net', `ᴿᵉᵍᶦˢᵗʳᵒ ᵉˡᶦᵐᶦⁿᵃᵈᵒ`, 'status@broadcast')
 }};
 handler.help = ['reg <nombre.edad>', 'verificar <nombre.edad>', 'nserie', 'unreg <serial>'];
 handler.tags = ['rg'];
