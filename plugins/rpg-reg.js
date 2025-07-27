@@ -118,8 +118,8 @@ await m.reply(sn);
 if (command == 'unreg') {
 if (!user.registered) return m.reply(`⚠️ *No estás registrado(a)*\n\nPara registrarte usa:\n*#reg nombre.edad*`);
 if (!args[0]) return m.reply( `✳️ *Ingrese número de serie*\nVerifique su número de serie con el comando...\n\n*${usedPrefix}nserie*`)
-const user = userResult.rows[0] || {};
-const sn = user.serial_number || createHash('md5').update(m.sender).digest('hex');
+const user2 = userResult.rows[0] || {};
+const sn = user2.serial_number || createHash('md5').update(m.sender).digest('hex');
 if (args[0] !== sn) return m.reply('⚠️ *Número de serie incorrecto*')
 await db.query(`UPDATE usuarios
         SET registered = false,
