@@ -159,7 +159,7 @@ nna2: info.nna2
 text = String(text).replace(new RegExp(`%(${Object.keys(replace).join('|')})`, 'g'), (_, key) => replace[key] ?? '');
 try {
 let pp = fs.readFileSync('./media/Menu2.jpg');
-const menuMessage = await conn.sendMessage(chatId, { text: text, contextInfo: { forwardedNewsletterMessageInfo: { newsletterJid: "120363305025805187@newsletter",newsletterName: "LoliBot ✨️" }, forwardingScore: 999, isForwarded: true, mentionedJid: await conn.parseMention(text), externalAdReply: { mediaUrl: info.md, mediaType: 2, showAdAttribution: false, renderLargerThumbnail: false, title: "✨️ MENU ✨️", body: `${nombreBot} (${tipo})`, thumbnailUrl: info.img2, sourceUrl: "https://skyultraplus.com" }}}, { quoted: m });
+const menuMessage = await conn.sendMessage(chatId, { text: text, contextInfo: { forwardedNewsletterMessageInfo: { newsletterJid: "120363305025805187@newsletter",newsletterName: "LoliBot ✨️" }, forwardingScore: 999, isForwarded: true, mentionedJid: await conn.parseMention(text), externalAdReply: { mediaUrl:  [info.nna, info.nna2, info.md].getRandom(), mediaType: 2, showAdAttribution: false, renderLargerThumbnail: false, title: "✨️ MENU ✨️", body: `${nombreBot} (${tipo})`, thumbnailUrl: info.img2, sourceUrl: "https://skyultraplus.com" }}}, { quoted: m });
 cooldowns.set(chatId, { lastUsed: now, menuMessage: menuMessage })
 m.react('🙌');
 } catch (err) {    
