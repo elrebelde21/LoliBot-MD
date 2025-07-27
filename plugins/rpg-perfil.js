@@ -1,5 +1,6 @@
 import { createHash } from 'crypto'
 import fetch from 'node-fetch'
+import moment from 'moment-timezone'
 import { xpRange } from '../lib/levelling.js'
 
 const formatPhoneNumber = (jid) => {
@@ -18,7 +19,7 @@ const bio = await conn.fetchStatus(who).catch(() => ({}))
 const biot = bio.status || 'Sin Info'
 const profilePic = await conn.profilePictureUrl(who, 'image').catch(_ => 'https://telegra.ph/file/9d38415096b6c46bf03f8.jpg')
 const buffer = await (await fetch(profilePic)).buffer()
-const { exp, limite, nombre, registered, edad, level, marry } = user
+const { exp, limite, nombre, registered, edad, level, marry, gender, birthday } = user
 const { min, xp, max } = xpRange(level, global.multiplier || 1)
 const sn = createHash('md5').update(String(who)).digest('hex')
 const phone = formatPhoneNumber(who)
@@ -42,7 +43,7 @@ const texto = `*「 PERFIL 」*
 👤 *Nombre:* ${nombre}
 ☎️ *Número:* ${phone}
 🌐 *Link:* wa.me/${who.split('@')[0]}
-🌍 *Nacionalidad:* ${nacionalidad}
+🌍 *Nacionalidad:* ${nacionalidad} ${edad ? `\n🎈 *Edad:* ${edad}` : ''} ${gender ? `\n⚧️ *Género:* ${gender}` : ''} ${birthday ? `\n🎂 *Cumpleaños:* ${moment(birthday).format('DD/MM/YYYY')}` : ''}
 💎 *Límite:* ${limite ?? 0}
 ⚙️ *Nivel:* ${level}
 ◯ *Registrado:* ${registered ? 'Sí' : 'No'}
