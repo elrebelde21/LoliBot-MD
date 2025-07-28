@@ -821,9 +821,7 @@ if (!res.rows.length) return;
 
 for (const row of res.rows) {
 let cabecera = row.tipo === "sugerencia" ? "🌟 *SUGERENCIA*" : "ＲＥＰＯＲＴＥ";
-const txt = `┏╼╾╼⧼⧼⧼ ${cabecera}  ⧽⧽⧽╼╼╼┓\n
-╏• *Usuario:* wa.me/${row.sender_id.split("@")[0]} 
-╏• ${row.tipo === "sugerencia" ? "*Sugerencia:*" : "*Mensaje:*"} ${row.mensaje}`;
+const txt = `┏╼╾╼⧼⧼⧼ ${cabecera}  ⧽⧽⧽╼╼╼┓\n╏• *Usuario:* wa.me/${row.sender_id.split("@")[0]}\n╏• ${row.tipo === "sugerencia" ? "*Sugerencia:*" : "*Mensaje:*"} ${row.mensaje}\n┗╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼╼`;
 await conn.sendMessage(MODGROUP_ID, { text: txt });
 await db.query("DELETE FROM reportes WHERE id = $1", [row.id]);
 }} catch (err) {
