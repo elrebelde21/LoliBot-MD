@@ -7,7 +7,7 @@ await conn.sendMessage(m.chat, { text: `🏓 *Pong!* ${ping}ms`, edit: key }, { 
 };
 handler.help = ['ping'];
 handler.tags = ['main'];
-handler.command = /^ping|p$/i;
+handler.command = /^(ping|p)$/i
 handler.owner = false;
 
 export default handler;
