@@ -28,8 +28,7 @@ main();
 async function main() {
 const hayCredencialesPrincipal = fs.existsSync(BOT_CREDS_PATH);
 const subbotsFolder = "./jadibot";
-const haySubbotsActivos = fs.existsSync(subbotsFolder) && fs.readdirSync(subbotsFolder).some(folder =>
-fs.existsSync(path.join(subbotsFolder, folder, "creds.json"))
+const haySubbotsActivos = fs.existsSync(subbotsFolder) && fs.readdirSync(subbotsFolder).some(folder => fs.existsSync(path.join(subbotsFolder, folder, "creds.json"))
 );
 
 if (!hayCredencialesPrincipal && !haySubbotsActivos) {
@@ -77,16 +76,11 @@ const subbotIds = fs.readdirSync(folder);
 console.log(chalk.bold.yellowBright(`📦 Subbots cargados: ${subbotIds.length}`));
 
 for (const userId of subbotIds) {
-const sessionPath = path.join(folder, userId, "creds.json");
-if (!fs.existsSync(sessionPath)) {
-continue;
-}
-if (globalThis.conns?.some(conn => conn.userId === userId)) {
-continue;
-}
-if (reconectando.has(userId)) {
-continue;
-}
+const sessionPath = path.join(folder, userId);
+const credsPath = path.join(sessionPath, "creds.json");
+if (!fs.existsSync(credsPath)) continue;
+if (globalThis.conns?.some(conn => conn.userId === userId)) continue;
+if (reconectando.has(userId)) continue;
 
 try {
 reconectando.add(userId);
