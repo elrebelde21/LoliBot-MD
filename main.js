@@ -206,8 +206,8 @@ const age = now - modifiedTime;
 if (age > 3 * 60 * 1000) {
 fs.unlinkSync(filePath);
 }
-console.log(chalk.gray(`┏━━━━━━⪻♻️ AUTO-CLEAR 🗑️⪼━━━━━━•\n┃→ ARCHIVOS DE LA CARPETA TMP ELIMINADOS\n┗━━━━━━━━━━━━━━━━━━━━━━━━━━━•`));
 })
+console.log(chalk.gray(`┏━━━━━━⪻♻️ AUTO-CLEAR 🗑️⪼━━━━━━•\n┃→ ARCHIVOS DE LA CARPETA TMP ELIMINADOS\n┗━━━━━━━━━━━━━━━━━━━━━━━━━━━•`));
 } catch (err) {
 console.error('Error cleaning temporary files:', err);
 }}, 30 * 1000);
