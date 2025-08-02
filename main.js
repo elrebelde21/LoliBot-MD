@@ -17,7 +17,7 @@ if (!fs.existsSync(BOT_SESSION_FOLDER)) fs.mkdirSync(BOT_SESSION_FOLDER);
 
 if (!globalThis.conns || !(globalThis.conns instanceof Array)) globalThis.conns = [];
 let _indiceActualSubbot = 0;
-const MAX_SUBBOTS = 30
+const MAX_SUBBOTS = 5;
 let reconectandoAhora = 0;
 const reconectando = new Set();
 let usarCodigo = false;
@@ -73,19 +73,12 @@ const folder = "./jadibot";
 if (!fs.existsSync(folder)) return;
 
 const subbotIds = fs.readdirSync(folder);
-console.log(chalk.bold.yellowBright(`📦 Subbots cargados: ${subbotIds.length}`));
+//console.log(chalk.bold.yellowBright(`📦 Subbots cargados: ${subbotIds.length}`));
 
 for (const userId of subbotIds) {
-const sessionPath = path.join(folder, userId, "creds.json");
-if (!fs.existsSync(sessionPath)) {
-const dirPath = path.join(folder, userId);
-console.log(chalk.red(`🗑️ Subbot ${userId} sin creds.json → Eliminando carpeta completa.`));
-try { 
-fs.rmSync(dirPath, { recursive: true, force: true }); 
-} catch {}
-continue;
-} 
-
+const sessionPath = path.join(folder, userId);
+const credsPath = path.join(sessionPath, "creds.json");
+if (!fs.existsSync(credsPath)) continue;
 if (globalThis.conns?.some(conn => conn.userId === userId)) continue;
 if (reconectando.has(userId)) continue;
 
