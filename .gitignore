@@ -5,5 +5,5 @@ yarn.lock
 node_modules/
 BotSession/
 jadibot/
-src/
+src/ 
 tmp/
