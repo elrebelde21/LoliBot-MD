@@ -1,0 +1,504 @@
+{
+  "global": {
+    "ara ara": {
+      "regex": "(ara ara)",
+      "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/Ara.mp3"
+    },
+    "a": {
+      "regex": "(ª|a|A)",
+      "audio": "./media/a.mp3"
+    },
+     "buen dia grupo": {
+      "regex": "(Buen día grupo|Buen dia grupo|🙌)",
+      "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/Buen%20día%20grupo.mp3"
+    },
+      "abduzcan": {
+      "regex": "(abduzcan|Abduzcan|adbuzcan|Adbuzcan)",
+      "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/abduzcan.mp3"
+    },
+     "A bueno adios master": {
+      "regex": "(A Bueno master|Bueno master|Bueno Máster|🫂)",
+      "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/A%20bueno%20adios%20master.mp3"
+    },
+      "Blackpink": {
+      "regex": "(Blackpink in your area|blackpink in your area|in your area|In your area)",
+      "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/Blackpink%20in%20your%20area.mp3"
+    },
+      "Bienvenido": {
+      "regex": "(bienveni|🥳|🤗|👋)",
+      "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/Bienvenido.mp3"
+    },
+      "Calla Fan de bts": {
+      "regex": "(Calla Fan de bts|bts|Amo a bts|Chino|Chinos)",
+      "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/Calla%20Fan%20de%20BTS.mp3"
+    },
+    "Cambiate a Movistar": {
+      "regex": "(Cambiate a Movistar|cambiate a Movistar|cambiate a movistar|Cambiate a movistar|movistar)",
+      "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/Cambiate%20a%20Movistar.mp3"
+    },
+    "temon": {
+      "regex": "(temon)",
+      "audio": "https://qu.ax/Rvyzk.opus"
+    },
+     "corte": {
+      "regex": "(Corte Corte|corte|pelea|pelear|golpear|golpea)",
+      "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/Corte%20Corte.mp3"
+    },
+      "El Toxico": {
+      "regex": "(El Toxico|El tóxico|Toxico|tóxico|malo|mala|estupido|estupida)",
+      "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/El%20Toxico.mp3"
+    },
+      "elmo sabe donde vives": {
+    "regex": "(Elmo sabe donde vives|Elmo sabe dónde vives|elmo|vives|de donde eres|eres de|sabes)",
+    "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/Elmo%20sabe%20donde%20vives.mp3"
+  },
+  "en caso de una investigación": {
+    "regex": "(En caso de una investigación|En caso de una investigacion|fbi|cia|nasa|detective|👤|🕵️‍|♀️🕵️‍♂️)",
+    "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/En%20caso%20de%20una%20investigación.mp3"
+  },
+  "eres fuerte": {
+    "regex": "(Eres Fuerte|god|🙌|🤜|🤛|🦾|👊)",
+    "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/Eres%20Fuerte.mp3"
+  },
+  "esta zzzz": {
+    "regex": "(Zzzz|zzz|😴|💩|👽)",
+    "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/Esta%20Zzzz.mp3"
+  },
+  "las reglas del grupo": {
+    "regex": "(Las reglas del grupo|lee|leíste|leiste)",
+    "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/Las%20reglas%20del%20grupo.mp3"
+  },
+  "me anda buscando anonymous": {
+    "regex": "(Me anda buscando anonymous|me anda buscando anonymous|Me está buscando anonymous|me está buscando anonymous|Me está buscando anonimo|Me esta buscando anonimo|anonimus|anónimo)",
+    "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/Me%20anda%20buscando%20anonymous.mp3"
+  },
+  "momento equisde": {
+    "regex": "(Momento equisde|momento equisde|Momento|fuera|🤘|👄|🕴️|💃|🕺)",
+    "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/Momento%20equisde.mp3"
+  },
+  "motivacion": {
+    "regex": "(Motivacion|Motivación|💥|☘️)",
+    "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/Motivacion.mp3"
+  },
+  "muchachos": {
+    "regex": "(Muchachos|⛈️|🌩️|🌦️|🌤️|🌪️|escucharon)",
+    "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/Muchachos.mp3"
+  },
+  "nico nico": {
+    "regex": "(Nico Nico|🐄|🐖|🐬|🐼|🐰|🐇|🦦|🐋)",
+    "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/Nico%20Nico.mp3"
+  },
+  "no rompas mas": {
+    "regex": "(No Rompas más|No Rompas mas|💔|😖|😫|😣|😿)",
+    "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/No%20Rompas%20Mas.mp3"
+  },
+  "porque ta tite": {
+    "regex": "(Porque ta tite|Por qué ta tite|🥺|😕|😟|😞|😔)",
+    "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/Porque%20ta%20tite.mp3"
+  },
+  "potaxio": {
+    "regex": "(Potaxio|Potasio|🥑)",
+    "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/Potaxio.mp3"
+  },
+  "que tal grupo": {
+    "regex": "(Que tal Grupo|qué tal grupo|grupos)",
+    "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/Que%20tal%20Grupo.mp3"
+  },
+  "se están riendo de mi": {
+    "regex": "(Se están riendo de mí|Se estan riendo de mi|Se esta riendo de mi|Se está riendo de mi|se estan)",
+    "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/Se%20estan%20riendo%20de%20mi.mp3"
+  },
+  "su nivel de pendejo": {
+    "regex": "(Su nivel de pendejo|pendeja|pendejo|idiota|tonto|tonta|😐|🙄|😜|🤪)",
+    "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/Su%20nivel%20de%20pendejo.mp3"
+  },
+  "tal vez": {
+  "regex": "(tal vez|puede ser|posible|🧘‍|♀️🧘|🍦|🍡|🌮|🍕|🍔|🌭|🍖|😋|🎩)",
+  "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/Tal%20vez.mp3"
+},
+"te gusta el pepino": {
+  "regex": "(Te gusta el Pepino|🥒|🍆|nepe)",
+  "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/Te%20gusta%20el%20Pepino.mp3"
+},
+"todo bien": {
+  "regex": "(Todo bien)",
+  "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/Todo%20bien.mp3"
+},
+"traiganle una falda": {
+  "regex": "(Traigan le una falda|Traiganle una falda|Nina|niña|niño)",
+  "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/Traigan%20le%20una%20falda.mp3"
+},
+"y este quien es": {
+  "regex": "(Y este quien es|Y este quien poronga es|Y este quien porongas es|vida)",
+  "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/Y%20este%20quien%20es.mp3"
+},
+"ya antojaron": {
+  "regex": "(Goku pervertido|pervertido|pervertida|goku|antojen|antogen|😈|👿|👉👌|👌👈)",
+  "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/Ya%20antojaron.mp3"
+},
+"abduzcan": {
+  "regex": "(abduzcan|Abduzcan|adbuzcan|Adbuzcan)",
+  "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/abduzcan.mp3"
+},
+"admin calzones": {
+  "regex": "(TENGO LOS CALZONES|Tengo los calzones|tengo los calzones|🥶|😨|calzones)",
+  "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/admin-calzones.mp3"
+},
+"anadieleimporta": {
+  "regex": "(anadieleimporta|a nadie le importa|y que|no importa|literal)",
+  "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/dylan1.mp3"
+},
+"insultar bot": {
+  "regex": "(miarda de bot|mierda de bot|mearda de bot|Miarda de Bot|Mierda de Bot|Mearda de Bot|bot puto|Bot puto|Bot CTM|Bot ctm|bot CTM|bot ctm|bot pendejo|Bot pendejo|bot de mierda)",
+  "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/insultar.mp3"
+},
+"baneado": {
+  "regex": "(baneado|Baneado|baneada)",
+  "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/baneado.mp3"
+},
+"basado": {
+  "regex": "(Cada|Basado|Basada|Basadisimo|BASADO|basado|basada|Que basado|Que basada|que basado)",
+  "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/basado.mp3"
+},
+"bien pensado woody": {
+  "regex": "(Bien pensado woody|bien pensado woody|Bien pensado|bien pensado|Bien pensado wudy|bien pensado wudy|Bien pensado Woody|bien pensado Woody|Bien pensado woodi|bien pensado woodi)",
+  "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/bien-pensado-woody.mp3"
+},
+"bañate": {
+  "regex": "(bañate|Bañat)",
+  "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/Banate.mp3"
+},
+"boanoite": {
+  "regex": "(buenas noches|Buenas noches|Boanoite|boanoite)",
+  "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/boanoite.mp3"
+},
+"bueno si": {
+  "regex": "(Bueno si|bueno si|bueno sí|Bueno sí)",
+  "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/bueno%20si.mp3"
+},
+"buenos dias": {
+  "regex": "(buenos dias|Buenos dias|buenos días|Buenos días)",
+  "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/Buenos-dias-2.mp3"
+},
+"me olvide": {
+  "regex": "(Me olvide|ME OLVIDE|me olvide|Me olvidé|me olvidé|lgante)",
+  "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/chica%20lgante.mp3"
+},
+"diagnosticado con gay": {
+  "regex": "(giagnosticadocongay|diagnosticado con gay|diagnosticado gay|te diagnóstico con gay|diagnóstico gay|te diagnostico con gay|te diagnóstico con gay|te diagnosticó con gay|te diagnostico con gay)",
+  "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/DiagnosticadoConGay.mp3"
+},
+"el pepe": {
+  "regex": "(El pepe|el pepe|El Pepe|el Pepe)",
+  "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/el%20pepe.mp3"
+},
+"el rap de fernanfloo": {
+  "regex": "(el rap de fernanfloo)",
+  "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/el%20rap%20de%20fernanfloo.mp3"
+},
+"enojado": {
+  "regex": "(Enojado|ENOJADO|enojado|Molesto|Enojada|ENOJADA|enojada|Molesta|🤬|😡|😠|😤)",
+  "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/asen.mp3"
+},
+"entrada epica al chat": {
+  "regex": "(ENTRADA|entrada|Entrada|Entra|ENTRA|Entra|Ingresa|ingresa|INGRESA|ingresar|INGRESAR|Ingresar)",
+  "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/entrada-epica-al-chat.mp3"
+},
+"esto va a hacer epico papus": {
+  "regex": "(Esto va ser épico papus|esto va ser épico papus|Esto va ser|Esto va a hacer|esto va acer|Esto va aser|esto va ser|esto va a hacer)",
+  "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/esto%20va%20a%20hacer%20epico%20papus.mp3"
+},
+"esto va para ti": {
+  "regex": "(Esto va para ti|esto va para ti)",
+  "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/esto%20va%20para%20ti.mp3"
+},
+"feliz cumple": {
+  "regex": "(feliz cumpleaños|felizcumpleaños|happy birthday)",
+  "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/Feliz%20cumple.mp3"
+},
+"fiesta admin2": {
+  "regex": "(fiesta del admin2|fiesta del admin 2|fiestadeladmin2|fiesta del administrador)",
+  "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/fiesta.mp3"
+},
+"fiesta admin": {
+  "regex": "(Fiesta del admin|fiesta del admin)",
+  "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/admin.mp3"
+},
+"fiesta admin3": {
+  "regex": "(fiesta del admin 3|atención grupo|atencion grupo|aviso importante|fiestadeladmin3|fiesta en casa)",
+  "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/Fiesta1.mp3"
+},
+"fino señores": {
+  "regex": "(Fino señores|fino señores|Fino senores|fino senores|Fino🧐|🤨|🧐🍷|🧐🍷|🐍|🙊|🙉|🙈)",
+  "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/fino-senores.mp3"
+},
+"flash": {
+  "regex": "(Me voy|me voy|ME VOY|Me fui|me fui|ME FUI|Se fue|se fue|SE FUE|Adios|adios|ADIOS|Chao|chao|CHAO)",
+  "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/flash.mp3"
+},
+"tunometecabrasaramambiche": {
+  "regex": "(tunometecabrasaramambiche|tunometecabrasaramanbiche|tunometecabrasarananbiche|tunometecabrasaranambiche)",
+  "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/tunometecabrasaramambiche.mp3"
+},
+"gemidos": {
+  "regex": "(gemidos|gemime|gime|gemime|gemi2)",
+  "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/gemi2.mp3"
+},
+"hablar primos": {
+  "regex": "(hablar primos|Hablar primos)",
+  "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/hablar%20primos.mp3"
+},
+"hentai": {
+  "regex": "(audio hentai|Audio hentai|audiohentai|Audiohentai)",
+  "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/hentai.mp3"
+},
+"hola": {
+  "regex": "(hola|ola|hi|hello)",
+  "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/Hola.mp3"
+},
+"homero chino": {
+  "regex": "(Homero chino|homero chino|Omero chino|omero chino|Homero Chino)",
+  "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/Homero%20chino.mp3"
+},
+"sexo": {
+  "regex": "(sexo|Sexo|Hora de sexo|hora de sexo)",
+  "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/maau1.mp3"
+},
+"jesucristo": {
+  "regex": "(Jesucristo|jesucristo|Jesús|jesús|Auronplay|Auron|Dios)",
+  "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/jesucristo.mp3"
+},
+"la voz de hombre": {
+  "regex": "(La voz de hombre|la voz de hombre|La voz del hombre|la voz del hombre|La voz|la voz|🥸|👨|👩|🤦)",
+  "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/la-voz-de-hombre.mp3"
+},
+"ora": {
+  "regex": "(laoracion|La biblia|La oración|La biblia|La oración|la biblia|La Biblia|oremos|recemos|rezemos|🙌|👏|🙏)",
+  "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/ora.mp3"
+},
+"cancion marica tu": {
+  "regex": "(Marica tu|cancion1|Marica quien|maricon|bando)",
+  "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/cancion.mp3"
+},
+"masivo cancion": {
+  "regex": "(MA MA MASIVO|ma ma masivo|Ma ma masivo|Bv|BV|bv|masivo|Masivo|MASIVO)",
+  "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/masivo-cancion.mp3"
+},
+"me vengo": {
+  "regex": "(ho me vengo|oh me vengo|o me vengo|Ho me vengo|Oh me vengo|O me vengo)",
+  "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/vengo.mp3"
+},
+"me pican los cocos": {
+  "regex": "(Me pica los cocos|ME PICA |me pica|Me pican los cocos|ME PICAN)",
+  "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/me-pican-los-cocos.mp3"
+},
+"mmm": {
+  "regex": "(mmm|Mmm|MmM)",
+  "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/mmm.mp3"
+},
+"moshi moshi": {
+  "regex": "(Moshi moshi|Shinobu|mundo)",
+  "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/moshi%20moshi.mp3"
+},
+"murio el grupo": {
+  "regex": "(Murió el grupo|Murio el grupo|murio el grupo|murió el grupo|Grupo muerto|grupo muerto)",
+  "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/Murio.m4a"
+},
+"nadie te pregunto": {
+  "regex": "(nadie te pregunto|Nadie te pregunto|Nadie te preguntó|nadie te preguntó)",
+  "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/nadie%20te%20pregunto.mp3"
+},
+"navidad": {
+  "regex": "(Feliz navidad|feliz navidad|Merry Christmas|merry chritmas)",
+  "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/navidad.m4a"
+},
+"niconico": {
+  "regex": "(niconico|NICONICO|Niconico|niconiconi|Niconiconi|NICONICONI)",
+  "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/niconico.mp3"
+},
+"no chu": {
+  "regex": "(No chupa la|No chupala|no chupala|No chu|no chu|No, chupala|No, chupa la)",
+  "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/no%20chu.mp3"
+},
+"no me hables": {
+  "regex": "(No me hables|no me hables)",
+  "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/no%20me%20hables.mp3"
+},
+"no me hagas usar esto": {
+  "regex": "(no me hagas usar esto|No me hagas usar esto|No me agas usar esto)",
+  "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/no%20me%20hagas%20usar%20esto.mp3"
+},
+"no digas eso papu": {
+  "regex": "(NO DIGAS ESO PAPU|no digas eso papu|No gigas eso papu|NO PAPU|No papu|NO papu|no papu)",
+  "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/no-digas-eso-papu.mp3"
+},
+"noche de paz": {
+  "regex": "(noche de paz|Noche de paz|Noche de amor|noche de amor|Noche de Paz|🌚|🌕|🌖|🌗|🌘|🌑|🌒|🌓|🌔|🌙|🪐)",
+  "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/Noche.mp3"
+},
+"otaku": {
+  "regex": "(Nyapasu|Nyanpasu|nyapasu|Nyapasu|Gambure|Yabure|🐨|🐣|🐥|🦄|🤙)",
+  "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/otaku.mp3"
+},
+"ohayo": {
+  "regex": "(Ohayo|ohayo|Ojayo|ojayo|Ohallo|ohallo|Ojallo|ojallo|🏮|🎎|⛩️|🐲|🐉|🌸|🍙|🍘)",
+  "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/ohayo.mp3"
+},
+"omaiga": {
+  "regex": "(OMAIGA|OMG|omg|omaiga|Omg|Omaiga|OMAIGA)",
+  "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/omaiga.mp3"
+},
+"onichan": {
+  "regex": "(oni-chan|onichan|o-onichan)",
+  "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/Onichan.mp3"
+},
+"orale": {
+  "regex": "(orale|Orale)",
+  "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/orale.mp3"
+},
+"elmo pack": {
+  "regex": "(Pasa pack|vendes tu nudes|pasa video hot|pasa tu pack|pasa fotos hot|vendes tu pack|Vendes tu pack|Vendes tu pack\\?|vendes tu pack|Pasa Pack Bot|pasa pack Bot|pasa tu pack Bot|Pásame tus fotos desnudas|pásame tu pack|me pasas tu pak|me pasas tu pack|pasa pack)",
+  "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/Elmo.mp3"
+},
+"contexto": {
+  "regex": "(Contexto|CONTEXTO|contexto|Pasen contexto|PASEN CONTEXTO|pasen contexto|Y el contexto|Y EL CONTEXTO|y el contexto)",
+  "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/contexto.mp3"
+},
+"otro nivel": {
+  "regex": "(Pero esto|pero esto|Pero esto ya es otro nivel|pero esto ya es otro nivel|Otro nivel|otro nivel)",
+  "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/pero-esto-ya-es-otro-nivel.mp3"
+},
+"pikachu": {
+  "regex": "(PIKA|pica|Pica|Pikachu|pikachu|PIKACHU|picachu|Picachu)",
+  "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/pikachu.mp3"
+},
+"pokemon": {
+  "regex": "(Pokemon|pokemon|Pokémon|pokémon)",
+  "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/pokemon.mp3"
+},
+"tu senpai": {
+  "regex": "(Quién es tu senpai botsito 7u7|Quien es tu senpai botsito 7u7|Quién es tu sempai botsito 7u7|Quien es tu sempai botsito 7u7|Quién es tu senpai botsito 7w7|Quien es tu senpai botsito 7w7|quién es tu senpai botsito 7u7|quien es tu senpai botsito 7u7|Quién es tu sempai botsito 7w7|Quien es tu sempai botsito 7w7|Quién es tu senpai botsito|Quien es tu senpai botsito|Quién es tu sempai botsito|Quien es tu sempai botsito|Quién es tu senpai botsito|Quien es tu senpai botsito|quién es tu senpai botsito|quien es tu senpai botsito|Quién es tu sempai botsito|Quien es tu sempai botsito)",
+  "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/Tu.mp3"
+},
+"rawr": {
+  "regex": "(rawr|Rawr|RAWR|raawwr|rraawr|rawwr)",
+  "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/rawr.mp3"
+},
+"sempai hablame": {
+  "regex": "(hablame|Habla me|Hablame|habla me|Háblame|háblame)",
+  "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/sempai.mp3"
+},
+"suspenso": {
+  "regex": "(Cagaste|Miedo|miedo|Pvp|PVP|temor|que pasa|Que sucede|Que pasa|que sucede|Qué pasa|Qué sucede|Dime|dime)",
+  "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/suspenso.mp3"
+},
+"yoshi cancion": {
+  "regex": "(YOSHI|Yoshi|YoShi|yoshi)",
+  "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/yoshi-cancion.mp3"
+},
+"verdad que te engañe": {
+  "regex": "(Verdad que te engañe|verdad que te engañe|verdad que|Verdad que)",
+  "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/verdad-que-te-engane.mp3"
+},
+"vivan": {
+  "regex": "(vivan|vivan los novios|vivanlosnovios)",
+  "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/vivan.mp3"
+},
+"yamete kudasai": {
+  "regex": "(Yamete|yamete|Yamete kudasai|yamete kudasai)",
+  "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/Yamete-kudasai.mp3"
+},
+"usted está detenido": {
+  "regex": "(Usted esta detenido|usted esta detenido|usted está detenido|Usted está detenido)",
+  "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/usted%20esta%20detenido.mp3"
+},
+"una pregunta": {
+  "regex": "(una pregunta|pregunton|preguntona)",
+  "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/una-pregunta.mp3"
+},
+"dylan2": {
+  "regex": "(oye|🐔|Chiste)",
+  "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/dylan2.mp3"
+},
+"gaspi6": {
+  "regex": "(gaspi y la minita|Gaspi y la mina|ig del la minita)",
+  "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/gaspi6.mp3"
+},
+"gaspi9": {
+  "regex": "(gaspi frase|frase)",
+  "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/gaspi9.mp3"
+},
+"sonbare5": {
+  "regex": "(se pubrio|se que re pubrio)",
+  "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/sonbare5.mp3"
+},
+"sonbare14": {
+  "regex": "(goo|temazo|fuaa temon)",
+  "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/sonbare14.mp3"
+},
+"vamo": {
+  "regex": "(Vamos|vamo)",
+  "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/vamo.mp3"
+},
+"viejo1": {
+  "regex": "(:V|:v|v:)",
+  "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/viejo1.mp3"
+},
+"bruno": {
+  "regex": "(Bruno|bruno)",
+  "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/bruno.mp3"
+},
+"vete a la verga": {
+  "regex": "(vetealavrg|vete a la vrg|vete a la verga)",
+  "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/vete%20a%20la%20verga.mp3"
+},
+"wtf": {
+  "regex": "(WTF|wtf|Wtf|wataf|watafac|watafack)",
+  "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/wtf.mp3"
+},
+"uwu": {
+  "regex": "(UwU|uwu|Uwu|uwU|UWU)",
+  "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/UwU.mp3"
+},
+"jai": {
+  "regex": "(Hey|Hei|hey|HEY)",
+  "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/jai.mp3"
+},
+"joder": {
+  "regex": "(Joder|joder)",
+  "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/joder.mp3"
+},
+"toma": {
+  "regex": "(:c|c)",
+  "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/toma.mp3"
+},
+"siu": {
+  "regex": "(siu|siiuu|ssiiuu|siuuu|siiuuu|siiiuuuu|siuuuu|siiiiuuuuu|SIIIIUUU)",
+  "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/siu.mp3"
+},
+"sus": {
+  "regex": "(Sus|sus|Amongos|among us|Among us|Among)",
+  "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/sus.mp3"
+},
+"te amo": {
+  "regex": "(te amo|teamo)",
+  "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/Te-amo.mp3"
+},
+"violin": {
+  "regex": "(Estoy triste|ESTOY TRISTE|estoy triste|Triste|TRISTE|triste|Troste|TROSTE|troste|Truste|TRUSTE|truste)",
+  "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/violin.mp3"
+},
+"pato": {
+  "regex": "(un Pato| un pato|un pato que va caminando alegremente|Un pato|Un Pato)",
+  "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/pato.mp3"
+},
+"viernes": {
+  "regex": "(fiesta viernes|viernes|Viernes|viernes fiesta)",
+  "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/viernes.mp3"
+},
+"yokese": {
+  "regex": "(Yokese|yokese|YOKESE)",
+  "audio": "https://raw.githubusercontent.com/GataNina-Li/GataBot-MD1/master/media/yokese.mp3"
+}
+  }
+}
