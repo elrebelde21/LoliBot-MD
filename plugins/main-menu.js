@@ -168,8 +168,7 @@ console.error(err);
 }}
 handler.help = ['menu']
 handler.tags = ['main']
-handler.command = /^menu|help|allmenu|menú$/i
-handler.noprefixOnly = true;
+handler.command = /^(menu|help|allmenu|menú)$/i
 export default handler
 
 const clockString = ms => {

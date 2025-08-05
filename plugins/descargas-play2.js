@@ -180,7 +180,7 @@ delete userRequests[m.sender];
 }}
 handler.help = ['ytmp4', 'ytmp3'];
 handler.tags = ['downloader'];
-handler.command = /^ytmp3|ytmp4|fgmp4|audio|fgmp3|dlmp3|ytmp4doc|ytmp3doc?$/i
+handler.command = /^(ytmp3|ytmp4|fgmp4|fgmp3|dlmp3|ytmp4doc|ytmp3doc)$/i;
 export default handler
 
 async function search(query, options = {}) {

@@ -72,11 +72,11 @@ await db.query(`INSERT INTO group_settings (group_id) VALUES ($1) ON CONFLICT DO
 await db.query(`UPDATE group_settings SET antiporn = $1 WHERE group_id = $2`, [isEnable, chatId])
 break
             
-case 'antiestado': case 'antiStatus':
+case 'audios':
 if (!m.isGroup) throw '⚠️ Este comando solo se puede usar dentro de un grupo.'
 if (!isAdmin) throw "⚠️ Solo los admins puede usar este comando.";
 await db.query(`INSERT INTO group_settings (group_id) VALUES ($1) ON CONFLICT DO NOTHING`, [chatId])
-await db.query(`UPDATE group_settings SET antiStatus = $1 WHERE group_id = $2`, [isEnable, chatId])
+await db.query(`UPDATE group_settings SET audios = $1 WHERE group_id = $2`, [isEnable, chatId])
 break
             
 case 'antifake':
@@ -122,7 +122,7 @@ await m.reply(`🗂️ La opción *${type}* para ${isAll ? 'todo el bot' : isUse
 }
 handler.help = ['enable <opción>', 'disable <opción>']
 handler.tags = ['nable']
-handler.command = /^(enable|disable)$/i
+handler.command = /^((en|dis)able|(tru|fals)e|(turn)?o(n|ff)|[01])$/i
 handler.register = true
 //handler.group = true 
 //handler.admin = true
