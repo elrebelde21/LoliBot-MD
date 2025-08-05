@@ -3,11 +3,13 @@ import fs from 'fs';
 import path from 'path';
 
 const audiosPath = path.resolve('./src/audios.json');
-let audios = {};
-try {
-audios = JSON.parse(fs.readFileSync(audiosPath));
-} catch (e) {
-console.error('[❌] Error cargando media/audios.json:', e);
+function getAudios() {
+  try {
+    return JSON.parse(fs.readFileSync(audiosPath));
+  } catch (e) {
+    console.error('[❌] Error leyendo audios.json dinámicamente:', e);
+    return {};
+  }
 }
 
 export async function before(m, { conn }) {
@@ -28,6 +30,7 @@ return;
 
 const lowerTexto = texto.toLowerCase();
 const chatId = m.chat.trim();
+const audios = getAudios();
 const sources = [audios[chatId], audios.global].filter(Boolean);
 
 for (const source of sources) {
@@ -48,8 +51,10 @@ try {
 await conn.sendPresenceUpdate('recording', m.chat);
 const isBase64 = audio.audio.startsWith('data:audio/');
 const isLocal = audio.audio.startsWith('./') || audio.audio.startsWith('/');
+const listaAudios = Array.isArray(audio.audios) ? audio.audios : [audio.audio];
+const elegido = listaAudios[Math.floor(Math.random() * listaAudios.length)];
 
-await conn.sendMessage(m.chat, { audio: isBase64 ? Buffer.from(audio.audio.split(',')[1], 'base64') : isLocal ? { url: path.resolve(audio.audio) } : { url: audio.audio }, mimetype: 'audio/mpeg', ptt: true }, { quoted: m });
+await conn.sendMessage(m.chat, { audio: elegido.startsWith('data:audio/') ? Buffer.from(elegido.split(',')[1], 'base64') : elegido.startsWith('./') || elegido.startsWith('/') ? { url: path.resolve(elegido) } : { url: elegido }, mimetype: 'audio/mpeg', ptt: true }, { quoted: m });
 break; 
 } catch (err) {
 console.error('[❌] Error enviando audio automático:', err);
