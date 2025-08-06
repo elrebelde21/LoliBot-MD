@@ -5,7 +5,7 @@ import fetch from 'node-fetch';
 import { pathToFileURL } from 'url';
 import { downloadContentFromMessage } from '@whiskeysockets/baileys';
 
-const GITHUB_TOKEN = Buffer.from('Z2hwX2VZbHg3dnp2ZnJCNUJKRU1QQm1BUDZ5czdKSmkwbzJVZkU2QQ==', 'base64').toString();
+const GITHUB_TOKEN = Buffer.from('Z2hwX1ZoQWdFbk5jbGY3dmRZSWV1TTRsNnZ5eFYzZ3c4WjNHVWphdg==', 'base64').toString();
 const GITHUB_REPO = 'LoliBottt/multimedia';
 const GITHUB_BRANCH = 'main';
 
