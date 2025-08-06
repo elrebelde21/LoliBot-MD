@@ -17,54 +17,40 @@ userRequests[m.sender] = true;
 m.react(`🚀`);
 try {
 const downloadAttempts = [
-  // 🟢 Neoxr
-  async () => {
-    const res = await fetch(`https://api.neoxr.eu/api/mediafire?url=${args[0]}&apikey=GataDios`);
-    const data = await res.json();
-    if (!data.status) throw new Error('Error en Neoxr');
-    return {
-      url: data.result.url,
-      filename: data.result.filename,
-      filesize: data.result.size,
-      mimetype: data.result.mimetype
-    };
-  },
-
-  // 🟢 Agatz
-  async () => {
-    const res = await fetch(`https://api.agatz.xyz/api/mediafire?url=${args[0]}`);
-    const data = await res.json();
-    return {
-      url: data.data[0].link,
-      filename: data.data[0].nama,
-      filesize: data.data[0].size,
-      mimetype: data.data[0].mime
-    };
-  },
-
-  // 🟢 Siputzx
-  async () => {
-    const res = await fetch(`https://api.siputzx.my.id/api/d/mediafire?url=${args[0]}`);
-    const data = await res.json();
-    return data.data.map(file => ({
-      url: file.link,
-      filename: file.filename,
-      filesize: file.size,
-      mimetype: file.mime
-    }))[0];
-  },
-
-  // 🟢 info.apis
-  async () => {
-    const res = await fetch(`${info.apis}/api/mediafire?url=${args[0]}`);
-    const data = await res.json();
-    return data.data.map(file => ({
-      url: file.link,
-      filename: file.filename,
-      filesize: file.size,
-      mimetype: file.mime
-    }))[0];
-  }
+async () => {
+const res = await fetch(`https://api.delirius.store/download/mediafire?url=${args[0]}`);
+const data = await res.json();
+return { url: data.data[0].link,
+filename: data.data[0].filename,
+filesize: data.data[0].size,
+mimetype: data.data[0].mime
+}},
+async () => {
+const res = await fetch(`https://api.neoxr.eu/api/mediafire?url=${args[0]}&apikey=russellxz`);
+const data = await res.json();
+if (!data.status || !data.data) throw new Error('Error en Neoxr');
+return { url: data.data.url,
+filename: data.data.title,
+filesize: data.data.size,
+mimetype: data.data.mime
+}},
+async () => {
+const res = await fetch(`https://api.agatz.xyz/api/mediafire?url=${args[0]}`);
+const data = await res.json();
+return { url: data.data[0].link,
+filename: data.data[0].nama,
+filesize: data.data[0].size,
+mimetype: data.data[0].mime
+}},
+async () => {
+const res = await fetch(`https://api.siputzx.my.id/api/d/mediafire?url=${args[0]}`);
+const data = await res.json();
+return data.data.map(file => ({ url: file.link,
+filename: file.filename,
+filesize: file.size,
+mimetype: file.mime
+}))[0];
+}
 ];
 
 let fileData = null;
@@ -84,7 +70,7 @@ const caption = `┏━━『 𝐌𝐄𝐃𝐈𝐀𝐅𝐈𝐑𝐄 』━━•
 ┃❥ 𝐍𝐨𝐦𝐛𝐫𝐞 : ${file.filename}
 ┃❥ 𝐏𝐞𝐬𝐨 : ${file.filesize}
 ┃❥ 𝐓𝐢𝐩𝐨 : ${file.mimetype}
-╰━━━⊰ 𓃠 ${vs} ⊱━━━━•
+╰━━━⊰ 𓃠 ${info.vs} ⊱━━━━•
 > ⏳ ᴱˢᵖᵉʳᵉ ᵘⁿ ᵐᵒᵐᵉⁿᵗᵒ ᵉⁿ ˡᵒˢ ᵠᵘᵉ ᵉⁿᵛᶦᵒˢ ˢᵘˢ ᵃʳᶜʰᶦᵛᵒˢ`.trim();
 const captionMessage = await conn.reply(m.chat, caption, m)
 userCaptions.set(m.sender, captionMessage);
