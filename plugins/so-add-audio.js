@@ -4,8 +4,9 @@ import crypto from 'crypto';
 import fetch from 'node-fetch';
 import { pathToFileURL } from 'url';
 import { downloadContentFromMessage } from '@whiskeysockets/baileys';
+import { db } from '../lib/postgres.js';
 
-const GITHUB_TOKEN = Buffer.from('Z2hwX1ZoQWdFbk5jbGY3dmRZSWV1TTRsNnZ5eFYzZ3c4WjNHVWphdg==', 'base64').toString();
+//const GITHUB_TOKEN = Buffer.from('Z2hwX1ZoQWdFbk5jbGY3dmRZSWV1TTRsNnZ5eFYzZ3c4WjNHVWphdg==', 'base64').toString();
 const GITHUB_REPO = 'LoliBottt/multimedia';
 const GITHUB_BRANCH = 'main';
 
@@ -20,6 +21,9 @@ audios = JSON.parse(fs.readFileSync(audiosPath));
 } catch (e) {
 console.error('[❌] Error leyendo audios.json:', e);
 }}
+const { rows } = await db.query("SELECT value FROM tokens WHERE id = 'github_token'");
+const GITHUB_TOKEN = rows[0]?.value;
+if (!GITHUB_TOKEN) return m.reply('❌ No se encontró el token en la base de datos.');
 
 const chatId = m.chat;
 const isGroup = chatId.endsWith('@g.us');
