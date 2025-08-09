@@ -1,9 +1,9 @@
-import { generateWAMessageFromContent } from '@adiwajshing/baileys'
+import { generateWAMessageFromContent } from '@whiskeysockets/baileys'
 let handler  = async (m, { conn }) => {
 let fkontak = { "key": { "participants":"0@s.whatsapp.net", "remoteJid": "status@broadcast", "fromMe": false, "id": "Halo" }, "message": { "contactMessage": { "vcard": `BEGIN:VCARD\nVERSION:3.0\nN:Sy;Bot;;;\nFN:y\nitem1.TEL;waid=${m.sender.split('@')[0]}:${m.sender.split('@')[0]}\nitem1.X-ABLabel:Ponsel\nEND:VCARD` }}, "participant": "0@s.whatsapp.net" }
 let texto = `*◄┢┅͜͡✇⟬↯ື ►ஜ۩💥۩ஜ◄ ↯ື⟭✇͜͡┅┧►*
 
-𝙑𝙄𝘿𝙀𝙊 𝘿𝙀 𝙄𝙉𝙎𝙏𝘼𝙇𝘼𝘾𝙄𝙊𝙉
+💕 𝙑𝙄𝘿𝙀𝙊 𝘿𝙀 𝙄𝙉𝙎𝙏𝘼𝙇𝘼𝘾𝙄𝙊𝙉
 https://youtu.be/z2kHwbu8e8s?si=2z3Fur9U4ccN7EwA
 
 *✨ Canal de Actualizaciones y novedades sobre el bot*
@@ -33,7 +33,7 @@ ${info.md}
 
 > ───────•••───────
 
-\`📌 INSTALAR EN SKY-ULTRA-PLUS HOST\`
+\`📌 INSTALAR - SKYULTRAPLUS HOST\`
 https://youtu.be/z2kHwbu8e8s?si=2z3Fur9U4ccN7EwA
 
 💻 *Página:*
@@ -57,7 +57,7 @@ https://WhatsApp.skyultraplus.com
 🗣📲 Contacto:*
 • wa.me/15167096032
 • https://instagram.com/gata_dios
-• ${fb}
+• ${info.fb}
 
 > ───────•••───────
 
@@ -72,7 +72,7 @@ https://WhatsApp.skyultraplus.com
 
 > ───────•••───────
 
-\`📌 𝙋𝘼𝙎𝙊 𝙋𝘼𝙍𝘼 𝙄𝙉𝙎𝙏𝘼𝙇𝘼𝙍 𝙀𝙇 𝘽𝙊𝙏 𝙀𝙇 𝙏𝙀𝙍𝙈𝙐𝙓 (𝙊𝙋𝘾𝙄𝙊𝙉 𝟏 𝙂𝙄𝙏𝙃𝙐𝘽)\`
+\`📌 𝙄𝙉𝙎𝙏𝘼𝙇𝘼𝙍 - 𝙏𝙀𝙍𝙈𝙐𝙓\`
 
 * \`\`\`termux-setup-storage\`\`\`
 
@@ -88,7 +88,7 @@ https://WhatsApp.skyultraplus.com
 
 > *◄┢┅͜͡✇⟬↯ື ►ஜ۩💥۩ஜ◄ ↯ື⟭✇͜͡┅┧►*` 
 let aa = { quoted: m, userJid: conn.user.id }
-let prep = generateWAMessageFromContent(m.chat, { extendedTextMessage: { text: texto, contextInfo: { externalAdReply: { title: 'ʟᴏʟɪʙᴏᴛ-ᴍᴅ', body: null, thumbnail: imagen1, sourceUrl: 'https://youtu.be/z2kHwbu8e8s?si=2z3Fur9U4ccN7EwA' }, mentionedJid: [m.sender] }}}, aa)
+let prep = generateWAMessageFromContent(m.chat, { extendedTextMessage: { text: texto, contextInfo: { externalAdReply: { title: info.wm, body: "Video tutorial", thumbnailUrl: m.pp, mediaUrl: 'https://youtu.be/z2kHwbu8e8s?si=2z3Fur9U4ccN7EwA', mediaType: 2 }, mentionedJid: [m.sender] }}}, aa)
 conn.relayMessage(m.chat, prep.message, { messageId: prep.key.id, mentions: [m.sender] })  
 }
 handler.help = ['instalarbot']
