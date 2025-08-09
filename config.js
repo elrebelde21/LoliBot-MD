@@ -29,6 +29,7 @@ yt: "https://www.youtube.com/@elrebelde.21",
 tiktok: "https://www.tiktok.com/@elrebelde.21",
 md: "https://github.com/elrebelde21/LoliBot-MD",
 fb: "https://www.facebook.com/elrebelde21",
+ig: "https://www.instagram.com/its_china_official",
 nn: "https://chat.whatsapp.com/HNDVUxHphPzG3cJHIwCaX5", //Grupo ofc1
 nn2: "https://chat.whatsapp.com/KDBt6S54riRCIpSZspkxhg", //Grupo ofc2
 nn3: "https://chat.whatsapp.com/GXNXKWSEckU1j1c7sItTxK", //Colab Loli & Gata
