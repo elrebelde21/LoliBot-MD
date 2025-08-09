@@ -39,20 +39,23 @@ https://youtu.be/z2kHwbu8e8s?si=2z3Fur9U4ccN7EwA
 💻 *Página:*
 https://skyultraplus.com
 
-*🟢 Dashboard:*
-https://dash.skyultraplus.com
+✨ *Dashboard "new" para cliente:*
+paymenter.skyultraplus.com
+
+🟢 *Dash "anterior" usuarios free:*
+dash.skyultraplus.com
 
 ⚙️ *Panel:*
 https://panel.skyultraplus.com
 
 💥 *Comunidad de WhatsApp:*
-https://chat.whatsapp.com/E6iWpvGuJ8zJNPbN3zOr0D
+https://chat.whatsapp.com/E6iWpvGuJ8zJNPbN3zOr0D?mode=ac_t
 
 *🟣 Discord:*
-https://discord.skyultraplus.com
+https://discord.gg/zvKgtc2RBc
 
 🧡 Canal de WhatsApp:*
-https://WhatsApp.skyultraplus.com
+https://whatsapp.com/channel/0029VakUvreFHWpyWUr4Jr0g
 
 🗣📲 Contacto:*
 • wa.me/15167096032
