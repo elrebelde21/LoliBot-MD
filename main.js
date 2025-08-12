@@ -16,9 +16,6 @@ const BOT_CREDS_PATH = path.join(BOT_SESSION_FOLDER, "creds.json");
 if (!fs.existsSync(BOT_SESSION_FOLDER)) fs.mkdirSync(BOT_SESSION_FOLDER);
 
 if (!globalThis.conns || !(globalThis.conns instanceof Array)) globalThis.conns = [];
-let _indiceActualSubbot = 0;
-const MAX_SUBBOTS = 5;
-let reconectandoAhora = 0;
 const reconectando = new Set();
 let usarCodigo = false;
 let numero = "";
