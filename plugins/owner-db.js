@@ -1,62 +1,70 @@
 import { db } from '../lib/postgres.js';
 
-let handler = async (m, { conn }) => {
-  try {
-    const [
-      usuarios,
-      registrados,
-      chats,
-      grupos,
-      mensajes,
-      tablasRes,
-      totalSize
-    ] = await Promise.all([
-      db.query('SELECT COUNT(*) FROM usuarios'),
-      db.query('SELECT COUNT(*) FROM usuarios WHERE registered = true'),
-      db.query('SELECT COUNT(*) FROM chats'),
-      db.query("SELECT COUNT(*) FROM group_settings WHERE welcome IS NOT NULL"),
-      db.query('SELECT SUM(message_count) FROM messages'),
-      db.query(`
-        SELECT relname AS tabla,
-               n_live_tup AS filas,
-               pg_size_pretty(pg_total_relation_size(relid)) AS tamaño
-        FROM pg_stat_user_tables
-        ORDER BY pg_total_relation_size(relid) DESC;
-      `),
-      db.query(`
-        SELECT pg_size_pretty(SUM(pg_total_relation_size(relid))) AS total
-        FROM pg_stat_user_tables;
-      `)
-    ]);
+let handler = async (m, { conn, args, isOwner, command }) => {
+  const subcmd = args[0]?.toLowerCase();
 
-    const totalUsers = usuarios.rows[0].count;
-    const totalRegistrados = registrados.rows[0].count;
-    const totalChats = chats.rows[0].count;
-    const totalGroups = grupos.rows[0].count;
-    const totalMessages = mensajes.rows[0].sum || 0;
-    const totalDBSize = totalSize.rows[0].total;
+  switch (subcmd) {
+    case 'info': {
+      try {
+        const [usuarios, registrados, chats, grupos, mensajes, tablasRes, totalSize] = await Promise.all([
+          db.query('SELECT COUNT(*) FROM usuarios'),
+          db.query('SELECT COUNT(*) FROM usuarios WHERE registered = true'),
+          db.query('SELECT COUNT(*) FROM chats'),
+          db.query("SELECT COUNT(*) FROM group_settings WHERE welcome IS NOT NULL"),
+          db.query('SELECT SUM(message_count) FROM messages'),
+          db.query(`
+            SELECT relname AS tabla, n_live_tup AS filas,
+                   pg_size_pretty(pg_total_relation_size(relid)) AS tamaño
+            FROM pg_stat_user_tables ORDER BY pg_total_relation_size(relid) DESC;
+          `),
+          db.query(`
+            SELECT pg_size_pretty(SUM(pg_total_relation_size(relid))) AS total
+            FROM pg_stat_user_tables;
+          `)
+        ]);
 
-    let text = `📊 *\`ESTADÍSTICAS DE BASE DE DATOS\`*\n`;
-    text += `> 👤 Usuarios: *${totalUsers}*\n`;
-    text += `> ✅ Registrados: *${totalRegistrados}*\n`;
-    text += `> 💬 Chats totales: *${totalChats}*\n`;
-    text += `> 💾 Tamaño total DB: *${totalDBSize}*\n\n`;
+        const text = [
+          `📊 *\`ESTADÍSTICAS DE BASE DE DATOS\`*`,
+          `> 👤 Usuarios: *${usuarios.rows[0].count}*`,
+          `> ✅ Registrados: *${registrados.rows[0].count}*`,
+          `> 💬 Chats totales: *${chats.rows[0].count}*`,
+          `> 💾 Tamaño total DB: *${totalSize.rows[0].total}*`,
+          `\n📁 *\`TAMAÑO POR TABLA:\`*`,
+          ...tablasRes.rows.map(r => `• *${r.tabla}*: ${r.filas} filas — ${r.tamaño}`)
+        ].join('\n');
 
-    text += `📁 *\`TAMAÑO POR TABLA:\`*\n`;
-    for (const row of tablasRes.rows) {
-      text += `• *${row.tabla}*: ${row.filas} filas — ${row.tamaño}\n`;
+        await m.reply(text);
+      } catch (e) {
+        console.error('[❌] /db info error:', e);
+        await m.reply('❌ Error al consultar la base de datos.');
+      }
+      break;
     }
 
-    await m.reply(text);
-  } catch (err) {
-    console.error("❌ Error en /db info:", err);
-    await m.reply('❌ Error al consultar la base de datos.');
+    case 'optimizar': {
+      try {
+        const inicio = Date.now();
+        await db.query('VACUUM FULL;');
+        const tiempo = ((Date.now() - inicio) / 1000).toFixed(2);
+        await m.reply(`✅ *Optimización completada.*\n📉 Se ejecutó *VACUUM FULL*\n⏱️ Duración: *${tiempo} segundos*`);
+      } catch (e) {
+        console.error('[❌] Error en optimizar:', e);
+        await m.reply('❌ No se pudo optimizar.');
+      }
+      break;
+    }
+
+    default:
+      await m.reply(`❓ Usa uno de estos subcomandos:
+
+• /db info — ver estadísticas
+• /db optimizar — VACUUM FULL`);
   }
 };
 
-handler.help = ['db info'];
+handler.help = ['db info', 'db optimizar', 'db borrar', 'db crear'];
 handler.tags = ['owner'];
-handler.command = /^\/?db(info)?$/i;
+handler.command = /^(db)$/i;
 handler.rowner = true;
 
 export default handler;
