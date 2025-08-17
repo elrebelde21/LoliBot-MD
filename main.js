@@ -95,9 +95,9 @@ setTimeout(cargarSubbots, 60 * 1000);
 async function startBot() {
 const { state, saveCreds } = await baileys.useMultiFileAuthState(BOT_SESSION_FOLDER);
 const msgRetryCounterMap = new Map();
-const msgRetryCounterCache = new NodeCache({ stdTTL: 0, checkperiod: 0 });
+const msgRetryCounterCache = new NodeCache({ stdTTL: 0, checkperiod: 0 }); 
 const userDevicesCache = new NodeCache({ stdTTL: 0, checkperiod: 0 });
-const groupCache = new NodeCache({ stdTTL: 300, checkperiod: 60 });
+const groupCache = new NodeCache({ stdTTL: 3600, checkperiod: 300 });
 const { version } = await baileys.fetchLatestBaileysVersion();
 
 console.info = () => {} 
@@ -150,6 +150,7 @@ setTimeout(() => startBot(), 3000);
 }});
 
 process.on('uncaughtException', console.error);
+process.on('unhandledRejection', console.error);
   
 if (usarCodigo && !state.creds.registered) {
 setTimeout(async () => {
