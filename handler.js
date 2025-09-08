@@ -153,7 +153,6 @@ newsletterName: "LoliBot ✨️"
 await conn.sendMessage(id, { text: msg,
 contextInfo: {
 forwardedNewsletterMessageInfo: {
-newsletterJid: (() => {
 newsletterJid: ["120363305025805187@newsletter", "120363301598733462@newsletter"].getRandom(),
 newsletterName: "LoliBot ✨️"
 },
