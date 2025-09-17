@@ -333,10 +333,18 @@ await db.query(`UPDATE subbots SET tipo = $1 WHERE id = $2`, [botType, botId.rep
 const prefijo = Array.isArray(botConfig.prefix) ? botConfig.prefix : [botConfig.prefix];
 const modo = botConfig.mode || "public";
 m.isGroup = chatId.endsWith("@g.us");
+
+if (m.key?.participantAlt && m.key.participantAlt.endsWith("@s.whatsapp.net")) {
+m.sender = m.key.participantAlt;   
+m.lid = m.key.participant;
+} else {
 m.sender = m.key?.participant || chatId;
+}
+
 if (m.key?.fromMe) {
 m.sender = conn.user?.id || m.sender;
 }
+
 if (typeof m.sender === "string") {
 m.sender = m.sender.replace(/:\d+/, "");
 }
@@ -455,24 +463,23 @@ setTimeout(() => groupMetaCache.delete(chatId), 300_000);
 } catch {
 metadata = { participants: [] };
 }}}
-/*let metadata = { participants: [] };
-if (m.isGroup) {
-try {
-metadata = await conn.groupMetadata(m.chat);
-} catch (err) {
-metadata = { participants: [] };
-}}*/
 
 const participants = metadata.participants || [];
-const adminIds = participants.filter(p => p.admin === "admin" || p.admin === "superadmin").map(p => p.id && p.id.replace(/:\d+/, ""));
+
+const adminIds = participants.filter(p => p.admin === "admin" || p.admin === "superadmin").flatMap(p => {
+const clean = p.id?.replace(/:\d+/, "") || "";
+return clean.endsWith("@lid")
+? [clean, clean.replace("@lid", "@s.whatsapp.net")]
+: [clean, clean.replace("@s.whatsapp.net", "@lid")];
+});
 
 const senderJids = [];
 if (m.user?.id) senderJids.push(m.user.id.replace(/:\d+/, ""));
 if (m.user?.lid) senderJids.push(m.user.lid.replace(/:\d+/, ""));
 if (m.sender) senderJids.push(m.sender.replace(/:\d+/, ""));
 if (m.lid) senderJids.push(m.lid.replace(/:\d+/, ""));
-const uniqueSenderJids = [...new Set(senderJids.filter(Boolean))];
 
+const uniqueSenderJids = [...new Set(senderJids.filter(Boolean))];
 m.isAdmin = adminIds.some(adminJid => uniqueSenderJids.includes(adminJid));
 
 if (m.isGroup && !isCreator && senderJid !== botJid) {
@@ -498,38 +505,34 @@ console.error(err);
 }}
 
 try {
-const rawJid = m.key?.participant || m.key?.remoteJid || null;
-const isValido = typeof rawJid === 'string' && /^\d+@s\.whatsapp\.net$/.test(rawJid);
+const rawJid = m.key?.participantAlt || m.key?.participant || m.key?.remoteJid || null;
+const isValido = typeof rawJid === 'string' && /^\d+@(s\.whatsapp\.net|lid)$/.test(rawJid);
 const num = isValido ? rawJid.split('@')[0] : null;
 const userName = m.pushName || 'sin name';
 
-if (m.sender && m.sender.endsWith('@lid')) {
-try {
-await db.query('DELETE FROM usuarios WHERE id = $1', [m.sender]);
-} catch (e) {
-console.error("❌ Error borrando usuario duplicado con @lid:", e);
-}
+if (m.key?.participantAlt && m.key.participantAlt.endsWith('@s.whatsapp.net')) {
+m.sender = m.key.participantAlt;
+m.lid = m.key.participant;
+} else {
 m.sender = m.key?.participant || m.key?.remoteJid;
 }
 
 await db.query(`INSERT INTO usuarios (id, nombre, num, registered)
-      VALUES ($1, $2, $3, false)
-      ON CONFLICT (id) DO NOTHING
-    `, [m.sender, userName, num]);
-if (isValido) {
-await db.query(`UPDATE usuarios SET nombre = $1${num ? ', num = COALESCE(num, $2)' : ''} WHERE id = $3`, num ? [userName, num, rawJid] : [userName, rawJid]);
+     VALUES ($1, $2, $3, false)
+     ON CONFLICT (id) DO NOTHING`, [m.sender, userName, num]);
+
+if (isValido && m.sender.endsWith('@s.whatsapp.net')) {
+await db.query(`UPDATE usuarios SET nombre = $1${num ? ', num = COALESCE(num, $2)' : ''} WHERE id = $3`, num ? [userName, num, m.sender] : [userName, m.sender]);
 }
 
 if (m.key && m.key.senderLid) {
 try {
-await db.query('DELETE FROM usuarios WHERE id = $1', [m.key.senderLid]);
 await db.query('UPDATE usuarios SET lid = NULL WHERE lid = $1 AND id <> $2', [m.key.senderLid, m.sender]);
 await db.query('UPDATE usuarios SET lid = $1 WHERE id = $2', [m.key.senderLid, m.sender]);
 m.lid = m.key.senderLid;
 } catch (e) {
 console.error("❌ Error actualizando lid en handler:", e);
 }}
-
 } catch (err) {
 console.error(err);
 }
@@ -639,8 +642,18 @@ continue
 
 //User banear
 try {
-const senderId = (m.sender || m.key?.participant || "").replace(/[^0-9]/g, "") + "@s.whatsapp.net";
-if (senderId !== (conn.user?.id?.replace(/:\d+/, "") + "@s.whatsapp.net")) {
+let rawSender = m.sender || m.key?.participant || "";
+let senderId;
+
+if (rawSender.endsWith("@lid") && m.key?.participantAlt && m.key.participantAlt.endsWith("@s.whatsapp.net")) {
+senderId = m.key.participantAlt;
+} else {
+senderId = rawSender;
+}
+
+senderId = senderId.replace(/:\d+/, "");
+const botId = (conn.user?.id || "").replace(/:\d+/, "");
+if (senderId !== botId) {
 const resBan = await db.query("SELECT banned, razon_ban, avisos_ban FROM usuarios WHERE id = $1", [senderId]);
 if (resBan.rows[0]?.banned) {
 const avisos = resBan.rows[0]?.avisos_ban || 0;
@@ -648,9 +661,9 @@ if (avisos < 3) {
 const nuevoAviso = avisos + 1;
 await db.query("UPDATE usuarios SET avisos_ban = $2 WHERE id = $1", [senderId, nuevoAviso]);
 const razon = resBan.rows[0]?.razon_ban?.trim() || "Spam";
-await conn.sendMessage(m.chat, {text: `⚠️ ESTAS BANEADO ⚠️\n*• Motivo:* ${razon} (avisos: ${nuevoAviso}/3)\n*👉🏻 Puedes contactar al propietario del Bot si crees que se trata de un error o para charlar sobre tu desbaneo*\n\n👉 ${info.fb}`, contextInfo: { mentionedJid: [senderId] }}, { quoted: m });
+await conn.sendMessage(m.chat, { text: `⚠️ ESTAS BANEADO ⚠️\n*• Motivo:* ${razon} (avisos: ${nuevoAviso}/3)\n*👉🏻 Puedes contactar al propietario del Bot si crees que se trata de un error o para charlar sobre tu desbaneo*\n\n👉 ${info.fb}`, contextInfo: { mentionedJid: [senderId] }}, { quoted: m });
 }
-return; 
+return;
 }}
 } catch (e) {
 console.error("❌ Error al verificar baneo:", e);
