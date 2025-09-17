@@ -20,6 +20,23 @@ const reconectando = new Set();
 let usarCodigo = false;
 let numero = "";
 
+// --- Detector de spam de "ekey bundle" ---
+let spamCount = 0;
+
+setInterval(() => { spamCount = 0 }, 60 * 1000);
+
+const origError = console.error;
+console.error = (...args) => {
+  if (args[0]?.toString().includes("Closing stale open session")) {
+    spamCount++;
+    if (spamCount > 50) {
+      console.log("⚠️ Detectado loop de sesiones, reiniciando bot...");
+      process.exit(1);
+    }
+  }
+  origError(...args);
+};
+
 main();
 
 async function main() {
@@ -100,10 +117,11 @@ const userDevicesCache = new NodeCache({ stdTTL: 0, checkperiod: 0 });
 const groupCache = new NodeCache({ stdTTL: 3600, checkperiod: 300 });
 const { version } = await baileys.fetchLatestBaileysVersion();
 
-console.info = () => {} 
+console.info = () => {};
+console.debug = () => {};
 const sock = baileys.makeWASocket({
 printQRInTerminal: !usarCodigo && !fs.existsSync(BOT_CREDS_PATH),
-logger: pino({ level: 'silent' }),   
+logger: pino({ level: 'error' }),
 browser: ['Windows', 'Chrome'],
 auth: { creds: state.creds,
 keys: baileys.makeCacheableSignalKeyStore(state.keys, pino({ level: 'silent' }))
@@ -111,14 +129,9 @@ keys: baileys.makeCacheableSignalKeyStore(state.keys, pino({ level: 'silent' }))
 markOnlineOnConnect: false, 
 generateHighQualityLinkPreview: true, 
 syncFullHistory: false,
-getMessage: async (key) => {
-try {
-let jid = jidNormalizedUser(key.remoteJid);
-let msg = await store.loadMessage(jid, key.id);
-return msg?.message || "";
-} catch (error) {
+getMessage: async () => {
 return "";
-}},
+},
 msgRetryCounterCache: msgRetryCounterCache || new Map(),
 userDevicesCache: userDevicesCache || new Map(),
 //msgRetryCounterMap,
@@ -165,10 +178,7 @@ sock.ev.on("messages.upsert", async ({ messages, type }) => {
 if (type !== "notify") return;
 for (const msg of messages) {
 if (!msg.message) continue;
-const tiempoInicio = Math.floor(sock.uptime / 1000);
-if (msg.messageTimestamp && (msg.messageTimestamp < tiempoInicio || (Date.now() / 1000 - msg.messageTimestamp) > 60)) {
-  continue;
-}
+if (msg.messageTimestamp && (Date.now()/1000 - msg.messageTimestamp > 120)) continue; 
 if(msg.key.id.startsWith('NJX-') || msg.key.id.startsWith('Lyru-') || msg.key.id.startsWith('EvoGlobalBot-') || msg.key.id.startsWith('BAE5') && msg.key.id.length === 16 || msg.key.id.startsWith('3EB0') && msg.key.id.length === 12 || msg.key.id.startsWith('3EB0') || msg.key.id.startsWith('3E83') || msg.key.id.startsWith('3E38') && (msg.key.id.length === 20 || msg.key.id.length === 22) || msg.key.id.startsWith('B24E') || msg.key.id.startsWith('8SCO') && msg.key.id.length === 20 || msg.key.id.startsWith('FizzxyTheGreat-')) return
 try {
 //const { handler } = await import("./handler.js");
@@ -218,36 +228,49 @@ process.exit(0);
 
 //tmp session basura
 setInterval(() => {
-const now = Date.now();
-const carpetas = ['./jadibot', './BotSession'];
-for (const basePath of carpetas) {
-if (!fs.existsSync(basePath)) continue;
+  const now = Date.now();
+  const carpetas = ['./jadibot', './BotSession'];
+  for (const basePath of carpetas) {
+    if (!fs.existsSync(basePath)) continue;
 
-const subfolders = fs.readdirSync(basePath);
-for (const folder of subfolders) {
-const sessionPath = path.join(basePath, folder);
-if (!fs.statSync(sessionPath).isDirectory()) continue;
-const isActive = globalThis.conns?.some(c => c.userId === folder || c.user?.id?.includes(folder));
-const files = fs.readdirSync(sessionPath);
+    const subfolders = fs.readdirSync(basePath);
+    for (const folder of subfolders) {
+      const sessionPath = path.join(basePath, folder);
+      if (!fs.statSync(sessionPath).isDirectory()) continue;
+      const isActive = globalThis.conns?.some(c => c.userId === folder || c.user?.id?.includes(folder));
+      const files = fs.readdirSync(sessionPath);
 
-for (const file of files) {
-const fullPath = path.join(sessionPath, file);
-if (!fs.existsSync(fullPath)) continue;
-if (file === 'creds.json') continue;
-try {
-const stats = fs.statSync(fullPath);
-const ageMs = now - stats.mtimeMs;
+      // 🔧 limitar cantidad de pre-keys
+      const prekeys = files.filter(f => f.startsWith("pre-key"));
+      if (prekeys.length > 500) {
+        prekeys
+          .sort((a, b) => fs.statSync(path.join(sessionPath, a)).mtimeMs - fs.statSync(path.join(sessionPath, b)).mtimeMs)
+          .slice(0, prekeys.length - 300)
+          .forEach(pk => {
+            fs.unlinkSync(path.join(sessionPath, pk));
+          });
+      }
 
-if (file.startsWith('pre-key') && ageMs > 24 * 60 * 60 * 1000 && !isActive) {
-fs.unlinkSync(fullPath);
-//console.log(chalk.cyanBright(`[🔵] Pre-key vieja eliminada (${folder}): ${file}`));
-} else if (ageMs > 30 * 60 * 1000 && !isActive) {
-fs.unlinkSync(fullPath);
-//console.log(chalk.gray(`[⚪] Archivo viejo eliminado (${folder}): ${file}`));
-}} catch (err) {
-console.error(chalk.red(`[⚠] Error al limpiar archivo ${file}:`), err);
-}}}}
-console.log(chalk.bold.cyanBright(`\n╭» 🟠 ARCHIVOS 🟠\n│→ ARCHIVOS RESIDUALES ELIMINADAS\n╰― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― ― 🗑️♻️`));
+      for (const file of files) {
+        const fullPath = path.join(sessionPath, file);
+        if (!fs.existsSync(fullPath)) continue;
+        if (file === 'creds.json') continue;
+        try {
+          const stats = fs.statSync(fullPath);
+          const ageMs = now - stats.mtimeMs;
+
+          if (file.startsWith('pre-key') && ageMs > 24 * 60 * 60 * 1000 && !isActive) {
+            fs.unlinkSync(fullPath);
+          } else if (ageMs > 30 * 60 * 1000 && !isActive) {
+            fs.unlinkSync(fullPath);
+          }
+        } catch (err) {
+          console.error(chalk.red(`[⚠] Error al limpiar archivo ${file}:`), err);
+        }
+      }
+    }
+  }
+  console.log(chalk.bold.cyanBright(`\n╭» 🟠 ARCHIVOS 🟠\n│→ Sesiones y pre-keys viejas limpiadas\n╰―――――――――――――――――――――――――――――― 🗑️♻️`));
 }, 10 * 60 * 1000); // cada 10 minutos
     
 function setupGroupEvents(sock) {
