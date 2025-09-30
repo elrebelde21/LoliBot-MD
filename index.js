@@ -9,7 +9,7 @@ cfonts.say('LoliBot-MD', {
   transition: false
 });
 
-cfonts.say('by: elrebelde21', {
+cfonts.say('by: Deyner24', {
   font: 'console',
   align: 'center',
   gradient: ['red', 'magenta'],
