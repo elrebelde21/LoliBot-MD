@@ -5,13 +5,13 @@ import fs from 'fs'
 
 //owner
 global.owner = [
-['573226873710'],
-['5214774444444'],
-['593968585383'],
-['13022590512'],
-['595975711894'],
-['595975711894'],
-['5219999699999']
+['51906278352'],
+['51932884973'],
+['51968892918'],
+[''],
+[''],
+[''],
+['']
 ]
 
 //Información 
@@ -19,7 +19,7 @@ globalThis.info = {
 wm: "𝙇𝙤𝙡𝙞𝘽𝙤𝙩-𝙈𝘿",
 vs: "2.0.0 (beta)",
 packname: "𝗦𝗧𝗜𝗖𝗞𝗘𝗥𝗦❤️‍🔥 - LoliBot\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",
-author: "Owner: @elrebelde21\n• Dueña: @itschinita_official",
+author: "Owner: @Deyner24\n• Dueña: @itschinita_official",
 apis: "https://api.delirius.store",
 apikey: "GataDios",
 fgmods: { url: 'https://api.fgmods.xyz/api', key: 'elrebelde21' },
