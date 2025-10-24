@@ -3,7 +3,7 @@
 </p>
 
 <p align="center">
-  <img src="https://capsule-render.vercel.app/api?type=waving&color=F700FF&height=100&section=header&text=✨%20LoliBot-MD%20v2.0.0%20(BETA)%20✨&fontSize=32&fontColor=ffffff" />
+  <img src="https://capsule-render.vercel.app/api?type=waving&color=F700FF&height=100&section=header&text=✨%20LoliBot-MD%20v2.0.5%20✨&fontSize=32&fontColor=ffffff" />
 </p>
 
 <p align="center">
