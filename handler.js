@@ -510,11 +510,20 @@ const isValido = typeof rawJid === 'string' && /^\d+@(s\.whatsapp\.net|lid)$/.te
 const num = isValido ? rawJid.split('@')[0] : null;
 const userName = m.pushName || 'sin name';
 
-if (m.key?.participantAlt && m.key.participantAlt.endsWith('@s.whatsapp.net')) {
-m.sender = m.key.participantAlt;
-m.lid = m.key.participant;
+if (m.key?.participantAlt && m.key.participantAlt.endsWith("@s.whatsapp.net")) {
+  m.sender = m.key.participantAlt;
+  m.lid = m.key.participant;      
+} else if (m.key?.remoteJidAlt && m.key.remoteJidAlt.endsWith("@s.whatsapp.net")) {
+  m.sender = m.key.remoteJidAlt;   
+  m.lid = m.key.remoteJid;       
 } else {
-m.sender = m.key?.participant || m.key?.remoteJid;
+const jid = m.key?.participant || m.key?.remoteJid || "";
+if (jid.endsWith("@lid")) {   
+    m.lid = jid;
+    m.sender = jid.replace("@lid", "@s.whatsapp.net");
+  } else {
+    m.sender = jid;
+  }
 }
 
 await db.query(`INSERT INTO usuarios (id, nombre, num, registered)
