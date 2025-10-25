@@ -3,31 +3,27 @@ import { db } from '../lib/postgres.js';
 let handler = async (m, { conn, text, participants, metadata, args, command }) => {
 
 if (/^(tagall|invocar|invocacion|todos|invocación)$/i.test(command)) {
-let pesan = args.join` `
-let oi = `*𝙈𝙚𝙣𝙨𝙖𝙟𝙚:* ${pesan}`
-let teks = `*⺀ ＡＣＴＩＶＥ ＧＲＵＰＯ 🗣️⺀*\n\n❏ ${oi} \n\n❏ *𝙀𝙩𝙞𝙦𝙪𝙚𝙩𝙖𝙨:*\n`
-let menciones = []
- 
-for (let mem of participants) {
-let numero = null
-if (mem.id.endsWith('@lid')) {
-if (mem.participantAlt && mem.participantAlt.endsWith('@s.whatsapp.net')) {
-numero = mem.participantAlt.split('@')[0]
-menciones.push(mem.participantAlt)
-} else {
-const res = await db.query('SELECT num FROM usuarios WHERE lid = $1', [mem.id])
-numero = res.rows[0]?.num || null
-if (numero) menciones.push(mem.id)
-}} else if (/^\d+@s\.whatsapp\.net$/.test(mem.id)) {
-numero = mem.id.split('@')[0]
-menciones.push(mem.id)
-}
+try {
+const metadata = await conn.groupMetadata(m.chat)
+const participants = metadata.participants || []
+if (!participants.length) return 
+const users = participants.map(p => p.phoneNumber || p.id)
+const total = users.length
 
-if (numero) {
-teks += `➥ @${numero}\n`
-}}
-await conn.sendMessage(m.chat, { text: teks, mentions: menciones }, { quoted: m })
+await m.react("📣")
+let mensaje = ""
+mensaje += `*⺀ ＡＣＴＩＶＥ ＧＲＵＰＯ 🗣️⺀*\n\n`
+if (text && text.trim()) {
+mensaje += `❏ *Mensaje:* ${text.trim()}\n`
 }
+mensaje += `*👥 Miembros del grupo:* ${total}\n`
+mensaje += `❏ *Etiquetas:*\n`
+mensaje += users.map(u => `➥ @${u.replace(/@s\.whatsapp\.net|@lid/g, "").replace(/[^0-9]/g, "")}`).join(" \n ")
+
+await conn.sendMessage(m.chat, { text: mensaje, mentions: users }, { quoted: m })
+} catch (e) {
+console.error("❌ Error en /tagall:", e)
+}}
 
 if (command == 'contador') {
 const result = await db.query(`SELECT user_id, message_count

@@ -1,29 +1,26 @@
-let handler = async (m, { conn, participants, metadata, args }) => {
-const pp = await conn.profilePictureUrl(m.chat, 'image').catch(_ => null) || './media/Menu1.jpg'
-const groupAdmins = participants.filter(p => p.admin)
-const listAdmin = groupAdmins.map((v, i) => {
-let jid = v.id
-if (jid.endsWith('@lid') && v.participantAlt && v.participantAlt.endsWith('@s.whatsapp.net')) {
-jid = v.participantAlt
-}
-return `${i + 1}. @${jid.split('@')[0]}`
-}).join('\n➥ ')
+let handler = async (m, { conn, text, participants, metadata, args }) => {
+try {
+if (!text || !text.trim()) return m.reply(`😾 Y el texto?`)
+const metadata = await conn.groupMetadata(m.chat)
+const admins = metadata.participants.filter(p => p.admin)
+if (!admins.length) return m.reply("⚠️ No hay administradores en este grupo.")
 
-let owner = metadata.owner || groupAdmins.find(p => p.admin === 'superadmin')?.id || m.chat.split`-`[0] + '@s.whatsapp.net'
-let text = `•══✪〘 *ＳＴＡＦＦ* 〙✪══•
+const users = admins.map(p => p.phoneNumber || p.id)
+const total = users.length
+await m.react("📣")
+
+const mensaje = `•══✪〘 *ＳＴＡＦＦ* 〙✪══•
 
 > *𝐒𝐞 𝐧𝐞𝐜𝐞𝐬𝐢𝐭𝐚 𝐥𝐚 𝐩𝐫𝐞𝐬𝐞𝐧𝐜𝐢𝐚 𝐝𝐞 𝐮𝐧 𝐚𝐝𝐦𝐢𝐧𝐬* 
 
-*• 𝐆𝐫𝐮𝐩𝐨:* ${metadata.subject}
+*• Mensaje:* ${text.trim()}
 
-*• 𝐀𝐝𝐦𝐢𝐧𝐬:*
-➥ ${listAdmin}
+👑 *Administradores (${total}):*\n` + users.map(u => `➥ @${u.replace(/@s\.whatsapp\.net|@lid/g, "").replace(/[^0-9]/g, "")}`).join(" \n ")
 
-> [ ⚠ ️] *ᵁˢᵃʳ ᵉˢᵗᵉ ᶜᵒᵐᵃⁿᵈᵒ ˢᵒˡᵒ ᶜᵘᵃⁿᵈᵒ ˢᵉ ᵗʳᵃᵗᵉ ᵈᵉ ᵘⁿᵃ ᵉᵐᵉʳᵍᵉⁿᶜᶦᵃ*`.trim()
-
-const mentions = [...groupAdmins.map(v => v.participantAlt?.endsWith('@s.whatsapp.net') ? v.participantAlt : v.id), owner]
-await conn.sendFile(m.chat, pp, 'staff.jpg', text, m, false, { mentions })
-}
+await conn.sendMessage(m.chat, { text: mensaje + `\n\n> [ ⚠️ ️] *ᵁˢᵃʳ ᵉˢᵗᵉ ᶜᵒᵐᵃⁿᵈᵒ ˢᵒˡᵒ ᶜᵘᵃⁿᵈᵒ ˢᵉ ᵗʳᵃᵗᵉ ᵈᵉ ᵘⁿᵃ ᵉᵐᵉʳᵍᵉⁿᶜᶦᵃ*`, mentions: users }, { quoted: m})
+} catch (e) {
+console.error("❌ Error en /admins:", e)
+}}
 handler.help = ['staff']
 handler.tags = ['group']
 handler.command = ['staff', 'admins', 'listadmin'] 
