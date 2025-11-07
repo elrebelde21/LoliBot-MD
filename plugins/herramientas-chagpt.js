@@ -26,7 +26,8 @@ console.error("❌ Error obteniendo prompt o TTL:", e.message);
 
 if (!systemPrompt) {
 try {
-systemPrompt = await fetch('https://raw.githubusercontent.com/Skidy89/chat-gpt-jailbreak/main/Text.txt').then(r => r.text());
+systemPrompt = await fetch('https://raw.githubusercontent.com/elrebelde21/LoliBot-MD/main/src/text-chatgpt.txt').then(r => r.text());
+//await fetch('https://raw.githubusercontent.com/Skidy89/chat-gpt-jailbreak/main/Text.txt').then(r => r.text());
 } catch {
 systemPrompt = syms1; 
 }}
@@ -48,9 +49,11 @@ if (memory.length > 25) memory = [memory[0], ...memory.slice(-24)];
 
 function formatForWhatsApp(text) {
   return text
+    .replace(/\\([!?.,"'])/g, '$1')  
     .replace(/\*\*/g, "*") 
     .replace(/\_\_/g, "_") 
     .replace(/\\n/g, "\n") 
+    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '$2')
     .replace(/\n{3,}/g, "\n\n") 
     .trim();
 }

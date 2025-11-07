@@ -1,4 +1,7 @@
 import fetch from 'node-fetch';
+import fs from 'fs';
+import path from 'path';
+import axios from 'axios';
 import { exoml } from '../lib/scraper.js';
 import { db } from '../lib/postgres.js';
 
@@ -49,7 +52,7 @@ console.error("[❌] Error obteniendo prompt/ttl:", e.message);
 }
 
 if (!systemPrompt) {
-systemPrompt = await fetch('https://raw.githubusercontent.com/elrebelde21/LoliBot-MD/main/src/text-chatgpt.txt').then(v => v.text());
+systemPrompt = await fetch('https://raw.githubusercontent.com/elrebelde21/LoliBot-MD/main/src/text-chatgpt.txt').then(r => r.text());
 //await fetch('https://raw.githubusercontent.com/Skidy89/chat-gpt-jailbreak/main/Text.txt').then(r => r.text());
 }
 
@@ -73,7 +76,7 @@ memory = [memory[0], ...memory.slice(-MAX_TURNS * 2)];
 
 let result = '';
 try {
-let gpt = await fetch(`${info.apis}/ia/gptprompt?text=${text}?&prompt=${memory + systemPrompt}`);
+let gpt = await fetch(`${info.apis}/ia/gptprompt?text=${memory}?&prompt=${systemPrompt}`);
 let res = await gpt.json();
 result = res.data;
 } catch (err) {
