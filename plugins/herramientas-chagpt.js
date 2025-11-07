@@ -72,6 +72,14 @@ console.error("❌ No se pudo guardar memoria:", e.message);
 return await m.reply(result);
 }
 
+function formatForWhatsApp(text: string) {
+return text
+.replace(/\*\*/g, "*") 
+.replace(/\\n/g, "\n") 
+.replace(/\n{3,}/g, "\n\n") 
+.trim()
+}
+
 if (command == 'openai'  || command == 'chatgpt2') {
 await conn.sendPresenceUpdate('composing', m.chat);
 try {
@@ -83,7 +91,9 @@ await m.reply(decoded);
 try { 
 let gpt = await fetch(`${info.apis}/ia/gptweb?text=${text}`) 
 let res = await gpt.json()
-await m.reply(res.gpt)
+const formatted = formatForWhatsApp(res.gpt)
+await m.reply(formatted)
+//await m.reply(res.gpt)
 } catch {
 try {
 let gpt = await fetch(`${info.apis}/api/ia2?text=${text}`)
