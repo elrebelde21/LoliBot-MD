@@ -1,5 +1,5 @@
 import fetch from 'node-fetch';
-import { blackboxAi, exoml, perplexity } from '../lib/scraper.js';
+import { exoml } from '../lib/scraper.js';
 import { db } from '../lib/postgres.js';
 
 const MAX_TURNS = 12;
@@ -15,6 +15,15 @@ const mention = mentioned.some(j => {
 const num = j?.split('@')[0]?.split(':')[0];
 return botIds.includes(num);
 });
+
+function formatForWhatsApp(text) {
+  return text
+    .replace(/\*\*/g, "*") 
+    .replace(/\_\_/g, "_") 
+    .replace(/\\n/g, "\n") 
+    .replace(/\n{3,}/g, "\n\n") 
+    .trim();
+}
 
 //const isReplyToBot = m.quoted && [conn.user?.id, conn.user?.lid].some(id => id?.includes(m.quoted.sender));
 //if (!mention && !isReplyToBot) return true;
@@ -64,11 +73,11 @@ memory = [memory[0], ...memory.slice(-MAX_TURNS * 2)];
 
 let result = '';
 try {
-result = await exoml.generate(memory, systemPrompt, 'llama-4-scout');
+let gpt = await fetch(`${info.apis}/ia/gptprompt?text=${text}?&prompt=${memory + systemPrompt}`);
+let res = await gpt.json();
+result = res.data;
 } catch (err) {
-console.error("❌ Error en ExoML, fallback:", err);
-const bb = await blackboxAi(query);
-result = bb?.data?.response || "❌ No se obtuvo respuesta.";
+result = await exoml.generate(memory, systemPrompt, 'llama-4-scout');
 }
 
 if (!result || result.trim().length < 2) result = "🤖 ...";
@@ -82,7 +91,9 @@ await db.query(`INSERT INTO chat_memory (chat_id, history, updated_at)
 console.error("❌ No se pudo guardar memoria:", e.message);
 }
 
-await conn.reply(m.chat, result, m);
+const formatted = formatForWhatsApp(result)
+return await conn.reply(m.chat, formatted, m)
+//await conn.reply(m.chat, result, m);
 await conn.readMessages([m.key]);
 
 return false;
