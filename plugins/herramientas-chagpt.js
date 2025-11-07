@@ -46,6 +46,15 @@ if (!memory.length || memory[0]?.role !== 'system' || memory[0]?.content !== sys
 memory.push({ role: 'user', content: text });
 if (memory.length > 25) memory = [memory[0], ...memory.slice(-24)];
 
+function formatForWhatsApp(text) {
+  return text
+    .replace(/\*\*/g, "*") 
+    .replace(/\_\_/g, "_") 
+    .replace(/\\n/g, "\n") 
+    .replace(/\n{3,}/g, "\n\n") 
+    .trim();
+}
+
 if (command == 'ia' || command == 'chatgpt') {
 await conn.sendPresenceUpdate('composing', m.chat)
 let result = '';
@@ -69,15 +78,9 @@ await db.query(`INSERT INTO chat_memory (chat_id, history, updated_at)
 } catch (e) {
 console.error("❌ No se pudo guardar memoria:", e.message);
 }
-return await m.reply(result);
-}
-
-function formatForWhatsApp(text: string) {
-return text
-.replace(/\*\*/g, "*") 
-.replace(/\\n/g, "\n") 
-.replace(/\n{3,}/g, "\n\n") 
-.trim()
+const formatted = formatForWhatsApp(result)
+return await m.reply(formatted)
+//await m.reply(result);
 }
 
 if (command == 'openai'  || command == 'chatgpt2') {
