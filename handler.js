@@ -335,18 +335,30 @@ const modo = botConfig.mode || "public";
 m.isGroup = chatId.endsWith("@g.us");
 
 if (m.key?.participantAlt && m.key.participantAlt.endsWith("@s.whatsapp.net")) {
-m.sender = m.key.participantAlt;   
-m.lid = m.key.participant;
+  m.sender = m.key.participantAlt;
+  m.lid = m.key.participant;
+} else if (m.key?.jid && m.key.jid.endsWith("@s.whatsapp.net")) {
+  m.sender = m.key.jid;
+  m.lid = m.key.remoteJid;
+} else if (m.key?.participant && m.key.participant.endsWith("@lid")) {
+  m.lid = m.key.participant;
+  m.sender = m.key.participant.replace("@lid", "@s.whatsapp.net");
+} else if (m.key?.remoteJid && m.key.remoteJid.endsWith("@lid")) {
+  m.lid = m.key.remoteJid;
+  m.sender = m.key.remoteJid.replace("@lid", "@s.whatsapp.net");
 } else {
-m.sender = m.key?.participant || chatId;
+  m.sender = m.key?.participant || chatId;
 }
 
 if (m.key?.fromMe) {
-m.sender = conn.user?.id || m.sender;
+  m.sender = conn.user?.id || m.sender;
 }
 
 if (typeof m.sender === "string") {
-m.sender = m.sender.replace(/:\d+/, "");
+  m.sender = m.sender.replace(/:\d+$/, "");
+}
+if (typeof m.lid === "string") {
+  m.lid = m.lid.replace(/:\d+$/, "");
 }
 
 m.reply = async (text) => {
@@ -476,6 +488,7 @@ return clean.endsWith("@lid")
 const senderJids = [];
 if (m.user?.id) senderJids.push(m.user.id.replace(/:\d+/, ""));
 if (m.user?.lid) senderJids.push(m.user.lid.replace(/:\d+/, ""));
+if (m.user?.jid) senderJids.push(m.user.jid.replace(/:\d+/, ""));
 if (m.sender) senderJids.push(m.sender.replace(/:\d+/, ""));
 if (m.lid) senderJids.push(m.lid.replace(/:\d+/, ""));
 
@@ -505,45 +518,67 @@ console.error(err);
 }}
 
 try {
-const rawJid = m.key?.participantAlt || m.key?.participant || m.key?.remoteJid || null;
-const isValido = typeof rawJid === 'string' && /^\d+@(s\.whatsapp\.net|lid)$/.test(rawJid);
-const num = isValido ? rawJid.split('@')[0] : null;
-const userName = m.pushName || 'sin name';
+  const jidMain =
+    m.key?.jid ||
+    m.key?.participantAlt ||
+    m.key?.participant ||
+    m.key?.remoteJidAlt ||
+    m.key?.remoteJid ||
+    null;
 
-if (m.key?.participantAlt && m.key.participantAlt.endsWith("@s.whatsapp.net")) {
-  m.sender = m.key.participantAlt;
-  m.lid = m.key.participant;      
-} else if (m.key?.remoteJidAlt && m.key.remoteJidAlt.endsWith("@s.whatsapp.net")) {
-  m.sender = m.key.remoteJidAlt;   
-  m.lid = m.key.remoteJid;       
-} else {
-const jid = m.key?.participant || m.key?.remoteJid || "";
-if (jid.endsWith("@lid")) {   
-    m.lid = jid;
-    m.sender = jid.replace("@lid", "@s.whatsapp.net");
+  const isValido = typeof jidMain === 'string' && /^\d+@(s\.whatsapp\.net|lid)$/.test(jidMain);
+  const num = isValido ? jidMain.split('@')[0] : null;
+  const userName = m.pushName || 'sin name';
+
+  if (m.key?.jid && m.key.jid.endsWith("@s.whatsapp.net")) {
+    m.sender = m.key.jid;
+    m.lid = m.key.remoteJid && m.key.remoteJid.endsWith("@lid") ? m.key.remoteJid : "";
+  } else if (m.key?.participantAlt && m.key.participantAlt.endsWith("@s.whatsapp.net")) {
+    m.sender = m.key.participantAlt;
+    m.lid = m.key.participant;
+  } else if (m.key?.remoteJidAlt && m.key.remoteJidAlt.endsWith("@s.whatsapp.net")) {
+    m.sender = m.key.remoteJidAlt;
+    m.lid = m.key.remoteJid;
   } else {
-    m.sender = jid;
+    const jid = m.key?.participant || m.key?.remoteJid || "";
+    if (jid.endsWith("@lid")) {
+      m.lid = jid;
+      m.sender = jid.replace("@lid", "@s.whatsapp.net");
+    } else {
+      m.sender = jid;
+    }
   }
-}
 
-await db.query(`INSERT INTO usuarios (id, nombre, num, registered)
+  if (typeof m.sender === "string") m.sender = m.sender.replace(/:\d+$/, "");
+  if (typeof m.lid === "string") m.lid = m.lid.replace(/:\d+$/, "");
+
+  await db.query(
+    `INSERT INTO usuarios (id, nombre, num, registered)
      VALUES ($1, $2, $3, false)
-     ON CONFLICT (id) DO NOTHING`, [m.sender, userName, num]);
+     ON CONFLICT (id) DO NOTHING`,
+    [m.sender, userName, num]
+  );
 
-if (isValido && m.sender.endsWith('@s.whatsapp.net')) {
-await db.query(`UPDATE usuarios SET nombre = $1${num ? ', num = COALESCE(num, $2)' : ''} WHERE id = $3`, num ? [userName, num, m.sender] : [userName, m.sender]);
-}
+  if (isValido && m.sender.endsWith('@s.whatsapp.net')) {
+    await db.query(
+      `UPDATE usuarios
+       SET nombre = $1${num ? ', num = COALESCE(num, $2)' : ''}
+       WHERE id = $3`,
+      num ? [userName, num, m.sender] : [userName, m.sender]
+    );
+  }
 
-if (m.key && m.key.senderLid) {
-try {
-await db.query('UPDATE usuarios SET lid = NULL WHERE lid = $1 AND id <> $2', [m.key.senderLid, m.sender]);
-await db.query('UPDATE usuarios SET lid = $1 WHERE id = $2', [m.key.senderLid, m.sender]);
-m.lid = m.key.senderLid;
-} catch (e) {
-console.error("❌ Error actualizando lid en handler:", e);
-}}
+  if (m.key && m.key.senderLid) {
+    try {
+      await db.query('UPDATE usuarios SET lid = NULL WHERE lid = $1 AND id <> $2', [m.key.senderLid, m.sender]);
+      await db.query('UPDATE usuarios SET lid = $1 WHERE id = $2', [m.key.senderLid, m.sender]);
+      m.lid = m.key.senderLid;
+    } catch (e) {
+      console.error("❌ Error actualizando lid en handler:", e);
+    }
+  }
 } catch (err) {
-console.error(err);
+  console.error(err);
 }
 
 try {
