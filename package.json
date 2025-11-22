@@ -6,7 +6,7 @@
   "start": "node --max-old-space-size=512 index.js",
   "dev": "node index.js"
   },
-  "dependencies": {
+  "dependencies": { 
     "@whiskeysockets/baileys": "github:elrebelde21/baileys",
     "@bochilteam/scraper": "^5.0.1",
     "chalk": "^5.3.0",
