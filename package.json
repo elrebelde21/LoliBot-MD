@@ -7,7 +7,7 @@
   "dev": "node index.js"
   },
   "dependencies": { 
-    "@whiskeysockets/baileys": "^7.0.0-rc.8",
+    "@whiskeysockets/baileys": "^7.0.0-rc.9",
     "@bochilteam/scraper": "^5.0.1",
     "chalk": "^5.3.0",
     "api-dylux": "^1.8.3",
