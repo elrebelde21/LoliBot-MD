@@ -54,7 +54,7 @@ const isLocal = audio.audio.startsWith('./') || audio.audio.startsWith('/');
 const listaAudios = Array.isArray(audio.audios) ? audio.audios : [audio.audio];
 const elegido = listaAudios[Math.floor(Math.random() * listaAudios.length)];
 
-await conn.sendMessage(m.chat, { audio: elegido.startsWith('data:audio/') ? Buffer.from(elegido.split(',')[1], 'base64') : elegido.startsWith('./') || elegido.startsWith('/') ? { url: path.resolve(elegido) } : { url: elegido }, mimetype: 'audio/mpeg', ptt: true }, { quoted: m });
+await conn.sendMessage(m.chat, { audio: elegido.startsWith('data:audio/') ? Buffer.from(elegido.split(',')[1], 'base64') : elegido.startsWith('./') || elegido.startsWith('/') ? { url: path.resolve(elegido) } : { url: elegido }, mimetype: 'audio/mpeg' }, { quoted: m });
 break; 
 } catch (err) {
 console.error('[❌] Error enviando audio automático:', err);
