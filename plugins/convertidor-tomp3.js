@@ -8,7 +8,7 @@ if (!media) throw '*⚠️ 𝐎𝐂𝐔𝐑𝐑𝐈𝐎́ 𝐔𝐍 𝐄𝐑𝐑�
 m.reply(`Calmaoooo estoy procesando 😎\n\n> *Convirtiendo de MP4 a MP3 🔄*`) 
 const audio = await toAudio(media, 'mp4');
 if (!audio.data) throw '*⚠️ 𝐓𝐑𝐄𝐌𝐄𝐍𝐃𝐎 ¿𝐍𝐨 𝐬𝐚𝐛𝐞𝐬 𝐮𝐬𝐚𝐫 𝐞𝐥 𝐜𝐨𝐦𝐚𝐧𝐝𝐨? 𝐫𝐞𝐬𝐩𝐨𝐧𝐝𝐞𝐫 𝐚 𝐮𝐧 𝐯𝐢𝐝𝐞𝐨 𝐨 𝐧𝐨𝐭𝐚 𝐝𝐞 𝐯𝐨𝐳 𝐛𝐨𝐛𝐨*';
-conn.sendMessage(m.chat, { audio: audio.data, mimetype: 'audio/mpeg', ppt: true, contextInfo: {} }, { quoted: m });
+conn.sendMessage(m.chat, { audio: audio.data, mimetype: 'audio/mpeg', ptt: true, contextInfo: {} }, { quoted: m });
 };
 handler.help = ['tomp3'];
 handler.tags = ['convertidor']
