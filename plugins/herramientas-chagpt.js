@@ -59,7 +59,7 @@ const groq = await fetch("https://api.groq.com/openai/v1/chat/completions", {
 method: "POST",
 headers: { "Authorization": "Bearer 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",
 "Content-Type": "application/json" },
-body: JSON.stringify({model: "moonshotai/kimi-k2-instruct-0905",
+body: JSON.stringify({model: "meta-llama/llama-4-maverick-17b-128e-instruct",
 messages: [
 { role: "system", content: systemPrompt }, 
 { role: "user", content: text }
