@@ -7,6 +7,27 @@ import { db } from '../lib/postgres.js';
 
 const MAX_TURNS = 12;
 
+let GROQ_API_KEY_CACHE = null;
+
+async function getGroqKey() {
+  if (GROQ_API_KEY_CACHE) return GROQ_API_KEY_CACHE;
+
+  const { rows } = await db.query(
+    "SELECT token_b64 FROM api_tokens WHERE name = $1",
+    ["groq"]
+  );
+
+  if (!rows.length) throw new Error("Token GROQ no encontrado");
+
+  GROQ_API_KEY_CACHE = Buffer
+    .from(rows[0].token_b64, "base64")
+    .toString("utf8");
+
+  return GROQ_API_KEY_CACHE;
+}
+
+const GROQ_API_KEY = await getGroqKey();
+
 export async function before(m, { conn }) {
 const botIds = [conn.user?.id, conn.user?.lid].filter(Boolean).map(j => j.split('@')[0].split(':')[0]);
 
@@ -77,17 +98,20 @@ memory = [memory[0], ...memory.slice(-MAX_TURNS * 2)];
 let result = '';
 try {
 const groq = await fetch("https://api.groq.com/openai/v1/chat/completions", {
-method: "POST",
-headers: { "Authorization": "Bearer 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",
-"Content-Type": "application/json" },
-body: JSON.stringify({model: "llama-3.3-70b-versatile",
-messages: [
-{ role: "system", content: systemPrompt }, 
-{ role: "user", content: text }
-],
-temperature: 0.9,
-max_tokens: 600
-})
+  method: "POST",
+  headers: {
+    "Authorization": `Bearer ${GROQ_API_KEY}`,
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({
+    model: "llama-3.3-70b-versatile",
+    messages: [
+      { role: "system", content: systemPrompt },
+      { role: "user", content: text }
+    ],
+    temperature: 0.9,
+    max_tokens: 600
+  })
 });
 const data = await groq.json();
 result = data.choices?.[0]?.message?.content?.trim() || `uy ${m.pushName} me colgué un segundo 😵‍💫 dame otra chance crack`;
