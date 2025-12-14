@@ -83,7 +83,7 @@ const groq = await fetch("https://api.groq.com/openai/v1/chat/completions", {
     "Content-Type": "application/json"
   },
   body: JSON.stringify({
-    model: "llama-3.3-70b-versatile",
+    model: "moonshotai/kimi-k2-instruct-0905",
     messages: [
       { role: "system", content: systemPrompt },
       { role: "user", content: text }
