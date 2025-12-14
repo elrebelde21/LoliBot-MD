@@ -76,12 +76,29 @@ memory = [memory[0], ...memory.slice(-MAX_TURNS * 2)];
 
 let result = '';
 try {
+const groq = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+method: "POST",
+headers: { "Authorization": "Bearer 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",
+"Content-Type": "application/json" },
+body: JSON.stringify({model: "llama-3.3-70b-versatile",
+messages: [
+{ role: "system", content: systemPrompt }, 
+{ role: "user", content: text }
+],
+temperature: 0.9,
+max_tokens: 600
+})
+});
+const data = await groq.json();
+result = data.choices?.[0]?.message?.content?.trim() || `uy ${m.pushName} me colgué un segundo 😵‍💫 dame otra chance crack`;
+} catch (e) {
+try {
 let gpt = await fetch(`${info.apis}/ia/gptprompt?text=${memory}?&prompt=${systemPrompt}`);
 let res = await gpt.json();
 result = res.data;
 } catch (err) {
 result = await exoml.generate(memory, systemPrompt, 'llama-4-scout');
-}
+}}
 
 if (!result || result.trim().length < 2) result = "🤖 ...";
 memory.push({ role: 'assistant', content: result });
