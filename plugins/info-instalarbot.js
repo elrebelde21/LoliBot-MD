@@ -7,7 +7,7 @@ let texto = `*◄┢┅͜͡✇⟬↯ື ►ஜ۩💥۩ஜ◄ ↯ື⟭✇͜͡┅
 https://youtu.be/z2kHwbu8e8s?si=2z3Fur9U4ccN7EwA
 
 *✨ Canal de Actualizaciones y novedades sobre el bot*
-${info.nna2}
+${info.nna}
 
 *📲💛 Si tienes dudas o necesitas ayuda en el proceso de la instalación puede escribirme por facebook:*
 ${info.fb}

@@ -183,7 +183,7 @@ ${pref}menu
 ◉ *Total de usuarios registrados:* ${toNum(rtotalreg + 1)}`,
 contextInfo: {
 forwardedNewsletterMessageInfo: {
-newsletterJid: '120363305025805187@newsletter',
+newsletterJid: '120363321650707484@newsletter',
 serverMessageId: '',
 newsletterName: 'LoliBot ✨️' },
 forwardingScore: 9999999,
