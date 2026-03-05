@@ -4,27 +4,6 @@ import path from 'path';
 import axios from 'axios';
 import { blackboxAi, exoml, perplexity } from '../lib/scraper.js';
 import { db } from '../lib/postgres.js';
- 
-let GROQ_API_KEY_CACHE = null;
-
-async function getGroqKey() {
-  if (GROQ_API_KEY_CACHE) return GROQ_API_KEY_CACHE;
-
-  const { rows } = await db.query(
-    "SELECT token_b64 FROM api_tokens WHERE name = $1",
-    ["groq"]
-  );
-
-  if (!rows.length) throw new Error("Token GROQ no encontrado");
-
-  GROQ_API_KEY_CACHE = Buffer
-    .from(rows[0].token_b64, "base64")
-    .toString("utf8");
-
-  return GROQ_API_KEY_CACHE;
-}
-
-const GROQ_API_KEY = await getGroqKey();
 
 const handler = async (m, {conn, text, usedPrefix, command}) => {
 let username = m.pushName 
@@ -76,24 +55,9 @@ try {
 //modelo4 meta-llama/llama-4-maverick-17b-128e-instruct
 //modelo5 llama-3.1-8b-instant
 //modelo6 openai/gpt-oss-120b
-const groq = await fetch("https://api.groq.com/openai/v1/chat/completions", {
-  method: "POST",
-  headers: {
-    "Authorization": `Bearer ${GROQ_API_KEY}`,
-    "Content-Type": "application/json"
-  },
-  body: JSON.stringify({
-    model: "moonshotai/kimi-k2-instruct-0905",
-    messages: [
-      { role: "system", content: systemPrompt },
-      { role: "user", content: text }
-    ],
-    temperature: 0.9,
-    max_tokens: 600
-  })
-});
+const groq = await fetch(`https://api.mitzuki.xyz/ia/groq?text=${text}` + `&prompt=${systemPrompt}` +`&apikey=elrebelde21`)
 const data = await groq.json();
-result = data.choices?.[0]?.message?.content?.trim() || `uy ${m.pushName} me colgué un segundo 😵‍💫 dame otra chance crack`;
+result = data.data.result.trim() || `uy ${m.pushName} me colgué un segundo 😵‍💫 dame otra chance crack`;
 //result = await exoml.generate(memory, systemPrompt, 'llama-4-scout');
 } catch (e) {
 try {
