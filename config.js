@@ -4,7 +4,7 @@ import { fileURLToPath } from 'url'
 import fs from 'fs'
 
 //owner
-global.owner = [
+global.owner = [51925679896], 
 ['573226873710'],
 ['5214774444444'],
 ['593968585383'],
