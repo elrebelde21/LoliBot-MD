@@ -50,7 +50,7 @@ const res = await fetch("https://cdn.skyultraplus.com/upload.php", {
 method: "POST",
 headers: {
 ...form.getHeaders(),
-"X-API-KEY": "4aef4a55e558",
+"X-API-KEY": "3ade1171a99a228e",
 },
 body: form,
 });
