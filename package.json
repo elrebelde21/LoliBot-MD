@@ -40,11 +40,15 @@
     "jimp": "^1.6.0",
     "human-readable": "^0.2.1",
     "hispamemes": "^1.0.7",
+    "moment-timezone": "^0.5.37",
+    "dotenv": "^17.2.3", 
+    "pg": "^8.11.3",
     "node-cache": "^5.1.2"
   },
  "optionalDependencies": {
    "wa-sticker-formatter": "^4.4.4",
-   "moment-timezone": "^0.5.37",
-   "pg": "^8.11.3"
+   "better-sqlite3": "^12.5.0",
+   "mongodb": "^7.0.0",
+   "mysql2": "^3.16.0"  
   }
 }

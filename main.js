@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import * as baileys from "@whiskeysockets/baileys";
 import fs from "fs";
 import path from "path";
@@ -7,7 +8,7 @@ import pino from "pino";
 import NodeCache from 'node-cache';
 import { startSubBot } from "./lib/subbot.js";
 import "./config.js";
-import { handler, callUpdate, participantsUpdate, groupsUpdate } from "./handler.js";
+import { handler, callUpdate, participantsUpdate, groupsUpdate, handleJoinRequest } from "./handler.js";
 import { loadPlugins } from './lib/plugins.js';
 
 await loadPlugins();
@@ -274,22 +275,34 @@ setInterval(() => {
 }, 10 * 60 * 1000); // cada 10 minutos
     
 function setupGroupEvents(sock) {
-sock.ev.on("group-participants.update", async (update) => {
-console.log(update)
-try {
-await participantsUpdate(sock, update);
-} catch (err) {
-console.error(chalk.red("❌ Error procesando group-participants.update:"), err);
-}});
+  sock.ev.on("group-participants.update", async (update) => {
+    console.log(update)
+    try {
+      await participantsUpdate(sock, update)
+    } catch (err) {
+      console.error(chalk.red("❌ Error procesando group-participants.update:"), err)
+    }
+  })
 
-sock.ev.on("groups.update", async (updates) => {
-console.log(updates)
-try {
-for (const update of updates) {
-await groupsUpdate(sock, update);
-}} catch (err) {
-console.error(chalk.red("❌ Error procesando groups.update:"), err);
-}});
+  sock.ev.on("groups.update", async (updates) => {
+    console.log(updates)
+    try {
+      for (const update of updates) {
+        await groupsUpdate(sock, update)
+      }
+    } catch (err) {
+      console.error(chalk.red("❌ Error procesando groups.update:"), err)
+    }
+  })
+
+  sock.ev.on("group.join-request", async (data) => {
+    console.log(data)
+    try {
+      await handleJoinRequest(sock, data)
+    } catch (err) {
+      console.error(chalk.red("❌ Error procesando group.join-request:"), err)
+    }
+  })
 }
 }
 

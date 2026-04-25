@@ -15,272 +15,343 @@ const pluginsFolder = path.join(__dirname, "plugins");
 const processedMessages = new Set();
 const lastDbUpdate = new Map();
 const groupMetaCache = new Map(); 
-export async function participantsUpdate(conn, { id, participants, action, author }) {
+export async function participantsUpdate(conn, { id, participants, action, author, authorPn }) {
 try {
-if (!id || !Array.isArray(participants) || !action) return;
-if (!conn?.user?.id) return;
-const botId = conn.user.id;
+if (!id || !Array.isArray(participants) || !action) return
+if (!conn?.user?.id) return
+const cleanJid = (jid = "") => String(jid || "").replace(/:\d+/, "")
+
+const getRealJid = (p) => {
+if (typeof p === "string") return cleanJid(p)
+return cleanJid(p?.phoneNumber || p?.participantAlt || p?.jid || p?.id || p?.lid || "")
+}
+
+const getLidJid = (p) => {
+if (typeof p === "string") return cleanJid(p)
+return cleanJid(p?.id || p?.lid || p?.jid || "")
+}
+
+const getTag = (jid) => jid?.includes("@") ? `@${jid.split("@")[0]}` : "@usuario"
+const makeMsg = (raw, vars = {}) => {
+let txt = String(raw || "")
+for (const [k, v] of Object.entries(vars)) {
+txt = txt.replace(new RegExp(k, "gi"), v ?? "")
+}
+return txt
+}
+
+const botId = conn.user.id
 const botConfig = await getSubbotConfig(botId)
 const modo = botConfig.mode || "public"
-const botJid = conn.user?.id?.replace(/:\d+@/, "@")
-const isCreator = global.owner.map(([v]) => v.replace(/[^0-9]/g, "") + "@s.whatsapp.net").includes(author || "")
-if (modo === "private" && !isCreator && author !== botJid) return
+const botJidClean = cleanJid(conn.user?.id)
+const botLidClean = cleanJid(conn.user?.lid)
+const authorJid = cleanJid(authorPn || author)
 
-const metadata = await conn.groupMetadata(id);
-groupMetaCache.set(id, metadata);
+const isCreator = global.owner.map(([v]) => v.replace(/[^0-9]/g, "") + "@s.whatsapp.net").includes(authorJid)
+if (modo === "private" && !isCreator && authorJid !== botJidClean) return
+
+const metadata = await conn.groupMetadata(id)
+groupMetaCache.set(id, metadata)
+
 const groupName = metadata.subject || "Grupo"
-const botJidClean = (conn.user?.id || "").replace(/:\d+/, "")
-const botLidClean = (conn.user?.lid || "").replace(/:\d+/, "")
-
-const isBotAdmin = metadata.participants.some(p => {
-  const cleanId = p.id?.replace(/:\d+/, "");
-  return (
-    (cleanId === botJidClean || cleanId === botLidClean) &&
-    (p.admin === "admin" || p.admin === "superadmin")
-  );
-});
+const groupDesc = metadata.desc || "Sin descripción"
+const pp = "./media/Menu1.jpg"
 
 const settings = (await db.query("SELECT * FROM group_settings WHERE group_id = $1", [id])).rows[0] || {
 welcome: true,
+bye: false,
 detect: true,
 antifake: false
 }
 
-const arabicCountryCodes = ['+91', '+92', '+222', '+93', '+265', '+213', '+225', '+240', '+241', '+61', '+249', '+62', '+966', '+229', '+244', '+40', '+49', '+20', '+963', '+967', '+234', '+256', '+243', '+210', '+249', ,'+212', '+971', '+974', '+968', '+965', '+962', '+961', '+964', '+970'];
-const pp = "./media/Menu1.jpg"
+const isBotAdmin = metadata.participants.some(p => {
+const jid = cleanJid(p.id)
+return ((jid === botJidClean || jid === botLidClean) && (p.admin === "admin" || p.admin === "superadmin"))
+})
 
-for (const participant of participants) {
-if (!participant || typeof participant !== 'string' || !participant.includes('@')) continue;
-const userTag = typeof participant === 'string' && participant.includes('@') ? `@${participant.split("@")[0]}` : "@usuario"
-const authorTag = typeof author === 'string' && author.includes('@') ? `@${author.split("@")[0]}` : "alguien"
+const blockedPrefixes = Array.isArray(settings.antifake_prefixes) ? settings.antifake_prefixes : ["91", "92", "222", "93", "265", "213", "225", "240", "241", "61", "249", "62", "966", "229", "244", "40", "49", "20", "963", "967", "234", "256", "243", "210", "212", "971", "974", "968", "965", "962", "961", "964", "970"]
 
-if (action === "add" && settings.antifake) {
-const phoneNumber = participant.split("@")[0]
-const isFake = arabicCountryCodes.some(code => phoneNumber.startsWith(code.slice(1)))
-
-if (isFake && isBotAdmin) {
-await conn.sendMessage(id, { text: `⚠️ ${userTag} fue eliminado automáticamente por *número no permitido*`, mentions: [participant] })
-await conn.groupParticipantsUpdate(id, [participant], "remove")    
-continue
-} else if (isFake && !isBotAdmin) {
-//await conn.sendMessage(id, { text: `⚠️ ${userTag} tiene un número prohibido, pero no tengo admin para eliminarlo.`, mentions: [participant] })
-continue 
-}}
-
-let image
-try {
-image = await conn.profilePictureUrl(participant, "image")
-} catch {
-image = pp
-}           
-        
-switch (action) {
-case "add":
-if (settings.welcome) {
-const groupDesc = metadata.desc || "*ᴜɴ ɢʀᴜᴘᴏ ɢᴇɴɪᴀ😸*\n *sɪɴ ʀᴇɢʟᴀ 😉*"
-const raw = settings.swelcome || `HOLAA!! @user ¿COMO ESTAS?😃\n\n『Bienvenido A *@group*』\n\nUn gusto conocerte amig@ 🤗\n\n_Recuerda leer las reglas del grupo para no tener ningun problema 🧐_\n\n*Solo disfrutar de este grupo y divertite 🥳*`
-const msg = raw
-.replace(/@user/gi, userTag)
-.replace(/@group|@subject/gi, groupName)
-.replace(/@desc/gi, groupDesc)
-
-if (settings.photowelcome) {
-await conn.sendMessage(id, { image: { url: image },caption: msg,
+const sendText = async (jid, msg, title, body, image, mentions = []) => {
+return conn.sendMessage(id, { text: msg,
 contextInfo: {
-mentionedJid: [participant],
+mentionedJid: mentions.filter(Boolean),
 isForwarded: true,
-forwardingScore: 999999,
+forwardingScore: 9999999,
 forwardedNewsletterMessageInfo: {
-newsletterJid: ["120363321650707484@newsletter", "120363368880733138@newsletter", "120363301598733462@newsletter"].getRandom(),
-newsletterName: "LoliBot ✨️"
-}}}, { quoted: null })
-} else {
-await conn.sendMessage(id, { text: msg,
-contextInfo: {
-forwardedNewsletterMessageInfo: {
-newsletterJid: ["120363321650707484@newsletter", "120363368880733138@newsletter", "120363301598733462@newsletter"].getRandom(),
+newsletterJid: [process.env.CHANNEL_ID, "120363301598733462@newsletter", "120363310758594673@newsletter"].getRandom(),
 newsletterName: "LoliBot ✨️"
 },
-forwardingScore: 9999999,
-isForwarded: true,
-mentionedJid: [participant],
 externalAdReply: {
-mediaUrl: [info.nna, info.nna2, info.md].getRandom(), 
+mediaUrl: [info.nna, info.nna2, info.md].getRandom(),
 mediaType: 2,
 showAdAttribution: false,
 renderLargerThumbnail: false,
 thumbnailUrl: image,
-title: "🌟 WELCOME 🌟",
-body: "Bienvenido al grupo 🤗",
+title,
+body,
 containsAutoReply: true,
 sourceUrl: "https://skyultraplus.com"
 }}}, { quoted: null })
-}}
-break
-
-case "remove":
-try {
-await db.query(`DELETE FROM messages
-    WHERE user_id = $1 AND group_id = $2`, [participant, id]);
-const botJid = (conn.user?.id || "").replace(/:\d+/, "");
-if (participant.replace(/:\d+/, "") === botJid) {
-await db.query(`UPDATE chats SET joined = false
-      WHERE id = $1 AND bot_id = $2`, [id, botJid]);
-console.log(`[DEBUG] El bot fue eliminado del grupo ${id}. Marcado como 'joined = false'.`);
-}} catch (err) {
-console.error("❌ Error en 'remove':", err);
 }
-          
-if (settings.welcome && conn?.user?.jid !== globalThis?.conn?.user?.jid) {
-const groupDesc = metadata.desc || "Sin descripción"
-const raw = settings.sbye || `Bueno, se fue @user 👋\n\nQue dios lo bendiga 😎`
-const msg = raw
-.replace(/@user/gi, userTag)
-.replace(/@group/gi, groupName)
-.replace(/@desc/gi, groupDesc)
 
-if (settings.photobye) {
-await conn.sendMessage(id, { image: { url: image },caption: msg, 
-contextInfo: { 
-mentionedJid: [participant],
+const sendImage = async (msg, image, mentions = []) => {
+return conn.sendMessage(id, { image: { url: image }, caption: msg,
+contextInfo: {
+mentionedJid: mentions.filter(Boolean),
 isForwarded: true,
 forwardingScore: 999999,
 forwardedNewsletterMessageInfo: {
-newsletterJid: ["120363321650707484@newsletter", "120363368880733138@newsletter", "120363301598733462@newsletter"].getRandom(),
+newsletterJid: [process.env.CHANNEL_ID, "120363301598733462@newsletter", "120363310758594673@newsletter"].getRandom(),
 newsletterName: "LoliBot ✨️"
 }}}, { quoted: null })
+}
+
+for (const p of participants) {
+const participant = getRealJid(p)
+const participantLid = getLidJid(p)
+if (!participant || !participant.includes("@")) continue
+
+const mentions = [...new Set([participant, participantLid, authorJid].filter(Boolean))]
+const userTag = getTag(participant)
+const authorTag = getTag(authorJid)
+
+let image = pp
+try {
+image = await conn.profilePictureUrl(participant, "image")
+} catch {}
+
+if (action === "add" && settings.antifake) {
+const phoneNumber = participant.split("@")[0].replace(/[^0-9]/g, "")
+const isFake = blockedPrefixes.some(code => phoneNumber.startsWith(String(code).replace(/[^0-9]/g, "")))
+
+if (isFake && isBotAdmin) {
+await conn.sendMessage(id, { text: `⚠️ ${userTag} fue eliminado automáticamente por *número no permitido*`, mentions: [participant] })
+await conn.groupParticipantsUpdate(id, [participant], "remove")
+continue
+}
+
+if (isFake && !isBotAdmin) continue
+}
+
+const vars = {
+"@user": userTag,
+"@author": authorTag,
+"@group": groupName,
+"@subject": groupName,
+"@desc": groupDesc
+}
+
+if (action === "add") {
+if (!settings.welcome) continue
+const raw = settings.swelcome || settings.sWelcome || `HOLAA!! @user ¿COMO ESTAS?😃\n\n『Bienvenido A *@group*』\n\nUn gusto conocerte amig@ 🤗\n\n_Recuerda leer las reglas del grupo para no tener ningun problema 🧐_\n\n*Solo disfrutar de este grupo y divertite 🥳*`
+const msg = makeMsg(raw, vars)
+
+if (settings.photowelcome) {
+await sendImage(msg, image, mentions)
 } else {
-await conn.sendMessage(id, { text: msg,
-contextInfo: {
-forwardedNewsletterMessageInfo: {
-newsletterJid: ["120363321650707484@newsletter", "120363368880733138@newsletter", "120363301598733462@newsletter"].getRandom(),
-newsletterName: "LoliBot ✨️"
-},
-forwardingScore: 9999999,
-isForwarded: true,
-mentionedJid: [participant],
-externalAdReply: {
-showAdAttribution: true,
-renderLargerThumbnail: true,
-thumbnailUrl: image,
-title: "👋 BYE",
-body: "Se fue un gay",
-containsAutoReply: true,
-mediaType: 1,
-sourceUrl: "https://skyultraplus.com"
-}}}, { quoted: null })
-}}
-break
-
-case "promote": case "daradmin": case "darpoder":
-if (settings.detect) {
-const raw = settings.sPromote || `@user 𝘼𝙃𝙊𝙍𝘼 𝙀𝙎 𝘼𝘿𝙈𝙄𝙉 𝙀𝙉 𝙀𝙎𝙏𝙀 𝙂𝙍𝙐𝙋𝙊\n\n😼🫵𝘼𝘾𝘾𝙄𝙊𝙉 𝙍𝙀𝘼𝙇𝙄𝙕𝘼𝘿𝘼 𝙋𝙊𝙍: @author`
-const msg = raw
-  .replace(/@user/gi, userTag)
-  .replace(/@group/gi, groupName)
-  .replace(/@desc/gi, metadata.desc || "")
-  .replace(/@author/gi, authorTag)
-await conn.sendMessage(id, { text: msg,  
-contextInfo:{  
-forwardedNewsletterMessageInfo: { 
-newsletterJid: ["120363321650707484@newsletter", "120363368880733138@newsletter", "120363301598733462@newsletter"].getRandom(),
-newsletterName: "LoliBot ✨️" },
-forwardingScore: 9999999,  
-isForwarded: true,   
-mentionedJid: [participant, author],
-externalAdReply: {  
-mediaUrl: [info.nna, info.nna2, info.md].getRandom(), 
-mediaType: 2,
-showAdAttribution: false,  
-renderLargerThumbnail: false,  
-title: "NUEVO ADMINS 🥳",
-body: "Weon eres admin portante mal 😉",
-containsAutoReply: true,  
-thumbnailUrl: image,
-sourceUrl: "skyultraplus.com"
-}}}, { quoted: null })         
+await sendText(id, msg, "🌟 WELCOME 🌟", "Bienvenido al grupo 🤗", image, mentions)
 }
-break
 
-case "demote": case "quitaradmin": case "quitarpoder":
-if (settings.detect) {
-const raw = settings.sDemote || `@user 𝘿𝙀𝙅𝘼 𝘿𝙀 𝙎𝙀𝙍 𝘼𝘿𝙈𝙄𝙉 𝙀𝙉 𝙀𝙎𝙏𝙀 𝙂𝙍𝙐𝙋𝙊\n\n😼🫵𝘼𝘾𝘾𝙄𝙊𝙉 𝙍𝙀𝘼𝙇𝙄𝙕𝘼𝘿𝘼 𝙋𝙊𝙍: @author`
-const msg = raw
-  .replace(/@user/gi, userTag)
-  .replace(/@group/gi, groupName)
-  .replace(/@desc/gi, metadata.desc || "")
-  .replace(/@author/gi, authorTag)
-await conn.sendMessage(id, { text: msg,  
-contextInfo:{  
-forwardedNewsletterMessageInfo: { 
-newsletterJid: ["120363321650707484@newsletter", "120363368880733138@newsletter", "120363301598733462@newsletter"].getRandom(),
-newsletterName: "LoliBot ✨️" },
-forwardingScore: 9999999,  
-isForwarded: true,   
-mentionedJid: [participant, author],
-externalAdReply: {  
-mediaUrl: [info.nna, info.nna2, info.md].getRandom(), 
-mediaType: 2,
-showAdAttribution: false,  
-renderLargerThumbnail: false,  
-title: "📛 UN ADMINS MENOS",
-body: "Jjjj Ya no eres admin 😹",
-containsAutoReply: true,  
-mediaType: 1,   
-thumbnailUrl: image,
-sourceUrl: "skyultraplus.com"
-}}}, { quoted: null })            
+continue
 }
-break
+
+if (action === "remove") {
+try {
+await db.query(`DELETE FROM messages WHERE user_id = $1 AND group_id = $2`, [participant, id])
+
+if (participant === botJidClean || participantLid === botLidClean) {
+await db.query(`UPDATE chats SET joined = false WHERE id = $1 AND bot_id = $2`, [id, botJidClean])
+}
+} catch (err) {
+console.error("❌ Error limpiando remove:", err)
+}
+
+if (!settings.bye) continue
+const raw = settings.sbye || settings.sBye || `Bueno, se fue @user 👋\n\nQue dios lo bendiga 😎`
+const msg = makeMsg(raw, vars)
+
+if (settings.photobye) {
+await sendImage(msg, image, mentions)
+} else {
+await sendText(id, msg, "👋 BYE", "Se fue del grupo", image, mentions)
+}
+
+continue
+}
+
+if (["promote", "daradmin", "darpoder"].includes(action)) {
+if (!settings.detect) continue
+const raw = settings.spromote || settings.sPromote || `@user 𝘼𝙃𝙊𝙍𝘼 𝙀𝙎 𝘼𝘿𝙈𝙄𝙉 𝙀𝙉 𝙀𝙎𝙏𝙀 𝙂𝙍𝙐𝙋𝙊\n\n😼🫵𝘼𝘾𝘾𝙄𝙊𝙉 𝙍𝙀𝘼𝙇𝙄𝙕𝘼𝘿𝘼 𝙋𝙊𝙍: @author`
+const msg = makeMsg(raw, vars)
+
+await sendText(id, msg, "NUEVO ADMIN 🥳", "Ahora tiene admin", image, mentions)
+continue
+}
+
+if (["demote", "quitaradmin", "quitarpoder"].includes(action)) {
+if (!settings.detect) continue
+const raw = settings.sdemote || settings.sDemote || `@user 𝘿𝙀𝙅𝘼 𝘿𝙀 𝙎𝙀𝙍 𝘼𝘿𝙈𝙄𝙉 𝙀𝙉 𝙀𝙎𝙏𝙀 𝙂𝙍𝙐𝙋𝙊\n\n😼🫵𝘼𝘾𝘾𝙄𝙊𝙉 𝙍𝙀𝘼𝙇𝙄𝙕𝘼𝘿𝘼 𝙋𝙊𝙍: @author`
+const msg = makeMsg(raw, vars)
+
+await sendText(id, msg, "📛 ADMIN REMOVIDO", "Ya no tiene admin", image, mentions)
+continue
 }}
 } catch (err) {
-console.error(chalk.red(`❌ Error en participantsUpdate - Acción: ${action} | Grupo: ${id}`), err);
+console.error(chalk.red(`❌ Error en participantsUpdate - Acción: ${action} | Grupo: ${id}`), err)
 }
 }
 
-export async function groupsUpdate(conn, { id, subject, desc, picture }) {
+export async function groupsUpdate(conn, updates) {
 try {
-const botId = conn.user?.id;
+if (!Array.isArray(updates)) updates = [updates]
+const cleanJid = (jid = "") => String(jid || "").replace(/:\d+/, "")
+const botId = conn.user?.id
+if (!botId) return
+
 const botConfig = await getSubbotConfig(botId)
-const modo = botConfig.mode || "public";
-const botJid = conn.user?.id?.replace(/:\d+@/, "@");
-const isCreator = global.owner.map(([v]) => v.replace(/[^0-9]/g, '') + '@s.whatsapp.net').includes(botJid);
-    
-const settings = (await db.query("SELECT * FROM group_settings WHERE group_id = $1", [id])).rows[0] || {
-welcome: true,
-detec: true,
-antifake: false
-};
-    
-if (modo === "private" && !isCreator) return;
-const metadata = await conn.groupMetadata(id);
-groupMetaCache.set(id, metadata);
-const groupName = subject || metadata.subject || "Grupo";
-const isBotAdmin = metadata.participants.some(p => p.id.includes(botJid) && p.admin);
+const modo = botConfig.mode || "public"
+const botJid = cleanJid(conn.user?.id)
+const fixedOwners = global.owner.map(([v]) => v.replace(/[^0-9]/g, "") + "@s.whatsapp.net")
 
-let message = "";
-if (subject) {
-message = `El nombre del grupo ha cambiado a *${groupName}*.`;
-} else if (desc) {
-message = `La descripción del grupo *${groupName}* ha sido actualizada, nueva descripción:\n\n${metadata.desc || "Sin descripción"}`;
-} else if (picture) {
-message = `La foto del grupo *${groupName}* ha sido actualizada.`;
-}
-
-if (message && settings.detect) {
-await conn.sendMessage(id, { text: message,
+const sendDetect = async (groupId, text, mentions = []) => {
+await conn.sendMessage(groupId, { text, mentions,
 contextInfo: {
+mentionedJid: mentions,
 isForwarded: true,
-forwardingScore: 1,
+forwardingScore: 999999,
 forwardedNewsletterMessageInfo: {
-newsletterJid: ["120363321650707484@newsletter", "120363368880733138@newsletter", "120363301598733462@newsletter"].getRandom(),
+newsletterJid: [process.env.CHANNEL_ID, "120363301598733462@newsletter", "120363310758594673@newsletter"].getRandom(),
 newsletterName: "LoliBot ✨️",
 serverMessageId: 1
 }}
-});
-}} catch (err) {
-console.error(chalk.red("❌ Error en groupsUpdate:"), err);
+})
 }
+
+for (const update of updates) {
+const id = update?.id
+if (!id) continue
+
+const author = cleanJid(update.authorPn || update.author || "")
+const isCreator = fixedOwners.includes(author) || fixedOwners.includes(botJid)
+
+if (modo === "private" && !isCreator && author !== botJid) continue
+
+const settings = (await db.query("SELECT detect FROM group_settings WHERE group_id = $1", [id])).rows[0] || { detect: true }
+if (!settings.detect) continue
+
+let metadata = {}
+try {
+metadata = await conn.groupMetadata(id)
+groupMetaCache.set(id, metadata)
+} catch {}
+
+const groupName = update.subject || metadata.subject || "Grupo"
+const authorTag = author ? `@${author.split("@")[0]}` : "alguien"
+
+let message = ""
+if (typeof update.subject === "string") {
+message = `✏️ *Nombre del grupo actualizado*\n\nNuevo nombre:\n*${groupName}*`
+
+} else if (typeof update.desc === "string") {
+message = `📝 *Descripción del grupo actualizada*\n\n${metadata.desc || update.desc || "Sin descripción"}`
+
+} else if (update.picture) {
+message = `🖼️ *Foto del grupo actualizada*`
+
+} else if (typeof update.restrict === "boolean") {
+message = update.restrict ? `🔒 *Modo edición cerrado*\n\nSolo admins pueden editar la info del grupo.` : `🔓 *Modo edición abierto*\n\nTodos pueden editar la info del grupo.`
+
+} else if (typeof update.announce === "boolean") {
+message = update.announce ? `🔇 *Grupo cerrado*\n\nSolo admins pueden enviar mensajes.`  : `🔊 *Grupo abierto*\n\nTodos pueden enviar mensajes.`
+
+} else if (typeof update.memberAddMode === "boolean") {
+message = update.memberAddMode ? `✅ *Añadir miembros activado*\n\nTodos pueden añadir miembros al grupo.` : `🚫 *Añadir miembros desactivado*\n\nSolo admins pueden añadir miembros al grupo.`
+
+} else if (typeof update.joinApprovalMode === "boolean") {
+message = update.joinApprovalMode ? `🛂 *Aprobación activada*\n\nLos nuevos miembros necesitan aprobación para entrar.` : `🚪 *Aprobación desactivada*\n\nLos nuevos miembros pueden entrar sin aprobación.`
+
+} else if (update.inviteCode) {
+const link = `https://chat.whatsapp.com/${update.inviteCode}`
+message = `🔗 *Nuevo enlace del grupo generado*\n\n${link}`
+}
+
+if (!message) continue
+await sendDetect(id, message, author ? [author] : [])
+}
+} catch (err) {
+console.error(chalk.red("❌ Error en groupsUpdate:"), err)
+}
+}
+
+export async function handleJoinRequest(conn, data) {
+  try {
+    const groupId = data.id || data.jid || data.groupJid
+    const participantsRaw = data.participants || data.participant || []
+
+    if (!groupId) return
+
+    const users = Array.isArray(participantsRaw) ? participantsRaw : [participantsRaw]
+    if (!users.length) return
+
+    const myJid = (conn.user?.id || '').replace(/:\d+/, '')
+
+    const res = await db.query(
+      `SELECT auto_approve, antifake, antifake_prefixes, primary_bot
+       FROM group_settings
+       WHERE group_id = $1`,
+      [groupId]
+    )
+
+    const settings = res.rows[0]
+    if (!settings) return
+
+    let {
+      auto_approve,
+      antifake,
+      antifake_prefixes = [],
+      primary_bot
+    } = settings
+
+    if (typeof antifake_prefixes === 'string') {
+      try {
+        antifake_prefixes = JSON.parse(antifake_prefixes)
+      } catch {
+        antifake_prefixes = antifake_prefixes.split(',').map(v => v.trim()).filter(Boolean)
+      }
+    }
+
+    if (!Array.isArray(antifake_prefixes)) antifake_prefixes = []
+
+    if (primary_bot && primary_bot !== myJid) return
+    if (!auto_approve) return
+
+    for (const user of users) {
+      const jid = user.jid || user.id || user.lid
+      const pn = user.pn || user.phoneNumber || user.phone_number
+
+      if (!jid) continue
+
+      const num = pn ? pn.replace(/[^0-9]/g, '') : jid.replace(/[^0-9]/g, '')
+
+      if (antifake && num) {
+        const blocked = antifake_prefixes.some(p => {
+          const prefix = String(p).replace(/[^0-9]/g, '')
+          return prefix && num.startsWith(prefix)
+        })
+
+        if (blocked) {
+          console.log('🚫 AUTO-REJECT JOIN:', num || jid)
+          await conn.groupRequestParticipantsUpdate(groupId, [jid], 'reject')
+          continue
+        }
+      }
+
+      console.log('✅ AUTO-APPROVE JOIN:', num || jid)
+      await conn.groupRequestParticipantsUpdate(groupId, [jid], 'approve')
+    }
+  } catch (err) {
+    console.error('❌ Error en handleJoinRequest:', err)
+  }
 }
 
 export async function callUpdate(conn, call) {
@@ -294,7 +365,7 @@ contextInfo: {
 isForwarded: true,
 forwardingScore: 1,
 forwardedNewsletterMessageInfo: {
-newsletterJid: ["120363321650707484@newsletter", "120363368880733138@newsletter", "120363301598733462@newsletter"].getRandom(),
+newsletterJid: [process.env.CHANNEL_ID, "120363301598733462@newsletter", "120363310758594673@newsletter"].getRandom(),
 newsletterName: "LoliBot ✨️",
 serverMessageId: 1
 }}
@@ -355,7 +426,7 @@ mentionedJid: await conn.parseMention(text),
 isForwarded: true,
 forwardingScore: 1,
 forwardedNewsletterMessageInfo: {
-newsletterJid: "120363321650707484@newsletter",
+newsletterJid: process.env.CHANNEL_ID,
 newsletterName: "LoliBot ✨️"
 }};
 return await conn.sendMessage(chatId, { text, contextInfo }, { quoted: m });
@@ -368,18 +439,40 @@ if (processedMessages.has(hash)) return;
 processedMessages.add(hash);
 setTimeout(() => processedMessages.delete(hash), 60_000);
 
-//contador 
-if (m.isGroup && m.sender !== conn.user?.id.replace(/:\d+@/, "@")) {
-const key = `${m.sender}|${chatId}`;
-const now = Date.now();
-const last = lastDbUpdate.get(key) || 0;
-if (now - last > 9000) { //9 seg
-lastDbUpdate.set(key, now);
-db.query(`INSERT INTO messages (user_id, group_id, message_count)
-      VALUES ($1, $2, 1)
-      ON CONFLICT (user_id, group_id)
-      DO UPDATE SET message_count = messages.message_count + 1`, [m.sender, chatId]).catch(console.error);
-}}
+// contador 
+if (m.isGroup) {
+  const botClean = (conn.user?.id || "").replace(/:\d+/, "")
+  const senderIds = [
+    m.sender,
+    m.lid,
+    m.key?.participant,
+    m.key?.participantAlt,
+    m.key?.senderLid
+  ]
+    .filter(Boolean)
+    .map(v => v.replace(/:\d+/, ""))
+
+  const uniqueIds = [...new Set(senderIds)]
+    .filter(v => v && v !== botClean)
+
+  const now = Date.now()
+
+  for (const userId of uniqueIds) {
+    const key = `${userId}|${chatId}`
+    const last = lastDbUpdate.get(key) || 0
+
+    if (now - last > 9000) {
+      lastDbUpdate.set(key, now)
+
+      db.query(`INSERT INTO messages (user_id, group_id, message_count)
+        VALUES ($1, $2, 1)
+        ON CONFLICT (user_id, group_id)
+        DO UPDATE SET message_count = messages.message_count + 1`,
+        [userId, chatId]
+      ).catch(console.error)
+    }
+  }
+}
 
 //antifake
 if (m.isGroup && m.sender && m.sender.endsWith("@s.whatsapp.net")) {
@@ -505,45 +598,73 @@ console.error(err);
 }}
 
 try {
-const rawJid = m.key?.participantAlt || m.key?.participant || m.key?.remoteJid || null;
-const isValido = typeof rawJid === 'string' && /^\d+@(s\.whatsapp\.net|lid)$/.test(rawJid);
-const num = isValido ? rawJid.split('@')[0] : null;
-const userName = m.pushName || 'sin name';
+  const cleanJid = (jid = "") => String(jid || "").replace(/:\d+/, "")
+  const onlyNum = (jid = "") => String(jid || "").split("@")[0].replace(/[^0-9]/g, "")
 
-if (m.key?.participantAlt && m.key.participantAlt.endsWith("@s.whatsapp.net")) {
-  m.sender = m.key.participantAlt;
-  m.lid = m.key.participant;      
-} else if (m.key?.remoteJidAlt && m.key.remoteJidAlt.endsWith("@s.whatsapp.net")) {
-  m.sender = m.key.remoteJidAlt;   
-  m.lid = m.key.remoteJid;       
-} else {
-const jid = m.key?.participant || m.key?.remoteJid || "";
-if (jid.endsWith("@lid")) {   
-    m.lid = jid;
-    m.sender = jid.replace("@lid", "@s.whatsapp.net");
-  } else {
-    m.sender = jid;
+  const key = m.key || {}
+
+  const possiblePhone = [
+    key.participantAlt,
+    key.remoteJidAlt,
+    key.participant,
+    key.remoteJid
+  ].filter(v => typeof v === "string" && v.endsWith("@s.whatsapp.net")).map(cleanJid)
+
+  const possibleLid = [
+    key.senderLid,
+    key.participant,
+    key.remoteJid,
+    key.participantAlt,
+    key.remoteJidAlt
+  ].filter(v => typeof v === "string" && v.endsWith("@lid")).map(cleanJid)
+
+  const phoneJid = possiblePhone[0] || (
+    m.sender?.endsWith("@s.whatsapp.net") ? cleanJid(m.sender) : ""
+  )
+
+  const lidJid = possibleLid[0] || (
+    m.lid?.endsWith("@lid") ? cleanJid(m.lid) : ""
+  )
+
+  // Si no hay número real, no inventes s.whatsapp.net desde lid
+  const finalId = phoneJid || cleanJid(m.sender || key.remoteJid || "")
+  const finalLid = lidJid || null
+  const finalNum = onlyNum(phoneJid || finalId)
+  const userName = m.pushName || "sin name"
+
+  if (!finalId || !finalId.includes("@")) return
+
+  m.sender = finalId
+  m.lid = finalLid || ""
+
+  await db.query(
+    `INSERT INTO usuarios (id, nombre, num, lid, registered)
+     VALUES ($1, $2, $3, $4, false)
+     ON CONFLICT (id) DO NOTHING`,
+    [finalId, userName, finalNum || null, finalLid]
+  )
+
+  await db.query(
+    `UPDATE usuarios SET nombre = $1, num = $2 WHERE id = $3`,
+    [userName, finalNum || null, finalId]
+  )
+
+  if (finalLid) {
+    const old = await db.query(`SELECT id FROM usuarios WHERE lid = $1`, [finalLid])
+
+    for (const row of old.rows || []) {
+      if (row.id && row.id !== finalId) {
+        await db.query(`UPDATE usuarios SET lid = NULL WHERE id = $1`, [row.id])
+      }
+    }
+
+    await db.query(
+      `UPDATE usuarios SET lid = $1 WHERE id = $2`,
+      [finalLid, finalId]
+    )
   }
-}
-
-await db.query(`INSERT INTO usuarios (id, nombre, num, registered)
-     VALUES ($1, $2, $3, false)
-     ON CONFLICT (id) DO NOTHING`, [m.sender, userName, num]);
-
-if (isValido && m.sender.endsWith('@s.whatsapp.net')) {
-await db.query(`UPDATE usuarios SET nombre = $1${num ? ', num = COALESCE(num, $2)' : ''} WHERE id = $3`, num ? [userName, num, m.sender] : [userName, m.sender]);
-}
-
-if (m.key && m.key.senderLid) {
-try {
-await db.query('UPDATE usuarios SET lid = NULL WHERE lid = $1 AND id <> $2', [m.key.senderLid, m.sender]);
-await db.query('UPDATE usuarios SET lid = $1 WHERE id = $2', [m.key.senderLid, m.sender]);
-m.lid = m.key.senderLid;
-} catch (e) {
-console.error("❌ Error actualizando lid en handler:", e);
-}}
 } catch (err) {
-console.error(err);
+  console.error("❌ Error guardando usuario/lid:", err)
 }
 
 try {
