@@ -83,7 +83,7 @@
    </tr>
   <tr>
   <td>💻 Base de datos</td>
-  <td>Compatible con múltiples motores: LowDB (por defecto), SQLite3, PostgreSQL, MariaDB y MongoDB, ofreciendo flexibilidad, eficiencia y escalabilidad según las necesidades</td>
+  <td>Compatible con múltiples motores: LowDB (por defecto), SQLite3, PostgreSQL, MariaDB o MongoDB, ofreciendo flexibilidad, eficiencia y escalabilidad según las necesidades</td>
 </tr>
   <tr>
     <td>🚧 En constante mejora</td>
