@@ -3,7 +3,7 @@
 </p>
 
 <p align="center">
-  <img src="https://capsule-render.vercel.app/api?type=waving&color=F700FF&height=100&section=header&text=✨%20LoliBot-MD%20v2.0.0%20✨&fontSize=32&fontColor=ffffff" />
+  <img src="https://capsule-render.vercel.app/api?type=waving&color=F700FF&height=100&section=header&text=✨%20LoliBot-MD%20v2.0.5%20✨&fontSize=32&fontColor=ffffff" />
 </p>
 
 <p align="center">
@@ -82,9 +82,9 @@
     <td>Adivina, reto, piedra papel tijera, ruleta y más</td>
    </tr>
   <tr>
-    <td>💻 Base de datos</td>
-    <td>PostgreSQL para una mayor eficiencia y escalabilidad</td>
-  </tr>
+  <td>💻 Base de datos</td>
+  <td>Compatible con múltiples motores: LowDB (por defecto), SQLite3, PostgreSQL, MariaDB y MongoDB, ofreciendo flexibilidad, eficiencia y escalabilidad según las necesidades</td>
+</tr>
   <tr>
     <td>🚧 En constante mejora</td>
     <td>Siempre en evolución con nuevas ideas y funciones</td>
