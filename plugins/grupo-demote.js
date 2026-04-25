@@ -1,31 +1,77 @@
-const handler = async (m, {conn, usedPrefix, text}) => {
-if (isNaN(text) && !text.match(/@/g)) {
-} else if (isNaN(text)) {
-var number = text.split`@`[1];
-} else if (!isNaN(text)) {
-var number = text;
+const cleanJid = (jid = '') => String(jid).replace(/:\d+/, '')
+
+const getParticipantIds = (p = {}) => {
+  return [
+    p.id,
+    p.phoneNumber,
+    p.lid,
+    p.participantAlt,
+    p.jid
+  ].filter(Boolean).map(cleanJid)
 }
 
-if (!text && !m.quoted) return conn.reply(m.chat, `*⚠️ ¿A quien le quitó admins?* etiquetas a una persona no soy adivinó :)`, m);
-if (number.length > 13 || (number.length < 11 && number.length > 0)) return conn.reply(m.chat, `*Esta drogado o que ese número ingresado es incorrecto 🤓*, ingresa el número correctamente o mejor etiquetas al usuario.`, m);
-try {
-if (text) {
-var user = number + '@s.whatsapp.net';
-} else if (m.quoted.sender) {
-var user = m.quoted.sender;
-} else if (m.mentionedJid) {
-var user = number + '@s.whatsapp.net';
-}} catch (e) {
-} finally {
-conn.groupParticipantsUpdate(m.chat, [user], 'demote');
-conn.reply(m.chat, `*[ ✅ ] ÓRDENES RECIBIDAS*`, m);
-}};
-handler.help = ['*593xxx*', '*@usuario*', '*responder chat*'].map((v) => 'demote ' + v);
-handler.tags = ['group'];
-handler.command = /^(demote|quitarpoder|quitaradmin)$/i;
-handler.group = true;
-handler.admin = true;
-handler.botAdmin = true;
-handler.register = true 
-handler.fail = null;
-export default handler;
+const findParticipant = (participants = [], who = '') => {
+  who = cleanJid(who)
+
+  return participants.find(p => {
+    const ids = getParticipantIds(p)
+    return ids.includes(who) || ids.some(id => id.includes(who.replace(/[^0-9]/g, '')))
+  })
+}
+
+const handler = async (m, { conn, text, metadata }) => {
+  try {
+    let who
+
+    if (m.mentionedJid?.[0]) {
+      who = m.mentionedJid[0]
+    } else if (m.quoted?.sender) {
+      who = m.quoted.sender
+    } else if (text) {
+      const number = text.replace(/[^0-9]/g, '')
+      if (!number) {
+        return conn.reply(m.chat, `*⚠️ Usuario inválido.*`, m)
+      }
+
+      if (number.length > 15 || number.length < 7) {
+        return conn.reply(m.chat, `*Ese número está mal escrito 🤓*`, m)
+      }
+
+      who = `${number}@s.whatsapp.net`
+    }
+
+    if (!who) {
+      return conn.reply(m.chat, `*⚠️ ¿A quién le quito admin?* etiqueta a una persona o responde su mensaje.`, m)
+    }
+
+    who = cleanJid(who)
+
+    const participants = metadata?.participants || []
+    const participant = findParticipant(participants, who)
+
+    if (!participant) {
+      return conn.reply(m.chat, `⚠️ No encontré ese usuario en el grupo.`, m)
+    }
+
+    const user = cleanJid(participant.id)
+
+    await conn.groupParticipantsUpdate(m.chat, [user], 'demote')
+
+    await conn.reply(m.chat, `*[ ✅ ] Admin quitado correctamente.*`, m)
+
+  } catch (e) {
+    console.error(e)
+    await conn.reply(m.chat, `❌ No pude quitarle admin al usuario.`, m)
+  }
+}
+
+handler.help = ['demote @usuario', 'demote responder chat', 'quitaradmin @usuario']
+handler.tags = ['group']
+handler.command = /^(demote|quitarpoder|quitaradmin)$/i
+handler.group = true
+handler.admin = true
+handler.botAdmin = true
+handler.register = true
+handler.fail = null
+
+export default handler

@@ -10,7 +10,17 @@ const formatPhoneNumber = (jid) => {
   if (!/^\d{8,15}$/.test(number)) return null;
   return `+${number}`;
 };
-const estados = {} 
+
+const estados = {}
+async function getTotalReg() {
+  try {
+    const res = await db.query(`SELECT COUNT(*) AS total FROM usuarios WHERE registered = true`);
+    return Number(res?.rows?.[0]?.total ?? res?.rows?.[0]?.count ?? 0);
+  } catch (e) {
+    console.error("❌ Error contando usuarios registrados:", e);
+    return 0;
+  }
+}
 
 let handler = async (m, { conn, text, args, usedPrefix, command }) => {
 let fkontak = {key: { participants: "0@s.whatsapp.net", remoteJid: "status@broadcast", fromMe: false, id: "Halo" }, message: {contactMessage: {vcard: `BEGIN:VCARD\nVERSION:3.0\nN:Sy;Bot;;;\nFN:y\nitem1.TEL;waid=${m.sender.split('@')[0]}:${m.sender.split('@')[0]}\nitem1.X-ABLabel:Ponsel\nEND:VCARD`}}, participant: "0@s.whatsapp.net"};
@@ -34,8 +44,7 @@ let user = userResult.rows[0] || { registered: false };
 const input = text.trim()
   const step = estados[who]?.step || 0
 let name2 = m.pushName || 'loli'
-const totalRegResult = await db.query(`SELECT COUNT(*) AS total FROM usuarios WHERE registered = true`);
-const rtotalreg = parseInt(totalRegResult.rows[0].total);
+const rtotalreg = await getTotalReg();
 
 if (command === 'reg' || command === 'verify' || command === 'verificar') {
 if (user.registered) return m.reply(`*Ya estás registrado 🤨*`)
@@ -183,7 +192,7 @@ ${pref}menu
 ◉ *Total de usuarios registrados:* ${toNum(rtotalreg + 1)}`,
 contextInfo: {
 forwardedNewsletterMessageInfo: {
-newsletterJid: '120363321650707484@newsletter',
+newsletterJid: process.env.CHANNEL_ID,
 serverMessageId: '',
 newsletterName: 'LoliBot ✨️' },
 forwardingScore: 9999999,

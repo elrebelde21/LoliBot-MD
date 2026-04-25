@@ -31,8 +31,7 @@ const PlayText = await conn.sendMessage(m.chat, { text: `${yt_play[0].title}
 *👉🏻Aguarde un momento en lo que envío su ${tipoDescarga}*`,  
 contextInfo:{  
 forwardedNewsletterMessageInfo: { 
-newsletterJid: '120363321650707484@newsletter', 
-serverMessageId: '', 
+newsletterJid: process.env.CHANNEL_ID, 
 newsletterName: 'LoliBot ✨️' },
 forwardingScore: 9999999,  
 isForwarded: true,   
@@ -59,12 +58,13 @@ const format = isAudio ? 'mp3' : '720'
 
 const audioApis = [
 { url: () => savetube.download(yt_play[0].url, format), extract: (data) => ({ data: data.result.download, isDirect: false }) },
+{ url: () => fetch(`https://api.mitzuki.xyz/download/youtube?url=${encodeURIComponent(yt_play[0].url)}&type=audio&format=mp3&apikey=${process.env.API_KEY}`).then(res => res.json()), extract: (data) => ({ data: data?.data?.media?.dl_download, isDirect: false }) },
+{ url: () => fetch(`https://api.mitzuki.xyz/download/youtube2?url=${encodeURIComponent(yt_play[0].url)}&apikey=${process.env.API_KEY}`).then(res => res.json()), extract: (data) => ({ data: data?.data?.audio?.url isDirect: false }) },
+{ url: () => fetch(`https://dv-yer-api.online/ytmp3?mode=link&url=${encodeURIComponent(yt_play[0].url)}`).then(res => res.json()), extract: (data) => ({ data: data?.download_url_full || data?.stream_url_full || (data?.url ? `https://dv-yer-api.online${d.url}` : null, isDirect: false }) },
 { url: () => ogmp3.download(yt_play[0].url, selectedQuality, 'audio'), extract: (data) => ({ data: data.result.download, isDirect: false }) },
 { url: () => fetch(`https://api.dorratz.com/v3/ytdl?url=${yt_play[0].url}`).then(res => res.json()), extract: (data) => { 
 const mp3 = data.medias.find(media => media.quality === "160kbps" && media.extension === "mp3");
 return { data: mp3.url, isDirect: false }}},
-{ url: () => fetch(`https://api.neoxr.eu/api/youtube?url=${yt_play[0].url}&type=audio&quality=128kbps&apikey=GataDios`).then(res => res.json()), extract: (data) => ({ data: data.data.url, isDirect: false }) },
-{ url: () => fetch(`https://api.fgmods.xyz/api/downloader/ytmp4?url=${yt_play[0].url}&apikey=elrebelde21`).then(res => res.json()), extract: (data) => ({ data: data.result.dl_url, isDirect: false }) },
 { url: () => fetch(`https://api.siputzx.my.id/api/d/ytmp4?url=${yt_play[0].url}`).then(res => res.json()), extract: (data) => ({ data: data.dl, isDirect: false }) },
 { url: () => fetch(`${info.apis}/download/ytmp3?url=${yt_play[0].url}`).then(res => res.json()), extract: (data) => ({ data: data.status ? data.data.download.url : null, isDirect: false }) },
 { url: () => fetch(`https://api.zenkey.my.id/api/download/ytmp3?apikey=zenkey&url=${yt_play[0].url}`).then(res => res.json()), extract: (data) => ({ data: data.result.download.url, isDirect: false }) },

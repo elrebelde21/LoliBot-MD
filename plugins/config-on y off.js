@@ -44,6 +44,13 @@ await db.query(`INSERT INTO group_settings (group_id) VALUES ($1) ON CONFLICT DO
 await db.query(`UPDATE group_settings SET welcome = $1 WHERE group_id = $2`, [isEnable, chatId])
 break
 
+case "bye": case "despedidas":
+if (!m.isGroup) throw '⚠️ Este comando solo se puede usar dentro de un grupo.'
+if (!isAdmin) throw "⚠️ Solo los admins puede usar este comando.";
+await db.query(`INSERT INTO group_settings (group_id) VALUES ($1) ON CONFLICT DO NOTHING`, [chatId])
+await db.query(`UPDATE group_settings SET bye = $1 WHERE group_id = $2`, [isEnable, chatId])
+break
+
 case 'detect': case 'avisos':
 if (!m.isGroup) throw '⚠️ Este comando solo se puede usar dentro de un grupo.'
 if (!isAdmin) throw "⚠️ Solo los admins puede usar este comando.";
@@ -65,6 +72,13 @@ await db.query(`INSERT INTO group_settings (group_id) VALUES ($1) ON CONFLICT DO
 await db.query(`UPDATE group_settings SET antilink2 = $1 WHERE group_id = $2`, [isEnable, chatId])
 break
             
+case "approve": case "autoapprove": case "aprobar":
+if (!m.isGroup) throw '⚠️ Este comando solo se puede usar dentro de un grupo.'
+if (!isAdmin) throw "⚠️ Solo los admins puede usar este comando.";
+await db.query(`INSERT INTO group_settings (group_id) VALUES ($1) ON CONFLICT DO NOTHING`, [chatId])
+await db.query(`UPDATE group_settings SET auto_approve = $1 WHERE group_id = $2`, [isEnable, chatId])
+break
+            
 case 'antiporn': case 'antiporno': case 'antinwfs':
 if (!m.isGroup) throw '⚠️ Este comando solo se puede usar dentro de un grupo.'
 if (!isAdmin) throw "⚠️ Solo los admins puede usar este comando.";
@@ -84,6 +98,13 @@ if (!m.isGroup) throw '⚠️ Este comando solo se puede usar dentro de un grupo
 if (!isAdmin) throw "⚠️ Solo los admins puede usar este comando.";
 await db.query(`INSERT INTO group_settings (group_id) VALUES ($1) ON CONFLICT DO NOTHING`, [chatId])
 await db.query(`UPDATE group_settings SET antifake = $1 WHERE group_id = $2`, [isEnable, chatId])
+break
+      
+case "antistatus": case "antiestados":
+if (!m.isGroup) throw '⚠️ Este comando solo se puede usar dentro de un grupo.'
+if (!isAdmin) throw "⚠️ Solo los admins puede usar este comando.";
+await db.query(`INSERT INTO group_settings (group_id) VALUES ($1) ON CONFLICT DO NOTHING`, [chatId])
+await db.query(`UPDATE group_settings SET antistatus = $1 WHERE group_id = $2`, [isEnable, chatId])
 break
       
 case 'nsfw': case "modohorny": case "modocaliente":

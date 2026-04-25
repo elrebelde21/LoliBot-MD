@@ -79,7 +79,7 @@ contextInfo: {
 forwardingScore: 1, 
 isForwarded: true,
 forwardedNewsletterMessageInfo: {
-newsletterJid: '120363321650707484@newsletter',
+newsletterJid: process.env.CHANNEL_ID,
 serverMessageId: '',
 newsletterName: 'LoliBot ✨️' },
 externalAdReply: {
@@ -149,7 +149,7 @@ return conn.sendMessage(m.chat, { text: '⚠️ Error al procesar la compra. Int
 }
 handler.help = ['rw']
 handler.tags = ['gacha']
-handler.command = ['rf', 'rw']
+handler.command = ['rw']
 handler.register = true
 
 export default handler

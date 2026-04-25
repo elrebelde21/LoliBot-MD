@@ -59,24 +59,52 @@ return conn.reply(m.chat, txt, m, { mentions: await conn.parseMention(txt) });
 }
 
 if (command === "listaparejas") {
-try {
-const res = await db.query("SELECT id, marry FROM usuarios WHERE marry IS NOT NULL");
-txt += `╭•·––| 💞 *LISTA DE PAREJAS* |––·•\n│\n*│Total:* ${res.rowCount}\n│\n`;
-if (res.rows.length) {
-let i = 1;
-for (const user of res.rows) {
-if (!user.marry || user.marry === "null") continue;
-txt += `│ *${i}.* @${user.id.split("@")[0]} 💞 @${user.marry.split("@")[0]}\n`;
-i++;
-}
-} else {
-txt += "│✅ No hay parejas registradas actualmente.\n";
-}
-txt += "╰•·–––––––––––––––––––·•\n";
-} catch (e) {
-txt += "❌ Error al obtener la lista de parejas.\n";
-}
-return conn.reply(m.chat, txt, m, { mentions: await conn.parseMention(txt) });
+  try {
+    const res = await db.query(
+      "SELECT id, marry FROM usuarios WHERE marry IS NOT NULL"
+    )
+
+    const parejas = []
+    const vistos = new Set()
+
+    for (const user of res.rows || []) {
+      if (!user.marry || user.marry === "null") continue
+
+      const id1 = String(user.id || "").replace(/:\d+/, "")
+      const id2 = String(user.marry || "").replace(/:\d+/, "")
+
+      if (!id1 || !id2) continue
+
+      const key = [id1, id2].sort().join("|")
+      if (vistos.has(key)) continue
+
+      vistos.add(key)
+      parejas.push([id1, id2])
+    }
+
+    txt += `╭•·––| 💞 *LISTA DE PAREJAS* |––·•\n│\n`
+    txt += `*│Total:* ${parejas.length}\n│\n`
+
+    if (parejas.length) {
+      let i = 1
+
+      for (const [id1, id2] of parejas) {
+        txt += `│ *${i}.* @${id1.split("@")[0]} 💞 @${id2.split("@")[0]}\n`
+        i++
+      }
+    } else {
+      txt += "│✅ No hay parejas registradas actualmente.\n"
+    }
+
+    txt += "╰•·–––––––––––––––––––·•\n"
+  } catch (e) {
+    console.error(e)
+    txt += "❌ Error al obtener la lista de parejas.\n"
+  }
+
+  return conn.reply(m.chat, txt, m, {
+    mentions: await conn.parseMention(txt)
+  })
 }
 
 if (command === "listaadv") {

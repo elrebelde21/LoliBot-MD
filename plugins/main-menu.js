@@ -85,18 +85,21 @@ user = { limite: 0, level: 0, exp: 0, role: '-' };
 
 let totalreg = 0;
 let rtotalreg = 0;
+
 try {
-const userCountRes = await db.query(`
-      SELECT COUNT(*)::int AS total,
-             COUNT(*) FILTER (WHERE registered = true)::int AS registrados
-      FROM usuarios
-    `);
-totalreg = userCountRes.rows[0].total;
-rtotalreg = userCountRes.rows[0].registrados;
+  const totalRes = await db.query(`SELECT COUNT(*) AS total FROM usuarios`);
+  const regRes = await db.query(`SELECT COUNT(*) AS total FROM usuarios WHERE registered = true`);
+
+  totalreg = Number(totalRes?.rows?.[0]?.total ?? totalRes?.rows?.[0]?.count ?? 0);
+  rtotalreg = Number(regRes?.rows?.[0]?.total ?? regRes?.rows?.[0]?.count ?? 0);
 } catch (err) {
+  console.error("❌ Error contando usuarios del menú:", err);
+  totalreg = 0;
+  rtotalreg = 0;
 }
-const toUsers = toNum(totalreg);
-const toUserReg = toNum(rtotalreg);
+
+const toUsers = toNum(totalreg || 0);
+const toUserReg = toNum(rtotalreg || 0);
 const nombreBot = conn.user?.name || 'Bot'
 const isPrincipal = conn === global.conn;
 const tipo = isPrincipal ? 'Bot Oficial' : 'Sub Bot';
@@ -153,13 +156,13 @@ fecha, hora, muptime,
 wm: info.wm,
 botOfc: botOfc,
 BoTag: BoTag,
-nna2: info.nna2
+nna2: info.nna
 };
 
 text = String(text).replace(new RegExp(`%(${Object.keys(replace).join('|')})`, 'g'), (_, key) => replace[key] ?? '');
 try {
 let pp = fs.readFileSync('./media/Menu2.jpg');
-const menuMessage = await conn.sendMessage(chatId, { text: text, contextInfo: { forwardedNewsletterMessageInfo: { newsletterJid: "120363321650707484@newsletter",newsletterName: "LoliBot ✨️" }, forwardingScore: 999, isForwarded: true, mentionedJid: await conn.parseMention(text), externalAdReply: { mediaUrl:  [info.nna, info.nna2, info.md].getRandom(), mediaType: 2, showAdAttribution: false, renderLargerThumbnail: false, title: "✨️ MENU ✨️", body: `${nombreBot} (${tipo})`, thumbnailUrl: info.img2, sourceUrl: "https://skyultraplus.com" }}}, { quoted: m });
+const menuMessage = await conn.sendMessage(chatId, { text: text, contextInfo: { forwardedNewsletterMessageInfo: { newsletterJid: process.env.CHANNEL_ID,newsletterName: "LoliBot ✨️" }, forwardingScore: 999, isForwarded: true, mentionedJid: await conn.parseMention(text), externalAdReply: { mediaUrl:  [info.nna, info.nna2, info.md].getRandom(), mediaType: 2, showAdAttribution: false, renderLargerThumbnail: false, title: "✨️ MENU ✨️", body: `${nombreBot} (${tipo})`, thumbnailUrl: info.img2, sourceUrl: "https://skyultraplus.com" }}}, { quoted: m });
 cooldowns.set(chatId, { lastUsed: now, menuMessage: menuMessage })
 m.react('🙌');
 } catch (err) {    
@@ -178,6 +181,9 @@ const clockString = ms => {
   return [h, m, s].map(v => v.toString().padStart(2, 0)).join(':')
 }
 
-const toNum = n => (n >= 1_000_000) ? (n / 1_000_000).toFixed(1) + 'M'
-  : (n >= 1_000) ? (n / 1_000).toFixed(1) + 'k'
-  : n.toString()
+const toNum = n => {
+  n = Number(n || 0)
+  return n >= 1_000_000 ? (n / 1_000_000).toFixed(1) + 'M'
+    : n >= 1_000 ? (n / 1_000).toFixed(1) + 'k'
+    : n.toString()
+}

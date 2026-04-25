@@ -39,28 +39,11 @@ https://youtu.be/z2kHwbu8e8s?si=2z3Fur9U4ccN7EwA
 💻 *Página:*
 https://skyultraplus.com
 
-✨ *Dashboard "new" para cliente:*
-paymenter.skyultraplus.com
-
-🟢 *Dash "anterior" usuarios free:*
+✨ *Dash:*
 dash.skyultraplus.com
 
 ⚙️ *Panel:*
 https://panel.skyultraplus.com
-
-💥 *Comunidad de WhatsApp:*
-https://chat.whatsapp.com/E6iWpvGuJ8zJNPbN3zOr0D?mode=ac_t
-
-*🟣 Discord:*
-https://discord.gg/zvKgtc2RBc
-
-🧡 Canal de WhatsApp:*
-https://whatsapp.com/channel/0029VakUvreFHWpyWUr4Jr0g
-
-🗣📲 Contacto:*
-• wa.me/15167096032
-• https://instagram.com/gata_dios
-• ${info.fb}
 
 > ───────•••───────
 
@@ -83,7 +66,7 @@ https://whatsapp.com/channel/0029VakUvreFHWpyWUr4Jr0g
 
 * \`\`\`git clone https://github.com/elrebelde21/LoliBot-MD && cd LoliBot-MD\`\`\`
 
-* \`\`\`bash install.sh\`\`\`
+* \`\`\`npm install\`\`\`
 
 * \`\`\`ls\`\`\`
 
