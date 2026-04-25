@@ -137,7 +137,7 @@ git clone https://github.com/elrebelde21/LoliBot-MD && cd LoliBot-MD
 ```
 
 ```bash
-bash install.sh
+npm install 
 ```
 
 ```bash
