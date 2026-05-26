@@ -17,7 +17,7 @@ globalThis.info = {
 wm: "𝙇𝙤𝙡𝙞𝘽𝙤𝙩-𝙈𝘿",
 vs: "2.0.5",
 packname: "𝗦𝗧𝗜𝗖𝗞𝗘𝗥𝗦❤️‍🔥 - LoliBot\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",
-author: "Owner: @elrebelde21\n• Dueña: @chn1ttta",
+author: "Owner: @elrebelde21\n• Dueña: @itschinita_official",
 apis: "https://api.delirius.store",
 img2: "https://telegra.ph/file/39fb047cdf23c790e0146.jpg",
 img4: fs.readFileSync('./media/Menu2.jpg'),
