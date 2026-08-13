@@ -1,41 +1,37 @@
-import os from 'os';
-import cp from 'child_process';
-import { promisify } from 'util';
-import fetch from 'node-fetch';
-const exec = promisify(cp.exec).bind(cp);
+import os from "os"
+import cp from "child_process"
+import { promisify } from "util"
+
+const exec = promisify(cp.exec)
 
 const handler = async (m) => {
-    let o;
-m.react("🚀") 
+let o
+    m.react("🚀")
     try {
-        o = await exec('python3 speed.py --secure --share');
-        const {stdout, stderr} = o;
-        if (stdout.trim()) {
-            const match = stdout.match(/http[^"]+\.png/);
-            const urlImagen = match ? match[0] : null;
-            await conn.relayMessage(m.chat, {
-extendedTextMessage:{ text: stdout.trim(), 
-contextInfo: { externalAdReply: {
-title: "< ＩＮＦＯ - ＳＰＥＥＤＴＥＳＴ />", body: `${toTime(os.uptime() * 1000)}`, mediaType: 1,
-previewType: 0, renderLargerThumbnail: true,
-thumbnailUrl: urlImagen, sourceUrl: info.nna }}, mentions: null }}, {quoted: m})
-            //conn.sendMessage(m.chat, {image: {url: urlImagen}, caption: stdout.trim()}, {quoted: m});
+      o = await exec("python3 speed.py --secure --share 2>/dev/null")
+      const { stdout, stderr } = o
+      
+      if (stdout.trim()) {
+        const urlMatch = stdout.match(/https:\/\/www\.speedtest\.net\/result\/[^\s]+/)
+        
+        if (urlMatch) {
+          const imageUrl = urlMatch[0] + '.png'
+          await conn.sendMessage(m.chat, { 
+            image: { url: imageUrl },
+            caption: stdout.trim()
+          }, { quoted: m })
+        } else {
+          await conn.sendMessage(m.chat, { text: stdout.trim() }, { quoted: m })
         }
-        if (stderr.trim()) { 
-            const match2 = stderr.match(/http[^"]+\.png/);
-            const urlImagen2 = match2 ? match2[0] : null;    
-            await conn.relayMessage(m.chat, {
-extendedTextMessage:{text: stderr.trim(), contextInfo: {externalAdReply: {
-title: "< ＩＮＦＯ - ＳＰＥＥＤＴＥＳＴ />", body: `${toTime(os.uptime() * 1000)}`, mediaType: 1, 
-previewType: 0, renderLargerThumbnail: true,
-thumbnailUrl: urlImagen2, 
-sourceUrl: info.nna }}, mentions: null }}, {quoted: m})
-        }
+      }
+      
+      if (stderr.trim() && !stderr.includes("Speedtest (Ookla)")) {
+        await conn.sendMessage(m.chat, { text: stderr.trim() }, { quoted: m })
+      }
     } catch (e) {
-        o = e.message;
-        return m.reply(o)
+      return m.reply(e.message)
     }
-};
+  }
 handler.help = ['speedtest'];
 handler.tags = ['main'];
 handler.command = /^(speedtest?|test?speed)$/i;
